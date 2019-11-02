@@ -43,323 +43,447 @@ namespace DiscImageChef.Server
         {
             var ctx = new DicServerContext();
 
-            if (newStats.Commands != null)
+            if(newStats.Commands != null)
             {
-                if (newStats.Commands.Analyze > 0)
+                if(newStats.Commands.Analyze > 0)
                 {
-                    var existing = ctx.Commands.FirstOrDefault(c => c.Name == "analyze");
+                    Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "analyze");
 
-                    if (existing == null)
-                        ctx.Commands.Add(new Command {Count = newStats.Commands.Analyze, Name = "analyze"});
-                    else existing.Count += newStats.Commands.Analyze;
+                    if(existing == null)
+                        ctx.Commands.Add(new Command
+                        {
+                            Count = newStats.Commands.Analyze, Name = "analyze"
+                        });
+                    else
+                        existing.Count += newStats.Commands.Analyze;
                 }
 
-                if (newStats.Commands.Benchmark > 0)
+                if(newStats.Commands.Benchmark > 0)
                 {
-                    var existing = ctx.Commands.FirstOrDefault(c => c.Name == "benchmark");
+                    Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "benchmark");
 
-                    if (existing == null)
-                        ctx.Commands.Add(new Command {Count = newStats.Commands.Benchmark, Name = "benchmark"});
-                    else existing.Count += newStats.Commands.Benchmark;
+                    if(existing == null)
+                        ctx.Commands.Add(new Command
+                        {
+                            Count = newStats.Commands.Benchmark, Name = "benchmark"
+                        });
+                    else
+                        existing.Count += newStats.Commands.Benchmark;
                 }
 
-                if (newStats.Commands.Checksum > 0)
+                if(newStats.Commands.Checksum > 0)
                 {
-                    var existing = ctx.Commands.FirstOrDefault(c => c.Name == "checksum");
+                    Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "checksum");
 
-                    if (existing == null)
-                        ctx.Commands.Add(new Command {Count = newStats.Commands.Checksum, Name = "checksum"});
-                    else existing.Count += newStats.Commands.Checksum;
+                    if(existing == null)
+                        ctx.Commands.Add(new Command
+                        {
+                            Count = newStats.Commands.Checksum, Name = "checksum"
+                        });
+                    else
+                        existing.Count += newStats.Commands.Checksum;
                 }
 
-                if (newStats.Commands.Compare > 0)
+                if(newStats.Commands.Compare > 0)
                 {
-                    var existing = ctx.Commands.FirstOrDefault(c => c.Name == "compare");
+                    Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "compare");
 
-                    if (existing == null)
-                        ctx.Commands.Add(new Command {Count = newStats.Commands.Compare, Name = "compare"});
-                    else existing.Count += newStats.Commands.Compare;
+                    if(existing == null)
+                        ctx.Commands.Add(new Command
+                        {
+                            Count = newStats.Commands.Compare, Name = "compare"
+                        });
+                    else
+                        existing.Count += newStats.Commands.Compare;
                 }
 
-                if (newStats.Commands.CreateSidecar > 0)
+                if(newStats.Commands.CreateSidecar > 0)
                 {
-                    var existing = ctx.Commands.FirstOrDefault(c => c.Name == "create-sidecar");
+                    Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "create-sidecar");
 
-                    if (existing == null)
+                    if(existing == null)
                         ctx.Commands.Add(new Command
                         {
                             Count = newStats.Commands.CreateSidecar, Name = "create-sidecar"
                         });
-                    else existing.Count += newStats.Commands.CreateSidecar;
+                    else
+                        existing.Count += newStats.Commands.CreateSidecar;
                 }
 
-                if (newStats.Commands.Decode > 0)
+                if(newStats.Commands.Decode > 0)
                 {
-                    var existing = ctx.Commands.FirstOrDefault(c => c.Name == "decode");
+                    Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "decode");
 
-                    if (existing == null)
-                        ctx.Commands.Add(new Command {Count = newStats.Commands.Decode, Name = "decode"});
-                    else existing.Count += newStats.Commands.Decode;
+                    if(existing == null)
+                        ctx.Commands.Add(new Command
+                        {
+                            Count = newStats.Commands.Decode, Name = "decode"
+                        });
+                    else
+                        existing.Count += newStats.Commands.Decode;
                 }
 
-                if (newStats.Commands.DeviceInfo > 0)
+                if(newStats.Commands.DeviceInfo > 0)
                 {
-                    var existing = ctx.Commands.FirstOrDefault(c => c.Name == "device-info");
+                    Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "device-info");
 
-                    if (existing == null)
-                        ctx.Commands.Add(new Command {Count = newStats.Commands.DeviceInfo, Name = "device-info"});
-                    else existing.Count += newStats.Commands.DeviceInfo;
+                    if(existing == null)
+                        ctx.Commands.Add(new Command
+                        {
+                            Count = newStats.Commands.DeviceInfo, Name = "device-info"
+                        });
+                    else
+                        existing.Count += newStats.Commands.DeviceInfo;
                 }
 
-                if (newStats.Commands.DeviceReport > 0)
+                if(newStats.Commands.DeviceReport > 0)
                 {
-                    var existing = ctx.Commands.FirstOrDefault(c => c.Name == "device-report");
+                    Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "device-report");
 
-                    if (existing == null)
-                        ctx.Commands.Add(new Command {Count = newStats.Commands.DeviceReport, Name = "device-report"});
-                    else existing.Count += newStats.Commands.DeviceReport;
+                    if(existing == null)
+                        ctx.Commands.Add(new Command
+                        {
+                            Count = newStats.Commands.DeviceReport, Name = "device-report"
+                        });
+                    else
+                        existing.Count += newStats.Commands.DeviceReport;
                 }
 
-                if (newStats.Commands.DumpMedia > 0)
+                if(newStats.Commands.DumpMedia > 0)
                 {
-                    var existing = ctx.Commands.FirstOrDefault(c => c.Name == "dump-media");
+                    Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "dump-media");
 
-                    if (existing == null)
-                        ctx.Commands.Add(new Command {Count = newStats.Commands.DumpMedia, Name = "dump-media"});
-                    else existing.Count += newStats.Commands.DumpMedia;
+                    if(existing == null)
+                        ctx.Commands.Add(new Command
+                        {
+                            Count = newStats.Commands.DumpMedia, Name = "dump-media"
+                        });
+                    else
+                        existing.Count += newStats.Commands.DumpMedia;
                 }
 
-                if (newStats.Commands.Entropy > 0)
+                if(newStats.Commands.Entropy > 0)
                 {
-                    var existing = ctx.Commands.FirstOrDefault(c => c.Name == "entropy");
+                    Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "entropy");
 
-                    if (existing == null)
-                        ctx.Commands.Add(new Command {Count = newStats.Commands.Entropy, Name = "entropy"});
-                    else existing.Count += newStats.Commands.Entropy;
+                    if(existing == null)
+                        ctx.Commands.Add(new Command
+                        {
+                            Count = newStats.Commands.Entropy, Name = "entropy"
+                        });
+                    else
+                        existing.Count += newStats.Commands.Entropy;
                 }
 
-                if (newStats.Commands.Formats > 0)
+                if(newStats.Commands.Formats > 0)
                 {
-                    var existing = ctx.Commands.FirstOrDefault(c => c.Name == "formats");
+                    Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "formats");
 
-                    if (existing == null)
-                        ctx.Commands.Add(new Command {Count = newStats.Commands.Formats, Name = "formats"});
-                    else existing.Count += newStats.Commands.Formats;
+                    if(existing == null)
+                        ctx.Commands.Add(new Command
+                        {
+                            Count = newStats.Commands.Formats, Name = "formats"
+                        });
+                    else
+                        existing.Count += newStats.Commands.Formats;
                 }
 
-                if (newStats.Commands.MediaInfo > 0)
+                if(newStats.Commands.MediaInfo > 0)
                 {
-                    var existing = ctx.Commands.FirstOrDefault(c => c.Name == "media-info");
+                    Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "media-info");
 
-                    if (existing == null)
-                        ctx.Commands.Add(new Command {Count = newStats.Commands.MediaInfo, Name = "media-info"});
-                    else existing.Count += newStats.Commands.MediaInfo;
+                    if(existing == null)
+                        ctx.Commands.Add(new Command
+                        {
+                            Count = newStats.Commands.MediaInfo, Name = "media-info"
+                        });
+                    else
+                        existing.Count += newStats.Commands.MediaInfo;
                 }
 
-                if (newStats.Commands.MediaScan > 0)
+                if(newStats.Commands.MediaScan > 0)
                 {
-                    var existing = ctx.Commands.FirstOrDefault(c => c.Name == "media-scan");
+                    Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "media-scan");
 
-                    if (existing == null)
-                        ctx.Commands.Add(new Command {Count = newStats.Commands.MediaScan, Name = "media-scan"});
-                    else existing.Count += newStats.Commands.MediaScan;
+                    if(existing == null)
+                        ctx.Commands.Add(new Command
+                        {
+                            Count = newStats.Commands.MediaScan, Name = "media-scan"
+                        });
+                    else
+                        existing.Count += newStats.Commands.MediaScan;
                 }
 
-                if (newStats.Commands.PrintHex > 0)
+                if(newStats.Commands.PrintHex > 0)
                 {
-                    var existing = ctx.Commands.FirstOrDefault(c => c.Name == "printhex");
+                    Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "printhex");
 
-                    if (existing == null)
-                        ctx.Commands.Add(new Command {Count = newStats.Commands.PrintHex, Name = "printhex"});
-                    else existing.Count += newStats.Commands.PrintHex;
+                    if(existing == null)
+                        ctx.Commands.Add(new Command
+                        {
+                            Count = newStats.Commands.PrintHex, Name = "printhex"
+                        });
+                    else
+                        existing.Count += newStats.Commands.PrintHex;
                 }
 
-                if (newStats.Commands.Verify > 0)
+                if(newStats.Commands.Verify > 0)
                 {
-                    var existing = ctx.Commands.FirstOrDefault(c => c.Name == "verify");
+                    Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "verify");
 
-                    if (existing == null)
-                        ctx.Commands.Add(new Command {Count = newStats.Commands.Verify, Name = "verify"});
-                    else existing.Count += newStats.Commands.Verify;
+                    if(existing == null)
+                        ctx.Commands.Add(new Command
+                        {
+                            Count = newStats.Commands.Verify, Name = "verify"
+                        });
+                    else
+                        existing.Count += newStats.Commands.Verify;
                 }
 
-                if (newStats.Commands.Ls > 0)
+                if(newStats.Commands.Ls > 0)
                 {
-                    var existing = ctx.Commands.FirstOrDefault(c => c.Name == "ls");
+                    Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "ls");
 
-                    if (existing == null) ctx.Commands.Add(new Command {Count = newStats.Commands.Ls, Name = "ls"});
-                    else existing.Count += newStats.Commands.Ls;
+                    if(existing == null)
+                        ctx.Commands.Add(new Command
+                        {
+                            Count = newStats.Commands.Ls, Name = "ls"
+                        });
+                    else
+                        existing.Count += newStats.Commands.Ls;
                 }
 
-                if (newStats.Commands.ExtractFiles > 0)
+                if(newStats.Commands.ExtractFiles > 0)
                 {
-                    var existing = ctx.Commands.FirstOrDefault(c => c.Name == "extract-files");
+                    Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "extract-files");
 
-                    if (existing == null)
-                        ctx.Commands.Add(new Command {Count = newStats.Commands.ExtractFiles, Name = "extract-files"});
-                    else existing.Count += newStats.Commands.ExtractFiles;
+                    if(existing == null)
+                        ctx.Commands.Add(new Command
+                        {
+                            Count = newStats.Commands.ExtractFiles, Name = "extract-files"
+                        });
+                    else
+                        existing.Count += newStats.Commands.ExtractFiles;
                 }
 
-                if (newStats.Commands.ListDevices > 0)
+                if(newStats.Commands.ListDevices > 0)
                 {
-                    var existing = ctx.Commands.FirstOrDefault(c => c.Name == "list-devices");
+                    Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "list-devices");
 
-                    if (existing == null)
-                        ctx.Commands.Add(new Command {Count = newStats.Commands.ListDevices, Name = "list-devices"});
-                    else existing.Count += newStats.Commands.ListDevices;
+                    if(existing == null)
+                        ctx.Commands.Add(new Command
+                        {
+                            Count = newStats.Commands.ListDevices, Name = "list-devices"
+                        });
+                    else
+                        existing.Count += newStats.Commands.ListDevices;
                 }
 
-                if (newStats.Commands.ListEncodings > 0)
+                if(newStats.Commands.ListEncodings > 0)
                 {
-                    var existing = ctx.Commands.FirstOrDefault(c => c.Name == "list-encodings");
+                    Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "list-encodings");
 
-                    if (existing == null)
+                    if(existing == null)
                         ctx.Commands.Add(new Command
                         {
                             Count = newStats.Commands.ListEncodings, Name = "list-encodings"
                         });
-                    else existing.Count += newStats.Commands.ListEncodings;
+                    else
+                        existing.Count += newStats.Commands.ListEncodings;
                 }
 
-                if (newStats.Commands.ConvertImage > 0)
+                if(newStats.Commands.ConvertImage > 0)
                 {
-                    var existing = ctx.Commands.FirstOrDefault(c => c.Name == "convert-image");
+                    Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "convert-image");
 
-                    if (existing == null)
-                        ctx.Commands.Add(new Command {Count = newStats.Commands.ConvertImage, Name = "convert-image"});
-                    else existing.Count += newStats.Commands.ConvertImage;
+                    if(existing == null)
+                        ctx.Commands.Add(new Command
+                        {
+                            Count = newStats.Commands.ConvertImage, Name = "convert-image"
+                        });
+                    else
+                        existing.Count += newStats.Commands.ConvertImage;
                 }
 
-                if (newStats.Commands.ImageInfo > 0)
+                if(newStats.Commands.ImageInfo > 0)
                 {
-                    var existing = ctx.Commands.FirstOrDefault(c => c.Name == "image-info");
+                    Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "image-info");
 
-                    if (existing == null)
-                        ctx.Commands.Add(new Command {Count = newStats.Commands.ImageInfo, Name = "image-info"});
-                    else existing.Count += newStats.Commands.ImageInfo;
+                    if(existing == null)
+                        ctx.Commands.Add(new Command
+                        {
+                            Count = newStats.Commands.ImageInfo, Name = "image-info"
+                        });
+                    else
+                        existing.Count += newStats.Commands.ImageInfo;
                 }
             }
 
-            if (newStats.OperatingSystems != null)
+            if(newStats.OperatingSystems != null)
             {
-                foreach (var operatingSystem in newStats.OperatingSystems)
+                foreach(OsStats operatingSystem in newStats.OperatingSystems)
                 {
-                    if (string.IsNullOrWhiteSpace(operatingSystem.name) ||
-                        string.IsNullOrWhiteSpace(operatingSystem.version)) continue;
+                    if(string.IsNullOrWhiteSpace(operatingSystem.name) ||
+                       string.IsNullOrWhiteSpace(operatingSystem.version))
+                        continue;
 
-                    var existing =
-                        ctx.OperatingSystems.FirstOrDefault(c => c.Name == operatingSystem.name &&
+                    OperatingSystem existing =
+                        ctx.OperatingSystems.FirstOrDefault(c => c.Name    == operatingSystem.name &&
                                                                  c.Version == operatingSystem.version);
 
-                    if (existing == null)
+                    if(existing == null)
                         ctx.OperatingSystems.Add(new OperatingSystem
                         {
-                            Count = operatingSystem.Value,
-                            Name = operatingSystem.name,
+                            Count   = operatingSystem.Value, Name = operatingSystem.name,
                             Version = operatingSystem.version
                         });
-                    else existing.Count += operatingSystem.Value;
+                    else
+                        existing.Count += operatingSystem.Value;
                 }
             }
             else
             {
-                var existing =
+                OperatingSystem existing =
                     ctx.OperatingSystems.FirstOrDefault(c => c.Name == "Linux" && c.Version == null);
 
-                if (existing == null) ctx.OperatingSystems.Add(new OperatingSystem {Count = 1, Name = "Linux"});
-                else existing.Count++;
+                if(existing == null)
+                    ctx.OperatingSystems.Add(new OperatingSystem
+                    {
+                        Count = 1, Name = "Linux"
+                    });
+                else
+                    existing.Count++;
             }
 
-            if (newStats.Versions != null)
+            if(newStats.Versions != null)
             {
-                foreach (var nvs in newStats.Versions)
+                foreach(NameValueStats nvs in newStats.Versions)
                 {
-                    if (string.IsNullOrWhiteSpace(nvs.name)) continue;
+                    if(string.IsNullOrWhiteSpace(nvs.name))
+                        continue;
 
-                    var existing = ctx.Versions.FirstOrDefault(c => c.Value == nvs.name);
+                    Version existing = ctx.Versions.FirstOrDefault(c => c.Value == nvs.name);
 
-                    if (existing == null) ctx.Versions.Add(new Version {Count = nvs.Value, Value = nvs.name});
-                    else existing.Count += nvs.Value;
+                    if(existing == null)
+                        ctx.Versions.Add(new Version
+                        {
+                            Count = nvs.Value, Value = nvs.name
+                        });
+                    else
+                        existing.Count += nvs.Value;
                 }
             }
             else
             {
-                var existing = ctx.Versions.FirstOrDefault(c => c.Value == "previous");
+                Version existing = ctx.Versions.FirstOrDefault(c => c.Value == "previous");
 
-                if (existing == null) ctx.Versions.Add(new Version {Count = 1, Value = "previous"});
-                else existing.Count++;
+                if(existing == null)
+                    ctx.Versions.Add(new Version
+                    {
+                        Count = 1, Value = "previous"
+                    });
+                else
+                    existing.Count++;
             }
 
-            if (newStats.Filesystems != null)
-                foreach (var nvs in newStats.Filesystems)
+            if(newStats.Filesystems != null)
+                foreach(NameValueStats nvs in newStats.Filesystems)
                 {
-                    if (string.IsNullOrWhiteSpace(nvs.name)) continue;
+                    if(string.IsNullOrWhiteSpace(nvs.name))
+                        continue;
 
-                    var existing = ctx.Filesystems.FirstOrDefault(c => c.Name == nvs.name);
+                    Filesystem existing = ctx.Filesystems.FirstOrDefault(c => c.Name == nvs.name);
 
-                    if (existing == null) ctx.Filesystems.Add(new Filesystem {Count = nvs.Value, Name = nvs.name});
-                    else existing.Count += nvs.Value;
+                    if(existing == null)
+                        ctx.Filesystems.Add(new Filesystem
+                        {
+                            Count = nvs.Value, Name = nvs.name
+                        });
+                    else
+                        existing.Count += nvs.Value;
                 }
 
-            if (newStats.Partitions != null)
-                foreach (var nvs in newStats.Partitions)
+            if(newStats.Partitions != null)
+                foreach(NameValueStats nvs in newStats.Partitions)
                 {
-                    if (string.IsNullOrWhiteSpace(nvs.name)) continue;
+                    if(string.IsNullOrWhiteSpace(nvs.name))
+                        continue;
 
-                    var existing = ctx.Partitions.FirstOrDefault(c => c.Name == nvs.name);
+                    Partition existing = ctx.Partitions.FirstOrDefault(c => c.Name == nvs.name);
 
-                    if (existing == null) ctx.Partitions.Add(new Partition {Count = nvs.Value, Name = nvs.name});
-                    else existing.Count += nvs.Value;
+                    if(existing == null)
+                        ctx.Partitions.Add(new Partition
+                        {
+                            Count = nvs.Value, Name = nvs.name
+                        });
+                    else
+                        existing.Count += nvs.Value;
                 }
 
-            if (newStats.MediaImages != null)
-                foreach (var nvs in newStats.MediaImages)
+            if(newStats.MediaImages != null)
+                foreach(NameValueStats nvs in newStats.MediaImages)
                 {
-                    if (string.IsNullOrWhiteSpace(nvs.name)) continue;
+                    if(string.IsNullOrWhiteSpace(nvs.name))
+                        continue;
 
-                    var existing = ctx.MediaFormats.FirstOrDefault(c => c.Name == nvs.name);
+                    MediaFormat existing = ctx.MediaFormats.FirstOrDefault(c => c.Name == nvs.name);
 
-                    if (existing == null) ctx.MediaFormats.Add(new MediaFormat {Count = nvs.Value, Name = nvs.name});
-                    else existing.Count += nvs.Value;
+                    if(existing == null)
+                        ctx.MediaFormats.Add(new MediaFormat
+                        {
+                            Count = nvs.Value, Name = nvs.name
+                        });
+                    else
+                        existing.Count += nvs.Value;
                 }
 
-            if (newStats.Filters != null)
-                foreach (var nvs in newStats.Filters)
+            if(newStats.Filters != null)
+                foreach(NameValueStats nvs in newStats.Filters)
                 {
-                    if (string.IsNullOrWhiteSpace(nvs.name)) continue;
+                    if(string.IsNullOrWhiteSpace(nvs.name))
+                        continue;
 
-                    var existing = ctx.Filters.FirstOrDefault(c => c.Name == nvs.name);
+                    Filter existing = ctx.Filters.FirstOrDefault(c => c.Name == nvs.name);
 
-                    if (existing == null) ctx.Filters.Add(new Filter {Count = nvs.Value, Name = nvs.name});
-                    else existing.Count += nvs.Value;
+                    if(existing == null)
+                        ctx.Filters.Add(new Filter
+                        {
+                            Count = nvs.Value, Name = nvs.name
+                        });
+                    else
+                        existing.Count += nvs.Value;
                 }
 
-            if (newStats.Devices != null)
-                foreach (var device in newStats.Devices)
+            if(newStats.Devices != null)
+                foreach(DeviceStats device in newStats.Devices)
                 {
-                    if (string.IsNullOrWhiteSpace(device.Model)) continue;
+                    if(string.IsNullOrWhiteSpace(device.Model))
+                        continue;
 
-                    if (!ctx.DeviceStats.Any(c => c.Bus == device.Bus && c.Manufacturer == device.Manufacturer &&
-                                                  c.Model == device.Model && c.Revision == device.Revision))
+                    if(!ctx.DeviceStats.Any(c => c.Bus   == device.Bus   && c.Manufacturer == device.Manufacturer &&
+                                                 c.Model == device.Model && c.Revision     == device.Revision))
                         ctx.DeviceStats.Add(new DeviceStat
                         {
-                            Bus = device.Bus,
-                            Manufacturer = device.Manufacturer,
-                            Model = device.Model,
+                            Bus      = device.Bus, Manufacturer = device.Manufacturer, Model = device.Model,
                             Revision = device.Revision
                         });
                 }
 
-            if (newStats.Medias != null)
-                foreach (var media in newStats.Medias)
+            if(newStats.Medias != null)
+                foreach(MediaStats media in newStats.Medias)
                 {
-                    if (string.IsNullOrWhiteSpace(media.type)) continue;
+                    if(string.IsNullOrWhiteSpace(media.type))
+                        continue;
 
-                    var existing = ctx.Medias.FirstOrDefault(c => c.Type == media.type && c.Real == media.real);
+                    Media existing = ctx.Medias.FirstOrDefault(c => c.Type == media.type && c.Real == media.real);
 
-                    if (existing == null)
-                        ctx.Medias.Add(new Media {Count = media.Value, Real = media.real, Type = media.type});
-                    else existing.Count += media.Value;
+                    if(existing == null)
+                        ctx.Medias.Add(new Media
+                        {
+                            Count = media.Value, Real = media.real, Type = media.type
+                        });
+                    else
+                        existing.Count += media.Value;
                 }
 
             ctx.SaveChanges();

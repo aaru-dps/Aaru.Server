@@ -39,24 +39,24 @@ namespace DiscImageChef.Server.Models
 {
     public class UsbVendor
     {
-        public UsbVendor()
-        {
-        }
+        public UsbVendor() { }
 
         public UsbVendor(ushort id, string vendor)
         {
-            VendorId = id;
-            Vendor = vendor;
+            VendorId  = id;
+            Vendor    = vendor;
             AddedWhen = ModifiedWhen = DateTime.UtcNow;
         }
 
-        [Key] public int Id { get; set; }
+        [Key]
+        public int Id { get; set; }
 
-        public ushort VendorId { get; set; }
-        public string Vendor { get; set; }
-        public DateTime AddedWhen { get; set; }
+        public ushort   VendorId     { get; set; }
+        public string   Vendor       { get; set; }
+        public DateTime AddedWhen    { get; set; }
         public DateTime ModifiedWhen { get; set; }
 
-        [JsonIgnore] public virtual ICollection<UsbProduct> Products { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<UsbProduct> Products { get; set; }
     }
 }

@@ -38,33 +38,31 @@ namespace DiscImageChef.Server.Models
 {
     public class CompactDiscOffset : CdOffset
     {
-        public CompactDiscOffset()
-        {
-        }
+        public CompactDiscOffset() { }
 
         public CompactDiscOffset(string manufacturer, string model, short offset, int submissions, float agreement)
         {
             Manufacturer = manufacturer;
-            Model = model;
-            Offset = offset;
-            Submissions = submissions;
-            Agreement = agreement;
-            AddedWhen = ModifiedWhen = DateTime.UtcNow;
+            Model        = model;
+            Offset       = offset;
+            Submissions  = submissions;
+            Agreement    = agreement;
+            AddedWhen    = ModifiedWhen = DateTime.UtcNow;
         }
 
         public CompactDiscOffset(CdOffset offset)
         {
             Manufacturer = offset.Manufacturer;
-            Model = offset.Model;
-            Offset = offset.Offset;
-            Submissions = offset.Submissions;
-            Agreement = offset.Agreement;
-            AddedWhen = ModifiedWhen = DateTime.UtcNow;
+            Model        = offset.Model;
+            Offset       = offset.Offset;
+            Submissions  = offset.Submissions;
+            Agreement    = offset.Agreement;
+            AddedWhen    = ModifiedWhen = DateTime.UtcNow;
         }
 
-        public int Id { get; set; }
-        public DateTime AddedWhen { get; set; }
-        public DateTime ModifiedWhen { get; set; }
-        public virtual ICollection<Device> Devices { get; set; }
+        public         int                 Id           { get; set; }
+        public         DateTime            AddedWhen    { get; set; }
+        public         DateTime            ModifiedWhen { get; set; }
+        public virtual ICollection<Device> Devices      { get; set; }
     }
 }

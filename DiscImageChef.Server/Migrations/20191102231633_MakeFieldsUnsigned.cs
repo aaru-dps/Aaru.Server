@@ -6,379 +6,160 @@ namespace DiscImageChef.Server.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "ProductIDSql",
-                table: "Usb");
+            migrationBuilder.DropColumn("ProductIDSql", "Usb");
 
-            migrationBuilder.DropColumn(
-                name: "VendorIDSql",
-                table: "Usb");
+            migrationBuilder.DropColumn("VendorIDSql", "Usb");
 
-            migrationBuilder.DropColumn(
-                name: "BlockSizeSql",
-                table: "TestedMedia");
+            migrationBuilder.DropColumn("BlockSizeSql", "TestedMedia");
 
-            migrationBuilder.DropColumn(
-                name: "BlocksSql",
-                table: "TestedMedia");
+            migrationBuilder.DropColumn("BlocksSql", "TestedMedia");
 
-            migrationBuilder.DropColumn(
-                name: "LBA48SectorsSql",
-                table: "TestedMedia");
+            migrationBuilder.DropColumn("LBA48SectorsSql", "TestedMedia");
 
-            migrationBuilder.DropColumn(
-                name: "LBASectorsSql",
-                table: "TestedMedia");
+            migrationBuilder.DropColumn("LBASectorsSql", "TestedMedia");
 
-            migrationBuilder.DropColumn(
-                name: "LogicalAlignmentSql",
-                table: "TestedMedia");
+            migrationBuilder.DropColumn("LogicalAlignmentSql", "TestedMedia");
 
-            migrationBuilder.DropColumn(
-                name: "LongBlockSizeSql",
-                table: "TestedMedia");
+            migrationBuilder.DropColumn("LongBlockSizeSql", "TestedMedia");
 
-            migrationBuilder.DropColumn(
-                name: "NominalRotationRateSql",
-                table: "TestedMedia");
+            migrationBuilder.DropColumn("NominalRotationRateSql", "TestedMedia");
 
-            migrationBuilder.DropColumn(
-                name: "PhysicalBlockSizeSql",
-                table: "TestedMedia");
+            migrationBuilder.DropColumn("PhysicalBlockSizeSql", "TestedMedia");
 
-            migrationBuilder.DropColumn(
-                name: "UnformattedBPSSql",
-                table: "TestedMedia");
+            migrationBuilder.DropColumn("UnformattedBPSSql", "TestedMedia");
 
-            migrationBuilder.DropColumn(
-                name: "UnformattedBPTSql",
-                table: "TestedMedia");
+            migrationBuilder.DropColumn("UnformattedBPTSql", "TestedMedia");
 
-            migrationBuilder.DropColumn(
-                name: "BitsPerMmSql",
-                table: "SupportedDensity");
+            migrationBuilder.DropColumn("BitsPerMmSql", "SupportedDensity");
 
-            migrationBuilder.DropColumn(
-                name: "CapacitySql",
-                table: "SupportedDensity");
+            migrationBuilder.DropColumn("CapacitySql", "SupportedDensity");
 
-            migrationBuilder.DropColumn(
-                name: "TracksSql",
-                table: "SupportedDensity");
+            migrationBuilder.DropColumn("TracksSql", "SupportedDensity");
 
-            migrationBuilder.DropColumn(
-                name: "WidthSql",
-                table: "SupportedDensity");
+            migrationBuilder.DropColumn("WidthSql", "SupportedDensity");
 
-            migrationBuilder.DropColumn(
-                name: "LengthSql",
-                table: "SscSupportedMedia");
+            migrationBuilder.DropColumn("LengthSql", "SscSupportedMedia");
 
-            migrationBuilder.DropColumn(
-                name: "WidthSql",
-                table: "SscSupportedMedia");
+            migrationBuilder.DropColumn("WidthSql", "SscSupportedMedia");
 
-            migrationBuilder.DropColumn(
-                name: "MaxBlockLengthSql",
-                table: "Ssc");
+            migrationBuilder.DropColumn("MaxBlockLengthSql", "Ssc");
 
-            migrationBuilder.DropColumn(
-                name: "MinBlockLengthSql",
-                table: "Ssc");
+            migrationBuilder.DropColumn("MinBlockLengthSql", "Ssc");
 
-            migrationBuilder.DropColumn(
-                name: "CardCodeSql",
-                table: "Pcmcia");
+            migrationBuilder.DropColumn("CardCodeSql", "Pcmcia");
 
-            migrationBuilder.DropColumn(
-                name: "ManufacturerCodeSql",
-                table: "Pcmcia");
+            migrationBuilder.DropColumn("ManufacturerCodeSql", "Pcmcia");
 
-            migrationBuilder.DropColumn(
-                name: "BlocksPerReadableUnitSql",
-                table: "MmcFeatures");
+            migrationBuilder.DropColumn("BlocksPerReadableUnitSql", "MmcFeatures");
 
-            migrationBuilder.DropColumn(
-                name: "LogicalBlockSizeSql",
-                table: "MmcFeatures");
+            migrationBuilder.DropColumn("LogicalBlockSizeSql", "MmcFeatures");
 
-            migrationBuilder.DropColumn(
-                name: "PhysicalInterfaceStandardNumberSql",
-                table: "MmcFeatures");
+            migrationBuilder.DropColumn("PhysicalInterfaceStandardNumberSql", "MmcFeatures");
 
-            migrationBuilder.DropColumn(
-                name: "VolumeLevelsSql",
-                table: "MmcFeatures");
+            migrationBuilder.DropColumn("VolumeLevelsSql", "MmcFeatures");
 
-            migrationBuilder.DropColumn(
-                name: "ProductIDSql",
-                table: "FireWire");
+            migrationBuilder.DropColumn("ProductIDSql", "FireWire");
 
-            migrationBuilder.DropColumn(
-                name: "VendorIDSql",
-                table: "FireWire");
+            migrationBuilder.DropColumn("VendorIDSql", "FireWire");
 
-            migrationBuilder.DropColumn(
-                name: "CylindersSql",
-                table: "Chs");
+            migrationBuilder.DropColumn("CylindersSql", "Chs");
 
-            migrationBuilder.DropColumn(
-                name: "HeadsSql",
-                table: "Chs");
+            migrationBuilder.DropColumn("HeadsSql", "Chs");
 
-            migrationBuilder.DropColumn(
-                name: "SectorsSql",
-                table: "Chs");
+            migrationBuilder.DropColumn("SectorsSql", "Chs");
 
-            migrationBuilder.DropColumn(
-                name: "BlockLengthSql",
-                table: "BlockDescriptor");
+            migrationBuilder.DropColumn("BlockLengthSql", "BlockDescriptor");
 
-            migrationBuilder.DropColumn(
-                name: "BlocksSql",
-                table: "BlockDescriptor");
+            migrationBuilder.DropColumn("BlocksSql", "BlockDescriptor");
 
-            migrationBuilder.AlterColumn<ushort>(
-                name: "VendorId",
-                table: "UsbVendors",
-                nullable: false,
-                oldClrType: typeof(int),
-                oldType: "int");
+            migrationBuilder.AlterColumn<ushort>("VendorId", "UsbVendors", nullable: false, oldClrType: typeof(int),
+                                                 oldType: "int");
 
-            migrationBuilder.AlterColumn<ushort>(
-                name: "ProductId",
-                table: "UsbProducts",
-                nullable: false,
-                oldClrType: typeof(int),
-                oldType: "int");
+            migrationBuilder.AlterColumn<ushort>("ProductId", "UsbProducts", nullable: false, oldClrType: typeof(int),
+                                                 oldType: "int");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<int>(
-                name: "VendorId",
-                table: "UsbVendors",
-                type: "int",
-                nullable: false,
-                oldClrType: typeof(ushort));
+            migrationBuilder.AlterColumn<int>("VendorId", "UsbVendors", "int", nullable: false,
+                                              oldClrType: typeof(ushort));
 
-            migrationBuilder.AlterColumn<int>(
-                name: "ProductId",
-                table: "UsbProducts",
-                type: "int",
-                nullable: false,
-                oldClrType: typeof(ushort));
+            migrationBuilder.AlterColumn<int>("ProductId", "UsbProducts", "int", nullable: false,
+                                              oldClrType: typeof(ushort));
 
-            migrationBuilder.AddColumn<short>(
-                name: "ProductIDSql",
-                table: "Usb",
-                type: "smallint",
-                nullable: false,
-                defaultValue: (short)0);
+            migrationBuilder.AddColumn<short>("ProductIDSql", "Usb", "smallint", nullable: false,
+                                              defaultValue: (short)0);
 
-            migrationBuilder.AddColumn<short>(
-                name: "VendorIDSql",
-                table: "Usb",
-                type: "smallint",
-                nullable: false,
-                defaultValue: (short)0);
+            migrationBuilder.AddColumn<short>("VendorIDSql", "Usb", "smallint", nullable: false,
+                                              defaultValue: (short)0);
 
-            migrationBuilder.AddColumn<int>(
-                name: "BlockSizeSql",
-                table: "TestedMedia",
-                type: "int",
-                nullable: true);
+            migrationBuilder.AddColumn<int>("BlockSizeSql", "TestedMedia", "int", nullable: true);
 
-            migrationBuilder.AddColumn<long>(
-                name: "BlocksSql",
-                table: "TestedMedia",
-                type: "bigint",
-                nullable: true);
+            migrationBuilder.AddColumn<long>("BlocksSql", "TestedMedia", "bigint", nullable: true);
 
-            migrationBuilder.AddColumn<long>(
-                name: "LBA48SectorsSql",
-                table: "TestedMedia",
-                type: "bigint",
-                nullable: true);
+            migrationBuilder.AddColumn<long>("LBA48SectorsSql", "TestedMedia", "bigint", nullable: true);
 
-            migrationBuilder.AddColumn<int>(
-                name: "LBASectorsSql",
-                table: "TestedMedia",
-                type: "int",
-                nullable: true);
+            migrationBuilder.AddColumn<int>("LBASectorsSql", "TestedMedia", "int", nullable: true);
 
-            migrationBuilder.AddColumn<short>(
-                name: "LogicalAlignmentSql",
-                table: "TestedMedia",
-                type: "smallint",
-                nullable: true);
+            migrationBuilder.AddColumn<short>("LogicalAlignmentSql", "TestedMedia", "smallint", nullable: true);
 
-            migrationBuilder.AddColumn<int>(
-                name: "LongBlockSizeSql",
-                table: "TestedMedia",
-                type: "int",
-                nullable: true);
+            migrationBuilder.AddColumn<int>("LongBlockSizeSql", "TestedMedia", "int", nullable: true);
 
-            migrationBuilder.AddColumn<short>(
-                name: "NominalRotationRateSql",
-                table: "TestedMedia",
-                type: "smallint",
-                nullable: true);
+            migrationBuilder.AddColumn<short>("NominalRotationRateSql", "TestedMedia", "smallint", nullable: true);
 
-            migrationBuilder.AddColumn<int>(
-                name: "PhysicalBlockSizeSql",
-                table: "TestedMedia",
-                type: "int",
-                nullable: true);
+            migrationBuilder.AddColumn<int>("PhysicalBlockSizeSql", "TestedMedia", "int", nullable: true);
 
-            migrationBuilder.AddColumn<short>(
-                name: "UnformattedBPSSql",
-                table: "TestedMedia",
-                type: "smallint",
-                nullable: true);
+            migrationBuilder.AddColumn<short>("UnformattedBPSSql", "TestedMedia", "smallint", nullable: true);
 
-            migrationBuilder.AddColumn<short>(
-                name: "UnformattedBPTSql",
-                table: "TestedMedia",
-                type: "smallint",
-                nullable: true);
+            migrationBuilder.AddColumn<short>("UnformattedBPTSql", "TestedMedia", "smallint", nullable: true);
 
-            migrationBuilder.AddColumn<int>(
-                name: "BitsPerMmSql",
-                table: "SupportedDensity",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
+            migrationBuilder.AddColumn<int>("BitsPerMmSql", "SupportedDensity", "int", nullable: false,
+                                            defaultValue: 0);
 
-            migrationBuilder.AddColumn<int>(
-                name: "CapacitySql",
-                table: "SupportedDensity",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
+            migrationBuilder.AddColumn<int>("CapacitySql", "SupportedDensity", "int", nullable: false, defaultValue: 0);
 
-            migrationBuilder.AddColumn<short>(
-                name: "TracksSql",
-                table: "SupportedDensity",
-                type: "smallint",
-                nullable: false,
-                defaultValue: (short)0);
+            migrationBuilder.AddColumn<short>("TracksSql", "SupportedDensity", "smallint", nullable: false,
+                                              defaultValue: (short)0);
 
-            migrationBuilder.AddColumn<short>(
-                name: "WidthSql",
-                table: "SupportedDensity",
-                type: "smallint",
-                nullable: false,
-                defaultValue: (short)0);
+            migrationBuilder.AddColumn<short>("WidthSql", "SupportedDensity", "smallint", nullable: false,
+                                              defaultValue: (short)0);
 
-            migrationBuilder.AddColumn<short>(
-                name: "LengthSql",
-                table: "SscSupportedMedia",
-                type: "smallint",
-                nullable: false,
-                defaultValue: (short)0);
+            migrationBuilder.AddColumn<short>("LengthSql", "SscSupportedMedia", "smallint", nullable: false,
+                                              defaultValue: (short)0);
 
-            migrationBuilder.AddColumn<short>(
-                name: "WidthSql",
-                table: "SscSupportedMedia",
-                type: "smallint",
-                nullable: false,
-                defaultValue: (short)0);
+            migrationBuilder.AddColumn<short>("WidthSql", "SscSupportedMedia", "smallint", nullable: false,
+                                              defaultValue: (short)0);
 
-            migrationBuilder.AddColumn<int>(
-                name: "MaxBlockLengthSql",
-                table: "Ssc",
-                type: "int",
-                nullable: true);
+            migrationBuilder.AddColumn<int>("MaxBlockLengthSql", "Ssc", "int", nullable: true);
 
-            migrationBuilder.AddColumn<int>(
-                name: "MinBlockLengthSql",
-                table: "Ssc",
-                type: "int",
-                nullable: true);
+            migrationBuilder.AddColumn<int>("MinBlockLengthSql", "Ssc", "int", nullable: true);
 
-            migrationBuilder.AddColumn<short>(
-                name: "CardCodeSql",
-                table: "Pcmcia",
-                type: "smallint",
-                nullable: true);
+            migrationBuilder.AddColumn<short>("CardCodeSql", "Pcmcia", "smallint", nullable: true);
 
-            migrationBuilder.AddColumn<short>(
-                name: "ManufacturerCodeSql",
-                table: "Pcmcia",
-                type: "smallint",
-                nullable: true);
+            migrationBuilder.AddColumn<short>("ManufacturerCodeSql", "Pcmcia", "smallint", nullable: true);
 
-            migrationBuilder.AddColumn<short>(
-                name: "BlocksPerReadableUnitSql",
-                table: "MmcFeatures",
-                type: "smallint",
-                nullable: true);
+            migrationBuilder.AddColumn<short>("BlocksPerReadableUnitSql", "MmcFeatures", "smallint", nullable: true);
 
-            migrationBuilder.AddColumn<int>(
-                name: "LogicalBlockSizeSql",
-                table: "MmcFeatures",
-                type: "int",
-                nullable: true);
+            migrationBuilder.AddColumn<int>("LogicalBlockSizeSql", "MmcFeatures", "int", nullable: true);
 
-            migrationBuilder.AddColumn<int>(
-                name: "PhysicalInterfaceStandardNumberSql",
-                table: "MmcFeatures",
-                type: "int",
-                nullable: true);
+            migrationBuilder.AddColumn<int>("PhysicalInterfaceStandardNumberSql", "MmcFeatures", "int", nullable: true);
 
-            migrationBuilder.AddColumn<short>(
-                name: "VolumeLevelsSql",
-                table: "MmcFeatures",
-                type: "smallint",
-                nullable: true);
+            migrationBuilder.AddColumn<short>("VolumeLevelsSql", "MmcFeatures", "smallint", nullable: true);
 
-            migrationBuilder.AddColumn<int>(
-                name: "ProductIDSql",
-                table: "FireWire",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
+            migrationBuilder.AddColumn<int>("ProductIDSql", "FireWire", "int", nullable: false, defaultValue: 0);
 
-            migrationBuilder.AddColumn<int>(
-                name: "VendorIDSql",
-                table: "FireWire",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
+            migrationBuilder.AddColumn<int>("VendorIDSql", "FireWire", "int", nullable: false, defaultValue: 0);
 
-            migrationBuilder.AddColumn<short>(
-                name: "CylindersSql",
-                table: "Chs",
-                type: "smallint",
-                nullable: false,
-                defaultValue: (short)0);
+            migrationBuilder.AddColumn<short>("CylindersSql", "Chs", "smallint", nullable: false,
+                                              defaultValue: (short)0);
 
-            migrationBuilder.AddColumn<short>(
-                name: "HeadsSql",
-                table: "Chs",
-                type: "smallint",
-                nullable: false,
-                defaultValue: (short)0);
+            migrationBuilder.AddColumn<short>("HeadsSql", "Chs", "smallint", nullable: false, defaultValue: (short)0);
 
-            migrationBuilder.AddColumn<short>(
-                name: "SectorsSql",
-                table: "Chs",
-                type: "smallint",
-                nullable: false,
-                defaultValue: (short)0);
+            migrationBuilder.AddColumn<short>("SectorsSql", "Chs", "smallint", nullable: false, defaultValue: (short)0);
 
-            migrationBuilder.AddColumn<int>(
-                name: "BlockLengthSql",
-                table: "BlockDescriptor",
-                type: "int",
-                nullable: true);
+            migrationBuilder.AddColumn<int>("BlockLengthSql", "BlockDescriptor", "int", nullable: true);
 
-            migrationBuilder.AddColumn<long>(
-                name: "BlocksSql",
-                table: "BlockDescriptor",
-                type: "bigint",
-                nullable: true);
+            migrationBuilder.AddColumn<long>("BlocksSql", "BlockDescriptor", "bigint", nullable: true);
         }
     }
 }

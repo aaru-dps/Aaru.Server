@@ -36,23 +36,22 @@ namespace DiscImageChef.Server.App_Start
 {
     public static class TestedMedia
     {
-        /// <summary>
-        ///     Takes the tested media from a device report and prints it as a list of values
-        /// </summary>
+        /// <summary>Takes the tested media from a device report and prints it as a list of values</summary>
         /// <param name="ata"><c>true</c> if device report is from an ATA device</param>
         /// <param name="mediaOneValue">List to put values on</param>
         /// <param name="testedMedias">List of tested media</param>
         public static void Report(List<CommonTypes.Metadata.TestedMedia> testedMedias, ref List<string> mediaOneValue)
         {
-            foreach (var testedMedia in testedMedias)
+            foreach(CommonTypes.Metadata.TestedMedia testedMedia in testedMedias)
             {
-                if (!string.IsNullOrWhiteSpace(testedMedia.MediumTypeName))
+                if(!string.IsNullOrWhiteSpace(testedMedia.MediumTypeName))
                 {
                     mediaOneValue.Add($"<i>Information for medium named \"{testedMedia.MediumTypeName}\"</i>");
-                    if (testedMedia.MediumType != null)
+
+                    if(testedMedia.MediumType != null)
                         mediaOneValue.Add($"Medium type code: {testedMedia.MediumType:X2}h");
                 }
-                else if (testedMedia.MediumType != null)
+                else if(testedMedia.MediumType != null)
                 {
                     mediaOneValue.Add($"<i>Information for medium type {testedMedia.MediumType:X2}h</i>");
                 }
@@ -61,265 +60,318 @@ namespace DiscImageChef.Server.App_Start
                     mediaOneValue.Add("<i>Information for unknown medium type</i>");
                 }
 
-                mediaOneValue.Add(testedMedia.MediaIsRecognized
-                    ? "Drive recognizes this medium."
-                    : "Drive does not recognize this medium.");
+                mediaOneValue.Add(testedMedia.MediaIsRecognized ? "Drive recognizes this medium."
+                                      : "Drive does not recognize this medium.");
 
-                if (!string.IsNullOrWhiteSpace(testedMedia.Manufacturer))
+                if(!string.IsNullOrWhiteSpace(testedMedia.Manufacturer))
                     mediaOneValue.Add($"Medium manufactured by: {testedMedia.Manufacturer}");
-                if (!string.IsNullOrWhiteSpace(testedMedia.Model))
-                    mediaOneValue.Add($"Medium model: {testedMedia.Model}");
-                if (testedMedia.Density != null) mediaOneValue.Add($"Density code: {testedMedia.Density:X2}h");
 
-                if (testedMedia.BlockSize != null)
+                if(!string.IsNullOrWhiteSpace(testedMedia.Model))
+                    mediaOneValue.Add($"Medium model: {testedMedia.Model}");
+
+                if(testedMedia.Density != null)
+                    mediaOneValue.Add($"Density code: {testedMedia.Density:X2}h");
+
+                if(testedMedia.BlockSize != null)
                     mediaOneValue.Add($"Logical sector size: {testedMedia.BlockSize} bytes");
-                if (testedMedia.PhysicalBlockSize != null)
+
+                if(testedMedia.PhysicalBlockSize != null)
                     mediaOneValue.Add($"Physical sector size: {testedMedia.PhysicalBlockSize} bytes");
-                if (testedMedia.LongBlockSize != null)
+
+                if(testedMedia.LongBlockSize != null)
                     mediaOneValue.Add($"READ LONG sector size: {testedMedia.LongBlockSize} bytes");
 
-                if (testedMedia.Blocks != null && testedMedia.BlockSize != null)
+                if(testedMedia.Blocks    != null &&
+                   testedMedia.BlockSize != null)
                 {
                     mediaOneValue.Add($"Medium has {testedMedia.Blocks} blocks of {testedMedia.BlockSize} bytes each");
 
-                    if (testedMedia.Blocks * testedMedia.BlockSize / 1024 / 1024 > 1000000)
-                        mediaOneValue
-                            .Add(
-                                $"Medium size: {testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double) (testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
-                    else if (testedMedia.Blocks * testedMedia.BlockSize / 1024 / 1024 > 1000)
-                        mediaOneValue
-                            .Add(
-                                $"Medium size: {testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double) (testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
+                    if(testedMedia.Blocks * testedMedia.BlockSize / 1024 / 1024 > 1000000)
+                        mediaOneValue.
+                            Add($"Medium size: {testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                    else if(testedMedia.Blocks * testedMedia.BlockSize / 1024 / 1024 > 1000)
+                        mediaOneValue.
+                            Add($"Medium size: {testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
                     else
-                        mediaOneValue
-                            .Add(
-                                $"Medium size: {testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000} Mb, {(double) (testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+                        mediaOneValue.
+                            Add($"Medium size: {testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
                 }
 
-                if (testedMedia.CHS != null && testedMedia.CurrentCHS != null)
+                if(testedMedia.CHS        != null &&
+                   testedMedia.CurrentCHS != null)
                 {
-                    var currentSectors = testedMedia.CurrentCHS.Cylinders * testedMedia.CurrentCHS.Heads *
+                    int currentSectors = testedMedia.CurrentCHS.Cylinders * testedMedia.CurrentCHS.Heads *
                                          testedMedia.CurrentCHS.Sectors;
-                    mediaOneValue
-                        .Add(
-                            $"Cylinders: {testedMedia.CHS.Cylinders} max., {testedMedia.CurrentCHS.Cylinders} current");
+
+                    mediaOneValue.
+                        Add($"Cylinders: {testedMedia.CHS.Cylinders} max., {testedMedia.CurrentCHS.Cylinders} current");
+
                     mediaOneValue.Add($"Heads: {testedMedia.CHS.Heads} max., {testedMedia.CurrentCHS.Heads} current");
-                    mediaOneValue
-                        .Add(
-                            $"Sectors per track: {testedMedia.CHS.Sectors} max., {testedMedia.CurrentCHS.Sectors} current");
-                    mediaOneValue
-                        .Add(
-                            $"Sectors addressable in CHS mode: {testedMedia.CHS.Cylinders * testedMedia.CHS.Heads * testedMedia.CHS.Sectors} max., {currentSectors} current");
-                    mediaOneValue
-                        .Add(
-                            $"Medium size in CHS mode: {(ulong) currentSectors * testedMedia.BlockSize} bytes, {(ulong) currentSectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double) ((ulong) currentSectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+
+                    mediaOneValue.
+                        Add($"Sectors per track: {testedMedia.CHS.Sectors} max., {testedMedia.CurrentCHS.Sectors} current");
+
+                    mediaOneValue.
+                        Add($"Sectors addressable in CHS mode: {testedMedia.CHS.Cylinders * testedMedia.CHS.Heads * testedMedia.CHS.Sectors} max., {currentSectors} current");
+
+                    mediaOneValue.
+                        Add($"Medium size in CHS mode: {(ulong)currentSectors * testedMedia.BlockSize} bytes, {(ulong)currentSectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)((ulong)currentSectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
                 }
-                else if (testedMedia.CHS != null)
+                else if(testedMedia.CHS != null)
                 {
-                    var currentSectors = testedMedia.CHS.Cylinders * testedMedia.CHS.Heads * testedMedia.CHS.Sectors;
+                    int currentSectors = testedMedia.CHS.Cylinders * testedMedia.CHS.Heads * testedMedia.CHS.Sectors;
                     mediaOneValue.Add($"Cylinders: {testedMedia.CHS.Cylinders}");
                     mediaOneValue.Add($"Heads: {testedMedia.CHS.Heads}");
                     mediaOneValue.Add($"Sectors per track: {testedMedia.CHS.Sectors}");
                     mediaOneValue.Add($"Sectors addressable in CHS mode: {currentSectors}");
-                    mediaOneValue
-                        .Add(
-                            $"Medium size in CHS mode: {(ulong) currentSectors * testedMedia.BlockSize} bytes, {(ulong) currentSectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double) ((ulong) currentSectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+
+                    mediaOneValue.
+                        Add($"Medium size in CHS mode: {(ulong)currentSectors * testedMedia.BlockSize} bytes, {(ulong)currentSectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)((ulong)currentSectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
                 }
 
-                if (testedMedia.LBASectors != null)
+                if(testedMedia.LBASectors != null)
                 {
                     mediaOneValue.Add($"Sectors addressable in sectors in 28-bit LBA mode: {testedMedia.LBASectors}");
 
-                    if ((ulong) testedMedia.LBASectors * testedMedia.BlockSize / 1024 / 1024 > 1000000)
-                        mediaOneValue
-                            .Add(
-                                $"Medium size in 28-bit LBA mode: {(ulong) testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong) testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double) ((ulong) testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
-                    else if ((ulong) testedMedia.LBASectors * testedMedia.BlockSize / 1024 / 1024 > 1000)
-                        mediaOneValue
-                            .Add(
-                                $"Medium size in 28-bit LBA mode: {(ulong) testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong) testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double) ((ulong) testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
+                    if((ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1024 / 1024 > 1000000)
+                        mediaOneValue.
+                            Add($"Medium size in 28-bit LBA mode: {(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                    else if((ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1024 / 1024 > 1000)
+                        mediaOneValue.
+                            Add($"Medium size in 28-bit LBA mode: {(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
                     else
-                        mediaOneValue
-                            .Add(
-                                $"Medium size in 28-bit LBA mode: {(ulong) testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong) testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double) ((ulong) testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+                        mediaOneValue.
+                            Add($"Medium size in 28-bit LBA mode: {(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
                 }
 
-                if (testedMedia.LBA48Sectors != null)
+                if(testedMedia.LBA48Sectors != null)
                 {
                     mediaOneValue.Add($"Sectors addressable in sectors in 48-bit LBA mode: {testedMedia.LBA48Sectors}");
 
-                    if (testedMedia.LBA48Sectors * testedMedia.BlockSize / 1024 / 1024 > 1000000)
-                        mediaOneValue
-                            .Add(
-                                $"Medium size in 48-bit LBA mode: {testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double) (testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
-                    else if (testedMedia.LBA48Sectors * testedMedia.BlockSize / 1024 / 1024 > 1000)
-                        mediaOneValue
-                            .Add(
-                                $"Medium size in 48-bit LBA mode: {testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double) (testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
+                    if(testedMedia.LBA48Sectors * testedMedia.BlockSize / 1024 / 1024 > 1000000)
+                        mediaOneValue.
+                            Add($"Medium size in 48-bit LBA mode: {testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                    else if(testedMedia.LBA48Sectors * testedMedia.BlockSize / 1024 / 1024 > 1000)
+                        mediaOneValue.
+                            Add($"Medium size in 48-bit LBA mode: {testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
                     else
-                        mediaOneValue
-                            .Add(
-                                $"Medium size in 48-bit LBA mode: {testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double) (testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+                        mediaOneValue.
+                            Add($"Medium size in 48-bit LBA mode: {testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
                 }
 
-                if (testedMedia.NominalRotationRate != null && testedMedia.NominalRotationRate != 0x0000 &&
-                    testedMedia.NominalRotationRate != 0xFFFF)
-                    mediaOneValue.Add(testedMedia.NominalRotationRate == 0x0001
-                        ? "Medium does not rotate."
-                        : $"Medium rotates at {testedMedia.NominalRotationRate} rpm");
+                if(testedMedia.NominalRotationRate != null   &&
+                   testedMedia.NominalRotationRate != 0x0000 &&
+                   testedMedia.NominalRotationRate != 0xFFFF)
+                    mediaOneValue.Add(testedMedia.NominalRotationRate == 0x0001 ? "Medium does not rotate."
+                                          : $"Medium rotates at {testedMedia.NominalRotationRate} rpm");
 
-                if (testedMedia.BlockSize != null &&
-                    testedMedia.PhysicalBlockSize != null &&
-                    testedMedia.BlockSize.Value != testedMedia.PhysicalBlockSize.Value &&
-                    (testedMedia.LogicalAlignment & 0x8000) == 0x0000 &&
-                    (testedMedia.LogicalAlignment & 0x4000) == 0x4000)
-                    mediaOneValue
-                        .Add(
-                            $"Logical sector starts at offset {testedMedia.LogicalAlignment & 0x3FFF} from physical sector");
+                if(testedMedia.BlockSize                   != null                                &&
+                   testedMedia.PhysicalBlockSize           != null                                &&
+                   testedMedia.BlockSize.Value             != testedMedia.PhysicalBlockSize.Value &&
+                   (testedMedia.LogicalAlignment & 0x8000) == 0x0000                              &&
+                   (testedMedia.LogicalAlignment & 0x4000) == 0x4000)
+                    mediaOneValue.
+                        Add($"Logical sector starts at offset {testedMedia.LogicalAlignment & 0x3FFF} from physical sector");
 
-                if (testedMedia.SupportsReadSectors == true)
+                if(testedMedia.SupportsReadSectors == true)
                     mediaOneValue.Add("Device can use the READ SECTOR(S) command in CHS mode with this medium");
-                if (testedMedia.SupportsReadRetry == true)
+
+                if(testedMedia.SupportsReadRetry == true)
                     mediaOneValue.Add("Device can use the READ SECTOR(S) RETRY command in CHS mode with this medium");
-                if (testedMedia.SupportsReadDma == true)
+
+                if(testedMedia.SupportsReadDma == true)
                     mediaOneValue.Add("Device can use the READ DMA command in CHS mode with this medium");
-                if (testedMedia.SupportsReadDmaRetry == true)
+
+                if(testedMedia.SupportsReadDmaRetry == true)
                     mediaOneValue.Add("Device can use the READ DMA RETRY command in CHS mode with this medium");
-                if (testedMedia.SupportsReadLong == true)
+
+                if(testedMedia.SupportsReadLong == true)
                     mediaOneValue.Add("Device can use the READ LONG command in CHS mode with this medium");
-                if (testedMedia.SupportsReadLongRetry == true)
+
+                if(testedMedia.SupportsReadLongRetry == true)
                     mediaOneValue.Add("Device can use the READ LONG RETRY command in CHS mode with this medium");
 
-                if (testedMedia.SupportsReadLba == true)
+                if(testedMedia.SupportsReadLba == true)
                     mediaOneValue.Add("Device can use the READ SECTOR(S) command in 28-bit LBA mode with this medium");
-                if (testedMedia.SupportsReadRetryLba == true)
-                    mediaOneValue
-                        .Add("Device can use the READ SECTOR(S) RETRY command in 28-bit LBA mode with this medium");
-                if (testedMedia.SupportsReadDmaLba == true)
+
+                if(testedMedia.SupportsReadRetryLba == true)
+                    mediaOneValue.
+                        Add("Device can use the READ SECTOR(S) RETRY command in 28-bit LBA mode with this medium");
+
+                if(testedMedia.SupportsReadDmaLba == true)
                     mediaOneValue.Add("Device can use the READ DMA command in 28-bit LBA mode with this medium");
-                if (testedMedia.SupportsReadDmaRetryLba == true)
+
+                if(testedMedia.SupportsReadDmaRetryLba == true)
                     mediaOneValue.Add("Device can use the READ DMA RETRY command in 28-bit LBA mode with this medium");
-                if (testedMedia.SupportsReadLongLba == true)
+
+                if(testedMedia.SupportsReadLongLba == true)
                     mediaOneValue.Add("Device can use the READ LONG command in 28-bit LBA mode with this medium");
-                if (testedMedia.SupportsReadLongRetryLba == true)
+
+                if(testedMedia.SupportsReadLongRetryLba == true)
                     mediaOneValue.Add("Device can use the READ LONG RETRY command in 28-bit LBA mode with this medium");
 
-                if (testedMedia.SupportsReadLba48 == true)
+                if(testedMedia.SupportsReadLba48 == true)
                     mediaOneValue.Add("Device can use the READ SECTOR(S) command in 48-bit LBA mode with this medium");
-                if (testedMedia.SupportsReadDmaLba48 == true)
+
+                if(testedMedia.SupportsReadDmaLba48 == true)
                     mediaOneValue.Add("Device can use the READ DMA command in 48-bit LBA mode with this medium");
 
-                if (testedMedia.SupportsSeek == true)
+                if(testedMedia.SupportsSeek == true)
                     mediaOneValue.Add("Device can use the SEEK command in CHS mode with this medium");
-                if (testedMedia.SupportsSeekLba == true)
+
+                if(testedMedia.SupportsSeekLba == true)
                     mediaOneValue.Add("Device can use the SEEK command in 28-bit LBA mode with this medium");
 
-                if (testedMedia.SupportsReadCapacity == true)
+                if(testedMedia.SupportsReadCapacity == true)
                     mediaOneValue.Add("Device can use the READ CAPACITY (10) command with this medium");
-                if (testedMedia.SupportsReadCapacity16 == true)
+
+                if(testedMedia.SupportsReadCapacity16 == true)
                     mediaOneValue.Add("Device can use the READ CAPACITY (16) command with this medium");
-                if (testedMedia.SupportsRead6 == true)
+
+                if(testedMedia.SupportsRead6 == true)
                     mediaOneValue.Add("Device can use the READ (6) command with this medium");
-                if (testedMedia.SupportsRead10 == true)
+
+                if(testedMedia.SupportsRead10 == true)
                     mediaOneValue.Add("Device can use the READ (10) command with this medium");
-                if (testedMedia.SupportsRead12 == true)
+
+                if(testedMedia.SupportsRead12 == true)
                     mediaOneValue.Add("Device can use the READ (12) command with this medium");
-                if (testedMedia.SupportsRead16 == true)
+
+                if(testedMedia.SupportsRead16 == true)
                     mediaOneValue.Add("Device can use the READ (16) command with this medium");
-                if (testedMedia.SupportsReadLong == true)
+
+                if(testedMedia.SupportsReadLong == true)
                     mediaOneValue.Add("Device can use the READ LONG (10) command with this medium");
-                if (testedMedia.SupportsReadLong16 == true)
+
+                if(testedMedia.SupportsReadLong16 == true)
                     mediaOneValue.Add("Device can use the READ LONG (16) command with this medium");
 
-                if (testedMedia.SupportsReadCd == true)
+                if(testedMedia.SupportsReadCd == true)
                     mediaOneValue.Add("Device can use the READ CD command with LBA addressing with this medium");
-                if (testedMedia.SupportsReadCdMsf == true)
-                    mediaOneValue.Add("Device can use the READ CD command with MM:SS:FF addressing with this medium");
-                if (testedMedia.SupportsReadCdRaw == true)
-                    mediaOneValue
-                        .Add(
-                            "Device can use the READ CD command with LBA addressing with this medium to read raw sector");
-                if (testedMedia.SupportsReadCdMsfRaw == true)
-                    mediaOneValue
-                        .Add(
-                            "Device can use the READ CD command with MM:SS:FF addressing with this medium read raw sector");
 
-                if (testedMedia.SupportsHLDTSTReadRawDVD == true)
+                if(testedMedia.SupportsReadCdMsf == true)
+                    mediaOneValue.Add("Device can use the READ CD command with MM:SS:FF addressing with this medium");
+
+                if(testedMedia.SupportsReadCdRaw == true)
+                    mediaOneValue.
+                        Add("Device can use the READ CD command with LBA addressing with this medium to read raw sector");
+
+                if(testedMedia.SupportsReadCdMsfRaw == true)
+                    mediaOneValue.
+                        Add("Device can use the READ CD command with MM:SS:FF addressing with this medium read raw sector");
+
+                if(testedMedia.SupportsHLDTSTReadRawDVD == true)
                     mediaOneValue.Add("Device can use the HL-DT-ST vendor READ DVD (RAW) command with this medium");
-                if (testedMedia.SupportsNECReadCDDA == true)
+
+                if(testedMedia.SupportsNECReadCDDA == true)
                     mediaOneValue.Add("Device can use the NEC vendor READ CD-DA command with this medium");
-                if (testedMedia.SupportsPioneerReadCDDA == true)
+
+                if(testedMedia.SupportsPioneerReadCDDA == true)
                     mediaOneValue.Add("Device can use the PIONEER vendor READ CD-DA command with this medium");
-                if (testedMedia.SupportsPioneerReadCDDAMSF == true)
+
+                if(testedMedia.SupportsPioneerReadCDDAMSF == true)
                     mediaOneValue.Add("Device can use the PIONEER vendor READ CD-DA MSF command with this medium");
-                if (testedMedia.SupportsPlextorReadCDDA == true)
+
+                if(testedMedia.SupportsPlextorReadCDDA == true)
                     mediaOneValue.Add("Device can use the PLEXTOR vendor READ CD-DA command with this medium");
-                if (testedMedia.SupportsPlextorReadRawDVD == true)
+
+                if(testedMedia.SupportsPlextorReadRawDVD == true)
                     mediaOneValue.Add("Device can use the PLEXOR vendor READ DVD (RAW) command with this medium");
 
-                if (testedMedia.CanReadAACS == true)
+                if(testedMedia.CanReadAACS == true)
                     mediaOneValue.Add("Device can read the Advanced Access Content System from this medium");
-                if (testedMedia.CanReadADIP == true)
+
+                if(testedMedia.CanReadADIP == true)
                     mediaOneValue.Add("Device can read the DVD ADress-In-Pregroove from this medium");
-                if (testedMedia.CanReadATIP == true)
+
+                if(testedMedia.CanReadATIP == true)
                     mediaOneValue.Add("Device can read the CD Absolute-Time-In-Pregroove from this medium");
-                if (testedMedia.CanReadBCA == true)
+
+                if(testedMedia.CanReadBCA == true)
                     mediaOneValue.Add("Device can read the Burst Cutting Area from this medium");
-                if (testedMedia.CanReadC2Pointers == true)
+
+                if(testedMedia.CanReadC2Pointers == true)
                     mediaOneValue.Add("Device can report the C2 pointers when reading from this medium");
-                if (testedMedia.CanReadCMI == true)
+
+                if(testedMedia.CanReadCMI == true)
                     mediaOneValue.Add("Device can read the Copyright Management Information from this medium");
-                if (testedMedia.CanReadCorrectedSubchannel == true)
+
+                if(testedMedia.CanReadCorrectedSubchannel == true)
                     mediaOneValue.Add("Device can correct subchannels when reading from this medium");
-                if (testedMedia.CanReadCorrectedSubchannelWithC2 == true)
-                    mediaOneValue
-                        .Add("Device can correct subchannels and report the C2 pointers when reading from this medium");
-                if (testedMedia.CanReadDCB == true)
+
+                if(testedMedia.CanReadCorrectedSubchannelWithC2 == true)
+                    mediaOneValue.
+                        Add("Device can correct subchannels and report the C2 pointers when reading from this medium");
+
+                if(testedMedia.CanReadDCB == true)
                     mediaOneValue.Add("Device can read the Disc Control Blocks from this medium");
-                if (testedMedia.CanReadDDS == true)
+
+                if(testedMedia.CanReadDDS == true)
                     mediaOneValue.Add("Device can read the Disc Definition Structure from this medium");
-                if (testedMedia.CanReadDMI == true)
+
+                if(testedMedia.CanReadDMI == true)
                     mediaOneValue.Add("Device can read the Disc Manufacurer Information from this medium");
-                if (testedMedia.CanReadDiscInformation == true)
+
+                if(testedMedia.CanReadDiscInformation == true)
                     mediaOneValue.Add("Device can read the Disc Information from this medium");
-                if (testedMedia.CanReadFullTOC == true)
+
+                if(testedMedia.CanReadFullTOC == true)
                     mediaOneValue.Add("Device can read the Table of Contents from this medium, without processing it");
-                if (testedMedia.CanReadHDCMI == true)
+
+                if(testedMedia.CanReadHDCMI == true)
                     mediaOneValue.Add("Device can read the HD DVD Copyright Management Information from this medium");
-                if (testedMedia.CanReadLayerCapacity == true)
+
+                if(testedMedia.CanReadLayerCapacity == true)
                     mediaOneValue.Add("Device can read the layer capacity from this medium");
-                if (testedMedia.CanReadFirstTrackPreGap == true)
+
+                if(testedMedia.CanReadFirstTrackPreGap == true)
                     mediaOneValue.Add("Device can read the first track's pregap data");
-                if (testedMedia.CanReadLeadIn == true)
+
+                if(testedMedia.CanReadLeadIn == true)
                     mediaOneValue.Add("Device can read the Lead-In from this medium");
-                if (testedMedia.CanReadLeadOut == true)
+
+                if(testedMedia.CanReadLeadOut == true)
                     mediaOneValue.Add("Device can read the Lead-Out from this medium");
-                if (testedMedia.CanReadMediaID == true)
+
+                if(testedMedia.CanReadMediaID == true)
                     mediaOneValue.Add("Device can read the Media ID from this medium");
-                if (testedMedia.CanReadMediaSerial == true)
+
+                if(testedMedia.CanReadMediaSerial == true)
                     mediaOneValue.Add("Device can read the Media Serial Number from this medium");
-                if (testedMedia.CanReadPAC == true) mediaOneValue.Add("Device can read the PAC from this medium");
-                if (testedMedia.CanReadPFI == true)
+
+                if(testedMedia.CanReadPAC == true)
+                    mediaOneValue.Add("Device can read the PAC from this medium");
+
+                if(testedMedia.CanReadPFI == true)
                     mediaOneValue.Add("Device can read the Physical Format Information from this medium");
-                if (testedMedia.CanReadPMA == true)
+
+                if(testedMedia.CanReadPMA == true)
                     mediaOneValue.Add("Device can read the Power Management Area from this medium");
-                if (testedMedia.CanReadPQSubchannel == true)
+
+                if(testedMedia.CanReadPQSubchannel == true)
                     mediaOneValue.Add("Device can read the P to Q subchannels from this medium");
-                if (testedMedia.CanReadPQSubchannelWithC2 == true)
-                    mediaOneValue
-                        .Add("Device can read the P to Q subchannels from this medium reporting the C2 pointers");
-                if (testedMedia.CanReadPRI == true)
+
+                if(testedMedia.CanReadPQSubchannelWithC2 == true)
+                    mediaOneValue.
+                        Add("Device can read the P to Q subchannels from this medium reporting the C2 pointers");
+
+                if(testedMedia.CanReadPRI == true)
                     mediaOneValue.Add("Device can read the Pre-Recorded Information from this medium");
-                if (testedMedia.CanReadRWSubchannel == true)
+
+                if(testedMedia.CanReadRWSubchannel == true)
                     mediaOneValue.Add("Device can read the R to W subchannels from this medium");
-                if (testedMedia.CanReadRWSubchannelWithC2 == true)
-                    mediaOneValue
-                        .Add("Device can read the R to W subchannels from this medium reporting the C2 pointers");
-                if (testedMedia.CanReadRecordablePFI == true)
+
+                if(testedMedia.CanReadRWSubchannelWithC2 == true)
+                    mediaOneValue.
+                        Add("Device can read the R to W subchannels from this medium reporting the C2 pointers");
+
+                if(testedMedia.CanReadRecordablePFI == true)
                     mediaOneValue.Add("Device can read the Physical Format Information from Lead-In from this medium");
-                if (testedMedia.CanReadSpareAreaInformation == true)
+
+                if(testedMedia.CanReadSpareAreaInformation == true)
                     mediaOneValue.Add("Device can read the Spare Area Information from this medium");
-                if (testedMedia.CanReadTOC == true)
+
+                if(testedMedia.CanReadTOC == true)
                     mediaOneValue.Add("Device can read the Table of Contents from this medium");
 
                 mediaOneValue.Add("");

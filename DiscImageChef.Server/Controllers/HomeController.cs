@@ -41,21 +41,18 @@ namespace DiscImageChef.Server.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IWebHostEnvironment _environment;
+        readonly IWebHostEnvironment _environment;
 
-        public HomeController(IWebHostEnvironment environment)
-        {
-            _environment = environment;
-        }
+        public HomeController(IWebHostEnvironment environment) => _environment = environment;
 
-        [Route("")]
-        [Route("README")]
+        [Route(""), Route("README")]
         public ActionResult Index()
         {
             var sr =
                 new StreamReader(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
-                    "docs", "README.md"));
-            var mdcontent = sr.ReadToEnd();
+                                              "docs", "README.md"));
+
+            string mdcontent = sr.ReadToEnd();
             sr.Close();
 
             mdcontent = mdcontent.Replace(".md)", ")");
@@ -72,8 +69,9 @@ namespace DiscImageChef.Server.Controllers
         {
             var sr =
                 new StreamReader(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
-                    "docs", "Changelog.md"));
-            var mdcontent = sr.ReadToEnd();
+                                              "docs", "Changelog.md"));
+
+            string mdcontent = sr.ReadToEnd();
             sr.Close();
 
             mdcontent = mdcontent.Replace(".md)", ")");
@@ -90,8 +88,9 @@ namespace DiscImageChef.Server.Controllers
         {
             var sr =
                 new StreamReader(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
-                    "docs", "CODE_OF_CONDUCT.md"));
-            var mdcontent = sr.ReadToEnd();
+                                              "docs", "CODE_OF_CONDUCT.md"));
+
+            string mdcontent = sr.ReadToEnd();
             sr.Close();
 
             mdcontent = mdcontent.Replace(".md)", ")").Replace("(.github/", "(");
@@ -108,8 +107,9 @@ namespace DiscImageChef.Server.Controllers
         {
             var sr =
                 new StreamReader(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
-                    "docs", "PULL_REQUEST_TEMPLATE.md"));
-            var mdcontent = sr.ReadToEnd();
+                                              "docs", "PULL_REQUEST_TEMPLATE.md"));
+
+            string mdcontent = sr.ReadToEnd();
             sr.Close();
 
             mdcontent = mdcontent.Replace(".md)", ")").Replace("(.github/", "(");
@@ -126,8 +126,9 @@ namespace DiscImageChef.Server.Controllers
         {
             var sr =
                 new StreamReader(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
-                    "docs", "ISSUE_TEMPLATE.md"));
-            var mdcontent = sr.ReadToEnd();
+                                              "docs", "ISSUE_TEMPLATE.md"));
+
+            string mdcontent = sr.ReadToEnd();
             sr.Close();
 
             mdcontent = mdcontent.Replace(".md)", ")").Replace("(.github/", "(");
@@ -144,8 +145,9 @@ namespace DiscImageChef.Server.Controllers
         {
             var sr =
                 new StreamReader(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
-                    "docs", "CONTRIBUTING.md"));
-            var mdcontent = sr.ReadToEnd();
+                                              "docs", "CONTRIBUTING.md"));
+
+            string mdcontent = sr.ReadToEnd();
             sr.Close();
 
             mdcontent = mdcontent.Replace(".md)", ")").Replace("(.github/", "(");
@@ -162,8 +164,9 @@ namespace DiscImageChef.Server.Controllers
         {
             var sr =
                 new StreamReader(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
-                    "docs", "DONATING.md"));
-            var mdcontent = sr.ReadToEnd();
+                                              "docs", "DONATING.md"));
+
+            string mdcontent = sr.ReadToEnd();
             sr.Close();
 
             mdcontent = mdcontent.Replace(".md)", ")");
@@ -180,8 +183,9 @@ namespace DiscImageChef.Server.Controllers
         {
             var sr =
                 new StreamReader(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
-                    "docs", "TODO.md"));
-            var mdcontent = sr.ReadToEnd();
+                                              "docs", "TODO.md"));
+
+            string mdcontent = sr.ReadToEnd();
             sr.Close();
 
             mdcontent = mdcontent.Replace(".md)", ")");
