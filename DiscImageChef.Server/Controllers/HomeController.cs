@@ -33,23 +33,27 @@
 using System;
 using System.IO;
 using System.Reflection;
-using System.Web.Hosting;
-using System.Web.Mvc;
 using Markdig;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DiscImageChef.Server.Controllers
 {
-    [RoutePrefix("Home")]
     public class HomeController : Controller
     {
+        private IWebHostEnvironment _environment;
+
+        public HomeController(IWebHostEnvironment environment)
+        {
+            _environment = environment;
+        }
+
         [Route("")]
-        [Route("~/")]
         [Route("README")]
-        [Route("~/README")]
         public ActionResult Index()
         {
             StreamReader sr =
-                new StreamReader(Path.Combine(HostingEnvironment.MapPath("~") ?? throw new InvalidOperationException(),
+                new StreamReader(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
                                               "docs", "README.md"));
             string mdcontent = sr.ReadToEnd();
             sr.Close();
@@ -64,11 +68,10 @@ namespace DiscImageChef.Server.Controllers
         }
 
         [Route("Changelog")]
-        [Route("~/Changelog")]
         public ActionResult Changelog()
         {
             StreamReader sr =
-                new StreamReader(Path.Combine(HostingEnvironment.MapPath("~") ?? throw new InvalidOperationException(),
+                new StreamReader(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
                                               "docs", "Changelog.md"));
             string mdcontent = sr.ReadToEnd();
             sr.Close();
@@ -83,11 +86,10 @@ namespace DiscImageChef.Server.Controllers
         }
 
         [Route("CODE_OF_CONDUCT")]
-        [Route("~/CODE_OF_CONDUCT")]
         public ActionResult CODE_OF_CONDUCT()
         {
             StreamReader sr =
-                new StreamReader(Path.Combine(HostingEnvironment.MapPath("~") ?? throw new InvalidOperationException(),
+                new StreamReader(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
                                               "docs", "CODE_OF_CONDUCT.md"));
             string mdcontent = sr.ReadToEnd();
             sr.Close();
@@ -102,11 +104,10 @@ namespace DiscImageChef.Server.Controllers
         }
 
         [Route("PULL_REQUEST_TEMPLATE")]
-        [Route("~/PULL_REQUEST_TEMPLATE")]
         public ActionResult PULL_REQUEST_TEMPLATE()
         {
             StreamReader sr =
-                new StreamReader(Path.Combine(HostingEnvironment.MapPath("~") ?? throw new InvalidOperationException(),
+                new StreamReader(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
                                               "docs", "PULL_REQUEST_TEMPLATE.md"));
             string mdcontent = sr.ReadToEnd();
             sr.Close();
@@ -121,11 +122,10 @@ namespace DiscImageChef.Server.Controllers
         }
 
         [Route("ISSUE_TEMPLATE")]
-        [Route("~/ISSUE_TEMPLATE")]
         public ActionResult ISSUE_TEMPLATE()
         {
             StreamReader sr =
-                new StreamReader(Path.Combine(HostingEnvironment.MapPath("~") ?? throw new InvalidOperationException(),
+                new StreamReader(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
                                               "docs", "ISSUE_TEMPLATE.md"));
             string mdcontent = sr.ReadToEnd();
             sr.Close();
@@ -140,11 +140,10 @@ namespace DiscImageChef.Server.Controllers
         }
 
         [Route("CONTRIBUTING")]
-        [Route("~/CONTRIBUTING")]
         public ActionResult CONTRIBUTING()
         {
             StreamReader sr =
-                new StreamReader(Path.Combine(HostingEnvironment.MapPath("~") ?? throw new InvalidOperationException(),
+                new StreamReader(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
                                               "docs", "CONTRIBUTING.md"));
             string mdcontent = sr.ReadToEnd();
             sr.Close();
@@ -159,11 +158,10 @@ namespace DiscImageChef.Server.Controllers
         }
 
         [Route("DONATING")]
-        [Route("~/DONATING")]
         public ActionResult DONATING()
         {
             StreamReader sr =
-                new StreamReader(Path.Combine(HostingEnvironment.MapPath("~") ?? throw new InvalidOperationException(),
+                new StreamReader(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
                                               "docs", "DONATING.md"));
             string mdcontent = sr.ReadToEnd();
             sr.Close();
@@ -178,11 +176,10 @@ namespace DiscImageChef.Server.Controllers
         }
 
         [Route("TODO")]
-        [Route("~/TODO")]
         public ActionResult TODO()
         {
             StreamReader sr =
-                new StreamReader(Path.Combine(HostingEnvironment.MapPath("~") ?? throw new InvalidOperationException(),
+                new StreamReader(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
                                               "docs", "TODO.md"));
             string mdcontent = sr.ReadToEnd();
             sr.Close();

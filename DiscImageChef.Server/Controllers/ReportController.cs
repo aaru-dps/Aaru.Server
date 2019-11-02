@@ -33,18 +33,25 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
-using System.Web.Routing;
 using DiscImageChef.CommonTypes.Metadata;
 using DiscImageChef.Decoders.PCMCIA;
 using DiscImageChef.Decoders.SCSI;
 using DiscImageChef.Server.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Tuple = DiscImageChef.Decoders.PCMCIA.Tuple;
 
 namespace DiscImageChef.Server.Controllers
 {
     public class ReportController : Controller
     {
+        private DicServerContext _ctx;
+
+        public ReportController(DicServerContext context)
+        {
+            _ctx = context;
+        }
+
         public ActionResult Index() => RedirectToAction("View", "Report", new RouteValueDictionary {{"id", 1}});
 
         public ActionResult View(int? id)
@@ -53,8 +60,7 @@ namespace DiscImageChef.Server.Controllers
 
             try
             {
-                DicServerContext ctx    = new DicServerContext();
-                Device           report = ctx.Devices.FirstOrDefault(d => d.Id == id);
+                Device           report = _ctx.Devices.FirstOrDefault(d => d.Id == id);
 
                 if(report is null) return Content("Cannot find requested report");
 
@@ -68,13 +74,13 @@ namespace DiscImageChef.Server.Controllers
                     string usbProductDescription = null;
 
                     UsbProduct dbProduct =
-                        ctx.UsbProducts.FirstOrDefault(p => p.ProductId       == report.USB.ProductID &&
+                        _ctx.UsbProducts.FirstOrDefault(p => p.ProductId       == report.USB.ProductID &&
                                                             p.Vendor          != null                 &&
                                                             p.Vendor.VendorId == report.USB.VendorID);
 
                     if(dbProduct is null)
                     {
-                        UsbVendor dbVendor = ctx.UsbVendors.FirstOrDefault(v => v.VendorId == report.USB.VendorID);
+                        UsbVendor dbVendor = _ctx.UsbVendors.FirstOrDefault(v => v.VendorId == report.USB.VendorID);
 
                         if(!(dbVendor is null)) usbVendorDescription = dbVendor.Vendor;
                     }

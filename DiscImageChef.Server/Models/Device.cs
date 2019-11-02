@@ -64,7 +64,6 @@ namespace DiscImageChef.Server.Models
         }
 
         public DateTime AddedWhen { get; set; }
-        [Index]
         public DateTime? ModifiedWhen { get;             set; }
         public virtual CompactDiscOffset CdOffset { get; set; }
         [DefaultValue(0)]

@@ -51,11 +51,9 @@ namespace DiscImageChef.Server.Models
 
         [Key]
         public int Id { get; set; }
-        [Index(IsUnique = true)]
         public int VendorId { get;       set; }
         public string   Vendor    { get; set; }
         public DateTime AddedWhen { get; set; }
-        [Index]
         public DateTime ModifiedWhen { get; set; }
 
         [JsonIgnore]

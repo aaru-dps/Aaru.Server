@@ -38,46 +38,57 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
-using System.Web.Http;
 using System.Xml.Serialization;
 using DiscImageChef.CommonTypes.Metadata;
 using DiscImageChef.Server.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using OperatingSystem = DiscImageChef.Server.Models.OperatingSystem;
 using Version = DiscImageChef.Server.Models.Version;
 
 namespace DiscImageChef.Server.Controllers
 {
-    public class UploadStatsController : ApiController
+    public class UploadStatsController : Controller
     {
+        DicServerContext _ctx;
+        private IWebHostEnvironment _environment;
+
+        public UploadStatsController(IWebHostEnvironment environment, DicServerContext ctx)
+        {
+            _environment = environment;
+            _ctx = ctx;
+        }
         /// <summary>
         ///     Receives statistics from DiscImageChef.Core, processes them and adds them to a server-side global statistics XML
         /// </summary>
         /// <returns>HTTP response</returns>
         [Route("api/uploadstats")]
         [HttpPost]
-        public HttpResponseMessage UploadStats()
+        public async Task<IActionResult> UploadStats()
         {
-            HttpResponseMessage response = new HttpResponseMessage {StatusCode = HttpStatusCode.OK};
+            ContentResult response = new ContentResult {StatusCode = (int)HttpStatusCode.OK, ContentType = "text/plain"};
 
             try
             {
                 Stats       newStats = new Stats();
-                HttpRequest request  = HttpContext.Current.Request;
+                HttpRequest request  = HttpContext.Request;
 
                 XmlSerializer xs = new XmlSerializer(newStats.GetType());
-                newStats = (Stats)xs.Deserialize(request.InputStream);
+                newStats = (Stats) xs.Deserialize(new StringReader(await new StreamReader(request.Body).ReadToEndAsync()));
 
                 if(newStats == null)
                 {
-                    response.Content = new StringContent("notstats", Encoding.UTF8, "text/plain");
+                    response.Content = "notstats";
                     return response;
                 }
 
                 StatsConverter.Convert(newStats);
 
-                response.Content = new StringContent("ok", Encoding.UTF8, "text/plain");
+                response.Content = "ok";
                 return response;
             }
             catch(Exception ex)
@@ -85,7 +96,7 @@ namespace DiscImageChef.Server.Controllers
                 #if DEBUG
                 if(Debugger.IsAttached) throw;
                 #endif
-                response.Content = new StringContent("error", Encoding.UTF8, "text/plain");
+                response.Content = "error";
                 return response;
             }
         }
@@ -96,76 +107,75 @@ namespace DiscImageChef.Server.Controllers
         /// <returns>HTTP response</returns>
         [Route("api/uploadstatsv2")]
         [HttpPost]
-        public HttpResponseMessage UploadStatsV2()
+        public async Task<IActionResult> UploadStatsV2()
         {
-            HttpResponseMessage response = new HttpResponseMessage {StatusCode = HttpStatusCode.OK};
+            ContentResult response = new ContentResult {StatusCode = (int)HttpStatusCode.OK, ContentType = "text/plain"};
 
             try
             {
-                HttpRequest request = HttpContext.Current.Request;
+                HttpRequest request = HttpContext.Request;
 
-                StreamReader sr       = new StreamReader(request.InputStream);
-                StatsDto     newstats = JsonConvert.DeserializeObject<StatsDto>(sr.ReadToEnd());
+                StreamReader sr       = new StreamReader(request.Body);
+                var statsString = await sr.ReadToEndAsync();
+                StatsDto     newstats = JsonConvert.DeserializeObject<StatsDto>(statsString);
 
                 if(newstats == null)
                 {
-                    response.Content = new StringContent("notstats", Encoding.UTF8, "text/plain");
+                    response.Content = "notstats";
                     return response;
                 }
-
-                DicServerContext ctx = new DicServerContext();
 
                 if(newstats.Commands != null)
                     foreach(NameValueStats nvs in newstats.Commands)
                     {
-                        Command existing = ctx.Commands.FirstOrDefault(c => c.Name == nvs.name);
+                        Command existing = _ctx.Commands.FirstOrDefault(c => c.Name == nvs.name);
 
-                        if(existing == null) ctx.Commands.Add(new Command {Name = nvs.name, Count = nvs.Value});
+                        if(existing == null) _ctx.Commands.Add(new Command {Name = nvs.name, Count = nvs.Value});
                         else existing.Count += nvs.Value;
                     }
 
                 if(newstats.Versions != null)
                     foreach(NameValueStats nvs in newstats.Versions)
                     {
-                        Version existing = ctx.Versions.FirstOrDefault(c => c.Value == nvs.name);
+                        Version existing = _ctx.Versions.FirstOrDefault(c => c.Value == nvs.name);
 
-                        if(existing == null) ctx.Versions.Add(new Version {Value = nvs.name, Count = nvs.Value});
+                        if(existing == null) _ctx.Versions.Add(new Version {Value = nvs.name, Count = nvs.Value});
                         else existing.Count += nvs.Value;
                     }
 
                 if(newstats.Filesystems != null)
                     foreach(NameValueStats nvs in newstats.Filesystems)
                     {
-                        Filesystem existing = ctx.Filesystems.FirstOrDefault(c => c.Name == nvs.name);
+                        Filesystem existing = _ctx.Filesystems.FirstOrDefault(c => c.Name == nvs.name);
 
-                        if(existing == null) ctx.Filesystems.Add(new Filesystem {Name = nvs.name, Count = nvs.Value});
+                        if(existing == null) _ctx.Filesystems.Add(new Filesystem {Name = nvs.name, Count = nvs.Value});
                         else existing.Count += nvs.Value;
                     }
 
                 if(newstats.Partitions != null)
                     foreach(NameValueStats nvs in newstats.Partitions)
                     {
-                        Partition existing = ctx.Partitions.FirstOrDefault(c => c.Name == nvs.name);
+                        Partition existing = _ctx.Partitions.FirstOrDefault(c => c.Name == nvs.name);
 
-                        if(existing == null) ctx.Partitions.Add(new Partition {Name = nvs.name, Count = nvs.Value});
+                        if(existing == null) _ctx.Partitions.Add(new Partition {Name = nvs.name, Count = nvs.Value});
                         else existing.Count += nvs.Value;
                     }
 
                 if(newstats.MediaFormats != null)
                     foreach(NameValueStats nvs in newstats.MediaFormats)
                     {
-                        MediaFormat existing = ctx.MediaFormats.FirstOrDefault(c => c.Name == nvs.name);
+                        MediaFormat existing = _ctx.MediaFormats.FirstOrDefault(c => c.Name == nvs.name);
 
-                        if(existing == null) ctx.MediaFormats.Add(new MediaFormat {Name = nvs.name, Count = nvs.Value});
+                        if(existing == null) _ctx.MediaFormats.Add(new MediaFormat {Name = nvs.name, Count = nvs.Value});
                         else existing.Count += nvs.Value;
                     }
 
                 if(newstats.Filters != null)
                     foreach(NameValueStats nvs in newstats.Filters)
                     {
-                        Filter existing = ctx.Filters.FirstOrDefault(c => c.Name == nvs.name);
+                        Filter existing = _ctx.Filters.FirstOrDefault(c => c.Name == nvs.name);
 
-                        if(existing == null) ctx.Filters.Add(new Filter {Name = nvs.name, Count = nvs.Value});
+                        if(existing == null) _ctx.Filters.Add(new Filter {Name = nvs.name, Count = nvs.Value});
                         else existing.Count += nvs.Value;
                     }
 
@@ -173,11 +183,11 @@ namespace DiscImageChef.Server.Controllers
                     foreach(OsStats operatingSystem in newstats.OperatingSystems)
                     {
                         OperatingSystem existing =
-                            ctx.OperatingSystems.FirstOrDefault(c => c.Name    == operatingSystem.name &&
+                            _ctx.OperatingSystems.FirstOrDefault(c => c.Name    == operatingSystem.name &&
                                                                      c.Version == operatingSystem.version);
 
                         if(existing == null)
-                            ctx.OperatingSystems.Add(new OperatingSystem
+                            _ctx.OperatingSystems.Add(new OperatingSystem
                             {
                                 Name    = operatingSystem.name,
                                 Version = operatingSystem.version,
@@ -189,10 +199,10 @@ namespace DiscImageChef.Server.Controllers
                 if(newstats.Medias != null)
                     foreach(MediaStats media in newstats.Medias)
                     {
-                        Media existing = ctx.Medias.FirstOrDefault(c => c.Type == media.type && c.Real == media.real);
+                        Media existing = _ctx.Medias.FirstOrDefault(c => c.Type == media.type && c.Real == media.real);
 
                         if(existing == null)
-                            ctx.Medias.Add(new Media {Type = media.type, Real = media.real, Count = media.Value});
+                            _ctx.Medias.Add(new Media {Type = media.type, Real = media.real, Count = media.Value});
                         else existing.Count += media.Value;
                     }
 
@@ -200,13 +210,13 @@ namespace DiscImageChef.Server.Controllers
                     foreach(DeviceStats device in newstats.Devices)
                     {
                         DeviceStat existing =
-                            ctx.DeviceStats.FirstOrDefault(c => c.Bus          == device.Bus          &&
+                            _ctx.DeviceStats.FirstOrDefault(c => c.Bus          == device.Bus          &&
                                                                 c.Manufacturer == device.Manufacturer &&
                                                                 c.Model        == device.Model        &&
                                                                 c.Revision     == device.Revision);
 
                         if(existing == null)
-                            ctx.DeviceStats.Add(new DeviceStat
+                            _ctx.DeviceStats.Add(new DeviceStat
                             {
                                 Bus          = device.Bus,
                                 Manufacturer = device.Manufacturer,
@@ -215,9 +225,9 @@ namespace DiscImageChef.Server.Controllers
                             });
                     }
 
-                ctx.SaveChanges();
+                _ctx.SaveChanges();
 
-                response.Content = new StringContent("ok", Encoding.UTF8, "text/plain");
+                response.Content = "ok";
                 return response;
             }
             // ReSharper disable once RedundantCatchClause
@@ -226,7 +236,7 @@ namespace DiscImageChef.Server.Controllers
                 #if DEBUG
                 if(Debugger.IsAttached) throw;
                 #endif
-                response.Content = new StringContent("error", Encoding.UTF8, "text/plain");
+                response.Content = "error";
                 return response;
             }
         }

@@ -51,13 +51,10 @@ namespace DiscImageChef.Server.Models
 
         [Key]
         public int Id { get; set; }
-        [Index]
         public int ProductId { get;      set; }
         public string   Product   { get; set; }
         public DateTime AddedWhen { get; set; }
-        [Index]
         public DateTime ModifiedWhen { get; set; }
-        [Index]
         public int VendorId { get; set; }
         [JsonIgnore]
         public virtual UsbVendor Vendor { get; set; }

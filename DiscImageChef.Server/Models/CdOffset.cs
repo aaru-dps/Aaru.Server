@@ -63,7 +63,6 @@ namespace DiscImageChef.Server.Models
 
         public int      Id        { get; set; }
         public DateTime AddedWhen { get; set; }
-        [Index]
         public DateTime ModifiedWhen { get;               set; }
         public virtual ICollection<Device> Devices { get; set; }
     }

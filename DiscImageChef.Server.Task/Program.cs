@@ -31,14 +31,13 @@
 // ****************************************************************************/
 
 using System;
-using System.Data.Entity.Migrations;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-using DiscImageChef.Server.Migrations;
 using DiscImageChef.Server.Models;
 using HtmlAgilityPack;
+using Microsoft.EntityFrameworkCore;
 
 namespace DiscImageChef.Server.Task
 {
@@ -47,30 +46,29 @@ namespace DiscImageChef.Server.Task
         public static void Main(string[] args)
         {
             DateTime start, end;
-            Console.WriteLine("{0}: Migrating database to latest version...", DateTime.UtcNow);
-            start = DateTime.UtcNow;
-            Configuration migratorConfig = new Configuration();
-            DbMigrator    dbMigrator     = new DbMigrator(migratorConfig);
-            dbMigrator.Update();
-            end = DateTime.UtcNow;
-            Console.WriteLine("{0}: Took {1:F2} seconds", DateTime.UtcNow, (end - start).TotalSeconds);
 
             start = DateTime.UtcNow;
-            Console.WriteLine("{0}: Connecting to database...", DateTime.UtcNow);
+            System.Console.WriteLine("{0}: Connecting to database...", DateTime.UtcNow);
             DicServerContext ctx = new DicServerContext();
             end = DateTime.UtcNow;
-            Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
+            System.Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
+
+            System.Console.WriteLine("{0}: Migrating database to latest version...", DateTime.UtcNow);
+            start = DateTime.UtcNow;
+            ctx.Database.Migrate();
+            end = DateTime.UtcNow;
+            System.Console.WriteLine("{0}: Took {1:F2} seconds", DateTime.UtcNow, (end - start).TotalSeconds);
 
             WebClient client;
 
             try
             {
-                Console.WriteLine("{0}: Retrieving USB IDs from Linux USB...", DateTime.UtcNow);
+                System.Console.WriteLine("{0}: Retrieving USB IDs from Linux USB...", DateTime.UtcNow);
                 start  = DateTime.UtcNow;
                 client = new WebClient();
                 StringReader sr = new StringReader(client.DownloadString("http://www.linux-usb.org/usb.ids"));
                 end = DateTime.UtcNow;
-                Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
+                System.Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
 
                 UsbVendor vendor           = null;
                 int       newVendors       = 0;
@@ -80,16 +78,16 @@ namespace DiscImageChef.Server.Task
                 int       counter          = 0;
 
                 start = DateTime.UtcNow;
-                Console.WriteLine("{0}: Adding and updating database entries...", DateTime.UtcNow);
+                System.Console.WriteLine("{0}: Adding and updating database entries...", DateTime.UtcNow);
                 do
                 {
                     if(counter == 1000)
                     {
                         DateTime start2 = DateTime.UtcNow;
-                        Console.WriteLine("{0}: Saving changes", start2);
+                        System.Console.WriteLine("{0}: Saving changes", start2);
                         ctx.SaveChanges();
                         end = DateTime.UtcNow;
-                        Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start2).TotalSeconds);
+                        System.Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start2).TotalSeconds);
                         counter = 0;
                     }
 
@@ -118,7 +116,7 @@ namespace DiscImageChef.Server.Task
                         {
                             product = new UsbProduct(vendor, number, name);
                             ctx.UsbProducts.Add(product);
-                            Console.WriteLine("{0}: Will add product {1} with ID {2:X4} and vendor {3} ({4:X4})",
+                            System.Console.WriteLine("{0}: Will add product {1} with ID {2:X4} and vendor {3} ({4:X4})",
                                               DateTime.UtcNow, product.Product, product.ProductId,
                                               product.Vendor?.Vendor ?? "null", product.Vendor?.VendorId ?? 0);
                             newProducts++;
@@ -126,7 +124,7 @@ namespace DiscImageChef.Server.Task
                         }
                         else if(name != product.Product)
                         {
-                            Console
+                            System.Console
                                .WriteLine("{0}: Will modify product with ID {1:X4} and vendor {2} ({3:X4}) from \"{4}\" to \"{5}\"",
                                           DateTime.UtcNow, product.ProductId, product.Vendor?.Vendor ?? "null",
                                           product.Vendor?.VendorId                                   ?? 0,
@@ -153,14 +151,14 @@ namespace DiscImageChef.Server.Task
                     {
                         vendor = new UsbVendor(number, name);
                         ctx.UsbVendors.Add(vendor);
-                        Console.WriteLine("{0}: Will add vendor {1} with ID {2:X4}", DateTime.UtcNow, vendor.Vendor,
+                        System.Console.WriteLine("{0}: Will add vendor {1} with ID {2:X4}", DateTime.UtcNow, vendor.Vendor,
                                           vendor.VendorId);
                         newVendors++;
                         counter++;
                     }
                     else if(name != vendor.Vendor)
                     {
-                        Console.WriteLine("{0}: Will modify vendor with ID {1:X4} from \"{2}\" to \"{3}\"",
+                        System.Console.WriteLine("{0}: Will modify vendor with ID {1:X4} from \"{2}\" to \"{3}\"",
                                           DateTime.UtcNow, vendor.VendorId, vendor.Vendor, name);
                         vendor.Vendor       = name;
                         vendor.ModifiedWhen = DateTime.UtcNow;
@@ -171,68 +169,68 @@ namespace DiscImageChef.Server.Task
                 while(true);
 
                 end = DateTime.UtcNow;
-                Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
+                System.Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
 
-                Console.WriteLine("{0}: Saving database changes...", DateTime.UtcNow);
+                System.Console.WriteLine("{0}: Saving database changes...", DateTime.UtcNow);
                 start = DateTime.UtcNow;
                 ctx.SaveChanges();
                 end = DateTime.UtcNow;
-                Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
+                System.Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
 
-                Console.WriteLine("{0}: {1} vendors added.",     DateTime.UtcNow, newVendors);
-                Console.WriteLine("{0}: {1} products added.",    DateTime.UtcNow, newProducts);
-                Console.WriteLine("{0}: {1} vendors modified.",  DateTime.UtcNow, modifiedVendors);
-                Console.WriteLine("{0}: {1} products modified.", DateTime.UtcNow, modifiedProducts);
+                System.Console.WriteLine("{0}: {1} vendors added.",     DateTime.UtcNow, newVendors);
+                System.Console.WriteLine("{0}: {1} products added.",    DateTime.UtcNow, newProducts);
+                System.Console.WriteLine("{0}: {1} vendors modified.",  DateTime.UtcNow, modifiedVendors);
+                System.Console.WriteLine("{0}: {1} products modified.", DateTime.UtcNow, modifiedProducts);
 
-                Console.WriteLine("{0}: Looking up a vendor", DateTime.UtcNow);
+                System.Console.WriteLine("{0}: Looking up a vendor", DateTime.UtcNow);
                 start  = DateTime.UtcNow;
                 vendor = ctx.UsbVendors.FirstOrDefault(v => v.VendorId == 0x8086);
-                if(vendor is null) Console.WriteLine("{0}: Error, could not find vendor.", DateTime.UtcNow);
+                if(vendor is null) System.Console.WriteLine("{0}: Error, could not find vendor.", DateTime.UtcNow);
                 else
-                    Console.WriteLine("{0}: Found {1}.", DateTime.UtcNow,
+                    System.Console.WriteLine("{0}: Found {1}.", DateTime.UtcNow,
                                       vendor.Vendor);
                 end = DateTime.UtcNow;
-                Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
+                System.Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
 
-                Console.WriteLine("{0}: Looking up a product", DateTime.UtcNow);
+                System.Console.WriteLine("{0}: Looking up a product", DateTime.UtcNow);
                 start = DateTime.UtcNow;
                 UsbProduct prd =
                     ctx.UsbProducts.FirstOrDefault(p => p.ProductId == 0x0001 && p.Vendor.VendorId == 0x8086);
-                if(prd is null) Console.WriteLine("{0}: Error, could not find product.", DateTime.UtcNow);
-                else Console.WriteLine("{0}: Found {1}.",                                DateTime.UtcNow, prd.Product);
+                if(prd is null) System.Console.WriteLine("{0}: Error, could not find product.", DateTime.UtcNow);
+                else System.Console.WriteLine("{0}: Found {1}.",                                DateTime.UtcNow, prd.Product);
                 end = DateTime.UtcNow;
-                Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
+                System.Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
             }
             catch(Exception ex)
             {
                 #if DEBUG
                 if(Debugger.IsAttached) throw;
                 #endif
-                Console.WriteLine("{0}: Exception {1} filling USB IDs...", DateTime.UtcNow, ex);
+                System.Console.WriteLine("{0}: Exception {1} filling USB IDs...", DateTime.UtcNow, ex);
             }
 
-            Console.WriteLine("{0}: Fixing all devices without modification time...", DateTime.UtcNow);
+            System.Console.WriteLine("{0}: Fixing all devices without modification time...", DateTime.UtcNow);
             start = DateTime.UtcNow;
             foreach(Device device in ctx.Devices.Where(d => d.ModifiedWhen == null))
                 device.ModifiedWhen = device.AddedWhen;
             end = DateTime.UtcNow;
-            Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
+            System.Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
 
-            Console.WriteLine("{0}: Committing changes...", DateTime.UtcNow);
+            System.Console.WriteLine("{0}: Committing changes...", DateTime.UtcNow);
             start = DateTime.UtcNow;
             ctx.SaveChanges();
             end = DateTime.UtcNow;
-            Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
+            System.Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
 
             try
             {
-                Console.WriteLine("{0}: Retrieving CompactDisc read offsets from AccurateRip...", DateTime.UtcNow);
+                System.Console.WriteLine("{0}: Retrieving CompactDisc read offsets from AccurateRip...", DateTime.UtcNow);
                 start = DateTime.UtcNow;
 
                 client = new WebClient();
                 string html = client.DownloadString("http://www.accuraterip.com/driveoffsets.htm");
                 end = DateTime.UtcNow;
-                Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
+                System.Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
 
                 // The HTML is too malformed to process easily, so find start of table
                 html = "<html><body><table><tr>" +
@@ -247,7 +245,7 @@ namespace DiscImageChef.Server.Task
                 int addedOffsets    = 0;
                 int modifiedOffsets = 0;
 
-                Console.WriteLine("{0}: Processing offsets...", DateTime.UtcNow);
+                System.Console.WriteLine("{0}: Processing offsets...", DateTime.UtcNow);
                 start = DateTime.UtcNow;
                 foreach(HtmlNode row in firstTable.Descendants("tr"))
                 {
@@ -255,7 +253,7 @@ namespace DiscImageChef.Server.Task
 
                     if(columns.Length != 4)
                     {
-                        Console.WriteLine("{0}: Row does not have correct number of columns...", DateTime.UtcNow);
+                        System.Console.WriteLine("{0}: Row does not have correct number of columns...", DateTime.UtcNow);
                         continue;
                     }
 
@@ -268,28 +266,28 @@ namespace DiscImageChef.Server.Task
                     {
                         if(column0.ToLowerInvariant() != "cd drive")
                         {
-                            Console.WriteLine("{0}: Unexpected header \"{1}\" found...", DateTime.UtcNow,
+                            System.Console.WriteLine("{0}: Unexpected header \"{1}\" found...", DateTime.UtcNow,
                                               columns[0].InnerText);
                             break;
                         }
 
                         if(column1.ToLowerInvariant() != "correction offset")
                         {
-                            Console.WriteLine("{0}: Unexpected header \"{1}\" found...", DateTime.UtcNow,
+                            System.Console.WriteLine("{0}: Unexpected header \"{1}\" found...", DateTime.UtcNow,
                                               columns[1].InnerText);
                             break;
                         }
 
                         if(column2.ToLowerInvariant() != "submitted by")
                         {
-                            Console.WriteLine("{0}: Unexpected header \"{1}\" found...", DateTime.UtcNow,
+                            System.Console.WriteLine("{0}: Unexpected header \"{1}\" found...", DateTime.UtcNow,
                                               columns[2].InnerText);
                             break;
                         }
 
                         if(column3.ToLowerInvariant() != "percentage agree")
                         {
-                            Console.WriteLine("{0}: Unexpected header \"{1}\" found...", DateTime.UtcNow,
+                            System.Console.WriteLine("{0}: Unexpected header \"{1}\" found...", DateTime.UtcNow,
                                               columns[3].InnerText);
                             break;
                         }
@@ -412,23 +410,23 @@ namespace DiscImageChef.Server.Task
                 }
 
                 end = DateTime.UtcNow;
-                Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
+                System.Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
 
-                Console.WriteLine("{0}: Committing changes...", DateTime.UtcNow);
+                System.Console.WriteLine("{0}: Committing changes...", DateTime.UtcNow);
                 start = DateTime.UtcNow;
                 ctx.SaveChanges();
                 end = DateTime.UtcNow;
-                Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
+                System.Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
 
-                Console.WriteLine("{0}: Added {1} offsets",    end, addedOffsets);
-                Console.WriteLine("{0}: Modified {1} offsets", end, modifiedOffsets);
+                System.Console.WriteLine("{0}: Added {1} offsets",    end, addedOffsets);
+                System.Console.WriteLine("{0}: Modified {1} offsets", end, modifiedOffsets);
             }
             catch(Exception ex)
             {
                 #if DEBUG
                 if(Debugger.IsAttached) throw;
                 #endif
-                Console.WriteLine("{0}: Exception {1} filling CompactDisc read offsets...", DateTime.UtcNow, ex);
+                System.Console.WriteLine("{0}: Exception {1} filling CompactDisc read offsets...", DateTime.UtcNow, ex);
             }
         }
     }

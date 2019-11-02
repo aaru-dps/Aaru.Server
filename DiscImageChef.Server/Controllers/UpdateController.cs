@@ -37,35 +37,41 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Web.Http;
 using DiscImageChef.CommonTypes.Metadata;
 using DiscImageChef.Dto;
 using DiscImageChef.Server.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace DiscImageChef.Server.Controllers
 {
-    public class UpdateController : ApiController
+    public class UpdateController : Controller
     {
+        private DicServerContext _ctx;
+
+        public UpdateController(DicServerContext ctx)
+        {
+            _ctx = ctx;
+        }
+
         /// <summary>
         ///     Receives a report from DiscImageChef.Core, verifies it's in the correct format and stores it on the server
         /// </summary>
         /// <returns>HTTP response</returns>
         [Route("api/update")]
         [HttpGet]
-        public HttpResponseMessage UploadReport(long timestamp)
+        public ActionResult Update(long timestamp)
         {
-            DicServerContext ctx = new DicServerContext();
-
             SyncDto  sync     = new SyncDto();
             DateTime lastSync = DateHandlers.UnixToDateTime(timestamp);
 
             sync.UsbVendors = new List<UsbVendorDto>();
-            foreach(UsbVendor vendor in ctx.UsbVendors.Where(v => v.ModifiedWhen > lastSync))
+            foreach(UsbVendor vendor in _ctx.UsbVendors.Where(v => v.ModifiedWhen > lastSync))
                 sync.UsbVendors.Add(new UsbVendorDto {VendorId = (ushort)vendor.VendorId, Vendor = vendor.Vendor});
 
             sync.UsbProducts = new List<UsbProductDto>();
-            foreach(UsbProduct product in ctx.UsbProducts.Where(p => p.ModifiedWhen > lastSync))
+            foreach(UsbProduct product in _ctx.UsbProducts.Include(p => p.Vendor).Where(p => p.ModifiedWhen > lastSync))
                 sync.UsbProducts.Add(new UsbProductDto
                 {
                     Id        = product.Id,
@@ -75,11 +81,11 @@ namespace DiscImageChef.Server.Controllers
                 });
 
             sync.Offsets = new List<CdOffsetDto>();
-            foreach(CompactDiscOffset offset in ctx.CdOffsets.Where(o => o.ModifiedWhen > lastSync))
+            foreach(CompactDiscOffset offset in _ctx.CdOffsets.Where(o => o.ModifiedWhen > lastSync))
                 sync.Offsets.Add(new CdOffsetDto(offset, offset.Id));
 
             sync.Devices = new List<DeviceDto>();
-            foreach(Device device in ctx.Devices.Where(d => d.ModifiedWhen > lastSync).ToList())
+            foreach(Device device in _ctx.Devices.Where(d => d.ModifiedWhen > lastSync).ToList())
                 sync.Devices.Add(new
                                      DeviceDto(JsonConvert.DeserializeObject<DeviceReportV2>(JsonConvert.SerializeObject(device, Formatting.None, new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Ignore})),
                                                device.Id, device.OptimalMultipleSectorsRead));
@@ -88,10 +94,11 @@ namespace DiscImageChef.Server.Controllers
             StringWriter   sw = new StringWriter();
             js.Serialize(sw, sync);
 
-            return new HttpResponseMessage
+            return new ContentResult
             {
-                StatusCode = HttpStatusCode.OK,
-                Content    = new StringContent(sw.ToString(), Encoding.UTF8, "application/json")
+                StatusCode = (int)HttpStatusCode.OK,
+                Content = sw.ToString(),
+                ContentType = "application/json"
             };
         }
     }

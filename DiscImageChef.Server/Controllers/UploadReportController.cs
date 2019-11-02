@@ -36,22 +36,32 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
-using System.Web.Hosting;
-using System.Web.Http;
 using System.Xml.Serialization;
 using Cinchoo.PGP;
 using DiscImageChef.CommonTypes.Metadata;
 using DiscImageChef.Server.Models;
 using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting.Internal;
 using MimeKit;
 using Newtonsoft.Json;
 
 namespace DiscImageChef.Server.Controllers
 {
-    public class UploadReportController : ApiController
+    public class UploadReportController : Controller
     {
-        DicServerContext ctx = new DicServerContext();
+        private DicServerContext ctx;
+        private IWebHostEnvironment _environment;
+
+        public UploadReportController(IWebHostEnvironment environment, DicServerContext _ctx)
+        {
+            _environment = environment;
+            ctx = _ctx;
+        }
 
         /// <summary>
         ///     Receives a report from DiscImageChef.Core, verifies it's in the correct format and stores it on the server
@@ -59,21 +69,21 @@ namespace DiscImageChef.Server.Controllers
         /// <returns>HTTP response</returns>
         [Route("api/uploadreport")]
         [HttpPost]
-        public HttpResponseMessage UploadReport()
+        public async Task<IActionResult> UploadReport()
         {
-            HttpResponseMessage response = new HttpResponseMessage {StatusCode = HttpStatusCode.OK};
+            ContentResult response = new ContentResult {StatusCode = (int)HttpStatusCode.OK, ContentType = "text/plain"};
 
             try
             {
                 DeviceReport newReport = new DeviceReport();
-                HttpRequest  request   = HttpContext.Current.Request;
+                HttpRequest  request   = HttpContext.Request;
 
                 XmlSerializer xs = new XmlSerializer(newReport.GetType());
-                newReport = (DeviceReport)xs.Deserialize(request.InputStream);
+                newReport = (DeviceReport) xs.Deserialize(new StringReader(await new StreamReader(request.Body).ReadToEndAsync()));
 
                 if(newReport == null)
                 {
-                    response.Content = new StringContent("notstats", Encoding.UTF8, "text/plain");
+                    response.Content = "notstats";
                     return response;
                 }
 
@@ -94,7 +104,7 @@ namespace DiscImageChef.Server.Controllers
                 MemoryStream         pgpOut = new MemoryStream();
                 ChoPGPEncryptDecrypt pgp    = new ChoPGPEncryptDecrypt();
                 pgp.Encrypt(pgpIn, pgpOut,
-                            Path.Combine(HostingEnvironment.MapPath("~") ?? throw new InvalidOperationException(),
+                            Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
                                          "public.asc"), true);
                 pgpOut.Position = 0;
                 reportV2String  = Encoding.UTF8.GetString(pgpOut.ToArray());
@@ -114,7 +124,7 @@ namespace DiscImageChef.Server.Controllers
                     client.Disconnect(true);
                 }
 
-                response.Content = new StringContent("ok", Encoding.UTF8, "text/plain");
+                response.Content = "ok";
                 return response;
             }
             // ReSharper disable once RedundantCatchClause
@@ -123,7 +133,7 @@ namespace DiscImageChef.Server.Controllers
                 #if DEBUG
                 if(Debugger.IsAttached) throw;
                 #endif
-                response.Content = new StringContent("error", Encoding.UTF8, "text/plain");
+                response.Content = "error";
                 return response;
             }
         }
@@ -134,21 +144,21 @@ namespace DiscImageChef.Server.Controllers
         /// <returns>HTTP response</returns>
         [Route("api/uploadreportv2")]
         [HttpPost]
-        public HttpResponseMessage UploadReportV2()
+        public async Task<IActionResult> UploadReportV2()
         {
-            HttpResponseMessage response = new HttpResponseMessage {StatusCode = HttpStatusCode.OK};
+            ContentResult response = new ContentResult {StatusCode = (int)HttpStatusCode.OK, ContentType = "text/plain"};
 
             try
             {
-                HttpRequest request = HttpContext.Current.Request;
+                HttpRequest request = HttpContext.Request;
 
-                StreamReader   sr         = new StreamReader(request.InputStream);
-                string         reportJson = sr.ReadToEnd();
+                StreamReader   sr         = new StreamReader(request.Body);
+                string         reportJson = await sr.ReadToEndAsync();
                 DeviceReportV2 newReport  = JsonConvert.DeserializeObject<DeviceReportV2>(reportJson);
 
                 if(newReport == null)
                 {
-                    response.Content = new StringContent("notstats", Encoding.UTF8, "text/plain");
+                    response.Content = "notstats";
                     return response;
                 }
 
@@ -159,7 +169,7 @@ namespace DiscImageChef.Server.Controllers
                 MemoryStream         pgpOut = new MemoryStream();
                 ChoPGPEncryptDecrypt pgp    = new ChoPGPEncryptDecrypt();
                 pgp.Encrypt(pgpIn, pgpOut,
-                            Path.Combine(HostingEnvironment.MapPath("~") ?? throw new InvalidOperationException(),
+                            Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
                                          "public.asc"), true);
                 pgpOut.Position = 0;
                 reportJson      = Encoding.UTF8.GetString(pgpOut.ToArray());
@@ -178,7 +188,7 @@ namespace DiscImageChef.Server.Controllers
                     client.Disconnect(true);
                 }
 
-                response.Content = new StringContent("ok", Encoding.UTF8, "text/plain");
+                response.Content = "ok";
                 return response;
             }
             // ReSharper disable once RedundantCatchClause
@@ -187,7 +197,7 @@ namespace DiscImageChef.Server.Controllers
                 #if DEBUG
                 if(Debugger.IsAttached) throw;
                 #endif
-                response.Content = new StringContent("error", Encoding.UTF8, "text/plain");
+                response.Content ="error";
                 return response;
             }
         }

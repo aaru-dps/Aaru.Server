@@ -36,14 +36,15 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using System.Web.Hosting;
-using System.Web.Mvc;
 using System.Xml;
 using System.Xml.Serialization;
 using DiscImageChef.CommonTypes.Interop;
 using DiscImageChef.CommonTypes.Metadata;
 using DiscImageChef.Server.Models;
 using Highsoft.Web.Mvc.Charts;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting.Internal;
 using Filter = DiscImageChef.Server.Models.Filter;
 using OperatingSystem = DiscImageChef.Server.Models.OperatingSystem;
 using PlatformID = DiscImageChef.CommonTypes.Interop.PlatformID;
@@ -56,12 +57,19 @@ namespace DiscImageChef.Server.Controllers
     /// </summary>
     public class StatsController : Controller
     {
-        DicServerContext     ctx = new DicServerContext();
+        DicServerContext     ctx;
         List<DeviceItem>     devices;
         List<NameValueStats> operatingSystems;
         List<MediaItem>      realMedia;
         List<NameValueStats> versions;
         List<MediaItem>      virtualMedia;
+        private IWebHostEnvironment _environment;
+
+        public StatsController(IWebHostEnvironment environment, DicServerContext context)
+        {
+            _environment = environment;
+            ctx = context;
+        }
 
         public ActionResult Index()
         {
@@ -71,7 +79,7 @@ namespace DiscImageChef.Server.Controllers
             {
                 if(
                     System.IO.File
-                          .Exists(Path.Combine(HostingEnvironment.MapPath("~") ?? throw new InvalidOperationException(),
+                          .Exists(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
                                                "Statistics", "Statistics.xml")))
                     try
                     {
@@ -79,7 +87,7 @@ namespace DiscImageChef.Server.Controllers
 
                         XmlSerializer xs = new XmlSerializer(statistics.GetType());
                         FileStream fs =
-                            WaitForFile(Path.Combine(HostingEnvironment.MapPath("~") ?? throw new InvalidOperationException(), "Statistics", "Statistics.xml"),
+                            WaitForFile(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(), "Statistics", "Statistics.xml"),
                                         FileMode.Open, FileAccess.Read, FileShare.Read);
                         statistics = (Stats)xs.Deserialize(fs);
                         fs.Close();
@@ -87,7 +95,7 @@ namespace DiscImageChef.Server.Controllers
                         StatsConverter.Convert(statistics);
 
                         System.IO.File
-                              .Delete(Path.Combine(HostingEnvironment.MapPath("~") ?? throw new InvalidOperationException(),
+                              .Delete(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
                                                    "Statistics", "Statistics.xml"));
                     }
                     catch(XmlException)
@@ -443,24 +451,24 @@ namespace DiscImageChef.Server.Controllers
 
                         xmlFile = xmlFile.Replace('/', '_').Replace('\\', '_').Replace('?', '_');
 
-                        if(System.IO.File.Exists(Path.Combine(HostingEnvironment.MapPath("~"), "Reports", xmlFile)))
+                        if(System.IO.File.Exists(Path.Combine(_environment.ContentRootPath, "Reports", xmlFile)))
                         {
                             DeviceReport deviceReport = new DeviceReport();
 
                             XmlSerializer xs = new XmlSerializer(deviceReport.GetType());
                             FileStream fs =
-                                WaitForFile(Path.Combine(HostingEnvironment.MapPath("~") ?? throw new InvalidOperationException(), "Reports", xmlFile),
+                                WaitForFile(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(), "Reports", xmlFile),
                                             FileMode.Open, FileAccess.Read, FileShare.Read);
                             deviceReport = (DeviceReport)xs.Deserialize(fs);
                             fs.Close();
 
                             DeviceReportV2 deviceReportV2 = new DeviceReportV2(deviceReport);
 
-                            device.Report = ctx.Devices.Add(new Device(deviceReportV2));
+                            device.Report = ctx.Devices.Add(new Device(deviceReportV2)).Entity;
                             ctx.SaveChanges();
 
                             System.IO.File
-                                  .Delete(Path.Combine(HostingEnvironment.MapPath("~") ?? throw new InvalidOperationException(),
+                                  .Delete(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
                                                        "Reports", xmlFile));
                         }
 

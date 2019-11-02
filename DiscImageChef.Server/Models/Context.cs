@@ -30,12 +30,11 @@
 // Copyright © 2011-2019 Natalia Portillo
 // ****************************************************************************/
 
-using System.Data.Entity;
-using MySql.Data.EntityFramework;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace DiscImageChef.Server.Models
 {
-    [DbConfigurationType(typeof(MySqlEFConfiguration))]
     public sealed class DicServerContext : DbContext
     {
         public DbSet<Device>            Devices          { get; set; }
@@ -52,5 +51,50 @@ namespace DiscImageChef.Server.Models
         public DbSet<UsbVendor>         UsbVendors       { get; set; }
         public DbSet<UsbProduct>        UsbProducts      { get; set; }
         public DbSet<CompactDiscOffset> CdOffsets        { get; set; }
+
+        public DicServerContext() { }
+
+        public DicServerContext(DbContextOptions<DicServerContext> options) : base(options) { }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if(optionsBuilder.IsConfigured) return;
+
+
+            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
+            var configuration = builder.Build();
+            optionsBuilder.UseMySql(configuration.GetConnectionString("DefaultConnection"));
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CompactDiscOffset>().HasIndex(b => b.ModifiedWhen);
+
+            modelBuilder.Entity<Device>().HasIndex(b => b.ModifiedWhen);
+
+            modelBuilder.Entity<UsbProduct>().HasIndex(b => b.ModifiedWhen);
+            modelBuilder.Entity<UsbProduct>().HasIndex(b => b.ProductId);
+            modelBuilder.Entity<UsbProduct>().HasIndex(b => b.VendorId);
+
+            modelBuilder.Entity<UsbVendor>().HasIndex(b => b.ModifiedWhen);
+            modelBuilder.Entity<UsbVendor>().HasIndex(b => b.VendorId).IsUnique();
+        }
+
+        internal static bool TableExists(string tableName)
+        {
+            using(var db = new DicServerContext())
+            {
+                var connection = db.Database.GetDbConnection();
+                connection.Open();
+
+                var command = connection.CreateCommand();
+                command.CommandText =
+                    $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME=\"{tableName}\"";
+
+                var result = (long)command.ExecuteScalar();
+
+                return result != 0;
+            }
+        }
     }
 }
