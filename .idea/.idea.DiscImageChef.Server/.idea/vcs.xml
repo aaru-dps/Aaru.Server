@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CommitMessageInspectionProfile">
+    <profile version="1.0">
+      <inspection_tool class="GraziCommit" enabled="true" level="TYPO" enabled_by_default="true" />
+    </profile>
+  </component>
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/CICMMetadata" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/DiscImageChef.CommonTypes" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/DiscImageChef.Console" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/DiscImageChef.Decoders" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/DiscImageChef.Dto" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/DiscImageChef.Helpers" vcs="Git" />
+  </component>
+</project>
