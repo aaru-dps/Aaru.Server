@@ -65,7 +65,7 @@ namespace DiscImageChef.Server.Controllers
 
             sync.UsbVendors = new List<UsbVendorDto>();
             foreach (var vendor in _ctx.UsbVendors.Where(v => v.ModifiedWhen > lastSync))
-                sync.UsbVendors.Add(new UsbVendorDto {VendorId = (ushort) vendor.VendorId, Vendor = vendor.Vendor});
+                sync.UsbVendors.Add(new UsbVendorDto {VendorId = vendor.VendorId, Vendor = vendor.Vendor});
 
             sync.UsbProducts = new List<UsbProductDto>();
             foreach (var product in _ctx.UsbProducts.Include(p => p.Vendor).Where(p => p.ModifiedWhen > lastSync))
@@ -73,8 +73,8 @@ namespace DiscImageChef.Server.Controllers
                 {
                     Id = product.Id,
                     Product = product.Product,
-                    ProductId = (ushort) product.ProductId,
-                    VendorId = (ushort) product.Vendor.VendorId
+                    ProductId = product.ProductId,
+                    VendorId = product.Vendor.VendorId
                 });
 
             sync.Offsets = new List<CdOffsetDto>();

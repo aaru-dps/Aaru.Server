@@ -52,7 +52,7 @@ namespace DiscImageChef.Server.Models
 
         [Key] public int Id { get; set; }
 
-        public int ProductId { get; set; }
+        public ushort ProductId { get; set; }
         public string Product { get; set; }
         public DateTime AddedWhen { get; set; }
         public DateTime ModifiedWhen { get; set; }
