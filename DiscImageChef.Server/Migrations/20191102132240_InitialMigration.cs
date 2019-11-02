@@ -10,6 +10,7 @@ namespace DiscImageChef.Server.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             #region Check for old tables
+
             var AtasExists = DicServerContext.TableExists("Atas");
             var BlockDescriptorsExists = DicServerContext.TableExists("BlockDescriptors");
             var ChsExists = DicServerContext.TableExists("Chs");
@@ -43,10 +44,12 @@ namespace DiscImageChef.Server.Migrations
             var UsbVendorsExists = DicServerContext.TableExists("UsbVendors");
             var VersionsExists = DicServerContext.TableExists("Versions");
             var EFExists = DicServerContext.TableExists("__MigrationHistory");
+
             #endregion
 
             #region Drop old restrictions
-            if(AtasExists)
+
+            if (AtasExists)
                 migrationBuilder.DropForeignKey("FK_Atas_TestedMedias_ReadCapabilities_Id", "Atas");
             if (BlockDescriptorsExists)
                 migrationBuilder.DropForeignKey("FK_BlockDescriptors_ScsiModes_ScsiMode_Id", "BlockDescriptors");
@@ -74,6 +77,7 @@ namespace DiscImageChef.Server.Migrations
                 migrationBuilder.DropForeignKey(
                     "FK_Devices_Usbs_USB_Id", "Devices");
             }
+
             if (DeviceStatsExists)
                 migrationBuilder.DropForeignKey(
                     "FK_DeviceStats_Devices_Report_Id", "DeviceStats");
@@ -83,123 +87,128 @@ namespace DiscImageChef.Server.Migrations
             if (ScsiPagesExists)
             {
                 migrationBuilder.DropForeignKey(
-                    "FK_ScsiPages_ScsiModes_ScsiMode_Id","ScsiPages");
+                    "FK_ScsiPages_ScsiModes_ScsiMode_Id", "ScsiPages");
                 migrationBuilder.DropForeignKey(
-                    "FK_ScsiPages_Scsis_Scsi_Id","ScsiPages");
+                    "FK_ScsiPages_Scsis_Scsi_Id", "ScsiPages");
             }
+
             if (ScsisExists)
             {
                 migrationBuilder.DropForeignKey(
-                    "FK_Scsis_Mmcs_MultiMediaDevice_Id","Scsis");
+                    "FK_Scsis_Mmcs_MultiMediaDevice_Id", "Scsis");
                 migrationBuilder.DropForeignKey(
-                    "FK_Scsis_ScsiModes_ModeSense_Id","Scsis");
+                    "FK_Scsis_ScsiModes_ModeSense_Id", "Scsis");
                 migrationBuilder.DropForeignKey(
-                    "FK_Scsis_Sscs_SequentialDevice_Id","Scsis");
+                    "FK_Scsis_Sscs_SequentialDevice_Id", "Scsis");
                 migrationBuilder.DropForeignKey(
-                    "FK_Scsis_TestedMedias_ReadCapabilities_Id","Scsis");
+                    "FK_Scsis_TestedMedias_ReadCapabilities_Id", "Scsis");
             }
+
             if (SscSupportedMediasExists)
             {
                 migrationBuilder.DropForeignKey(
-                    "FK_a812ec60296b45bcb3d245a5c6d01d73","SscSupportedMedias");
+                    "FK_a812ec60296b45bcb3d245a5c6d01d73", "SscSupportedMedias");
                 migrationBuilder.DropForeignKey(
-                    "FK_SscSupportedMedias_Sscs_Ssc_Id","SscSupportedMedias");
+                    "FK_SscSupportedMedias_Sscs_Ssc_Id", "SscSupportedMedias");
             }
+
             if (SupportedDensitiesExists)
             {
                 migrationBuilder.DropForeignKey(
-                    "FK_783f1b3552774280af1caf44fb27e285","SupportedDensities");
+                    "FK_783f1b3552774280af1caf44fb27e285", "SupportedDensities");
                 migrationBuilder.DropForeignKey(
-                    "FK_SupportedDensities_Sscs_Ssc_Id","SupportedDensities");
+                    "FK_SupportedDensities_Sscs_Ssc_Id", "SupportedDensities");
             }
+
             if (TestedMediasExists)
             {
                 migrationBuilder.DropForeignKey(
-                    "FK_TestedMedias_Atas_Ata_Id","TestedMedias");
+                    "FK_TestedMedias_Atas_Ata_Id", "TestedMedias");
                 migrationBuilder.DropForeignKey(
-                    "FK_TestedMedias_Chs_CHS_Id","TestedMedias");
+                    "FK_TestedMedias_Chs_CHS_Id", "TestedMedias");
                 migrationBuilder.DropForeignKey(
-                    "FK_TestedMedias_Chs_CurrentCHS_Id","TestedMedias");
+                    "FK_TestedMedias_Chs_CurrentCHS_Id", "TestedMedias");
                 migrationBuilder.DropForeignKey(
-                    "FK_TestedMedias_Mmcs_Mmc_Id","TestedMedias");
+                    "FK_TestedMedias_Mmcs_Mmc_Id", "TestedMedias");
                 migrationBuilder.DropForeignKey(
-                    "FK_TestedMedias_Scsis_Scsi_Id","TestedMedias");
+                    "FK_TestedMedias_Scsis_Scsi_Id", "TestedMedias");
             }
+
             if (TestedSequentialMediasExists)
                 migrationBuilder.DropForeignKey(
-                    "FK_TestedSequentialMedias_Sscs_Ssc_Id","TestedSequentialMedias");
+                    "FK_TestedSequentialMedias_Sscs_Ssc_Id", "TestedSequentialMedias");
             if (UploadedReportsExists)
             {
                 migrationBuilder.DropForeignKey(
-                    "FK_UploadedReports_Atas_ATA_Id","UploadedReports");
+                    "FK_UploadedReports_Atas_ATA_Id", "UploadedReports");
                 migrationBuilder.DropForeignKey(
-                    "FK_UploadedReports_Atas_ATAPI_Id","UploadedReports");
+                    "FK_UploadedReports_Atas_ATAPI_Id", "UploadedReports");
                 migrationBuilder.DropForeignKey(
-                    "FK_UploadedReports_FireWires_FireWire_Id","UploadedReports");
+                    "FK_UploadedReports_FireWires_FireWire_Id", "UploadedReports");
                 migrationBuilder.DropForeignKey(
-                    "FK_UploadedReports_MmcSds_MultiMediaCard_Id","UploadedReports");
+                    "FK_UploadedReports_MmcSds_MultiMediaCard_Id", "UploadedReports");
                 migrationBuilder.DropForeignKey(
-                    "FK_UploadedReports_MmcSds_SecureDigital_Id","UploadedReports");
+                    "FK_UploadedReports_MmcSds_SecureDigital_Id", "UploadedReports");
                 migrationBuilder.DropForeignKey(
-                    "FK_UploadedReports_Pcmcias_PCMCIA_Id","UploadedReports");
+                    "FK_UploadedReports_Pcmcias_PCMCIA_Id", "UploadedReports");
                 migrationBuilder.DropForeignKey(
-                    "FK_UploadedReports_Scsis_SCSI_Id","UploadedReports");
+                    "FK_UploadedReports_Scsis_SCSI_Id", "UploadedReports");
                 migrationBuilder.DropForeignKey(
-                    "FK_UploadedReports_Usbs_USB_Id","UploadedReports");
+                    "FK_UploadedReports_Usbs_USB_Id", "UploadedReports");
             }
+
             if (UsbProductsExists)
                 migrationBuilder.DropForeignKey(
-                    "FK_UsbProducts_UsbVendors_VendorId","UsbProducts");
+                    "FK_UsbProducts_UsbVendors_VendorId", "UsbProducts");
+
             #endregion
 
             #region TABLE: CdOffsets
+
             migrationBuilder.CreateTable(
-                name: "CdOffsets",
-                columns: table => new
+                "CdOffsets",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Manufacturer = table.Column<string>(nullable: true),
                     Model = table.Column<string>(nullable: true),
-                    Offset = table.Column<short>(nullable: false),
-                    Submissions = table.Column<int>(nullable: false),
-                    Agreement = table.Column<float>(nullable: false),
-                    AddedWhen = table.Column<DateTime>(nullable: false),
-                    ModifiedWhen = table.Column<DateTime>(nullable: false)
+                    Offset = table.Column<short>(),
+                    Submissions = table.Column<int>(),
+                    Agreement = table.Column<float>(),
+                    AddedWhen = table.Column<DateTime>(),
+                    ModifiedWhen = table.Column<DateTime>()
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CdOffsets", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_CdOffsets", x => x.Id); });
 
             if (CompactDiscOffsetsExists)
             {
-                migrationBuilder.Sql("INSERT INTO CdOffsets (Id, Manufacturer, Model, Offset, Submissions, Agreement, AddedWhen, ModifiedWhen) SELECT Id, Manufacturer, Model, Offset, Submissions, Agreement, AddedWhen, ModifiedWhen FROM CompactDiscOffsets");
+                migrationBuilder.Sql(
+                    "INSERT INTO CdOffsets (Id, Manufacturer, Model, Offset, Submissions, Agreement, AddedWhen, ModifiedWhen) SELECT Id, Manufacturer, Model, Offset, Submissions, Agreement, AddedWhen, ModifiedWhen FROM CompactDiscOffsets");
                 migrationBuilder.DropTable("CompactDiscOffsets");
             }
+
             #endregion
 
             #region TABLE: Chs
+
             if (ChsExists)
-                migrationBuilder.RenameTable(name: "Chs", newName: "Chs_old");
+                migrationBuilder.RenameTable("Chs", newName: "Chs_old");
 
             migrationBuilder.CreateTable(
-                name: "Chs",
-                columns: table => new
+                "Chs",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Cylinders = table.Column<ushort>(nullable: false),
-                    Heads = table.Column<ushort>(nullable: false),
-                    Sectors = table.Column<ushort>(nullable: false),
-                    CylindersSql = table.Column<short>(nullable: false),
-                    HeadsSql = table.Column<short>(nullable: false),
-                    SectorsSql = table.Column<short>(nullable: false)
+                    Cylinders = table.Column<ushort>(),
+                    Heads = table.Column<ushort>(),
+                    Sectors = table.Column<ushort>(),
+                    CylindersSql = table.Column<short>(),
+                    HeadsSql = table.Column<short>(),
+                    SectorsSql = table.Column<short>()
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Chs", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Chs", x => x.Id); });
 
             if (ChsExists)
             {
@@ -207,25 +216,24 @@ namespace DiscImageChef.Server.Migrations
                     "INSERT INTO Chs (Id, Cylinders, Heads, Sectors, CylindersSql, HeadsSql, SectorsSql) SELECT Id, CylindersSql AS Cylinders, HeadsSql AS Heads, SectorsSql AS Sectors, CylindersSql, HeadsSql, SectorsSql FROM Chs_old");
                 migrationBuilder.DropTable("Chs_old");
             }
+
             #endregion
 
             #region TABLE: Commands
+
             if (CommandsExists)
-                migrationBuilder.RenameTable(name: "Commands", newName: "Commands_old");
+                migrationBuilder.RenameTable("Commands", newName: "Commands_old");
 
             migrationBuilder.CreateTable(
-                name: "Commands",
-                columns: table => new
+                "Commands",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    Count = table.Column<long>(nullable: false)
+                    Count = table.Column<long>()
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Commands", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Commands", x => x.Id); });
 
             if (CommandsExists)
             {
@@ -233,25 +241,24 @@ namespace DiscImageChef.Server.Migrations
                     "INSERT INTO Commands (Id, Name, Count) SELECT Id, Name, Count FROM Commands_old");
                 migrationBuilder.DropTable("Commands_old");
             }
+
             #endregion
 
             #region TABLE: Filesystems
+
             if (FilesystemsExists)
-                migrationBuilder.RenameTable(name: "Filesystems", newName: "Filesystems_old");
+                migrationBuilder.RenameTable("Filesystems", newName: "Filesystems_old");
 
             migrationBuilder.CreateTable(
-                name: "Filesystems",
-                columns: table => new
+                "Filesystems",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    Count = table.Column<long>(nullable: false)
+                    Count = table.Column<long>()
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Filesystems", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Filesystems", x => x.Id); });
 
             if (FilesystemsExists)
             {
@@ -259,25 +266,24 @@ namespace DiscImageChef.Server.Migrations
                     "INSERT INTO Filesystems (Id, Name, Count) SELECT Id, Name, Count FROM Filesystems_old");
                 migrationBuilder.DropTable("Filesystems_old");
             }
+
             #endregion
 
             #region TABLE: Filters
+
             if (FiltersExists)
-                migrationBuilder.RenameTable(name: "Filters", newName: "Filters_old");
+                migrationBuilder.RenameTable("Filters", newName: "Filters_old");
 
             migrationBuilder.CreateTable(
-                name: "Filters",
-                columns: table => new
+                "Filters",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    Count = table.Column<long>(nullable: false)
+                    Count = table.Column<long>()
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Filters", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Filters", x => x.Id); });
 
             if (FiltersExists)
             {
@@ -285,27 +291,26 @@ namespace DiscImageChef.Server.Migrations
                     "INSERT INTO Filters (Id, Name, Count) SELECT Id, Name, Count FROM Filters_old");
                 migrationBuilder.DropTable("Filters_old");
             }
+
             #endregion
 
             #region TABLE: FireWire
+
             migrationBuilder.CreateTable(
-                name: "FireWire",
-                columns: table => new
+                "FireWire",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    VendorID = table.Column<uint>(nullable: false),
-                    ProductID = table.Column<uint>(nullable: false),
+                    VendorID = table.Column<uint>(),
+                    ProductID = table.Column<uint>(),
                     Manufacturer = table.Column<string>(nullable: true),
                     Product = table.Column<string>(nullable: true),
-                    RemovableMedia = table.Column<bool>(nullable: false),
-                    VendorIDSql = table.Column<int>(nullable: false),
-                    ProductIDSql = table.Column<int>(nullable: false)
+                    RemovableMedia = table.Column<bool>(),
+                    VendorIDSql = table.Column<int>(),
+                    ProductIDSql = table.Column<int>()
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FireWire", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_FireWire", x => x.Id); });
 
             if (FireWiresExists)
             {
@@ -313,25 +318,24 @@ namespace DiscImageChef.Server.Migrations
                     "INSERT INTO FireWire (Id, VendorID, ProductID, Manufacturer, Product, RemovableMedia, VendorIDSql, ProductIDSql) SELECT Id, VendorIDSql AS VendorID, ProductIDSql AS ProductID, Manufacturer, Product, RemovableMedia, VendorIDSql, ProductIDSql FROM FireWires");
                 migrationBuilder.DropTable("FireWires");
             }
+
             #endregion
 
             #region TABLE: MediaFormats
+
             if (MediaFormatsExists)
-                migrationBuilder.RenameTable(name: "MediaFormats", newName: "MediaFormats_old");
+                migrationBuilder.RenameTable("MediaFormats", newName: "MediaFormats_old");
 
             migrationBuilder.CreateTable(
-                name: "MediaFormats",
-                columns: table => new
+                "MediaFormats",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    Count = table.Column<long>(nullable: false)
+                    Count = table.Column<long>()
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MediaFormats", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_MediaFormats", x => x.Id); });
 
             if (MediaFormatsExists)
             {
@@ -339,23 +343,22 @@ namespace DiscImageChef.Server.Migrations
                     "INSERT INTO MediaFormats (Id, Name, Count) SELECT Id, Name, Count FROM MediaFormats_old");
                 migrationBuilder.DropTable("MediaFormats_old");
             }
+
             #endregion
 
             #region TABLE: Medias
+
             migrationBuilder.CreateTable(
-                name: "Medias",
-                columns: table => new
+                "Medias",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Type = table.Column<string>(nullable: true),
-                    Real = table.Column<bool>(nullable: false),
-                    Count = table.Column<long>(nullable: false)
+                    Real = table.Column<bool>(),
+                    Count = table.Column<long>()
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Medias", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Medias", x => x.Id); });
 
             if (MediaExists)
             {
@@ -363,140 +366,142 @@ namespace DiscImageChef.Server.Migrations
                     "INSERT INTO Medias (`Id`, `Type`, `Real`, `Count`) SELECT `Id`, `Type`, `Real`, `Count` FROM Media");
                 migrationBuilder.DropTable("Media");
             }
+
             #endregion
 
             #region TABLE: MmcFeatures
+
             if (MmcFeaturesExists)
-                migrationBuilder.RenameTable(name: "MmcFeatures", newName: "MmcFeatures_old");
+                migrationBuilder.RenameTable("MmcFeatures", newName: "MmcFeatures_old");
 
             migrationBuilder.CreateTable(
-                name: "MmcFeatures",
-                columns: table => new
+                "MmcFeatures",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     AACSVersion = table.Column<byte>(nullable: true),
                     AGIDs = table.Column<byte>(nullable: true),
                     BindingNonceBlocks = table.Column<byte>(nullable: true),
                     BlocksPerReadableUnit = table.Column<ushort>(nullable: true),
-                    BufferUnderrunFreeInDVD = table.Column<bool>(nullable: false),
-                    BufferUnderrunFreeInSAO = table.Column<bool>(nullable: false),
-                    BufferUnderrunFreeInTAO = table.Column<bool>(nullable: false),
-                    CanAudioScan = table.Column<bool>(nullable: false),
-                    CanEject = table.Column<bool>(nullable: false),
-                    CanEraseSector = table.Column<bool>(nullable: false),
-                    CanExpandBDRESpareArea = table.Column<bool>(nullable: false),
-                    CanFormat = table.Column<bool>(nullable: false),
-                    CanFormatBDREWithoutSpare = table.Column<bool>(nullable: false),
-                    CanFormatCert = table.Column<bool>(nullable: false),
-                    CanFormatFRF = table.Column<bool>(nullable: false),
-                    CanFormatQCert = table.Column<bool>(nullable: false),
-                    CanFormatRRM = table.Column<bool>(nullable: false),
-                    CanGenerateBindingNonce = table.Column<bool>(nullable: false),
-                    CanLoad = table.Column<bool>(nullable: false),
-                    CanMuteSeparateChannels = table.Column<bool>(nullable: false),
-                    CanOverwriteSAOTrack = table.Column<bool>(nullable: false),
-                    CanOverwriteTAOTrack = table.Column<bool>(nullable: false),
-                    CanPlayCDAudio = table.Column<bool>(nullable: false),
-                    CanPseudoOverwriteBDR = table.Column<bool>(nullable: false),
-                    CanReadAllDualR = table.Column<bool>(nullable: false),
-                    CanReadAllDualRW = table.Column<bool>(nullable: false),
-                    CanReadBD = table.Column<bool>(nullable: false),
-                    CanReadBDR = table.Column<bool>(nullable: false),
-                    CanReadBDRE1 = table.Column<bool>(nullable: false),
-                    CanReadBDRE2 = table.Column<bool>(nullable: false),
-                    CanReadBDROM = table.Column<bool>(nullable: false),
-                    CanReadBluBCA = table.Column<bool>(nullable: false),
-                    CanReadCD = table.Column<bool>(nullable: false),
-                    CanReadCDMRW = table.Column<bool>(nullable: false),
-                    CanReadCPRM_MKB = table.Column<bool>(nullable: false),
-                    CanReadDDCD = table.Column<bool>(nullable: false),
-                    CanReadDVD = table.Column<bool>(nullable: false),
-                    CanReadDVDPlusMRW = table.Column<bool>(nullable: false),
-                    CanReadDVDPlusR = table.Column<bool>(nullable: false),
-                    CanReadDVDPlusRDL = table.Column<bool>(nullable: false),
-                    CanReadDVDPlusRW = table.Column<bool>(nullable: false),
-                    CanReadDVDPlusRWDL = table.Column<bool>(nullable: false),
-                    CanReadDriveAACSCertificate = table.Column<bool>(nullable: false),
-                    CanReadHDDVD = table.Column<bool>(nullable: false),
-                    CanReadHDDVDR = table.Column<bool>(nullable: false),
-                    CanReadHDDVDRAM = table.Column<bool>(nullable: false),
-                    CanReadLeadInCDText = table.Column<bool>(nullable: false),
-                    CanReadOldBDR = table.Column<bool>(nullable: false),
-                    CanReadOldBDRE = table.Column<bool>(nullable: false),
-                    CanReadOldBDROM = table.Column<bool>(nullable: false),
-                    CanReadSpareAreaInformation = table.Column<bool>(nullable: false),
-                    CanReportDriveSerial = table.Column<bool>(nullable: false),
-                    CanReportMediaSerial = table.Column<bool>(nullable: false),
-                    CanTestWriteDDCDR = table.Column<bool>(nullable: false),
-                    CanTestWriteDVD = table.Column<bool>(nullable: false),
-                    CanTestWriteInSAO = table.Column<bool>(nullable: false),
-                    CanTestWriteInTAO = table.Column<bool>(nullable: false),
-                    CanUpgradeFirmware = table.Column<bool>(nullable: false),
-                    CanWriteBD = table.Column<bool>(nullable: false),
-                    CanWriteBDR = table.Column<bool>(nullable: false),
-                    CanWriteBDRE1 = table.Column<bool>(nullable: false),
-                    CanWriteBDRE2 = table.Column<bool>(nullable: false),
-                    CanWriteBusEncryptedBlocks = table.Column<bool>(nullable: false),
-                    CanWriteCDMRW = table.Column<bool>(nullable: false),
-                    CanWriteCDRW = table.Column<bool>(nullable: false),
-                    CanWriteCDRWCAV = table.Column<bool>(nullable: false),
-                    CanWriteCDSAO = table.Column<bool>(nullable: false),
-                    CanWriteCDTAO = table.Column<bool>(nullable: false),
-                    CanWriteCSSManagedDVD = table.Column<bool>(nullable: false),
-                    CanWriteDDCDR = table.Column<bool>(nullable: false),
-                    CanWriteDDCDRW = table.Column<bool>(nullable: false),
-                    CanWriteDVDPlusMRW = table.Column<bool>(nullable: false),
-                    CanWriteDVDPlusR = table.Column<bool>(nullable: false),
-                    CanWriteDVDPlusRDL = table.Column<bool>(nullable: false),
-                    CanWriteDVDPlusRW = table.Column<bool>(nullable: false),
-                    CanWriteDVDPlusRWDL = table.Column<bool>(nullable: false),
-                    CanWriteDVDR = table.Column<bool>(nullable: false),
-                    CanWriteDVDRDL = table.Column<bool>(nullable: false),
-                    CanWriteDVDRW = table.Column<bool>(nullable: false),
-                    CanWriteHDDVDR = table.Column<bool>(nullable: false),
-                    CanWriteHDDVDRAM = table.Column<bool>(nullable: false),
-                    CanWriteOldBDR = table.Column<bool>(nullable: false),
-                    CanWriteOldBDRE = table.Column<bool>(nullable: false),
-                    CanWritePackedSubchannelInTAO = table.Column<bool>(nullable: false),
-                    CanWriteRWSubchannelInSAO = table.Column<bool>(nullable: false),
-                    CanWriteRWSubchannelInTAO = table.Column<bool>(nullable: false),
-                    CanWriteRaw = table.Column<bool>(nullable: false),
-                    CanWriteRawMultiSession = table.Column<bool>(nullable: false),
-                    CanWriteRawSubchannelInTAO = table.Column<bool>(nullable: false),
-                    ChangerIsSideChangeCapable = table.Column<bool>(nullable: false),
-                    ChangerSlots = table.Column<byte>(nullable: false),
-                    ChangerSupportsDiscPresent = table.Column<bool>(nullable: false),
+                    BufferUnderrunFreeInDVD = table.Column<bool>(),
+                    BufferUnderrunFreeInSAO = table.Column<bool>(),
+                    BufferUnderrunFreeInTAO = table.Column<bool>(),
+                    CanAudioScan = table.Column<bool>(),
+                    CanEject = table.Column<bool>(),
+                    CanEraseSector = table.Column<bool>(),
+                    CanExpandBDRESpareArea = table.Column<bool>(),
+                    CanFormat = table.Column<bool>(),
+                    CanFormatBDREWithoutSpare = table.Column<bool>(),
+                    CanFormatCert = table.Column<bool>(),
+                    CanFormatFRF = table.Column<bool>(),
+                    CanFormatQCert = table.Column<bool>(),
+                    CanFormatRRM = table.Column<bool>(),
+                    CanGenerateBindingNonce = table.Column<bool>(),
+                    CanLoad = table.Column<bool>(),
+                    CanMuteSeparateChannels = table.Column<bool>(),
+                    CanOverwriteSAOTrack = table.Column<bool>(),
+                    CanOverwriteTAOTrack = table.Column<bool>(),
+                    CanPlayCDAudio = table.Column<bool>(),
+                    CanPseudoOverwriteBDR = table.Column<bool>(),
+                    CanReadAllDualR = table.Column<bool>(),
+                    CanReadAllDualRW = table.Column<bool>(),
+                    CanReadBD = table.Column<bool>(),
+                    CanReadBDR = table.Column<bool>(),
+                    CanReadBDRE1 = table.Column<bool>(),
+                    CanReadBDRE2 = table.Column<bool>(),
+                    CanReadBDROM = table.Column<bool>(),
+                    CanReadBluBCA = table.Column<bool>(),
+                    CanReadCD = table.Column<bool>(),
+                    CanReadCDMRW = table.Column<bool>(),
+                    CanReadCPRM_MKB = table.Column<bool>(),
+                    CanReadDDCD = table.Column<bool>(),
+                    CanReadDVD = table.Column<bool>(),
+                    CanReadDVDPlusMRW = table.Column<bool>(),
+                    CanReadDVDPlusR = table.Column<bool>(),
+                    CanReadDVDPlusRDL = table.Column<bool>(),
+                    CanReadDVDPlusRW = table.Column<bool>(),
+                    CanReadDVDPlusRWDL = table.Column<bool>(),
+                    CanReadDriveAACSCertificate = table.Column<bool>(),
+                    CanReadHDDVD = table.Column<bool>(),
+                    CanReadHDDVDR = table.Column<bool>(),
+                    CanReadHDDVDRAM = table.Column<bool>(),
+                    CanReadLeadInCDText = table.Column<bool>(),
+                    CanReadOldBDR = table.Column<bool>(),
+                    CanReadOldBDRE = table.Column<bool>(),
+                    CanReadOldBDROM = table.Column<bool>(),
+                    CanReadSpareAreaInformation = table.Column<bool>(),
+                    CanReportDriveSerial = table.Column<bool>(),
+                    CanReportMediaSerial = table.Column<bool>(),
+                    CanTestWriteDDCDR = table.Column<bool>(),
+                    CanTestWriteDVD = table.Column<bool>(),
+                    CanTestWriteInSAO = table.Column<bool>(),
+                    CanTestWriteInTAO = table.Column<bool>(),
+                    CanUpgradeFirmware = table.Column<bool>(),
+                    CanWriteBD = table.Column<bool>(),
+                    CanWriteBDR = table.Column<bool>(),
+                    CanWriteBDRE1 = table.Column<bool>(),
+                    CanWriteBDRE2 = table.Column<bool>(),
+                    CanWriteBusEncryptedBlocks = table.Column<bool>(),
+                    CanWriteCDMRW = table.Column<bool>(),
+                    CanWriteCDRW = table.Column<bool>(),
+                    CanWriteCDRWCAV = table.Column<bool>(),
+                    CanWriteCDSAO = table.Column<bool>(),
+                    CanWriteCDTAO = table.Column<bool>(),
+                    CanWriteCSSManagedDVD = table.Column<bool>(),
+                    CanWriteDDCDR = table.Column<bool>(),
+                    CanWriteDDCDRW = table.Column<bool>(),
+                    CanWriteDVDPlusMRW = table.Column<bool>(),
+                    CanWriteDVDPlusR = table.Column<bool>(),
+                    CanWriteDVDPlusRDL = table.Column<bool>(),
+                    CanWriteDVDPlusRW = table.Column<bool>(),
+                    CanWriteDVDPlusRWDL = table.Column<bool>(),
+                    CanWriteDVDR = table.Column<bool>(),
+                    CanWriteDVDRDL = table.Column<bool>(),
+                    CanWriteDVDRW = table.Column<bool>(),
+                    CanWriteHDDVDR = table.Column<bool>(),
+                    CanWriteHDDVDRAM = table.Column<bool>(),
+                    CanWriteOldBDR = table.Column<bool>(),
+                    CanWriteOldBDRE = table.Column<bool>(),
+                    CanWritePackedSubchannelInTAO = table.Column<bool>(),
+                    CanWriteRWSubchannelInSAO = table.Column<bool>(),
+                    CanWriteRWSubchannelInTAO = table.Column<bool>(),
+                    CanWriteRaw = table.Column<bool>(),
+                    CanWriteRawMultiSession = table.Column<bool>(),
+                    CanWriteRawSubchannelInTAO = table.Column<bool>(),
+                    ChangerIsSideChangeCapable = table.Column<bool>(),
+                    ChangerSlots = table.Column<byte>(),
+                    ChangerSupportsDiscPresent = table.Column<bool>(),
                     CPRMVersion = table.Column<byte>(nullable: true),
                     CSSVersion = table.Column<byte>(nullable: true),
-                    DBML = table.Column<bool>(nullable: false),
-                    DVDMultiRead = table.Column<bool>(nullable: false),
-                    EmbeddedChanger = table.Column<bool>(nullable: false),
-                    ErrorRecoveryPage = table.Column<bool>(nullable: false),
+                    DBML = table.Column<bool>(),
+                    DVDMultiRead = table.Column<bool>(),
+                    EmbeddedChanger = table.Column<bool>(),
+                    ErrorRecoveryPage = table.Column<bool>(),
                     FirmwareDate = table.Column<DateTime>(nullable: true),
                     LoadingMechanismType = table.Column<byte>(nullable: true),
-                    Locked = table.Column<bool>(nullable: false),
+                    Locked = table.Column<bool>(),
                     LogicalBlockSize = table.Column<uint>(nullable: true),
-                    MultiRead = table.Column<bool>(nullable: false),
+                    MultiRead = table.Column<bool>(),
                     PhysicalInterfaceStandardNumber = table.Column<uint>(nullable: true),
-                    PreventJumper = table.Column<bool>(nullable: false),
-                    SupportsAACS = table.Column<bool>(nullable: false),
-                    SupportsBusEncryption = table.Column<bool>(nullable: false),
-                    SupportsC2 = table.Column<bool>(nullable: false),
-                    SupportsCPRM = table.Column<bool>(nullable: false),
-                    SupportsCSS = table.Column<bool>(nullable: false),
-                    SupportsDAP = table.Column<bool>(nullable: false),
-                    SupportsDeviceBusyEvent = table.Column<bool>(nullable: false),
-                    SupportsHybridDiscs = table.Column<bool>(nullable: false),
-                    SupportsModePage1Ch = table.Column<bool>(nullable: false),
-                    SupportsOSSC = table.Column<bool>(nullable: false),
-                    SupportsPWP = table.Column<bool>(nullable: false),
-                    SupportsSWPP = table.Column<bool>(nullable: false),
-                    SupportsSecurDisc = table.Column<bool>(nullable: false),
-                    SupportsSeparateVolume = table.Column<bool>(nullable: false),
-                    SupportsVCPS = table.Column<bool>(nullable: false),
-                    SupportsWriteInhibitDCB = table.Column<bool>(nullable: false),
-                    SupportsWriteProtectPAC = table.Column<bool>(nullable: false),
+                    PreventJumper = table.Column<bool>(),
+                    SupportsAACS = table.Column<bool>(),
+                    SupportsBusEncryption = table.Column<bool>(),
+                    SupportsC2 = table.Column<bool>(),
+                    SupportsCPRM = table.Column<bool>(),
+                    SupportsCSS = table.Column<bool>(),
+                    SupportsDAP = table.Column<bool>(),
+                    SupportsDeviceBusyEvent = table.Column<bool>(),
+                    SupportsHybridDiscs = table.Column<bool>(),
+                    SupportsModePage1Ch = table.Column<bool>(),
+                    SupportsOSSC = table.Column<bool>(),
+                    SupportsPWP = table.Column<bool>(),
+                    SupportsSWPP = table.Column<bool>(),
+                    SupportsSecurDisc = table.Column<bool>(),
+                    SupportsSeparateVolume = table.Column<bool>(),
+                    SupportsVCPS = table.Column<bool>(),
+                    SupportsWriteInhibitDCB = table.Column<bool>(),
+                    SupportsWriteProtectPAC = table.Column<bool>(),
                     VolumeLevels = table.Column<ushort>(nullable: true),
                     BinaryData = table.Column<byte[]>(nullable: true),
                     BlocksPerReadableUnitSql = table.Column<short>(nullable: true),
@@ -504,10 +509,7 @@ namespace DiscImageChef.Server.Migrations
                     PhysicalInterfaceStandardNumberSql = table.Column<int>(nullable: true),
                     VolumeLevelsSql = table.Column<short>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MmcFeatures", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_MmcFeatures", x => x.Id); });
 
             if (MmcFeaturesExists)
             {
@@ -766,7 +768,7 @@ BlocksPerReadableUnitSql,
 LogicalBlockSizeSql,
 PhysicalInterfaceStandardNumberSql,
 VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql >= 0 OR VolumeLevelsSql IS NULL");
-migrationBuilder.Sql(@"INSERT INTO MmcFeatures (AACSVersion,
+                migrationBuilder.Sql(@"INSERT INTO MmcFeatures (AACSVersion,
 AGIDs,
 BindingNonceBlocks,
 BlocksPerReadableUnit,
@@ -1021,16 +1023,18 @@ BlocksPerReadableUnitSql,
 LogicalBlockSizeSql,
 PhysicalInterfaceStandardNumberSql,
 VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
-migrationBuilder.DropTable("MmcFeatures_old");
+                migrationBuilder.DropTable("MmcFeatures_old");
             }
+
             #endregion
 
             #region TABLE: MmcSd
+
             migrationBuilder.CreateTable(
-                name: "MmcSd",
-                columns: table => new
+                "MmcSd",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CID = table.Column<byte[]>(nullable: true),
                     CSD = table.Column<byte[]>(nullable: true),
@@ -1038,10 +1042,7 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     SCR = table.Column<byte[]>(nullable: true),
                     ExtendedCSD = table.Column<byte[]>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MmcSd", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_MmcSd", x => x.Id); });
 
             if (MmcSdsExists)
             {
@@ -1049,26 +1050,25 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     "INSERT INTO MmcSd (Id, CID, CSD, OCR, SCR, ExtendedCSD) SELECT Id, CID, CSD, OCR, SCR, ExtendedCSD FROM MmcSds");
                 migrationBuilder.DropTable("MmcSds");
             }
+
             #endregion
 
             #region TABLE: OperatingSystems
+
             if (OperatingSystemsExists)
-                migrationBuilder.RenameTable(name: "OperatingSystems", newName: "OperatingSystems_old");
+                migrationBuilder.RenameTable("OperatingSystems", newName: "OperatingSystems_old");
 
             migrationBuilder.CreateTable(
-                name: "OperatingSystems",
-                columns: table => new
+                "OperatingSystems",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     Version = table.Column<string>(nullable: true),
-                    Count = table.Column<long>(nullable: false)
+                    Count = table.Column<long>()
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OperatingSystems", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_OperatingSystems", x => x.Id); });
 
             if (OperatingSystemsExists)
             {
@@ -1076,25 +1076,24 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     "INSERT INTO OperatingSystems (Id, Name, Version, Count) SELECT Id, Name, Version, Count FROM OperatingSystems_old");
                 migrationBuilder.DropTable("OperatingSystems_old");
             }
+
             #endregion
 
             #region TABLE: Partitions
+
             if (PartitionsExists)
-                migrationBuilder.RenameTable(name: "Partitions", newName: "Partitions_old");
+                migrationBuilder.RenameTable("Partitions", newName: "Partitions_old");
 
             migrationBuilder.CreateTable(
-                name: "Partitions",
-                columns: table => new
+                "Partitions",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    Count = table.Column<long>(nullable: false)
+                    Count = table.Column<long>()
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Partitions", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Partitions", x => x.Id); });
 
             if (PartitionsExists)
             {
@@ -1102,14 +1101,16 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     "INSERT INTO Partitions (Id, Name, Count) SELECT Id, Name, Count FROM Partitions_old");
                 migrationBuilder.DropTable("Partitions_old");
             }
+
             #endregion
 
             #region TABLE: Pcmcia
+
             migrationBuilder.CreateTable(
-                name: "Pcmcia",
-                columns: table => new
+                "Pcmcia",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CIS = table.Column<byte[]>(nullable: true),
                     Compliance = table.Column<string>(nullable: true),
@@ -1120,10 +1121,7 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     ManufacturerCodeSql = table.Column<short>(nullable: true),
                     CardCodeSql = table.Column<short>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Pcmcia", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Pcmcia", x => x.Id); });
 
             if (PcmciasExists)
             {
@@ -1131,26 +1129,25 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     "INSERT INTO Pcmcia (Id, CIS, Compliance, ManufacturerCode, CardCode, Manufacturer, ProductName, ManufacturerCodeSql, CardCodeSql) SELECT Id, CIS, Compliance, ManufacturerCodeSql AS ManufacturerCode, CardCodeSql AS CardCode, Manufacturer, ProductName, ManufacturerCodeSql, CardCodeSql FROM Pcmcias");
                 migrationBuilder.DropTable("Pcmcias");
             }
+
             #endregion
 
             #region TABLE: ScsiMode
+
             migrationBuilder.CreateTable(
-                name: "ScsiMode",
-                columns: table => new
+                "ScsiMode",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     MediumType = table.Column<byte>(nullable: true),
-                    WriteProtected = table.Column<bool>(nullable: false),
+                    WriteProtected = table.Column<bool>(),
                     Speed = table.Column<byte>(nullable: true),
                     BufferedMode = table.Column<byte>(nullable: true),
-                    BlankCheckEnabled = table.Column<bool>(nullable: false),
-                    DPOandFUA = table.Column<bool>(nullable: false)
+                    BlankCheckEnabled = table.Column<bool>(),
+                    DPOandFUA = table.Column<bool>()
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ScsiMode", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_ScsiMode", x => x.Id); });
 
             if (ScsiModesExists)
             {
@@ -1158,14 +1155,16 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     "INSERT INTO ScsiMode (Id, MediumType, WriteProtected, Speed, BufferedMode, BlankCheckEnabled, DPOandFUA) SELECT Id, MediumType, WriteProtected, Speed, BufferedMode, BlankCheckEnabled, DPOandFUA FROM ScsiModes");
                 migrationBuilder.DropTable("ScsiModes");
             }
+
             #endregion
 
             #region TABLE: Ssc
+
             migrationBuilder.CreateTable(
-                name: "Ssc",
-                columns: table => new
+                "Ssc",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     BlockSizeGranularity = table.Column<byte>(nullable: true),
                     MaxBlockLength = table.Column<uint>(nullable: true),
@@ -1173,10 +1172,7 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     MaxBlockLengthSql = table.Column<int>(nullable: true),
                     MinBlockLengthSql = table.Column<int>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Ssc", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Ssc", x => x.Id); });
 
             if (SscsExists)
             {
@@ -1184,28 +1180,27 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     "INSERT INTO Ssc (Id, BlockSizeGranularity, MaxBlockLength, MinBlockLength, MaxBlockLengthSql, MinBlockLengthSql) SELECT Id, BlockSizeGranularity, MaxBlockLengthSql AS MaxBlockLength, MinBlockLengthSql AS MinBlockLength, MaxBlockLengthSql, MinBlockLengthSql FROM Sscs");
                 migrationBuilder.DropTable("Sscs");
             }
+
             #endregion
 
             #region TABLE: Usb
+
             migrationBuilder.CreateTable(
-                name: "Usb",
-                columns: table => new
+                "Usb",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    VendorID = table.Column<ushort>(nullable: false),
-                    ProductID = table.Column<ushort>(nullable: false),
+                    VendorID = table.Column<ushort>(),
+                    ProductID = table.Column<ushort>(),
                     Manufacturer = table.Column<string>(nullable: true),
                     Product = table.Column<string>(nullable: true),
-                    RemovableMedia = table.Column<bool>(nullable: false),
+                    RemovableMedia = table.Column<bool>(),
                     Descriptors = table.Column<byte[]>(nullable: true),
-                    VendorIDSql = table.Column<short>(nullable: false),
-                    ProductIDSql = table.Column<short>(nullable: false)
+                    VendorIDSql = table.Column<short>(),
+                    ProductIDSql = table.Column<short>()
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Usb", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Usb", x => x.Id); });
 
             if (UsbsExists)
             {
@@ -1219,28 +1214,26 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     "INSERT INTO Usb (Id, VendorID, ProductID, Manufacturer, Product, RemovableMedia, Descriptors, VendorIDSql, ProductIDSql) SELECT Id, (65536+VendorIDSql) AS VendorID, (65536+ProductIDSql) AS ProductID, Manufacturer, Product, RemovableMedia, Descriptors, VendorIDSql, ProductIDSql FROM Usbs WHERE VendorIDSql < 0 AND ProductIDSql < 0");
                 migrationBuilder.DropTable("Usbs");
             }
+
             #endregion
 
             #region TABLE: UsbVendors
 
             if (UsbVendorsExists)
-                migrationBuilder.RenameTable(name: "UsbVendors", newName: "UsbVendors_old");
+                migrationBuilder.RenameTable("UsbVendors", newName: "UsbVendors_old");
 
             migrationBuilder.CreateTable(
-                name: "UsbVendors",
-                columns: table => new
+                "UsbVendors",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    VendorId = table.Column<int>(nullable: false),
+                    VendorId = table.Column<int>(),
                     Vendor = table.Column<string>(nullable: true),
-                    AddedWhen = table.Column<DateTime>(nullable: false),
-                    ModifiedWhen = table.Column<DateTime>(nullable: false)
+                    AddedWhen = table.Column<DateTime>(),
+                    ModifiedWhen = table.Column<DateTime>()
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UsbVendors", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_UsbVendors", x => x.Id); });
 
             if (UsbVendorsExists)
             {
@@ -1248,26 +1241,24 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     "INSERT INTO UsbVendors (Id, VendorId, Vendor, AddedWhen, ModifiedWhen) SELECT Id, VendorId, Vendor, AddedWhen, ModifiedWhen FROM UsbVendors_old");
                 migrationBuilder.DropTable("UsbVendors_old");
             }
+
             #endregion
 
             #region TABLE: Versions
 
             if (VersionsExists)
-                migrationBuilder.RenameTable(name: "Versions", newName: "Versions_old");
+                migrationBuilder.RenameTable("Versions", newName: "Versions_old");
 
             migrationBuilder.CreateTable(
-                name: "Versions",
-                columns: table => new
+                "Versions",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Value = table.Column<string>(nullable: true),
-                    Count = table.Column<long>(nullable: false)
+                    Count = table.Column<long>()
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Versions", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Versions", x => x.Id); });
 
             if (VersionsExists)
             {
@@ -1275,14 +1266,16 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     "INSERT INTO Versions (`Id`, `Value`, `Count`) SELECT `Id`, `Value`, `Count` FROM Versions_old");
                 migrationBuilder.DropTable("Versions_old");
             }
+
             #endregion
 
             #region TABLE: Mmc
+
             migrationBuilder.CreateTable(
-                name: "Mmc",
-                columns: table => new
+                "Mmc",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     FeaturesId = table.Column<int>(nullable: true),
                     ModeSense2AData = table.Column<byte[]>(nullable: true)
@@ -1291,10 +1284,10 @@ migrationBuilder.DropTable("MmcFeatures_old");
                 {
                     table.PrimaryKey("PK_Mmc", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Mmc_MmcFeatures_FeaturesId",
-                        column: x => x.FeaturesId,
-                        principalTable: "MmcFeatures",
-                        principalColumn: "Id",
+                        "FK_Mmc_MmcFeatures_FeaturesId",
+                        x => x.FeaturesId,
+                        "MmcFeatures",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -1304,16 +1297,18 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     "INSERT INTO Mmc (Id, FeaturesId, ModeSense2AData) SELECT Id, Features_Id, ModeSense2AData FROM Mmcs WHERE EXISTS(SELECT 1 FROM MmcFeatures WHERE MmcFeatures.Id = Features_Id) OR Features_Id IS NULL");
                 migrationBuilder.DropTable("Mmcs");
             }
+
             #endregion
 
             #region TABLE: BlockDescriptor
+
             migrationBuilder.CreateTable(
-                name: "BlockDescriptor",
-                columns: table => new
+                "BlockDescriptor",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Density = table.Column<byte>(nullable: false),
+                    Density = table.Column<byte>(),
                     Blocks = table.Column<ulong>(nullable: true),
                     BlockLength = table.Column<uint>(nullable: true),
                     BlocksSql = table.Column<long>(nullable: true),
@@ -1324,10 +1319,10 @@ migrationBuilder.DropTable("MmcFeatures_old");
                 {
                     table.PrimaryKey("PK_BlockDescriptor", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BlockDescriptor_ScsiMode_ScsiModeId",
-                        column: x => x.ScsiModeId,
-                        principalTable: "ScsiMode",
-                        principalColumn: "Id",
+                        "FK_BlockDescriptor_ScsiMode_ScsiModeId",
+                        x => x.ScsiModeId,
+                        "ScsiMode",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -1337,19 +1332,21 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     "INSERT INTO BlockDescriptor (Id, Density, Blocks, BlocksSql, BlockLength, BlockLengthSql, ScsiModeId) SELECT Id, Density, BlocksSql AS Blocks, BlocksSql, BlockLengthSql AS BlockLength, BlockLengthSql, ScsiMode_Id FROM BlockDescriptors");
                 migrationBuilder.DropTable("BlockDescriptors");
             }
+
             #endregion
 
             #region TABLE: TestedSequentialMedia
+
             migrationBuilder.CreateTable(
-                name: "TestedSequentialMedia",
-                columns: table => new
+                "TestedSequentialMedia",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CanReadMediaSerial = table.Column<bool>(nullable: true),
                     Density = table.Column<byte>(nullable: true),
                     Manufacturer = table.Column<string>(nullable: true),
-                    MediaIsRecognized = table.Column<bool>(nullable: false),
+                    MediaIsRecognized = table.Column<bool>(),
                     MediumType = table.Column<byte>(nullable: true),
                     MediumTypeName = table.Column<string>(nullable: true),
                     Model = table.Column<string>(nullable: true),
@@ -1361,10 +1358,10 @@ migrationBuilder.DropTable("MmcFeatures_old");
                 {
                     table.PrimaryKey("PK_TestedSequentialMedia", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TestedSequentialMedia_Ssc_SscId",
-                        column: x => x.SscId,
-                        principalTable: "Ssc",
-                        principalColumn: "Id",
+                        "FK_TestedSequentialMedia_Ssc_SscId",
+                        x => x.SscId,
+                        "Ssc",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -1374,35 +1371,33 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     "INSERT INTO TestedSequentialMedia (Id, CanReadMediaSerial, Density, Manufacturer, MediaIsRecognized, MediumType, MediumTypeName, Model, ModeSense6Data, ModeSense10Data, SscId) SELECT Id, CanReadMediaSerial, Density, Manufacturer, MediaIsRecognized, MediumType, MediumTypeName, Model, ModeSense6Data, ModeSense10Data, Ssc_Id FROM TestedSequentialMedias");
                 migrationBuilder.DropTable("TestedSequentialMedias");
             }
+
             #endregion
 
             #region TABLE: UsbProducts
 
-            if (UsbProductsExists)
-            {
-                migrationBuilder.RenameTable(name: "UsbProducts", newName: "UsbProducts_old");
-            }
+            if (UsbProductsExists) migrationBuilder.RenameTable("UsbProducts", newName: "UsbProducts_old");
 
             migrationBuilder.CreateTable(
-                name: "UsbProducts",
-                columns: table => new
+                "UsbProducts",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    ProductId = table.Column<int>(nullable: false),
+                    ProductId = table.Column<int>(),
                     Product = table.Column<string>(nullable: true),
-                    AddedWhen = table.Column<DateTime>(nullable: false),
-                    ModifiedWhen = table.Column<DateTime>(nullable: false),
-                    VendorId = table.Column<int>(nullable: false)
+                    AddedWhen = table.Column<DateTime>(),
+                    ModifiedWhen = table.Column<DateTime>(),
+                    VendorId = table.Column<int>()
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UsbProducts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UsbProducts_UsbVendors_VendorId",
-                        column: x => x.VendorId,
-                        principalTable: "UsbVendors",
-                        principalColumn: "Id",
+                        "FK_UsbProducts_UsbVendors_VendorId",
+                        x => x.VendorId,
+                        "UsbVendors",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -1412,23 +1407,25 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     "INSERT INTO UsbProducts (Id, ProductId, Product, AddedWhen, ModifiedWhen, VendorId) SELECT Id, ProductId, Product, AddedWhen, ModifiedWhen, VendorId FROM UsbProducts_old");
                 migrationBuilder.DropTable("UsbProducts_old");
             }
+
             #endregion
 
-#region TABLE: SscSupportedMedia
+            #region TABLE: SscSupportedMedia
+
             migrationBuilder.CreateTable(
-                name: "SscSupportedMedia",
-                columns: table => new
+                "SscSupportedMedia",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    MediumType = table.Column<byte>(nullable: false),
-                    Width = table.Column<ushort>(nullable: false),
-                    Length = table.Column<ushort>(nullable: false),
+                    MediumType = table.Column<byte>(),
+                    Width = table.Column<ushort>(),
+                    Length = table.Column<ushort>(),
                     Organization = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    WidthSql = table.Column<short>(nullable: false),
-                    LengthSql = table.Column<short>(nullable: false),
+                    WidthSql = table.Column<short>(),
+                    LengthSql = table.Column<short>(),
                     SscId = table.Column<int>(nullable: true),
                     TestedSequentialMediaId = table.Column<int>(nullable: true)
                 },
@@ -1436,16 +1433,16 @@ migrationBuilder.DropTable("MmcFeatures_old");
                 {
                     table.PrimaryKey("PK_SscSupportedMedia", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SscSupportedMedia_Ssc_SscId",
-                        column: x => x.SscId,
-                        principalTable: "Ssc",
-                        principalColumn: "Id",
+                        "FK_SscSupportedMedia_Ssc_SscId",
+                        x => x.SscId,
+                        "Ssc",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_SscSupportedMedia_TestedSequentialMedia_TestedSequentialMedi~",
-                        column: x => x.TestedSequentialMediaId,
-                        principalTable: "TestedSequentialMedia",
-                        principalColumn: "Id",
+                        "FK_SscSupportedMedia_TestedSequentialMedia_TestedSequentialMedi~",
+                        x => x.TestedSequentialMediaId,
+                        "TestedSequentialMedia",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -1455,31 +1452,33 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     "INSERT INTO SscSupportedMedia (Id, MediumType, Width, Length, Organization, Name, Description, WidthSql, LengthSql, SscId, TestedSequentialMediaId) SELECT Id, MediumType, WidthSql AS Width, LengthSql AS Length, Organization, Name, Description, WidthSql, LengthSql, Ssc_Id, TestedSequentialMedia_Id FROM SscSupportedMedias");
                 migrationBuilder.DropTable("SscSupportedMedias");
             }
+
             #endregion
 
             #region TABLE: SupportedDensity
+
             migrationBuilder.CreateTable(
-                name: "SupportedDensity",
-                columns: table => new
+                "SupportedDensity",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    PrimaryCode = table.Column<byte>(nullable: false),
-                    SecondaryCode = table.Column<byte>(nullable: false),
-                    Writable = table.Column<bool>(nullable: false),
-                    Duplicate = table.Column<bool>(nullable: false),
-                    DefaultDensity = table.Column<bool>(nullable: false),
-                    BitsPerMm = table.Column<uint>(nullable: false),
-                    Width = table.Column<ushort>(nullable: false),
-                    Tracks = table.Column<ushort>(nullable: false),
-                    Capacity = table.Column<uint>(nullable: false),
+                    PrimaryCode = table.Column<byte>(),
+                    SecondaryCode = table.Column<byte>(),
+                    Writable = table.Column<bool>(),
+                    Duplicate = table.Column<bool>(),
+                    DefaultDensity = table.Column<bool>(),
+                    BitsPerMm = table.Column<uint>(),
+                    Width = table.Column<ushort>(),
+                    Tracks = table.Column<ushort>(),
+                    Capacity = table.Column<uint>(),
                     Organization = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    BitsPerMmSql = table.Column<int>(nullable: false),
-                    WidthSql = table.Column<short>(nullable: false),
-                    TracksSql = table.Column<short>(nullable: false),
-                    CapacitySql = table.Column<int>(nullable: false),
+                    BitsPerMmSql = table.Column<int>(),
+                    WidthSql = table.Column<short>(),
+                    TracksSql = table.Column<short>(),
+                    CapacitySql = table.Column<int>(),
                     SscId = table.Column<int>(nullable: true),
                     TestedSequentialMediaId = table.Column<int>(nullable: true)
                 },
@@ -1487,16 +1486,16 @@ migrationBuilder.DropTable("MmcFeatures_old");
                 {
                     table.PrimaryKey("PK_SupportedDensity", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SupportedDensity_Ssc_SscId",
-                        column: x => x.SscId,
-                        principalTable: "Ssc",
-                        principalColumn: "Id",
+                        "FK_SupportedDensity_Ssc_SscId",
+                        x => x.SscId,
+                        "Ssc",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_SupportedDensity_TestedSequentialMedia_TestedSequentialMedia~",
-                        column: x => x.TestedSequentialMediaId,
-                        principalTable: "TestedSequentialMedia",
-                        principalColumn: "Id",
+                        "FK_SupportedDensity_TestedSequentialMedia_TestedSequentialMedia~",
+                        x => x.TestedSequentialMediaId,
+                        "TestedSequentialMedia",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -1506,26 +1505,28 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     "INSERT INTO SupportedDensity (PrimaryCode, SecondaryCode, Writable, Duplicate, DefaultDensity, BitsPerMm, Width, Tracks, Capacity, Organization, Name, Description, BitsPerMmSql, WidthSql, TracksSql, CapacitySql, SscId, TestedSequentialMediaId) SELECT PrimaryCode, SecondaryCode, Writable, Duplicate, DefaultDensity, BitsPerMmSql AS BitsPerMm, WidthSql AS Width, TracksSql AS Tracks, CapacitySql AS Capacity, Organization, Name, Description, BitsPerMmSql, WidthSql, TracksSql, CapacitySql, Ssc_Id, TestedSequentialMedia_Id FROM SupportedDensities");
                 migrationBuilder.DropTable("SupportedDensities");
             }
-#endregion
 
-#region TABLE: DensityCode
+            #endregion
+
+            #region TABLE: DensityCode
+
             migrationBuilder.CreateTable(
-                name: "DensityCode",
-                columns: table => new
+                "DensityCode",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Code = table.Column<int>(nullable: false),
+                    Code = table.Column<int>(),
                     SscSupportedMediaId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DensityCode", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DensityCode_SscSupportedMedia_SscSupportedMediaId",
-                        column: x => x.SscSupportedMediaId,
-                        principalTable: "SscSupportedMedia",
-                        principalColumn: "Id",
+                        "FK_DensityCode_SscSupportedMedia_SscSupportedMediaId",
+                        x => x.SscSupportedMediaId,
+                        "SscSupportedMedia",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -1535,23 +1536,24 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     "INSERT INTO DensityCode (Id, Code, SscSupportedMediaId) SELECT Id, Code, SscSupportedMedia_Id FROM DensityCodes");
                 migrationBuilder.DropTable("DensityCodes");
             }
+
             #endregion
 
             #region TABLE: Devices
 
             if (DevicesExists)
-                migrationBuilder.RenameTable(name: "Devices", newName: "Devices_old");
+                migrationBuilder.RenameTable("Devices", newName: "Devices_old");
 
             migrationBuilder.CreateTable(
-                name: "Devices",
-                columns: table => new
+                "Devices",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     USBId = table.Column<int>(nullable: true),
                     FireWireId = table.Column<int>(nullable: true),
                     PCMCIAId = table.Column<int>(nullable: true),
-                    CompactFlash = table.Column<bool>(nullable: false),
+                    CompactFlash = table.Column<bool>(),
                     ATAId = table.Column<int>(nullable: true),
                     ATAPIId = table.Column<int>(nullable: true),
                     SCSIId = table.Column<int>(nullable: true),
@@ -1560,50 +1562,50 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     Manufacturer = table.Column<string>(nullable: true),
                     Model = table.Column<string>(nullable: true),
                     Revision = table.Column<string>(nullable: true),
-                    Type = table.Column<int>(nullable: false),
-                    AddedWhen = table.Column<DateTime>(nullable: false),
+                    Type = table.Column<int>(),
+                    AddedWhen = table.Column<DateTime>(),
                     ModifiedWhen = table.Column<DateTime>(nullable: true),
                     CdOffsetId = table.Column<int>(nullable: true),
-                    OptimalMultipleSectorsRead = table.Column<int>(nullable: false)
+                    OptimalMultipleSectorsRead = table.Column<int>()
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Devices", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Devices_CdOffsets_CdOffsetId",
-                        column: x => x.CdOffsetId,
-                        principalTable: "CdOffsets",
-                        principalColumn: "Id",
+                        "FK_Devices_CdOffsets_CdOffsetId",
+                        x => x.CdOffsetId,
+                        "CdOffsets",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Devices_FireWire_FireWireId",
-                        column: x => x.FireWireId,
-                        principalTable: "FireWire",
-                        principalColumn: "Id",
+                        "FK_Devices_FireWire_FireWireId",
+                        x => x.FireWireId,
+                        "FireWire",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Devices_MmcSd_MultiMediaCardId",
-                        column: x => x.MultiMediaCardId,
-                        principalTable: "MmcSd",
-                        principalColumn: "Id",
+                        "FK_Devices_MmcSd_MultiMediaCardId",
+                        x => x.MultiMediaCardId,
+                        "MmcSd",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Devices_Pcmcia_PCMCIAId",
-                        column: x => x.PCMCIAId,
-                        principalTable: "Pcmcia",
-                        principalColumn: "Id",
+                        "FK_Devices_Pcmcia_PCMCIAId",
+                        x => x.PCMCIAId,
+                        "Pcmcia",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Devices_MmcSd_SecureDigitalId",
-                        column: x => x.SecureDigitalId,
-                        principalTable: "MmcSd",
-                        principalColumn: "Id",
+                        "FK_Devices_MmcSd_SecureDigitalId",
+                        x => x.SecureDigitalId,
+                        "MmcSd",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Devices_Usb_USBId",
-                        column: x => x.USBId,
-                        principalTable: "Usb",
-                        principalColumn: "Id",
+                        "FK_Devices_Usb_USBId",
+                        x => x.USBId,
+                        "Usb",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -1613,18 +1615,19 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     "INSERT INTO Devices (Id, USBId, FireWireId, PCMCIAId, CompactFlash, ATAId, ATAPIId, SCSIId, MultiMediaCardId, SecureDigitalId, Manufacturer, Model, Revision, Type, AddedWhen, ModifiedWhen, CdOffsetId, OptimalMultipleSectorsRead) SELECT Id, USB_Id, FireWire_Id, PCMCIA_Id, CompactFlash, ATA_Id, ATAPI_Id, SCSI_Id, MultiMediaCard_Id, SecureDigital_Id, Manufacturer, Model, Revision, Type, AddedWhen, ModifiedWhen, CdOffset_Id, OptimalMultipleSectorsRead FROM Devices_old");
                 migrationBuilder.DropTable("Devices_old");
             }
+
             #endregion
 
             #region TABLE: DeviceStats
 
             if (DeviceStatsExists)
-                migrationBuilder.RenameTable(name: "DeviceStats", newName: "DeviceStats_old");
+                migrationBuilder.RenameTable("DeviceStats", newName: "DeviceStats_old");
 
             migrationBuilder.CreateTable(
-                name: "DeviceStats",
-                columns: table => new
+                "DeviceStats",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Manufacturer = table.Column<string>(nullable: true),
                     Model = table.Column<string>(nullable: true),
@@ -1636,10 +1639,10 @@ migrationBuilder.DropTable("MmcFeatures_old");
                 {
                     table.PrimaryKey("PK_DeviceStats", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DeviceStats_Devices_ReportId",
-                        column: x => x.ReportId,
-                        principalTable: "Devices",
-                        principalColumn: "Id",
+                        "FK_DeviceStats_Devices_ReportId",
+                        x => x.ReportId,
+                        "Devices",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -1649,19 +1652,21 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     "INSERT INTO DeviceStats (Id, Manufacturer, Model, Revision, Bus, ReportId) SELECT Id, Manufacturer, Model, Revision, Bus, Report_Id FROM DeviceStats_old");
                 migrationBuilder.DropTable("DeviceStats_old");
             }
+
             #endregion
 
             #region TABLE: Reports
+
             migrationBuilder.CreateTable(
-                name: "Reports",
-                columns: table => new
+                "Reports",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     USBId = table.Column<int>(nullable: true),
                     FireWireId = table.Column<int>(nullable: true),
                     PCMCIAId = table.Column<int>(nullable: true),
-                    CompactFlash = table.Column<bool>(nullable: false),
+                    CompactFlash = table.Column<bool>(),
                     ATAId = table.Column<int>(nullable: true),
                     ATAPIId = table.Column<int>(nullable: true),
                     SCSIId = table.Column<int>(nullable: true),
@@ -1670,41 +1675,41 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     Manufacturer = table.Column<string>(nullable: true),
                     Model = table.Column<string>(nullable: true),
                     Revision = table.Column<string>(nullable: true),
-                    Type = table.Column<int>(nullable: false),
-                    UploadedWhen = table.Column<DateTime>(nullable: false)
+                    Type = table.Column<int>(),
+                    UploadedWhen = table.Column<DateTime>()
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reports", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reports_FireWire_FireWireId",
-                        column: x => x.FireWireId,
-                        principalTable: "FireWire",
-                        principalColumn: "Id",
+                        "FK_Reports_FireWire_FireWireId",
+                        x => x.FireWireId,
+                        "FireWire",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Reports_MmcSd_MultiMediaCardId",
-                        column: x => x.MultiMediaCardId,
-                        principalTable: "MmcSd",
-                        principalColumn: "Id",
+                        "FK_Reports_MmcSd_MultiMediaCardId",
+                        x => x.MultiMediaCardId,
+                        "MmcSd",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Reports_Pcmcia_PCMCIAId",
-                        column: x => x.PCMCIAId,
-                        principalTable: "Pcmcia",
-                        principalColumn: "Id",
+                        "FK_Reports_Pcmcia_PCMCIAId",
+                        x => x.PCMCIAId,
+                        "Pcmcia",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Reports_MmcSd_SecureDigitalId",
-                        column: x => x.SecureDigitalId,
-                        principalTable: "MmcSd",
-                        principalColumn: "Id",
+                        "FK_Reports_MmcSd_SecureDigitalId",
+                        x => x.SecureDigitalId,
+                        "MmcSd",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Reports_Usb_USBId",
-                        column: x => x.USBId,
-                        principalTable: "Usb",
-                        principalColumn: "Id",
+                        "FK_Reports_Usb_USBId",
+                        x => x.USBId,
+                        "Usb",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -1714,14 +1719,16 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     "INSERT INTO Reports (Id, USBId, FireWireId, PCMCIAId, CompactFlash, ATAId, ATAPIId, SCSIId, MultiMediaCardId, SecureDigitalId, Manufacturer, Model, Revision, Type, UploadedWhen) SELECT Id, USB_Id, FireWire_Id, PCMCIA_Id, CompactFlash, ATA_Id, ATAPI_Id, SCSI_Id, MultiMediaCard_Id, SecureDigital_Id, Manufacturer, Model, Revision, Type, UploadedWhen FROM UploadedReports");
                 migrationBuilder.DropTable("UploadedReports");
             }
+
             #endregion
 
             #region TABLE: TestedMedia
+
             migrationBuilder.CreateTable(
-                name: "TestedMedia",
-                columns: table => new
+                "TestedMedia",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     IdentifyData = table.Column<byte[]>(nullable: true),
                     Blocks = table.Column<ulong>(nullable: true),
@@ -1760,7 +1767,7 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     Density = table.Column<byte>(nullable: true),
                     LongBlockSize = table.Column<uint>(nullable: true),
                     Manufacturer = table.Column<string>(nullable: true),
-                    MediaIsRecognized = table.Column<bool>(nullable: false),
+                    MediaIsRecognized = table.Column<bool>(),
                     MediumType = table.Column<byte>(nullable: true),
                     MediumTypeName = table.Column<string>(nullable: true),
                     Model = table.Column<string>(nullable: true),
@@ -1893,29 +1900,29 @@ migrationBuilder.DropTable("MmcFeatures_old");
                 {
                     table.PrimaryKey("PK_TestedMedia", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TestedMedia_Chs_CHSId",
-                        column: x => x.CHSId,
-                        principalTable: "Chs",
-                        principalColumn: "Id",
+                        "FK_TestedMedia_Chs_CHSId",
+                        x => x.CHSId,
+                        "Chs",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_TestedMedia_Chs_CurrentCHSId",
-                        column: x => x.CurrentCHSId,
-                        principalTable: "Chs",
-                        principalColumn: "Id",
+                        "FK_TestedMedia_Chs_CurrentCHSId",
+                        x => x.CurrentCHSId,
+                        "Chs",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_TestedMedia_Mmc_MmcId",
-                        column: x => x.MmcId,
-                        principalTable: "Mmc",
-                        principalColumn: "Id",
+                        "FK_TestedMedia_Mmc_MmcId",
+                        x => x.MmcId,
+                        "Mmc",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             if (TestedMediasExists)
             {
-                string preFormat =
-                        @"INSERT INTO TestedMedia (Id, IdentifyData, Blocks, BlockSize, CanReadAACS, CanReadADIP,
+                var preFormat =
+                    @"INSERT INTO TestedMedia (Id, IdentifyData, Blocks, BlockSize, CanReadAACS, CanReadADIP,
                          CanReadATIP, CanReadBCA, CanReadC2Pointers, CanReadCMI, CanReadCorrectedSubchannel,
                          CanReadCorrectedSubchannelWithC2, CanReadDCB, CanReadDDS, CanReadDMI, CanReadDiscInformation,
                          CanReadFullTOC, CanReadHDCMI, CanReadLayerCapacity, CanReadFirstTrackPreGap, CanReadLeadIn,
@@ -1994,14 +2001,16 @@ migrationBuilder.DropTable("MmcFeatures_old");
 
                 migrationBuilder.DropTable("TestedMedias");
             }
+
             #endregion
 
             #region TABLE: Ata
+
             migrationBuilder.CreateTable(
-                name: "Ata",
-                columns: table => new
+                "Ata",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Identify = table.Column<byte[]>(nullable: true),
                     ReadCapabilitiesId = table.Column<int>(nullable: true)
@@ -2010,10 +2019,10 @@ migrationBuilder.DropTable("MmcFeatures_old");
                 {
                     table.PrimaryKey("PK_Ata", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Ata_TestedMedia_ReadCapabilitiesId",
-                        column: x => x.ReadCapabilitiesId,
-                        principalTable: "TestedMedia",
-                        principalColumn: "Id",
+                        "FK_Ata_TestedMedia_ReadCapabilitiesId",
+                        x => x.ReadCapabilitiesId,
+                        "TestedMedia",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -2023,19 +2032,21 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     "INSERT INTO Ata (Id, Identify, ReadCapabilitiesId) SELECT Id, Identify, ReadCapabilities_Id FROM Atas");
                 migrationBuilder.DropTable("Atas");
             }
+
             #endregion
 
             #region TABLE: Scsi
+
             migrationBuilder.CreateTable(
-                name: "Scsi",
-                columns: table => new
+                "Scsi",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     InquiryData = table.Column<byte[]>(nullable: true),
-                    SupportsModeSense6 = table.Column<bool>(nullable: false),
-                    SupportsModeSense10 = table.Column<bool>(nullable: false),
-                    SupportsModeSubpages = table.Column<bool>(nullable: false),
+                    SupportsModeSense6 = table.Column<bool>(),
+                    SupportsModeSense10 = table.Column<bool>(),
+                    SupportsModeSubpages = table.Column<bool>(),
                     ModeSenseId = table.Column<int>(nullable: true),
                     MultiMediaDeviceId = table.Column<int>(nullable: true),
                     ReadCapabilitiesId = table.Column<int>(nullable: true),
@@ -2051,28 +2062,28 @@ migrationBuilder.DropTable("MmcFeatures_old");
                 {
                     table.PrimaryKey("PK_Scsi", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Scsi_ScsiMode_ModeSenseId",
-                        column: x => x.ModeSenseId,
-                        principalTable: "ScsiMode",
-                        principalColumn: "Id",
+                        "FK_Scsi_ScsiMode_ModeSenseId",
+                        x => x.ModeSenseId,
+                        "ScsiMode",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Scsi_Mmc_MultiMediaDeviceId",
-                        column: x => x.MultiMediaDeviceId,
-                        principalTable: "Mmc",
-                        principalColumn: "Id",
+                        "FK_Scsi_Mmc_MultiMediaDeviceId",
+                        x => x.MultiMediaDeviceId,
+                        "Mmc",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Scsi_TestedMedia_ReadCapabilitiesId",
-                        column: x => x.ReadCapabilitiesId,
-                        principalTable: "TestedMedia",
-                        principalColumn: "Id",
+                        "FK_Scsi_TestedMedia_ReadCapabilitiesId",
+                        x => x.ReadCapabilitiesId,
+                        "TestedMedia",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Scsi_Ssc_SequentialDeviceId",
-                        column: x => x.SequentialDeviceId,
-                        principalTable: "Ssc",
-                        principalColumn: "Id",
+                        "FK_Scsi_Ssc_SequentialDeviceId",
+                        x => x.SequentialDeviceId,
+                        "Ssc",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -2082,16 +2093,18 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     "INSERT INTO Scsi (Id, InquiryData, SupportsModeSense6, SupportsModeSense10, SupportsModeSubpages, ModeSenseId, MultiMediaDeviceId, ReadCapabilitiesId, SequentialDeviceId, ModeSense6Data, ModeSense10Data, ModeSense6CurrentData, ModeSense10CurrentData, ModeSense6ChangeableData, ModeSense10ChangeableData) SELECT Id, InquiryData, SupportsModeSense6, SupportsModeSense10, SupportsModeSubpages, ModeSense_Id, MultiMediaDevice_Id, ReadCapabilities_Id, SequentialDevice_Id, ModeSense6Data, ModeSense10Data, ModeSense6CurrentData, ModeSense10CurrentData, ModeSense6ChangeableData, ModeSense10ChangeableData FROM Scsis WHERE EXISTS(SELECT 1 from Mmc WHERE Mmc.Id = Scsis.MultiMediaDevice_Id) OR MultiMediaDevice_Id IS NULL");
                 migrationBuilder.DropTable("Scsis");
             }
+
             #endregion
 
             #region TABLE: ScsiPage
+
             migrationBuilder.CreateTable(
-                name: "ScsiPage",
-                columns: table => new
+                "ScsiPage",
+                table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>()
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    page = table.Column<byte>(nullable: false),
+                    page = table.Column<byte>(),
                     subpage = table.Column<byte>(nullable: true),
                     value = table.Column<byte[]>(nullable: true),
                     ScsiId = table.Column<int>(nullable: true),
@@ -2101,16 +2114,16 @@ migrationBuilder.DropTable("MmcFeatures_old");
                 {
                     table.PrimaryKey("PK_ScsiPage", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ScsiPage_Scsi_ScsiId",
-                        column: x => x.ScsiId,
-                        principalTable: "Scsi",
-                        principalColumn: "Id",
+                        "FK_ScsiPage_Scsi_ScsiId",
+                        x => x.ScsiId,
+                        "Scsi",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ScsiPage_ScsiMode_ScsiModeId",
-                        column: x => x.ScsiModeId,
-                        principalTable: "ScsiMode",
-                        principalColumn: "Id",
+                        "FK_ScsiPage_ScsiMode_ScsiModeId",
+                        x => x.ScsiModeId,
+                        "ScsiMode",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -2120,271 +2133,272 @@ migrationBuilder.DropTable("MmcFeatures_old");
                     "INSERT INTO ScsiPage (Id, page, subpage, value, ScsiId, ScsiModeId) SELECT Id, page, subpage, value, Scsi_Id, ScsiMode_Id FROM ScsiPages");
                 migrationBuilder.DropTable("ScsiPages");
             }
+
             #endregion
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ata_ReadCapabilitiesId",
-                table: "Ata",
-                column: "ReadCapabilitiesId");
+                "IX_Ata_ReadCapabilitiesId",
+                "Ata",
+                "ReadCapabilitiesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BlockDescriptor_ScsiModeId",
-                table: "BlockDescriptor",
-                column: "ScsiModeId");
+                "IX_BlockDescriptor_ScsiModeId",
+                "BlockDescriptor",
+                "ScsiModeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CdOffsets_ModifiedWhen",
-                table: "CdOffsets",
-                column: "ModifiedWhen");
+                "IX_CdOffsets_ModifiedWhen",
+                "CdOffsets",
+                "ModifiedWhen");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DensityCode_SscSupportedMediaId",
-                table: "DensityCode",
-                column: "SscSupportedMediaId");
+                "IX_DensityCode_SscSupportedMediaId",
+                "DensityCode",
+                "SscSupportedMediaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Devices_ATAId",
-                table: "Devices",
-                column: "ATAId");
+                "IX_Devices_ATAId",
+                "Devices",
+                "ATAId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Devices_ATAPIId",
-                table: "Devices",
-                column: "ATAPIId");
+                "IX_Devices_ATAPIId",
+                "Devices",
+                "ATAPIId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Devices_CdOffsetId",
-                table: "Devices",
-                column: "CdOffsetId");
+                "IX_Devices_CdOffsetId",
+                "Devices",
+                "CdOffsetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Devices_FireWireId",
-                table: "Devices",
-                column: "FireWireId");
+                "IX_Devices_FireWireId",
+                "Devices",
+                "FireWireId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Devices_ModifiedWhen",
-                table: "Devices",
-                column: "ModifiedWhen");
+                "IX_Devices_ModifiedWhen",
+                "Devices",
+                "ModifiedWhen");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Devices_MultiMediaCardId",
-                table: "Devices",
-                column: "MultiMediaCardId");
+                "IX_Devices_MultiMediaCardId",
+                "Devices",
+                "MultiMediaCardId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Devices_PCMCIAId",
-                table: "Devices",
-                column: "PCMCIAId");
+                "IX_Devices_PCMCIAId",
+                "Devices",
+                "PCMCIAId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Devices_SCSIId",
-                table: "Devices",
-                column: "SCSIId");
+                "IX_Devices_SCSIId",
+                "Devices",
+                "SCSIId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Devices_SecureDigitalId",
-                table: "Devices",
-                column: "SecureDigitalId");
+                "IX_Devices_SecureDigitalId",
+                "Devices",
+                "SecureDigitalId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Devices_USBId",
-                table: "Devices",
-                column: "USBId");
+                "IX_Devices_USBId",
+                "Devices",
+                "USBId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DeviceStats_ReportId",
-                table: "DeviceStats",
-                column: "ReportId");
+                "IX_DeviceStats_ReportId",
+                "DeviceStats",
+                "ReportId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Mmc_FeaturesId",
-                table: "Mmc",
-                column: "FeaturesId");
+                "IX_Mmc_FeaturesId",
+                "Mmc",
+                "FeaturesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reports_ATAId",
-                table: "Reports",
-                column: "ATAId");
+                "IX_Reports_ATAId",
+                "Reports",
+                "ATAId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reports_ATAPIId",
-                table: "Reports",
-                column: "ATAPIId");
+                "IX_Reports_ATAPIId",
+                "Reports",
+                "ATAPIId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reports_FireWireId",
-                table: "Reports",
-                column: "FireWireId");
+                "IX_Reports_FireWireId",
+                "Reports",
+                "FireWireId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reports_MultiMediaCardId",
-                table: "Reports",
-                column: "MultiMediaCardId");
+                "IX_Reports_MultiMediaCardId",
+                "Reports",
+                "MultiMediaCardId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reports_PCMCIAId",
-                table: "Reports",
-                column: "PCMCIAId");
+                "IX_Reports_PCMCIAId",
+                "Reports",
+                "PCMCIAId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reports_SCSIId",
-                table: "Reports",
-                column: "SCSIId");
+                "IX_Reports_SCSIId",
+                "Reports",
+                "SCSIId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reports_SecureDigitalId",
-                table: "Reports",
-                column: "SecureDigitalId");
+                "IX_Reports_SecureDigitalId",
+                "Reports",
+                "SecureDigitalId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reports_USBId",
-                table: "Reports",
-                column: "USBId");
+                "IX_Reports_USBId",
+                "Reports",
+                "USBId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Scsi_ModeSenseId",
-                table: "Scsi",
-                column: "ModeSenseId");
+                "IX_Scsi_ModeSenseId",
+                "Scsi",
+                "ModeSenseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Scsi_MultiMediaDeviceId",
-                table: "Scsi",
-                column: "MultiMediaDeviceId");
+                "IX_Scsi_MultiMediaDeviceId",
+                "Scsi",
+                "MultiMediaDeviceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Scsi_ReadCapabilitiesId",
-                table: "Scsi",
-                column: "ReadCapabilitiesId");
+                "IX_Scsi_ReadCapabilitiesId",
+                "Scsi",
+                "ReadCapabilitiesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Scsi_SequentialDeviceId",
-                table: "Scsi",
-                column: "SequentialDeviceId");
+                "IX_Scsi_SequentialDeviceId",
+                "Scsi",
+                "SequentialDeviceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ScsiPage_ScsiId",
-                table: "ScsiPage",
-                column: "ScsiId");
+                "IX_ScsiPage_ScsiId",
+                "ScsiPage",
+                "ScsiId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ScsiPage_ScsiModeId",
-                table: "ScsiPage",
-                column: "ScsiModeId");
+                "IX_ScsiPage_ScsiModeId",
+                "ScsiPage",
+                "ScsiModeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SscSupportedMedia_SscId",
-                table: "SscSupportedMedia",
-                column: "SscId");
+                "IX_SscSupportedMedia_SscId",
+                "SscSupportedMedia",
+                "SscId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SscSupportedMedia_TestedSequentialMediaId",
-                table: "SscSupportedMedia",
-                column: "TestedSequentialMediaId");
+                "IX_SscSupportedMedia_TestedSequentialMediaId",
+                "SscSupportedMedia",
+                "TestedSequentialMediaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SupportedDensity_SscId",
-                table: "SupportedDensity",
-                column: "SscId");
+                "IX_SupportedDensity_SscId",
+                "SupportedDensity",
+                "SscId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SupportedDensity_TestedSequentialMediaId",
-                table: "SupportedDensity",
-                column: "TestedSequentialMediaId");
+                "IX_SupportedDensity_TestedSequentialMediaId",
+                "SupportedDensity",
+                "TestedSequentialMediaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TestedMedia_AtaId",
-                table: "TestedMedia",
-                column: "AtaId");
+                "IX_TestedMedia_AtaId",
+                "TestedMedia",
+                "AtaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TestedMedia_CHSId",
-                table: "TestedMedia",
-                column: "CHSId");
+                "IX_TestedMedia_CHSId",
+                "TestedMedia",
+                "CHSId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TestedMedia_CurrentCHSId",
-                table: "TestedMedia",
-                column: "CurrentCHSId");
+                "IX_TestedMedia_CurrentCHSId",
+                "TestedMedia",
+                "CurrentCHSId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TestedMedia_MmcId",
-                table: "TestedMedia",
-                column: "MmcId");
+                "IX_TestedMedia_MmcId",
+                "TestedMedia",
+                "MmcId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TestedMedia_ScsiId",
-                table: "TestedMedia",
-                column: "ScsiId");
+                "IX_TestedMedia_ScsiId",
+                "TestedMedia",
+                "ScsiId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TestedSequentialMedia_SscId",
-                table: "TestedSequentialMedia",
-                column: "SscId");
+                "IX_TestedSequentialMedia_SscId",
+                "TestedSequentialMedia",
+                "SscId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UsbProducts_ModifiedWhen",
-                table: "UsbProducts",
-                column: "ModifiedWhen");
+                "IX_UsbProducts_ModifiedWhen",
+                "UsbProducts",
+                "ModifiedWhen");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UsbProducts_ProductId",
-                table: "UsbProducts",
-                column: "ProductId");
+                "IX_UsbProducts_ProductId",
+                "UsbProducts",
+                "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UsbProducts_VendorId",
-                table: "UsbProducts",
-                column: "VendorId");
+                "IX_UsbProducts_VendorId",
+                "UsbProducts",
+                "VendorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UsbVendors_ModifiedWhen",
-                table: "UsbVendors",
-                column: "ModifiedWhen");
+                "IX_UsbVendors_ModifiedWhen",
+                "UsbVendors",
+                "ModifiedWhen");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UsbVendors_VendorId",
-                table: "UsbVendors",
-                column: "VendorId",
+                "IX_UsbVendors_VendorId",
+                "UsbVendors",
+                "VendorId",
                 unique: true);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Devices_Ata_ATAId",
-                table: "Devices",
-                column: "ATAId",
-                principalTable: "Ata",
+                "FK_Devices_Ata_ATAId",
+                "Devices",
+                "ATAId",
+                "Ata",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Devices_Ata_ATAPIId",
-                table: "Devices",
-                column: "ATAPIId",
-                principalTable: "Ata",
+                "FK_Devices_Ata_ATAPIId",
+                "Devices",
+                "ATAPIId",
+                "Ata",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Devices_Scsi_SCSIId",
-                table: "Devices",
-                column: "SCSIId",
-                principalTable: "Scsi",
+                "FK_Devices_Scsi_SCSIId",
+                "Devices",
+                "SCSIId",
+                "Scsi",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Reports_Ata_ATAId",
-                table: "Reports",
-                column: "ATAId",
-                principalTable: "Ata",
+                "FK_Reports_Ata_ATAId",
+                "Reports",
+                "ATAId",
+                "Ata",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Reports_Ata_ATAPIId",
-                table: "Reports",
-                column: "ATAPIId",
-                principalTable: "Ata",
+                "FK_Reports_Ata_ATAPIId",
+                "Reports",
+                "ATAPIId",
+                "Ata",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
@@ -2392,138 +2406,138 @@ migrationBuilder.DropTable("MmcFeatures_old");
                 "DELETE FROM Reports WHERE NOT EXISTS(SELECT 1 from Scsi WHERE Scsi.Id = SCSIId) AND SCSIId IS NOT NULL");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Reports_Scsi_SCSIId",
-                table: "Reports",
-                column: "SCSIId",
-                principalTable: "Scsi",
+                "FK_Reports_Scsi_SCSIId",
+                "Reports",
+                "SCSIId",
+                "Scsi",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_TestedMedia_Ata_AtaId",
-                table: "TestedMedia",
-                column: "AtaId",
-                principalTable: "Ata",
+                "FK_TestedMedia_Ata_AtaId",
+                "TestedMedia",
+                "AtaId",
+                "Ata",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_TestedMedia_Scsi_ScsiId",
-                table: "TestedMedia",
-                column: "ScsiId",
-                principalTable: "Scsi",
+                "FK_TestedMedia_Scsi_ScsiId",
+                "TestedMedia",
+                "ScsiId",
+                "Scsi",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
-            if(EFExists)
+            if (EFExists)
                 migrationBuilder.DropTable("__MigrationHistory");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Ata_TestedMedia_ReadCapabilitiesId",
-                table: "Ata");
+                "FK_Ata_TestedMedia_ReadCapabilitiesId",
+                "Ata");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Scsi_TestedMedia_ReadCapabilitiesId",
-                table: "Scsi");
+                "FK_Scsi_TestedMedia_ReadCapabilitiesId",
+                "Scsi");
 
             migrationBuilder.DropTable(
-                name: "BlockDescriptor");
+                "BlockDescriptor");
 
             migrationBuilder.DropTable(
-                name: "Commands");
+                "Commands");
 
             migrationBuilder.DropTable(
-                name: "DensityCode");
+                "DensityCode");
 
             migrationBuilder.DropTable(
-                name: "DeviceStats");
+                "DeviceStats");
 
             migrationBuilder.DropTable(
-                name: "Filesystems");
+                "Filesystems");
 
             migrationBuilder.DropTable(
-                name: "Filters");
+                "Filters");
 
             migrationBuilder.DropTable(
-                name: "MediaFormats");
+                "MediaFormats");
 
             migrationBuilder.DropTable(
-                name: "Medias");
+                "Medias");
 
             migrationBuilder.DropTable(
-                name: "OperatingSystems");
+                "OperatingSystems");
 
             migrationBuilder.DropTable(
-                name: "Partitions");
+                "Partitions");
 
             migrationBuilder.DropTable(
-                name: "Reports");
+                "Reports");
 
             migrationBuilder.DropTable(
-                name: "ScsiPage");
+                "ScsiPage");
 
             migrationBuilder.DropTable(
-                name: "SupportedDensity");
+                "SupportedDensity");
 
             migrationBuilder.DropTable(
-                name: "UsbProducts");
+                "UsbProducts");
 
             migrationBuilder.DropTable(
-                name: "Versions");
+                "Versions");
 
             migrationBuilder.DropTable(
-                name: "SscSupportedMedia");
+                "SscSupportedMedia");
 
             migrationBuilder.DropTable(
-                name: "Devices");
+                "Devices");
 
             migrationBuilder.DropTable(
-                name: "UsbVendors");
+                "UsbVendors");
 
             migrationBuilder.DropTable(
-                name: "TestedSequentialMedia");
+                "TestedSequentialMedia");
 
             migrationBuilder.DropTable(
-                name: "CdOffsets");
+                "CdOffsets");
 
             migrationBuilder.DropTable(
-                name: "FireWire");
+                "FireWire");
 
             migrationBuilder.DropTable(
-                name: "MmcSd");
+                "MmcSd");
 
             migrationBuilder.DropTable(
-                name: "Pcmcia");
+                "Pcmcia");
 
             migrationBuilder.DropTable(
-                name: "Usb");
+                "Usb");
 
             migrationBuilder.DropTable(
-                name: "TestedMedia");
+                "TestedMedia");
 
             migrationBuilder.DropTable(
-                name: "Ata");
+                "Ata");
 
             migrationBuilder.DropTable(
-                name: "Chs");
+                "Chs");
 
             migrationBuilder.DropTable(
-                name: "Scsi");
+                "Scsi");
 
             migrationBuilder.DropTable(
-                name: "ScsiMode");
+                "ScsiMode");
 
             migrationBuilder.DropTable(
-                name: "Mmc");
+                "Mmc");
 
             migrationBuilder.DropTable(
-                name: "Ssc");
+                "Ssc");
 
             migrationBuilder.DropTable(
-                name: "MmcFeatures");
+                "MmcFeatures");
         }
     }
 }

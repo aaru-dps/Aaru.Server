@@ -32,7 +32,6 @@
 
 using System;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 using DiscImageChef.CommonTypes.Metadata;
 
 namespace DiscImageChef.Server.Models
@@ -46,27 +45,27 @@ namespace DiscImageChef.Server.Models
 
         public Device(DeviceReportV2 report)
         {
-            ATA            = report.ATA;
-            ATAPI          = report.ATAPI;
-            CompactFlash   = report.CompactFlash;
-            FireWire       = report.FireWire;
-            AddedWhen      = DateTime.UtcNow;
-            ModifiedWhen   = DateTime.UtcNow;
+            ATA = report.ATA;
+            ATAPI = report.ATAPI;
+            CompactFlash = report.CompactFlash;
+            FireWire = report.FireWire;
+            AddedWhen = DateTime.UtcNow;
+            ModifiedWhen = DateTime.UtcNow;
             MultiMediaCard = report.MultiMediaCard;
-            PCMCIA         = report.PCMCIA;
-            SCSI           = report.SCSI;
-            SecureDigital  = report.SecureDigital;
-            USB            = report.USB;
-            Manufacturer   = report.Manufacturer;
-            Model          = report.Model;
-            Revision       = report.Revision;
-            Type           = report.Type;
+            PCMCIA = report.PCMCIA;
+            SCSI = report.SCSI;
+            SecureDigital = report.SecureDigital;
+            USB = report.USB;
+            Manufacturer = report.Manufacturer;
+            Model = report.Model;
+            Revision = report.Revision;
+            Type = report.Type;
         }
 
         public DateTime AddedWhen { get; set; }
-        public DateTime? ModifiedWhen { get;             set; }
+        public DateTime? ModifiedWhen { get; set; }
         public virtual CompactDiscOffset CdOffset { get; set; }
-        [DefaultValue(0)]
-        public int OptimalMultipleSectorsRead { get; set; }
+
+        [DefaultValue(0)] public int OptimalMultipleSectorsRead { get; set; }
     }
 }

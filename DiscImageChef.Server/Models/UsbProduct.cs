@@ -32,31 +32,32 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
 namespace DiscImageChef.Server.Models
 {
     public class UsbProduct
     {
-        public UsbProduct() { }
+        public UsbProduct()
+        {
+        }
 
         public UsbProduct(UsbVendor vendor, ushort id, string product)
         {
             ProductId = id;
-            Product   = product;
+            Product = product;
             AddedWhen = ModifiedWhen = DateTime.UtcNow;
-            Vendor    = vendor;
+            Vendor = vendor;
         }
 
-        [Key]
-        public int Id { get; set; }
-        public int ProductId { get;      set; }
-        public string   Product   { get; set; }
+        [Key] public int Id { get; set; }
+
+        public int ProductId { get; set; }
+        public string Product { get; set; }
         public DateTime AddedWhen { get; set; }
         public DateTime ModifiedWhen { get; set; }
         public int VendorId { get; set; }
-        [JsonIgnore]
-        public virtual UsbVendor Vendor { get; set; }
+
+        [JsonIgnore] public virtual UsbVendor Vendor { get; set; }
     }
 }

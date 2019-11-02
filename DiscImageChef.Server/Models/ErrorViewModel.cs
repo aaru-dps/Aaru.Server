@@ -1,5 +1,3 @@
-using System;
-
 namespace DiscImageChef.Server.Models
 {
     public class ErrorViewModel

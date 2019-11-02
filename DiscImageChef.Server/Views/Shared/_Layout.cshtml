@@ -35,23 +35,23 @@
 <html>
 <meta charset="UTF-8">
 <head>
-    @switch(DateTime.UtcNow.DayOfYear)
+    @switch (DateTime.UtcNow.DayOfYear)
     {
         // 24th January, Macintosh launch
         case 24:
             <link href="~/css/mac/dicserver.css"
-                  rel="stylesheet" type="text/css" />
+                  rel="stylesheet" type="text/css"/>
             <link href="~/css/mac/dicserver_highcharts.css"
-                  rel="stylesheet" type="text/css" />
+                  rel="stylesheet" type="text/css"/>
             break;
         default:
             <link href="~/css/dos/dicserver.css"
-                  rel="stylesheet" type="text/css" />
+                  rel="stylesheet" type="text/css"/>
             <link href="~/css/dos/dicserver_highcharts.css"
-                  rel="stylesheet" type="text/css" />
+                  rel="stylesheet" type="text/css"/>
             break;
     }
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>@ViewBag.Title</title>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async
@@ -73,8 +73,8 @@
     <a href="http://www.claunia.com"
        target="_blank">
         Claunia.com
-    </a><br />
-    @switch(DateTime.UtcNow.DayOfYear)
+    </a><br/>
+    @switch (DateTime.UtcNow.DayOfYear)
     {
         // 24th January, Macintosh launch
         case 24:
@@ -86,7 +86,7 @@
             ;
             break;
     }
-    <br />
+    <br/>
     CSS © 2018-2019
     <a href="https://getbootstrap.com/"
        target="_blank">

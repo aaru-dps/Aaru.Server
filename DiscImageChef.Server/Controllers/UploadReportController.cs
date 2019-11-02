@@ -34,19 +34,15 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
-using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using System.Xml.Serialization;
 using Cinchoo.PGP;
 using DiscImageChef.CommonTypes.Metadata;
 using DiscImageChef.Server.Models;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting.Internal;
 using MimeKit;
 using Newtonsoft.Json;
 
@@ -54,8 +50,8 @@ namespace DiscImageChef.Server.Controllers
 {
     public class UploadReportController : Controller
     {
-        private DicServerContext ctx;
-        private IWebHostEnvironment _environment;
+        private readonly IWebHostEnvironment _environment;
+        private readonly DicServerContext ctx;
 
         public UploadReportController(IWebHostEnvironment environment, DicServerContext _ctx)
         {
@@ -71,53 +67,54 @@ namespace DiscImageChef.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadReport()
         {
-            ContentResult response = new ContentResult {StatusCode = (int)HttpStatusCode.OK, ContentType = "text/plain"};
+            var response = new ContentResult {StatusCode = (int) HttpStatusCode.OK, ContentType = "text/plain"};
 
             try
             {
-                DeviceReport newReport = new DeviceReport();
-                HttpRequest  request   = HttpContext.Request;
+                var newReport = new DeviceReport();
+                var request = HttpContext.Request;
 
-                XmlSerializer xs = new XmlSerializer(newReport.GetType());
-                newReport = (DeviceReport) xs.Deserialize(new StringReader(await new StreamReader(request.Body).ReadToEndAsync()));
+                var xs = new XmlSerializer(newReport.GetType());
+                newReport = (DeviceReport) xs.Deserialize(
+                    new StringReader(await new StreamReader(request.Body).ReadToEndAsync()));
 
-                if(newReport == null)
+                if (newReport == null)
                 {
                     response.Content = "notstats";
                     return response;
                 }
 
-                DeviceReportV2 reportV2 = new DeviceReportV2(newReport);
-                StringWriter   jsonSw   = new StringWriter();
+                var reportV2 = new DeviceReportV2(newReport);
+                var jsonSw = new StringWriter();
                 jsonSw.Write(JsonConvert.SerializeObject(reportV2, Formatting.Indented,
-                                                         new JsonSerializerSettings
-                                                         {
-                                                             NullValueHandling = NullValueHandling.Ignore
-                                                         }));
-                string reportV2String = jsonSw.ToString();
+                    new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore
+                    }));
+                var reportV2String = jsonSw.ToString();
                 jsonSw.Close();
 
                 ctx.Reports.Add(new UploadedReport(reportV2));
                 ctx.SaveChanges();
 
-                MemoryStream         pgpIn  = new MemoryStream(Encoding.UTF8.GetBytes(reportV2String));
-                MemoryStream         pgpOut = new MemoryStream();
-                ChoPGPEncryptDecrypt pgp    = new ChoPGPEncryptDecrypt();
+                var pgpIn = new MemoryStream(Encoding.UTF8.GetBytes(reportV2String));
+                var pgpOut = new MemoryStream();
+                var pgp = new ChoPGPEncryptDecrypt();
                 pgp.Encrypt(pgpIn, pgpOut,
-                            Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
-                                         "public.asc"), true);
+                    Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
+                        "public.asc"));
                 pgpOut.Position = 0;
-                reportV2String  = Encoding.UTF8.GetString(pgpOut.ToArray());
+                reportV2String = Encoding.UTF8.GetString(pgpOut.ToArray());
 
-                MimeMessage message = new MimeMessage
+                var message = new MimeMessage
                 {
                     Subject = "New device report (old version)",
-                    Body    = new TextPart("plain") {Text = reportV2String}
+                    Body = new TextPart("plain") {Text = reportV2String}
                 };
-                message.From.Add(new MailboxAddress("DiscImageChef",  "dic@claunia.com"));
+                message.From.Add(new MailboxAddress("DiscImageChef", "dic@claunia.com"));
                 message.To.Add(new MailboxAddress("Natalia Portillo", "claunia@claunia.com"));
 
-                using(SmtpClient client = new SmtpClient())
+                using (var client = new SmtpClient())
                 {
                     client.Connect("mail.claunia.com", 25, false);
                     client.Send(message);
@@ -130,9 +127,9 @@ namespace DiscImageChef.Server.Controllers
             // ReSharper disable once RedundantCatchClause
             catch
             {
-                #if DEBUG
-                if(Debugger.IsAttached) throw;
-                #endif
+#if DEBUG
+                if (Debugger.IsAttached) throw;
+#endif
                 response.Content = "error";
                 return response;
             }
@@ -146,17 +143,17 @@ namespace DiscImageChef.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadReportV2()
         {
-            ContentResult response = new ContentResult {StatusCode = (int)HttpStatusCode.OK, ContentType = "text/plain"};
+            var response = new ContentResult {StatusCode = (int) HttpStatusCode.OK, ContentType = "text/plain"};
 
             try
             {
-                HttpRequest request = HttpContext.Request;
+                var request = HttpContext.Request;
 
-                StreamReader   sr         = new StreamReader(request.Body);
-                string         reportJson = await sr.ReadToEndAsync();
-                DeviceReportV2 newReport  = JsonConvert.DeserializeObject<DeviceReportV2>(reportJson);
+                var sr = new StreamReader(request.Body);
+                var reportJson = await sr.ReadToEndAsync();
+                var newReport = JsonConvert.DeserializeObject<DeviceReportV2>(reportJson);
 
-                if(newReport == null)
+                if (newReport == null)
                 {
                     response.Content = "notstats";
                     return response;
@@ -165,23 +162,23 @@ namespace DiscImageChef.Server.Controllers
                 ctx.Reports.Add(new UploadedReport(newReport));
                 ctx.SaveChanges();
 
-                MemoryStream         pgpIn  = new MemoryStream(Encoding.UTF8.GetBytes(reportJson));
-                MemoryStream         pgpOut = new MemoryStream();
-                ChoPGPEncryptDecrypt pgp    = new ChoPGPEncryptDecrypt();
+                var pgpIn = new MemoryStream(Encoding.UTF8.GetBytes(reportJson));
+                var pgpOut = new MemoryStream();
+                var pgp = new ChoPGPEncryptDecrypt();
                 pgp.Encrypt(pgpIn, pgpOut,
-                            Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
-                                         "public.asc"), true);
+                    Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
+                        "public.asc"));
                 pgpOut.Position = 0;
-                reportJson      = Encoding.UTF8.GetString(pgpOut.ToArray());
+                reportJson = Encoding.UTF8.GetString(pgpOut.ToArray());
 
-                MimeMessage message = new MimeMessage
+                var message = new MimeMessage
                 {
                     Subject = "New device report", Body = new TextPart("plain") {Text = reportJson}
                 };
-                message.From.Add(new MailboxAddress("DiscImageChef",  "dic@claunia.com"));
+                message.From.Add(new MailboxAddress("DiscImageChef", "dic@claunia.com"));
                 message.To.Add(new MailboxAddress("Natalia Portillo", "claunia@claunia.com"));
 
-                using(SmtpClient client = new SmtpClient())
+                using (var client = new SmtpClient())
                 {
                     client.Connect("mail.claunia.com", 25, false);
                     client.Send(message);
@@ -194,10 +191,10 @@ namespace DiscImageChef.Server.Controllers
             // ReSharper disable once RedundantCatchClause
             catch
             {
-                #if DEBUG
-                if(Debugger.IsAttached) throw;
-                #endif
-                response.Content ="error";
+#if DEBUG
+                if (Debugger.IsAttached) throw;
+#endif
+                response.Content = "error";
                 return response;
             }
         }

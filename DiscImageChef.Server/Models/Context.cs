@@ -37,28 +37,32 @@ namespace DiscImageChef.Server.Models
 {
     public sealed class DicServerContext : DbContext
     {
-        public DbSet<Device>            Devices          { get; set; }
-        public DbSet<UploadedReport>    Reports          { get; set; }
-        public DbSet<Command>           Commands         { get; set; }
-        public DbSet<DeviceStat>        DeviceStats      { get; set; }
-        public DbSet<Filesystem>        Filesystems      { get; set; }
-        public DbSet<Filter>            Filters          { get; set; }
-        public DbSet<Media>             Medias           { get; set; }
-        public DbSet<MediaFormat>       MediaFormats     { get; set; }
-        public DbSet<OperatingSystem>   OperatingSystems { get; set; }
-        public DbSet<Partition>         Partitions       { get; set; }
-        public DbSet<Version>           Versions         { get; set; }
-        public DbSet<UsbVendor>         UsbVendors       { get; set; }
-        public DbSet<UsbProduct>        UsbProducts      { get; set; }
-        public DbSet<CompactDiscOffset> CdOffsets        { get; set; }
+        public DicServerContext()
+        {
+        }
 
-        public DicServerContext() { }
+        public DicServerContext(DbContextOptions<DicServerContext> options) : base(options)
+        {
+        }
 
-        public DicServerContext(DbContextOptions<DicServerContext> options) : base(options) { }
+        public DbSet<Device> Devices { get; set; }
+        public DbSet<UploadedReport> Reports { get; set; }
+        public DbSet<Command> Commands { get; set; }
+        public DbSet<DeviceStat> DeviceStats { get; set; }
+        public DbSet<Filesystem> Filesystems { get; set; }
+        public DbSet<Filter> Filters { get; set; }
+        public DbSet<Media> Medias { get; set; }
+        public DbSet<MediaFormat> MediaFormats { get; set; }
+        public DbSet<OperatingSystem> OperatingSystems { get; set; }
+        public DbSet<Partition> Partitions { get; set; }
+        public DbSet<Version> Versions { get; set; }
+        public DbSet<UsbVendor> UsbVendors { get; set; }
+        public DbSet<UsbProduct> UsbProducts { get; set; }
+        public DbSet<CompactDiscOffset> CdOffsets { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if(optionsBuilder.IsConfigured) return;
+            if (optionsBuilder.IsConfigured) return;
 
 
             var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
@@ -82,7 +86,7 @@ namespace DiscImageChef.Server.Models
 
         internal static bool TableExists(string tableName)
         {
-            using(var db = new DicServerContext())
+            using (var db = new DicServerContext())
             {
                 var connection = db.Database.GetDbConnection();
                 connection.Open();
@@ -91,7 +95,7 @@ namespace DiscImageChef.Server.Models
                 command.CommandText =
                     $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME=\"{tableName}\"";
 
-                var result = (long)command.ExecuteScalar();
+                var result = (long) command.ExecuteScalar();
 
                 return result != 0;
             }

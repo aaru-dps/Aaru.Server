@@ -30,13 +30,10 @@
 // Copyright © 2011-2019 Natalia Portillo
 // ****************************************************************************/
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Text;
 using DiscImageChef.CommonTypes.Metadata;
 using DiscImageChef.Dto;
 using DiscImageChef.Server.Models;
@@ -48,7 +45,7 @@ namespace DiscImageChef.Server.Controllers
 {
     public class UpdateController : Controller
     {
-        private DicServerContext _ctx;
+        private readonly DicServerContext _ctx;
 
         public UpdateController(DicServerContext ctx)
         {
@@ -63,40 +60,43 @@ namespace DiscImageChef.Server.Controllers
         [HttpGet]
         public ActionResult Update(long timestamp)
         {
-            SyncDto  sync     = new SyncDto();
-            DateTime lastSync = DateHandlers.UnixToDateTime(timestamp);
+            var sync = new SyncDto();
+            var lastSync = DateHandlers.UnixToDateTime(timestamp);
 
             sync.UsbVendors = new List<UsbVendorDto>();
-            foreach(UsbVendor vendor in _ctx.UsbVendors.Where(v => v.ModifiedWhen > lastSync))
-                sync.UsbVendors.Add(new UsbVendorDto {VendorId = (ushort)vendor.VendorId, Vendor = vendor.Vendor});
+            foreach (var vendor in _ctx.UsbVendors.Where(v => v.ModifiedWhen > lastSync))
+                sync.UsbVendors.Add(new UsbVendorDto {VendorId = (ushort) vendor.VendorId, Vendor = vendor.Vendor});
 
             sync.UsbProducts = new List<UsbProductDto>();
-            foreach(UsbProduct product in _ctx.UsbProducts.Include(p => p.Vendor).Where(p => p.ModifiedWhen > lastSync))
+            foreach (var product in _ctx.UsbProducts.Include(p => p.Vendor).Where(p => p.ModifiedWhen > lastSync))
                 sync.UsbProducts.Add(new UsbProductDto
                 {
-                    Id        = product.Id,
-                    Product   = product.Product,
-                    ProductId = (ushort)product.ProductId,
-                    VendorId  = (ushort)product.Vendor.VendorId
+                    Id = product.Id,
+                    Product = product.Product,
+                    ProductId = (ushort) product.ProductId,
+                    VendorId = (ushort) product.Vendor.VendorId
                 });
 
             sync.Offsets = new List<CdOffsetDto>();
-            foreach(CompactDiscOffset offset in _ctx.CdOffsets.Where(o => o.ModifiedWhen > lastSync))
+            foreach (var offset in _ctx.CdOffsets.Where(o => o.ModifiedWhen > lastSync))
                 sync.Offsets.Add(new CdOffsetDto(offset, offset.Id));
 
             sync.Devices = new List<DeviceDto>();
-            foreach(Device device in _ctx.Devices.Where(d => d.ModifiedWhen > lastSync).ToList())
+            foreach (var device in _ctx.Devices.Where(d => d.ModifiedWhen > lastSync).ToList())
                 sync.Devices.Add(new
-                                     DeviceDto(JsonConvert.DeserializeObject<DeviceReportV2>(JsonConvert.SerializeObject(device, Formatting.None, new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Ignore})),
-                                               device.Id, device.OptimalMultipleSectorsRead));
+                    DeviceDto(
+                        JsonConvert.DeserializeObject<DeviceReportV2>(JsonConvert.SerializeObject(device,
+                            Formatting.None,
+                            new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Ignore})),
+                        device.Id, device.OptimalMultipleSectorsRead));
 
-            JsonSerializer js = JsonSerializer.Create();
-            StringWriter   sw = new StringWriter();
+            var js = JsonSerializer.Create();
+            var sw = new StringWriter();
             js.Serialize(sw, sync);
 
             return new ContentResult
             {
-                StatusCode = (int)HttpStatusCode.OK,
+                StatusCode = (int) HttpStatusCode.OK,
                 Content = sw.ToString(),
                 ContentType = "application/json"
             };

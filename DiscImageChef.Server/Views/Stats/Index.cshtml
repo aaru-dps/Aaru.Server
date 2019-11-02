@@ -1,9 +1,4 @@
-@using System.Collections
 @using DiscImageChef.CommonTypes.Metadata
-@using DiscImageChef.Server.Models
-@using Highsoft.Web.Mvc.Charts
-@using Chart = Highsoft.Web.Mvc.Charts.Chart
-@using Filter = DiscImageChef.Server.Models.Filter
 @{
     // /***************************************************************************
     // The Disc Image Chef
@@ -51,7 +46,7 @@
     </i> Server version @ViewBag.Version
 </header>
 <div class="container-fluid mt-3">
-@if(ViewBag.repOperatingSystems != null)
+@if (ViewBag.repOperatingSystems != null)
 {
     <div class="container"
          id="divOperatingSystems">
@@ -129,7 +124,7 @@
                      id="osCollapse">
                     <div class="card-body">
                         <table class="table-dark">
-                            @foreach(NameValueStats os in ViewBag.repOperatingSystems)
+                            @foreach (NameValueStats os in ViewBag.repOperatingSystems)
                             {
                                 <tr>
                                     <td class="text-left">
@@ -142,10 +137,10 @@
                 </div>
             </div>
         </div>
-        <br />
+        <br/>
     </div>
 }
-@if(ViewBag.repVersions != null)
+@if (ViewBag.repVersions != null)
 {
     <div class="container mt-3"
          id="divVersions">
@@ -175,7 +170,7 @@
                      id="versionsCollapse">
                     <div class="card-body">
                         <table class="table-dark">
-                            @foreach(NameValueStats version in ViewBag.repVersions)
+                            @foreach (NameValueStats version in ViewBag.repVersions)
                             {
                                 <tr>
                                     <td class="text-left">
@@ -188,10 +183,10 @@
                 </div>
             </div>
         </div>
-        <br />
+        <br/>
     </div>
 }
-@if(ViewBag.repCommands != null)
+@if (ViewBag.repCommands != null)
 {
     <div class="container mt-3"
          id="divCommands">
@@ -221,7 +216,7 @@
                      id="commandsCollapse">
                     <div class="card-body">
                         <table class="table-dark">
-                            @foreach(Command command in ViewBag.repCommands)
+                            @foreach (Command command in ViewBag.repCommands)
                             {
                                 <tr>
                                     <td class="text-left">
@@ -234,10 +229,10 @@
                 </div>
             </div>
         </div>
-        <br />
+        <br/>
     </div>
 }
-@if(ViewBag.repFilters != null)
+@if (ViewBag.repFilters != null)
 {
     <div class="container mt-3"
          id="divFilters">
@@ -271,7 +266,7 @@
                                 <th class="table-dark-header">Filter</th>
                                 <th class="table-dark-header">Times</th>
                             </tr>
-                            @foreach(Filter filter in ViewBag.repFilters)
+                            @foreach (Filter filter in ViewBag.repFilters)
                             {
                                 <tr>
                                     <td class="text-right">
@@ -289,7 +284,7 @@
         </div>
     </div>
 }
-@if(ViewBag.repMediaImages != null)
+@if (ViewBag.repMediaImages != null)
 {
     <div class="container mt-3"
          id="divMediaImages">
@@ -323,7 +318,7 @@
                                 <th class="table-dark-header">Media image format</th>
                                 <th class="table-dark-header">Times</th>
                             </tr>
-                            @foreach(MediaFormat format in ViewBag.repMediaImages)
+                            @foreach (MediaFormat format in ViewBag.repMediaImages)
                             {
                                 <tr>
                                     <td class="text-left">
@@ -341,7 +336,7 @@
         </div>
     </div>
 }
-@if(ViewBag.repPartitions != null)
+@if (ViewBag.repPartitions != null)
 {
     <div class="container mt-3"
          id="divPartitions">
@@ -375,7 +370,7 @@
                                 <th class="table-dark-header">Partitioning scheme</th>
                                 <th class="table-dark-header">Times</th>
                             </tr>
-                            @foreach(Partition partition in ViewBag.repPartitions)
+                            @foreach (Partition partition in ViewBag.repPartitions)
                             {
                                 <tr>
                                     <td class="text-left">
@@ -393,7 +388,7 @@
         </div>
     </div>
 }
-@if(ViewBag.repFilesystems != null)
+@if (ViewBag.repFilesystems != null)
 {
     <div class="container mt-3"
          id="divFilesystems">
@@ -427,7 +422,7 @@
                                 <th class="table-dark-header">Filesystem name</th>
                                 <th class="table-dark-header">Times</th>
                             </tr>
-                            @foreach(Filesystem filesystem in ViewBag.repFilesystems)
+                            @foreach (Filesystem filesystem in ViewBag.repFilesystems)
                             {
                                 <tr>
                                     <td class="text-left">
@@ -445,7 +440,7 @@
         </div>
     </div>
 }
-@if(ViewBag.repVirtualMedia != null)
+@if (ViewBag.repVirtualMedia != null)
 {
     <div class="container mt-3"
          id="divVirtualMedia">
@@ -480,7 +475,7 @@
                                 <th class="table-dark-header">Logical type</th>
                                 <th class="table-dark-header">Times</th>
                             </tr>
-                            @foreach(MediaItem media in ViewBag.repVirtualMedia)
+                            @foreach (MediaItem media in ViewBag.repVirtualMedia)
                             {
                                 <tr>
                                     <td class="text-left">
@@ -501,7 +496,7 @@
         </div>
     </div>
 }
-@if(ViewBag.repRealMedia != null)
+@if (ViewBag.repRealMedia != null)
 {
     <div class="container mt-3"
          id="divRealMedia">
@@ -536,7 +531,7 @@
                                 <th class="table-dark-header">Logical type</th>
                                 <th class="table-dark-header">Times</th>
                             </tr>
-                            @foreach(MediaItem media in ViewBag.repRealMedia)
+                            @foreach (MediaItem media in ViewBag.repRealMedia)
                             {
                                 <tr>
                                     <td class="text-left">
@@ -557,7 +552,7 @@
         </div>
     </div>
 }
-@if(ViewBag.repDevices != null)
+@if (ViewBag.repDevices != null)
 {
     <div class="container mt-3"
          id="divDevices">
@@ -623,7 +618,7 @@
                         <th class="table-dark-header">Bus</th>
                         <th class="table-dark-header">Report</th>
                     </tr>
-                    @foreach(DeviceItem device in ViewBag.repDevices)
+                    @foreach (DeviceItem device in ViewBag.repDevices)
                     {
                         <tr>
                             <td>
@@ -639,12 +634,14 @@
                                 @device.Bus
                             </td>
                             <td>
-                                @if(device.ReportId != 0)
+                                @if (device.ReportId != 0)
                                 {
                                     <text>@Html.ActionLink("Yes", "View", "Report", new {id = device.ReportId}, new {target = "_blank"})</text>
                                 }
                                 else
-                                { <text>No</text> }
+                                {
+                                    <text>No</text>
+                                }
                             </td>
                         </tr>
                     }
@@ -657,7 +654,7 @@
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 @{
-/*    string highChartsTitleColor;
+    /*    string highChartsTitleColor;
     string highChartsDataLabelColor;
 
     switch(DateTime.UtcNow.DayOfYear)
