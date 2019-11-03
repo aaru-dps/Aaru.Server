@@ -577,5 +577,23 @@ namespace DiscImageChef.Server.Controllers
 
             return Json(result);
         }
+
+        public IActionResult GetFormatsData()
+        {
+            string[][] result =
+            {
+                ctx.MediaFormats.OrderByDescending(o => o.Count).Take(10).Select(v => v.Name).ToArray(),
+                ctx.MediaFormats.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
+            };
+
+            if(result[0].Length < 10)
+                return Json(result);
+
+            result[0][9] = "Other";
+
+            result[1][9] = (ctx.MediaFormats.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
+
+            return Json(result);
+        }
     }
 }

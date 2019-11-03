@@ -225,7 +225,8 @@
 @if (ViewBag.repMediaImages != null)
 {
     <div class="container mt-3" id="divMediaImages">
-        <div class="container" id="formatsChart">
+        <div class="container">
+            <canvas id="formatsChart"></canvas>
         </div>
         <div class="accordion mt-3" id="formatsAccordion">
             <div class="card">
@@ -577,6 +578,11 @@ function DrawFiltersPie(filtersData)
     DrawPie("filtersChart", `Top ${filtersData[0].length} filters found`, filtersData[0], filtersData[1])
 }
 
+function DrawFormatsPie(formats)
+{
+    DrawPie("formatsChart", `Top ${formats[0].length} media image formats found`, formats[0], formats[1])
+}
+
 window.onload = () => {
     $.ajax({dataType: "json", url: "/Stats/GetOsData", success: DrawOsPie, cache:false});
     $.ajax({dataType: "json", url: "/Stats/GetLinuxData", success: DrawLinuxPie, cache:false});
@@ -585,6 +591,7 @@ window.onload = () => {
     $.ajax({dataType: "json", url: "/Stats/GetVersionsData", success: DrawVersionsPie, cache:false});
     $.ajax({dataType: "json", url: "/Stats/GetCommandsData", success: DrawCommandsPie, cache:false});
     $.ajax({dataType: "json", url: "/Stats/GetFiltersData", success: DrawFiltersPie, cache:false});
+    $.ajax({dataType: "json", url: "/Stats/GetFormatsData", success: DrawFormatsPie, cache:false});
 }
 
 </script>
