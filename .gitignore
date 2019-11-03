@@ -538,3 +538,4 @@ MigrationBackup/
 .ionide/
 
 public.asc
+appsettings.Production.json
