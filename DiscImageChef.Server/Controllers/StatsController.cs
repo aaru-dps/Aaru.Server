@@ -115,22 +115,6 @@ namespace DiscImageChef.Server.Controllers
 
                     ViewBag.repOperatingSystems = operatingSystems.OrderBy(os => os.name).ToList();
 
-                    List<PieSeriesData> macosPieData = new List<PieSeriesData>();
-
-                    decimal macosCount = ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()).
-                                             Sum(o => o.Count);
-
-                    foreach(OperatingSystem version in
-                        ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()))
-                        macosPieData.Add(new PieSeriesData
-                        {
-                            Name =
-                                $"{DetectOS.GetPlatformName(PlatformID.MacOSX, version.Version)}{(string.IsNullOrEmpty(version.Version) ? "" : " ")}{version.Version}",
-                            Y = (double?)(version.Count / macosCount)
-                        });
-
-                    ViewData["macosPieData"] = macosPieData;
-
                     List<PieSeriesData> windowsPieData = new List<PieSeriesData>();
 
                     decimal windowsCount = ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).
@@ -524,6 +508,17 @@ namespace DiscImageChef.Server.Controllers
                            $"{DetectOS.GetPlatformName(PlatformID.Linux, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}").
                 ToArray(),
             ctx.OperatingSystems.Where(o => o.Name == PlatformID.Linux.ToString()).OrderByDescending(o => o.Count).
+                Take(10).Select(x => x.Count.ToString()).ToArray()
+        });
+
+        public IActionResult GetMacOsData() => Json(new[]
+        {
+            ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()).OrderByDescending(o => o.Count).
+                Take(10).
+                Select(x =>
+                           $"{DetectOS.GetPlatformName(PlatformID.MacOSX, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}").
+                ToArray(),
+            ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()).OrderByDescending(o => o.Count).
                 Take(10).Select(x => x.Count.ToString()).ToArray()
         });
     }
