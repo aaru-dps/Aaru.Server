@@ -114,22 +114,6 @@ namespace DiscImageChef.Server.Controllers
                         });
 
                     ViewBag.repOperatingSystems = operatingSystems.OrderBy(os => os.name).ToList();
-
-                    List<PieSeriesData> windowsPieData = new List<PieSeriesData>();
-
-                    decimal windowsCount = ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).
-                                               Sum(o => o.Count);
-
-                    foreach(OperatingSystem version in
-                        ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()))
-                        windowsPieData.Add(new PieSeriesData
-                        {
-                            Name =
-                                $"{DetectOS.GetPlatformName(PlatformID.Win32NT, version.Version)}{(string.IsNullOrEmpty(version.Version) ? "" : " ")}{version.Version}",
-                            Y = (double?)(version.Count / windowsCount)
-                        });
-
-                    ViewData["windowsPieData"] = windowsPieData;
                 }
 
                 if(ctx.Versions.Any())
@@ -143,15 +127,6 @@ namespace DiscImageChef.Server.Controllers
                         });
 
                     ViewBag.repVersions = versions.OrderBy(ver => ver.name).ToList();
-
-                    decimal totalVersionCount = ctx.Versions.Sum(o => o.Count);
-
-                    ViewData["versionsPieData"] = ctx.Versions.Select(version => new PieSeriesData
-                    {
-                        Name     = version.Value == "previous" ? "Previous than 3.4.99.0" : version.Value,
-                        Y        = (double?)(version.Count / totalVersionCount), Sliced = version.Value == "previous",
-                        Selected = version.Value                                                        == "previous"
-                    }).ToList();
                 }
 
                 if(ctx.Commands.Any())
@@ -568,6 +543,25 @@ namespace DiscImageChef.Server.Controllers
 
             result[1][9] = (ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).Sum(o => o.Count) -
                             result[1].Take(9).Sum(long.Parse)).ToString();
+
+            return Json(result);
+        }
+
+        public IActionResult GetVersionsData()
+        {
+            string[][] result =
+            {
+                ctx.Versions.OrderByDescending(o => o.Count).Take(10).
+                    Select(v => v.Value == "previous" ? "Previous than 3.4.99.0" : v.Value).ToArray(),
+                ctx.Versions.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
+            };
+
+            if(result[0].Length < 10)
+                return Json(result);
+
+            result[0][9] = "Other";
+
+            result[1][9] = (ctx.Versions.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
 
             return Json(result);
         }

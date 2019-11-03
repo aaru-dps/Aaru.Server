@@ -116,7 +116,8 @@
 @if (ViewBag.repVersions != null)
 {
     <div class="container mt-3" id="divVersions">
-        <div class="container" id="versionsChart">
+        <div class="container">
+            <canvas id="versionsChart"></canvas>
         </div>
         <div class="accordion mt-3" id="versionsAccordion">
             <div class="card">
@@ -559,11 +560,17 @@ function DrawWindowsPie(windowsData)
     DrawPie("windowsChart", `Top ${windowsData[0].length} Windows versions`, windowsData[0], windowsData[1])
 }
 
+function DrawVersionsPie(versionsData)
+{
+    DrawPie("versionsChart", `Top ${versionsData[0].length} DiscImageChef versions`, versionsData[0], versionsData[1])
+}
+
 window.onload = () => {
     $.ajax({dataType: "json", url: "/Stats/GetOsData", success: DrawOsPie, cache:false});
     $.ajax({dataType: "json", url: "/Stats/GetLinuxData", success: DrawLinuxPie, cache:false});
     $.ajax({dataType: "json", url: "/Stats/GetMacOsData", success: DrawMacOsPie, cache:false});
     $.ajax({dataType: "json", url: "/Stats/GetWindowsData", success: DrawWindowsPie, cache:false});
+    $.ajax({dataType: "json", url: "/Stats/GetVersionsData", success: DrawVersionsPie, cache:false});
 }
 
 </script>
