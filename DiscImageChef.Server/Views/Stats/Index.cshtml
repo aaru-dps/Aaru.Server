@@ -63,7 +63,8 @@
                 <div class="active carousel-item">
                     <canvas id="osChart"></canvas>
                 </div>
-                <div class="carousel-item" id="linuxChart">
+                <div class="carousel-item">
+                    <canvas id="linuxChart"></canvas>
                 </div>
                 <div class="carousel-item" id="macosChart">
                 </div>
@@ -541,9 +542,14 @@ function DrawOsPie(osData)
     DrawPie("osChart", "Operating systems", osData[0], osData[1])
 }
 
-window.onload = () => {
-    var foo = document.body.style['highcharts-color-0'];
+function DrawLinuxPie(linuxData)
+{
+    DrawPie("linuxChart", "Top 10 Linux versions", linuxData[0], linuxData[1])
+}
+
+window.onload = () =;> {
     $.ajax({dataType: "json", url: "/Stats/GetOsData", success: DrawOsPie, cache:false});
+    $.ajax({dataType: "json", url: "/Stats/GetLinuxData", success: DrawLinuxPie, cache:false});
 }
 
 </script>

@@ -115,22 +115,6 @@ namespace DiscImageChef.Server.Controllers
 
                     ViewBag.repOperatingSystems = operatingSystems.OrderBy(os => os.name).ToList();
 
-                    List<PieSeriesData> linuxPieData = new List<PieSeriesData>();
-
-                    decimal linuxCount = ctx.OperatingSystems.Where(o => o.Name == PlatformID.Linux.ToString()).
-                                             Sum(o => o.Count);
-
-                    foreach(OperatingSystem version in
-                        ctx.OperatingSystems.Where(o => o.Name == PlatformID.Linux.ToString()))
-                        linuxPieData.Add(new PieSeriesData
-                        {
-                            Name =
-                                $"{DetectOS.GetPlatformName(PlatformID.Linux, version.Version)}{(string.IsNullOrEmpty(version.Version) ? "" : " ")}{version.Version}",
-                            Y = (double?)(version.Count / linuxCount)
-                        });
-
-                    ViewData["linuxPieData"] = linuxPieData;
-
                     List<PieSeriesData> macosPieData = new List<PieSeriesData>();
 
                     decimal macosCount = ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()).
@@ -531,5 +515,16 @@ namespace DiscImageChef.Server.Controllers
 
             return Json(result);
         }
+
+        public IActionResult GetLinuxData() => Json(new[]
+        {
+            ctx.OperatingSystems.Where(o => o.Name == PlatformID.Linux.ToString()).OrderByDescending(o => o.Count).
+                Take(10).
+                Select(x =>
+                           $"{DetectOS.GetPlatformName(PlatformID.Linux, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}").
+                ToArray(),
+            ctx.OperatingSystems.Where(o => o.Name == PlatformID.Linux.ToString()).OrderByDescending(o => o.Count).
+                Take(10).Select(x => x.Count.ToString()).ToArray()
+        });
     }
 }
