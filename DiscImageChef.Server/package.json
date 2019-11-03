@@ -1,0 +1,13 @@
+{
+  "name": "DiscImageChef.Server",
+  "version": "4.5.99.1663",
+  "description": "Server component for The Disc Image Chef",
+  "private": true,
+  "author": "Natalia Portillo <claunia@claunia.com>",
+  "homepage": "https://discimagechef.app",
+  "license": "LGPL",
+  "repository": "github:discimagechef/DiscImageChef.Server",
+  "dependencies": {
+    "bootstrap": "^4.3.1"
+  }
+}
