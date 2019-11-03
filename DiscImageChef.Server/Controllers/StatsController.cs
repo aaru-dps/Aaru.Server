@@ -521,5 +521,16 @@ namespace DiscImageChef.Server.Controllers
             ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()).OrderByDescending(o => o.Count).
                 Take(10).Select(x => x.Count.ToString()).ToArray()
         });
+
+        public IActionResult GetWindowsData() => Json(new[]
+        {
+            ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).OrderByDescending(o => o.Count).
+                Take(10).
+                Select(x =>
+                           $"{DetectOS.GetPlatformName(PlatformID.Win32NT, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}").
+                ToArray(),
+            ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).OrderByDescending(o => o.Count).
+                Take(10).Select(x => x.Count.ToString()).ToArray()
+        });
     }
 }
