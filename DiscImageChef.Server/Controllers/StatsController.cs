@@ -535,5 +535,41 @@ namespace DiscImageChef.Server.Controllers
 
             return Json(result);
         }
+
+        public IActionResult GetRealMediaData()
+        {
+            Media[] realMedias = ctx.Medias.Where(o => o.Real).OrderByDescending(o => o.Count).Take(10).ToArray();
+
+            foreach (Media media in realMedias)
+            {
+                try
+                {
+                    MediaType.
+                        MediaTypeToString((CommonTypes.MediaType)Enum.Parse(typeof(CommonTypes.MediaType), media.Type),
+                                          out string type, out string subtype);
+
+                    media.Type = $"{type} ({subtype})";
+                }
+                catch
+                {
+                    // Could not get media type/subtype pair from type, so just leave it as is
+                }
+            }
+
+            string[][] result =
+            {
+                realMedias.Select(v => v.Type).ToArray(),
+                realMedias.Select(x => x.Count.ToString()).ToArray()
+            };
+
+            if(result[0].Length < 10)
+                return Json(result);
+
+            result[0][9] = "Other";
+
+            result[1][9] = (ctx.Medias.Where(o => o.Real).Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
+
+            return Json(result);
+        }
     }
 }
