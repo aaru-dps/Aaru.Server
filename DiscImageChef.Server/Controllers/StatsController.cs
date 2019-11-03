@@ -500,37 +500,76 @@ namespace DiscImageChef.Server.Controllers
             return Json(result);
         }
 
-        public IActionResult GetLinuxData() => Json(new[]
+        public IActionResult GetLinuxData()
         {
-            ctx.OperatingSystems.Where(o => o.Name == PlatformID.Linux.ToString()).OrderByDescending(o => o.Count).
-                Take(10).
-                Select(x =>
-                           $"{DetectOS.GetPlatformName(PlatformID.Linux, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}").
-                ToArray(),
-            ctx.OperatingSystems.Where(o => o.Name == PlatformID.Linux.ToString()).OrderByDescending(o => o.Count).
-                Take(10).Select(x => x.Count.ToString()).ToArray()
-        });
+            string[][] result =
+            {
+                ctx.OperatingSystems.Where(o => o.Name == PlatformID.Linux.ToString()).OrderByDescending(o => o.Count).
+                    Take(10).
+                    Select(x =>
+                               $"{DetectOS.GetPlatformName(PlatformID.Linux, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}").
+                    ToArray(),
+                ctx.OperatingSystems.Where(o => o.Name == PlatformID.Linux.ToString()).OrderByDescending(o => o.Count).
+                    Take(10).Select(x => x.Count.ToString()).ToArray()
+            };
 
-        public IActionResult GetMacOsData() => Json(new[]
-        {
-            ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()).OrderByDescending(o => o.Count).
-                Take(10).
-                Select(x =>
-                           $"{DetectOS.GetPlatformName(PlatformID.MacOSX, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}").
-                ToArray(),
-            ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()).OrderByDescending(o => o.Count).
-                Take(10).Select(x => x.Count.ToString()).ToArray()
-        });
+            if(result[0].Length < 10)
+                return Json(result);
 
-        public IActionResult GetWindowsData() => Json(new[]
+            result[0][9] = "Other";
+
+            result[1][9] = (ctx.OperatingSystems.Where(o => o.Name == PlatformID.Linux.ToString()).Sum(o => o.Count) -
+                            result[1].Take(9).Sum(long.Parse)).ToString();
+
+            return Json(result);
+        }
+
+        public IActionResult GetMacOsData()
         {
-            ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).OrderByDescending(o => o.Count).
-                Take(10).
-                Select(x =>
-                           $"{DetectOS.GetPlatformName(PlatformID.Win32NT, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}").
-                ToArray(),
-            ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).OrderByDescending(o => o.Count).
-                Take(10).Select(x => x.Count.ToString()).ToArray()
-        });
+            string[][] result =
+            {
+                ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()).OrderByDescending(o => o.Count).
+                    Take(10).
+                    Select(x =>
+                               $"{DetectOS.GetPlatformName(PlatformID.MacOSX, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}").
+                    ToArray(),
+                ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()).OrderByDescending(o => o.Count).
+                    Take(10).Select(x => x.Count.ToString()).ToArray()
+            };
+
+            if(result[0].Length < 10)
+                return Json(result);
+
+            result[0][9] = "Other";
+
+            result[1][9] = (ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()).Sum(o => o.Count) -
+                            result[1].Take(9).Sum(long.Parse)).ToString();
+
+            return Json(result);
+        }
+
+        public IActionResult GetWindowsData()
+        {
+            string[][] result =
+            {
+                ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).
+                    OrderByDescending(o => o.Count).Take(10).
+                    Select(x =>
+                               $"{DetectOS.GetPlatformName(PlatformID.Win32NT, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}").
+                    ToArray(),
+                ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).
+                    OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
+            };
+
+            if(result[0].Length < 10)
+                return Json(result);
+
+            result[0][9] = "Other";
+
+            result[1][9] = (ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).Sum(o => o.Count) -
+                            result[1].Take(9).Sum(long.Parse)).ToString();
+
+            return Json(result);
+        }
     }
 }
