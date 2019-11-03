@@ -131,35 +131,10 @@ namespace DiscImageChef.Server.Controllers
                 }
 
                 if(ctx.Commands.Any())
-                {
                     ViewBag.repCommands = ctx.Commands.OrderBy(c => c.Name).ToList();
 
-                    decimal totalCommandCount = ctx.Commands.Sum(o => o.Count);
-
-                    ViewData["commandsPieData"] = ctx.Commands.Select(command => new PieSeriesData
-                    {
-                        Name   = command.Name, Y                     = (double?)(command.Count / totalCommandCount),
-                        Sliced = command.Name == "analyze", Selected = command.Name == "analyze"
-                    }).ToList();
-                }
-
                 if(ctx.Filters.Any())
-                {
                     ViewBag.repFilters = ctx.Filters.OrderBy(filter => filter.Name).ToList();
-
-                    List<PieSeriesData> filtersPieData = new List<PieSeriesData>();
-
-                    decimal totalFiltersCount = ctx.Filters.Sum(o => o.Count);
-
-                    foreach(Filter filter in ctx.Filters.ToList())
-                        filtersPieData.Add(new PieSeriesData
-                        {
-                            Name   = filter.Name, Y                       = (double?)(filter.Count / totalFiltersCount),
-                            Sliced = filter.Name == "No filter", Selected = filter.Name == "No filter"
-                        });
-
-                    ViewData["filtersPieData"] = filtersPieData;
-                }
 
                 if(ctx.MediaFormats.Any())
                 {
@@ -581,6 +556,24 @@ namespace DiscImageChef.Server.Controllers
             result[0][9] = "Other";
 
             result[1][9] = (ctx.Commands.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
+
+            return Json(result);
+        }
+
+        public IActionResult GetFiltersData()
+        {
+            string[][] result =
+            {
+                ctx.Filters.OrderByDescending(o => o.Count).Take(10).Select(v => v.Name).ToArray(),
+                ctx.Filters.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
+            };
+
+            if(result[0].Length < 10)
+                return Json(result);
+
+            result[0][9] = "Other";
+
+            result[1][9] = (ctx.Filters.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
 
             return Json(result);
         }

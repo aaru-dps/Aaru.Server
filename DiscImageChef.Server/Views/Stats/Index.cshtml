@@ -185,7 +185,8 @@
 @if (ViewBag.repFilters != null)
 {
     <div class="container mt-3" id="divFilters">
-        <div class="container" id="filtersChart">
+        <div class="container">
+            <canvas id="filtersChart"></canvas>
         </div>
         <div class="accordion mt-3" id="filtersAccordion">
             <div class="card">
@@ -571,6 +572,11 @@ function DrawCommandsPie(commandsData)
     DrawPie("commandsChart", `Top ${commandsData[0].length} used commands`, commandsData[0], commandsData[1])
 }
 
+function DrawFiltersPie(filtersData)
+{
+    DrawPie("filtersChart", `Top ${filtersData[0].length} filters found`, filtersData[0], filtersData[1])
+}
+
 window.onload = () => {
     $.ajax({dataType: "json", url: "/Stats/GetOsData", success: DrawOsPie, cache:false});
     $.ajax({dataType: "json", url: "/Stats/GetLinuxData", success: DrawLinuxPie, cache:false});
@@ -578,6 +584,7 @@ window.onload = () => {
     $.ajax({dataType: "json", url: "/Stats/GetWindowsData", success: DrawWindowsPie, cache:false});
     $.ajax({dataType: "json", url: "/Stats/GetVersionsData", success: DrawVersionsPie, cache:false});
     $.ajax({dataType: "json", url: "/Stats/GetCommandsData", success: DrawCommandsPie, cache:false});
+    $.ajax({dataType: "json", url: "/Stats/GetFiltersData", success: DrawFiltersPie, cache:false});
 }
 
 </script>
