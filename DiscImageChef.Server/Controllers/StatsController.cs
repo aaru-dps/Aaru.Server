@@ -183,67 +183,12 @@ namespace DiscImageChef.Server.Controllers
                         }
 
                     if(realMedia.Count > 0)
-                    {
                         ViewBag.repRealMedia =
                             realMedia.OrderBy(media => media.Type).ThenBy(media => media.SubType).ToList();
 
-                        List<PieSeriesData> realMediaPieData = new List<PieSeriesData>();
-
-                        decimal totalRealMediaCount = realMedia.Sum(o => o.Count);
-                        decimal top10RealMediaCount = 0;
-
-                        foreach(MediaItem realMediaItem in realMedia.OrderByDescending(o => o.Count).Take(10))
-                        {
-                            top10RealMediaCount += realMediaItem.Count;
-
-                            realMediaPieData.Add(new PieSeriesData
-                            {
-                                Name = $"{realMediaItem.Type} ({realMediaItem.SubType})",
-                                Y    = (double?)(realMediaItem.Count / totalRealMediaCount)
-                            });
-                        }
-
-                        realMediaPieData.Add(new PieSeriesData
-                        {
-                            Name   = "Other",
-                            Y      = (double?)((totalRealMediaCount - top10RealMediaCount) / totalRealMediaCount),
-                            Sliced = true, Selected = true
-                        });
-
-                        ViewData["realMediaPieData"] = realMediaPieData;
-                    }
-
                     if(virtualMedia.Count > 0)
-                    {
                         ViewBag.repVirtualMedia =
                             virtualMedia.OrderBy(media => media.Type).ThenBy(media => media.SubType).ToList();
-
-                        List<PieSeriesData> virtualMediaPieData = new List<PieSeriesData>();
-
-                        decimal totalVirtualMediaCount = virtualMedia.Sum(o => o.Count);
-                        decimal top10VirtualMediaCount = 0;
-
-                        foreach(MediaItem virtualMediaItem in virtualMedia.OrderByDescending(o => o.Count).Take(10))
-                        {
-                            top10VirtualMediaCount += virtualMediaItem.Count;
-
-                            virtualMediaPieData.Add(new PieSeriesData
-                            {
-                                Name = $"{virtualMediaItem.Type} ({virtualMediaItem.SubType})",
-                                Y    = (double?)(virtualMediaItem.Count / totalVirtualMediaCount)
-                            });
-                        }
-
-                        virtualMediaPieData.Add(new PieSeriesData
-                        {
-                            Name = "Other",
-                            Y = (double?)((totalVirtualMediaCount - top10VirtualMediaCount) /
-                                               totalVirtualMediaCount),
-                            Sliced = true, Selected = true
-                        });
-
-                        ViewData["virtualMediaPieData"] = virtualMediaPieData;
-                    }
                 }
 
                 if(ctx.DeviceStats.Any())
@@ -551,6 +496,42 @@ namespace DiscImageChef.Server.Controllers
             result[0][9] = "Other";
 
             result[1][9] = (ctx.Filesystems.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
+
+            return Json(result);
+        }
+
+        public IActionResult GetVirtualMediaData()
+        {
+            Media[] virtualMedias = ctx.Medias.Where(o => !o.Real).OrderByDescending(o => o.Count).Take(10).ToArray();
+
+            foreach (Media media in virtualMedias)
+            {
+                try
+                {
+                    MediaType.
+                        MediaTypeToString((CommonTypes.MediaType)Enum.Parse(typeof(CommonTypes.MediaType), media.Type),
+                                          out string type, out string subtype);
+
+                    media.Type = $"{type} ({subtype})";
+                }
+                catch
+                {
+                    // Could not get media type/subtype pair from type, so just leave it as is
+                }
+            }
+
+            string[][] result =
+            {
+                virtualMedias.Select(v => v.Type).ToArray(),
+                virtualMedias.Select(x => x.Count.ToString()).ToArray()
+            };
+
+            if(result[0].Length < 10)
+                return Json(result);
+
+            result[0][9] = "Other";
+
+            result[1][9] = (ctx.Medias.Where(o => !o.Real).Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
 
             return Json(result);
         }

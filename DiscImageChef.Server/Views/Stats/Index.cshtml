@@ -345,7 +345,8 @@
 @if (ViewBag.repVirtualMedia != null)
 {
     <div class="container mt-3" id="divVirtualMedia">
-        <div class="container" id="virtualMediaChart">
+        <div class="container">
+            <canvas id="virtualMediaChart"></canvas>
         </div>
         <div class="accordion mt-3" id="virtualMediaAccordion">
             <div class="card">
@@ -595,6 +596,11 @@ function DrawFilesystemsPie(filesystemsData)
     DrawPie("filesystemsChart", `Top ${filesystemsData[0].length} filesystems found`, filesystemsData[0], filesystemsData[1])
 }
 
+function DrawVirtualMediaPie(virtualMediaData)
+{
+    DrawPie("virtualMediaChart", `Top ${virtualMediaData[0].length} media types found in images`, virtualMediaData[0], virtualMediaData[1])
+}
+
 window.onload = () => {
     $.ajax({dataType: "json", url: "/Stats/GetOsData", success: DrawOsPie, cache:false});
     $.ajax({dataType: "json", url: "/Stats/GetLinuxData", success: DrawLinuxPie, cache:false});
@@ -606,6 +612,7 @@ window.onload = () => {
     $.ajax({dataType: "json", url: "/Stats/GetFormatsData", success: DrawFormatsPie, cache:false});
     $.ajax({dataType: "json", url: "/Stats/GetPartitionsData", success: DrawPartitionsPie, cache:false});
     $.ajax({dataType: "json", url: "/Stats/GetFilesystemsData", success: DrawFilesystemsPie, cache:false});
+    $.ajax({dataType: "json", url: "/Stats/GetVirtualMediaData", success: DrawVirtualMediaPie, cache:false});
 }
 
 </script>
