@@ -32,7 +32,6 @@
 
   <ItemGroup>
     <PackageReference Include="ChoPGP" Version="1.0.1.2" />
-    <PackageReference Include="Highsoft.Highcharts" Version="7.2.0.2" />
     <PackageReference Include="MailKit" Version="2.3.2" />
     <PackageReference Include="Markdig" Version="0.18.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0" />
