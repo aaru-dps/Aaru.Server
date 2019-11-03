@@ -115,23 +115,6 @@ namespace DiscImageChef.Server.Controllers
 
                     ViewBag.repOperatingSystems = operatingSystems.OrderBy(os => os.name).ToList();
 
-                    List<PieSeriesData> osPieData = new List<PieSeriesData>();
-
-                    decimal totalOsCount = ctx.OperatingSystems.Sum(o => o.Count);
-
-                    foreach(string os in ctx.OperatingSystems.Select(o => o.Name).Distinct().ToList())
-                    {
-                        decimal osCount = ctx.OperatingSystems.Where(o => o.Name == os).Sum(o => o.Count);
-
-                        osPieData.Add(new PieSeriesData
-                        {
-                            Name = DetectOS.GetPlatformName((PlatformID)Enum.Parse(typeof(PlatformID), os)),
-                            Y    = (double?)(osCount / totalOsCount), Sliced = os == "Linux", Selected = os == "Linux"
-                        });
-                    }
-
-                    ViewData["osPieData"] = osPieData;
-
                     List<PieSeriesData> linuxPieData = new List<PieSeriesData>();
 
                     decimal linuxCount = ctx.OperatingSystems.Where(o => o.Name == PlatformID.Linux.ToString()).
@@ -527,6 +510,26 @@ namespace DiscImageChef.Server.Controllers
             }
 
             return null;
+        }
+
+        public IActionResult GetOsData()
+        {
+            var query = ctx.OperatingSystems.GroupBy(x => new
+            {
+                x.Name
+            }, x => x.Count).Select(g => new
+            {
+                g.Key.Name, Count = g.Sum()
+            });
+
+            string[][] result = new string[2][];
+            result[0] = query.Select(x => x.Name).ToArray();
+            result[1] = query.Select(x => x.Count.ToString()).ToArray();
+
+            for(int i = 0; i < result[0].Length; i++)
+                result[0][i] = DetectOS.GetPlatformName((PlatformID)Enum.Parse(typeof(PlatformID), result[0][i]));
+
+            return Json(result);
         }
     }
 }

@@ -60,7 +60,8 @@
                 </li>
             </ol>
             <div class="carousel-inner">
-                <div class="active carousel-item" id="osChart">
+                <div class="active carousel-item">
+                    <canvas id="osChart"></canvas>
                 </div>
                 <div class="carousel-item" id="linuxChart">
                 </div>
@@ -505,54 +506,44 @@
     </div>
 }
 </div>
-<script src="http://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-@{
-    /*    string highChartsTitleColor;
-    string highChartsDataLabelColor;
-
-    switch(DateTime.UtcNow.DayOfYear)
-    {
-        // 24th January, Macintosh launch
-        case 24:
-            highChartsTitleColor = "#000000";
-            highChartsDataLabelColor = "#000000";
-            break;
-        default:
-            highChartsTitleColor = "#AAAAAA";
-            highChartsDataLabelColor = "#FFFFFF";
-            break;
-    }
-
-    Hashtable highChartsTitleStyle = new Hashtable {{"color", highChartsTitleColor}};
-    PlotOptionsPieDataLabelsStyle highChartsDataLabelStyle = new PlotOptionsPieDataLabelsStyle {Color = highChartsDataLabelColor, TextOutline = "0px"};
-
-    @(Html.Highsoft().GetHighcharts(new Highcharts {Chart = new Chart {PlotBackgroundColor = null, PlotBorderWidth = null, PlotShadow = new Shadow {Enabled = true}}, Title = new Title {Text = "Operating system usage", Style = highChartsTitleStyle}, Tooltip = new Tooltip {PointFormat = "{series.name}: <b>{point.percentage:.1f}%</b>"}, PlotOptions = new PlotOptions {Pie = new PlotOptionsPie {AllowPointSelect = true, Cursor = PlotOptionsPieCursor.Pointer, DataLabels = new PlotOptionsPieDataLabels {Style = highChartsDataLabelStyle, Enabled = true, Format = "<b>{point.name}</b>: {point.percentage:.1f} %"}}}, Series = new List<Series> {new PieSeries {Name = "Percentage:", Data = ViewData["osPieData"] as List<PieSeriesData>}}}, "osChart", false))
-
-    @(Html.Highsoft().GetHighcharts(new Highcharts {Chart = new Chart {PlotBackgroundColor = null, PlotBorderWidth = null, PlotShadow = new Shadow {Enabled = true}}, Title = new Title {Text = "Linux versions", Style = highChartsTitleStyle}, Tooltip = new Tooltip {PointFormat = "{series.name}: <b>{point.percentage:.1f}%</b>"}, PlotOptions = new PlotOptions {Pie = new PlotOptionsPie {AllowPointSelect = true, Cursor = PlotOptionsPieCursor.Pointer, DataLabels = new PlotOptionsPieDataLabels {Style = highChartsDataLabelStyle, Enabled = true, Format = "<b>{point.name}</b>: {point.percentage:.1f} %"}}}, Series = new List<Series> {new PieSeries {Name = "Percentage:", Data = ViewData["linuxPieData"] as List<PieSeriesData>}}}, "linuxChart", false))
-
-    @(Html.Highsoft().GetHighcharts(new Highcharts {Chart = new Chart {PlotBackgroundColor = null, PlotBorderWidth = null, PlotShadow = new Shadow {Enabled = true}}, Title = new Title {Text = "macOS versions", Style = highChartsTitleStyle}, Tooltip = new Tooltip {PointFormat = "{series.name}: <b>{point.percentage:.1f}%</b>"}, PlotOptions = new PlotOptions {Pie = new PlotOptionsPie {AllowPointSelect = true, Cursor = PlotOptionsPieCursor.Pointer, DataLabels = new PlotOptionsPieDataLabels {Style = highChartsDataLabelStyle, Enabled = true, Format = "<b>{point.name}</b>: {point.percentage:.1f} %"}}}, Series = new List<Series> {new PieSeries {Name = "Percentage:", Data = ViewData["macosPieData"] as List<PieSeriesData>}}}, "macosChart", false))
-
-    @(Html.Highsoft().GetHighcharts(new Highcharts {Chart = new Chart {PlotBackgroundColor = null, PlotBorderWidth = null, PlotShadow = new Shadow {Enabled = true}}, Title = new Title {Text = "Windows versions", Style = highChartsTitleStyle}, Tooltip = new Tooltip {PointFormat = "{series.name}: <b>{point.percentage:.1f}%</b>"}, PlotOptions = new PlotOptions {Pie = new PlotOptionsPie {AllowPointSelect = true, Cursor = PlotOptionsPieCursor.Pointer, DataLabels = new PlotOptionsPieDataLabels {Style = highChartsDataLabelStyle, Enabled = true, Format = "<b>{point.name}</b>: {point.percentage:.1f} %"}}}, Series = new List<Series> {new PieSeries {Name = "Percentage:", Data = ViewData["windowsPieData"] as List<PieSeriesData>}}}, "windowsChart", false))
-
-    @(Html.Highsoft().GetHighcharts(new Highcharts {Chart = new Chart {PlotBackgroundColor = null, PlotBorderWidth = null, PlotShadow = new Shadow {Enabled = true}}, Title = new Title {Text = "DiscImageChef versions", Style = highChartsTitleStyle}, Tooltip = new Tooltip {PointFormat = "{series.name}: <b>{point.percentage:.1f}%</b>"}, PlotOptions = new PlotOptions {Pie = new PlotOptionsPie {AllowPointSelect = true, Cursor = PlotOptionsPieCursor.Pointer, DataLabels = new PlotOptionsPieDataLabels {Style = highChartsDataLabelStyle, Enabled = true, Format = "<b>{point.name}</b>: {point.percentage:.1f} %"}}}, Series = new List<Series> {new PieSeries {Name = "Percentage:", Data = ViewData["versionsPieData"] as List<PieSeriesData>}}}, "versionsChart", false))
-
-    @(Html.Highsoft().GetHighcharts(new Highcharts {Chart = new Chart {PlotBackgroundColor = null, PlotBorderWidth = null, PlotShadow = new Shadow {Enabled = true}}, Title = new Title {Text = "Commands run", Style = highChartsTitleStyle}, Tooltip = new Tooltip {PointFormat = "{series.name}: <b>{point.percentage:.1f}%</b>"}, PlotOptions = new PlotOptions {Pie = new PlotOptionsPie {AllowPointSelect = true, Cursor = PlotOptionsPieCursor.Pointer, DataLabels = new PlotOptionsPieDataLabels {Style = highChartsDataLabelStyle, Enabled = true, Format = "<b>{point.name}</b>: {point.percentage:.1f} %"}}}, Series = new List<Series> {new PieSeries {Name = "Percentage:", Data = ViewData["commandsPieData"] as List<PieSeriesData>}}}, "commandsChart", false))
-
-    @(Html.Highsoft().GetHighcharts(new Highcharts {Chart = new Chart {PlotBackgroundColor = null, PlotBorderWidth = null, PlotShadow = new Shadow {Enabled = true}}, Title = new Title {Text = "Filters found", Style = highChartsTitleStyle}, Tooltip = new Tooltip {PointFormat = "{series.name}: <b>{point.percentage:.1f}%</b>"}, PlotOptions = new PlotOptions {Pie = new PlotOptionsPie {AllowPointSelect = true, Cursor = PlotOptionsPieCursor.Pointer, DataLabels = new PlotOptionsPieDataLabels {Style = highChartsDataLabelStyle, Enabled = true, Format = "<b>{point.name}</b>: {point.percentage:.1f} %"}}}, Series = new List<Series> {new PieSeries {Name = "Percentage:", Data = ViewData["filtersPieData"] as List<PieSeriesData>}}}, "filtersChart", false))
-
-    @(Html.Highsoft().GetHighcharts(new Highcharts {Chart = new Chart {PlotBackgroundColor = null, PlotBorderWidth = null, PlotShadow = new Shadow {Enabled = true}}, Title = new Title {Text = "Top 10 media image formats found", Style = highChartsTitleStyle}, Tooltip = new Tooltip {PointFormat = "{series.name}: <b>{point.percentage:.1f}%</b>"}, PlotOptions = new PlotOptions {Pie = new PlotOptionsPie {AllowPointSelect = true, Cursor = PlotOptionsPieCursor.Pointer, DataLabels = new PlotOptionsPieDataLabels {Style = highChartsDataLabelStyle, Enabled = true, Format = "<b>{point.name}</b>: {point.percentage:.1f} %"}}}, Series = new List<Series> {new PieSeries {Name = "Percentage:", Data = ViewData["formatsPieData"] as List<PieSeriesData>}}}, "formatsChart", false))
-
-    @(Html.Highsoft().GetHighcharts(new Highcharts {Chart = new Chart {PlotBackgroundColor = null, PlotBorderWidth = null, PlotShadow = new Shadow {Enabled = true}}, Title = new Title {Text = "Top 10 partitioning schemes found", Style = highChartsTitleStyle}, Tooltip = new Tooltip {PointFormat = "{series.name}: <b>{point.percentage:.1f}%</b>"}, PlotOptions = new PlotOptions {Pie = new PlotOptionsPie {AllowPointSelect = true, Cursor = PlotOptionsPieCursor.Pointer, DataLabels = new PlotOptionsPieDataLabels {Style = highChartsDataLabelStyle, Enabled = true, Format = "<b>{point.name}</b>: {point.percentage:.1f} %"}}}, Series = new List<Series> {new PieSeries {Name = "Percentage:", Data = ViewData["partitionsPieData"] as List<PieSeriesData>}}}, "partitionsChart", false))
-
-    @(Html.Highsoft().GetHighcharts(new Highcharts {Chart = new Chart {PlotBackgroundColor = null, PlotBorderWidth = null, PlotShadow = new Shadow {Enabled = true}}, Title = new Title {Text = "Top 10 filesystems found", Style = highChartsTitleStyle}, Tooltip = new Tooltip {PointFormat = "{series.name}: <b>{point.percentage:.1f}%</b>"}, PlotOptions = new PlotOptions {Pie = new PlotOptionsPie {AllowPointSelect = true, Cursor = PlotOptionsPieCursor.Pointer, DataLabels = new PlotOptionsPieDataLabels {Style = highChartsDataLabelStyle, Enabled = true, Format = "<b>{point.name}</b>: {point.percentage:.1f} %"}}}, Series = new List<Series> {new PieSeries {Name = "Percentage:", Data = ViewData["filesystemsPieData"] as List<PieSeriesData>}}}, "filesystemsChart", false))
-
-    @(Html.Highsoft().GetHighcharts(new Highcharts {Chart = new Chart {PlotBackgroundColor = null, PlotBorderWidth = null, PlotShadow = new Shadow {Enabled = true}}, Title = new Title {Text = "Top 10 media types found in images", Style = highChartsTitleStyle}, Tooltip = new Tooltip {PointFormat = "{series.name}: <b>{point.percentage:.1f}%</b>"}, PlotOptions = new PlotOptions {Pie = new PlotOptionsPie {AllowPointSelect = true, Cursor = PlotOptionsPieCursor.Pointer, DataLabels = new PlotOptionsPieDataLabels {Style = highChartsDataLabelStyle, Enabled = true, Format = "<b>{point.name}</b>: {point.percentage:.1f} %"}}}, Series = new List<Series> {new PieSeries {Name = "Percentage:", Data = ViewData["virtualMediaPieData"] as List<PieSeriesData>}}}, "virtualMediaChart", false))
-
-    @(Html.Highsoft().GetHighcharts(new Highcharts {Chart = new Chart {PlotBackgroundColor = null, PlotBorderWidth = null, PlotShadow = new Shadow {Enabled = true}}, Title = new Title {Text = "Top 10 media types found in real devices", Style = highChartsTitleStyle}, Tooltip = new Tooltip {PointFormat = "{series.name}: <b>{point.percentage:.1f}%</b>"}, PlotOptions = new PlotOptions {Pie = new PlotOptionsPie {AllowPointSelect = true, Cursor = PlotOptionsPieCursor.Pointer, DataLabels = new PlotOptionsPieDataLabels {Style = highChartsDataLabelStyle, Enabled = true, Format = "<b>{point.name}</b>: {point.percentage:.1f} %"}}}, Series = new List<Series> {new PieSeries {Name = "Percentage:", Data = ViewData["realMediaPieData"] as List<PieSeriesData>}}}, "realMediaChart", false))
-
-    @(Html.Highsoft().GetHighcharts(new Highcharts {Chart = new Chart {PlotBackgroundColor = null, PlotBorderWidth = null, PlotShadow = new Shadow {Enabled = true}}, Title = new Title {Text = "Devices found by bus", Style = highChartsTitleStyle}, Tooltip = new Tooltip {PointFormat = "{series.name}: <b>{point.percentage:.1f}%</b>"}, PlotOptions = new PlotOptions {Pie = new PlotOptionsPie {AllowPointSelect = true, Cursor = PlotOptionsPieCursor.Pointer, DataLabels = new PlotOptionsPieDataLabels {Style = highChartsDataLabelStyle, Enabled = true, Format = "<b>{point.name}</b>: {point.percentage:.1f} %"}}}, Series = new List<Series> {new PieSeries {Name = "Percentage:", Data = ViewData["devicesBusPieData"] as List<PieSeriesData>}}}, "devicesBusChart", false))
-
-    @(Html.Highsoft().GetHighcharts(new Highcharts {Chart = new Chart {PlotBackgroundColor = null, PlotBorderWidth = null, PlotShadow = new Shadow {Enabled = true}}, Title = new Title {Text = "Devices found by manufacturer", Style = highChartsTitleStyle}, Tooltip = new Tooltip {PointFormat = "{series.name}: <b>{point.percentage:.1f}%</b>"}, PlotOptions = new PlotOptions {Pie = new PlotOptionsPie {AllowPointSelect = true, Cursor = PlotOptionsPieCursor.Pointer, DataLabels = new PlotOptionsPieDataLabels {Style = highChartsDataLabelStyle, Enabled = true, Format = "<b>{point.name}</b>: {point.percentage:.1f} %"}}}, Series = new List<Series> {new PieSeries {Name = "Percentage:", Data = ViewData["devicesManufacturerPieData"] as List<PieSeriesData>}}}, "devicesManufacturerChart", false))
-*/
+<script crossorigin="anonymous" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+<script>
+function DrawPie(elementName, label, dataLabels, data)
+{
+    var ctx = document.getElementById(elementName);
+    var myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: dataLabels,
+                    datasets: [{
+                        label: label,
+                        data: data,
+                        backgroundColor: themeColors
+                    }]
+                },
+                options: {
+        responsive: true,
+        title: {
+            display: true,
+            text: label,
+            fontColor: chartTitleColor
+        },
+        legend: {
+                    labels: {
+                        fontColor: chartDataLabelColor
+                    }
+                }}}
+            );
 }
+
+function DrawOsPie(osData)
+{
+    DrawPie("osChart", "Operating systems", osData[0], osData[1])
+}
+
+window.onload = () => {
+    var foo = document.body.style['highcharts-color-0'];
+    $.ajax({dataType: "json", url: "/Stats/GetOsData", success: DrawOsPie, cache:false});
+}
+
+</script>
