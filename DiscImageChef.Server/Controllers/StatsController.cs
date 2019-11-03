@@ -143,33 +143,7 @@ namespace DiscImageChef.Server.Controllers
                     ViewBag.repPartitions = ctx.Partitions.OrderBy(filter => filter.Name).ToList();
 
                 if(ctx.Filesystems.Any())
-                {
                     ViewBag.repFilesystems = ctx.Filesystems.OrderBy(filter => filter.Name).ToList();
-
-                    List<PieSeriesData> filesystemsPieData = new List<PieSeriesData>();
-
-                    decimal totalFilesystemsCount = ctx.Filesystems.Sum(o => o.Count);
-                    decimal top10FilesystemCount  = 0;
-
-                    foreach(Filesystem filesystem in ctx.Filesystems.OrderByDescending(o => o.Count).Take(10))
-                    {
-                        top10FilesystemCount += filesystem.Count;
-
-                        filesystemsPieData.Add(new PieSeriesData
-                        {
-                            Name = filesystem.Name, Y = (double?)(filesystem.Count / totalFilesystemsCount)
-                        });
-                    }
-
-                    filesystemsPieData.Add(new PieSeriesData
-                    {
-                        Name   = "Other",
-                        Y      = (double?)((totalFilesystemsCount - top10FilesystemCount) / totalFilesystemsCount),
-                        Sliced = true, Selected = true
-                    });
-
-                    ViewData["filesystemsPieData"] = filesystemsPieData;
-                }
 
                 if(ctx.Medias.Any())
                 {
@@ -559,6 +533,24 @@ namespace DiscImageChef.Server.Controllers
             result[0][9] = "Other";
 
             result[1][9] = (ctx.Partitions.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
+
+            return Json(result);
+        }
+
+        public IActionResult GetFilesystemsData()
+        {
+            string[][] result =
+            {
+                ctx.Filesystems.OrderByDescending(o => o.Count).Take(10).Select(v => v.Name).ToArray(),
+                ctx.Filesystems.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
+            };
+
+            if(result[0].Length < 10)
+                return Json(result);
+
+            result[0][9] = "Other";
+
+            result[1][9] = (ctx.Filesystems.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
 
             return Json(result);
         }

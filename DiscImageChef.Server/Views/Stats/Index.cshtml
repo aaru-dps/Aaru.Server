@@ -305,7 +305,8 @@
 @if (ViewBag.repFilesystems != null)
 {
     <div class="container mt-3" id="divFilesystems">
-        <div class="container" id="filesystemsChart">
+        <div class="container">
+            <canvas id="filesystemsChart"></canvas>
         </div>
         <div class="accordion mt-3" id="filesystemsAccordion">
             <div class="card">
@@ -589,6 +590,11 @@ function DrawPartitionsPie(partitionsData)
     DrawPie("partitionsChart", `Top ${partitionsData[0].length} partitioning schemes found`, partitionsData[0], partitionsData[1])
 }
 
+function DrawFilesystemsPie(filesystemsData)
+{
+    DrawPie("filesystemsChart", `Top ${filesystemsData[0].length} filesystems found`, filesystemsData[0], filesystemsData[1])
+}
+
 window.onload = () => {
     $.ajax({dataType: "json", url: "/Stats/GetOsData", success: DrawOsPie, cache:false});
     $.ajax({dataType: "json", url: "/Stats/GetLinuxData", success: DrawLinuxPie, cache:false});
@@ -599,6 +605,7 @@ window.onload = () => {
     $.ajax({dataType: "json", url: "/Stats/GetFiltersData", success: DrawFiltersPie, cache:false});
     $.ajax({dataType: "json", url: "/Stats/GetFormatsData", success: DrawFormatsPie, cache:false});
     $.ajax({dataType: "json", url: "/Stats/GetPartitionsData", success: DrawPartitionsPie, cache:false});
+    $.ajax({dataType: "json", url: "/Stats/GetFilesystemsData", success: DrawFilesystemsPie, cache:false});
 }
 
 </script>
