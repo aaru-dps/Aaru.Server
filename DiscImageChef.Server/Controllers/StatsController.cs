@@ -52,18 +52,13 @@ namespace DiscImageChef.Server.Controllers
     /// <summary>Renders a page with statistics, list of media type, devices, etc</summary>
     public class StatsController : Controller
     {
-        readonly IWebHostEnvironment _environment;
         readonly DicServerContext    ctx;
-        List<DeviceItem>             devices;
-        List<NameValueStats>         operatingSystems;
-        List<MediaItem>              realMedia;
-        List<NameValueStats>         versions;
-        List<MediaItem>              virtualMedia;
+        readonly IWebHostEnvironment env;
 
         public StatsController(IWebHostEnvironment environment, DicServerContext context)
         {
-            _environment = environment;
-            ctx          = context;
+            env = environment;
+            ctx = context;
         }
 
         public ActionResult Index()
@@ -72,10 +67,8 @@ namespace DiscImageChef.Server.Controllers
 
             try
             {
-                if(
-                    System.IO.File.
-                           Exists(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
-                                               "Statistics", "Statistics.xml")))
+                if(System.IO.File.Exists(Path.Combine(env.ContentRootPath ?? throw new InvalidOperationException(),
+                                                      "Statistics", "Statistics.xml")))
                     try
                     {
                         var statistics = new Stats();
@@ -83,7 +76,7 @@ namespace DiscImageChef.Server.Controllers
                         var xs = new XmlSerializer(statistics.GetType());
 
                         FileStream fs =
-                            WaitForFile(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(), "Statistics", "Statistics.xml"),
+                            WaitForFile(Path.Combine(env.ContentRootPath ?? throw new InvalidOperationException(), "Statistics", "Statistics.xml"),
                                         FileMode.Open, FileAccess.Read, FileShare.Read);
 
                         statistics = (Stats)xs.Deserialize(fs);
@@ -91,9 +84,8 @@ namespace DiscImageChef.Server.Controllers
 
                         StatsConverter.Convert(statistics);
 
-                        System.IO.File.
-                               Delete(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
-                                                   "Statistics", "Statistics.xml"));
+                        System.IO.File.Delete(Path.Combine(env.ContentRootPath ?? throw new InvalidOperationException(),
+                                                           "Statistics", "Statistics.xml"));
                     }
                     catch(XmlException)
                     {
@@ -102,7 +94,7 @@ namespace DiscImageChef.Server.Controllers
 
                 if(ctx.OperatingSystems.Any())
                 {
-                    operatingSystems = new List<NameValueStats>();
+                    List<NameValueStats> operatingSystems = new List<NameValueStats>();
 
                     foreach(OperatingSystem nvs in ctx.OperatingSystems)
                         operatingSystems.Add(new NameValueStats
@@ -117,7 +109,7 @@ namespace DiscImageChef.Server.Controllers
 
                 if(ctx.Versions.Any())
                 {
-                    versions = new List<NameValueStats>();
+                    List<NameValueStats> versions = new List<NameValueStats>();
 
                     foreach(Version nvs in ctx.Versions)
                         versions.Add(new NameValueStats
@@ -145,8 +137,8 @@ namespace DiscImageChef.Server.Controllers
 
                 if(ctx.Medias.Any())
                 {
-                    realMedia    = new List<MediaItem>();
-                    virtualMedia = new List<MediaItem>();
+                    List<MediaItem> realMedia    = new List<MediaItem>();
+                    List<MediaItem> virtualMedia = new List<MediaItem>();
 
                     foreach(Media nvs in ctx.Medias)
                         try
@@ -191,7 +183,7 @@ namespace DiscImageChef.Server.Controllers
 
                 if(ctx.DeviceStats.Any())
                 {
-                    devices = new List<DeviceItem>();
+                    List<DeviceItem> devices = new List<DeviceItem>();
 
                     foreach(DeviceStat device in ctx.DeviceStats.ToList())
                     {
@@ -212,14 +204,14 @@ namespace DiscImageChef.Server.Controllers
 
                         xmlFile = xmlFile.Replace('/', '_').Replace('\\', '_').Replace('?', '_');
 
-                        if(System.IO.File.Exists(Path.Combine(_environment.ContentRootPath, "Reports", xmlFile)))
+                        if(System.IO.File.Exists(Path.Combine(env.ContentRootPath, "Reports", xmlFile)))
                         {
                             var deviceReport = new DeviceReport();
 
                             var xs = new XmlSerializer(deviceReport.GetType());
 
                             FileStream fs =
-                                WaitForFile(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(), "Reports", xmlFile),
+                                WaitForFile(Path.Combine(env.ContentRootPath ?? throw new InvalidOperationException(), "Reports", xmlFile),
                                             FileMode.Open, FileAccess.Read, FileShare.Read);
 
                             deviceReport = (DeviceReport)xs.Deserialize(fs);
@@ -231,7 +223,7 @@ namespace DiscImageChef.Server.Controllers
                             ctx.SaveChanges();
 
                             System.IO.File.
-                                   Delete(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
+                                   Delete(Path.Combine(env.ContentRootPath ?? throw new InvalidOperationException(),
                                                        "Reports", xmlFile));
                         }
 
@@ -582,11 +574,11 @@ namespace DiscImageChef.Server.Controllers
 
         public IActionResult GetDevicesByManufacturerData()
         {
-            List<Device> devs = ctx.Devices.Where(d => d.Manufacturer != null && d.Manufacturer != "").ToList();
+            List<Device> devices = ctx.Devices.Where(d => d.Manufacturer != null && d.Manufacturer != "").ToList();
 
-            var data = devs.Select(d => d.Manufacturer.ToLowerInvariant()).Distinct().Select(manufacturer => new
+            var data = devices.Select(d => d.Manufacturer.ToLowerInvariant()).Distinct().Select(manufacturer => new
             {
-                manufacturer, manufacturerCount = devs.Count(d => d.Manufacturer?.ToLowerInvariant() == manufacturer)
+                manufacturer, manufacturerCount = devices.Count(d => d.Manufacturer?.ToLowerInvariant() == manufacturer)
             }).Select(t => new
             {
                 Name = t.manufacturer, Count = t.manufacturerCount
