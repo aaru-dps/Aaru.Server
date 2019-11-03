@@ -41,10 +41,8 @@ using System.Xml.Serialization;
 using DiscImageChef.CommonTypes.Interop;
 using DiscImageChef.CommonTypes.Metadata;
 using DiscImageChef.Server.Models;
-using Highsoft.Web.Mvc.Charts;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using OperatingSystem = DiscImageChef.Server.Models.OperatingSystem;
 using PlatformID = DiscImageChef.CommonTypes.Interop.PlatformID;
 using Version = DiscImageChef.Server.Models.Version;
@@ -248,15 +246,6 @@ namespace DiscImageChef.Server.Controllers
                     ViewBag.repDevices = devices.OrderBy(device => device.Manufacturer).ThenBy(device => device.Model).
                                                  ThenBy(device => device.Revision).ThenBy(device => device.Bus).
                                                  ToList();
-
-                    ViewData["devicesManufacturerPieData"] =
-                        (from manufacturer in devices.Where(d => d.Manufacturer != null).
-                                                      Select(d => d.Manufacturer.ToLowerInvariant()).Distinct()
-                         let manufacturerCount = devices.Count(d => d.Manufacturer?.ToLowerInvariant() == manufacturer)
-                         select new PieSeriesData
-                         {
-                             Name = manufacturer, Y = manufacturerCount / (double)devices.Count
-                         }).ToList();
                 }
             }
             catch(Exception)
@@ -497,7 +486,7 @@ namespace DiscImageChef.Server.Controllers
         {
             Media[] virtualMedias = ctx.Medias.Where(o => !o.Real).OrderByDescending(o => o.Count).Take(10).ToArray();
 
-            foreach (Media media in virtualMedias)
+            foreach(Media media in virtualMedias)
             {
                 try
                 {
@@ -515,8 +504,7 @@ namespace DiscImageChef.Server.Controllers
 
             string[][] result =
             {
-                virtualMedias.Select(v => v.Type).ToArray(),
-                virtualMedias.Select(x => x.Count.ToString()).ToArray()
+                virtualMedias.Select(v => v.Type).ToArray(), virtualMedias.Select(x => x.Count.ToString()).ToArray()
             };
 
             if(result[0].Length < 10)
@@ -524,7 +512,8 @@ namespace DiscImageChef.Server.Controllers
 
             result[0][9] = "Other";
 
-            result[1][9] = (ctx.Medias.Where(o => !o.Real).Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
+            result[1][9] = (ctx.Medias.Where(o => !o.Real).Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).
+                ToString();
 
             return Json(result);
         }
@@ -533,7 +522,7 @@ namespace DiscImageChef.Server.Controllers
         {
             Media[] realMedias = ctx.Medias.Where(o => o.Real).OrderByDescending(o => o.Count).Take(10).ToArray();
 
-            foreach (Media media in realMedias)
+            foreach(Media media in realMedias)
             {
                 try
                 {
@@ -551,8 +540,7 @@ namespace DiscImageChef.Server.Controllers
 
             string[][] result =
             {
-                realMedias.Select(v => v.Type).ToArray(),
-                realMedias.Select(x => x.Count.ToString()).ToArray()
+                realMedias.Select(v => v.Type).ToArray(), realMedias.Select(x => x.Count.ToString()).ToArray()
             };
 
             if(result[0].Length < 10)
@@ -560,23 +548,21 @@ namespace DiscImageChef.Server.Controllers
 
             result[0][9] = "Other";
 
-            result[1][9] = (ctx.Medias.Where(o => o.Real).Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
+            result[1][9] = (ctx.Medias.Where(o => o.Real).Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).
+                ToString();
 
             return Json(result);
         }
 
-        public IActionResult GetDevicesBusData()
+        public IActionResult GetDevicesByBusData()
         {
-            var data = ctx.DeviceStats.Select(d => d.Bus).
-                               Distinct().
-                               Select(deviceBus => new
-                               {
-                                   deviceBus, deviceBusCount = ctx.DeviceStats.Count(d => d.Bus == deviceBus)
-                               }).
-                               Select(t => new
-                               {
-                                   Name = t.deviceBus, Count = t.deviceBusCount
-                               }).ToList();
+            var data = ctx.DeviceStats.Select(d => d.Bus).Distinct().Select(deviceBus => new
+            {
+                deviceBus, deviceBusCount = ctx.DeviceStats.Count(d => d.Bus == deviceBus)
+            }).Select(t => new
+            {
+                Name = t.deviceBus, Count = t.deviceBusCount
+            }).ToList();
 
             string[][] result =
             {
@@ -588,6 +574,34 @@ namespace DiscImageChef.Server.Controllers
                 return Json(result);
 
             result[0][9] = "Other";
+
+            result[1][9] = (data.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
+
+            return Json(result);
+        }
+
+        public IActionResult GetDevicesByManufacturerData()
+        {
+            List<Device> devs = ctx.Devices.Where(d => d.Manufacturer != null && d.Manufacturer != "").ToList();
+
+            var data = devs.Select(d => d.Manufacturer.ToLowerInvariant()).Distinct().Select(manufacturer => new
+            {
+                manufacturer, manufacturerCount = devs.Count(d => d.Manufacturer?.ToLowerInvariant() == manufacturer)
+            }).Select(t => new
+            {
+                Name = t.manufacturer, Count = t.manufacturerCount
+            }).ToList();
+
+            string[][] result =
+            {
+                data.OrderByDescending(o => o.Count).Take(10).Select(v => v.Name).ToArray(),
+                data.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
+            };
+
+            if(result[0].Length < 10)
+                return Json(result);
+
+            result[0][9] = "other";
 
             result[1][9] = (data.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
 

@@ -448,7 +448,8 @@
                 <div class="active carousel-item">
                     <canvas id="devicesBusChart"></canvas>
                 </div>
-                <div class="carousel-item" id="devicesManufacturerChart">
+                <div class="carousel-item">
+                    <canvas id="devicesManufacturerChart"></canvas>
                 </div>
             </div>
             <a class="carousel-control-prev" data-slide="prev" href="#carouselDevices" role="button">
@@ -608,9 +609,14 @@ function DrawRealMediaPie(realMediaData)
     DrawPie("realMediaChart", `Top ${realMediaData[0].length} media types found in devices`, realMediaData[0], realMediaData[1])
 }
 
-function DrawDevicesBusPie(devicesBusData)
+function DrawDevicesByBusPie(devicesBusData)
 {
     DrawPie("devicesBusChart", `Top ${devicesBusData[0].length} devices by bus`, devicesBusData[0], devicesBusData[1])
+}
+
+function DrawDevicesByManufacturerPie(devicesByManufacturerData)
+{
+    DrawPie("devicesManufacturerChart", `Top ${devicesByManufacturerData[0].length} devices by manufacturer`, devicesByManufacturerData[0], devicesByManufacturerData[1])
 }
 
 window.onload = () => {
@@ -626,7 +632,8 @@ window.onload = () => {
     $.ajax({dataType: "json", url: "/Stats/GetFilesystemsData", success: DrawFilesystemsPie, cache:false});
     $.ajax({dataType: "json", url: "/Stats/GetVirtualMediaData", success: DrawVirtualMediaPie, cache:false});
     $.ajax({dataType: "json", url: "/Stats/GetRealMediaData", success: DrawRealMediaPie, cache:false});
-    $.ajax({dataType: "json", url: "/Stats/GetDevicesBusData", success: DrawDevicesBusPie, cache:false});
+    $.ajax({dataType: "json", url: "/Stats/GetDevicesByBusData", success: DrawDevicesByBusPie, cache:false});
+    $.ajax({dataType: "json", url: "/Stats/GetDevicesByManufacturerData", success: DrawDevicesByManufacturerPie, cache:false});
 }
 
 </script>
