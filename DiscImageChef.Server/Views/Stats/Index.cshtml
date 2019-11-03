@@ -265,7 +265,8 @@
 @if (ViewBag.repPartitions != null)
 {
     <div class="container mt-3" id="divPartitions">
-        <div class="container" id="partitionsChart">
+        <div class="container">
+            <canvas id="partitionsChart"></canvas>
         </div>
         <div class="accordion mt-3" id="partitionsAccordion">
             <div class="card">
@@ -578,9 +579,14 @@ function DrawFiltersPie(filtersData)
     DrawPie("filtersChart", `Top ${filtersData[0].length} filters found`, filtersData[0], filtersData[1])
 }
 
-function DrawFormatsPie(formats)
+function DrawFormatsPie(formatsData)
 {
-    DrawPie("formatsChart", `Top ${formats[0].length} media image formats found`, formats[0], formats[1])
+    DrawPie("formatsChart", `Top ${formatsData[0].length} media image formats found`, formatsData[0], formatsData[1])
+}
+
+function DrawPartitionsPie(partitionsData)
+{
+    DrawPie("partitionsChart", `Top ${partitionsData[0].length} partitioning schemes found`, partitionsData[0], partitionsData[1])
 }
 
 window.onload = () => {
@@ -592,6 +598,7 @@ window.onload = () => {
     $.ajax({dataType: "json", url: "/Stats/GetCommandsData", success: DrawCommandsPie, cache:false});
     $.ajax({dataType: "json", url: "/Stats/GetFiltersData", success: DrawFiltersPie, cache:false});
     $.ajax({dataType: "json", url: "/Stats/GetFormatsData", success: DrawFormatsPie, cache:false});
+    $.ajax({dataType: "json", url: "/Stats/GetPartitionsData", success: DrawPartitionsPie, cache:false});
 }
 
 </script>

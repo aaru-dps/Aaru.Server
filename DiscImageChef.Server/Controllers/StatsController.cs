@@ -137,61 +137,10 @@ namespace DiscImageChef.Server.Controllers
                     ViewBag.repFilters = ctx.Filters.OrderBy(filter => filter.Name).ToList();
 
                 if(ctx.MediaFormats.Any())
-                {
                     ViewBag.repMediaImages = ctx.MediaFormats.OrderBy(filter => filter.Name).ToList();
 
-                    List<PieSeriesData> formatsPieData = new List<PieSeriesData>();
-
-                    decimal totalFormatsCount = ctx.MediaFormats.Sum(o => o.Count);
-                    decimal top10FormatCount  = 0;
-
-                    foreach(MediaFormat format in ctx.MediaFormats.OrderByDescending(o => o.Count).Take(10))
-                    {
-                        top10FormatCount += format.Count;
-
-                        formatsPieData.Add(new PieSeriesData
-                        {
-                            Name = format.Name, Y = (double?)(format.Count / totalFormatsCount)
-                        });
-                    }
-
-                    formatsPieData.Add(new PieSeriesData
-                    {
-                        Name   = "Other", Y     = (double?)((totalFormatsCount - top10FormatCount) / totalFormatsCount),
-                        Sliced = true, Selected = true
-                    });
-
-                    ViewData["formatsPieData"] = formatsPieData;
-                }
-
                 if(ctx.Partitions.Any())
-                {
                     ViewBag.repPartitions = ctx.Partitions.OrderBy(filter => filter.Name).ToList();
-
-                    List<PieSeriesData> partitionsPieData = new List<PieSeriesData>();
-
-                    decimal totalPartitionsCount = ctx.Partitions.Sum(o => o.Count);
-                    decimal top10PartitionCount  = 0;
-
-                    foreach(Partition partition in ctx.Partitions.OrderByDescending(o => o.Count).Take(10))
-                    {
-                        top10PartitionCount += partition.Count;
-
-                        partitionsPieData.Add(new PieSeriesData
-                        {
-                            Name = partition.Name, Y = (double?)(partition.Count / totalPartitionsCount)
-                        });
-                    }
-
-                    partitionsPieData.Add(new PieSeriesData
-                    {
-                        Name   = "Other",
-                        Y      = (double?)((totalPartitionsCount - top10PartitionCount) / totalPartitionsCount),
-                        Sliced = true, Selected = true
-                    });
-
-                    ViewData["partitionsPieData"] = partitionsPieData;
-                }
 
                 if(ctx.Filesystems.Any())
                 {
@@ -592,6 +541,24 @@ namespace DiscImageChef.Server.Controllers
             result[0][9] = "Other";
 
             result[1][9] = (ctx.MediaFormats.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
+
+            return Json(result);
+        }
+
+        public IActionResult GetPartitionsData()
+        {
+            string[][] result =
+            {
+                ctx.Partitions.OrderByDescending(o => o.Count).Take(10).Select(v => v.Name).ToArray(),
+                ctx.Partitions.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
+            };
+
+            if(result[0].Length < 10)
+                return Json(result);
+
+            result[0][9] = "Other";
+
+            result[1][9] = (ctx.Partitions.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
 
             return Json(result);
         }
