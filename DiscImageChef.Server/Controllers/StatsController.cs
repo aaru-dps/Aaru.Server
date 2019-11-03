@@ -249,13 +249,6 @@ namespace DiscImageChef.Server.Controllers
                                                  ThenBy(device => device.Revision).ThenBy(device => device.Bus).
                                                  ToList();
 
-                    ViewData["devicesBusPieData"] = (from deviceBus in devices.Select(d => d.Bus).Distinct()
-                                                     let deviceBusCount = devices.Count(d => d.Bus == deviceBus)
-                                                     select new PieSeriesData
-                                                     {
-                                                         Name = deviceBus, Y = deviceBusCount / (double)devices.Count
-                                                     }).ToList();
-
                     ViewData["devicesManufacturerPieData"] =
                         (from manufacturer in devices.Where(d => d.Manufacturer != null).
                                                       Select(d => d.Manufacturer.ToLowerInvariant()).Distinct()
@@ -568,6 +561,35 @@ namespace DiscImageChef.Server.Controllers
             result[0][9] = "Other";
 
             result[1][9] = (ctx.Medias.Where(o => o.Real).Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
+
+            return Json(result);
+        }
+
+        public IActionResult GetDevicesBusData()
+        {
+            var data = ctx.DeviceStats.Select(d => d.Bus).
+                               Distinct().
+                               Select(deviceBus => new
+                               {
+                                   deviceBus, deviceBusCount = ctx.DeviceStats.Count(d => d.Bus == deviceBus)
+                               }).
+                               Select(t => new
+                               {
+                                   Name = t.deviceBus, Count = t.deviceBusCount
+                               }).ToList();
+
+            string[][] result =
+            {
+                data.OrderByDescending(o => o.Count).Take(10).Select(v => v.Name).ToArray(),
+                data.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
+            };
+
+            if(result[0].Length < 10)
+                return Json(result);
+
+            result[0][9] = "Other";
+
+            result[1][9] = (data.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
 
             return Json(result);
         }
