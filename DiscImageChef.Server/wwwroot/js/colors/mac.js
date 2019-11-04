@@ -1,4 +1,4 @@
-var themeColors =
+const themeColors =
     [
         "#1FB714",
         "#FBF305",
@@ -13,5 +13,5 @@ var themeColors =
         "#006412"
     ];
 
-var chartDataLabelColor = "#000000";
-var chartTitleColor = "#000000";
+const chartDataLabelColor = "#000000";
+const chartTitleColor = "#000000";
