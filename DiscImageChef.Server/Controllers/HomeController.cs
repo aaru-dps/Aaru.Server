@@ -159,12 +159,31 @@ namespace DiscImageChef.Server.Controllers
             return View();
         }
 
-        [Route("DONATING")]
-        public ActionResult DONATING()
+        [Route("DONATING"), Route("NEEDED")]
+        public ActionResult Needed()
         {
             var sr =
                 new StreamReader(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
-                                              "docs", "DONATING.md"));
+                                              "docs", "NEEDED.md"));
+
+            string mdcontent = sr.ReadToEnd();
+            sr.Close();
+
+            mdcontent = mdcontent.Replace(".md)", ")");
+
+            ViewBag.Markdown = Markdown.ToHtml(mdcontent);
+
+            ViewBag.lblVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
+            return View();
+        }
+
+        [Route("NEEDINFO")]
+        public ActionResult NeedInfo()
+        {
+            var sr =
+                new StreamReader(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
+                                              "docs", "NEEDINFO.md"));
 
             string mdcontent = sr.ReadToEnd();
             sr.Close();

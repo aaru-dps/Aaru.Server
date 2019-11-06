@@ -2,14 +2,14 @@ DiscImageChef v4.5.99.1693
 
 Disc Image Chef (because "swiss-army-knife" is used too much)
 
-Copyright © 2011-2018 Natalia Portillo <claunia@claunia.com>
+Copyright © 2011-2019 Natalia Portillo <claunia@claunia.com>
 
 [![Build status](https://dev.azure.com/DiscImageChef/DiscImageChef/_apis/build/status/DiscImageChef-.NET%20Desktop-CI)](https://dev.azure.com/DiscImageChef/DiscImageChef/_build/latest?definitionId=4)
-[![Build Status](https://travis-ci.org/claunia/DiscImageChef.svg?branch=master)](https://travis-ci.org/claunia/DiscImageChef)
+[![Build Status](https://travis-ci.org/discimagechef/DiscImageChef.svg?branch=master)](https://travis-ci.org/discimagechef/DiscImageChef)
 [![Build status](https://ci.appveyor.com/api/projects/status/vim4c8h028pn5oys?svg=true)](https://ci.appveyor.com/project/claunia/discimagechef)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fclaunia%2FDiscImageChef.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fclaunia%2FDiscImageChef?ref=badge_shield)
 
-You can see statistics and device reports [here](https://www.discimagechef.app/Statistics.aspx)
+You can see statistics and device reports [here](https://www.discimagechef.app/Stats)
 
 DiscImageChef is a fully featured media dump management solution. You usually know media dumps
 as disc images, disk images, tape images, etc.
@@ -23,6 +23,10 @@ To see last changes, check the [changelog](Changelog.md).
 To see list of pending things to do, check the [TODO list](TODO.md).
 
 If you want to contribute in any way please read the [contributing guide](CONTRIBUTING.md).
+
+Stable releases in [Github](https://github.com/discimagechef/DiscImageChef/releases).
+CI beta builds [here](https://goo.gl/6dZPMq).  
+
 
 System requirements
 ===================
@@ -45,11 +49,23 @@ Features
 * Analyzes a disk image getting information about the disk itself and analyzes partitions and filesystems inside them
 * Can checksum the disks (and if optical disc, separate tracks) user-data (tags and metadata coming soon)
 * Can compare two disk images, even different formats, for different sectors and/or metadata
-* Can list and extract contents from filesystems that support that
+* Can list and extract contents from supported filesystems
 * Can read several disk image formats.
 * Can read several known sector by sector formats with variable bytes per sector.
 * Can read standard sector by sector copies for optical and magnetic discs with constant bytes per sector.
 * Can verify sectors or disk images if supported by the underlying format
+* Can dump media from ATA, ATAPI, SCSI, USB, FireWire and SDHCI drives (magnetic disks, optical discs, magnetoptical disks, flash devices, memory cards and tapes) to several supported image formats.
+* Can convert between image formats.
+* Include an opensource archival image format with compression and deduplication.
+* Can create standard open XML metadata from existing images.
+* Can measure readability and speed of media (same that can be dumped, MHDD style)
+* Has an online database with drive capabilities, and can report the capabilities of any drive.
+* Works on any operating system and architecture where Mono or .NET Framework is supported (drive access requires Windows, Linux or FreeBSD).
+* Has a graphical interface (work in progress)
+
+Feature requests
+================
+[![Feature Requests](http://feathub.com/discimagechef/DiscImageChef?format=svg)](http://feathub.com/discimagechef/DiscImageChef)
 
 Supported disk image formats (read-only)
 ========================================
@@ -88,6 +104,7 @@ Supported disk image formats (read and write)
 * CDRWin cue/bin cuesheets, including ones with ISOBuster extensions
 * CisCopy disk image (aka DC-File, .DCF)
 * CloneCD
+* CopyTape
 * DataPackRat's d2f/f2d disk image format ("WC DISK IMAGE")
 * Digital Research DiskCopy
 * DiscImageChef format
@@ -138,15 +155,22 @@ Supported partitioning schemes
 
 Supported file systems for read-only operations
 ===============================================
+* 3DO Opera file system
 * Apple DOS file system
 * Apple Lisa file system
 * Apple Macintosh File System (MFS)
+* CD-i file system
 * CP/M file system
+* High Sierra Format
+* ISO9660, including Apple, Amiga, Rock Ridge, Joliet and Romeo extensions
+* Microsoft 12-bit File Allocation Table (FAT12), including Atari ST extensions
+* Microsoft 16-bit File Allocation Table (FAT16)
+* Microsoft 32-bit File Allocation Table (FAT32), including FAT+ extension
 * U.C.S.D Pascal file system
+* Xbox filesystems
 
 Supported file systems for identification and information only
 ==============================================================
-* 3DO Opera file system
 * Acorn Advanced Disc Filing System
 * Alexander Osipov DOS (AO-DOS for Electronika BK-0011) file system
 * Amiga Fast File System v2, untested
@@ -161,7 +185,6 @@ Supported file systems for identification and information only
 * BSD Fast File System (FFS) / Unix File System (UFS)
 * BSD Unix File System 2 (UFS2)
 * B-tree file system (btrfs)
-* CD-i file system
 * Coherent UNIX file system
 * Commodore 1540/1541/1571/1581 filesystems
 * Cram file system
@@ -173,19 +196,14 @@ Supported file systems for identification and information only
 * Fossil file system (from Plan9)
 * HAMMER file system
 * High Performance Optical File System (HPOFS)
-* High Sierra Format
 * HP Logical Interchange Format
 * IBM Journaling File System (JFS)
-* ISO9660
 * Linux extended file system
 * Linux extended file system 2
 * Linux extended file system 3
 * Linux extended file system 4
 * Locus file system
 * MicroDOS file system
-* Microsoft 12-bit File Allocation Table (FAT12), including Atari ST extensions
-* Microsoft 16-bit File Allocation Table (FAT16)
-* Microsoft 32-bit File Allocation Table (FAT32), including FAT+ extension
 * Microsoft Extended File Allocation Table (exFAT)
 * Microsoft/IBM High Performance File System (HPFS)
 * Microsoft New Technology File System (NTFS)
@@ -212,7 +230,6 @@ Supported file systems for identification and information only
 * UnixWare boot file system
 * Veritas file system
 * VMware file system (VMFS)
-* Xbox filesystems
 * Xenix file system
 * Xia filesystem
 * Zettabyte File System (ZFS)
@@ -250,5 +267,6 @@ These disk image formats cannot be read, but their contents can be checksummed o
 * SuperCardPro
 
 
-## License
+License
+=======
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fclaunia%2FDiscImageChef.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fclaunia%2FDiscImageChef?ref=badge_large)
