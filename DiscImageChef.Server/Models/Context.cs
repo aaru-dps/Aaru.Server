@@ -31,12 +31,14 @@
 // ****************************************************************************/
 
 using System.Data.Common;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace DiscImageChef.Server.Models
 {
-    public sealed class DicServerContext : DbContext
+    public sealed class DicServerContext : IdentityDbContext<IdentityUser>
     {
         public DicServerContext() { }
 
@@ -69,6 +71,8 @@ namespace DiscImageChef.Server.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<CompactDiscOffset>().HasIndex(b => b.ModifiedWhen);
 
             modelBuilder.Entity<Device>().HasIndex(b => b.ModifiedWhen);
@@ -83,20 +87,19 @@ namespace DiscImageChef.Server.Models
 
         internal static bool TableExists(string tableName)
         {
-            using(var db = new DicServerContext())
-            {
-                DbConnection connection = db.Database.GetDbConnection();
-                connection.Open();
+            using var db = new DicServerContext();
 
-                DbCommand command = connection.CreateCommand();
+            DbConnection connection = db.Database.GetDbConnection();
+            connection.Open();
 
-                command.CommandText =
-                    $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME=\"{tableName}\"";
+            DbCommand command = connection.CreateCommand();
 
-                long result = (long)command.ExecuteScalar();
+            command.CommandText =
+                $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME=\"{tableName}\"";
 
-                return result != 0;
-            }
+            long result = (long)command.ExecuteScalar();
+
+            return result != 0;
         }
     }
 }

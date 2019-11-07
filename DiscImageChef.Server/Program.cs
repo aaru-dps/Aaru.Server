@@ -95,6 +95,15 @@ namespace DiscImageChef.Server
 
                     System.Console.WriteLine("\u001b[31;1mTook \u001b[32;1m{0} seconds\u001b[31;1m...\u001b[0m",
                                              (end - start).TotalSeconds);
+
+                    start = DateTime.Now;
+                    System.Console.WriteLine("\u001b[31;1mSeeding Identity...\u001b[0m");
+                    Seeder.Seed(context, services);
+                    context.Database.Migrate();
+                    end = DateTime.Now;
+
+                    System.Console.WriteLine("\u001b[31;1mTook \u001b[32;1m{0} seconds\u001b[31;1m...\u001b[0m",
+                                             (end - start).TotalSeconds);
                 }
                 catch(Exception ex)
                 {
