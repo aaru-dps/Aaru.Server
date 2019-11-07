@@ -62,9 +62,9 @@ namespace DiscImageChef.Server
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute("areas", "{area}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
-                endpoints.MapAreaControllerRoute("Admin", "Admin", "Admin/{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
