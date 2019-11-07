@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 @{
     // /***************************************************************************
     // The Disc Image Chef
@@ -67,9 +70,35 @@
     </script>
 </head>
 <body>
+<header>
+    Welcome to
+    <i>
+        <a href="http://github.com/claunia/discimagechef" target="_blank">
+            DiscImageChef
+        </a>
+    </i> Server Administrative Area
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div>
+            <a asp-area="Identity" asp-page="/Account/Manage/Index" class="text-dark" id="manage" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new
+                                                                                                                          {
+                                                                                                                              area = ""
+                                                                                                                          })">
+                <button class="btn btn-link text-dark" id="logout" type="submit">Logout</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <div>
+            <a asp-area="Identity" asp-page="/Account/Login" class="text-dark" id="login">Login</a>
+        </div>
+    }
+</header>
 @RenderBody()
 <footer class="container-fluid">
-    © 2011-2019
+    © 2021-2019
     <a href="http://www.claunia.com" target="_blank">
         Claunia.com
     </a>

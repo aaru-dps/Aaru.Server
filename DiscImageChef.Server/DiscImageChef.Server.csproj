@@ -86,6 +86,19 @@
     <_ContentIncludedByDefault Remove="wwwroot\js\site.js" />
     <_ContentIncludedByDefault Remove="wwwroot\css\js\colors\dos.js" />
     <_ContentIncludedByDefault Remove="wwwroot\css\js\colors\mac.js" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Shared\Error.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Shared\_CookieConsentPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Shared\_Layout.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Shared\_LoginPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Shared\_ValidationScriptsPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Admin\Shared\Error.cshtml" />
+    <UpToDateCheckInput Remove="Areas\Admin\Shared\_CookieConsentPartial.cshtml" />
+    <UpToDateCheckInput Remove="Areas\Admin\Shared\_Layout.cshtml" />
+    <UpToDateCheckInput Remove="Areas\Admin\Shared\_LoginPartial.cshtml" />
+    <UpToDateCheckInput Remove="Areas\Admin\Shared\_ValidationScriptsPartial.cshtml" />
   </ItemGroup>
 
 </Project>
