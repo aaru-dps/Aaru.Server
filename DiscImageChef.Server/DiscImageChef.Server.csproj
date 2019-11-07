@@ -91,6 +91,11 @@
     <_ContentIncludedByDefault Remove="Areas\Admin\Shared\_Layout.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Admin\Shared\_LoginPartial.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Admin\Shared\_ValidationScriptsPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Device\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Device\Delete.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Device\Details.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Device\Edit.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Device\Index.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
