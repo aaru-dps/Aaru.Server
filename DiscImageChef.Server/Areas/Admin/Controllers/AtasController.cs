@@ -36,25 +36,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             return View(ata);
         }
 
-        // GET: Admin/Atas/Create
-        public IActionResult Create() => View();
-
-        // POST: Admin/Atas/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Identify")] CommonTypes.Metadata.Ata ata)
-        {
-            if(ModelState.IsValid)
-            {
-                _context.Add(ata);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(ata);
-        }
 
         // GET: Admin/Atas/Delete/5
         public async Task<IActionResult> Delete(int? id)

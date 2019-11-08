@@ -36,29 +36,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             return View(scsi);
         }
 
-        // GET: Admin/Scsis/Create
-        public IActionResult Create() => View();
-
-        // POST: Admin/Scsis/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(
-            [Bind(
-                "Id,InquiryData,SupportsModeSense6,SupportsModeSense10,SupportsModeSubpages,ModeSense6Data,ModeSense10Data,ModeSense6CurrentData,ModeSense10CurrentData,ModeSense6ChangeableData,ModeSense10ChangeableData")]
-            Scsi scsi)
-        {
-            if(ModelState.IsValid)
-            {
-                _context.Add(scsi);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(scsi);
-        }
-
         // GET: Admin/Scsis/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

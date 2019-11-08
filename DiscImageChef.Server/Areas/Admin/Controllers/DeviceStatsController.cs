@@ -35,27 +35,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             return View(deviceStat);
         }
 
-        // GET: Admin/DeviceStats/Create
-        public IActionResult Create() => View();
-
-        // POST: Admin/DeviceStats/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Manufacturer,Model,Revision,Bus")]
-                                                DeviceStat deviceStat)
-        {
-            if(ModelState.IsValid)
-            {
-                _context.Add(deviceStat);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(deviceStat);
-        }
-
         // GET: Admin/DeviceStats/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

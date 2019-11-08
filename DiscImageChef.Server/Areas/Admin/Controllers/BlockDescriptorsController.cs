@@ -36,27 +36,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             return View(blockDescriptor);
         }
 
-        // GET: Admin/BlockDescriptors/Create
-        public IActionResult Create() => View();
-
-        // POST: Admin/BlockDescriptors/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Density,Blocks,BlockLength")]
-                                                BlockDescriptor blockDescriptor)
-        {
-            if(ModelState.IsValid)
-            {
-                _context.Add(blockDescriptor);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(blockDescriptor);
-        }
-
         // GET: Admin/BlockDescriptors/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

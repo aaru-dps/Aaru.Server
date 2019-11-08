@@ -36,26 +36,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             return View(chs);
         }
 
-        // GET: Admin/Chs/Create
-        public IActionResult Create() => View();
-
-        // POST: Admin/Chs/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Cylinders,Heads,Sectors")] Chs chs)
-        {
-            if(ModelState.IsValid)
-            {
-                _context.Add(chs);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(chs);
-        }
-
         // GET: Admin/Chs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

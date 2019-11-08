@@ -36,27 +36,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             return View(ssc);
         }
 
-        // GET: Admin/Sscs/Create
-        public IActionResult Create() => View();
-
-        // POST: Admin/Sscs/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,BlockSizeGranularity,MaxBlockLength,MinBlockLength")]
-                                                Ssc ssc)
-        {
-            if(ModelState.IsValid)
-            {
-                _context.Add(ssc);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(ssc);
-        }
-
         // GET: Admin/Sscs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

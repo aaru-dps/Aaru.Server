@@ -35,26 +35,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             return View(mediaFormat);
         }
 
-        // GET: Admin/MediaFormats/Create
-        public IActionResult Create() => View();
-
-        // POST: Admin/MediaFormats/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Count")] MediaFormat mediaFormat)
-        {
-            if(ModelState.IsValid)
-            {
-                _context.Add(mediaFormat);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(mediaFormat);
-        }
-
         // GET: Admin/MediaFormats/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

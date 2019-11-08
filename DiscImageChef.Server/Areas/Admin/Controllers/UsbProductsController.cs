@@ -43,34 +43,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             return View(usbProduct);
         }
 
-        // GET: Admin/UsbProducts/Create
-        public IActionResult Create()
-        {
-            ViewData["VendorId"] = new SelectList(_context.UsbVendors, "Id", "Id");
-
-            return View();
-        }
-
-        // POST: Admin/UsbProducts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ProductId,Product,AddedWhen,ModifiedWhen,VendorId")]
-                                                UsbProduct usbProduct)
-        {
-            if(ModelState.IsValid)
-            {
-                _context.Add(usbProduct);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            ViewData["VendorId"] = new SelectList(_context.UsbVendors, "Id", "Id", usbProduct.VendorId);
-
-            return View(usbProduct);
-        }
-
         // GET: Admin/UsbProducts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

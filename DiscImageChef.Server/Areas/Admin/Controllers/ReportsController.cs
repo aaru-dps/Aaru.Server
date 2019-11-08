@@ -35,27 +35,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             return View(uploadedReport);
         }
 
-        // GET: Admin/Reports/Create
-        public IActionResult Create() => View();
-
-        // POST: Admin/Reports/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UploadedWhen,Id,CompactFlash,Manufacturer,Model,Revision,Type")]
-                                                UploadedReport uploadedReport)
-        {
-            if(ModelState.IsValid)
-            {
-                _context.Add(uploadedReport);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(uploadedReport);
-        }
-
         // GET: Admin/Reports/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
