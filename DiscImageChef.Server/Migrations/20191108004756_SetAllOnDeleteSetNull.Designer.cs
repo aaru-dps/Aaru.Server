@@ -3,14 +3,16 @@ using System;
 using DiscImageChef.Server.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DiscImageChef.Server.Migrations
 {
     [DbContext(typeof(DicServerContext))]
-    partial class DicServerContextModelSnapshot : ModelSnapshot
+    [Migration("20191108004756_SetAllOnDeleteSetNull")]
+    partial class SetAllOnDeleteSetNull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
