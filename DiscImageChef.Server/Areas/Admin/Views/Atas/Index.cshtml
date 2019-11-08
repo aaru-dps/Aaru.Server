@@ -33,11 +33,13 @@
     // Copyright © 2011-2019 Natalia Portillo
     // ****************************************************************************/
 }
+ATA IDENTIFY DEVICE responses
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Identify)
+                @Html.DisplayNameFor(model => model.IdentifyDevice.Value.Model)
             </th>
             <th></th>
         </tr>
@@ -46,7 +48,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Identify)
+                @Html.DisplayFor(modelItem => item.IdentifyDevice.Value.Model)
             </td>
             <td>
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
