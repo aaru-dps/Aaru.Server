@@ -1,0 +1,85 @@
+@model DiscImageChef.CommonTypes.Metadata.Scsi
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+
+<h4>Scsi</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="InquiryData" class="control-label"></label>
+                <input asp-for="InquiryData" class="form-control" />
+                <span asp-validation-for="InquiryData" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SupportsModeSense6" /> @Html.DisplayNameFor(model => model.SupportsModeSense6)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SupportsModeSense10" /> @Html.DisplayNameFor(model => model.SupportsModeSense10)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SupportsModeSubpages" /> @Html.DisplayNameFor(model => model.SupportsModeSubpages)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModeSense6Data" class="control-label"></label>
+                <input asp-for="ModeSense6Data" class="form-control" />
+                <span asp-validation-for="ModeSense6Data" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModeSense10Data" class="control-label"></label>
+                <input asp-for="ModeSense10Data" class="form-control" />
+                <span asp-validation-for="ModeSense10Data" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModeSense6CurrentData" class="control-label"></label>
+                <input asp-for="ModeSense6CurrentData" class="form-control" />
+                <span asp-validation-for="ModeSense6CurrentData" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModeSense10CurrentData" class="control-label"></label>
+                <input asp-for="ModeSense10CurrentData" class="form-control" />
+                <span asp-validation-for="ModeSense10CurrentData" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModeSense6ChangeableData" class="control-label"></label>
+                <input asp-for="ModeSense6ChangeableData" class="form-control" />
+                <span asp-validation-for="ModeSense6ChangeableData" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModeSense10ChangeableData" class="control-label"></label>
+                <input asp-for="ModeSense10ChangeableData" class="form-control" />
+                <span asp-validation-for="ModeSense10ChangeableData" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+</body>
+</html>

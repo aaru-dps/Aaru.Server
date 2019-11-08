@@ -1,0 +1,49 @@
+@model DiscImageChef.CommonTypes.Metadata.ScsiPage
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+
+<h4>ScsiPage</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="page" class="control-label"></label>
+                <input asp-for="page" class="form-control" />
+                <span asp-validation-for="page" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="subpage" class="control-label"></label>
+                <input asp-for="subpage" class="form-control" />
+                <span asp-validation-for="subpage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="value" class="control-label"></label>
+                <input asp-for="value" class="form-control" />
+                <span asp-validation-for="value" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+</body>
+</html>

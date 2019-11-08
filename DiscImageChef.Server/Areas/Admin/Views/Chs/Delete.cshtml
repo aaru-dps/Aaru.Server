@@ -1,0 +1,48 @@
+@model DiscImageChef.CommonTypes.Metadata.Chs
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Chs</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cylinders)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Cylinders)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Heads)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Heads)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Sectors)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Sectors)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
+</body>
+</html>

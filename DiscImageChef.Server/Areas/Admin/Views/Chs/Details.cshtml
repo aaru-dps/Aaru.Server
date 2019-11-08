@@ -1,0 +1,45 @@
+@model DiscImageChef.CommonTypes.Metadata.Chs
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+
+<div>
+    <h4>Chs</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cylinders)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Cylinders)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Heads)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Heads)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Sectors)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Sectors)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+</body>
+</html>

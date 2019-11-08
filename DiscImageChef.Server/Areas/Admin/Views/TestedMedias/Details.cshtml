@@ -1,0 +1,927 @@
+@model DiscImageChef.CommonTypes.Metadata.TestedMedia
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+
+<div>
+    <h4>TestedMedia</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdentifyData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdentifyData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Blocks)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Blocks)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BlockSize)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BlockSize)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadAACS)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadAACS)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadADIP)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadADIP)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadATIP)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadATIP)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadBCA)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadBCA)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadC2Pointers)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadC2Pointers)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadCMI)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadCMI)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadCorrectedSubchannel)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadCorrectedSubchannel)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadCorrectedSubchannelWithC2)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadCorrectedSubchannelWithC2)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadDCB)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadDCB)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadDDS)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadDDS)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadDMI)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadDMI)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadDiscInformation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadDiscInformation)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadFullTOC)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadFullTOC)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadHDCMI)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadHDCMI)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadLayerCapacity)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadLayerCapacity)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadFirstTrackPreGap)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadFirstTrackPreGap)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadLeadIn)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadLeadIn)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadLeadOut)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadLeadOut)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadMediaID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadMediaID)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadMediaSerial)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadMediaSerial)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadPAC)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadPAC)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadPFI)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadPFI)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadPMA)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadPMA)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadPQSubchannel)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadPQSubchannel)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadPQSubchannelWithC2)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadPQSubchannelWithC2)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadPRI)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadPRI)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadRWSubchannel)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadRWSubchannel)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadRWSubchannelWithC2)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadRWSubchannelWithC2)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadRecordablePFI)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadRecordablePFI)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadSpareAreaInformation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadSpareAreaInformation)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadTOC)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadTOC)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Density)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Density)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LongBlockSize)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LongBlockSize)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Manufacturer)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Manufacturer)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MediaIsRecognized)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MediaIsRecognized)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MediumType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MediumType)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MediumTypeName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MediumTypeName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Model)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Model)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsHLDTSTReadRawDVD)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsHLDTSTReadRawDVD)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsNECReadCDDA)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsNECReadCDDA)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsPioneerReadCDDA)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsPioneerReadCDDA)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsPioneerReadCDDAMSF)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsPioneerReadCDDAMSF)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsPlextorReadCDDA)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsPlextorReadCDDA)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsPlextorReadRawDVD)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsPlextorReadRawDVD)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsRead10)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsRead10)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsRead12)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsRead12)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsRead16)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsRead16)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsRead6)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsRead6)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsReadCapacity16)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsReadCapacity16)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsReadCapacity)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsReadCapacity)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsReadCd)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsReadCd)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsReadCdMsf)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsReadCdMsf)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsReadCdRaw)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsReadCdRaw)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsReadCdMsfRaw)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsReadCdMsfRaw)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsReadLong16)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsReadLong16)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsReadLong)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsReadLong)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ModeSense6Data)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ModeSense6Data)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ModeSense10Data)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ModeSense10Data)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LBASectors)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LBASectors)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LBA48Sectors)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LBA48Sectors)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LogicalAlignment)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LogicalAlignment)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NominalRotationRate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NominalRotationRate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PhysicalBlockSize)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PhysicalBlockSize)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SolidStateDevice)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SolidStateDevice)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UnformattedBPT)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UnformattedBPT)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UnformattedBPS)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UnformattedBPS)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsReadDmaLba)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsReadDmaLba)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsReadDmaRetryLba)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsReadDmaRetryLba)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsReadLba)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsReadLba)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsReadRetryLba)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsReadRetryLba)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsReadLongLba)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsReadLongLba)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsReadLongRetryLba)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsReadLongRetryLba)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsSeekLba)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsSeekLba)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsReadDmaLba48)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsReadDmaLba48)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsReadLba48)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsReadLba48)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsReadDma)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsReadDma)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsReadDmaRetry)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsReadDmaRetry)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsReadRetry)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsReadRetry)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsReadSectors)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsReadSectors)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsReadLongRetry)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsReadLongRetry)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupportsSeek)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SupportsSeek)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadingIntersessionLeadIn)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadingIntersessionLeadIn)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CanReadingIntersessionLeadOut)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CanReadingIntersessionLeadOut)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IntersessionLeadInData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IntersessionLeadInData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IntersessionLeadOutData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IntersessionLeadOutData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Read6Data)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Read6Data)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Read10Data)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Read10Data)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Read12Data)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Read12Data)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Read16Data)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Read16Data)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReadLong10Data)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReadLong10Data)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReadLong16Data)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReadLong16Data)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReadSectorsData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReadSectorsData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReadSectorsRetryData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReadSectorsRetryData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReadDmaData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReadDmaData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReadDmaRetryData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReadDmaRetryData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReadLbaData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReadLbaData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReadRetryLbaData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReadRetryLbaData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReadDmaLbaData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReadDmaLbaData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReadDmaRetryLbaData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReadDmaRetryLbaData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReadLba48Data)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReadLba48Data)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReadDmaLba48Data)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReadDmaLba48Data)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReadLongData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReadLongData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReadLongRetryData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReadLongRetryData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReadLongLbaData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReadLongLbaData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReadLongRetryLbaData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReadLongRetryLbaData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TocData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TocData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FullTocData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FullTocData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AtipData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AtipData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PmaData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PmaData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReadCdData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReadCdData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReadCdMsfData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReadCdMsfData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReadCdFullData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReadCdFullData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReadCdMsfFullData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReadCdMsfFullData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Track1PregapData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Track1PregapData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LeadInData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LeadInData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LeadOutData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LeadOutData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.C2PointersData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.C2PointersData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PQSubchannelData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PQSubchannelData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.RWSubchannelData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RWSubchannelData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CorrectedSubchannelData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CorrectedSubchannelData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PQSubchannelWithC2Data)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PQSubchannelWithC2Data)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.RWSubchannelWithC2Data)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RWSubchannelWithC2Data)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CorrectedSubchannelWithC2Data)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CorrectedSubchannelWithC2Data)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PfiData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PfiData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DmiData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DmiData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CmiData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CmiData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DvdBcaData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DvdBcaData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DvdAacsData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DvdAacsData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DvdDdsData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DvdDdsData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DvdSaiData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DvdSaiData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PriData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PriData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EmbossedPfiData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EmbossedPfiData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AdipData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AdipData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DcbData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DcbData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HdCmiData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HdCmiData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DvdLayerData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DvdLayerData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BluBcaData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BluBcaData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BluDdsData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BluDdsData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BluSaiData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BluSaiData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BluDiData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BluDiData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BluPacData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BluPacData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PlextorReadCddaData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PlextorReadCddaData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PioneerReadCddaData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PioneerReadCddaData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PioneerReadCddaMsfData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PioneerReadCddaMsfData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NecReadCddaData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NecReadCddaData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PlextorReadRawDVDData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PlextorReadRawDVDData)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HLDTSTReadRawDVDData)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HLDTSTReadRawDVDData)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+</body>
+</html>

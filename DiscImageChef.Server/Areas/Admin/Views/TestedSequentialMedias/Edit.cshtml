@@ -1,0 +1,80 @@
+@model DiscImageChef.CommonTypes.Metadata.TestedSequentialMedia
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+
+<h4>TestedSequentialMedia</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="CanReadMediaSerial" class="control-label"></label>
+                <input asp-for="CanReadMediaSerial" class="form-control" />
+                <span asp-validation-for="CanReadMediaSerial" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Density" class="control-label"></label>
+                <input asp-for="Density" class="form-control" />
+                <span asp-validation-for="Density" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Manufacturer" class="control-label"></label>
+                <input asp-for="Manufacturer" class="form-control" />
+                <span asp-validation-for="Manufacturer" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="MediaIsRecognized" /> @Html.DisplayNameFor(model => model.MediaIsRecognized)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="MediumType" class="control-label"></label>
+                <input asp-for="MediumType" class="form-control" />
+                <span asp-validation-for="MediumType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MediumTypeName" class="control-label"></label>
+                <input asp-for="MediumTypeName" class="form-control" />
+                <span asp-validation-for="MediumTypeName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Model" class="control-label"></label>
+                <input asp-for="Model" class="form-control" />
+                <span asp-validation-for="Model" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModeSense6Data" class="control-label"></label>
+                <input asp-for="ModeSense6Data" class="form-control" />
+                <span asp-validation-for="ModeSense6Data" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModeSense10Data" class="control-label"></label>
+                <input asp-for="ModeSense10Data" class="form-control" />
+                <span asp-validation-for="ModeSense10Data" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+</body>
+</html>

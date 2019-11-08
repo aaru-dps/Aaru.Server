@@ -1,0 +1,781 @@
+@model IEnumerable<DiscImageChef.CommonTypes.Metadata.MmcFeatures>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AACSVersion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AGIDs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BindingNonceBlocks)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BlocksPerReadableUnit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BufferUnderrunFreeInDVD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BufferUnderrunFreeInSAO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BufferUnderrunFreeInTAO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanAudioScan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanEject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanEraseSector)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanExpandBDRESpareArea)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanFormat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanFormatBDREWithoutSpare)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanFormatCert)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanFormatFRF)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanFormatQCert)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanFormatRRM)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanGenerateBindingNonce)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanLoad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanMuteSeparateChannels)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanOverwriteSAOTrack)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanOverwriteTAOTrack)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanPlayCDAudio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanPseudoOverwriteBDR)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadAllDualR)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadAllDualRW)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadBD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadBDR)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadBDRE1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadBDRE2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadBDROM)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadBluBCA)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadCD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadCDMRW)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadCPRM_MKB)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadDDCD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadDVD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadDVDPlusMRW)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadDVDPlusR)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadDVDPlusRDL)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadDVDPlusRW)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadDVDPlusRWDL)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadDriveAACSCertificate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadHDDVD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadHDDVDR)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadHDDVDRAM)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadLeadInCDText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadOldBDR)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadOldBDRE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadOldBDROM)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReadSpareAreaInformation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReportDriveSerial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanReportMediaSerial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanTestWriteDDCDR)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanTestWriteDVD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanTestWriteInSAO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanTestWriteInTAO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanUpgradeFirmware)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteBD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteBDR)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteBDRE1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteBDRE2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteBusEncryptedBlocks)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteCDMRW)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteCDRW)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteCDRWCAV)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteCDSAO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteCDTAO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteCSSManagedDVD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteDDCDR)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteDDCDRW)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteDVDPlusMRW)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteDVDPlusR)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteDVDPlusRDL)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteDVDPlusRW)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteDVDPlusRWDL)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteDVDR)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteDVDRDL)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteDVDRW)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteHDDVDR)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteHDDVDRAM)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteOldBDR)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteOldBDRE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWritePackedSubchannelInTAO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteRWSubchannelInSAO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteRWSubchannelInTAO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteRaw)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteRawMultiSession)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanWriteRawSubchannelInTAO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChangerIsSideChangeCapable)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChangerSlots)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChangerSupportsDiscPresent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CPRMVersion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CSSVersion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DBML)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DVDMultiRead)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmbeddedChanger)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ErrorRecoveryPage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirmwareDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoadingMechanismType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Locked)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LogicalBlockSize)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MultiRead)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhysicalInterfaceStandardNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PreventJumper)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupportsAACS)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupportsBusEncryption)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupportsC2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupportsCPRM)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupportsCSS)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupportsDAP)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupportsDeviceBusyEvent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupportsHybridDiscs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupportsModePage1Ch)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupportsOSSC)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupportsPWP)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupportsSWPP)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupportsSecurDisc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupportsSeparateVolume)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupportsVCPS)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupportsWriteInhibitDCB)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupportsWriteProtectPAC)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VolumeLevels)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BinaryData)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AACSVersion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AGIDs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BindingNonceBlocks)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BlocksPerReadableUnit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BufferUnderrunFreeInDVD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BufferUnderrunFreeInSAO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BufferUnderrunFreeInTAO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanAudioScan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanEject)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanEraseSector)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanExpandBDRESpareArea)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanFormat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanFormatBDREWithoutSpare)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanFormatCert)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanFormatFRF)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanFormatQCert)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanFormatRRM)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanGenerateBindingNonce)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanLoad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanMuteSeparateChannels)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanOverwriteSAOTrack)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanOverwriteTAOTrack)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanPlayCDAudio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanPseudoOverwriteBDR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadAllDualR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadAllDualRW)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadBD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadBDR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadBDRE1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadBDRE2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadBDROM)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadBluBCA)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadCD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadCDMRW)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadCPRM_MKB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadDDCD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadDVD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadDVDPlusMRW)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadDVDPlusR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadDVDPlusRDL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadDVDPlusRW)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadDVDPlusRWDL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadDriveAACSCertificate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadHDDVD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadHDDVDR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadHDDVDRAM)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadLeadInCDText)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadOldBDR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadOldBDRE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadOldBDROM)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadSpareAreaInformation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReportDriveSerial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReportMediaSerial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanTestWriteDDCDR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanTestWriteDVD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanTestWriteInSAO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanTestWriteInTAO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanUpgradeFirmware)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteBD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteBDR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteBDRE1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteBDRE2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteBusEncryptedBlocks)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteCDMRW)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteCDRW)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteCDRWCAV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteCDSAO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteCDTAO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteCSSManagedDVD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteDDCDR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteDDCDRW)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteDVDPlusMRW)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteDVDPlusR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteDVDPlusRDL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteDVDPlusRW)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteDVDPlusRWDL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteDVDR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteDVDRDL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteDVDRW)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteHDDVDR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteHDDVDRAM)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteOldBDR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteOldBDRE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWritePackedSubchannelInTAO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteRWSubchannelInSAO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteRWSubchannelInTAO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteRaw)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteRawMultiSession)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanWriteRawSubchannelInTAO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChangerIsSideChangeCapable)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChangerSlots)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChangerSupportsDiscPresent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CPRMVersion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CSSVersion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DBML)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DVDMultiRead)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmbeddedChanger)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ErrorRecoveryPage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirmwareDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoadingMechanismType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Locked)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LogicalBlockSize)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MultiRead)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhysicalInterfaceStandardNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PreventJumper)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportsAACS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportsBusEncryption)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportsC2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportsCPRM)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportsCSS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportsDAP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportsDeviceBusyEvent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportsHybridDiscs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportsModePage1Ch)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportsOSSC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportsPWP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportsSWPP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportsSecurDisc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportsSeparateVolume)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportsVCPS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportsWriteInhibitDCB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportsWriteProtectPAC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VolumeLevels)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BinaryData)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>

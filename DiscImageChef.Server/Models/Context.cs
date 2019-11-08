@@ -58,6 +58,23 @@ namespace DiscImageChef.Server.Models
         public DbSet<UsbVendor>         UsbVendors       { get; set; }
         public DbSet<UsbProduct>        UsbProducts      { get; set; }
         public DbSet<CompactDiscOffset> CdOffsets        { get; set; }
+        public DbSet<DiscImageChef.CommonTypes.Metadata.Ata> Ata { get; set; }
+        public DbSet<DiscImageChef.CommonTypes.Metadata.BlockDescriptor> BlockDescriptor { get; set; }
+        public DbSet<DiscImageChef.CommonTypes.Metadata.Chs> Chs { get; set; }
+        public DbSet<DiscImageChef.CommonTypes.Metadata.DensityCode> DensityCode { get; set; }
+        public DbSet<DiscImageChef.CommonTypes.Metadata.FireWire> FireWire { get; set; }
+        public DbSet<DiscImageChef.CommonTypes.Metadata.Mmc> Mmc { get; set; }
+        public DbSet<DiscImageChef.CommonTypes.Metadata.MmcSd> MmcSd { get; set; }
+        public DbSet<DiscImageChef.CommonTypes.Metadata.MmcFeatures> MmcFeatures { get; set; }
+        public DbSet<DiscImageChef.CommonTypes.Metadata.Pcmcia> Pcmcia { get; set; }
+        public DbSet<DiscImageChef.CommonTypes.Metadata.Scsi> Scsi { get; set; }
+        public DbSet<DiscImageChef.CommonTypes.Metadata.ScsiMode> ScsiMode { get; set; }
+        public DbSet<DiscImageChef.CommonTypes.Metadata.ScsiPage> ScsiPage { get; set; }
+        public DbSet<DiscImageChef.CommonTypes.Metadata.Ssc> Ssc { get; set; }
+        public DbSet<DiscImageChef.CommonTypes.Metadata.SupportedDensity> SupportedDensity { get; set; }
+        public DbSet<DiscImageChef.CommonTypes.Metadata.TestedMedia> TestedMedia { get; set; }
+        public DbSet<DiscImageChef.CommonTypes.Metadata.TestedSequentialMedia> TestedSequentialMedia { get; set; }
+        public DbSet<DiscImageChef.CommonTypes.Metadata.Usb> Usb { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

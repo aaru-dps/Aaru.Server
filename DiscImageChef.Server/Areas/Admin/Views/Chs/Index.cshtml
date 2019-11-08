@@ -1,0 +1,55 @@
+@model IEnumerable<DiscImageChef.CommonTypes.Metadata.Chs>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cylinders)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Heads)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sectors)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cylinders)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Heads)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sectors)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>

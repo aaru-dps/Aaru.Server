@@ -1,0 +1,655 @@
+@model DiscImageChef.CommonTypes.Metadata.MmcFeatures
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+
+<h4>MmcFeatures</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="AACSVersion" class="control-label"></label>
+                <input asp-for="AACSVersion" class="form-control" />
+                <span asp-validation-for="AACSVersion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AGIDs" class="control-label"></label>
+                <input asp-for="AGIDs" class="form-control" />
+                <span asp-validation-for="AGIDs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BindingNonceBlocks" class="control-label"></label>
+                <input asp-for="BindingNonceBlocks" class="form-control" />
+                <span asp-validation-for="BindingNonceBlocks" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BlocksPerReadableUnit" class="control-label"></label>
+                <input asp-for="BlocksPerReadableUnit" class="form-control" />
+                <span asp-validation-for="BlocksPerReadableUnit" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="BufferUnderrunFreeInDVD" /> @Html.DisplayNameFor(model => model.BufferUnderrunFreeInDVD)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="BufferUnderrunFreeInSAO" /> @Html.DisplayNameFor(model => model.BufferUnderrunFreeInSAO)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="BufferUnderrunFreeInTAO" /> @Html.DisplayNameFor(model => model.BufferUnderrunFreeInTAO)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanAudioScan" /> @Html.DisplayNameFor(model => model.CanAudioScan)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanEject" /> @Html.DisplayNameFor(model => model.CanEject)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanEraseSector" /> @Html.DisplayNameFor(model => model.CanEraseSector)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanExpandBDRESpareArea" /> @Html.DisplayNameFor(model => model.CanExpandBDRESpareArea)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanFormat" /> @Html.DisplayNameFor(model => model.CanFormat)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanFormatBDREWithoutSpare" /> @Html.DisplayNameFor(model => model.CanFormatBDREWithoutSpare)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanFormatCert" /> @Html.DisplayNameFor(model => model.CanFormatCert)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanFormatFRF" /> @Html.DisplayNameFor(model => model.CanFormatFRF)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanFormatQCert" /> @Html.DisplayNameFor(model => model.CanFormatQCert)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanFormatRRM" /> @Html.DisplayNameFor(model => model.CanFormatRRM)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanGenerateBindingNonce" /> @Html.DisplayNameFor(model => model.CanGenerateBindingNonce)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanLoad" /> @Html.DisplayNameFor(model => model.CanLoad)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanMuteSeparateChannels" /> @Html.DisplayNameFor(model => model.CanMuteSeparateChannels)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanOverwriteSAOTrack" /> @Html.DisplayNameFor(model => model.CanOverwriteSAOTrack)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanOverwriteTAOTrack" /> @Html.DisplayNameFor(model => model.CanOverwriteTAOTrack)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanPlayCDAudio" /> @Html.DisplayNameFor(model => model.CanPlayCDAudio)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanPseudoOverwriteBDR" /> @Html.DisplayNameFor(model => model.CanPseudoOverwriteBDR)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadAllDualR" /> @Html.DisplayNameFor(model => model.CanReadAllDualR)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadAllDualRW" /> @Html.DisplayNameFor(model => model.CanReadAllDualRW)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadBD" /> @Html.DisplayNameFor(model => model.CanReadBD)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadBDR" /> @Html.DisplayNameFor(model => model.CanReadBDR)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadBDRE1" /> @Html.DisplayNameFor(model => model.CanReadBDRE1)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadBDRE2" /> @Html.DisplayNameFor(model => model.CanReadBDRE2)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadBDROM" /> @Html.DisplayNameFor(model => model.CanReadBDROM)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadBluBCA" /> @Html.DisplayNameFor(model => model.CanReadBluBCA)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadCD" /> @Html.DisplayNameFor(model => model.CanReadCD)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadCDMRW" /> @Html.DisplayNameFor(model => model.CanReadCDMRW)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadCPRM_MKB" /> @Html.DisplayNameFor(model => model.CanReadCPRM_MKB)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadDDCD" /> @Html.DisplayNameFor(model => model.CanReadDDCD)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadDVD" /> @Html.DisplayNameFor(model => model.CanReadDVD)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadDVDPlusMRW" /> @Html.DisplayNameFor(model => model.CanReadDVDPlusMRW)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadDVDPlusR" /> @Html.DisplayNameFor(model => model.CanReadDVDPlusR)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadDVDPlusRDL" /> @Html.DisplayNameFor(model => model.CanReadDVDPlusRDL)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadDVDPlusRW" /> @Html.DisplayNameFor(model => model.CanReadDVDPlusRW)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadDVDPlusRWDL" /> @Html.DisplayNameFor(model => model.CanReadDVDPlusRWDL)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadDriveAACSCertificate" /> @Html.DisplayNameFor(model => model.CanReadDriveAACSCertificate)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadHDDVD" /> @Html.DisplayNameFor(model => model.CanReadHDDVD)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadHDDVDR" /> @Html.DisplayNameFor(model => model.CanReadHDDVDR)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadHDDVDRAM" /> @Html.DisplayNameFor(model => model.CanReadHDDVDRAM)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadLeadInCDText" /> @Html.DisplayNameFor(model => model.CanReadLeadInCDText)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadOldBDR" /> @Html.DisplayNameFor(model => model.CanReadOldBDR)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadOldBDRE" /> @Html.DisplayNameFor(model => model.CanReadOldBDRE)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadOldBDROM" /> @Html.DisplayNameFor(model => model.CanReadOldBDROM)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReadSpareAreaInformation" /> @Html.DisplayNameFor(model => model.CanReadSpareAreaInformation)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReportDriveSerial" /> @Html.DisplayNameFor(model => model.CanReportDriveSerial)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanReportMediaSerial" /> @Html.DisplayNameFor(model => model.CanReportMediaSerial)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanTestWriteDDCDR" /> @Html.DisplayNameFor(model => model.CanTestWriteDDCDR)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanTestWriteDVD" /> @Html.DisplayNameFor(model => model.CanTestWriteDVD)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanTestWriteInSAO" /> @Html.DisplayNameFor(model => model.CanTestWriteInSAO)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanTestWriteInTAO" /> @Html.DisplayNameFor(model => model.CanTestWriteInTAO)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanUpgradeFirmware" /> @Html.DisplayNameFor(model => model.CanUpgradeFirmware)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteBD" /> @Html.DisplayNameFor(model => model.CanWriteBD)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteBDR" /> @Html.DisplayNameFor(model => model.CanWriteBDR)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteBDRE1" /> @Html.DisplayNameFor(model => model.CanWriteBDRE1)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteBDRE2" /> @Html.DisplayNameFor(model => model.CanWriteBDRE2)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteBusEncryptedBlocks" /> @Html.DisplayNameFor(model => model.CanWriteBusEncryptedBlocks)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteCDMRW" /> @Html.DisplayNameFor(model => model.CanWriteCDMRW)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteCDRW" /> @Html.DisplayNameFor(model => model.CanWriteCDRW)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteCDRWCAV" /> @Html.DisplayNameFor(model => model.CanWriteCDRWCAV)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteCDSAO" /> @Html.DisplayNameFor(model => model.CanWriteCDSAO)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteCDTAO" /> @Html.DisplayNameFor(model => model.CanWriteCDTAO)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteCSSManagedDVD" /> @Html.DisplayNameFor(model => model.CanWriteCSSManagedDVD)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteDDCDR" /> @Html.DisplayNameFor(model => model.CanWriteDDCDR)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteDDCDRW" /> @Html.DisplayNameFor(model => model.CanWriteDDCDRW)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteDVDPlusMRW" /> @Html.DisplayNameFor(model => model.CanWriteDVDPlusMRW)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteDVDPlusR" /> @Html.DisplayNameFor(model => model.CanWriteDVDPlusR)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteDVDPlusRDL" /> @Html.DisplayNameFor(model => model.CanWriteDVDPlusRDL)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteDVDPlusRW" /> @Html.DisplayNameFor(model => model.CanWriteDVDPlusRW)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteDVDPlusRWDL" /> @Html.DisplayNameFor(model => model.CanWriteDVDPlusRWDL)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteDVDR" /> @Html.DisplayNameFor(model => model.CanWriteDVDR)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteDVDRDL" /> @Html.DisplayNameFor(model => model.CanWriteDVDRDL)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteDVDRW" /> @Html.DisplayNameFor(model => model.CanWriteDVDRW)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteHDDVDR" /> @Html.DisplayNameFor(model => model.CanWriteHDDVDR)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteHDDVDRAM" /> @Html.DisplayNameFor(model => model.CanWriteHDDVDRAM)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteOldBDR" /> @Html.DisplayNameFor(model => model.CanWriteOldBDR)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteOldBDRE" /> @Html.DisplayNameFor(model => model.CanWriteOldBDRE)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWritePackedSubchannelInTAO" /> @Html.DisplayNameFor(model => model.CanWritePackedSubchannelInTAO)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteRWSubchannelInSAO" /> @Html.DisplayNameFor(model => model.CanWriteRWSubchannelInSAO)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteRWSubchannelInTAO" /> @Html.DisplayNameFor(model => model.CanWriteRWSubchannelInTAO)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteRaw" /> @Html.DisplayNameFor(model => model.CanWriteRaw)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteRawMultiSession" /> @Html.DisplayNameFor(model => model.CanWriteRawMultiSession)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CanWriteRawSubchannelInTAO" /> @Html.DisplayNameFor(model => model.CanWriteRawSubchannelInTAO)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ChangerIsSideChangeCapable" /> @Html.DisplayNameFor(model => model.ChangerIsSideChangeCapable)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="ChangerSlots" class="control-label"></label>
+                <input asp-for="ChangerSlots" class="form-control" />
+                <span asp-validation-for="ChangerSlots" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ChangerSupportsDiscPresent" /> @Html.DisplayNameFor(model => model.ChangerSupportsDiscPresent)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="CPRMVersion" class="control-label"></label>
+                <input asp-for="CPRMVersion" class="form-control" />
+                <span asp-validation-for="CPRMVersion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CSSVersion" class="control-label"></label>
+                <input asp-for="CSSVersion" class="form-control" />
+                <span asp-validation-for="CSSVersion" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DBML" /> @Html.DisplayNameFor(model => model.DBML)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DVDMultiRead" /> @Html.DisplayNameFor(model => model.DVDMultiRead)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="EmbeddedChanger" /> @Html.DisplayNameFor(model => model.EmbeddedChanger)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ErrorRecoveryPage" /> @Html.DisplayNameFor(model => model.ErrorRecoveryPage)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirmwareDate" class="control-label"></label>
+                <input asp-for="FirmwareDate" class="form-control" />
+                <span asp-validation-for="FirmwareDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LoadingMechanismType" class="control-label"></label>
+                <input asp-for="LoadingMechanismType" class="form-control" />
+                <span asp-validation-for="LoadingMechanismType" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Locked" /> @Html.DisplayNameFor(model => model.Locked)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="LogicalBlockSize" class="control-label"></label>
+                <input asp-for="LogicalBlockSize" class="form-control" />
+                <span asp-validation-for="LogicalBlockSize" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="MultiRead" /> @Html.DisplayNameFor(model => model.MultiRead)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhysicalInterfaceStandardNumber" class="control-label"></label>
+                <input asp-for="PhysicalInterfaceStandardNumber" class="form-control" />
+                <span asp-validation-for="PhysicalInterfaceStandardNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="PreventJumper" /> @Html.DisplayNameFor(model => model.PreventJumper)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SupportsAACS" /> @Html.DisplayNameFor(model => model.SupportsAACS)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SupportsBusEncryption" /> @Html.DisplayNameFor(model => model.SupportsBusEncryption)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SupportsC2" /> @Html.DisplayNameFor(model => model.SupportsC2)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SupportsCPRM" /> @Html.DisplayNameFor(model => model.SupportsCPRM)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SupportsCSS" /> @Html.DisplayNameFor(model => model.SupportsCSS)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SupportsDAP" /> @Html.DisplayNameFor(model => model.SupportsDAP)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SupportsDeviceBusyEvent" /> @Html.DisplayNameFor(model => model.SupportsDeviceBusyEvent)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SupportsHybridDiscs" /> @Html.DisplayNameFor(model => model.SupportsHybridDiscs)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SupportsModePage1Ch" /> @Html.DisplayNameFor(model => model.SupportsModePage1Ch)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SupportsOSSC" /> @Html.DisplayNameFor(model => model.SupportsOSSC)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SupportsPWP" /> @Html.DisplayNameFor(model => model.SupportsPWP)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SupportsSWPP" /> @Html.DisplayNameFor(model => model.SupportsSWPP)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SupportsSecurDisc" /> @Html.DisplayNameFor(model => model.SupportsSecurDisc)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SupportsSeparateVolume" /> @Html.DisplayNameFor(model => model.SupportsSeparateVolume)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SupportsVCPS" /> @Html.DisplayNameFor(model => model.SupportsVCPS)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SupportsWriteInhibitDCB" /> @Html.DisplayNameFor(model => model.SupportsWriteInhibitDCB)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SupportsWriteProtectPAC" /> @Html.DisplayNameFor(model => model.SupportsWriteProtectPAC)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="VolumeLevels" class="control-label"></label>
+                <input asp-for="VolumeLevels" class="form-control" />
+                <span asp-validation-for="VolumeLevels" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BinaryData" class="control-label"></label>
+                <input asp-for="BinaryData" class="form-control" />
+                <span asp-validation-for="BinaryData" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+</body>
+</html>
