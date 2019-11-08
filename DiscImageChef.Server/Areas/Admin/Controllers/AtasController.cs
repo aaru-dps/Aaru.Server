@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DiscImageChef.Server.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DiscImageChef.Server.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class AtasController : Controller
     {
         private readonly DicServerContext _context;

@@ -1,12 +1,14 @@
 using System.Linq;
 using System.Threading.Tasks;
 using DiscImageChef.Server.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DiscImageChef.Server.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class ReportsController : Controller
     {
         readonly DicServerContext _context;
@@ -38,7 +40,7 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         public IActionResult Create() => View();
 
         // POST: Admin/Reports/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("UploadedWhen,Id,CompactFlash,Manufacturer,Model,Revision,Type")]
@@ -74,7 +76,7 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         }
 
         // POST: Admin/Reports/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(

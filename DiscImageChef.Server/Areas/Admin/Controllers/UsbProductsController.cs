@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using DiscImageChef.Server.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using Microsoft.EntityFrameworkCore.Query;
 namespace DiscImageChef.Server.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class UsbProductsController : Controller
     {
         readonly DicServerContext _context;
@@ -51,7 +53,7 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         }
 
         // POST: Admin/UsbProducts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,ProductId,Product,AddedWhen,ModifiedWhen,VendorId")]
@@ -91,7 +93,7 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         }
 
         // POST: Admin/UsbProducts/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,ProductId,Product,AddedWhen,ModifiedWhen,VendorId")]
