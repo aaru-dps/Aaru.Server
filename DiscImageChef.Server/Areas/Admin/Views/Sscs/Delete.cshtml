@@ -38,29 +38,28 @@
     <h4>Ssc</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.BlockSizeGranularity)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.BlockSizeGranularity)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.MaxBlockLength)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.MaxBlockLength)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.MinBlockLength)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.MinBlockLength)
         </dd>
     </dl>
-
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <a asp-action="Index" class="btn btn-primary">Back to List</a>
-<input type="submit" value="Delete" class="btn btn-danger" />
+        <input class="btn btn-danger" type="submit" value="Delete" />
     </form>
 </div>

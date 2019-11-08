@@ -44,7 +44,7 @@
                 <input asp-for="MediumType" class="form-control" />
                 <span asp-validation-for="MediumType" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
+            <div class="form-check form-group">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="WriteProtected" /> @Html.DisplayNameFor(model => model.WriteProtected)
                 </label>
@@ -59,24 +59,22 @@
                 <input asp-for="BufferedMode" class="form-control" />
                 <span asp-validation-for="BufferedMode" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
+            <div class="form-check form-group">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="BlankCheckEnabled" /> @Html.DisplayNameFor(model => model.BlankCheckEnabled)
                 </label>
             </div>
-            <div class="form-group form-check">
+            <div class="form-check form-group">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="DPOandFUA" /> @Html.DisplayNameFor(model => model.DPOandFUA)
                 </label>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input class="btn btn-primary" type="submit" value="Create" />
             </div>
         </form>
     </div>
 </div>
-
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-

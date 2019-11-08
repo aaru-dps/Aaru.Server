@@ -38,29 +38,28 @@
     <h4>BlockDescriptor</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Density)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Density)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Blocks)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Blocks)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.BlockLength)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.BlockLength)
         </dd>
     </dl>
-
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <a asp-action="Index" class="btn btn-primary">Back to List</a>
-<input type="submit" value="Delete" class="btn btn-danger" />
+        <input class="btn btn-danger" type="submit" value="Delete" />
     </form>
 </div>

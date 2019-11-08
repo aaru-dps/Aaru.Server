@@ -35,30 +35,31 @@
 }
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CIS)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Compliance)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ManufacturerCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CardCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Manufacturer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductName)
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CIS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Compliance)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ManufacturerCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CardCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Manufacturer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.CIS)
@@ -82,8 +83,8 @@
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">Edit</a>
                 <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
-</td>
+            </td>
         </tr>
-}
+    }
     </tbody>
 </table>

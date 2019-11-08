@@ -35,42 +35,43 @@
 }
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.InquiryData)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SupportsModeSense6)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SupportsModeSense10)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SupportsModeSubpages)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModeSense6Data)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModeSense10Data)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModeSense6CurrentData)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModeSense10CurrentData)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModeSense6ChangeableData)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModeSense10ChangeableData)
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.InquiryData)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SupportsModeSense6)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SupportsModeSense10)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SupportsModeSubpages)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModeSense6Data)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModeSense10Data)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModeSense6CurrentData)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModeSense10CurrentData)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModeSense6ChangeableData)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModeSense10ChangeableData)
+        </th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.InquiryData)
@@ -106,8 +107,8 @@
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">Edit</a>
                 <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
-</td>
+            </td>
         </tr>
-}
+    }
     </tbody>
 </table>

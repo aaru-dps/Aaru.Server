@@ -9,8 +9,7 @@ using Microsoft.EntityFrameworkCore.Query;
 
 namespace DiscImageChef.Server.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    [Authorize]
+    [Area("Admin"), Authorize]
     public class UsbProductsController : Controller
     {
         readonly DicServerContext _context;

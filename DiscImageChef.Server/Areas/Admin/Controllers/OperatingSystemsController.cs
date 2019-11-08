@@ -7,8 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DiscImageChef.Server.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    [Authorize]
+    [Area("Admin"), Authorize]
     public class OperatingSystemsController : Controller
     {
         readonly DicServerContext _context;

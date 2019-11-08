@@ -39,7 +39,6 @@ using DiscImageChef.Decoders.SCSI;
 using DiscImageChef.Server.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using TestedMedia = DiscImageChef.CommonTypes.Metadata.TestedMedia;
 using Tuple = DiscImageChef.Decoders.PCMCIA.Tuple;
 
 namespace DiscImageChef.Server.Controllers

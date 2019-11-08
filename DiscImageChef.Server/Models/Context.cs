@@ -31,6 +31,7 @@
 // ****************************************************************************/
 
 using System.Data.Common;
+using DiscImageChef.CommonTypes.Metadata;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -44,37 +45,37 @@ namespace DiscImageChef.Server.Models
 
         public DicServerContext(DbContextOptions<DicServerContext> options) : base(options) { }
 
-        public DbSet<Device>            Devices          { get; set; }
-        public DbSet<UploadedReport>    Reports          { get; set; }
-        public DbSet<Command>           Commands         { get; set; }
-        public DbSet<DeviceStat>        DeviceStats      { get; set; }
-        public DbSet<Filesystem>        Filesystems      { get; set; }
-        public DbSet<Filter>            Filters          { get; set; }
-        public DbSet<Media>             Medias           { get; set; }
-        public DbSet<MediaFormat>       MediaFormats     { get; set; }
-        public DbSet<OperatingSystem>   OperatingSystems { get; set; }
-        public DbSet<Partition>         Partitions       { get; set; }
-        public DbSet<Version>           Versions         { get; set; }
-        public DbSet<UsbVendor>         UsbVendors       { get; set; }
-        public DbSet<UsbProduct>        UsbProducts      { get; set; }
-        public DbSet<CompactDiscOffset> CdOffsets        { get; set; }
-        public DbSet<DiscImageChef.CommonTypes.Metadata.Ata> Ata { get; set; }
-        public DbSet<DiscImageChef.CommonTypes.Metadata.BlockDescriptor> BlockDescriptor { get; set; }
-        public DbSet<DiscImageChef.CommonTypes.Metadata.Chs> Chs { get; set; }
-        public DbSet<DiscImageChef.CommonTypes.Metadata.DensityCode> DensityCode { get; set; }
-        public DbSet<DiscImageChef.CommonTypes.Metadata.FireWire> FireWire { get; set; }
-        public DbSet<DiscImageChef.CommonTypes.Metadata.Mmc> Mmc { get; set; }
-        public DbSet<DiscImageChef.CommonTypes.Metadata.MmcSd> MmcSd { get; set; }
-        public DbSet<DiscImageChef.CommonTypes.Metadata.MmcFeatures> MmcFeatures { get; set; }
-        public DbSet<DiscImageChef.CommonTypes.Metadata.Pcmcia> Pcmcia { get; set; }
-        public DbSet<DiscImageChef.CommonTypes.Metadata.Scsi> Scsi { get; set; }
-        public DbSet<DiscImageChef.CommonTypes.Metadata.ScsiMode> ScsiMode { get; set; }
-        public DbSet<DiscImageChef.CommonTypes.Metadata.ScsiPage> ScsiPage { get; set; }
-        public DbSet<DiscImageChef.CommonTypes.Metadata.Ssc> Ssc { get; set; }
-        public DbSet<DiscImageChef.CommonTypes.Metadata.SupportedDensity> SupportedDensity { get; set; }
-        public DbSet<DiscImageChef.CommonTypes.Metadata.TestedMedia> TestedMedia { get; set; }
-        public DbSet<DiscImageChef.CommonTypes.Metadata.TestedSequentialMedia> TestedSequentialMedia { get; set; }
-        public DbSet<DiscImageChef.CommonTypes.Metadata.Usb> Usb { get; set; }
+        public DbSet<Device>                   Devices               { get; set; }
+        public DbSet<UploadedReport>           Reports               { get; set; }
+        public DbSet<Command>                  Commands              { get; set; }
+        public DbSet<DeviceStat>               DeviceStats           { get; set; }
+        public DbSet<Filesystem>               Filesystems           { get; set; }
+        public DbSet<Filter>                   Filters               { get; set; }
+        public DbSet<Media>                    Medias                { get; set; }
+        public DbSet<MediaFormat>              MediaFormats          { get; set; }
+        public DbSet<OperatingSystem>          OperatingSystems      { get; set; }
+        public DbSet<Partition>                Partitions            { get; set; }
+        public DbSet<Version>                  Versions              { get; set; }
+        public DbSet<UsbVendor>                UsbVendors            { get; set; }
+        public DbSet<UsbProduct>               UsbProducts           { get; set; }
+        public DbSet<CompactDiscOffset>        CdOffsets             { get; set; }
+        public DbSet<CommonTypes.Metadata.Ata> Ata                   { get; set; }
+        public DbSet<BlockDescriptor>          BlockDescriptor       { get; set; }
+        public DbSet<Chs>                      Chs                   { get; set; }
+        public DbSet<DensityCode>              DensityCode           { get; set; }
+        public DbSet<FireWire>                 FireWire              { get; set; }
+        public DbSet<Mmc>                      Mmc                   { get; set; }
+        public DbSet<MmcSd>                    MmcSd                 { get; set; }
+        public DbSet<MmcFeatures>              MmcFeatures           { get; set; }
+        public DbSet<Pcmcia>                   Pcmcia                { get; set; }
+        public DbSet<Scsi>                     Scsi                  { get; set; }
+        public DbSet<ScsiMode>                 ScsiMode              { get; set; }
+        public DbSet<ScsiPage>                 ScsiPage              { get; set; }
+        public DbSet<Ssc>                      Ssc                   { get; set; }
+        public DbSet<SupportedDensity>         SupportedDensity      { get; set; }
+        public DbSet<TestedMedia>              TestedMedia           { get; set; }
+        public DbSet<TestedSequentialMedia>    TestedSequentialMedia { get; set; }
+        public DbSet<Usb>                      Usb                   { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -131,7 +132,8 @@ namespace DiscImageChef.Server.Models
 
             modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.ScsiPage", b =>
             {
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Scsi", null).WithMany("EVPDPages").HasForeignKey("ScsiId").OnDelete(DeleteBehavior.SetNull);
+                b.HasOne("DiscImageChef.CommonTypes.Metadata.Scsi", null).WithMany("EVPDPages").HasForeignKey("ScsiId").
+                  OnDelete(DeleteBehavior.SetNull);
 
                 b.HasOne("DiscImageChef.CommonTypes.Metadata.ScsiMode", null).WithMany("ModePages").
                   HasForeignKey("ScsiModeId").OnDelete(DeleteBehavior.SetNull);
@@ -143,7 +145,8 @@ namespace DiscImageChef.Server.Models
                   HasForeignKey("SscId").OnDelete(DeleteBehavior.SetNull);
 
                 b.HasOne("DiscImageChef.CommonTypes.Metadata.TestedSequentialMedia", null).
-                  WithMany("SupportedMediaTypes").HasForeignKey("TestedSequentialMediaId").OnDelete(DeleteBehavior.SetNull);
+                  WithMany("SupportedMediaTypes").HasForeignKey("TestedSequentialMediaId").
+                  OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.SupportedDensity", b =>
@@ -152,7 +155,8 @@ namespace DiscImageChef.Server.Models
                   HasForeignKey("SscId").OnDelete(DeleteBehavior.SetNull);
 
                 b.HasOne("DiscImageChef.CommonTypes.Metadata.TestedSequentialMedia", null).
-                  WithMany("SupportedDensities").HasForeignKey("TestedSequentialMediaId").OnDelete(DeleteBehavior.SetNull);
+                  WithMany("SupportedDensities").HasForeignKey("TestedSequentialMediaId").
+                  OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.TestedMedia", b =>
@@ -160,12 +164,14 @@ namespace DiscImageChef.Server.Models
                 b.HasOne("DiscImageChef.CommonTypes.Metadata.Ata", null).WithMany("RemovableMedias").
                   HasForeignKey("AtaId").OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Chs", "CHS").WithMany().HasForeignKey("CHSId").OnDelete(DeleteBehavior.SetNull);
+                b.HasOne("DiscImageChef.CommonTypes.Metadata.Chs", "CHS").WithMany().HasForeignKey("CHSId").
+                  OnDelete(DeleteBehavior.SetNull);
 
                 b.HasOne("DiscImageChef.CommonTypes.Metadata.Chs", "CurrentCHS").WithMany().
                   HasForeignKey("CurrentCHSId").OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Mmc", null).WithMany("TestedMedia").HasForeignKey("MmcId").OnDelete(DeleteBehavior.SetNull);
+                b.HasOne("DiscImageChef.CommonTypes.Metadata.Mmc", null).WithMany("TestedMedia").HasForeignKey("MmcId").
+                  OnDelete(DeleteBehavior.SetNull);
 
                 b.HasOne("DiscImageChef.CommonTypes.Metadata.Scsi", null).WithMany("RemovableMedias").
                   HasForeignKey("ScsiId").OnDelete(DeleteBehavior.SetNull);
@@ -173,14 +179,17 @@ namespace DiscImageChef.Server.Models
 
             modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.TestedSequentialMedia", b =>
             {
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Ssc", null).WithMany("TestedMedia").HasForeignKey("SscId").OnDelete(DeleteBehavior.SetNull);
+                b.HasOne("DiscImageChef.CommonTypes.Metadata.Ssc", null).WithMany("TestedMedia").HasForeignKey("SscId").
+                  OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity("DiscImageChef.Server.Models.Device", b =>
             {
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Ata", "ATA").WithMany().HasForeignKey("ATAId").OnDelete(DeleteBehavior.SetNull);
+                b.HasOne("DiscImageChef.CommonTypes.Metadata.Ata", "ATA").WithMany().HasForeignKey("ATAId").
+                  OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Ata", "ATAPI").WithMany().HasForeignKey("ATAPIId").OnDelete(DeleteBehavior.SetNull);
+                b.HasOne("DiscImageChef.CommonTypes.Metadata.Ata", "ATAPI").WithMany().HasForeignKey("ATAPIId").
+                  OnDelete(DeleteBehavior.SetNull);
 
                 b.HasOne("DiscImageChef.Server.Models.CompactDiscOffset", "CdOffset").WithMany("Devices").
                   HasForeignKey("CdOffsetId").OnDelete(DeleteBehavior.SetNull);
@@ -191,26 +200,32 @@ namespace DiscImageChef.Server.Models
                 b.HasOne("DiscImageChef.CommonTypes.Metadata.MmcSd", "MultiMediaCard").WithMany().
                   HasForeignKey("MultiMediaCardId").OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Pcmcia", "PCMCIA").WithMany().HasForeignKey("PCMCIAId").OnDelete(DeleteBehavior.SetNull);
+                b.HasOne("DiscImageChef.CommonTypes.Metadata.Pcmcia", "PCMCIA").WithMany().HasForeignKey("PCMCIAId").
+                  OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Scsi", "SCSI").WithMany().HasForeignKey("SCSIId").OnDelete(DeleteBehavior.SetNull);
+                b.HasOne("DiscImageChef.CommonTypes.Metadata.Scsi", "SCSI").WithMany().HasForeignKey("SCSIId").
+                  OnDelete(DeleteBehavior.SetNull);
 
                 b.HasOne("DiscImageChef.CommonTypes.Metadata.MmcSd", "SecureDigital").WithMany().
                   HasForeignKey("SecureDigitalId").OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Usb", "USB").WithMany().HasForeignKey("USBId").OnDelete(DeleteBehavior.SetNull);
+                b.HasOne("DiscImageChef.CommonTypes.Metadata.Usb", "USB").WithMany().HasForeignKey("USBId").
+                  OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity("DiscImageChef.Server.Models.DeviceStat", b =>
             {
-                b.HasOne("DiscImageChef.Server.Models.Device", "Report").WithMany().HasForeignKey("ReportId").OnDelete(DeleteBehavior.SetNull);
+                b.HasOne("DiscImageChef.Server.Models.Device", "Report").WithMany().HasForeignKey("ReportId").
+                  OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity("DiscImageChef.Server.Models.UploadedReport", b =>
             {
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Ata", "ATA").WithMany().HasForeignKey("ATAId").OnDelete(DeleteBehavior.SetNull);
+                b.HasOne("DiscImageChef.CommonTypes.Metadata.Ata", "ATA").WithMany().HasForeignKey("ATAId").
+                  OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Ata", "ATAPI").WithMany().HasForeignKey("ATAPIId").OnDelete(DeleteBehavior.SetNull);
+                b.HasOne("DiscImageChef.CommonTypes.Metadata.Ata", "ATAPI").WithMany().HasForeignKey("ATAPIId").
+                  OnDelete(DeleteBehavior.SetNull);
 
                 b.HasOne("DiscImageChef.CommonTypes.Metadata.FireWire", "FireWire").WithMany().
                   HasForeignKey("FireWireId").OnDelete(DeleteBehavior.SetNull);
@@ -218,14 +233,17 @@ namespace DiscImageChef.Server.Models
                 b.HasOne("DiscImageChef.CommonTypes.Metadata.MmcSd", "MultiMediaCard").WithMany().
                   HasForeignKey("MultiMediaCardId").OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Pcmcia", "PCMCIA").WithMany().HasForeignKey("PCMCIAId").OnDelete(DeleteBehavior.SetNull);
+                b.HasOne("DiscImageChef.CommonTypes.Metadata.Pcmcia", "PCMCIA").WithMany().HasForeignKey("PCMCIAId").
+                  OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Scsi", "SCSI").WithMany().HasForeignKey("SCSIId").OnDelete(DeleteBehavior.SetNull);
+                b.HasOne("DiscImageChef.CommonTypes.Metadata.Scsi", "SCSI").WithMany().HasForeignKey("SCSIId").
+                  OnDelete(DeleteBehavior.SetNull);
 
                 b.HasOne("DiscImageChef.CommonTypes.Metadata.MmcSd", "SecureDigital").WithMany().
                   HasForeignKey("SecureDigitalId").OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Usb", "USB").WithMany().HasForeignKey("USBId").OnDelete(DeleteBehavior.SetNull);
+                b.HasOne("DiscImageChef.CommonTypes.Metadata.Usb", "USB").WithMany().HasForeignKey("USBId").
+                  OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<CompactDiscOffset>().HasIndex(b => b.ModifiedWhen);

@@ -44,17 +44,17 @@
                 <input asp-for="InquiryData" class="form-control" />
                 <span asp-validation-for="InquiryData" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
+            <div class="form-check form-group">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="SupportsModeSense6" /> @Html.DisplayNameFor(model => model.SupportsModeSense6)
                 </label>
             </div>
-            <div class="form-group form-check">
+            <div class="form-check form-group">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="SupportsModeSense10" /> @Html.DisplayNameFor(model => model.SupportsModeSense10)
                 </label>
             </div>
-            <div class="form-group form-check">
+            <div class="form-check form-group">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="SupportsModeSubpages" /> @Html.DisplayNameFor(model => model.SupportsModeSubpages)
                 </label>
@@ -90,13 +90,11 @@
                 <span asp-validation-for="ModeSense10ChangeableData" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input class="btn btn-primary" type="submit" value="Create" />
             </div>
         </form>
     </div>
 </div>
-
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-

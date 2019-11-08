@@ -36,767 +36,765 @@
 <h4>TestedMedia</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="IdentifyData" class="control-label"></label>
-                <input asp-for="IdentifyData" class="form-control" />
-                <span asp-validation-for="IdentifyData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Blocks" class="control-label"></label>
-                <input asp-for="Blocks" class="form-control" />
-                <span asp-validation-for="Blocks" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BlockSize" class="control-label"></label>
-                <input asp-for="BlockSize" class="form-control" />
-                <span asp-validation-for="BlockSize" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadAACS" class="control-label"></label>
-                <input asp-for="CanReadAACS" class="form-control" />
-                <span asp-validation-for="CanReadAACS" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadADIP" class="control-label"></label>
-                <input asp-for="CanReadADIP" class="form-control" />
-                <span asp-validation-for="CanReadADIP" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadATIP" class="control-label"></label>
-                <input asp-for="CanReadATIP" class="form-control" />
-                <span asp-validation-for="CanReadATIP" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadBCA" class="control-label"></label>
-                <input asp-for="CanReadBCA" class="form-control" />
-                <span asp-validation-for="CanReadBCA" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadC2Pointers" class="control-label"></label>
-                <input asp-for="CanReadC2Pointers" class="form-control" />
-                <span asp-validation-for="CanReadC2Pointers" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadCMI" class="control-label"></label>
-                <input asp-for="CanReadCMI" class="form-control" />
-                <span asp-validation-for="CanReadCMI" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadCorrectedSubchannel" class="control-label"></label>
-                <input asp-for="CanReadCorrectedSubchannel" class="form-control" />
-                <span asp-validation-for="CanReadCorrectedSubchannel" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadCorrectedSubchannelWithC2" class="control-label"></label>
-                <input asp-for="CanReadCorrectedSubchannelWithC2" class="form-control" />
-                <span asp-validation-for="CanReadCorrectedSubchannelWithC2" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadDCB" class="control-label"></label>
-                <input asp-for="CanReadDCB" class="form-control" />
-                <span asp-validation-for="CanReadDCB" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadDDS" class="control-label"></label>
-                <input asp-for="CanReadDDS" class="form-control" />
-                <span asp-validation-for="CanReadDDS" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadDMI" class="control-label"></label>
-                <input asp-for="CanReadDMI" class="form-control" />
-                <span asp-validation-for="CanReadDMI" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadDiscInformation" class="control-label"></label>
-                <input asp-for="CanReadDiscInformation" class="form-control" />
-                <span asp-validation-for="CanReadDiscInformation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadFullTOC" class="control-label"></label>
-                <input asp-for="CanReadFullTOC" class="form-control" />
-                <span asp-validation-for="CanReadFullTOC" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadHDCMI" class="control-label"></label>
-                <input asp-for="CanReadHDCMI" class="form-control" />
-                <span asp-validation-for="CanReadHDCMI" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadLayerCapacity" class="control-label"></label>
-                <input asp-for="CanReadLayerCapacity" class="form-control" />
-                <span asp-validation-for="CanReadLayerCapacity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadFirstTrackPreGap" class="control-label"></label>
-                <input asp-for="CanReadFirstTrackPreGap" class="form-control" />
-                <span asp-validation-for="CanReadFirstTrackPreGap" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadLeadIn" class="control-label"></label>
-                <input asp-for="CanReadLeadIn" class="form-control" />
-                <span asp-validation-for="CanReadLeadIn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadLeadOut" class="control-label"></label>
-                <input asp-for="CanReadLeadOut" class="form-control" />
-                <span asp-validation-for="CanReadLeadOut" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadMediaID" class="control-label"></label>
-                <input asp-for="CanReadMediaID" class="form-control" />
-                <span asp-validation-for="CanReadMediaID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadMediaSerial" class="control-label"></label>
-                <input asp-for="CanReadMediaSerial" class="form-control" />
-                <span asp-validation-for="CanReadMediaSerial" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadPAC" class="control-label"></label>
-                <input asp-for="CanReadPAC" class="form-control" />
-                <span asp-validation-for="CanReadPAC" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadPFI" class="control-label"></label>
-                <input asp-for="CanReadPFI" class="form-control" />
-                <span asp-validation-for="CanReadPFI" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadPMA" class="control-label"></label>
-                <input asp-for="CanReadPMA" class="form-control" />
-                <span asp-validation-for="CanReadPMA" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadPQSubchannel" class="control-label"></label>
-                <input asp-for="CanReadPQSubchannel" class="form-control" />
-                <span asp-validation-for="CanReadPQSubchannel" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadPQSubchannelWithC2" class="control-label"></label>
-                <input asp-for="CanReadPQSubchannelWithC2" class="form-control" />
-                <span asp-validation-for="CanReadPQSubchannelWithC2" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadPRI" class="control-label"></label>
-                <input asp-for="CanReadPRI" class="form-control" />
-                <span asp-validation-for="CanReadPRI" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadRWSubchannel" class="control-label"></label>
-                <input asp-for="CanReadRWSubchannel" class="form-control" />
-                <span asp-validation-for="CanReadRWSubchannel" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadRWSubchannelWithC2" class="control-label"></label>
-                <input asp-for="CanReadRWSubchannelWithC2" class="form-control" />
-                <span asp-validation-for="CanReadRWSubchannelWithC2" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadRecordablePFI" class="control-label"></label>
-                <input asp-for="CanReadRecordablePFI" class="form-control" />
-                <span asp-validation-for="CanReadRecordablePFI" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadSpareAreaInformation" class="control-label"></label>
-                <input asp-for="CanReadSpareAreaInformation" class="form-control" />
-                <span asp-validation-for="CanReadSpareAreaInformation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadTOC" class="control-label"></label>
-                <input asp-for="CanReadTOC" class="form-control" />
-                <span asp-validation-for="CanReadTOC" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Density" class="control-label"></label>
-                <input asp-for="Density" class="form-control" />
-                <span asp-validation-for="Density" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LongBlockSize" class="control-label"></label>
-                <input asp-for="LongBlockSize" class="form-control" />
-                <span asp-validation-for="LongBlockSize" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Manufacturer" class="control-label"></label>
-                <input asp-for="Manufacturer" class="form-control" />
-                <span asp-validation-for="Manufacturer" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="MediaIsRecognized" /> @Html.DisplayNameFor(model => model.MediaIsRecognized)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="MediumType" class="control-label"></label>
-                <input asp-for="MediumType" class="form-control" />
-                <span asp-validation-for="MediumType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MediumTypeName" class="control-label"></label>
-                <input asp-for="MediumTypeName" class="form-control" />
-                <span asp-validation-for="MediumTypeName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Model" class="control-label"></label>
-                <input asp-for="Model" class="form-control" />
-                <span asp-validation-for="Model" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsHLDTSTReadRawDVD" class="control-label"></label>
-                <input asp-for="SupportsHLDTSTReadRawDVD" class="form-control" />
-                <span asp-validation-for="SupportsHLDTSTReadRawDVD" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsNECReadCDDA" class="control-label"></label>
-                <input asp-for="SupportsNECReadCDDA" class="form-control" />
-                <span asp-validation-for="SupportsNECReadCDDA" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsPioneerReadCDDA" class="control-label"></label>
-                <input asp-for="SupportsPioneerReadCDDA" class="form-control" />
-                <span asp-validation-for="SupportsPioneerReadCDDA" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsPioneerReadCDDAMSF" class="control-label"></label>
-                <input asp-for="SupportsPioneerReadCDDAMSF" class="form-control" />
-                <span asp-validation-for="SupportsPioneerReadCDDAMSF" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsPlextorReadCDDA" class="control-label"></label>
-                <input asp-for="SupportsPlextorReadCDDA" class="form-control" />
-                <span asp-validation-for="SupportsPlextorReadCDDA" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsPlextorReadRawDVD" class="control-label"></label>
-                <input asp-for="SupportsPlextorReadRawDVD" class="form-control" />
-                <span asp-validation-for="SupportsPlextorReadRawDVD" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsRead10" class="control-label"></label>
-                <input asp-for="SupportsRead10" class="form-control" />
-                <span asp-validation-for="SupportsRead10" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsRead12" class="control-label"></label>
-                <input asp-for="SupportsRead12" class="form-control" />
-                <span asp-validation-for="SupportsRead12" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsRead16" class="control-label"></label>
-                <input asp-for="SupportsRead16" class="form-control" />
-                <span asp-validation-for="SupportsRead16" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsRead6" class="control-label"></label>
-                <input asp-for="SupportsRead6" class="form-control" />
-                <span asp-validation-for="SupportsRead6" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsReadCapacity16" class="control-label"></label>
-                <input asp-for="SupportsReadCapacity16" class="form-control" />
-                <span asp-validation-for="SupportsReadCapacity16" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsReadCapacity" class="control-label"></label>
-                <input asp-for="SupportsReadCapacity" class="form-control" />
-                <span asp-validation-for="SupportsReadCapacity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsReadCd" class="control-label"></label>
-                <input asp-for="SupportsReadCd" class="form-control" />
-                <span asp-validation-for="SupportsReadCd" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsReadCdMsf" class="control-label"></label>
-                <input asp-for="SupportsReadCdMsf" class="form-control" />
-                <span asp-validation-for="SupportsReadCdMsf" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsReadCdRaw" class="control-label"></label>
-                <input asp-for="SupportsReadCdRaw" class="form-control" />
-                <span asp-validation-for="SupportsReadCdRaw" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsReadCdMsfRaw" class="control-label"></label>
-                <input asp-for="SupportsReadCdMsfRaw" class="form-control" />
-                <span asp-validation-for="SupportsReadCdMsfRaw" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsReadLong16" class="control-label"></label>
-                <input asp-for="SupportsReadLong16" class="form-control" />
-                <span asp-validation-for="SupportsReadLong16" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsReadLong" class="control-label"></label>
-                <input asp-for="SupportsReadLong" class="form-control" />
-                <span asp-validation-for="SupportsReadLong" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModeSense6Data" class="control-label"></label>
-                <input asp-for="ModeSense6Data" class="form-control" />
-                <span asp-validation-for="ModeSense6Data" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModeSense10Data" class="control-label"></label>
-                <input asp-for="ModeSense10Data" class="form-control" />
-                <span asp-validation-for="ModeSense10Data" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LBASectors" class="control-label"></label>
-                <input asp-for="LBASectors" class="form-control" />
-                <span asp-validation-for="LBASectors" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LBA48Sectors" class="control-label"></label>
-                <input asp-for="LBA48Sectors" class="form-control" />
-                <span asp-validation-for="LBA48Sectors" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LogicalAlignment" class="control-label"></label>
-                <input asp-for="LogicalAlignment" class="form-control" />
-                <span asp-validation-for="LogicalAlignment" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NominalRotationRate" class="control-label"></label>
-                <input asp-for="NominalRotationRate" class="form-control" />
-                <span asp-validation-for="NominalRotationRate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhysicalBlockSize" class="control-label"></label>
-                <input asp-for="PhysicalBlockSize" class="form-control" />
-                <span asp-validation-for="PhysicalBlockSize" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SolidStateDevice" class="control-label"></label>
-                <input asp-for="SolidStateDevice" class="form-control" />
-                <span asp-validation-for="SolidStateDevice" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UnformattedBPT" class="control-label"></label>
-                <input asp-for="UnformattedBPT" class="form-control" />
-                <span asp-validation-for="UnformattedBPT" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UnformattedBPS" class="control-label"></label>
-                <input asp-for="UnformattedBPS" class="form-control" />
-                <span asp-validation-for="UnformattedBPS" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsReadDmaLba" class="control-label"></label>
-                <input asp-for="SupportsReadDmaLba" class="form-control" />
-                <span asp-validation-for="SupportsReadDmaLba" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsReadDmaRetryLba" class="control-label"></label>
-                <input asp-for="SupportsReadDmaRetryLba" class="form-control" />
-                <span asp-validation-for="SupportsReadDmaRetryLba" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsReadLba" class="control-label"></label>
-                <input asp-for="SupportsReadLba" class="form-control" />
-                <span asp-validation-for="SupportsReadLba" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsReadRetryLba" class="control-label"></label>
-                <input asp-for="SupportsReadRetryLba" class="form-control" />
-                <span asp-validation-for="SupportsReadRetryLba" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsReadLongLba" class="control-label"></label>
-                <input asp-for="SupportsReadLongLba" class="form-control" />
-                <span asp-validation-for="SupportsReadLongLba" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsReadLongRetryLba" class="control-label"></label>
-                <input asp-for="SupportsReadLongRetryLba" class="form-control" />
-                <span asp-validation-for="SupportsReadLongRetryLba" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsSeekLba" class="control-label"></label>
-                <input asp-for="SupportsSeekLba" class="form-control" />
-                <span asp-validation-for="SupportsSeekLba" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsReadDmaLba48" class="control-label"></label>
-                <input asp-for="SupportsReadDmaLba48" class="form-control" />
-                <span asp-validation-for="SupportsReadDmaLba48" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsReadLba48" class="control-label"></label>
-                <input asp-for="SupportsReadLba48" class="form-control" />
-                <span asp-validation-for="SupportsReadLba48" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsReadDma" class="control-label"></label>
-                <input asp-for="SupportsReadDma" class="form-control" />
-                <span asp-validation-for="SupportsReadDma" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsReadDmaRetry" class="control-label"></label>
-                <input asp-for="SupportsReadDmaRetry" class="form-control" />
-                <span asp-validation-for="SupportsReadDmaRetry" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsReadRetry" class="control-label"></label>
-                <input asp-for="SupportsReadRetry" class="form-control" />
-                <span asp-validation-for="SupportsReadRetry" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsReadSectors" class="control-label"></label>
-                <input asp-for="SupportsReadSectors" class="form-control" />
-                <span asp-validation-for="SupportsReadSectors" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsReadLongRetry" class="control-label"></label>
-                <input asp-for="SupportsReadLongRetry" class="form-control" />
-                <span asp-validation-for="SupportsReadLongRetry" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupportsSeek" class="control-label"></label>
-                <input asp-for="SupportsSeek" class="form-control" />
-                <span asp-validation-for="SupportsSeek" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadingIntersessionLeadIn" class="control-label"></label>
-                <input asp-for="CanReadingIntersessionLeadIn" class="form-control" />
-                <span asp-validation-for="CanReadingIntersessionLeadIn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanReadingIntersessionLeadOut" class="control-label"></label>
-                <input asp-for="CanReadingIntersessionLeadOut" class="form-control" />
-                <span asp-validation-for="CanReadingIntersessionLeadOut" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IntersessionLeadInData" class="control-label"></label>
-                <input asp-for="IntersessionLeadInData" class="form-control" />
-                <span asp-validation-for="IntersessionLeadInData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IntersessionLeadOutData" class="control-label"></label>
-                <input asp-for="IntersessionLeadOutData" class="form-control" />
-                <span asp-validation-for="IntersessionLeadOutData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Read6Data" class="control-label"></label>
-                <input asp-for="Read6Data" class="form-control" />
-                <span asp-validation-for="Read6Data" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Read10Data" class="control-label"></label>
-                <input asp-for="Read10Data" class="form-control" />
-                <span asp-validation-for="Read10Data" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Read12Data" class="control-label"></label>
-                <input asp-for="Read12Data" class="form-control" />
-                <span asp-validation-for="Read12Data" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Read16Data" class="control-label"></label>
-                <input asp-for="Read16Data" class="form-control" />
-                <span asp-validation-for="Read16Data" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReadLong10Data" class="control-label"></label>
-                <input asp-for="ReadLong10Data" class="form-control" />
-                <span asp-validation-for="ReadLong10Data" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReadLong16Data" class="control-label"></label>
-                <input asp-for="ReadLong16Data" class="form-control" />
-                <span asp-validation-for="ReadLong16Data" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReadSectorsData" class="control-label"></label>
-                <input asp-for="ReadSectorsData" class="form-control" />
-                <span asp-validation-for="ReadSectorsData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReadSectorsRetryData" class="control-label"></label>
-                <input asp-for="ReadSectorsRetryData" class="form-control" />
-                <span asp-validation-for="ReadSectorsRetryData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReadDmaData" class="control-label"></label>
-                <input asp-for="ReadDmaData" class="form-control" />
-                <span asp-validation-for="ReadDmaData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReadDmaRetryData" class="control-label"></label>
-                <input asp-for="ReadDmaRetryData" class="form-control" />
-                <span asp-validation-for="ReadDmaRetryData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReadLbaData" class="control-label"></label>
-                <input asp-for="ReadLbaData" class="form-control" />
-                <span asp-validation-for="ReadLbaData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReadRetryLbaData" class="control-label"></label>
-                <input asp-for="ReadRetryLbaData" class="form-control" />
-                <span asp-validation-for="ReadRetryLbaData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReadDmaLbaData" class="control-label"></label>
-                <input asp-for="ReadDmaLbaData" class="form-control" />
-                <span asp-validation-for="ReadDmaLbaData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReadDmaRetryLbaData" class="control-label"></label>
-                <input asp-for="ReadDmaRetryLbaData" class="form-control" />
-                <span asp-validation-for="ReadDmaRetryLbaData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReadLba48Data" class="control-label"></label>
-                <input asp-for="ReadLba48Data" class="form-control" />
-                <span asp-validation-for="ReadLba48Data" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReadDmaLba48Data" class="control-label"></label>
-                <input asp-for="ReadDmaLba48Data" class="form-control" />
-                <span asp-validation-for="ReadDmaLba48Data" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReadLongData" class="control-label"></label>
-                <input asp-for="ReadLongData" class="form-control" />
-                <span asp-validation-for="ReadLongData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReadLongRetryData" class="control-label"></label>
-                <input asp-for="ReadLongRetryData" class="form-control" />
-                <span asp-validation-for="ReadLongRetryData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReadLongLbaData" class="control-label"></label>
-                <input asp-for="ReadLongLbaData" class="form-control" />
-                <span asp-validation-for="ReadLongLbaData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReadLongRetryLbaData" class="control-label"></label>
-                <input asp-for="ReadLongRetryLbaData" class="form-control" />
-                <span asp-validation-for="ReadLongRetryLbaData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TocData" class="control-label"></label>
-                <input asp-for="TocData" class="form-control" />
-                <span asp-validation-for="TocData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FullTocData" class="control-label"></label>
-                <input asp-for="FullTocData" class="form-control" />
-                <span asp-validation-for="FullTocData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AtipData" class="control-label"></label>
-                <input asp-for="AtipData" class="form-control" />
-                <span asp-validation-for="AtipData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PmaData" class="control-label"></label>
-                <input asp-for="PmaData" class="form-control" />
-                <span asp-validation-for="PmaData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReadCdData" class="control-label"></label>
-                <input asp-for="ReadCdData" class="form-control" />
-                <span asp-validation-for="ReadCdData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReadCdMsfData" class="control-label"></label>
-                <input asp-for="ReadCdMsfData" class="form-control" />
-                <span asp-validation-for="ReadCdMsfData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReadCdFullData" class="control-label"></label>
-                <input asp-for="ReadCdFullData" class="form-control" />
-                <span asp-validation-for="ReadCdFullData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReadCdMsfFullData" class="control-label"></label>
-                <input asp-for="ReadCdMsfFullData" class="form-control" />
-                <span asp-validation-for="ReadCdMsfFullData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Track1PregapData" class="control-label"></label>
-                <input asp-for="Track1PregapData" class="form-control" />
-                <span asp-validation-for="Track1PregapData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LeadInData" class="control-label"></label>
-                <input asp-for="LeadInData" class="form-control" />
-                <span asp-validation-for="LeadInData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LeadOutData" class="control-label"></label>
-                <input asp-for="LeadOutData" class="form-control" />
-                <span asp-validation-for="LeadOutData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="C2PointersData" class="control-label"></label>
-                <input asp-for="C2PointersData" class="form-control" />
-                <span asp-validation-for="C2PointersData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PQSubchannelData" class="control-label"></label>
-                <input asp-for="PQSubchannelData" class="form-control" />
-                <span asp-validation-for="PQSubchannelData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RWSubchannelData" class="control-label"></label>
-                <input asp-for="RWSubchannelData" class="form-control" />
-                <span asp-validation-for="RWSubchannelData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CorrectedSubchannelData" class="control-label"></label>
-                <input asp-for="CorrectedSubchannelData" class="form-control" />
-                <span asp-validation-for="CorrectedSubchannelData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PQSubchannelWithC2Data" class="control-label"></label>
-                <input asp-for="PQSubchannelWithC2Data" class="form-control" />
-                <span asp-validation-for="PQSubchannelWithC2Data" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RWSubchannelWithC2Data" class="control-label"></label>
-                <input asp-for="RWSubchannelWithC2Data" class="form-control" />
-                <span asp-validation-for="RWSubchannelWithC2Data" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CorrectedSubchannelWithC2Data" class="control-label"></label>
-                <input asp-for="CorrectedSubchannelWithC2Data" class="form-control" />
-                <span asp-validation-for="CorrectedSubchannelWithC2Data" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PfiData" class="control-label"></label>
-                <input asp-for="PfiData" class="form-control" />
-                <span asp-validation-for="PfiData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DmiData" class="control-label"></label>
-                <input asp-for="DmiData" class="form-control" />
-                <span asp-validation-for="DmiData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CmiData" class="control-label"></label>
-                <input asp-for="CmiData" class="form-control" />
-                <span asp-validation-for="CmiData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DvdBcaData" class="control-label"></label>
-                <input asp-for="DvdBcaData" class="form-control" />
-                <span asp-validation-for="DvdBcaData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DvdAacsData" class="control-label"></label>
-                <input asp-for="DvdAacsData" class="form-control" />
-                <span asp-validation-for="DvdAacsData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DvdDdsData" class="control-label"></label>
-                <input asp-for="DvdDdsData" class="form-control" />
-                <span asp-validation-for="DvdDdsData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DvdSaiData" class="control-label"></label>
-                <input asp-for="DvdSaiData" class="form-control" />
-                <span asp-validation-for="DvdSaiData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PriData" class="control-label"></label>
-                <input asp-for="PriData" class="form-control" />
-                <span asp-validation-for="PriData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EmbossedPfiData" class="control-label"></label>
-                <input asp-for="EmbossedPfiData" class="form-control" />
-                <span asp-validation-for="EmbossedPfiData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AdipData" class="control-label"></label>
-                <input asp-for="AdipData" class="form-control" />
-                <span asp-validation-for="AdipData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DcbData" class="control-label"></label>
-                <input asp-for="DcbData" class="form-control" />
-                <span asp-validation-for="DcbData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HdCmiData" class="control-label"></label>
-                <input asp-for="HdCmiData" class="form-control" />
-                <span asp-validation-for="HdCmiData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DvdLayerData" class="control-label"></label>
-                <input asp-for="DvdLayerData" class="form-control" />
-                <span asp-validation-for="DvdLayerData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BluBcaData" class="control-label"></label>
-                <input asp-for="BluBcaData" class="form-control" />
-                <span asp-validation-for="BluBcaData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BluDdsData" class="control-label"></label>
-                <input asp-for="BluDdsData" class="form-control" />
-                <span asp-validation-for="BluDdsData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BluSaiData" class="control-label"></label>
-                <input asp-for="BluSaiData" class="form-control" />
-                <span asp-validation-for="BluSaiData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BluDiData" class="control-label"></label>
-                <input asp-for="BluDiData" class="form-control" />
-                <span asp-validation-for="BluDiData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BluPacData" class="control-label"></label>
-                <input asp-for="BluPacData" class="form-control" />
-                <span asp-validation-for="BluPacData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PlextorReadCddaData" class="control-label"></label>
-                <input asp-for="PlextorReadCddaData" class="form-control" />
-                <span asp-validation-for="PlextorReadCddaData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PioneerReadCddaData" class="control-label"></label>
-                <input asp-for="PioneerReadCddaData" class="form-control" />
-                <span asp-validation-for="PioneerReadCddaData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PioneerReadCddaMsfData" class="control-label"></label>
-                <input asp-for="PioneerReadCddaMsfData" class="form-control" />
-                <span asp-validation-for="PioneerReadCddaMsfData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NecReadCddaData" class="control-label"></label>
-                <input asp-for="NecReadCddaData" class="form-control" />
-                <span asp-validation-for="NecReadCddaData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PlextorReadRawDVDData" class="control-label"></label>
-                <input asp-for="PlextorReadRawDVDData" class="form-control" />
-                <span asp-validation-for="PlextorReadRawDVDData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HLDTSTReadRawDVDData" class="control-label"></label>
-                <input asp-for="HLDTSTReadRawDVDData" class="form-control" />
-                <span asp-validation-for="HLDTSTReadRawDVDData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+<div class="col-md-4">
+<form asp-action="Create">
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="form-group">
+    <label asp-for="IdentifyData" class="control-label"></label>
+    <input asp-for="IdentifyData" class="form-control" />
+    <span asp-validation-for="IdentifyData" class="text-danger"></span>
 </div>
-
+<div class="form-group">
+    <label asp-for="Blocks" class="control-label"></label>
+    <input asp-for="Blocks" class="form-control" />
+    <span asp-validation-for="Blocks" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="BlockSize" class="control-label"></label>
+    <input asp-for="BlockSize" class="form-control" />
+    <span asp-validation-for="BlockSize" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadAACS" class="control-label"></label>
+    <input asp-for="CanReadAACS" class="form-control" />
+    <span asp-validation-for="CanReadAACS" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadADIP" class="control-label"></label>
+    <input asp-for="CanReadADIP" class="form-control" />
+    <span asp-validation-for="CanReadADIP" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadATIP" class="control-label"></label>
+    <input asp-for="CanReadATIP" class="form-control" />
+    <span asp-validation-for="CanReadATIP" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadBCA" class="control-label"></label>
+    <input asp-for="CanReadBCA" class="form-control" />
+    <span asp-validation-for="CanReadBCA" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadC2Pointers" class="control-label"></label>
+    <input asp-for="CanReadC2Pointers" class="form-control" />
+    <span asp-validation-for="CanReadC2Pointers" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadCMI" class="control-label"></label>
+    <input asp-for="CanReadCMI" class="form-control" />
+    <span asp-validation-for="CanReadCMI" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadCorrectedSubchannel" class="control-label"></label>
+    <input asp-for="CanReadCorrectedSubchannel" class="form-control" />
+    <span asp-validation-for="CanReadCorrectedSubchannel" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadCorrectedSubchannelWithC2" class="control-label"></label>
+    <input asp-for="CanReadCorrectedSubchannelWithC2" class="form-control" />
+    <span asp-validation-for="CanReadCorrectedSubchannelWithC2" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadDCB" class="control-label"></label>
+    <input asp-for="CanReadDCB" class="form-control" />
+    <span asp-validation-for="CanReadDCB" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadDDS" class="control-label"></label>
+    <input asp-for="CanReadDDS" class="form-control" />
+    <span asp-validation-for="CanReadDDS" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadDMI" class="control-label"></label>
+    <input asp-for="CanReadDMI" class="form-control" />
+    <span asp-validation-for="CanReadDMI" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadDiscInformation" class="control-label"></label>
+    <input asp-for="CanReadDiscInformation" class="form-control" />
+    <span asp-validation-for="CanReadDiscInformation" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadFullTOC" class="control-label"></label>
+    <input asp-for="CanReadFullTOC" class="form-control" />
+    <span asp-validation-for="CanReadFullTOC" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadHDCMI" class="control-label"></label>
+    <input asp-for="CanReadHDCMI" class="form-control" />
+    <span asp-validation-for="CanReadHDCMI" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadLayerCapacity" class="control-label"></label>
+    <input asp-for="CanReadLayerCapacity" class="form-control" />
+    <span asp-validation-for="CanReadLayerCapacity" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadFirstTrackPreGap" class="control-label"></label>
+    <input asp-for="CanReadFirstTrackPreGap" class="form-control" />
+    <span asp-validation-for="CanReadFirstTrackPreGap" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadLeadIn" class="control-label"></label>
+    <input asp-for="CanReadLeadIn" class="form-control" />
+    <span asp-validation-for="CanReadLeadIn" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadLeadOut" class="control-label"></label>
+    <input asp-for="CanReadLeadOut" class="form-control" />
+    <span asp-validation-for="CanReadLeadOut" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadMediaID" class="control-label"></label>
+    <input asp-for="CanReadMediaID" class="form-control" />
+    <span asp-validation-for="CanReadMediaID" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadMediaSerial" class="control-label"></label>
+    <input asp-for="CanReadMediaSerial" class="form-control" />
+    <span asp-validation-for="CanReadMediaSerial" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadPAC" class="control-label"></label>
+    <input asp-for="CanReadPAC" class="form-control" />
+    <span asp-validation-for="CanReadPAC" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadPFI" class="control-label"></label>
+    <input asp-for="CanReadPFI" class="form-control" />
+    <span asp-validation-for="CanReadPFI" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadPMA" class="control-label"></label>
+    <input asp-for="CanReadPMA" class="form-control" />
+    <span asp-validation-for="CanReadPMA" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadPQSubchannel" class="control-label"></label>
+    <input asp-for="CanReadPQSubchannel" class="form-control" />
+    <span asp-validation-for="CanReadPQSubchannel" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadPQSubchannelWithC2" class="control-label"></label>
+    <input asp-for="CanReadPQSubchannelWithC2" class="form-control" />
+    <span asp-validation-for="CanReadPQSubchannelWithC2" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadPRI" class="control-label"></label>
+    <input asp-for="CanReadPRI" class="form-control" />
+    <span asp-validation-for="CanReadPRI" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadRWSubchannel" class="control-label"></label>
+    <input asp-for="CanReadRWSubchannel" class="form-control" />
+    <span asp-validation-for="CanReadRWSubchannel" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadRWSubchannelWithC2" class="control-label"></label>
+    <input asp-for="CanReadRWSubchannelWithC2" class="form-control" />
+    <span asp-validation-for="CanReadRWSubchannelWithC2" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadRecordablePFI" class="control-label"></label>
+    <input asp-for="CanReadRecordablePFI" class="form-control" />
+    <span asp-validation-for="CanReadRecordablePFI" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadSpareAreaInformation" class="control-label"></label>
+    <input asp-for="CanReadSpareAreaInformation" class="form-control" />
+    <span asp-validation-for="CanReadSpareAreaInformation" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadTOC" class="control-label"></label>
+    <input asp-for="CanReadTOC" class="form-control" />
+    <span asp-validation-for="CanReadTOC" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Density" class="control-label"></label>
+    <input asp-for="Density" class="form-control" />
+    <span asp-validation-for="Density" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="LongBlockSize" class="control-label"></label>
+    <input asp-for="LongBlockSize" class="form-control" />
+    <span asp-validation-for="LongBlockSize" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Manufacturer" class="control-label"></label>
+    <input asp-for="Manufacturer" class="form-control" />
+    <span asp-validation-for="Manufacturer" class="text-danger"></span>
+</div>
+<div class="form-check form-group">
+    <label class="form-check-label">
+        <input class="form-check-input" asp-for="MediaIsRecognized" /> @Html.DisplayNameFor(model => model.MediaIsRecognized)
+    </label>
+</div>
+<div class="form-group">
+    <label asp-for="MediumType" class="control-label"></label>
+    <input asp-for="MediumType" class="form-control" />
+    <span asp-validation-for="MediumType" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="MediumTypeName" class="control-label"></label>
+    <input asp-for="MediumTypeName" class="form-control" />
+    <span asp-validation-for="MediumTypeName" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Model" class="control-label"></label>
+    <input asp-for="Model" class="form-control" />
+    <span asp-validation-for="Model" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsHLDTSTReadRawDVD" class="control-label"></label>
+    <input asp-for="SupportsHLDTSTReadRawDVD" class="form-control" />
+    <span asp-validation-for="SupportsHLDTSTReadRawDVD" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsNECReadCDDA" class="control-label"></label>
+    <input asp-for="SupportsNECReadCDDA" class="form-control" />
+    <span asp-validation-for="SupportsNECReadCDDA" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsPioneerReadCDDA" class="control-label"></label>
+    <input asp-for="SupportsPioneerReadCDDA" class="form-control" />
+    <span asp-validation-for="SupportsPioneerReadCDDA" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsPioneerReadCDDAMSF" class="control-label"></label>
+    <input asp-for="SupportsPioneerReadCDDAMSF" class="form-control" />
+    <span asp-validation-for="SupportsPioneerReadCDDAMSF" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsPlextorReadCDDA" class="control-label"></label>
+    <input asp-for="SupportsPlextorReadCDDA" class="form-control" />
+    <span asp-validation-for="SupportsPlextorReadCDDA" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsPlextorReadRawDVD" class="control-label"></label>
+    <input asp-for="SupportsPlextorReadRawDVD" class="form-control" />
+    <span asp-validation-for="SupportsPlextorReadRawDVD" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsRead10" class="control-label"></label>
+    <input asp-for="SupportsRead10" class="form-control" />
+    <span asp-validation-for="SupportsRead10" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsRead12" class="control-label"></label>
+    <input asp-for="SupportsRead12" class="form-control" />
+    <span asp-validation-for="SupportsRead12" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsRead16" class="control-label"></label>
+    <input asp-for="SupportsRead16" class="form-control" />
+    <span asp-validation-for="SupportsRead16" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsRead6" class="control-label"></label>
+    <input asp-for="SupportsRead6" class="form-control" />
+    <span asp-validation-for="SupportsRead6" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsReadCapacity16" class="control-label"></label>
+    <input asp-for="SupportsReadCapacity16" class="form-control" />
+    <span asp-validation-for="SupportsReadCapacity16" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsReadCapacity" class="control-label"></label>
+    <input asp-for="SupportsReadCapacity" class="form-control" />
+    <span asp-validation-for="SupportsReadCapacity" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsReadCd" class="control-label"></label>
+    <input asp-for="SupportsReadCd" class="form-control" />
+    <span asp-validation-for="SupportsReadCd" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsReadCdMsf" class="control-label"></label>
+    <input asp-for="SupportsReadCdMsf" class="form-control" />
+    <span asp-validation-for="SupportsReadCdMsf" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsReadCdRaw" class="control-label"></label>
+    <input asp-for="SupportsReadCdRaw" class="form-control" />
+    <span asp-validation-for="SupportsReadCdRaw" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsReadCdMsfRaw" class="control-label"></label>
+    <input asp-for="SupportsReadCdMsfRaw" class="form-control" />
+    <span asp-validation-for="SupportsReadCdMsfRaw" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsReadLong16" class="control-label"></label>
+    <input asp-for="SupportsReadLong16" class="form-control" />
+    <span asp-validation-for="SupportsReadLong16" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsReadLong" class="control-label"></label>
+    <input asp-for="SupportsReadLong" class="form-control" />
+    <span asp-validation-for="SupportsReadLong" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ModeSense6Data" class="control-label"></label>
+    <input asp-for="ModeSense6Data" class="form-control" />
+    <span asp-validation-for="ModeSense6Data" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ModeSense10Data" class="control-label"></label>
+    <input asp-for="ModeSense10Data" class="form-control" />
+    <span asp-validation-for="ModeSense10Data" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="LBASectors" class="control-label"></label>
+    <input asp-for="LBASectors" class="form-control" />
+    <span asp-validation-for="LBASectors" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="LBA48Sectors" class="control-label"></label>
+    <input asp-for="LBA48Sectors" class="form-control" />
+    <span asp-validation-for="LBA48Sectors" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="LogicalAlignment" class="control-label"></label>
+    <input asp-for="LogicalAlignment" class="form-control" />
+    <span asp-validation-for="LogicalAlignment" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="NominalRotationRate" class="control-label"></label>
+    <input asp-for="NominalRotationRate" class="form-control" />
+    <span asp-validation-for="NominalRotationRate" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="PhysicalBlockSize" class="control-label"></label>
+    <input asp-for="PhysicalBlockSize" class="form-control" />
+    <span asp-validation-for="PhysicalBlockSize" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SolidStateDevice" class="control-label"></label>
+    <input asp-for="SolidStateDevice" class="form-control" />
+    <span asp-validation-for="SolidStateDevice" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="UnformattedBPT" class="control-label"></label>
+    <input asp-for="UnformattedBPT" class="form-control" />
+    <span asp-validation-for="UnformattedBPT" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="UnformattedBPS" class="control-label"></label>
+    <input asp-for="UnformattedBPS" class="form-control" />
+    <span asp-validation-for="UnformattedBPS" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsReadDmaLba" class="control-label"></label>
+    <input asp-for="SupportsReadDmaLba" class="form-control" />
+    <span asp-validation-for="SupportsReadDmaLba" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsReadDmaRetryLba" class="control-label"></label>
+    <input asp-for="SupportsReadDmaRetryLba" class="form-control" />
+    <span asp-validation-for="SupportsReadDmaRetryLba" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsReadLba" class="control-label"></label>
+    <input asp-for="SupportsReadLba" class="form-control" />
+    <span asp-validation-for="SupportsReadLba" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsReadRetryLba" class="control-label"></label>
+    <input asp-for="SupportsReadRetryLba" class="form-control" />
+    <span asp-validation-for="SupportsReadRetryLba" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsReadLongLba" class="control-label"></label>
+    <input asp-for="SupportsReadLongLba" class="form-control" />
+    <span asp-validation-for="SupportsReadLongLba" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsReadLongRetryLba" class="control-label"></label>
+    <input asp-for="SupportsReadLongRetryLba" class="form-control" />
+    <span asp-validation-for="SupportsReadLongRetryLba" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsSeekLba" class="control-label"></label>
+    <input asp-for="SupportsSeekLba" class="form-control" />
+    <span asp-validation-for="SupportsSeekLba" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsReadDmaLba48" class="control-label"></label>
+    <input asp-for="SupportsReadDmaLba48" class="form-control" />
+    <span asp-validation-for="SupportsReadDmaLba48" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsReadLba48" class="control-label"></label>
+    <input asp-for="SupportsReadLba48" class="form-control" />
+    <span asp-validation-for="SupportsReadLba48" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsReadDma" class="control-label"></label>
+    <input asp-for="SupportsReadDma" class="form-control" />
+    <span asp-validation-for="SupportsReadDma" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsReadDmaRetry" class="control-label"></label>
+    <input asp-for="SupportsReadDmaRetry" class="form-control" />
+    <span asp-validation-for="SupportsReadDmaRetry" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsReadRetry" class="control-label"></label>
+    <input asp-for="SupportsReadRetry" class="form-control" />
+    <span asp-validation-for="SupportsReadRetry" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsReadSectors" class="control-label"></label>
+    <input asp-for="SupportsReadSectors" class="form-control" />
+    <span asp-validation-for="SupportsReadSectors" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsReadLongRetry" class="control-label"></label>
+    <input asp-for="SupportsReadLongRetry" class="form-control" />
+    <span asp-validation-for="SupportsReadLongRetry" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="SupportsSeek" class="control-label"></label>
+    <input asp-for="SupportsSeek" class="form-control" />
+    <span asp-validation-for="SupportsSeek" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadingIntersessionLeadIn" class="control-label"></label>
+    <input asp-for="CanReadingIntersessionLeadIn" class="form-control" />
+    <span asp-validation-for="CanReadingIntersessionLeadIn" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CanReadingIntersessionLeadOut" class="control-label"></label>
+    <input asp-for="CanReadingIntersessionLeadOut" class="form-control" />
+    <span asp-validation-for="CanReadingIntersessionLeadOut" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="IntersessionLeadInData" class="control-label"></label>
+    <input asp-for="IntersessionLeadInData" class="form-control" />
+    <span asp-validation-for="IntersessionLeadInData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="IntersessionLeadOutData" class="control-label"></label>
+    <input asp-for="IntersessionLeadOutData" class="form-control" />
+    <span asp-validation-for="IntersessionLeadOutData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Read6Data" class="control-label"></label>
+    <input asp-for="Read6Data" class="form-control" />
+    <span asp-validation-for="Read6Data" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Read10Data" class="control-label"></label>
+    <input asp-for="Read10Data" class="form-control" />
+    <span asp-validation-for="Read10Data" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Read12Data" class="control-label"></label>
+    <input asp-for="Read12Data" class="form-control" />
+    <span asp-validation-for="Read12Data" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Read16Data" class="control-label"></label>
+    <input asp-for="Read16Data" class="form-control" />
+    <span asp-validation-for="Read16Data" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ReadLong10Data" class="control-label"></label>
+    <input asp-for="ReadLong10Data" class="form-control" />
+    <span asp-validation-for="ReadLong10Data" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ReadLong16Data" class="control-label"></label>
+    <input asp-for="ReadLong16Data" class="form-control" />
+    <span asp-validation-for="ReadLong16Data" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ReadSectorsData" class="control-label"></label>
+    <input asp-for="ReadSectorsData" class="form-control" />
+    <span asp-validation-for="ReadSectorsData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ReadSectorsRetryData" class="control-label"></label>
+    <input asp-for="ReadSectorsRetryData" class="form-control" />
+    <span asp-validation-for="ReadSectorsRetryData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ReadDmaData" class="control-label"></label>
+    <input asp-for="ReadDmaData" class="form-control" />
+    <span asp-validation-for="ReadDmaData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ReadDmaRetryData" class="control-label"></label>
+    <input asp-for="ReadDmaRetryData" class="form-control" />
+    <span asp-validation-for="ReadDmaRetryData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ReadLbaData" class="control-label"></label>
+    <input asp-for="ReadLbaData" class="form-control" />
+    <span asp-validation-for="ReadLbaData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ReadRetryLbaData" class="control-label"></label>
+    <input asp-for="ReadRetryLbaData" class="form-control" />
+    <span asp-validation-for="ReadRetryLbaData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ReadDmaLbaData" class="control-label"></label>
+    <input asp-for="ReadDmaLbaData" class="form-control" />
+    <span asp-validation-for="ReadDmaLbaData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ReadDmaRetryLbaData" class="control-label"></label>
+    <input asp-for="ReadDmaRetryLbaData" class="form-control" />
+    <span asp-validation-for="ReadDmaRetryLbaData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ReadLba48Data" class="control-label"></label>
+    <input asp-for="ReadLba48Data" class="form-control" />
+    <span asp-validation-for="ReadLba48Data" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ReadDmaLba48Data" class="control-label"></label>
+    <input asp-for="ReadDmaLba48Data" class="form-control" />
+    <span asp-validation-for="ReadDmaLba48Data" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ReadLongData" class="control-label"></label>
+    <input asp-for="ReadLongData" class="form-control" />
+    <span asp-validation-for="ReadLongData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ReadLongRetryData" class="control-label"></label>
+    <input asp-for="ReadLongRetryData" class="form-control" />
+    <span asp-validation-for="ReadLongRetryData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ReadLongLbaData" class="control-label"></label>
+    <input asp-for="ReadLongLbaData" class="form-control" />
+    <span asp-validation-for="ReadLongLbaData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ReadLongRetryLbaData" class="control-label"></label>
+    <input asp-for="ReadLongRetryLbaData" class="form-control" />
+    <span asp-validation-for="ReadLongRetryLbaData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="TocData" class="control-label"></label>
+    <input asp-for="TocData" class="form-control" />
+    <span asp-validation-for="TocData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="FullTocData" class="control-label"></label>
+    <input asp-for="FullTocData" class="form-control" />
+    <span asp-validation-for="FullTocData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="AtipData" class="control-label"></label>
+    <input asp-for="AtipData" class="form-control" />
+    <span asp-validation-for="AtipData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="PmaData" class="control-label"></label>
+    <input asp-for="PmaData" class="form-control" />
+    <span asp-validation-for="PmaData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ReadCdData" class="control-label"></label>
+    <input asp-for="ReadCdData" class="form-control" />
+    <span asp-validation-for="ReadCdData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ReadCdMsfData" class="control-label"></label>
+    <input asp-for="ReadCdMsfData" class="form-control" />
+    <span asp-validation-for="ReadCdMsfData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ReadCdFullData" class="control-label"></label>
+    <input asp-for="ReadCdFullData" class="form-control" />
+    <span asp-validation-for="ReadCdFullData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ReadCdMsfFullData" class="control-label"></label>
+    <input asp-for="ReadCdMsfFullData" class="form-control" />
+    <span asp-validation-for="ReadCdMsfFullData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Track1PregapData" class="control-label"></label>
+    <input asp-for="Track1PregapData" class="form-control" />
+    <span asp-validation-for="Track1PregapData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="LeadInData" class="control-label"></label>
+    <input asp-for="LeadInData" class="form-control" />
+    <span asp-validation-for="LeadInData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="LeadOutData" class="control-label"></label>
+    <input asp-for="LeadOutData" class="form-control" />
+    <span asp-validation-for="LeadOutData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="C2PointersData" class="control-label"></label>
+    <input asp-for="C2PointersData" class="form-control" />
+    <span asp-validation-for="C2PointersData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="PQSubchannelData" class="control-label"></label>
+    <input asp-for="PQSubchannelData" class="form-control" />
+    <span asp-validation-for="PQSubchannelData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="RWSubchannelData" class="control-label"></label>
+    <input asp-for="RWSubchannelData" class="form-control" />
+    <span asp-validation-for="RWSubchannelData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CorrectedSubchannelData" class="control-label"></label>
+    <input asp-for="CorrectedSubchannelData" class="form-control" />
+    <span asp-validation-for="CorrectedSubchannelData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="PQSubchannelWithC2Data" class="control-label"></label>
+    <input asp-for="PQSubchannelWithC2Data" class="form-control" />
+    <span asp-validation-for="PQSubchannelWithC2Data" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="RWSubchannelWithC2Data" class="control-label"></label>
+    <input asp-for="RWSubchannelWithC2Data" class="form-control" />
+    <span asp-validation-for="RWSubchannelWithC2Data" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CorrectedSubchannelWithC2Data" class="control-label"></label>
+    <input asp-for="CorrectedSubchannelWithC2Data" class="form-control" />
+    <span asp-validation-for="CorrectedSubchannelWithC2Data" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="PfiData" class="control-label"></label>
+    <input asp-for="PfiData" class="form-control" />
+    <span asp-validation-for="PfiData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="DmiData" class="control-label"></label>
+    <input asp-for="DmiData" class="form-control" />
+    <span asp-validation-for="DmiData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="CmiData" class="control-label"></label>
+    <input asp-for="CmiData" class="form-control" />
+    <span asp-validation-for="CmiData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="DvdBcaData" class="control-label"></label>
+    <input asp-for="DvdBcaData" class="form-control" />
+    <span asp-validation-for="DvdBcaData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="DvdAacsData" class="control-label"></label>
+    <input asp-for="DvdAacsData" class="form-control" />
+    <span asp-validation-for="DvdAacsData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="DvdDdsData" class="control-label"></label>
+    <input asp-for="DvdDdsData" class="form-control" />
+    <span asp-validation-for="DvdDdsData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="DvdSaiData" class="control-label"></label>
+    <input asp-for="DvdSaiData" class="form-control" />
+    <span asp-validation-for="DvdSaiData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="PriData" class="control-label"></label>
+    <input asp-for="PriData" class="form-control" />
+    <span asp-validation-for="PriData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="EmbossedPfiData" class="control-label"></label>
+    <input asp-for="EmbossedPfiData" class="form-control" />
+    <span asp-validation-for="EmbossedPfiData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="AdipData" class="control-label"></label>
+    <input asp-for="AdipData" class="form-control" />
+    <span asp-validation-for="AdipData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="DcbData" class="control-label"></label>
+    <input asp-for="DcbData" class="form-control" />
+    <span asp-validation-for="DcbData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="HdCmiData" class="control-label"></label>
+    <input asp-for="HdCmiData" class="form-control" />
+    <span asp-validation-for="HdCmiData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="DvdLayerData" class="control-label"></label>
+    <input asp-for="DvdLayerData" class="form-control" />
+    <span asp-validation-for="DvdLayerData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="BluBcaData" class="control-label"></label>
+    <input asp-for="BluBcaData" class="form-control" />
+    <span asp-validation-for="BluBcaData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="BluDdsData" class="control-label"></label>
+    <input asp-for="BluDdsData" class="form-control" />
+    <span asp-validation-for="BluDdsData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="BluSaiData" class="control-label"></label>
+    <input asp-for="BluSaiData" class="form-control" />
+    <span asp-validation-for="BluSaiData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="BluDiData" class="control-label"></label>
+    <input asp-for="BluDiData" class="form-control" />
+    <span asp-validation-for="BluDiData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="BluPacData" class="control-label"></label>
+    <input asp-for="BluPacData" class="form-control" />
+    <span asp-validation-for="BluPacData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="PlextorReadCddaData" class="control-label"></label>
+    <input asp-for="PlextorReadCddaData" class="form-control" />
+    <span asp-validation-for="PlextorReadCddaData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="PioneerReadCddaData" class="control-label"></label>
+    <input asp-for="PioneerReadCddaData" class="form-control" />
+    <span asp-validation-for="PioneerReadCddaData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="PioneerReadCddaMsfData" class="control-label"></label>
+    <input asp-for="PioneerReadCddaMsfData" class="form-control" />
+    <span asp-validation-for="PioneerReadCddaMsfData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="NecReadCddaData" class="control-label"></label>
+    <input asp-for="NecReadCddaData" class="form-control" />
+    <span asp-validation-for="NecReadCddaData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="PlextorReadRawDVDData" class="control-label"></label>
+    <input asp-for="PlextorReadRawDVDData" class="form-control" />
+    <span asp-validation-for="PlextorReadRawDVDData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="HLDTSTReadRawDVDData" class="control-label"></label>
+    <input asp-for="HLDTSTReadRawDVDData" class="form-control" />
+    <span asp-validation-for="HLDTSTReadRawDVDData" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <input class="btn btn-primary" type="submit" value="Create" />
+</div>
+</form>
+</div>
+</div>
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-

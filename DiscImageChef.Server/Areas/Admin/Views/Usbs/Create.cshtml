@@ -59,7 +59,7 @@
                 <input asp-for="Product" class="form-control" />
                 <span asp-validation-for="Product" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
+            <div class="form-check form-group">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="RemovableMedia" /> @Html.DisplayNameFor(model => model.RemovableMedia)
                 </label>
@@ -70,13 +70,11 @@
                 <span asp-validation-for="Descriptors" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input class="btn btn-primary" type="submit" value="Create" />
             </div>
         </form>
     </div>
 </div>
-
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-

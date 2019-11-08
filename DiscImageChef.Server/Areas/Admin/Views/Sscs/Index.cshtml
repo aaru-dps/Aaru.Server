@@ -35,21 +35,22 @@
 }
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.BlockSizeGranularity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaxBlockLength)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MinBlockLength)
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BlockSizeGranularity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaxBlockLength)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MinBlockLength)
+        </th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.BlockSizeGranularity)
@@ -64,8 +65,8 @@
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">Edit</a>
                 <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
-</td>
+            </td>
         </tr>
-}
+    }
     </tbody>
 </table>
