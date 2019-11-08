@@ -22,9 +22,9 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         }
 
         // GET: Admin/Atas
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Ata.ToListAsync());
+            return View(_context.Ata.AsEnumerable().Where(m=>m.IdentifyDevice?.Model != null).OrderBy(m => m.IdentifyDevice.Value.Model));
         }
 
         // GET: Admin/Atas/Details/5
