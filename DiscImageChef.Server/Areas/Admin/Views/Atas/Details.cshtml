@@ -1,3 +1,5 @@
+@using DiscImageChef.Decoders.ATA
+@using DiscImageChef.Server.Core
 @model DiscImageChef.CommonTypes.Metadata.Ata
 
 @{
@@ -34,18 +36,10 @@
     // ****************************************************************************/
 }
 <div>
-    <h4>Ata</h4>
+    <h4>ATA IDENTIFY DEVICE / ATAPI IDENTIFY PACKET DEVICE - ID = @Model.Id</h4>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Identify)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Identify)
-        </dd>
-    </dl>
+    @Html.Raw(Html.EncodedMultiLineText(Identify.Prettify(Model.Identify)))
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </div>
