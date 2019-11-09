@@ -38,6 +38,9 @@ ATA IDENTIFY DEVICE responses
     <thead>
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.IdentifyDevice.Value.Model)
         </th>
         <th></th>
@@ -47,6 +50,9 @@ ATA IDENTIFY DEVICE responses
     @foreach (var item in Model)
     {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdentifyDevice.Value.Model)
             </td>
