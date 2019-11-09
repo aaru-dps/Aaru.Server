@@ -1,6 +1,4 @@
-@using DiscImageChef.Decoders.ATA
-@using DiscImageChef.Server.Core
-@model DiscImageChef.CommonTypes.Metadata.Ata
+@model CompareModel
 
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -35,17 +33,50 @@
     // Copyright © 2011-2019 Natalia Portillo
     // ****************************************************************************/
 }
-<div>
-    <h4>ATA IDENTIFY DEVICE / ATAPI IDENTIFY PACKET DEVICE - ID = @Model.Id</h4>
-    <hr />
-    @Html.Raw(Html.EncodedMultiLineText(Identify.Prettify(Model.Identify)))
-</div>
-<div>
-    <form asp-action="Compare">
-        <input type="hidden" asp-for="Id" />
-        Compare to:
-        <input name="RightId" type="number" />
-        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
-        <input class="btn btn-primary" type="submit" value="Compare" />
-    </form>
-</div>
+<h2>Comparing ATA IDENTIFY ID @Model.LeftId with ID @Model.RightId</h2>
+@if (Model.AreEqual)
+{
+    <p>No differences found.</p>
+    return;
+}
+
+@if (Model.HasError)
+{
+    <p class="alert-info">@Model.ErrorMessage</p>
+    return;
+}
+<table>
+    <thead>
+    <tr>
+        <th>
+            Value name
+        </th>
+        <th>
+            ID: @Model.LeftId
+        </th>
+        <th>
+            ID: @Model.RightId
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @for (var i = 0; i < Model.ValueNames.Count; i++)
+    {
+        <tr>
+            <td>
+                @Model.ValueNames[i]
+            </td>
+            <td>
+                @Model.LeftValues[i]
+            </td>
+            <td>
+                @Model.RightValues[i]
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<a asp-action="Index" class="btn btn-primary">Back to List</a>
+<a asp-action="Delete" asp-route-id="@Model.LeftId" class="btn btn-danger">Delete ID @Model.LeftId</a>
+<a asp-action="Delete" asp-route-id="@Model.RightId" class="btn btn-danger">Delete ID @Model.RightId</a>

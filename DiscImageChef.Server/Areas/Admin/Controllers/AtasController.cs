@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using DiscImageChef.Decoders.ATA;
 using DiscImageChef.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -139,6 +141,134 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             _context.SaveChanges();
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Compare(int id, int rightId)
+        {
+            var model = new CompareModel();
+
+            model.LeftId  = id;
+            model.RightId = rightId;
+
+            CommonTypes.Metadata.Ata left  = _context.Ata.FirstOrDefault(l => l.Id == id);
+            CommonTypes.Metadata.Ata right = _context.Ata.FirstOrDefault(r => r.Id == rightId);
+
+            if(left is null)
+            {
+                model.ErrorMessage = $"ATA with id {id} has not been found";
+                model.HasError     = true;
+
+                return View(model);
+            }
+
+            if(right is null)
+            {
+                model.ErrorMessage = $"ATA with id {rightId} has not been found";
+                model.HasError     = true;
+
+                return View(model);
+            }
+
+            Identify.IdentifyDevice? leftNullable  = left.IdentifyDevice;
+            Identify.IdentifyDevice? rightNullable = right.IdentifyDevice;
+
+            if(!leftNullable.HasValue &&
+               !rightNullable.HasValue)
+            {
+                model.AreEqual = true;
+
+                return View(model);
+            }
+
+            if(leftNullable.HasValue &&
+               !rightNullable.HasValue)
+            {
+                model.ValueNames.Add("Decoded");
+                model.LeftValues.Add("decoded");
+                model.RightValues.Add("null");
+
+                return View(model);
+            }
+
+            if(!leftNullable.HasValue)
+            {
+                model.ValueNames.Add("Decoded");
+                model.LeftValues.Add("null");
+                model.RightValues.Add("decoded");
+
+                return View(model);
+            }
+
+            Identify.IdentifyDevice leftValue  = left.IdentifyDevice.Value;
+            Identify.IdentifyDevice rightValue = right.IdentifyDevice.Value;
+            model.ValueNames  = new List<string>();
+            model.LeftValues  = new List<string>();
+            model.RightValues = new List<string>();
+
+            foreach(FieldInfo fieldInfo in leftValue.GetType().GetFields())
+            {
+                object? lv = fieldInfo.GetValue(leftValue);
+                object? rv = fieldInfo.GetValue(rightValue);
+
+                if(fieldInfo.FieldType.IsArray)
+                {
+                    object[] la = lv as object[];
+                    object[] ra = rv as object[];
+
+                    switch(la)
+                    {
+                        case null when ra is null: continue;
+                        case null:
+                            model.ValueNames.Add(fieldInfo.Name);
+                            model.LeftValues.Add("null");
+                            model.RightValues.Add("[]");
+
+                            continue;
+                    }
+
+                    if(ra is null)
+                    {
+                        model.ValueNames.Add(fieldInfo.Name);
+                        model.LeftValues.Add("[]");
+                        model.RightValues.Add("null");
+
+                        continue;
+                    }
+
+                    if(la.SequenceEqual(ra))
+                        continue;
+
+                    model.ValueNames.Add(fieldInfo.Name);
+                    model.LeftValues.Add("[]");
+                    model.RightValues.Add("[]");
+                }
+                else if(lv == null &&
+                        rv == null) { }
+                else if(lv != null &&
+                        rv == null)
+                {
+                    model.ValueNames.Add(fieldInfo.Name);
+                    model.LeftValues.Add($"{lv}");
+                    model.RightValues.Add("null");
+                }
+                else if(lv == null)
+                {
+                    model.ValueNames.Add(fieldInfo.Name);
+                    model.LeftValues.Add("null");
+                    model.RightValues.Add($"{rv}");
+                }
+                else if(!lv.Equals(rv))
+
+                {
+                    model.ValueNames.Add(fieldInfo.Name);
+                    model.LeftValues.Add($"{lv}");
+                    model.RightValues.Add($"{rv}");
+                }
+            }
+
+            model.AreEqual = model.LeftValues.Count == 0 && model.RightValues.Count == 0;
+
+            return View(model);
         }
     }
 }
