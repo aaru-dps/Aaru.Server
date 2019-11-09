@@ -65,5 +65,7 @@ namespace DiscImageChef.Server.Models
 
         [DefaultValue(0)]
         public int OptimalMultipleSectorsRead { get; set; }
+        public int ATAId   { get;                    set; }
+        public int ATAPIId { get;                    set; }
     }
 }

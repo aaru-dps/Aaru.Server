@@ -96,6 +96,7 @@
     <_ContentIncludedByDefault Remove="Areas\Admin\Views\Device\Details.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Admin\Views\Device\Edit.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Admin\Views\Device\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Atas\EditorTemplates\IdHashModel.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
