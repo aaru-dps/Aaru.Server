@@ -38,12 +38,6 @@
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.AddedWhen)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifiedWhen)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Manufacturer)
         </th>
         <th>
@@ -58,6 +52,12 @@
         <th>
             @Html.DisplayNameFor(model => model.Agreement)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AddedWhen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModifiedWhen)
+        </th>
         <th></th>
     </tr>
     </thead>
@@ -65,12 +65,6 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.AddedWhen)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedWhen)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Manufacturer)
             </td>
@@ -85,6 +79,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Agreement)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddedWhen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedWhen)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">Edit</a>
