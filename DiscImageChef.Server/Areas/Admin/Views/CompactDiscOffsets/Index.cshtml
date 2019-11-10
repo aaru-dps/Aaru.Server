@@ -34,7 +34,7 @@
     // ****************************************************************************/
 }
 <a asp-action="Update" class="btn btn-primary">Update from AccurateRip</a>
-<table class="table">
+<table class="table" id="tblOffsets">
     <thead>
     <tr>
         <th>
@@ -94,3 +94,12 @@
     }
     </tbody>
 </table>
+
+@section scripts{
+    <script crossorigin="anonymous" integrity="sha256-L4cf7m/cgC51e7BFPxQcKZcXryzSju7VYBKJLOKPHvQ=" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script language="javascript">
+$(document).ready(function() {
+    $('#tblOffsets').DataTable();
+} );
+</script>
+}
