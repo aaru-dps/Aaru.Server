@@ -17,7 +17,8 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         public FireWiresController(DicServerContext context) => _context = context;
 
         // GET: Admin/FireWires
-        public async Task<IActionResult> Index() => View(await _context.FireWire.ToListAsync());
+        public async Task<IActionResult> Index() =>
+            View(await _context.FireWire.OrderBy(f => f.Manufacturer).ThenBy(f => f.Product).ToListAsync());
 
         // GET: Admin/FireWires/Edit/5
         public async Task<IActionResult> Edit(int? id)
