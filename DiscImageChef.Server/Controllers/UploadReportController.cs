@@ -33,6 +33,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -99,7 +100,91 @@ namespace DiscImageChef.Server.Controllers
                 string reportV2String = jsonSw.ToString();
                 jsonSw.Close();
 
-                ctx.Reports.Add(new UploadedReport(reportV2));
+                var newUploadedReport = new UploadedReport(reportV2);
+
+                // Ensure CHS and CurrentCHS are not duplicates
+                if(newUploadedReport.ATA?.ReadCapabilities?.CHS        != null &&
+                   newUploadedReport.ATA?.ReadCapabilities?.CurrentCHS != null)
+                {
+                    if(newUploadedReport.ATA.ReadCapabilities.CHS.Cylinders ==
+                       newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Cylinders &&
+                       newUploadedReport.ATA.ReadCapabilities.CHS.Heads ==
+                       newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Heads &&
+                       newUploadedReport.ATA.ReadCapabilities.CHS.Sectors ==
+                       newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Sectors)
+                    {
+                        newUploadedReport.ATA.ReadCapabilities.CHS = newUploadedReport.ATA.ReadCapabilities.CurrentCHS;
+                    }
+                }
+
+                // Check if the CHS or CurrentCHS of this report already exist in the database
+                if(newUploadedReport.ATA?.ReadCapabilities?.CHS != null)
+                {
+                    Chs existingChs =
+                        ctx.Chs.FirstOrDefault(c =>
+                                                   c.Cylinders == newUploadedReport.
+                                                                  ATA.ReadCapabilities.CHS.Cylinders             &&
+                                                   c.Heads   == newUploadedReport.ATA.ReadCapabilities.CHS.Heads &&
+                                                   c.Sectors == newUploadedReport.ATA.ReadCapabilities.CHS.Sectors);
+
+                    if(existingChs != null)
+                        newUploadedReport.ATA.ReadCapabilities.CHS = existingChs;
+                }
+
+                if(newUploadedReport.ATA?.ReadCapabilities?.CurrentCHS != null)
+                {
+                    Chs existingChs =
+                        ctx.Chs.FirstOrDefault(c =>
+                                                   c.Cylinders == newUploadedReport.
+                                                                  ATA.ReadCapabilities.CurrentCHS.Cylinders           &&
+                                                   c.Heads == newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Heads &&
+                                                   c.Sectors == newUploadedReport.
+                                                                ATA.ReadCapabilities.CurrentCHS.Sectors);
+
+                    if(existingChs != null)
+                        newUploadedReport.ATA.ReadCapabilities.CurrentCHS = existingChs;
+                }
+
+                if(newUploadedReport.ATA?.RemovableMedias != null)
+                {
+                    foreach(TestedMedia media in newUploadedReport.ATA.RemovableMedias)
+                    {
+                        if(media.CHS        != null &&
+                           media.CurrentCHS != null)
+                        {
+                            if(media.CHS.Cylinders == media.CurrentCHS.Cylinders &&
+                               media.CHS.Heads     == media.CurrentCHS.Heads     &&
+                               media.CHS.Sectors   == media.CurrentCHS.Sectors)
+                            {
+                                media.CHS = media.CurrentCHS;
+                            }
+                        }
+
+                        if(media.CHS != null)
+                        {
+                            Chs existingChs =
+                                ctx.Chs.FirstOrDefault(c => c.Cylinders == media.CHS.Cylinders &&
+                                                            c.Heads     == media.CHS.Heads     &&
+                                                            c.Sectors   == media.CHS.Sectors);
+
+                            if(existingChs != null)
+                                media.CHS = existingChs;
+                        }
+
+                        if(media.CHS != null)
+                        {
+                            Chs existingChs =
+                                ctx.Chs.FirstOrDefault(c => c.Cylinders == media.CurrentCHS.Cylinders &&
+                                                            c.Heads     == media.CurrentCHS.Heads     &&
+                                                            c.Sectors   == media.CurrentCHS.Sectors);
+
+                            if(existingChs != null)
+                                media.CurrentCHS = existingChs;
+                        }
+                    }
+                }
+
+                ctx.Reports.Add(newUploadedReport);
                 ctx.SaveChanges();
 
                 var pgpIn  = new MemoryStream(Encoding.UTF8.GetBytes(reportV2String));
@@ -174,7 +259,91 @@ namespace DiscImageChef.Server.Controllers
                     return response;
                 }
 
-                ctx.Reports.Add(new UploadedReport(newReport));
+                var newUploadedReport = new UploadedReport(newReport);
+
+                // Ensure CHS and CurrentCHS are not duplicates
+                if(newUploadedReport.ATA?.ReadCapabilities?.CHS        != null &&
+                   newUploadedReport.ATA?.ReadCapabilities?.CurrentCHS != null)
+                {
+                    if(newUploadedReport.ATA.ReadCapabilities.CHS.Cylinders ==
+                       newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Cylinders &&
+                       newUploadedReport.ATA.ReadCapabilities.CHS.Heads ==
+                       newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Heads &&
+                       newUploadedReport.ATA.ReadCapabilities.CHS.Sectors ==
+                       newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Sectors)
+                    {
+                        newUploadedReport.ATA.ReadCapabilities.CHS = newUploadedReport.ATA.ReadCapabilities.CurrentCHS;
+                    }
+                }
+
+                // Check if the CHS or CurrentCHS of this report already exist in the database
+                if(newUploadedReport.ATA?.ReadCapabilities?.CHS != null)
+                {
+                    Chs existingChs =
+                        ctx.Chs.FirstOrDefault(c =>
+                                                   c.Cylinders == newUploadedReport.
+                                                                  ATA.ReadCapabilities.CHS.Cylinders             &&
+                                                   c.Heads   == newUploadedReport.ATA.ReadCapabilities.CHS.Heads &&
+                                                   c.Sectors == newUploadedReport.ATA.ReadCapabilities.CHS.Sectors);
+
+                    if(existingChs != null)
+                        newUploadedReport.ATA.ReadCapabilities.CHS = existingChs;
+                }
+
+                if(newUploadedReport.ATA?.ReadCapabilities?.CurrentCHS != null)
+                {
+                    Chs existingChs =
+                        ctx.Chs.FirstOrDefault(c =>
+                                                   c.Cylinders == newUploadedReport.
+                                                                  ATA.ReadCapabilities.CurrentCHS.Cylinders           &&
+                                                   c.Heads == newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Heads &&
+                                                   c.Sectors == newUploadedReport.
+                                                                ATA.ReadCapabilities.CurrentCHS.Sectors);
+
+                    if(existingChs != null)
+                        newUploadedReport.ATA.ReadCapabilities.CurrentCHS = existingChs;
+                }
+
+                if(newUploadedReport.ATA?.RemovableMedias != null)
+                {
+                    foreach(TestedMedia media in newUploadedReport.ATA.RemovableMedias)
+                    {
+                        if(media.CHS        != null &&
+                           media.CurrentCHS != null)
+                        {
+                            if(media.CHS.Cylinders == media.CurrentCHS.Cylinders &&
+                               media.CHS.Heads     == media.CurrentCHS.Heads     &&
+                               media.CHS.Sectors   == media.CurrentCHS.Sectors)
+                            {
+                                media.CHS = media.CurrentCHS;
+                            }
+                        }
+
+                        if(media.CHS != null)
+                        {
+                            Chs existingChs =
+                                ctx.Chs.FirstOrDefault(c => c.Cylinders == media.CHS.Cylinders &&
+                                                            c.Heads     == media.CHS.Heads     &&
+                                                            c.Sectors   == media.CHS.Sectors);
+
+                            if(existingChs != null)
+                                media.CHS = existingChs;
+                        }
+
+                        if(media.CHS != null)
+                        {
+                            Chs existingChs =
+                                ctx.Chs.FirstOrDefault(c => c.Cylinders == media.CurrentCHS.Cylinders &&
+                                                            c.Heads     == media.CurrentCHS.Heads     &&
+                                                            c.Sectors   == media.CurrentCHS.Sectors);
+
+                            if(existingChs != null)
+                                media.CurrentCHS = existingChs;
+                        }
+                    }
+                }
+
+                ctx.Reports.Add(newUploadedReport);
                 ctx.SaveChanges();
 
                 var pgpIn  = new MemoryStream(Encoding.UTF8.GetBytes(reportJson));
