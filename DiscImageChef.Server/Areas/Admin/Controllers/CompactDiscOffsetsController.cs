@@ -20,24 +20,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             View(await _context.CdOffsets.OrderBy(o => o.Manufacturer).ThenBy(o => o.Model).ThenBy(o => o.Offset).
                                 ToListAsync());
 
-        // GET: Admin/CompactDiscOffsets/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if(id == null)
-            {
-                return NotFound();
-            }
-
-            CompactDiscOffset compactDiscOffset = await _context.CdOffsets.FirstOrDefaultAsync(m => m.Id == id);
-
-            if(compactDiscOffset == null)
-            {
-                return NotFound();
-            }
-
-            return View(compactDiscOffset);
-        }
-
         // GET: Admin/CompactDiscOffsets/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -69,27 +51,26 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            if(ModelState.IsValid)
+            if(!ModelState.IsValid)
+                return View(compactDiscOffset);
+
+            try
             {
-                try
+                _context.Update(compactDiscOffset);
+                await _context.SaveChangesAsync();
+            }
+            catch(DbUpdateConcurrencyException)
+            {
+                if(!CompactDiscOffsetExists(compactDiscOffset.Id))
                 {
-                    _context.Update(compactDiscOffset);
-                    await _context.SaveChangesAsync();
-                }
-                catch(DbUpdateConcurrencyException)
-                {
-                    if(!CompactDiscOffsetExists(compactDiscOffset.Id))
-                    {
-                        return NotFound();
-                    }
-
-                    throw;
+                    return NotFound();
                 }
 
-                return RedirectToAction(nameof(Index));
+                throw;
             }
 
-            return View(compactDiscOffset);
+            return RedirectToAction(nameof(Index));
+
         }
 
         // GET: Admin/CompactDiscOffsets/Delete/5
