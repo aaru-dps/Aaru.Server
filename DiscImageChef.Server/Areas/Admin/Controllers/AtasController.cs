@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -343,6 +344,206 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             model.AreEqual = model.LeftValues.Count == 0 && model.RightValues.Count == 0;
 
             return View(model);
+        }
+
+        public IActionResult CheckPrivate()
+        {
+            List<CommonTypes.Metadata.Ata> havePrivacy = new List<CommonTypes.Metadata.Ata>();
+            byte[]                         tmp;
+
+            foreach(CommonTypes.Metadata.Ata ata in _context.Ata)
+            {
+                Identify.IdentifyDevice? id = ata.IdentifyDevice;
+
+                if(id is null)
+                    continue;
+
+                if(!string.IsNullOrWhiteSpace(id.Value.SerialNumber) ||
+                   id.Value.WWN          != 0                        ||
+                   id.Value.WWNExtension != 0                        ||
+                   !string.IsNullOrWhiteSpace(id.Value.MediaSerial))
+                {
+                    havePrivacy.Add(ata);
+
+                    continue;
+                }
+
+                tmp = new byte[10];
+                Array.Copy(ata.Identify, 121 * 2, tmp, 0, 10);
+
+                if(tmp.All(b => b > 0x20) &&
+                   tmp.All(b => b <= 0x5F))
+                {
+                    havePrivacy.Add(ata);
+
+                    continue;
+                }
+
+                tmp = new byte[62];
+                Array.Copy(ata.Identify, 129 * 2, tmp, 0, 62);
+
+                if(tmp.All(b => b > 0x20) &&
+                   tmp.All(b => b <= 0x5F))
+                {
+                    havePrivacy.Add(ata);
+
+                    continue;
+                }
+
+                tmp = new byte[14];
+                Array.Copy(ata.Identify, 161 * 2, tmp, 0, 14);
+
+                if(tmp.All(b => b > 0x20) &&
+                   tmp.All(b => b <= 0x5F))
+                {
+                    havePrivacy.Add(ata);
+
+                    continue;
+                }
+
+                tmp = new byte[12];
+                Array.Copy(ata.Identify, 224 * 2, tmp, 0, 12);
+
+                if(tmp.All(b => b > 0x20) &&
+                   tmp.All(b => b <= 0x5F))
+                {
+                    havePrivacy.Add(ata);
+
+                    continue;
+                }
+
+                tmp = new byte[38];
+                Array.Copy(ata.Identify, 236 * 2, tmp, 0, 38);
+
+                if(tmp.All(b => b > 0x20) &&
+                   tmp.All(b => b <= 0x5F))
+                {
+                    havePrivacy.Add(ata);
+                }
+            }
+
+            return View(havePrivacy);
+        }
+
+        public IActionResult ClearPrivate(int id)
+        {
+            CommonTypes.Metadata.Ata ata = _context.Ata.FirstOrDefault(a => a.Id == id);
+
+            if(ata is null)
+                return RedirectToAction(nameof(CheckPrivate));
+
+            // Serial number
+            for(int i = 0; i < 20; i++)
+                ata.Identify[10 * 2 + i] = 0x20;
+
+            // Media serial number
+            for(int i = 0; i < 40; i++)
+                ata.Identify[176 * 2 + i] = 0x20;
+
+            // WWN and WWN Extension
+            for(int i = 0; i < 16; i++)
+                ata.Identify[108 * 2 + i] = 0;
+
+            // We need to tell EFCore the entity has changed
+            _context.Update(ata);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(CheckPrivate));
+        }
+
+        public IActionResult ClearReserved(int id)
+        {
+            CommonTypes.Metadata.Ata ata = _context.Ata.FirstOrDefault(a => a.Id == id);
+
+            if(ata is null)
+                return RedirectToAction(nameof(CheckPrivate));
+
+            // ReservedWords121
+            for(int i = 0; i < 10; i++)
+                ata.Identify[121 * 2 + i] = 0;
+
+            // ReservedWords129
+            for(int i = 0; i < 40; i++)
+                ata.Identify[129 * 2 + i] = 0;
+
+            // ReservedCFA
+            for(int i = 0; i < 14; i++)
+                ata.Identify[161 * 2 + i] = 0;
+
+            // ReservedCEATA224
+            for(int i = 0; i < 12; i++)
+                ata.Identify[224 * 2 + i] = 0;
+
+            // ReservedWords
+            for(int i = 0; i < 14; i++)
+                ata.Identify[161 * 2 + i] = 0;
+
+            // We need to tell EFCore the entity has changed
+            _context.Update(ata);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(CheckPrivate));
+        }
+
+        public IActionResult ClearPrivateAll()
+        {
+            foreach(CommonTypes.Metadata.Ata ata in _context.Ata)
+            {
+                if(ata is null)
+                    return RedirectToAction(nameof(CheckPrivate));
+
+                // Serial number
+                for(int i = 0; i < 20; i++)
+                    ata.Identify[10 * 2 + i] = 0x20;
+
+                // Media serial number
+                for(int i = 0; i < 40; i++)
+                    ata.Identify[176 * 2 + i] = 0x20;
+
+                // WWN and WWN Extension
+                for(int i = 0; i < 16; i++)
+                    ata.Identify[108 * 2 + i] = 0;
+
+                // We need to tell EFCore the entity has changed
+                _context.Update(ata);
+            }
+
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(CheckPrivate));
+        }
+
+        public IActionResult ClearReservedAll()
+        {
+            foreach(CommonTypes.Metadata.Ata ata in _context.Ata)
+            {
+                // ReservedWords121
+                for(int i = 0; i < 10; i++)
+                    ata.Identify[121 * 2 + i] = 0;
+
+                // ReservedWords129
+                for(int i = 0; i < 40; i++)
+                    ata.Identify[129 * 2 + i] = 0;
+
+                // ReservedCFA
+                for(int i = 0; i < 14; i++)
+                    ata.Identify[161 * 2 + i] = 0;
+
+                // ReservedCEATA224
+                for(int i = 0; i < 12; i++)
+                    ata.Identify[224 * 2 + i] = 0;
+
+                // ReservedWords
+                for(int i = 0; i < 14; i++)
+                    ata.Identify[161 * 2 + i] = 0;
+
+                // We need to tell EFCore the entity has changed
+                _context.Update(ata);
+            }
+
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(CheckPrivate));
         }
     }
 }
