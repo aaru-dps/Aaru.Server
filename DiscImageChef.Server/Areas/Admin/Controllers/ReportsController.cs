@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using DiscImageChef.Server.Models;
@@ -119,5 +120,8 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         }
 
         bool UploadedReportExists(int id) => _context.Reports.Any(e => e.Id == id);
+
+        public IActionResult Find(int id, string manufacturer, string model, string bus) =>
+            throw new NotImplementedException();
     }
 }
