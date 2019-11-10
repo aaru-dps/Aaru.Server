@@ -42,9 +42,8 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(
-            int id, [Bind("Id,Manufacturer,Model,Offset,Submissions,Agreement")]
-            CompactDiscOffset compactDiscOffset)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Manufacturer,Model,Offset,Submissions,Agreement")]
+                                              CompactDiscOffset compactDiscOffset)
         {
             if(id != compactDiscOffset.Id)
             {
@@ -56,6 +55,7 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
             try
             {
+                compactDiscOffset.ModifiedWhen = DateTime.UtcNow;
                 _context.Update(compactDiscOffset);
                 await _context.SaveChangesAsync();
             }
@@ -70,7 +70,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             }
 
             return RedirectToAction(nameof(Index));
-
         }
 
         // GET: Admin/CompactDiscOffsets/Delete/5
@@ -104,9 +103,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
         bool CompactDiscOffsetExists(int id) => _context.CdOffsets.Any(e => e.Id == id);
 
-        public IActionResult Update()
-        {
-            throw new NotImplementedException();
-        }
+        public IActionResult Update() => throw new NotImplementedException();
     }
 }
