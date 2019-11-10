@@ -43,7 +43,7 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
-            int id, [Bind("Id,AddedWhen,ModifiedWhen,Manufacturer,Model,Offset,Submissions,Agreement")]
+            int id, [Bind("Id,Manufacturer,Model,Offset,Submissions,Agreement")]
             CompactDiscOffset compactDiscOffset)
         {
             if(id != compactDiscOffset.Id)
