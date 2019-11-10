@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using DiscImageChef.CommonTypes.Metadata;
 using DiscImageChef.Decoders.ATA;
 using DiscImageChef.Server.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -132,6 +133,11 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                     foreach(UploadedReport atapiReport in _context.Reports.Where(d => d.ATAPIId == duplicateId))
                     {
                         atapiReport.ATAPIId = duplicate.Id;
+                    }
+
+                    foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.AtaId == duplicateId))
+                    {
+                        testedMedia.AtaId = duplicate.Id;
                     }
 
                     _context.Ata.Remove(_context.Ata.First(d => d.Id == duplicateId));
