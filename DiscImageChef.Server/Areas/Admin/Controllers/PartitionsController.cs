@@ -15,6 +15,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         public PartitionsController(DicServerContext context) => _context = context;
 
         // GET: Admin/Partitions
-        public async Task<IActionResult> Index() => View(await _context.Partitions.ToListAsync());
+        public async Task<IActionResult> Index() => View(await _context.Partitions.OrderBy(p => p.Name).ToListAsync());
     }
 }
