@@ -52,13 +52,13 @@ namespace DiscImageChef.Server.Controllers
 {
     public class UploadReportController : Controller
     {
+        readonly DicServerContext    _ctx;
         readonly IWebHostEnvironment _environment;
-        readonly DicServerContext    ctx;
 
-        public UploadReportController(IWebHostEnvironment environment, DicServerContext _ctx)
+        public UploadReportController(IWebHostEnvironment environment, DicServerContext ctx)
         {
             _environment = environment;
-            ctx          = _ctx;
+            _ctx         = ctx;
         }
 
         /// <summary>Receives a report from DiscImageChef.Core, verifies it's in the correct format and stores it on the server</summary>
@@ -121,11 +121,11 @@ namespace DiscImageChef.Server.Controllers
                 if(newUploadedReport.ATA?.ReadCapabilities?.CHS != null)
                 {
                     Chs existingChs =
-                        ctx.Chs.FirstOrDefault(c =>
-                                                   c.Cylinders == newUploadedReport.
-                                                                  ATA.ReadCapabilities.CHS.Cylinders             &&
-                                                   c.Heads   == newUploadedReport.ATA.ReadCapabilities.CHS.Heads &&
-                                                   c.Sectors == newUploadedReport.ATA.ReadCapabilities.CHS.Sectors);
+                        _ctx.Chs.FirstOrDefault(c =>
+                                                    c.Cylinders == newUploadedReport.
+                                                                   ATA.ReadCapabilities.CHS.Cylinders             &&
+                                                    c.Heads   == newUploadedReport.ATA.ReadCapabilities.CHS.Heads &&
+                                                    c.Sectors == newUploadedReport.ATA.ReadCapabilities.CHS.Sectors);
 
                     if(existingChs != null)
                         newUploadedReport.ATA.ReadCapabilities.CHS = existingChs;
@@ -134,12 +134,13 @@ namespace DiscImageChef.Server.Controllers
                 if(newUploadedReport.ATA?.ReadCapabilities?.CurrentCHS != null)
                 {
                     Chs existingChs =
-                        ctx.Chs.FirstOrDefault(c =>
-                                                   c.Cylinders == newUploadedReport.
-                                                                  ATA.ReadCapabilities.CurrentCHS.Cylinders           &&
-                                                   c.Heads == newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Heads &&
-                                                   c.Sectors == newUploadedReport.
-                                                                ATA.ReadCapabilities.CurrentCHS.Sectors);
+                        _ctx.Chs.FirstOrDefault(c =>
+                                                    c.Cylinders == newUploadedReport.
+                                                                   ATA.ReadCapabilities.CurrentCHS.Cylinders &&
+                                                    c.Heads == newUploadedReport.
+                                                               ATA.ReadCapabilities.CurrentCHS.Heads &&
+                                                    c.Sectors == newUploadedReport.
+                                                                 ATA.ReadCapabilities.CurrentCHS.Sectors);
 
                     if(existingChs != null)
                         newUploadedReport.ATA.ReadCapabilities.CurrentCHS = existingChs;
@@ -163,9 +164,9 @@ namespace DiscImageChef.Server.Controllers
                         if(media.CHS != null)
                         {
                             Chs existingChs =
-                                ctx.Chs.FirstOrDefault(c => c.Cylinders == media.CHS.Cylinders &&
-                                                            c.Heads     == media.CHS.Heads     &&
-                                                            c.Sectors   == media.CHS.Sectors);
+                                _ctx.Chs.FirstOrDefault(c => c.Cylinders == media.CHS.Cylinders &&
+                                                             c.Heads     == media.CHS.Heads     &&
+                                                             c.Sectors   == media.CHS.Sectors);
 
                             if(existingChs != null)
                                 media.CHS = existingChs;
@@ -174,9 +175,9 @@ namespace DiscImageChef.Server.Controllers
                         if(media.CHS != null)
                         {
                             Chs existingChs =
-                                ctx.Chs.FirstOrDefault(c => c.Cylinders == media.CurrentCHS.Cylinders &&
-                                                            c.Heads     == media.CurrentCHS.Heads     &&
-                                                            c.Sectors   == media.CurrentCHS.Sectors);
+                                _ctx.Chs.FirstOrDefault(c => c.Cylinders == media.CurrentCHS.Cylinders &&
+                                                             c.Heads     == media.CurrentCHS.Heads     &&
+                                                             c.Sectors   == media.CurrentCHS.Sectors);
 
                             if(existingChs != null)
                                 media.CurrentCHS = existingChs;
@@ -184,8 +185,8 @@ namespace DiscImageChef.Server.Controllers
                     }
                 }
 
-                ctx.Reports.Add(newUploadedReport);
-                ctx.SaveChanges();
+                _ctx.Reports.Add(newUploadedReport);
+                _ctx.SaveChanges();
 
                 var pgpIn  = new MemoryStream(Encoding.UTF8.GetBytes(reportV2String));
                 var pgpOut = new MemoryStream();
@@ -280,11 +281,11 @@ namespace DiscImageChef.Server.Controllers
                 if(newUploadedReport.ATA?.ReadCapabilities?.CHS != null)
                 {
                     Chs existingChs =
-                        ctx.Chs.FirstOrDefault(c =>
-                                                   c.Cylinders == newUploadedReport.
-                                                                  ATA.ReadCapabilities.CHS.Cylinders             &&
-                                                   c.Heads   == newUploadedReport.ATA.ReadCapabilities.CHS.Heads &&
-                                                   c.Sectors == newUploadedReport.ATA.ReadCapabilities.CHS.Sectors);
+                        _ctx.Chs.FirstOrDefault(c =>
+                                                    c.Cylinders == newUploadedReport.
+                                                                   ATA.ReadCapabilities.CHS.Cylinders             &&
+                                                    c.Heads   == newUploadedReport.ATA.ReadCapabilities.CHS.Heads &&
+                                                    c.Sectors == newUploadedReport.ATA.ReadCapabilities.CHS.Sectors);
 
                     if(existingChs != null)
                         newUploadedReport.ATA.ReadCapabilities.CHS = existingChs;
@@ -293,12 +294,13 @@ namespace DiscImageChef.Server.Controllers
                 if(newUploadedReport.ATA?.ReadCapabilities?.CurrentCHS != null)
                 {
                     Chs existingChs =
-                        ctx.Chs.FirstOrDefault(c =>
-                                                   c.Cylinders == newUploadedReport.
-                                                                  ATA.ReadCapabilities.CurrentCHS.Cylinders           &&
-                                                   c.Heads == newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Heads &&
-                                                   c.Sectors == newUploadedReport.
-                                                                ATA.ReadCapabilities.CurrentCHS.Sectors);
+                        _ctx.Chs.FirstOrDefault(c =>
+                                                    c.Cylinders == newUploadedReport.
+                                                                   ATA.ReadCapabilities.CurrentCHS.Cylinders &&
+                                                    c.Heads == newUploadedReport.
+                                                               ATA.ReadCapabilities.CurrentCHS.Heads &&
+                                                    c.Sectors == newUploadedReport.
+                                                                 ATA.ReadCapabilities.CurrentCHS.Sectors);
 
                     if(existingChs != null)
                         newUploadedReport.ATA.ReadCapabilities.CurrentCHS = existingChs;
@@ -322,9 +324,9 @@ namespace DiscImageChef.Server.Controllers
                         if(media.CHS != null)
                         {
                             Chs existingChs =
-                                ctx.Chs.FirstOrDefault(c => c.Cylinders == media.CHS.Cylinders &&
-                                                            c.Heads     == media.CHS.Heads     &&
-                                                            c.Sectors   == media.CHS.Sectors);
+                                _ctx.Chs.FirstOrDefault(c => c.Cylinders == media.CHS.Cylinders &&
+                                                             c.Heads     == media.CHS.Heads     &&
+                                                             c.Sectors   == media.CHS.Sectors);
 
                             if(existingChs != null)
                                 media.CHS = existingChs;
@@ -333,9 +335,9 @@ namespace DiscImageChef.Server.Controllers
                         if(media.CHS != null)
                         {
                             Chs existingChs =
-                                ctx.Chs.FirstOrDefault(c => c.Cylinders == media.CurrentCHS.Cylinders &&
-                                                            c.Heads     == media.CurrentCHS.Heads     &&
-                                                            c.Sectors   == media.CurrentCHS.Sectors);
+                                _ctx.Chs.FirstOrDefault(c => c.Cylinders == media.CurrentCHS.Cylinders &&
+                                                             c.Heads     == media.CurrentCHS.Heads     &&
+                                                             c.Sectors   == media.CurrentCHS.Sectors);
 
                             if(existingChs != null)
                                 media.CurrentCHS = existingChs;
@@ -343,8 +345,8 @@ namespace DiscImageChef.Server.Controllers
                     }
                 }
 
-                ctx.Reports.Add(newUploadedReport);
-                ctx.SaveChanges();
+                _ctx.Reports.Add(newUploadedReport);
+                _ctx.SaveChanges();
 
                 var pgpIn  = new MemoryStream(Encoding.UTF8.GetBytes(reportJson));
                 var pgpOut = new MemoryStream();
