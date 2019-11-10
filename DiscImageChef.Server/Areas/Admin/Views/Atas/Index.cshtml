@@ -47,6 +47,9 @@ ATA IDENTIFY DEVICE responses
         <th>
             @Html.DisplayNameFor(model => model.IdentifyDevice.Value.Model)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdentifyDevice.Value.FirmwareRevision)
+        </th>
         <th></th>
     </tr>
     </thead>
@@ -59,6 +62,9 @@ ATA IDENTIFY DEVICE responses
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdentifyDevice.Value.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdentifyDevice.Value.FirmwareRevision)
             </td>
             <td>
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
