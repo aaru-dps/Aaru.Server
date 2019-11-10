@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DiscImageChef.CommonTypes.Metadata;
@@ -6,6 +6,7 @@ using DiscImageChef.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace DiscImageChef.Server.Areas.Admin.Controllers
 {
@@ -105,6 +106,76 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
         bool FireWireExists(int id) => _context.FireWire.Any(e => e.Id == id);
 
-        public IActionResult Consolidate() => throw new NotImplementedException();
+        public IActionResult Consolidate()
+        {
+            List<FireWireModel> dups = _context.FireWire.GroupBy(x => new
+            {
+                x.VendorID, x.ProductID, x.Manufacturer, x.Product,
+                x.RemovableMedia
+            }).Where(x => x.Count() > 1).Select(x => new FireWireModel
+            {
+                VendorID = x.Key.VendorID, ProductID     = x.Key.ProductID, Manufacturer = x.Key.Manufacturer,
+                Product  = x.Key.Product, RemovableMedia = x.Key.RemovableMedia
+            }).ToList();
+
+            return View(new FireWireModelForView
+            {
+                List = dups, Json = JsonConvert.SerializeObject(dups)
+            });
+        }
+
+        [HttpPost, ActionName("Consolidate"), ValidateAntiForgeryToken]
+        public IActionResult ConsolidateConfirmed(string models)
+        {
+            FireWireModel[] duplicates;
+
+            try
+            {
+                duplicates = JsonConvert.DeserializeObject<FireWireModel[]>(models);
+            }
+            catch(JsonSerializationException)
+            {
+                return BadRequest();
+            }
+
+            if(duplicates is null)
+                return BadRequest();
+
+            foreach(FireWireModel duplicate in duplicates)
+            {
+                FireWire master = _context.FireWire.FirstOrDefault(m => m.VendorID       == duplicate.VendorID     &&
+                                                                        m.ProductID      == duplicate.ProductID    &&
+                                                                        m.Manufacturer   == duplicate.Manufacturer &&
+                                                                        m.Product        == duplicate.Product      &&
+                                                                        m.RemovableMedia == duplicate.RemovableMedia);
+
+                if(master is null)
+                    continue;
+
+                foreach(FireWire firewire in _context.FireWire.Where(m => m.VendorID       == duplicate.VendorID     &&
+                                                                          m.ProductID      == duplicate.ProductID    &&
+                                                                          m.Manufacturer   == duplicate.Manufacturer &&
+                                                                          m.Product        == duplicate.Product      &&
+                                                                          m.RemovableMedia == duplicate.RemovableMedia).
+                                                      Skip(1).ToArray())
+                {
+                    foreach(Device device in _context.Devices.Where(d => d.FireWire.Id == firewire.Id))
+                    {
+                        device.FireWire = master;
+                    }
+
+                    foreach(UploadedReport report in _context.Reports.Where(d => d.FireWire.Id == firewire.Id))
+                    {
+                        report.FireWire = master;
+                    }
+
+                    _context.FireWire.Remove(firewire);
+                }
+            }
+
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

@@ -1,0 +1,61 @@
+@model FireWireModelForView
+
+@{
+    ViewBag.Title = "Consolidate duplicate FireWire";
+    Layout = "_Layout";
+}
+<h2>Consolidate duplicate FireWire</h2>
+<div>
+    The following FireWire have duplicates.
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.List[0].Manufacturer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.List[0].Product)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.List[0].VendorID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.List[0].ProductID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.List[0].RemovableMedia)
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.List)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Manufacturer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VendorID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RemovableMedia)
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<div>
+    Do you want to remove the duplicates?
+    <form asp-action="Consolidate" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Json" name="models" />
+        <a asp-action="Index" class="btn btn-primary">Back to List</a>
+        <input class="btn btn-danger" type="submit" value="Consolidate" />
+    </form>
+</div>
