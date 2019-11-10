@@ -15,7 +15,9 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         public CompactDiscOffsetsController(DicServerContext context) => _context = context;
 
         // GET: Admin/CompactDiscOffsets
-        public async Task<IActionResult> Index() => View(await _context.CdOffsets.ToListAsync());
+        public async Task<IActionResult> Index() =>
+            View(await _context.CdOffsets.OrderBy(o => o.Manufacturer).ThenBy(o => o.Model).ThenBy(o => o.Offset).
+                                ToListAsync());
 
         // GET: Admin/CompactDiscOffsets/Details/5
         public async Task<IActionResult> Details(int? id)
