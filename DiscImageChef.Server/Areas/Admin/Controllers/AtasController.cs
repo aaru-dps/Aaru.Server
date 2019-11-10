@@ -71,8 +71,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        bool AtaExists(int id) => _context.Ata.Any(e => e.Id == id);
-
         public IActionResult Consolidate()
         {
             List<IdHashModel> hashes =
@@ -126,29 +124,30 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                     if(slave is null)
                         continue;
 
-                    foreach(Device ataDevice in _context.Devices.Where(d => d.ATAId == duplicateId))
+                    foreach(Device ataDevice in _context.Devices.Where(d => d.ATA.Id == duplicateId))
                     {
-                        ataDevice.ATAId = duplicate.Id;
+                        ataDevice.ATA = master;
                     }
 
-                    foreach(Device atapiDevice in _context.Devices.Where(d => d.ATAPIId == duplicateId))
+                    foreach(Device atapiDevice in _context.Devices.Where(d => d.ATAPI.Id == duplicateId))
                     {
-                        atapiDevice.ATAPIId = duplicate.Id;
+                        atapiDevice.ATAPI = master;
                     }
 
-                    foreach(UploadedReport ataReport in _context.Reports.Where(d => d.ATAId == duplicateId))
+                    foreach(UploadedReport ataReport in _context.Reports.Where(d => d.ATA.Id == duplicateId))
                     {
-                        ataReport.ATAId = duplicate.Id;
+                        ataReport.ATA = master;
                     }
 
-                    foreach(UploadedReport atapiReport in _context.Reports.Where(d => d.ATAPIId == duplicateId))
+                    foreach(UploadedReport atapiReport in _context.Reports.Where(d => d.ATAPI.Id == duplicateId))
                     {
-                        atapiReport.ATAPIId = duplicate.Id;
+                        atapiReport.ATAPI = master;
                     }
 
-                    foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.AtaId == duplicateId))
+                    foreach(TestedMedia testedMedia in slave.RemovableMedias)
                     {
                         testedMedia.AtaId = duplicate.Id;
+                        _context.Update(testedMedia);
                     }
 
                     if(master.ReadCapabilities is null &&
@@ -182,29 +181,30 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                     id = masterId, rightId = slaveId
                 });
 
-            foreach(Device ataDevice in _context.Devices.Where(d => d.ATAId == slaveId))
+            foreach(Device ataDevice in _context.Devices.Where(d => d.ATA.Id == slaveId))
             {
-                ataDevice.ATAId = masterId;
+                ataDevice.ATA = master;
             }
 
-            foreach(Device atapiDevice in _context.Devices.Where(d => d.ATAPIId == slaveId))
+            foreach(Device atapiDevice in _context.Devices.Where(d => d.ATAPI.Id == slaveId))
             {
-                atapiDevice.ATAPIId = masterId;
+                atapiDevice.ATAPI = master;
             }
 
-            foreach(UploadedReport ataReport in _context.Reports.Where(d => d.ATAId == slaveId))
+            foreach(UploadedReport ataReport in _context.Reports.Where(d => d.ATA.Id == slaveId))
             {
-                ataReport.ATAId = masterId;
+                ataReport.ATA = master;
             }
 
-            foreach(UploadedReport atapiReport in _context.Reports.Where(d => d.ATAPIId == slaveId))
+            foreach(UploadedReport atapiReport in _context.Reports.Where(d => d.ATAPI.Id == slaveId))
             {
-                atapiReport.ATAPIId = masterId;
+                atapiReport.ATAPI = master;
             }
 
             foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.AtaId == slaveId))
             {
                 testedMedia.AtaId = masterId;
+                _context.Update(testedMedia);
             }
 
             if(master.ReadCapabilities is null &&
@@ -220,10 +220,11 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
         public IActionResult Compare(int id, int rightId)
         {
-            var model = new CompareModel();
+            var model = new CompareModel
+            {
+                LeftId = id, RightId = rightId
+            };
 
-            model.LeftId  = id;
-            model.RightId = rightId;
 
             CommonTypes.Metadata.Ata left  = _context.Ata.FirstOrDefault(l => l.Id == id);
             CommonTypes.Metadata.Ata right = _context.Ata.FirstOrDefault(r => r.Id == rightId);
