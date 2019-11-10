@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using DiscImageChef.Server.Models;
@@ -121,5 +122,10 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         }
 
         bool CompactDiscOffsetExists(int id) => _context.CdOffsets.Any(e => e.Id == id);
+
+        public IActionResult Update()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
