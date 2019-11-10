@@ -113,8 +113,18 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
             foreach(IdHashModel duplicate in duplicates)
             {
+                CommonTypes.Metadata.Ata master = _context.Ata.FirstOrDefault(m => m.Id == duplicate.Id);
+
+                if(master is null)
+                    continue;
+
                 foreach(int duplicateId in duplicate.Duplicates)
                 {
+                    CommonTypes.Metadata.Ata slave = _context.Ata.FirstOrDefault(m => m.Id == duplicateId);
+
+                    if(slave is null)
+                        continue;
+
                     foreach(Device ataDevice in _context.Devices.Where(d => d.ATAId == duplicateId))
                     {
                         ataDevice.ATAId = duplicate.Id;
@@ -140,7 +150,11 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                         testedMedia.AtaId = duplicate.Id;
                     }
 
-                    _context.Ata.Remove(_context.Ata.First(d => d.Id == duplicateId));
+                    if(master.ReadCapabilities is null &&
+                       slave.ReadCapabilities != null)
+                        master.ReadCapabilities = slave.ReadCapabilities;
+
+                    _context.Ata.Remove(slave);
                 }
             }
 
@@ -151,13 +165,17 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
         public IActionResult ConsolidateWithIds(int masterId, int slaveId)
         {
-            if(_context.Ata.Count(m => m.Id == masterId) == 0)
+            CommonTypes.Metadata.Ata master = _context.Ata.FirstOrDefault(m => m.Id == masterId);
+
+            if(master is null)
                 return RedirectToAction(nameof(Compare), new
                 {
                     id = masterId, rightId = slaveId
                 });
 
-            if(_context.Ata.Count(m => m.Id == slaveId) == 0)
+            CommonTypes.Metadata.Ata slave = _context.Ata.FirstOrDefault(m => m.Id == slaveId);
+
+            if(slave is null)
                 return RedirectToAction(nameof(Compare), new
                 {
                     id = masterId, rightId = slaveId
@@ -188,7 +206,11 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                 testedMedia.AtaId = masterId;
             }
 
-            _context.Ata.Remove(_context.Ata.First(d => d.Id == slaveId));
+            if(master.ReadCapabilities is null &&
+               slave.ReadCapabilities != null)
+                master.ReadCapabilities = slave.ReadCapabilities;
+
+            _context.Ata.Remove(slave);
 
             _context.SaveChanges();
 
