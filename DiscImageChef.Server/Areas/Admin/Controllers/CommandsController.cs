@@ -15,7 +15,7 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         public CommandsController(DicServerContext context) => _context = context;
 
         // GET: Admin/Commands
-        public async Task<IActionResult> Index() => View(await _context.Commands.ToListAsync());
+        public async Task<IActionResult> Index() => View(await _context.Commands.OrderBy(c => c.Name).ToListAsync());
 
         // GET: Admin/Commands/Details/5
         public async Task<IActionResult> Details(int? id)
