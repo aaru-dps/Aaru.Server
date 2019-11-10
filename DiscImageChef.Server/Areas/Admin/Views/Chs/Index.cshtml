@@ -48,7 +48,6 @@
         <th>
             @Html.DisplayNameFor(model => model.Sectors)
         </th>
-        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -63,9 +62,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Sectors)
-            </td>
-            <td>
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
             </td>
         </tr>
     }

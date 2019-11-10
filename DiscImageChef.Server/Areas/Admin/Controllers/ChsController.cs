@@ -22,35 +22,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             View(await _context.Chs.OrderBy(c => c.Cylinders).ThenBy(c => c.Heads).ThenBy(c => c.Sectors).
                                 ToListAsync());
 
-        // GET: Admin/Chs/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if(id == null)
-            {
-                return NotFound();
-            }
-
-            Chs chs = await _context.Chs.FirstOrDefaultAsync(m => m.Id == id);
-
-            if(chs == null)
-            {
-                return NotFound();
-            }
-
-            return View(chs);
-        }
-
-        // POST: Admin/Chs/Delete/5
-        [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            Chs chs = await _context.Chs.FindAsync(id);
-            _context.Chs.Remove(chs);
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction(nameof(Index));
-        }
-
         public IActionResult Consolidate()
         {
             List<ChsModel> dups = _context.Chs.GroupBy(x => new
