@@ -106,7 +106,7 @@ namespace DiscImageChef.Server.Models
             modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.DensityCode", b =>
             {
                 b.HasOne("DiscImageChef.CommonTypes.Metadata.SscSupportedMedia", null).WithMany("DensityCodes").
-                  HasForeignKey("SscSupportedMediaId").OnDelete(DeleteBehavior.SetNull);
+                  HasForeignKey("SscSupportedMediaId").OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.Mmc", b =>
