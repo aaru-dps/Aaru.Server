@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using DiscImageChef.CommonTypes.Metadata;
@@ -102,5 +103,7 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         }
 
         bool FireWireExists(int id) => _context.FireWire.Any(e => e.Id == id);
+
+        public IActionResult Consolidate() => throw new NotImplementedException();
     }
 }
