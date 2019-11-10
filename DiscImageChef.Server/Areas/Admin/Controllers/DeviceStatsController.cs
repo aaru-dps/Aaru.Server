@@ -17,24 +17,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         // GET: Admin/DeviceStats
         public async Task<IActionResult> Index() => View(await _context.DeviceStats.ToListAsync());
 
-        // GET: Admin/DeviceStats/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if(id == null)
-            {
-                return NotFound();
-            }
-
-            DeviceStat deviceStat = await _context.DeviceStats.FirstOrDefaultAsync(m => m.Id == id);
-
-            if(deviceStat == null)
-            {
-                return NotFound();
-            }
-
-            return View(deviceStat);
-        }
-
         // GET: Admin/DeviceStats/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
