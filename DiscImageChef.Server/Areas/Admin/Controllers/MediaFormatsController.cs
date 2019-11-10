@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using DiscImageChef.Server.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -14,7 +15,8 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         public MediaFormatsController(DicServerContext context) => _context = context;
 
         // GET: Admin/MediaFormats
-        public async Task<IActionResult> Index() => View(await _context.MediaFormats.ToListAsync());
+        public async Task<IActionResult> Index() =>
+            View(await _context.MediaFormats.OrderBy(mf => mf.Name).ToListAsync());
 
         // GET: Admin/MediaFormats/Delete/5
         public async Task<IActionResult> Delete(int? id)
