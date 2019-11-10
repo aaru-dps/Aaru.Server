@@ -32,6 +32,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using DiscImageChef.CommonTypes.Metadata;
 
 namespace DiscImageChef.Server.Models
@@ -61,7 +62,9 @@ namespace DiscImageChef.Server.Models
         }
 
         public         int                 Id           { get; set; }
+        [DisplayName("Added date")]
         public         DateTime            AddedWhen    { get; set; }
+        [DisplayName("Modification date")]
         public         DateTime            ModifiedWhen { get; set; }
         public virtual ICollection<Device> Devices      { get; set; }
     }
