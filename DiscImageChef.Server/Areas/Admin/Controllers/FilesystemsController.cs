@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using DiscImageChef.Server.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -14,6 +15,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         public FilesystemsController(DicServerContext context) => _context = context;
 
         // GET: Admin/Filesystems
-        public async Task<IActionResult> Index() => View(await _context.Filesystems.ToListAsync());
+        public async Task<IActionResult> Index() => View(await _context.Filesystems.OrderBy(f => f.Name).ToListAsync());
     }
 }
