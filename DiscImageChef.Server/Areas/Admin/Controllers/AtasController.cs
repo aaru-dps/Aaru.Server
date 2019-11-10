@@ -149,6 +149,52 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult ConsolidateWithIds(int masterId, int slaveId)
+        {
+            if(_context.Ata.Count(m => m.Id == masterId) == 0)
+                return RedirectToAction(nameof(Compare), new
+                {
+                    id = masterId, rightId = slaveId
+                });
+
+            if(_context.Ata.Count(m => m.Id == slaveId) == 0)
+                return RedirectToAction(nameof(Compare), new
+                {
+                    id = masterId, rightId = slaveId
+                });
+
+            foreach(Device ataDevice in _context.Devices.Where(d => d.ATAId == slaveId))
+            {
+                ataDevice.ATAId = masterId;
+            }
+
+            foreach(Device atapiDevice in _context.Devices.Where(d => d.ATAPIId == slaveId))
+            {
+                atapiDevice.ATAPIId = masterId;
+            }
+
+            foreach(UploadedReport ataReport in _context.Reports.Where(d => d.ATAId == slaveId))
+            {
+                ataReport.ATAId = masterId;
+            }
+
+            foreach(UploadedReport atapiReport in _context.Reports.Where(d => d.ATAPIId == slaveId))
+            {
+                atapiReport.ATAPIId = masterId;
+            }
+
+            foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.AtaId == slaveId))
+            {
+                testedMedia.AtaId = masterId;
+            }
+
+            _context.Ata.Remove(_context.Ata.First(d => d.Id == slaveId));
+
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
+
         public IActionResult Compare(int id, int rightId)
         {
             var model = new CompareModel();
@@ -213,8 +259,8 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
             foreach(FieldInfo fieldInfo in leftValue.GetType().GetFields())
             {
-                object? lv = fieldInfo.GetValue(leftValue);
-                object? rv = fieldInfo.GetValue(rightValue);
+                object lv = fieldInfo.GetValue(leftValue);
+                object rv = fieldInfo.GetValue(rightValue);
 
                 if(fieldInfo.FieldType.IsArray)
                 {

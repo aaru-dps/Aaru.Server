@@ -58,7 +58,7 @@ namespace DiscImageChef.Server.Models
         }
 
         public DateTime UploadedWhen { get; set; }
-        public int      ATAId        { get; set; }
-        public int      ATAPIId      { get; set; }
+        public int?     ATAId        { get; set; }
+        public int?     ATAPIId      { get; set; }
     }
 }

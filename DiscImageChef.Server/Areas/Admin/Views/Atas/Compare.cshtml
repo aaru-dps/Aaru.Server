@@ -80,3 +80,5 @@
 <a asp-action="Index" class="btn btn-primary">Back to List</a>
 <a asp-action="Delete" asp-route-id="@Model.LeftId" class="btn btn-danger">Delete ID @Model.LeftId</a>
 <a asp-action="Delete" asp-route-id="@Model.RightId" class="btn btn-danger">Delete ID @Model.RightId</a>
+<a asp-action="ConsolidateWithIds" asp-route-masterId="@Model.LeftId" asp-route-slaveId="@Model.RightId" class="btn btn-secondary">Replace all dependencies from ID @Model.RightId with ID @Model.LeftId</a>
+<a asp-action="ConsolidateWithIds" asp-route-masterId="@Model.RightId" asp-route-slaveId="@Model.LeftId" class="btn btn-secondary">Replace all dependencies from ID @Model.LeftId with ID @Model.RightId</a>
