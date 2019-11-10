@@ -99,7 +99,7 @@ namespace DiscImageChef.Server.Models
             modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.BlockDescriptor", b =>
             {
                 b.HasOne("DiscImageChef.CommonTypes.Metadata.ScsiMode", null).WithMany("BlockDescriptors").
-                  HasForeignKey("ScsiModeId").OnDelete(DeleteBehavior.SetNull);
+                  HasForeignKey("ScsiModeId").OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.DensityCode", b =>
