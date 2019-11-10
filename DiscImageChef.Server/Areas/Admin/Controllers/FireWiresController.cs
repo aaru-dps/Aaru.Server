@@ -18,24 +18,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         // GET: Admin/FireWires
         public async Task<IActionResult> Index() => View(await _context.FireWire.ToListAsync());
 
-        // GET: Admin/FireWires/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if(id == null)
-            {
-                return NotFound();
-            }
-
-            FireWire fireWire = await _context.FireWire.FirstOrDefaultAsync(m => m.Id == id);
-
-            if(fireWire == null)
-            {
-                return NotFound();
-            }
-
-            return View(fireWire);
-        }
-
         // GET: Admin/FireWires/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
