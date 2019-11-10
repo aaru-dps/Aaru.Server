@@ -62,7 +62,6 @@ namespace DiscImageChef.Server.Models
         public DbSet<CommonTypes.Metadata.Ata> Ata                   { get; set; }
         public DbSet<BlockDescriptor>          BlockDescriptor       { get; set; }
         public DbSet<Chs>                      Chs                   { get; set; }
-        public DbSet<DensityCode>              DensityCode           { get; set; }
         public DbSet<FireWire>                 FireWire              { get; set; }
         public DbSet<Mmc>                      Mmc                   { get; set; }
         public DbSet<MmcSd>                    MmcSd                 { get; set; }
