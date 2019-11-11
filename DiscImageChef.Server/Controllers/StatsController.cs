@@ -143,19 +143,19 @@ namespace DiscImageChef.Server.Controllers
                     foreach(Media nvs in ctx.Medias)
                         try
                         {
-                            MediaType.
-                                MediaTypeToString((CommonTypes.MediaType)Enum.Parse(typeof(CommonTypes.MediaType), nvs.Type),
-                                                  out string type, out string subtype);
+                            (string type, string subType) mediaType =
+                                MediaType.MediaTypeToString((CommonTypes.MediaType)
+                                                            Enum.Parse(typeof(CommonTypes.MediaType), nvs.Type));
 
                             if(nvs.Real)
                                 realMedia.Add(new MediaItem
                                 {
-                                    Type = type, SubType = subtype, Count = nvs.Count
+                                    Type = mediaType.type, SubType = mediaType.subType, Count = nvs.Count
                                 });
                             else
                                 virtualMedia.Add(new MediaItem
                                 {
-                                    Type = type, SubType = subtype, Count = nvs.Count
+                                    Type = mediaType.type, SubType = mediaType.subType, Count = nvs.Count
                                 });
                         }
                         catch
@@ -482,11 +482,11 @@ namespace DiscImageChef.Server.Controllers
             {
                 try
                 {
-                    MediaType.
-                        MediaTypeToString((CommonTypes.MediaType)Enum.Parse(typeof(CommonTypes.MediaType), media.Type),
-                                          out string type, out string subtype);
+                    (string type, string subType) mediaType =
+                        MediaType.MediaTypeToString((CommonTypes.MediaType)Enum.Parse(typeof(CommonTypes.MediaType),
+                                                                                      media.Type));
 
-                    media.Type = $"{type} ({subtype})";
+                    media.Type = $"{mediaType.type} ({mediaType.subType})";
                 }
                 catch
                 {
@@ -518,11 +518,11 @@ namespace DiscImageChef.Server.Controllers
             {
                 try
                 {
-                    MediaType.
-                        MediaTypeToString((CommonTypes.MediaType)Enum.Parse(typeof(CommonTypes.MediaType), media.Type),
-                                          out string type, out string subtype);
+                    (string type, string subType) mediaType =
+                        MediaType.MediaTypeToString((CommonTypes.MediaType)Enum.Parse(typeof(CommonTypes.MediaType),
+                                                                                      media.Type));
 
-                    media.Type = $"{type} ({subtype})";
+                    media.Type = $"{mediaType.type} ({mediaType.subType})";
                 }
                 catch
                 {
