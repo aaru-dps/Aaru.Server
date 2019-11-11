@@ -31,6 +31,7 @@
 // ****************************************************************************/
 
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DiscImageChef.CommonTypes;
@@ -73,8 +74,10 @@ namespace DiscImageChef.Server.Models
         }
 
         [NotMapped]
+        [DisplayName("Physical type")]
         public string PhysicalType => MediaType.type;
         [NotMapped]
+        [DisplayName("Logical type")]
         public string LogicalType => MediaType.subType;
     }
 }
