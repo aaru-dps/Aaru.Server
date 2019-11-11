@@ -15,7 +15,8 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         public MediasController(DicServerContext context) => _context = context;
 
         // GET: Admin/Medias
-        public async Task<IActionResult> Index() => View(await _context.Medias.ToListAsync());
+        public IActionResult Index() => View(_context.Medias.ToList().OrderBy(m => m.PhysicalType).
+                                                      ThenBy(m => m.LogicalType).ThenBy(m => m.Real));
 
         // GET: Admin/Medias/Delete/5
         public async Task<IActionResult> Delete(int? id)
