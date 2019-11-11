@@ -30,17 +30,51 @@
 // Copyright © 2011-2019 Natalia Portillo
 // ****************************************************************************/
 
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using DiscImageChef.CommonTypes;
 
 namespace DiscImageChef.Server.Models
 {
     public class Media
     {
-        [Key]
-        public int Id { get; set; }
+        [NotMapped]
+        (string type, string subType) _mediaType;
 
+        [Key]
+        public int Id { get;       set; }
         public string Type  { get; set; }
         public bool   Real  { get; set; }
         public long   Count { get; set; }
+
+        [NotMapped]
+        (string type, string subType) MediaType
+        {
+            get
+            {
+                if(_mediaType != default)
+                    return _mediaType;
+
+                try
+                {
+                    if(Enum.TryParse(Type, out MediaType enumMediaType))
+                        _mediaType = CommonTypes.Metadata.MediaType.MediaTypeToString(enumMediaType);
+                    else if(int.TryParse(Type, out int asInt))
+                        _mediaType = CommonTypes.Metadata.MediaType.MediaTypeToString((MediaType)asInt);
+                }
+                catch
+                {
+                    // Could not get media type/subtype pair from type, so just leave it as is
+                }
+
+                return _mediaType;
+            }
+        }
+
+        [NotMapped]
+        public string PhysicalType => MediaType.type;
+        [NotMapped]
+        public string LogicalType => MediaType.subType;
     }
 }
