@@ -1,4 +1,4 @@
-@model IEnumerable<DiscImageChef.CommonTypes.Metadata.Mmc>
+@model IEnumerable<MmcModelForView>
 
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -37,7 +37,13 @@
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ModeSense2AData)
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FeaturesId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataLength)
         </th>
         <th></th>
     </tr>
@@ -47,7 +53,20 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ModeSense2AData)
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @if (item.FeaturesId != null)
+                {
+                    <a asp-action="details" asp-controller="MmcFeatures" asp-route-id="@item.FeaturesId" target="_blank">@Html.DisplayFor(modelItem => item.FeaturesId)</a>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.FeaturesId)
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataLength)
             </td>
             <td>
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
