@@ -1,3 +1,5 @@
+@using DiscImageChef.Decoders.SCSI
+@using DiscImageChef.Server.Core
 @model DiscImageChef.CommonTypes.Metadata.Mmc
 
 @{
@@ -34,16 +36,9 @@
     // ****************************************************************************/
 }
 <div>
-    <h4>Mmc</h4>
+    <h4>MMC FEATURES - ID = @Model.Id</h4>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ModeSense2AData)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModeSense2AData)
-        </dd>
-    </dl>
+    @Html.Raw(Html.EncodedMultiLineText(Modes.PrettifyModePage_2A(Model.ModeSense2AData)))
 </div>
 <div>
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
