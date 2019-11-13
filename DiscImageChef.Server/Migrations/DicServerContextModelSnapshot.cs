@@ -1498,7 +1498,7 @@ namespace DiscImageChef.Server.Migrations
                   HasForeignKey("CurrentCHSId").OnDelete(DeleteBehavior.SetNull);
 
                 b.HasOne("DiscImageChef.CommonTypes.Metadata.Mmc", null).WithMany("TestedMedia").HasForeignKey("MmcId").
-                  OnDelete(DeleteBehavior.SetNull);
+                  OnDelete(DeleteBehavior.Cascade);
 
                 b.HasOne("DiscImageChef.CommonTypes.Metadata.Scsi", null).WithMany("RemovableMedias").
                   HasForeignKey("ScsiId").OnDelete(DeleteBehavior.SetNull);

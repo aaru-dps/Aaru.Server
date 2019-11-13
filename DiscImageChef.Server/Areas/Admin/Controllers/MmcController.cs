@@ -69,7 +69,10 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            Mmc mmc = await _context.Mmc.FindAsync(id);
+            Mmc         mmc     = await _context.Mmc.FindAsync(id);
+            MmcFeatures feature = await _context.MmcFeatures.FirstOrDefaultAsync(f => f.Id == mmc.FeaturesId);
+
+            _context.MmcFeatures.Remove(feature);
             _context.Mmc.Remove(mmc);
             await _context.SaveChangesAsync();
 
