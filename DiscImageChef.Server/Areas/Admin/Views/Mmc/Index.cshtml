@@ -33,6 +33,7 @@
     // Copyright © 2011-2019 Natalia Portillo
     // ****************************************************************************/
 }
+<a asp-action="Clean" class="btn btn-danger">Clean</a>
 <table class="table">
     <thead>
     <tr>
@@ -69,6 +70,11 @@
                 @Html.DisplayFor(modelItem => item.DataLength)
             </td>
             <td>
+                @if (item.FeaturesId == null &&
+                     item.DataLength > 0)
+                {
+                    <a asp-action="Decode" asp-route-id="@item.Id" class="btn btn-secondary">Decode</a>
+                }
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
                 <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
             </td>
