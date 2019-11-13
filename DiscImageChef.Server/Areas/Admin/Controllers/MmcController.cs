@@ -80,14 +80,14 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Decode(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public IActionResult Decode(int id) => throw new NotImplementedException();
 
-        public IActionResult Clean()
+        public async Task<IActionResult> Clean()
         {
-            throw new NotImplementedException();
+            _context.Mmc.RemoveRange(_context.Mmc.Where(m => m.FeaturesId == null && m.ModeSense2AData == null));
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
