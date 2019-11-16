@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using DiscImageChef.CommonTypes.Metadata;
@@ -79,8 +78,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-        public IActionResult Decode(int id) => throw new NotImplementedException();
 
         public async Task<IActionResult> Clean()
         {
