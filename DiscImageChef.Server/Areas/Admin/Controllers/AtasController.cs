@@ -144,7 +144,7 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                         atapiReport.ATAPI = master;
                     }
 
-                    foreach(TestedMedia testedMedia in slave.RemovableMedias)
+                    foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.AtaId == duplicateId))
                     {
                         testedMedia.AtaId = duplicate.Id;
                         _context.Update(testedMedia);
@@ -224,7 +224,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             {
                 LeftId = id, RightId = rightId
             };
-
 
             CommonTypes.Metadata.Ata left  = _context.Ata.FirstOrDefault(l => l.Id == id);
             CommonTypes.Metadata.Ata right = _context.Ata.FirstOrDefault(r => r.Id == rightId);
