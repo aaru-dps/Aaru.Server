@@ -21,8 +21,8 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         public AtasController(DicServerContext context) => _context = context;
 
         // GET: Admin/Atas
-        public IActionResult Index() => View(_context.Ata.AsEnumerable().Where(m => m.IdentifyDevice?.Model != null).
-                                                      OrderBy(m => m.IdentifyDevice.Value.Model));
+        public IActionResult Index() => View(_context.Ata.AsEnumerable().OrderBy(m => m.IdentifyDevice?.Model).
+                                                      ThenBy(m => m.IdentifyDevice?.FirmwareRevision));
 
         // GET: Admin/Atas/Details/5
         public async Task<IActionResult> Details(int? id)
