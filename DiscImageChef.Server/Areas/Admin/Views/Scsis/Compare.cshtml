@@ -1,0 +1,84 @@
+@model CompareModel
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "DiscImageChef";
+}
+@{
+    // /***************************************************************************
+    // The Disc Image Chef
+    // ----------------------------------------------------------------------------
+    //
+    // Filename       : Details.cshtml
+    // Author(s)      : Natalia Portillo <claunia@claunia.com>
+    //
+    // Component      : DiscImageChef Server.
+    //
+    // --[ License ] --------------------------------------------------------------
+    //
+    //     This library is free software; you can redistribute it and/or modify
+    //     it under the terms of the GNU Lesser General Public License as
+    //     published by the Free Software Foundation; either version 2.1 of the
+    //     License, or (at your option) any later version.
+    //
+    //     This library is distributed in the hope that it will be useful, but
+    //     WITHOUT ANY WARRANTY; without even the implied warranty of
+    //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    //     Lesser General Public License for more details.
+    //
+    //     You should have received a copy of the GNU Lesser General Public
+    //     License along with this library; if not, see <http://www.gnu.org/licenses/>.
+    //
+    // ----------------------------------------------------------------------------
+    // Copyright © 2011-2019 Natalia Portillo
+    // ****************************************************************************/
+}
+<h2>Comparing SCSI INQUIRY ID @Model.LeftId with ID @Model.RightId</h2>
+@if (Model.AreEqual)
+{
+    <p>No differences found.</p>
+    return;
+}
+
+@if (Model.HasError)
+{
+    <p class="alert-info">@Model.ErrorMessage</p>
+    return;
+}
+<table>
+    <thead>
+    <tr>
+        <th>
+            Value name
+        </th>
+        <th>
+            ID: @Model.LeftId
+        </th>
+        <th>
+            ID: @Model.RightId
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @for (var i = 0; i < Model.ValueNames.Count; i++)
+    {
+        <tr>
+            <td>
+                @Model.ValueNames[i]
+            </td>
+            <td>
+                @Model.LeftValues[i]
+            </td>
+            <td>
+                @Model.RightValues[i]
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<a asp-action="Index" class="btn btn-primary">Back to List</a>
+<a asp-action="Delete" asp-route-id="@Model.LeftId" class="btn btn-danger">Delete ID @Model.LeftId</a>
+<a asp-action="Delete" asp-route-id="@Model.RightId" class="btn btn-danger">Delete ID @Model.RightId</a>
+<a asp-action="ConsolidateWithIds" asp-route-masterId="@Model.LeftId" asp-route-slaveId="@Model.RightId" class="btn btn-secondary">Replace all dependencies from ID @Model.RightId with ID @Model.LeftId</a>
+<a asp-action="ConsolidateWithIds" asp-route-masterId="@Model.RightId" asp-route-slaveId="@Model.LeftId" class="btn btn-secondary">Replace all dependencies from ID @Model.LeftId with ID @Model.RightId</a>
