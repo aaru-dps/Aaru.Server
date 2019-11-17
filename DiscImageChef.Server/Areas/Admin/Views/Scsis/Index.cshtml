@@ -1,3 +1,4 @@
+@using DiscImageChef
 @model IEnumerable<DiscImageChef.CommonTypes.Metadata.Scsi>
 
 @{
@@ -37,7 +38,16 @@
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.InquiryData)
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Inquiry.Value.VendorIdentification)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Inquiry.Value.ProductIdentification)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Inquiry.Value.ProductRevisionLevel)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.SupportsModeSense6)
@@ -48,24 +58,6 @@
         <th>
             @Html.DisplayNameFor(model => model.SupportsModeSubpages)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModeSense6Data)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModeSense10Data)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModeSense6CurrentData)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModeSense10CurrentData)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModeSense6ChangeableData)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModeSense10ChangeableData)
-        </th>
         <th></th>
     </tr>
     </thead>
@@ -74,7 +66,16 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.InquiryData)
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @StringHandlers.CToString(item.Inquiry?.VendorIdentification)
+            </td>
+            <td>
+                @StringHandlers.CToString(item.Inquiry?.ProductIdentification)
+            </td>
+            <td>
+                @StringHandlers.CToString(item.Inquiry?.ProductRevisionLevel)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SupportsModeSense6)
@@ -84,24 +85,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SupportsModeSubpages)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModeSense6Data)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModeSense10Data)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModeSense6CurrentData)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModeSense10CurrentData)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModeSense6ChangeableData)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModeSense10ChangeableData)
             </td>
             <td>
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
