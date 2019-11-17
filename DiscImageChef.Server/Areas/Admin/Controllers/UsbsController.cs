@@ -16,7 +16,9 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         public UsbsController(DicServerContext context) => _context = context;
 
         // GET: Admin/Usbs
-        public async Task<IActionResult> Index() => View(await _context.Usb.ToListAsync());
+        public async Task<IActionResult> Index() =>
+            View(await _context.Usb.OrderBy(u => u.Manufacturer).ThenBy(u => u.Product).ThenBy(u => u.VendorID).
+                                ThenBy(u => u.ProductID).ToListAsync());
 
         // GET: Admin/Usbs/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -64,5 +66,5 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-   }
+    }
 }
