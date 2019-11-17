@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -231,8 +232,8 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
                 if(fieldInfo.FieldType.IsArray)
                 {
-                    object[] la = lv as object[];
-                    object[] ra = rv as object[];
+                    Array la = lv as Array;
+                    Array ra = rv as Array;
 
                     switch(la)
                     {
@@ -254,12 +255,20 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                         continue;
                     }
 
-                    if(la.SequenceEqual(ra))
-                        continue;
+                    List<object> ll = la.Cast<object>().ToList();
+                    List<object> rl = ra.Cast<object>().ToList();
 
-                    model.ValueNames.Add(fieldInfo.Name);
-                    model.LeftValues.Add("[]");
-                    model.RightValues.Add("[]");
+                    for(int i = 0; i < ll.Count; i++)
+                    {
+                        if(ll[i].Equals(rl[i]))
+                            continue;
+
+                        model.ValueNames.Add(fieldInfo.Name);
+                        model.LeftValues.Add("[]");
+                        model.RightValues.Add("[]");
+
+                        break;
+                    }
                 }
                 else if(lv == null &&
                         rv == null) { }
