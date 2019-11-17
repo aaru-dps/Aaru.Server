@@ -1,0 +1,49 @@
+@model SscModelForView
+
+@{
+    ViewBag.Title = "Consolidate duplicate CHS";
+    Layout = "_Layout";
+}
+<h2>Consolidate duplicate SSC</h2>
+<div>
+    The following SSC have duplicates.
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.List[0].MinBlockLength)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.List[0].MaxBlockLength)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.List[0].BlockSizeGranularity)
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.List)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MinBlockLength)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaxBlockLength)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BlockSizeGranularity)
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<div>
+    Do you want to remove the duplicates?
+    <form asp-action="Consolidate" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Json" name="models" />
+        <a asp-action="Index" class="btn btn-primary">Back to List</a>
+        <input class="btn btn-danger" type="submit" value="Consolidate" />
+    </form>
+</div>
