@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DiscImageChef.CommonTypes.Metadata;
@@ -5,6 +6,7 @@ using DiscImageChef.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace DiscImageChef.Server.Areas.Admin.Controllers
 {
@@ -63,6 +65,88 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             Usb usb = await _context.Usb.FindAsync(id);
             _context.Usb.Remove(usb);
             await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Consolidate()
+        {
+            List<UsbModel> dups = _context.Usb.GroupBy(x => new
+            {
+                x.Manufacturer, x.Product, x.VendorID, x.ProductID
+            }).Where(x => x.Count() > 1).Select(x => new UsbModel
+            {
+                Manufacturer = x.Key.Manufacturer, Product = x.Key.Product, VendorID = x.Key.VendorID,
+                ProductID    = x.Key.ProductID
+            }).ToList();
+
+            return View(new UsbModelForView
+            {
+                List = dups, Json = JsonConvert.SerializeObject(dups)
+            });
+        }
+
+        [HttpPost, ActionName("Consolidate"), ValidateAntiForgeryToken]
+        public IActionResult ConsolidateConfirmed(string models)
+        {
+            UsbModel[] duplicates;
+
+            try
+            {
+                duplicates = JsonConvert.DeserializeObject<UsbModel[]>(models);
+            }
+            catch(JsonSerializationException)
+            {
+                return BadRequest();
+            }
+
+            if(duplicates is null)
+                return BadRequest();
+
+            foreach(UsbModel duplicate in duplicates)
+            {
+                Usb master = _context.Usb.FirstOrDefault(m => m.Manufacturer == duplicate.Manufacturer &&
+                                                              m.Product      == duplicate.Product      &&
+                                                              m.VendorID     == duplicate.VendorID     &&
+                                                              m.ProductID    == duplicate.ProductID);
+
+                if(master is null)
+                    continue;
+
+                foreach(Usb slave in _context.Usb.Where(m => m.Manufacturer == duplicate.Manufacturer &&
+                                                             m.Product      == duplicate.Product      &&
+                                                             m.VendorID     == duplicate.VendorID     &&
+                                                             m.ProductID    == duplicate.ProductID).Skip(1).ToArray())
+                {
+                    if(slave.Descriptors  != null &&
+                       master.Descriptors != null)
+                    {
+                        if(!master.Descriptors.SequenceEqual(slave.Descriptors))
+                            continue;
+                    }
+
+                    foreach(Device device in _context.Devices.Where(d => d.USB.Id == slave.Id))
+                    {
+                        device.USB = master;
+                    }
+
+                    foreach(UploadedReport report in _context.Reports.Where(d => d.USB.Id == slave.Id))
+                    {
+                        report.USB = master;
+                    }
+
+                    if(master.Descriptors is null &&
+                       slave.Descriptors != null)
+                    {
+                        master.Descriptors = slave.Descriptors;
+                        _context.Usb.Update(master);
+                    }
+
+                    _context.Usb.Remove(slave);
+                }
+            }
+
+            _context.SaveChanges();
 
             return RedirectToAction(nameof(Index));
         }
