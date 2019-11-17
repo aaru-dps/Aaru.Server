@@ -33,7 +33,7 @@
     // Copyright © 2011-2019 Natalia Portillo
     // ****************************************************************************/
 }
-<table class="table">
+<table class="table" id="tblProducts">
     <thead>
     <tr>
         <th>
@@ -64,3 +64,12 @@
     }
     </tbody>
 </table>
+
+@section scripts{
+    <script crossorigin="anonymous" integrity="sha256-L4cf7m/cgC51e7BFPxQcKZcXryzSju7VYBKJLOKPHvQ=" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script language="javascript">
+$(document).ready(function() {
+    $('#tblProducts').DataTable();
+} );
+</script>
+}
