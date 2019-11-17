@@ -37,13 +37,13 @@
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.BlockSizeGranularity)
+            @Html.DisplayNameFor(model => model.MinBlockLength)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.MaxBlockLength)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MinBlockLength)
+            @Html.DisplayNameFor(model => model.BlockSizeGranularity)
         </th>
         <th></th>
     </tr>
@@ -53,13 +53,13 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.BlockSizeGranularity)
+                @Html.DisplayFor(modelItem => item.MinBlockLength)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MaxBlockLength)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MinBlockLength)
+                @Html.DisplayFor(modelItem => item.BlockSizeGranularity)
             </td>
             <td>
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
