@@ -15,7 +15,8 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         public UsbVendorsController(DicServerContext context) => _context = context;
 
         // GET: Admin/UsbVendors
-        public async Task<IActionResult> Index() => View(await _context.UsbVendors.OrderBy(v => v.Vendor).ThenBy(v => v.VendorId).ToListAsync());
+        public async Task<IActionResult> Index() =>
+            View(await _context.UsbVendors.OrderBy(v => v.Vendor).ThenBy(v => v.VendorId).ToListAsync());
 
         // GET: Admin/UsbVendors/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -32,7 +33,20 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            return View(usbVendor);
+            return View(new UsbVendorModel
+            {
+                Vendor = usbVendor.Vendor, VendorId = usbVendor.VendorId, Products = _context.
+                                                                                     UsbProducts.
+                                                                                     Where(p => p.VendorId ==
+                                                                                                usbVendor.Id).
+                                                                                     OrderBy(p => p.Product).
+                                                                                     ThenBy(p => p.ProductId).
+                                                                                     Select(p => new UsbProductModel
+                                                                                     {
+                                                                                         ProductId   = p.ProductId,
+                                                                                         ProductName = p.Product
+                                                                                     }).ToList()
+            });
         }
     }
 }

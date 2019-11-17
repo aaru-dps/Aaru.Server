@@ -1,4 +1,4 @@
-@model UsbVendor
+@model UsbVendorModel
 
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -34,7 +34,7 @@
     // ****************************************************************************/
 }
 <div>
-    <h4>UsbVendor</h4>
+    <h4>USB vendor</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -52,5 +52,42 @@
     </dl>
 </div>
 <div>
+    <h4>Products:</h4>
+    <table class="table" id="tblProducts">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].ProductId)
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductId)
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<div>
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </div>
+
+@section scripts{
+    <script crossorigin="anonymous" integrity="sha256-L4cf7m/cgC51e7BFPxQcKZcXryzSju7VYBKJLOKPHvQ=" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script language="javascript">
+$(document).ready(function() {
+    $('#tblProducts').DataTable();
+} );
+</script>
+}
