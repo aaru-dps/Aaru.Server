@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using DiscImageChef.Server.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -14,7 +15,7 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         public UsbVendorsController(DicServerContext context) => _context = context;
 
         // GET: Admin/UsbVendors
-        public async Task<IActionResult> Index() => View(await _context.UsbVendors.ToListAsync());
+        public async Task<IActionResult> Index() => View(await _context.UsbVendors.OrderBy(v => v.Vendor).ThenBy(v => v.VendorId).ToListAsync());
 
         // GET: Admin/UsbVendors/Details/5
         public async Task<IActionResult> Details(int? id)

@@ -32,6 +32,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
@@ -51,7 +52,9 @@ namespace DiscImageChef.Server.Models
         [Key]
         public int Id { get; set; }
 
+        [DisplayName("Manufacturer ID"), DisplayFormat(DataFormatString = "0x{0:X4}")]
         public ushort   VendorId     { get; set; }
+        [DisplayName("Manufacturer")]
         public string   Vendor       { get; set; }
         public DateTime AddedWhen    { get; set; }
         public DateTime ModifiedWhen { get; set; }
