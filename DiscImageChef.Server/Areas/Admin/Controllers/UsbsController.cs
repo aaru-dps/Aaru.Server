@@ -36,60 +36,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             return View(usb);
         }
 
-        // GET: Admin/Usbs/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if(id == null)
-            {
-                return NotFound();
-            }
-
-            Usb usb = await _context.Usb.FindAsync(id);
-
-            if(usb == null)
-            {
-                return NotFound();
-            }
-
-            return View(usb);
-        }
-
-        // POST: Admin/Usbs/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(
-            int id, [Bind("Id,VendorID,ProductID,Manufacturer,Product,RemovableMedia,Descriptors")]
-            Usb usb)
-        {
-            if(id != usb.Id)
-            {
-                return NotFound();
-            }
-
-            if(ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(usb);
-                    await _context.SaveChangesAsync();
-                }
-                catch(DbUpdateConcurrencyException)
-                {
-                    if(!UsbExists(usb.Id))
-                    {
-                        return NotFound();
-                    }
-
-                    throw;
-                }
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(usb);
-        }
-
         // GET: Admin/Usbs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -118,7 +64,5 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-        bool UsbExists(int id) => _context.Usb.Any(e => e.Id == id);
-    }
+   }
 }
