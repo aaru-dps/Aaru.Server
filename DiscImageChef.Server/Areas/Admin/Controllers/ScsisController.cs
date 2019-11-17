@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using DiscImageChef.CommonTypes.Metadata;
-using DiscImageChef.Decoders.ATA;
 using DiscImageChef.Decoders.SCSI;
 using DiscImageChef.Server.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -161,8 +160,8 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                 LeftId = id, RightId = rightId
             };
 
-            CommonTypes.Metadata.Scsi left  = _context.Scsi.FirstOrDefault(l => l.Id == id);
-            CommonTypes.Metadata.Scsi right = _context.Scsi.FirstOrDefault(r => r.Id == rightId);
+            Scsi left  = _context.Scsi.FirstOrDefault(l => l.Id == id);
+            Scsi right = _context.Scsi.FirstOrDefault(r => r.Id == rightId);
 
             if(left is null)
             {
@@ -213,8 +212,8 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                 return View(model);
             }
 
-            var leftValue  = left.Inquiry.Value;
-            var rightValue = right.Inquiry.Value;
+            Inquiry.SCSIInquiry leftValue  = left.Inquiry.Value;
+            Inquiry.SCSIInquiry rightValue = right.Inquiry.Value;
 
             foreach(FieldInfo fieldInfo in leftValue.GetType().GetFields())
             {
@@ -280,6 +279,51 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             model.AreEqual = model.LeftValues.Count == 0 && model.RightValues.Count == 0;
 
             return View(model);
+        }
+
+        public IActionResult ConsolidateWithIds(int masterId, int slaveId)
+        {
+            Scsi master = _context.Scsi.FirstOrDefault(m => m.Id == masterId);
+
+            if(master is null)
+                return RedirectToAction(nameof(Compare), new
+                {
+                    id = masterId, rightId = slaveId
+                });
+
+            Scsi slave = _context.Scsi.FirstOrDefault(m => m.Id == slaveId);
+
+            if(slave is null)
+                return RedirectToAction(nameof(Compare), new
+                {
+                    id = masterId, rightId = slaveId
+                });
+
+            foreach(Device scsiDevice in _context.Devices.Where(d => d.SCSI.Id == slaveId))
+            {
+                scsiDevice.SCSI = master;
+            }
+
+            foreach(UploadedReport scsiReport in _context.Reports.Where(d => d.SCSI.Id == slaveId))
+            {
+                scsiReport.SCSI = master;
+            }
+
+            foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.ScsiId == slaveId))
+            {
+                testedMedia.ScsiId = masterId;
+                _context.Update(testedMedia);
+            }
+
+            if(master.ReadCapabilities is null &&
+               slave.ReadCapabilities != null)
+                master.ReadCapabilities = slave.ReadCapabilities;
+
+            _context.Scsi.Remove(slave);
+
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
