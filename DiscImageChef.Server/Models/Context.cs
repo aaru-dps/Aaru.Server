@@ -151,11 +151,11 @@ namespace DiscImageChef.Server.Models
             modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.SupportedDensity", b =>
             {
                 b.HasOne("DiscImageChef.CommonTypes.Metadata.Ssc", null).WithMany("SupportedDensities").
-                  HasForeignKey("SscId").OnDelete(DeleteBehavior.SetNull);
+                  HasForeignKey("SscId").OnDelete(DeleteBehavior.Cascade);
 
                 b.HasOne("DiscImageChef.CommonTypes.Metadata.TestedSequentialMedia", null).
                   WithMany("SupportedDensities").HasForeignKey("TestedSequentialMediaId").
-                  OnDelete(DeleteBehavior.SetNull);
+                  OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.TestedMedia", b =>
