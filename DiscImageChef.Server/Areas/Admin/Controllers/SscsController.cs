@@ -36,59 +36,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             return View(ssc);
         }
 
-        // GET: Admin/Sscs/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if(id == null)
-            {
-                return NotFound();
-            }
-
-            Ssc ssc = await _context.Ssc.FindAsync(id);
-
-            if(ssc == null)
-            {
-                return NotFound();
-            }
-
-            return View(ssc);
-        }
-
-        // POST: Admin/Sscs/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,BlockSizeGranularity,MaxBlockLength,MinBlockLength")]
-                                              Ssc ssc)
-        {
-            if(id != ssc.Id)
-            {
-                return NotFound();
-            }
-
-            if(ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(ssc);
-                    await _context.SaveChangesAsync();
-                }
-                catch(DbUpdateConcurrencyException)
-                {
-                    if(!SscExists(ssc.Id))
-                    {
-                        return NotFound();
-                    }
-
-                    throw;
-                }
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(ssc);
-        }
-
         // GET: Admin/Sscs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -117,7 +64,5 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-        bool SscExists(int id) => _context.Ssc.Any(e => e.Id == id);
     }
 }
