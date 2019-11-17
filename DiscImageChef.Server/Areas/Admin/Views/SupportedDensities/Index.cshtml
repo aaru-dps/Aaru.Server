@@ -37,19 +37,22 @@
     <thead>
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.Organization)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Capacity)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.PrimaryCode)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.SecondaryCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Writable)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Duplicate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DefaultDensity)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.BitsPerMm)
@@ -61,16 +64,13 @@
             @Html.DisplayNameFor(model => model.Tracks)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Capacity)
+            @Html.DisplayNameFor(model => model.DefaultDensity)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Organization)
+            @Html.DisplayNameFor(model => model.Writable)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Duplicate)
         </th>
         <th></th>
     </tr>
@@ -80,19 +80,22 @@
     {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Organization)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Capacity)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.PrimaryCode)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SecondaryCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Writable)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Duplicate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DefaultDensity)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BitsPerMm)
@@ -104,16 +107,13 @@
                 @Html.DisplayFor(modelItem => item.Tracks)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Capacity)
+                @Html.DisplayFor(modelItem => item.DefaultDensity)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Organization)
+                @Html.DisplayFor(modelItem => item.Writable)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => item.Duplicate)
             </td>
             <td>
                 <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
