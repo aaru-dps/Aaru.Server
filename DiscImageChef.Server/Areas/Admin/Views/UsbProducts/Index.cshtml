@@ -1,4 +1,4 @@
-@model IEnumerable<UsbProduct>
+@model IEnumerable<UsbProductModel>
 
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -37,19 +37,13 @@
     <thead>
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.VendorName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.ProductId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Product)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AddedWhen)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifiedWhen)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Vendor)
         </th>
     </tr>
     </thead>
@@ -58,19 +52,13 @@
     {
         <tr>
             <td>
+                <a asp-controller="UsbVendors" asp-action="Details" asp-route-id="@item.VendorId" target="_blank">@Html.DisplayFor(modelItem => item.VendorName)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.ProductId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AddedWhen)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedWhen)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vendor.Id)
             </td>
         </tr>
     }

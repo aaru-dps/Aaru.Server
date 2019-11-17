@@ -3,9 +3,7 @@ using System.Threading.Tasks;
 using DiscImageChef.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 
 namespace DiscImageChef.Server.Areas.Admin.Controllers
 {
@@ -17,11 +15,14 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         public UsbProductsController(DicServerContext context) => _context = context;
 
         // GET: Admin/UsbProducts
-        public async Task<IActionResult> Index()
-        {
-            IIncludableQueryable<UsbProduct, UsbVendor> dicServerContext = _context.UsbProducts.Include(u => u.Vendor);
-
-            return View(await dicServerContext.ToListAsync());
-        }
+        public async Task<IActionResult> Index() => View(await _context.
+                                                               UsbProducts.Include(u => u.Vendor).
+                                                               OrderBy(p => p.Vendor.Vendor).ThenBy(p => p.Product).
+                                                               ThenBy(p => p.ProductId).Select(p => new UsbProductModel
+                                                               {
+                                                                   ProductId  = p.ProductId, ProductName = p.Product,
+                                                                   VendorId   = p.Vendor.Id,
+                                                                   VendorName = p.Vendor.Vendor
+                                                               }).ToListAsync());
     }
 }
