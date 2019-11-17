@@ -246,6 +246,9 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
             Identify.IdentifyDevice? leftNullable  = left.IdentifyDevice;
             Identify.IdentifyDevice? rightNullable = right.IdentifyDevice;
+            model.ValueNames  = new List<string>();
+            model.LeftValues  = new List<string>();
+            model.RightValues = new List<string>();
 
             if(!leftNullable.HasValue &&
                !rightNullable.HasValue)
@@ -276,9 +279,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
             Identify.IdentifyDevice leftValue  = left.IdentifyDevice.Value;
             Identify.IdentifyDevice rightValue = right.IdentifyDevice.Value;
-            model.ValueNames  = new List<string>();
-            model.LeftValues  = new List<string>();
-            model.RightValues = new List<string>();
 
             foreach(FieldInfo fieldInfo in leftValue.GetType().GetFields())
             {
