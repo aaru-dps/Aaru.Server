@@ -263,9 +263,38 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                         if(ll[i].Equals(rl[i]))
                             continue;
 
-                        model.ValueNames.Add(fieldInfo.Name);
-                        model.LeftValues.Add("[]");
-                        model.RightValues.Add("[]");
+                        switch(fieldInfo.Name)
+                        {
+                            case nameof(Inquiry.SCSIInquiry.KreonIdentifier):
+                            case nameof(Inquiry.SCSIInquiry.ProductIdentification):
+                            case nameof(Inquiry.SCSIInquiry.ProductRevisionLevel):
+                            case nameof(Inquiry.SCSIInquiry.Qt_ModuleRevision):
+                            case nameof(Inquiry.SCSIInquiry.Seagate_Copyright):
+                            case nameof(Inquiry.SCSIInquiry.Seagate_DriveSerialNumber):
+                            case nameof(Inquiry.SCSIInquiry.Seagate_ServoPROMPartNo):
+                            case nameof(Inquiry.SCSIInquiry.VendorIdentification):
+                                byte[] lb = new byte[ll.Count];
+                                byte[] rb = new byte[rl.Count];
+
+                                for(int j = 0; j < ll.Count; j++)
+                                    lb[j] = (byte)ll[j];
+
+                                for(int j = 0; j < ll.Count; j++)
+                                    rb[j] = (byte)rl[j];
+
+                                model.ValueNames.Add(fieldInfo.Name);
+                                model.LeftValues.Add($"{StringHandlers.CToString(lb)  ?? "<null>"}");
+                                model.RightValues.Add($"{StringHandlers.CToString(rb) ?? "<null>"}");
+
+                                break;
+
+                            default:
+                                model.ValueNames.Add(fieldInfo.Name);
+                                model.LeftValues.Add("[]");
+                                model.RightValues.Add("[]");
+
+                                break;
+                        }
 
                         break;
                     }
