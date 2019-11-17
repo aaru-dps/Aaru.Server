@@ -20,24 +20,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             View(await _context.Ssc.OrderBy(s => s.MinBlockLength).ThenBy(s => s.MaxBlockLength).
                                 ThenBy(s => s.BlockSizeGranularity).ToListAsync());
 
-        // GET: Admin/Sscs/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if(id == null)
-            {
-                return NotFound();
-            }
-
-            Ssc ssc = await _context.Ssc.FirstOrDefaultAsync(m => m.Id == id);
-
-            if(ssc == null)
-            {
-                return NotFound();
-            }
-
-            return View(ssc);
-        }
-
         // GET: Admin/Sscs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
