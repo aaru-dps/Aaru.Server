@@ -36,61 +36,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             return View(scsi);
         }
 
-        // GET: Admin/Scsis/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if(id == null)
-            {
-                return NotFound();
-            }
-
-            Scsi scsi = await _context.Scsi.FindAsync(id);
-
-            if(scsi == null)
-            {
-                return NotFound();
-            }
-
-            return View(scsi);
-        }
-
-        // POST: Admin/Scsis/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(
-            int id, [Bind(
-                "Id,InquiryData,SupportsModeSense6,SupportsModeSense10,SupportsModeSubpages,ModeSense6Data,ModeSense10Data,ModeSense6CurrentData,ModeSense10CurrentData,ModeSense6ChangeableData,ModeSense10ChangeableData")]
-            Scsi scsi)
-        {
-            if(id != scsi.Id)
-            {
-                return NotFound();
-            }
-
-            if(ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(scsi);
-                    await _context.SaveChangesAsync();
-                }
-                catch(DbUpdateConcurrencyException)
-                {
-                    if(!ScsiExists(scsi.Id))
-                    {
-                        return NotFound();
-                    }
-
-                    throw;
-                }
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(scsi);
-        }
-
         // GET: Admin/Scsis/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
