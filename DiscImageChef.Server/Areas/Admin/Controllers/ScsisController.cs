@@ -20,7 +20,16 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         public ScsisController(DicServerContext context) => _context = context;
 
         // GET: Admin/Scsis
-        public async Task<IActionResult> Index() => View(await _context.Scsi.ToListAsync());
+        public IActionResult Index() => View(_context.Scsi.AsEnumerable().
+                                                      OrderBy(m =>
+                                                                  StringHandlers.CToString(m.Inquiry?.
+                                                                                             VendorIdentification)).
+                                                      ThenBy(m =>
+                                                                 StringHandlers.CToString(m.Inquiry?.
+                                                                                            ProductIdentification)).
+                                                      ThenBy(m =>
+                                                                 StringHandlers.CToString(m.Inquiry?.
+                                                                                            ProductRevisionLevel)));
 
         // GET: Admin/Scsis/Details/5
         public async Task<IActionResult> Details(int? id)
