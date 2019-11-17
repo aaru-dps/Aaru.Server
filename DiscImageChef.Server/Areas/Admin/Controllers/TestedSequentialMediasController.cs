@@ -20,25 +20,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             View(await _context.TestedSequentialMedia.OrderBy(m => m.Manufacturer).ThenBy(m => m.Model).
                                 ThenBy(m => m.MediumTypeName).ToListAsync());
 
-        // GET: Admin/TestedSequentialMedias/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if(id == null)
-            {
-                return NotFound();
-            }
-
-            TestedSequentialMedia testedSequentialMedia =
-                await _context.TestedSequentialMedia.FirstOrDefaultAsync(m => m.Id == id);
-
-            if(testedSequentialMedia == null)
-            {
-                return NotFound();
-            }
-
-            return View(testedSequentialMedia);
-        }
-
         // GET: Admin/TestedSequentialMedias/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
