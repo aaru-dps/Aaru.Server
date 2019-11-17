@@ -37,22 +37,19 @@
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.VendorID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductID)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Manufacturer)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Product)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RemovableMedia)
+            @Html.DisplayNameFor(model => model.VendorID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Descriptors)
+            @Html.DisplayNameFor(model => model.ProductID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RemovableMedia)
         </th>
         <th></th>
     </tr>
@@ -62,22 +59,19 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.VendorID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductID)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Manufacturer)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Product)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RemovableMedia)
+                @Html.DisplayFor(modelItem => item.VendorID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Descriptors)
+                @Html.DisplayFor(modelItem => item.ProductID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RemovableMedia)
             </td>
             <td>
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
