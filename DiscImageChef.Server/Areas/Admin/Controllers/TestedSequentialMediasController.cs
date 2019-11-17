@@ -16,7 +16,9 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         public TestedSequentialMediasController(DicServerContext context) => _context = context;
 
         // GET: Admin/TestedSequentialMedias
-        public async Task<IActionResult> Index() => View(await _context.TestedSequentialMedia.ToListAsync());
+        public async Task<IActionResult> Index() =>
+            View(await _context.TestedSequentialMedia.OrderBy(m => m.Manufacturer).ThenBy(m => m.Model).
+                                ThenBy(m => m.MediumTypeName).ToListAsync());
 
         // GET: Admin/TestedSequentialMedias/Details/5
         public async Task<IActionResult> Details(int? id)
