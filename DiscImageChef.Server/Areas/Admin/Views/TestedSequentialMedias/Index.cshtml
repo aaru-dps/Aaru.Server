@@ -37,13 +37,13 @@
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CanReadMediaSerial)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Density)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Manufacturer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MediumTypeName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.MediaIsRecognized)
@@ -52,16 +52,10 @@
             @Html.DisplayNameFor(model => model.MediumType)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MediumTypeName)
+            @Html.DisplayNameFor(model => model.Density)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Model)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModeSense6Data)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModeSense10Data)
+            @Html.DisplayNameFor(model => model.CanReadMediaSerial)
         </th>
         <th></th>
     </tr>
@@ -71,13 +65,13 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.CanReadMediaSerial)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Density)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Manufacturer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MediumTypeName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MediaIsRecognized)
@@ -86,19 +80,12 @@
                 @Html.DisplayFor(modelItem => item.MediumType)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MediumTypeName)
+                @Html.DisplayFor(modelItem => item.Density)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Model)
+                @Html.DisplayFor(modelItem => item.CanReadMediaSerial)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ModeSense6Data)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModeSense10Data)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">Edit</a>
                 <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
             </td>
