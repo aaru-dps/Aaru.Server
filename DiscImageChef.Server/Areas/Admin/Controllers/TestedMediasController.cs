@@ -16,7 +16,12 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         public TestedMediasController(DicServerContext context) => _context = context;
 
         // GET: Admin/TestedMedias
-        public async Task<IActionResult> Index() => View(await _context.TestedMedia.ToListAsync());
+        public async Task<IActionResult> Index() => View(await _context.
+                                                               TestedMedia.OrderBy(m => m.Manufacturer).
+                                                               ThenBy(m => m.Model).ThenBy(m => m.MediumTypeName).
+                                                               ThenBy(m => m.MediaIsRecognized).
+                                                               ThenBy(m => m.LongBlockSize).ThenBy(m => m.BlockSize).
+                                                               ThenBy(m => m.Blocks).ToListAsync());
 
         // GET: Admin/TestedMedias/Details/5
         public async Task<IActionResult> Details(int? id)
