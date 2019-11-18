@@ -34,14 +34,22 @@
     // ****************************************************************************/
 }
 <div>
-<h4>TestedMedia</h4>
+<h4>Tested media</h4>
 <hr />
 <dl class="row">
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.IdentifyData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.IdentifyData)
+    @if (Model.IdentifyData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.IdentifyData)">@Model.IdentifyData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.Blocks)
@@ -245,7 +253,14 @@
     @Html.DisplayNameFor(model => model.Density)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.Density)
+    @if (Model.Density is null)
+    {
+        @("<null>")
+    }
+    else
+    {
+        @Html.DisplayFor(model => model.Density)
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.LongBlockSize)
@@ -269,7 +284,14 @@
     @Html.DisplayNameFor(model => model.MediumType)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.MediumType)
+    @if (Model.MediumType is null)
+    {
+        @("<null>")
+    }
+    else
+    {
+        @Html.DisplayFor(model => model.MediumType)
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.MediumTypeName)
@@ -395,13 +417,29 @@
     @Html.DisplayNameFor(model => model.ModeSense6Data)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.ModeSense6Data)
+    @if (Model.ModeSense6Data != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ModeSense6Data)">@Model.ModeSense6Data.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.ModeSense10Data)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.ModeSense10Data)
+    @if (Model.ModeSense10Data != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ModeSense10Data)">@Model.ModeSense10Data.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.LBASectors)
@@ -443,13 +481,27 @@
     @Html.DisplayNameFor(model => model.UnformattedBPT)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.UnformattedBPT)
+    @if (Model.UnformattedBPT is null)
+    {
+        @("<null>")
+    }
+    else
+    {
+        @Html.DisplayFor(model => model.UnformattedBPT)
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.UnformattedBPS)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.UnformattedBPS)
+    @if (Model.UnformattedBPS is null)
+    {
+        @("<null>")
+    }
+    else
+    {
+        @Html.DisplayFor(model => model.UnformattedBPS)
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.SupportsReadDmaLba)
@@ -557,385 +609,897 @@
     @Html.DisplayNameFor(model => model.IntersessionLeadInData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.IntersessionLeadInData)
+    @if (Model.IntersessionLeadInData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.IntersessionLeadInData)">@Model.IntersessionLeadInData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.IntersessionLeadOutData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.IntersessionLeadOutData)
+    @if (Model.IntersessionLeadOutData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.IntersessionLeadOutData)">@Model.IntersessionLeadOutData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.Read6Data)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.Read6Data)
+    @if (Model.Read6Data != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Read6Data)">@Model.Read6Data.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.Read10Data)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.Read10Data)
+    @if (Model.Read10Data != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Read10Data)">@Model.Read10Data.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.Read12Data)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.Read12Data)
+    @if (Model.Read12Data != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Read12Data)">@Model.Read12Data.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.Read16Data)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.Read16Data)
+    @if (Model.Read16Data != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Read16Data)">@Model.Read16Data.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.ReadLong10Data)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.ReadLong10Data)
+    @if (Model.ReadLong10Data != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadLong10Data)">@Model.ReadLong10Data.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.ReadLong16Data)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.ReadLong16Data)
+    @if (Model.ReadLong16Data != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadLong16Data)">@Model.ReadLong16Data.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.ReadSectorsData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.ReadSectorsData)
+    @if (Model.ReadSectorsData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadSectorsData)">@Model.ReadSectorsData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.ReadSectorsRetryData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.ReadSectorsRetryData)
+    @if (Model.ReadSectorsRetryData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadSectorsRetryData)">@Model.ReadSectorsRetryData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.ReadDmaData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.ReadDmaData)
+    @if (Model.ReadDmaData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadDmaData)">@Model.ReadDmaData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.ReadDmaRetryData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.ReadDmaRetryData)
+    @if (Model.ReadDmaRetryData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadDmaRetryData)">@Model.ReadDmaRetryData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.ReadLbaData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.ReadLbaData)
+    @if (Model.ReadLbaData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadLbaData)">@Model.ReadLbaData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.ReadRetryLbaData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.ReadRetryLbaData)
+    @if (Model.ReadRetryLbaData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadRetryLbaData)">@Model.ReadRetryLbaData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.ReadDmaLbaData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.ReadDmaLbaData)
+    @if (Model.ReadDmaLbaData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadDmaLbaData)">@Model.ReadDmaLbaData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.ReadDmaRetryLbaData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.ReadDmaRetryLbaData)
+    @if (Model.ReadDmaRetryLbaData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadDmaRetryLbaData)">@Model.ReadDmaRetryLbaData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.ReadLba48Data)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.ReadLba48Data)
+    @if (Model.ReadLba48Data != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadLba48Data)">@Model.ReadLba48Data.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.ReadDmaLba48Data)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.ReadDmaLba48Data)
+    @if (Model.ReadDmaLba48Data != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadDmaLba48Data)">@Model.ReadDmaLba48Data.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.ReadLongData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.ReadLongData)
+    @if (Model.ReadLongData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadLongData)">@Model.ReadLongData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.ReadLongRetryData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.ReadLongRetryData)
+    @if (Model.ReadLongRetryData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadLongRetryData)">@Model.ReadLongRetryData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.ReadLongLbaData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.ReadLongLbaData)
+    @if (Model.ReadLongLbaData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadLongLbaData)">@Model.ReadLongLbaData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.ReadLongRetryLbaData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.ReadLongRetryLbaData)
+    @if (Model.ReadLongRetryLbaData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadLongRetryLbaData)">@Model.ReadLongRetryLbaData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.TocData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.TocData)
+    @if (Model.TocData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.TocData)">@Model.TocData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.FullTocData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.FullTocData)
+    @if (Model.FullTocData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.FullTocData)">@Model.FullTocData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.AtipData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.AtipData)
+    @if (Model.AtipData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.AtipData)">@Model.AtipData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.PmaData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.PmaData)
+    @if (Model.PmaData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.PmaData)">@Model.PmaData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.ReadCdData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.ReadCdData)
+    @if (Model.ReadCdData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadCdData)">@Model.ReadCdData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.ReadCdMsfData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.ReadCdMsfData)
+    @if (Model.ReadCdMsfData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadCdMsfData)">@Model.ReadCdMsfData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.ReadCdFullData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.ReadCdFullData)
+    @if (Model.ReadCdFullData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadCdFullData)">@Model.ReadCdFullData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.ReadCdMsfFullData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.ReadCdMsfFullData)
+    @if (Model.ReadCdMsfFullData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadCdMsfFullData)">@Model.ReadCdMsfFullData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.Track1PregapData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.Track1PregapData)
+    @if (Model.Track1PregapData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Track1PregapData)">@Model.Track1PregapData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.LeadInData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.LeadInData)
+    @if (Model.LeadInData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.LeadInData)">@Model.LeadInData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.LeadOutData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.LeadOutData)
+    @if (Model.LeadOutData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.LeadOutData)">@Model.LeadOutData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.C2PointersData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.C2PointersData)
+    @if (Model.C2PointersData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.C2PointersData)">@Model.C2PointersData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.PQSubchannelData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.PQSubchannelData)
+    @if (Model.PQSubchannelData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.PQSubchannelData)">@Model.PQSubchannelData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.RWSubchannelData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.RWSubchannelData)
+    @if (Model.RWSubchannelData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.RWSubchannelData)">@Model.RWSubchannelData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.CorrectedSubchannelData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.CorrectedSubchannelData)
+    @if (Model.CorrectedSubchannelData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.CorrectedSubchannelData)">@Model.CorrectedSubchannelData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.PQSubchannelWithC2Data)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.PQSubchannelWithC2Data)
+    @if (Model.PQSubchannelWithC2Data != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.PQSubchannelWithC2Data)">@Model.PQSubchannelWithC2Data.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.RWSubchannelWithC2Data)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.RWSubchannelWithC2Data)
+    @if (Model.RWSubchannelWithC2Data != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.RWSubchannelWithC2Data)">@Model.RWSubchannelWithC2Data.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.CorrectedSubchannelWithC2Data)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.CorrectedSubchannelWithC2Data)
+    @if (Model.CorrectedSubchannelWithC2Data != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.CorrectedSubchannelWithC2Data)">@Model.CorrectedSubchannelWithC2Data.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.PfiData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.PfiData)
+    @if (Model.PfiData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.PfiData)">@Model.PfiData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.DmiData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.DmiData)
+    @if (Model.DmiData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.DmiData)">@Model.DmiData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.CmiData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.CmiData)
+    @if (Model.CmiData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.CmiData)">@Model.CmiData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.DvdBcaData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.DvdBcaData)
+    @if (Model.DvdBcaData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.DvdBcaData)">@Model.DvdBcaData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.DvdAacsData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.DvdAacsData)
+    @if (Model.DvdAacsData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.DvdAacsData)">@Model.DvdAacsData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.DvdDdsData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.DvdDdsData)
+    @if (Model.DvdDdsData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.DvdDdsData)">@Model.DvdDdsData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.DvdSaiData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.DvdSaiData)
+    @if (Model.DvdSaiData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.DvdSaiData)">@Model.DvdSaiData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.PriData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.PriData)
+    @if (Model.PriData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.PriData)">@Model.PriData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.EmbossedPfiData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.EmbossedPfiData)
+    @if (Model.EmbossedPfiData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.EmbossedPfiData)">@Model.EmbossedPfiData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.AdipData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.AdipData)
+    @if (Model.AdipData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.AdipData)">@Model.AdipData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.DcbData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.DcbData)
+    @if (Model.DcbData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.DcbData)">@Model.DcbData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.HdCmiData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.HdCmiData)
+    @if (Model.HdCmiData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.HdCmiData)">@Model.HdCmiData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.DvdLayerData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.DvdLayerData)
+    @if (Model.DvdLayerData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.DvdLayerData)">@Model.DvdLayerData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.BluBcaData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.BluBcaData)
+    @if (Model.BluBcaData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.BluBcaData)">@Model.BluBcaData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.BluDdsData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.BluDdsData)
+    @if (Model.BluDdsData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.BluDdsData)">@Model.BluDdsData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.BluSaiData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.BluSaiData)
+    @if (Model.BluSaiData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.BluSaiData)">@Model.BluSaiData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.BluDiData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.BluDiData)
+    @if (Model.BluDiData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.BluDiData)">@Model.BluDiData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.BluPacData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.BluPacData)
+    @if (Model.PlextorReadCddaData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.PlextorReadCddaData)">@Model.PlextorReadCddaData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.PlextorReadCddaData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.PlextorReadCddaData)
+    @if (Model.PlextorReadCddaData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.PlextorReadCddaData)">@Model.PlextorReadCddaData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.PioneerReadCddaData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.PioneerReadCddaData)
+    @if (Model.PioneerReadCddaData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.PioneerReadCddaData)">@Model.PioneerReadCddaData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.PioneerReadCddaMsfData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.PioneerReadCddaMsfData)
+    @if (Model.PioneerReadCddaMsfData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.PioneerReadCddaMsfData)">@Model.PioneerReadCddaMsfData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.NecReadCddaData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.NecReadCddaData)
+    @if (Model.NecReadCddaData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.NecReadCddaData)">@Model.NecReadCddaData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.PlextorReadRawDVDData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.PlextorReadRawDVDData)
+    @if (Model.PlextorReadRawDVDData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.PlextorReadRawDVDData)">@Model.PlextorReadRawDVDData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 <dt class="col-sm-2">
     @Html.DisplayNameFor(model => model.HLDTSTReadRawDVDData)
 </dt>
 <dd class="col-sm-10">
-    @Html.DisplayFor(model => model.HLDTSTReadRawDVDData)
+    @if (Model.HLDTSTReadRawDVDData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.HLDTSTReadRawDVDData)">@Model.HLDTSTReadRawDVDData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+        ;
+    }
 </dd>
 </dl>
 </div>
