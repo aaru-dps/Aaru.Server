@@ -42,37 +42,33 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(
-            int id, [Bind(
-                "Id,CanReadMediaSerial,Density,Manufacturer,MediaIsRecognized,MediumType,MediumTypeName,Model,ModeSense6Data,ModeSense10Data")]
-            TestedSequentialMedia testedSequentialMedia)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Manufacturer,MediumTypeName,Model")]
+                                              TestedSequentialMedia testedSequentialMedia)
         {
             if(id != testedSequentialMedia.Id)
             {
                 return NotFound();
             }
 
-            if(ModelState.IsValid)
+            if(!ModelState.IsValid)
+                return View(testedSequentialMedia);
+
+            try
             {
-                try
+                _context.Update(testedSequentialMedia);
+                await _context.SaveChangesAsync();
+            }
+            catch(DbUpdateConcurrencyException)
+            {
+                if(!TestedSequentialMediaExists(testedSequentialMedia.Id))
                 {
-                    _context.Update(testedSequentialMedia);
-                    await _context.SaveChangesAsync();
-                }
-                catch(DbUpdateConcurrencyException)
-                {
-                    if(!TestedSequentialMediaExists(testedSequentialMedia.Id))
-                    {
-                        return NotFound();
-                    }
-
-                    throw;
+                    return NotFound();
                 }
 
-                return RedirectToAction(nameof(Index));
+                throw;
             }
 
-            return View(testedSequentialMedia);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Admin/TestedSequentialMedias/Delete/5

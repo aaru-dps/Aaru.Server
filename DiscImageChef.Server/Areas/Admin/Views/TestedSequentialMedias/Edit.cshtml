@@ -33,7 +33,7 @@
     // Copyright © 2011-2019 Natalia Portillo
     // ****************************************************************************/
 }
-<h4>TestedSequentialMedia</h4>
+<h4>Tested sequential media</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -41,34 +41,9 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="CanReadMediaSerial" class="control-label"></label>
-                <input asp-for="CanReadMediaSerial" class="form-control" />
-                <span asp-validation-for="CanReadMediaSerial" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Density" class="control-label"></label>
-                <input asp-for="Density" class="form-control" />
-                <span asp-validation-for="Density" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Manufacturer" class="control-label"></label>
                 <input asp-for="Manufacturer" class="form-control" />
                 <span asp-validation-for="Manufacturer" class="text-danger"></span>
-            </div>
-            <div class="form-check form-group">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="MediaIsRecognized" /> @Html.DisplayNameFor(model => model.MediaIsRecognized)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="MediumType" class="control-label"></label>
-                <input asp-for="MediumType" class="form-control" />
-                <span asp-validation-for="MediumType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MediumTypeName" class="control-label"></label>
-                <input asp-for="MediumTypeName" class="form-control" />
-                <span asp-validation-for="MediumTypeName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Model" class="control-label"></label>
@@ -76,14 +51,9 @@
                 <span asp-validation-for="Model" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ModeSense6Data" class="control-label"></label>
-                <input asp-for="ModeSense6Data" class="form-control" />
-                <span asp-validation-for="ModeSense6Data" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModeSense10Data" class="control-label"></label>
-                <input asp-for="ModeSense10Data" class="form-control" />
-                <span asp-validation-for="ModeSense10Data" class="text-danger"></span>
+                <label asp-for="MediumTypeName" class="control-label"></label>
+                <input asp-for="MediumTypeName" class="form-control" />
+                <span asp-validation-for="MediumTypeName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input class="btn btn-primary" type="submit" value="Save" />
