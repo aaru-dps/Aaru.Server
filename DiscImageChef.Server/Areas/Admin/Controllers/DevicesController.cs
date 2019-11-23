@@ -15,7 +15,9 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         public DevicesController(DicServerContext context) => _context = context;
 
         // GET: Admin/Devices
-        public async Task<IActionResult> Index() => View(await _context.Devices.ToListAsync());
+        public async Task<IActionResult> Index() =>
+            View(await _context.Devices.OrderBy(d => d.Manufacturer).ThenBy(d => d.Model).ThenBy(d => d.Revision).
+                                ThenBy(d => d.CompactFlash).ThenBy(d => d.Type).ToListAsync());
 
         // GET: Admin/Devices/Details/5
         public async Task<IActionResult> Details(int? id)
