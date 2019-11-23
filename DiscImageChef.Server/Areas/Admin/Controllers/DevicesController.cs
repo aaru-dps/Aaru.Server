@@ -17,8 +17,11 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
         // GET: Admin/Devices
         public async Task<IActionResult> Index() =>
-            View(await _context.Devices.OrderBy(d => d.Manufacturer).ThenBy(d => d.Model).ThenBy(d => d.Revision).
-                                ThenBy(d => d.CompactFlash).ThenBy(d => d.Type).ToListAsync());
+            View(await _context.Devices.OrderBy(d => d.Manufacturer).
+                                ThenBy(d => d.Model).
+                                ThenBy(d => d.Revision).
+                                ThenBy(d => d.CompactFlash).
+                                ThenBy(d => d.Type).ToListAsync());
 
         // GET: Admin/Devices/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -30,7 +33,15 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
             var model = new DeviceDetails
             {
-                Report = await _context.Devices.FirstOrDefaultAsync(m => m.Id == id)
+                Report = await _context.Devices.Include(d => d.ATA).
+                                        Include(d => d.ATAPI).
+                                        Include(d => d.SCSI).
+                                        Include(d => d.MultiMediaCard).
+                                        Include(d => d.SecureDigital).
+                                        Include(d => d.USB).
+                                        Include(d => d.FireWire).
+                                        Include(d => d.PCMCIA).
+                                        FirstOrDefaultAsync(m => m.Id == id)
             };
 
             if(model.Report is null)
@@ -64,13 +75,31 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                                       Where(d => d.Manufacturer == model.Report.Manufacturer &&
                                                  d.Model        == model.Report.Model        &&
                                                  d.Revision     == model.Report.Revision).
-                                      Include(d => d.Report).ToList();
+                                      Include(d => d.Report).
+                                      Include(d => d.Report.ATA).
+                                      Include(d => d.Report.ATAPI).
+                                      Include(d => d.Report.SCSI).
+                                      Include(d => d.Report.MultiMediaCard).
+                                      Include(d => d.Report.SecureDigital).
+                                      Include(d => d.Report.USB).
+                                      Include(d => d.Report.FireWire).
+                                      Include(d => d.Report.PCMCIA).ToList();
 
             model.StatsButManufacturer = _context.DeviceStats.
                                                   Where(d => d.Model    == model.Report.Model &&
                                                              d.Revision == model.Report.Revision).
-                                                  Include(d => d.Report).AsEnumerable().
-                                                  Where(d => model.StatsAll.All(s => s.Id != d.Id)).ToList();
+                                                  Include(d => d.Report).
+                                                  Include(d => d.Report).
+                                                  Include(d => d.Report.ATA).
+                                                  Include(d => d.Report.ATAPI).
+                                                  Include(d => d.Report.SCSI).
+                                                  Include(d => d.Report.MultiMediaCard).
+                                                  Include(d => d.Report.SecureDigital).
+                                                  Include(d => d.Report.USB).
+                                                  Include(d => d.Report.FireWire).
+                                                  Include(d => d.Report.PCMCIA).
+                                                  AsEnumerable().Where(d => model.StatsAll.All(s => s.Id != d.Id)).
+                                                  ToList();
 
             return View(model);
         }
