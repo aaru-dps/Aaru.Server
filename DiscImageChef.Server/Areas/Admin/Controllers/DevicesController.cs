@@ -78,6 +78,17 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             model.ReadCapabilitiesId =
                 model.Report.ATA?.ReadCapabilities?.Id ?? model.Report.SCSI?.ReadCapabilities?.Id ?? 0;
 
+            // So we can check, as we know IDs with 0 will never exist, and EFCore does not allow null propagation in the LINQ
+            int ataId   = model.Report.ATA?.Id                    ?? 0;
+            int atapiId = model.Report.ATAPI?.Id                  ?? 0;
+            int scsiId  = model.Report.SCSI?.Id                   ?? 0;
+            int mmcId   = model.Report.SCSI?.MultiMediaDevice?.Id ?? 0;
+
+            model.TestedMedias = _context.TestedMedia.
+                                          Where(t => t.AtaId == ataId || t.AtaId == atapiId || t.ScsiId == scsiId ||
+                                                     t.MmcId == mmcId).OrderBy(t => t.Manufacturer).
+                                          ThenBy(t => t.Model).ThenBy(t => t.MediumTypeName).ToList();
+
             return View(model);
         }
 

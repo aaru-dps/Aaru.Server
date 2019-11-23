@@ -385,3 +385,44 @@
         </table>
     </div>
 }
+@if (Model.TestedMedias.Count > 0)
+{
+    <div>
+        <h4>Tested media:</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TestedMedias[0].Manufacturer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TestedMedias[0].Model)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TestedMedias[0].MediumTypeName)
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.TestedMedias)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Manufacturer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MediumTypeName)
+                    </td>
+                    <td>
+                        <a asp-controller="TestedMedias" asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary" target="_blank">Details</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
