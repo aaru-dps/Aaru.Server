@@ -60,36 +60,33 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(
-            int id, [Bind("UploadedWhen,Id,CompactFlash,Manufacturer,Model,Revision,Type")]
-            UploadedReport uploadedReport)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CompactFlash,Manufacturer,Model,Revision,Type")]
+                                              UploadedReport uploadedReport)
         {
             if(id != uploadedReport.Id)
             {
                 return NotFound();
             }
 
-            if(ModelState.IsValid)
+            if(!ModelState.IsValid)
+                return View(uploadedReport);
+
+            try
             {
-                try
+                _context.Update(uploadedReport);
+                await _context.SaveChangesAsync();
+            }
+            catch(DbUpdateConcurrencyException)
+            {
+                if(!UploadedReportExists(uploadedReport.Id))
                 {
-                    _context.Update(uploadedReport);
-                    await _context.SaveChangesAsync();
-                }
-                catch(DbUpdateConcurrencyException)
-                {
-                    if(!UploadedReportExists(uploadedReport.Id))
-                    {
-                        return NotFound();
-                    }
-
-                    throw;
+                    return NotFound();
                 }
 
-                return RedirectToAction(nameof(Index));
+                throw;
             }
 
-            return View(uploadedReport);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Admin/Reports/Delete/5
