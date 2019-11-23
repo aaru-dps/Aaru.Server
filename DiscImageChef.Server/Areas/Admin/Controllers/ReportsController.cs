@@ -28,14 +28,39 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            UploadedReport uploadedReport = await _context.Reports.FirstOrDefaultAsync(m => m.Id == id);
+            var model = new UploadedReportDetails
+            {
+                Report = await _context.Reports.FirstOrDefaultAsync(m => m.Id == id)
+            };
 
-            if(uploadedReport == null)
+            if(model.Report is null)
             {
                 return NotFound();
             }
 
-            return View(uploadedReport);
+            model.ReportAll = _context.
+                              Devices.Where(d => d.Manufacturer == model.Report.Manufacturer &&
+                                                 d.Model        == model.Report.Model        &&
+                                                 d.Revision     == model.Report.Revision).
+                              Select(d => d.Id).ToList();
+
+            model.ReportButManufacturer = _context.
+                                          Devices.Where(d => d.Model    == model.Report.Model &&
+                                                             d.Revision == model.Report.Revision).Select(d => d.Id).
+                                          Where(d => model.ReportAll.All(r => r != d)).ToList();
+
+            model.SameAll = _context.
+                            Reports.Where(d => d.Manufacturer == model.Report.Manufacturer &&
+                                               d.Model        == model.Report.Model        &&
+                                               d.Revision     == model.Report.Revision     &&
+                                               d.Id           != id).Select(d => d.Id).ToList();
+
+            model.SameButManufacturer = _context.
+                                        Reports.Where(d => d.Model    == model.Report.Model    &&
+                                                           d.Revision == model.Report.Revision && d.Id != id).
+                                        Select(d => d.Id).Where(d => model.SameAll.All(r => r != d)).ToList();
+
+            return View(model);
         }
 
         // GET: Admin/Reports/Edit/5
