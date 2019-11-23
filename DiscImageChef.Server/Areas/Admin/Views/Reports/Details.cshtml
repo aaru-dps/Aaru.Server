@@ -51,6 +51,54 @@
     <a asp-action="Promote" asp-route-id="@Model.Report.Id" class="btn btn-secondary">Promote</a>
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </div>
+@if (Model.Report.ATA != null)
+{
+    <div>
+        <a asp-controller="Atas" asp-action="Details" asp-route-id="@Model.Report.ATA.Id" target="_blank">ATA report</a>
+    </div>
+}
+@if (Model.Report.ATAPI != null)
+{
+    <div>
+        <a asp-controller="Atas" asp-action="Details" asp-route-id="@Model.Report.ATAPI.Id" target="_blank">ATAPI report</a>
+    </div>
+}
+@if (Model.Report.SCSI != null)
+{
+    <div>
+        <a asp-controller="Scsis" asp-action="Details" asp-route-id="@Model.Report.SCSI.Id" target="_blank">SCSI report</a>
+    </div>
+}
+@if (Model.Report.MultiMediaCard != null)
+{
+    <div>
+        <a asp-controller="MmcSds" asp-action="Details" asp-route-id="@Model.Report.MultiMediaCard.Id" target="_blank">MultiMediaCard report</a>
+    </div>
+}
+@if (Model.Report.SecureDigital != null)
+{
+    <div>
+        <a asp-controller="MmcSds" asp-action="Details" asp-route-id="@Model.Report.SecureDigital.Id" target="_blank">SecureDigital report</a>
+    </div>
+}
+@if (Model.Report.USB != null)
+{
+    <div>
+        <a asp-controller="Usbs" asp-action="Details" asp-route-id="@Model.Report.USB.Id" target="_blank">USB report</a>
+    </div>
+}
+@if (Model.Report.FireWire != null)
+{
+    <div>
+        Has a FireWire report.
+    </div>
+}
+@if (Model.Report.PCMCIA != null)
+{
+    <div>
+        Has a PCMCIA report.
+    </div>
+}
 @if (Model.SameAll.Count > 0)
 {
     <div>
