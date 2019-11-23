@@ -9,5 +9,6 @@ namespace DiscImageChef.Server.Models
         public List<int>      SameButManufacturer   { get; set; }
         public List<int>      ReportAll             { get; set; }
         public List<int>      ReportButManufacturer { get; set; }
+        public int            ReadCapabilitiesId    { get; set; }
     }
 }

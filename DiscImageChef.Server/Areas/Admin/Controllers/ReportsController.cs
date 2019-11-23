@@ -30,10 +30,11 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
             var model = new UploadedReportDetails
             {
-                Report = await _context.Reports.Include(d => d.ATA).Include(d => d.ATAPI).Include(d => d.SCSI).
-                                        Include(d => d.MultiMediaCard).Include(d => d.SecureDigital).
-                                        Include(d => d.USB).Include(d => d.FireWire).Include(d => d.PCMCIA).
-                                        FirstOrDefaultAsync(m => m.Id == id)
+                Report = await _context.Reports.Include(d => d.ATA).Include(d => d.ATA.ReadCapabilities).
+                                        Include(d => d.ATAPI).Include(d => d.SCSI).
+                                        Include(d => d.SCSI.ReadCapabilities).Include(d => d.MultiMediaCard).
+                                        Include(d => d.SecureDigital).Include(d => d.USB).Include(d => d.FireWire).
+                                        Include(d => d.PCMCIA).FirstOrDefaultAsync(m => m.Id == id)
             };
 
             if(model.Report is null)
@@ -62,6 +63,9 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                                         Reports.Where(d => d.Model    == model.Report.Model    &&
                                                            d.Revision == model.Report.Revision && d.Id != id).
                                         Select(d => d.Id).Where(d => model.SameAll.All(r => r != d)).ToList();
+
+            model.ReadCapabilitiesId =
+                model.Report.ATA?.ReadCapabilities?.Id ?? model.Report.SCSI?.ReadCapabilities?.Id ?? 0;
 
             return View(model);
         }
