@@ -28,14 +28,51 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Device device = await _context.Devices.FirstOrDefaultAsync(m => m.Id == id);
+            var model = new DeviceDetails
+            {
+                Report = await _context.Devices.FirstOrDefaultAsync(m => m.Id == id)
+            };
 
-            if(device == null)
+            if(model.Report is null)
             {
                 return NotFound();
             }
 
-            return View(device);
+            model.ReportAll = _context.
+                              Reports.Where(d => d.Manufacturer == model.Report.Manufacturer &&
+                                                 d.Model        == model.Report.Model        &&
+                                                 d.Revision     == model.Report.Revision).
+                              Select(d => d.Id).ToList();
+
+            model.ReportButManufacturer = _context.
+                                          Reports.Where(d => d.Model    == model.Report.Model &&
+                                                             d.Revision == model.Report.Revision).Select(d => d.Id).
+                                          Where(d => model.ReportAll.All(r => r != d)).ToList();
+
+            model.SameAll = _context.
+                            Devices.Where(d => d.Manufacturer == model.Report.Manufacturer &&
+                                               d.Model        == model.Report.Model        &&
+                                               d.Revision     == model.Report.Revision     &&
+                                               d.Id           != id).Select(d => d.Id).ToList();
+
+            model.SameButManufacturer = _context.
+                                        Devices.Where(d => d.Model    == model.Report.Model    &&
+                                                           d.Revision == model.Report.Revision && d.Id != id).
+                                        Select(d => d.Id).Where(d => model.SameAll.All(r => r != d)).ToList();
+
+            model.StatsAll = _context.DeviceStats.
+                                      Where(d => d.Manufacturer == model.Report.Manufacturer &&
+                                                 d.Model        == model.Report.Model        &&
+                                                 d.Revision     == model.Report.Revision).
+                                      Include(d => d.Report).ToList();
+
+            model.StatsButManufacturer = _context.DeviceStats.
+                                                  Where(d => d.Model    == model.Report.Model &&
+                                                             d.Revision == model.Report.Revision).
+                                                  Include(d => d.Report).AsEnumerable().
+                                                  Where(d => model.StatsAll.All(s => s.Id != d.Id)).ToList();
+
+            return View(model);
         }
 
         // GET: Admin/Devices/Edit/5

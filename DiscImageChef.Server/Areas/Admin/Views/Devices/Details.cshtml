@@ -1,4 +1,4 @@
-@model Device
+@model DeviceDetails
 
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -38,56 +38,296 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.AddedWhen)
+            @Html.DisplayNameFor(model => model.Report.AddedWhen)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.AddedWhen)
+            @Html.DisplayFor(model => model.Report.AddedWhen)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ModifiedWhen)
+            @Html.DisplayNameFor(model => model.Report.ModifiedWhen)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModifiedWhen)
+            @Html.DisplayFor(model => model.Report.ModifiedWhen)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.OptimalMultipleSectorsRead)
+            @Html.DisplayNameFor(model => model.Report.Manufacturer)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.OptimalMultipleSectorsRead)
+            @Html.DisplayFor(model => model.Report.Manufacturer)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CompactFlash)
+            @Html.DisplayNameFor(model => model.Report.Model)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CompactFlash)
+            @Html.DisplayFor(model => model.Report.Model)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Manufacturer)
+            @Html.DisplayNameFor(model => model.Report.Revision)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Manufacturer)
+            @Html.DisplayFor(model => model.Report.Revision)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Model)
+            @Html.DisplayNameFor(model => model.Report.CompactFlash)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Model)
+            @Html.DisplayFor(model => model.Report.CompactFlash)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Revision)
+            @Html.DisplayNameFor(model => model.Report.OptimalMultipleSectorsRead)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Revision)
+            @Html.DisplayFor(model => model.Report.OptimalMultipleSectorsRead)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Type)
+            @Html.DisplayNameFor(model => model.Report.Type)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Type)
+            @Html.DisplayFor(model => model.Report.Type)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+    <a asp-action="Edit" asp-route-id="@Model.Report.Id" class="btn btn-primary">Edit</a>
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </div>
+@if (Model.SameAll.Count > 0)
+{
+    <div>
+        <h4>Other device reports with same manufacturer, model and revision:</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.SameAll)
+            {
+                <tr>
+                    <td>
+                        @item
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item" class="btn btn-primary" target="_blank">Details</a>
+                        <a asp-action="Merge" asp-route-slave="@item" asp-route-master="@Model.Report.Id" class="btn btn-secondary">Merge</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+@if (Model.SameButManufacturer.Count > 0)
+{
+    <div>
+        <h4>Other device reports with same model and revision:</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.SameButManufacturer)
+            {
+                <tr>
+                    <td>
+                        @item
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item" class="btn btn-primary" target="_blank">Details</a>
+                        <a asp-action="Merge" asp-route-slave="@item" asp-route-master="@Model.Report.Id" class="btn btn-secondary">Merge</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+@if (Model.ReportAll.Count > 0)
+{
+    <div>
+        <h4>Uploaded reports with same manufacturer, model and revision:</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.ReportAll)
+            {
+                <tr>
+                    <td>
+                        @item
+                    </td>
+                    <td>
+                        <a asp-controller="UploadReport" asp-action="Details" asp-route-id="@item" class="btn btn-primary" target="_blank">Details</a>
+                        <a asp-action="MergeReports" asp-route-reportId="@item" asp-route-deviceId="@Model.Report.Id" class="btn btn-secondary">Merge</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+@if (Model.ReportButManufacturer.Count > 0)
+{
+    <div>
+        <h4>Device reports with same model and revision:</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.ReportButManufacturer)
+            {
+                <tr>
+                    <td>
+                        @item
+                    </td>
+                    <td>
+                        <a asp-controller="UploadReport" asp-action="Details" asp-route-id="@item" class="btn btn-primary" target="_blank">Details</a>
+                        <a asp-action="MergeReports" asp-route-reportId="@item" asp-route-deviceId="@Model.Report.Id" class="btn btn-secondary">Merge</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+@if (Model.StatsAll.Count > 0)
+{
+    <div>
+        <h4>Device statistics with same manufacturer, model and revision:</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatsAll[0].Manufacturer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatsAll[0].Model)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatsAll[0].Revision)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatsAll[0].Bus)
+                </th>
+                <th>
+                    Has a linked report?
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.StatsAll)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Manufacturer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Revision)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Bus)
+                    </td>
+                    <td>
+                        @if (item.Report is null)
+                        {
+                            @("No")
+                        }
+                        else
+                        {
+                            @("Yes")
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="LinkReports" asp-route-statsId="@item.Id" asp-route-deviceId="@Model.Report.Id" class="btn btn-secondary">Link</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+@if (Model.StatsButManufacturer.Count > 0)
+{
+    <div>
+        <h4>Device statistics with same model and revision:</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatsButManufacturer[0].Manufacturer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatsButManufacturer[0].Model)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatsButManufacturer[0].Revision)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatsButManufacturer[0].Bus)
+                </th>
+                <th>
+                    Has a linked report?
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.StatsButManufacturer)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Manufacturer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Revision)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Bus)
+                    </td>
+                    <td>
+                        @if (item.Report is null)
+                        {
+                            @("No")
+                        }
+                        else
+                        {
+                            @("Yes")
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="LinkReports" asp-route-statsId="@item.Id" asp-route-deviceId="@Model.Report.Id" class="btn btn-secondary">Link</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
