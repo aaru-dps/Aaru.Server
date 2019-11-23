@@ -16,7 +16,9 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         public ReportsController(DicServerContext context) => _context = context;
 
         // GET: Admin/Reports
-        public async Task<IActionResult> Index() => View(await _context.Reports.ToListAsync());
+        public async Task<IActionResult> Index() =>
+            View(await _context.Reports.OrderBy(r => r.Manufacturer).ThenBy(r => r.Model).ThenBy(r => r.Revision).
+                                ThenBy(r => r.CompactFlash).ThenBy(r => r.Type).ToListAsync());
 
         // GET: Admin/Reports/Details/5
         public async Task<IActionResult> Details(int? id)
