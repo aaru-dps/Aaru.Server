@@ -32,9 +32,10 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             {
                 Report = await _context.Reports.Include(d => d.ATA).Include(d => d.ATA.ReadCapabilities).
                                         Include(d => d.ATAPI).Include(d => d.SCSI).
-                                        Include(d => d.SCSI.ReadCapabilities).Include(d => d.MultiMediaCard).
-                                        Include(d => d.SecureDigital).Include(d => d.USB).Include(d => d.FireWire).
-                                        Include(d => d.PCMCIA).FirstOrDefaultAsync(m => m.Id == id)
+                                        Include(d => d.SCSI.MultiMediaDevice).Include(d => d.SCSI.ReadCapabilities).
+                                        Include(d => d.MultiMediaCard).Include(d => d.SecureDigital).
+                                        Include(d => d.USB).Include(d => d.FireWire).Include(d => d.PCMCIA).
+                                        FirstOrDefaultAsync(m => m.Id == id)
             };
 
             if(model.Report is null)
@@ -66,6 +67,17 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
             model.ReadCapabilitiesId =
                 model.Report.ATA?.ReadCapabilities?.Id ?? model.Report.SCSI?.ReadCapabilities?.Id ?? 0;
+
+            // So we can check, as we know IDs with 0 will never exist, and EFCore does not allow null propagation in the LINQ
+            int ataId   = model.Report.ATA?.Id                    ?? 0;
+            int atapiId = model.Report.ATAPI?.Id                  ?? 0;
+            int scsiId  = model.Report.SCSI?.Id                   ?? 0;
+            int mmcId   = model.Report.SCSI?.MultiMediaDevice?.Id ?? 0;
+
+            model.TestedMedias = _context.TestedMedia.
+                                          Where(t => t.AtaId == ataId || t.AtaId == atapiId || t.ScsiId == scsiId ||
+                                                     t.MmcId == mmcId).OrderBy(t => t.Manufacturer).
+                                          ThenBy(t => t.Model).ThenBy(t => t.MediumTypeName).ToList();
 
             return View(model);
         }
