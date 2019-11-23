@@ -11,5 +11,6 @@ namespace DiscImageChef.Server.Models
         public List<int>        ReportButManufacturer { get; set; }
         public List<DeviceStat> StatsAll              { get; set; }
         public List<DeviceStat> StatsButManufacturer  { get; set; }
+        public int ReadCapabilitiesId { get; set; }
     }
 }

@@ -75,6 +75,9 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                                                              d.Report.Id != model.Report.Id).AsEnumerable().
                                                   Where(d => model.StatsAll.All(s => s.Id != d.Id)).ToList();
 
+            model.ReadCapabilitiesId =
+                model.Report.ATA?.ReadCapabilities?.Id ?? model.Report.SCSI?.ReadCapabilities?.Id ?? 0;
+
             return View(model);
         }
 

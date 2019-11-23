@@ -91,6 +91,12 @@
     <a asp-action="Edit" asp-route-id="@Model.Report.Id" class="btn btn-primary">Edit</a>
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </div>
+@if (Model.ReadCapabilitiesId != 0)
+{
+    <div>
+        <a asp-controller="TestedMedias" asp-action="Details" asp-route-id="@Model.ReadCapabilitiesId" target="_blank">Read capabilities</a>
+    </div>
+}
 @if (Model.Report.ATA != null)
 {
     <div>
