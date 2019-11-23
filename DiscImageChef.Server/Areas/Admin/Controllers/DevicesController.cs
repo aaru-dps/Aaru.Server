@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using DiscImageChef.Server.Models;
@@ -60,8 +61,7 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
-            int id, [Bind(
-                "AddedWhen,ModifiedWhen,OptimalMultipleSectorsRead,Id,CompactFlash,Manufacturer,Model,Revision,Type")]
+            int id, [Bind("OptimalMultipleSectorsRead,Id,CompactFlash,Manufacturer,Model,Revision,Type")]
             Device device)
         {
             if(id != device.Id)
@@ -69,27 +69,26 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            if(ModelState.IsValid)
+            if(!ModelState.IsValid)
+                return View(device);
+
+            try
             {
-                try
+                device.ModifiedWhen = DateTime.UtcNow;
+                _context.Update(device);
+                await _context.SaveChangesAsync();
+            }
+            catch(DbUpdateConcurrencyException)
+            {
+                if(!DeviceExists(device.Id))
                 {
-                    _context.Update(device);
-                    await _context.SaveChangesAsync();
-                }
-                catch(DbUpdateConcurrencyException)
-                {
-                    if(!DeviceExists(device.Id))
-                    {
-                        return NotFound();
-                    }
-
-                    throw;
+                    return NotFound();
                 }
 
-                return RedirectToAction(nameof(Index));
+                throw;
             }
 
-            return View(device);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Admin/Devices/Delete/5
