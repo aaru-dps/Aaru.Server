@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using DiscImageChef.CommonTypes.Metadata;
 using DiscImageChef.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -200,6 +201,76 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             return RedirectToAction(nameof(DevicesController.Details), "Devices", new
             {
                 id = res.Entity.Id
+            });
+        }
+
+        public IActionResult Merge(int? master, int? slave)
+        {
+            if(master is null ||
+               slave is null)
+                return NotFound();
+
+            UploadedReport masterReport = _context.Reports.FirstOrDefault(m => m.Id == master);
+            UploadedReport slaveReport  = _context.Reports.FirstOrDefault(m => m.Id == slave);
+
+            if(masterReport is null ||
+               slaveReport is null)
+                return NotFound();
+
+            if(masterReport.ATAId != null &&
+               masterReport.ATAId != slaveReport.ATAId)
+            {
+                foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.AtaId == slaveReport.ATAId))
+                {
+                    testedMedia.AtaId = masterReport.ATAId;
+                    _context.Update(testedMedia);
+                }
+            }
+            else if(masterReport.ATAId == null &&
+                    slaveReport.ATAId  != null)
+            {
+                masterReport.ATAId = slaveReport.ATAId;
+                _context.Update(masterReport);
+            }
+
+            if(masterReport.ATAPIId != null &&
+               masterReport.ATAPIId != slaveReport.ATAPIId)
+            {
+                foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.AtaId == slaveReport.ATAPIId))
+                {
+                    testedMedia.AtaId = masterReport.ATAPIId;
+                    _context.Update(testedMedia);
+                }
+            }
+            else if(masterReport.ATAPIId == null &&
+                    slaveReport.ATAPIId  != null)
+            {
+                masterReport.ATAPIId = slaveReport.ATAPIId;
+                _context.Update(masterReport);
+            }
+
+            if(masterReport.SCSIId != null &&
+               masterReport.SCSIId != slaveReport.SCSIId)
+            {
+                foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.ScsiId == slaveReport.SCSIId))
+                {
+                    testedMedia.ScsiId = masterReport.SCSIId;
+                    _context.Update(testedMedia);
+                }
+            }
+            else if(masterReport.SCSIId == null &&
+                    slaveReport.SCSIId  != null)
+            {
+                masterReport.SCSIId = slaveReport.SCSIId;
+                _context.Update(masterReport);
+            }
+
+            _context.Remove(slaveReport);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Details), new
+            {
+                Id = master
             });
         }
     }
