@@ -253,5 +253,75 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                 Id = master
             });
         }
+
+        public IActionResult MergeReports(int? deviceId, int? reportId)
+        {
+            if(deviceId is null ||
+               reportId is null)
+                return NotFound();
+
+            Device         device = _context.Devices.FirstOrDefault(m => m.Id == deviceId);
+            UploadedReport report = _context.Reports.FirstOrDefault(m => m.Id == reportId);
+
+            if(device is null ||
+               report is null)
+                return NotFound();
+
+            if(device.ATAId != null &&
+               device.ATAId != report.ATAId)
+            {
+                foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.AtaId == report.ATAId))
+                {
+                    testedMedia.AtaId = device.ATAId;
+                    _context.Update(testedMedia);
+                }
+            }
+            else if(device.ATAId == null &&
+                    report.ATAId != null)
+            {
+                device.ATAId = report.ATAId;
+                _context.Update(device);
+            }
+
+            if(device.ATAPIId != null &&
+               device.ATAPIId != report.ATAPIId)
+            {
+                foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.AtaId == report.ATAPIId))
+                {
+                    testedMedia.AtaId = device.ATAPIId;
+                    _context.Update(testedMedia);
+                }
+            }
+            else if(device.ATAPIId == null &&
+                    report.ATAPIId != null)
+            {
+                device.ATAPIId = report.ATAPIId;
+                _context.Update(device);
+            }
+
+            if(device.SCSIId != null &&
+               device.SCSIId != report.SCSIId)
+            {
+                foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.ScsiId == report.SCSIId))
+                {
+                    testedMedia.ScsiId = device.SCSIId;
+                    _context.Update(testedMedia);
+                }
+            }
+            else if(device.SCSIId == null &&
+                    report.SCSIId != null)
+            {
+                device.SCSIId = report.SCSIId;
+                _context.Update(device);
+            }
+
+            _context.Remove(report);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Details), new
+            {
+                Id = deviceId
+            });
+        }
     }
 }
