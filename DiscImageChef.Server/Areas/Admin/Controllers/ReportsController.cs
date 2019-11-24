@@ -33,9 +33,9 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                 Report = await _context.Reports.Include(d => d.ATA).Include(d => d.ATA.ReadCapabilities).
                                         Include(d => d.ATAPI).Include(d => d.SCSI).
                                         Include(d => d.SCSI.MultiMediaDevice).Include(d => d.SCSI.ReadCapabilities).
-                                        Include(d => d.MultiMediaCard).Include(d => d.SecureDigital).
-                                        Include(d => d.USB).Include(d => d.FireWire).Include(d => d.PCMCIA).
-                                        FirstOrDefaultAsync(m => m.Id == id)
+                                        Include(d => d.SCSI.SequentialDevice).Include(d => d.MultiMediaCard).
+                                        Include(d => d.SecureDigital).Include(d => d.USB).Include(d => d.FireWire).
+                                        Include(d => d.PCMCIA).FirstOrDefaultAsync(m => m.Id == id)
             };
 
             if(model.Report is null)
