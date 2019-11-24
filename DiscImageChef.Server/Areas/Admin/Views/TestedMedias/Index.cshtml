@@ -33,64 +33,65 @@
     // Copyright © 2011-2019 Natalia Portillo
     // ****************************************************************************/
 }
+<h4>Tested media</h4>
 <table class="table">
-<thead>
-<tr>
-<th>
-    @Html.DisplayNameFor(model => model.Manufacturer)
-</th>
-<th>
-    @Html.DisplayNameFor(model => model.Model)
-</th>
-<th>
-    @Html.DisplayNameFor(model => model.MediumTypeName)
-</th>
-<th>
-    @Html.DisplayNameFor(model => model.MediaIsRecognized)
-</th>
-<th>
-    @Html.DisplayNameFor(model => model.Blocks)
-</th>
-<th>
-    @Html.DisplayNameFor(model => model.BlockSize)
-</th>
-<th>
-    @Html.DisplayNameFor(model => model.LongBlockSize)
-</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-@foreach (var item in Model)
-{
+    <thead>
     <tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Manufacturer)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Model)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.MediumTypeName)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.MediaIsRecognized)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Blocks)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.BlockSize)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.LongBlockSize)
-    </td>
-    <td>
-        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
-        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">Edit</a>
-        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
-    </td>
+        <th>
+            @Html.DisplayNameFor(model => model.Manufacturer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MediumTypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MediaIsRecognized)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Blocks)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BlockSize)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LongBlockSize)
+        </th>
+        <th></th>
     </tr>
-}
-</tbody>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Manufacturer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MediumTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MediaIsRecognized)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Blocks)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BlockSize)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LongBlockSize)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">Edit</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
 </table>

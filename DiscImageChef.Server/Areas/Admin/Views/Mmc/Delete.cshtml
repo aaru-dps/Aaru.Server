@@ -1,3 +1,5 @@
+@using DiscImageChef.Decoders.SCSI
+@using DiscImageChef.Server.Core
 @model DiscImageChef.CommonTypes.Metadata.Mmc
 
 @{
@@ -35,16 +37,9 @@
 }
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Mmc</h4>
+    <h4>SCSI CD-ROM capabilities page - ID = @Model.Id</h4>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ModeSense2AData)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ModeSense2AData)
-        </dd>
-    </dl>
+    @Html.Raw(Html.EncodedMultiLineText(Modes.PrettifyModePage_2A(Model.ModeSense2AData)))
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <a asp-action="Index" class="btn btn-primary">Back to List</a>

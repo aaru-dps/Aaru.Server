@@ -31,6 +31,7 @@
 // ****************************************************************************/
 
 using System;
+using System.ComponentModel;
 using DiscImageChef.CommonTypes.Metadata;
 
 namespace DiscImageChef.Server.Models
@@ -57,6 +58,7 @@ namespace DiscImageChef.Server.Models
             Type           = report.Type;
         }
 
+        [DisplayName("Uploaded when")]
         public DateTime UploadedWhen { get; set; }
 
         public int? ATAId            { get; set; }

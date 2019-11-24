@@ -349,6 +349,9 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
         public IActionResult Find(int id, string manufacturer, string model, string revision, string bus)
         {
+            if(model is null)
+                return NotFound();
+
             var found = new FindReportModel
             {
                 Id          = id, Manufacturer = manufacturer, Model = model, Revision = revision,
