@@ -1435,6 +1435,25 @@
         @("<null>")
     }
 </dd>
+<dt class="col-sm-2">
+    @Html.DisplayNameFor(model => model.CanReadCdScrambled)
+</dt>
+<dd class="col-sm-10">
+    @Html.DisplayFor(model => model.CanReadCdScrambled)
+</dd>
+<dt class="col-sm-2">
+    @Html.DisplayNameFor(model => model.ReadCdScrambledData)
+</dt>
+<dd class="col-sm-10">
+    @if (Model.ReadCdScrambledData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadCdScrambledData)">@Model.ReadCdScrambledData.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+    }
+</dd>
 </dl>
 <form asp-action="Delete">
     <input type="hidden" asp-for="Id" />

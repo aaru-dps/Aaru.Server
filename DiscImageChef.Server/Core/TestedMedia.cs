@@ -380,6 +380,9 @@ namespace DiscImageChef.Server.App_Start
                 if(testedMedia.CanReadingIntersessionLeadOut == true)
                     mediaOneValue.Add("Device can read Lead-Out between sessions");
 
+                if(testedMedia.CanReadCdScrambled == true)
+                    mediaOneValue.Add("Device can read scrambled sectors using standard READ CD command");
+
                 mediaOneValue.Add("");
             }
         }

@@ -452,6 +452,10 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                     buffer = testedMedia.Track1PregapData;
 
                     break;
+                case nameof(testedMedia.ReadCdScrambledData):
+                    buffer = testedMedia.ReadCdScrambledData;
+
+                    break;
                 default: return NotFound();
             }
 

@@ -624,6 +624,8 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<bool?>("CanReadCMI").HasColumnType("tinyint(1)");
 
+                b.Property<bool?>("CanReadCdScrambled").HasColumnType("tinyint(1)");
+
                 b.Property<bool?>("CanReadCorrectedSubchannel").HasColumnType("tinyint(1)");
 
                 b.Property<bool?>("CanReadCorrectedSubchannelWithC2").HasColumnType("tinyint(1)");
@@ -787,6 +789,8 @@ namespace DiscImageChef.Server.Migrations
                 b.Property<byte[]>("ReadCdMsfData").HasColumnType("longblob");
 
                 b.Property<byte[]>("ReadCdMsfFullData").HasColumnType("longblob");
+
+                b.Property<byte[]>("ReadCdScrambledData").HasColumnType("longblob");
 
                 b.Property<byte[]>("ReadDmaData").HasColumnType("longblob");
 
