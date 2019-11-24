@@ -426,3 +426,44 @@
         </table>
     </div>
 }
+@if (Model.TestedSequentialMedias.Count > 0)
+{
+    <div>
+        <h4>Tested media:</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TestedSequentialMedias[0].Manufacturer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TestedSequentialMedias[0].Model)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TestedSequentialMedias[0].MediumTypeName)
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.TestedSequentialMedias)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Manufacturer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MediumTypeName)
+                    </td>
+                    <td>
+                        <a asp-controller="TestedSequentialMedias" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" target="_blank">Delete</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}

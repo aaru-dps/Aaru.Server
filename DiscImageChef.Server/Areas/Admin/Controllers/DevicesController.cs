@@ -85,11 +85,16 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             int atapiId = model.Report.ATAPI?.Id                  ?? 0;
             int scsiId  = model.Report.SCSI?.Id                   ?? 0;
             int mmcId   = model.Report.SCSI?.MultiMediaDevice?.Id ?? 0;
+            int sscId   = model.Report.SCSI?.SequentialDevice?.Id ?? 0;
 
             model.TestedMedias = _context.TestedMedia.
                                           Where(t => t.AtaId == ataId || t.AtaId == atapiId || t.ScsiId == scsiId ||
                                                      t.MmcId == mmcId).OrderBy(t => t.Manufacturer).
                                           ThenBy(t => t.Model).ThenBy(t => t.MediumTypeName).ToList();
+
+            model.TestedSequentialMedias = _context.TestedSequentialMedia.Where(t => t.SscId == sscId).
+                                                    OrderBy(t => t.Manufacturer).ThenBy(t => t.Model).
+                                                    ThenBy(t => t.MediumTypeName).ToList();
 
             return View(model);
         }
