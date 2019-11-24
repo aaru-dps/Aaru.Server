@@ -83,7 +83,7 @@ namespace DiscImageChef.Server.Models
 
             IConfigurationBuilder builder       = new ConfigurationBuilder().AddJsonFile("appsettings.json");
             IConfigurationRoot    configuration = builder.Build();
-            optionsBuilder.UseMySql(configuration.GetConnectionString("DefaultConnection"));
+            optionsBuilder.UseMySql(configuration.GetConnectionString("DefaultConnection")).UseLazyLoadingProxies();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

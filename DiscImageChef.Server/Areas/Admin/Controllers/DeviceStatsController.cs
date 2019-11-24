@@ -16,7 +16,7 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
         // GET: Admin/DeviceStats
         public async Task<IActionResult> Index() =>
-            View(await _context.DeviceStats.Include(d => d.Report).OrderBy(d => d.Manufacturer).ThenBy(d => d.Model).
+            View(await _context.DeviceStats.OrderBy(d => d.Manufacturer).ThenBy(d => d.Model).
                                 ThenBy(d => d.Bus).ToListAsync());
 
         // GET: Admin/DeviceStats/Edit/5

@@ -22,7 +22,7 @@ namespace DiscImageChef.Server
         {
             services.AddDbContext<DicServerContext>(options =>
                                                         options.UseMySql(Configuration.
-                                                                             GetConnectionString("DefaultConnection")));
+                                                                             GetConnectionString("DefaultConnection")).UseLazyLoadingProxies());
 
             services.AddDefaultIdentity<IdentityUser>(options =>
             {

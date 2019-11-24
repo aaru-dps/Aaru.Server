@@ -31,12 +31,7 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
             var model = new DeviceDetails
             {
-                Report = await _context.Devices.Include(d => d.ATA).Include(d => d.ATA.ReadCapabilities).
-                                        Include(d => d.ATAPI).Include(d => d.SCSI).
-                                        Include(d => d.SCSI.MultiMediaDevice).Include(d => d.SCSI.ReadCapabilities).
-                                        Include(d => d.SCSI.SequentialDevice).Include(d => d.MultiMediaCard).
-                                        Include(d => d.SecureDigital).Include(d => d.USB).Include(d => d.FireWire).
-                                        Include(d => d.PCMCIA).FirstOrDefaultAsync(m => m.Id == id)
+                Report = await _context.Devices.FirstOrDefaultAsync(m => m.Id == id)
             };
 
             if(model.Report is null)
@@ -66,13 +61,13 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                                                            d.Revision == model.Report.Revision && d.Id != id).
                                         Select(d => d.Id).Where(d => model.SameAll.All(r => r != d)).ToList();
 
-            model.StatsAll = _context.DeviceStats.Include(d => d.Report).
+            model.StatsAll = _context.DeviceStats.
                                       Where(d => d.Manufacturer == model.Report.Manufacturer &&
                                                  d.Model        == model.Report.Model        &&
                                                  d.Revision     == model.Report.Revision     &&
                                                  d.Report.Id    != model.Report.Id).ToList();
 
-            model.StatsButManufacturer = _context.DeviceStats.Include(d => d.Report).
+            model.StatsButManufacturer = _context.DeviceStats.
                                                   Where(d => d.Model     == model.Report.Model    &&
                                                              d.Revision  == model.Report.Revision &&
                                                              d.Report.Id != model.Report.Id).AsEnumerable().
