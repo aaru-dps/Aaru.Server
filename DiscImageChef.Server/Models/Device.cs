@@ -32,6 +32,7 @@
 
 using System;
 using System.ComponentModel;
+using DiscImageChef.CommonTypes.Enums;
 using DiscImageChef.CommonTypes.Metadata;
 
 namespace DiscImageChef.Server.Models
@@ -59,11 +60,41 @@ namespace DiscImageChef.Server.Models
             Type           = report.Type;
         }
 
+        public Device(int? ataId, int? atapiId, int? firewireId, int? multimediacardId, int? pcmciaId,
+                      int? securedigitalId, int? scsiId, int? usbId, DateTime uploadedWhen, string manufacturer,
+                      string model, string revision, bool compactFlash, DeviceType type)
+        {
+            ATAId            = ataId;
+            ATAPIId          = atapiId;
+            FireWireId       = firewireId;
+            MultiMediaCardId = multimediacardId;
+            PCMCIAId         = pcmciaId;
+            SecureDigitalId  = securedigitalId;
+            SCSIId           = scsiId;
+            USBId            = usbId;
+            AddedWhen        = uploadedWhen;
+            ModifiedWhen     = DateTime.UtcNow;
+            Manufacturer     = manufacturer;
+            Model            = model;
+            Revision         = revision;
+            CompactFlash     = compactFlash;
+            Type             = type;
+        }
+
         public         DateTime          AddedWhen    { get; set; }
         public         DateTime?         ModifiedWhen { get; set; }
         public virtual CompactDiscOffset CdOffset     { get; set; }
 
         [DefaultValue(0)]
         public int OptimalMultipleSectorsRead { get; set; }
+
+        public int? ATAId            { get; set; }
+        public int? ATAPIId          { get; set; }
+        public int? FireWireId       { get; set; }
+        public int? MultiMediaCardId { get; set; }
+        public int? PCMCIAId         { get; set; }
+        public int? SecureDigitalId  { get; set; }
+        public int? SCSIId           { get; set; }
+        public int? USBId            { get; set; }
     }
 }

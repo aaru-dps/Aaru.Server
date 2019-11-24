@@ -58,5 +58,14 @@ namespace DiscImageChef.Server.Models
         }
 
         public DateTime UploadedWhen { get; set; }
+
+        public int? ATAId            { get; set; }
+        public int? ATAPIId          { get; set; }
+        public int? FireWireId       { get; set; }
+        public int? MultiMediaCardId { get; set; }
+        public int? PCMCIAId         { get; set; }
+        public int? SecureDigitalId  { get; set; }
+        public int? SCSIId           { get; set; }
+        public int? USBId            { get; set; }
     }
 }

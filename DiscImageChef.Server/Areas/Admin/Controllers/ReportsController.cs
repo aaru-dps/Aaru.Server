@@ -5,6 +5,7 @@ using DiscImageChef.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace DiscImageChef.Server.Areas.Admin.Controllers
 {
@@ -171,5 +172,35 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
         public IActionResult Find(int id, string manufacturer, string model, string bus) =>
             throw new NotImplementedException();
+
+        public IActionResult Promote(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            UploadedReport uploadedReport = _context.Reports.FirstOrDefault(m => m.Id == id);
+
+            if(uploadedReport == null)
+            {
+                return NotFound();
+            }
+
+            var device = new Device(uploadedReport.ATAId, uploadedReport.ATAPIId, uploadedReport.FireWireId,
+                                    uploadedReport.MultiMediaCardId, uploadedReport.PCMCIAId,
+                                    uploadedReport.SecureDigitalId, uploadedReport.SCSIId, uploadedReport.USBId,
+                                    uploadedReport.UploadedWhen, uploadedReport.Manufacturer, uploadedReport.Model,
+                                    uploadedReport.Revision, uploadedReport.CompactFlash, uploadedReport.Type);
+
+            EntityEntry<Device> res = _context.Devices.Add(device);
+            _context.Reports.Remove(uploadedReport);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(DevicesController.Details), "Devices", new
+            {
+                id = res.Entity.Id
+            });
+        }
     }
 }
