@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using DiscImageChef.CommonTypes.Metadata;
 using DiscImageChef.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -182,5 +183,75 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         }
 
         bool DeviceExists(int id) => _context.Devices.Any(e => e.Id == id);
+
+        public IActionResult Merge(int? master, int? slave)
+        {
+            if(master is null ||
+               slave is null)
+                return NotFound();
+
+            Device masterDevice = _context.Devices.FirstOrDefault(m => m.Id == master);
+            Device slaveDevice  = _context.Devices.FirstOrDefault(m => m.Id == slave);
+
+            if(masterDevice is null ||
+               slaveDevice is null)
+                return NotFound();
+
+            if(masterDevice.ATAId != null &&
+               masterDevice.ATAId != slaveDevice.ATAId)
+            {
+                foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.AtaId == slaveDevice.ATAId))
+                {
+                    testedMedia.AtaId = masterDevice.ATAId;
+                    _context.Update(testedMedia);
+                }
+            }
+            else if(masterDevice.ATAId == null &&
+                    slaveDevice.ATAId  != null)
+            {
+                masterDevice.ATAId = slaveDevice.ATAId;
+                _context.Update(masterDevice);
+            }
+
+            if(masterDevice.ATAPIId != null &&
+               masterDevice.ATAPIId != slaveDevice.ATAPIId)
+            {
+                foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.AtaId == slaveDevice.ATAPIId))
+                {
+                    testedMedia.AtaId = masterDevice.ATAPIId;
+                    _context.Update(testedMedia);
+                }
+            }
+            else if(masterDevice.ATAPIId == null &&
+                    slaveDevice.ATAPIId  != null)
+            {
+                masterDevice.ATAPIId = slaveDevice.ATAPIId;
+                _context.Update(masterDevice);
+            }
+
+            if(masterDevice.SCSIId != null &&
+               masterDevice.SCSIId != slaveDevice.SCSIId)
+            {
+                foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.ScsiId == slaveDevice.SCSIId))
+                {
+                    testedMedia.ScsiId = masterDevice.SCSIId;
+                    _context.Update(testedMedia);
+                }
+            }
+            else if(masterDevice.SCSIId == null &&
+                    slaveDevice.SCSIId  != null)
+            {
+                masterDevice.SCSIId = slaveDevice.SCSIId;
+                _context.Update(masterDevice);
+            }
+
+            _context.Remove(slaveDevice);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Details), new
+            {
+                Id = master
+            });
+        }
     }
 }
