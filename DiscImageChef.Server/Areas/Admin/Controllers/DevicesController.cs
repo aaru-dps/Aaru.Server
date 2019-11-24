@@ -346,5 +346,17 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                 Id = deviceId
             });
         }
+
+        public IActionResult Find(int id, string manufacturer, string model, string revision, string bus)
+        {
+            var found = new FindReportModel
+            {
+                Id          = id, Manufacturer = manufacturer, Model = model, Revision = revision,
+                Bus         = bus,
+                LikeDevices = _context.Devices.Where(r => r.Model.ToLower().Contains(model.ToLower())).ToList()
+            };
+
+            return View(found);
+        }
     }
 }
