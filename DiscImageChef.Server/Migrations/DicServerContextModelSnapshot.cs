@@ -83,13 +83,13 @@ namespace DiscImageChef.Server.Migrations
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
-                b.Property<string>("Manufacturer").HasColumnType("longtext");
+                b.Property<string>("Manufacturer").HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<string>("Product").HasColumnType("longtext");
+                b.Property<string>("Product").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.Property<uint>("ProductID").HasColumnType("int unsigned");
 
-                b.Property<bool>("RemovableMedia").HasColumnType("bit");
+                b.Property<bool>("RemovableMedia").HasColumnType("tinyint(1)");
 
                 b.Property<uint>("VendorID").HasColumnType("int unsigned");
 
@@ -127,241 +127,241 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<ushort?>("BlocksPerReadableUnit").HasColumnType("smallint unsigned");
 
-                b.Property<bool>("BufferUnderrunFreeInDVD").HasColumnType("bit");
+                b.Property<bool>("BufferUnderrunFreeInDVD").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("BufferUnderrunFreeInSAO").HasColumnType("bit");
+                b.Property<bool>("BufferUnderrunFreeInSAO").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("BufferUnderrunFreeInTAO").HasColumnType("bit");
+                b.Property<bool>("BufferUnderrunFreeInTAO").HasColumnType("tinyint(1)");
 
                 b.Property<byte?>("CPRMVersion").HasColumnType("tinyint unsigned");
 
                 b.Property<byte?>("CSSVersion").HasColumnType("tinyint unsigned");
 
-                b.Property<bool>("CanAudioScan").HasColumnType("bit");
+                b.Property<bool>("CanAudioScan").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanEject").HasColumnType("bit");
+                b.Property<bool>("CanEject").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanEraseSector").HasColumnType("bit");
+                b.Property<bool>("CanEraseSector").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanExpandBDRESpareArea").HasColumnType("bit");
+                b.Property<bool>("CanExpandBDRESpareArea").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanFormat").HasColumnType("bit");
+                b.Property<bool>("CanFormat").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanFormatBDREWithoutSpare").HasColumnType("bit");
+                b.Property<bool>("CanFormatBDREWithoutSpare").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanFormatCert").HasColumnType("bit");
+                b.Property<bool>("CanFormatCert").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanFormatFRF").HasColumnType("bit");
+                b.Property<bool>("CanFormatFRF").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanFormatQCert").HasColumnType("bit");
+                b.Property<bool>("CanFormatQCert").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanFormatRRM").HasColumnType("bit");
+                b.Property<bool>("CanFormatRRM").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanGenerateBindingNonce").HasColumnType("bit");
+                b.Property<bool>("CanGenerateBindingNonce").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanLoad").HasColumnType("bit");
+                b.Property<bool>("CanLoad").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanMuteSeparateChannels").HasColumnType("bit");
+                b.Property<bool>("CanMuteSeparateChannels").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanOverwriteSAOTrack").HasColumnType("bit");
+                b.Property<bool>("CanOverwriteSAOTrack").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanOverwriteTAOTrack").HasColumnType("bit");
+                b.Property<bool>("CanOverwriteTAOTrack").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanPlayCDAudio").HasColumnType("bit");
+                b.Property<bool>("CanPlayCDAudio").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanPseudoOverwriteBDR").HasColumnType("bit");
+                b.Property<bool>("CanPseudoOverwriteBDR").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadAllDualR").HasColumnType("bit");
+                b.Property<bool>("CanReadAllDualR").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadAllDualRW").HasColumnType("bit");
+                b.Property<bool>("CanReadAllDualRW").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadBD").HasColumnType("bit");
+                b.Property<bool>("CanReadBD").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadBDR").HasColumnType("bit");
+                b.Property<bool>("CanReadBDR").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadBDRE1").HasColumnType("bit");
+                b.Property<bool>("CanReadBDRE1").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadBDRE2").HasColumnType("bit");
+                b.Property<bool>("CanReadBDRE2").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadBDROM").HasColumnType("bit");
+                b.Property<bool>("CanReadBDROM").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadBluBCA").HasColumnType("bit");
+                b.Property<bool>("CanReadBluBCA").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadCD").HasColumnType("bit");
+                b.Property<bool>("CanReadCD").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadCDMRW").HasColumnType("bit");
+                b.Property<bool>("CanReadCDMRW").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadCPRM_MKB").HasColumnType("bit");
+                b.Property<bool>("CanReadCPRM_MKB").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadDDCD").HasColumnType("bit");
+                b.Property<bool>("CanReadDDCD").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadDVD").HasColumnType("bit");
+                b.Property<bool>("CanReadDVD").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadDVDPlusMRW").HasColumnType("bit");
+                b.Property<bool>("CanReadDVDPlusMRW").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadDVDPlusR").HasColumnType("bit");
+                b.Property<bool>("CanReadDVDPlusR").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadDVDPlusRDL").HasColumnType("bit");
+                b.Property<bool>("CanReadDVDPlusRDL").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadDVDPlusRW").HasColumnType("bit");
+                b.Property<bool>("CanReadDVDPlusRW").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadDVDPlusRWDL").HasColumnType("bit");
+                b.Property<bool>("CanReadDVDPlusRWDL").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadDriveAACSCertificate").HasColumnType("bit");
+                b.Property<bool>("CanReadDriveAACSCertificate").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadHDDVD").HasColumnType("bit");
+                b.Property<bool>("CanReadHDDVD").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadHDDVDR").HasColumnType("bit");
+                b.Property<bool>("CanReadHDDVDR").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadHDDVDRAM").HasColumnType("bit");
+                b.Property<bool>("CanReadHDDVDRAM").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadLeadInCDText").HasColumnType("bit");
+                b.Property<bool>("CanReadLeadInCDText").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadOldBDR").HasColumnType("bit");
+                b.Property<bool>("CanReadOldBDR").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadOldBDRE").HasColumnType("bit");
+                b.Property<bool>("CanReadOldBDRE").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadOldBDROM").HasColumnType("bit");
+                b.Property<bool>("CanReadOldBDROM").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReadSpareAreaInformation").HasColumnType("bit");
+                b.Property<bool>("CanReadSpareAreaInformation").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReportDriveSerial").HasColumnType("bit");
+                b.Property<bool>("CanReportDriveSerial").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanReportMediaSerial").HasColumnType("bit");
+                b.Property<bool>("CanReportMediaSerial").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanTestWriteDDCDR").HasColumnType("bit");
+                b.Property<bool>("CanTestWriteDDCDR").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanTestWriteDVD").HasColumnType("bit");
+                b.Property<bool>("CanTestWriteDVD").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanTestWriteInSAO").HasColumnType("bit");
+                b.Property<bool>("CanTestWriteInSAO").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanTestWriteInTAO").HasColumnType("bit");
+                b.Property<bool>("CanTestWriteInTAO").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanUpgradeFirmware").HasColumnType("bit");
+                b.Property<bool>("CanUpgradeFirmware").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteBD").HasColumnType("bit");
+                b.Property<bool>("CanWriteBD").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteBDR").HasColumnType("bit");
+                b.Property<bool>("CanWriteBDR").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteBDRE1").HasColumnType("bit");
+                b.Property<bool>("CanWriteBDRE1").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteBDRE2").HasColumnType("bit");
+                b.Property<bool>("CanWriteBDRE2").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteBusEncryptedBlocks").HasColumnType("bit");
+                b.Property<bool>("CanWriteBusEncryptedBlocks").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteCDMRW").HasColumnType("bit");
+                b.Property<bool>("CanWriteCDMRW").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteCDRW").HasColumnType("bit");
+                b.Property<bool>("CanWriteCDRW").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteCDRWCAV").HasColumnType("bit");
+                b.Property<bool>("CanWriteCDRWCAV").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteCDSAO").HasColumnType("bit");
+                b.Property<bool>("CanWriteCDSAO").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteCDTAO").HasColumnType("bit");
+                b.Property<bool>("CanWriteCDTAO").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteCSSManagedDVD").HasColumnType("bit");
+                b.Property<bool>("CanWriteCSSManagedDVD").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteDDCDR").HasColumnType("bit");
+                b.Property<bool>("CanWriteDDCDR").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteDDCDRW").HasColumnType("bit");
+                b.Property<bool>("CanWriteDDCDRW").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteDVDPlusMRW").HasColumnType("bit");
+                b.Property<bool>("CanWriteDVDPlusMRW").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteDVDPlusR").HasColumnType("bit");
+                b.Property<bool>("CanWriteDVDPlusR").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteDVDPlusRDL").HasColumnType("bit");
+                b.Property<bool>("CanWriteDVDPlusRDL").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteDVDPlusRW").HasColumnType("bit");
+                b.Property<bool>("CanWriteDVDPlusRW").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteDVDPlusRWDL").HasColumnType("bit");
+                b.Property<bool>("CanWriteDVDPlusRWDL").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteDVDR").HasColumnType("bit");
+                b.Property<bool>("CanWriteDVDR").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteDVDRDL").HasColumnType("bit");
+                b.Property<bool>("CanWriteDVDRDL").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteDVDRW").HasColumnType("bit");
+                b.Property<bool>("CanWriteDVDRW").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteHDDVDR").HasColumnType("bit");
+                b.Property<bool>("CanWriteHDDVDR").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteHDDVDRAM").HasColumnType("bit");
+                b.Property<bool>("CanWriteHDDVDRAM").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteOldBDR").HasColumnType("bit");
+                b.Property<bool>("CanWriteOldBDR").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteOldBDRE").HasColumnType("bit");
+                b.Property<bool>("CanWriteOldBDRE").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWritePackedSubchannelInTAO").HasColumnType("bit");
+                b.Property<bool>("CanWritePackedSubchannelInTAO").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteRWSubchannelInSAO").HasColumnType("bit");
+                b.Property<bool>("CanWriteRWSubchannelInSAO").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteRWSubchannelInTAO").HasColumnType("bit");
+                b.Property<bool>("CanWriteRWSubchannelInTAO").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteRaw").HasColumnType("bit");
+                b.Property<bool>("CanWriteRaw").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteRawMultiSession").HasColumnType("bit");
+                b.Property<bool>("CanWriteRawMultiSession").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("CanWriteRawSubchannelInTAO").HasColumnType("bit");
+                b.Property<bool>("CanWriteRawSubchannelInTAO").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("ChangerIsSideChangeCapable").HasColumnType("bit");
+                b.Property<bool>("ChangerIsSideChangeCapable").HasColumnType("tinyint(1)");
 
                 b.Property<byte>("ChangerSlots").HasColumnType("tinyint unsigned");
 
-                b.Property<bool>("ChangerSupportsDiscPresent").HasColumnType("bit");
+                b.Property<bool>("ChangerSupportsDiscPresent").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("DBML").HasColumnType("bit");
+                b.Property<bool>("DBML").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("DVDMultiRead").HasColumnType("bit");
+                b.Property<bool>("DVDMultiRead").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("EmbeddedChanger").HasColumnType("bit");
+                b.Property<bool>("EmbeddedChanger").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("ErrorRecoveryPage").HasColumnType("bit");
+                b.Property<bool>("ErrorRecoveryPage").HasColumnType("tinyint(1)");
 
                 b.Property<DateTime?>("FirmwareDate").HasColumnType("datetime(6)");
 
                 b.Property<byte?>("LoadingMechanismType").HasColumnType("tinyint unsigned");
 
-                b.Property<bool>("Locked").HasColumnType("bit");
+                b.Property<bool>("Locked").HasColumnType("tinyint(1)");
 
                 b.Property<uint?>("LogicalBlockSize").HasColumnType("int unsigned");
 
-                b.Property<bool>("MultiRead").HasColumnType("bit");
+                b.Property<bool>("MultiRead").HasColumnType("tinyint(1)");
 
                 b.Property<uint?>("PhysicalInterfaceStandardNumber").HasColumnType("int unsigned");
 
-                b.Property<bool>("PreventJumper").HasColumnType("bit");
+                b.Property<bool>("PreventJumper").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("SupportsAACS").HasColumnType("bit");
+                b.Property<bool>("SupportsAACS").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("SupportsBusEncryption").HasColumnType("bit");
+                b.Property<bool>("SupportsBusEncryption").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("SupportsC2").HasColumnType("bit");
+                b.Property<bool>("SupportsC2").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("SupportsCPRM").HasColumnType("bit");
+                b.Property<bool>("SupportsCPRM").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("SupportsCSS").HasColumnType("bit");
+                b.Property<bool>("SupportsCSS").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("SupportsDAP").HasColumnType("bit");
+                b.Property<bool>("SupportsDAP").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("SupportsDeviceBusyEvent").HasColumnType("bit");
+                b.Property<bool>("SupportsDeviceBusyEvent").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("SupportsHybridDiscs").HasColumnType("bit");
+                b.Property<bool>("SupportsHybridDiscs").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("SupportsModePage1Ch").HasColumnType("bit");
+                b.Property<bool>("SupportsModePage1Ch").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("SupportsOSSC").HasColumnType("bit");
+                b.Property<bool>("SupportsOSSC").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("SupportsPWP").HasColumnType("bit");
+                b.Property<bool>("SupportsPWP").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("SupportsSWPP").HasColumnType("bit");
+                b.Property<bool>("SupportsSWPP").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("SupportsSecurDisc").HasColumnType("bit");
+                b.Property<bool>("SupportsSecurDisc").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("SupportsSeparateVolume").HasColumnType("bit");
+                b.Property<bool>("SupportsSeparateVolume").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("SupportsVCPS").HasColumnType("bit");
+                b.Property<bool>("SupportsVCPS").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("SupportsWriteInhibitDCB").HasColumnType("bit");
+                b.Property<bool>("SupportsWriteInhibitDCB").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("SupportsWriteProtectPAC").HasColumnType("bit");
+                b.Property<bool>("SupportsWriteProtectPAC").HasColumnType("tinyint(1)");
 
                 b.Property<ushort?>("VolumeLevels").HasColumnType("smallint unsigned");
 
@@ -397,13 +397,13 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<ushort?>("CardCode").HasColumnType("smallint unsigned");
 
-                b.Property<string>("Compliance").HasColumnType("longtext");
+                b.Property<string>("Compliance").HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<string>("Manufacturer").HasColumnType("longtext");
+                b.Property<string>("Manufacturer").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.Property<ushort?>("ManufacturerCode").HasColumnType("smallint unsigned");
 
-                b.Property<string>("ProductName").HasColumnType("longtext");
+                b.Property<string>("ProductName").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.HasKey("Id");
 
@@ -436,11 +436,11 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<int?>("SequentialDeviceId").HasColumnType("int");
 
-                b.Property<bool>("SupportsModeSense10").HasColumnType("bit");
+                b.Property<bool>("SupportsModeSense10").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("SupportsModeSense6").HasColumnType("bit");
+                b.Property<bool>("SupportsModeSense6").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("SupportsModeSubpages").HasColumnType("bit");
+                b.Property<bool>("SupportsModeSubpages").HasColumnType("tinyint(1)");
 
                 b.HasKey("Id");
 
@@ -459,17 +459,17 @@ namespace DiscImageChef.Server.Migrations
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
-                b.Property<bool>("BlankCheckEnabled").HasColumnType("bit");
+                b.Property<bool>("BlankCheckEnabled").HasColumnType("tinyint(1)");
 
                 b.Property<byte?>("BufferedMode").HasColumnType("tinyint unsigned");
 
-                b.Property<bool>("DPOandFUA").HasColumnType("bit");
+                b.Property<bool>("DPOandFUA").HasColumnType("tinyint(1)");
 
                 b.Property<byte?>("MediumType").HasColumnType("tinyint unsigned");
 
                 b.Property<byte?>("Speed").HasColumnType("tinyint unsigned");
 
-                b.Property<bool>("WriteProtected").HasColumnType("bit");
+                b.Property<bool>("WriteProtected").HasColumnType("tinyint(1)");
 
                 b.HasKey("Id");
 
@@ -518,15 +518,15 @@ namespace DiscImageChef.Server.Migrations
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
-                b.Property<string>("Description").HasColumnType("longtext");
+                b.Property<string>("Description").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.Property<ushort>("Length").HasColumnType("smallint unsigned");
 
                 b.Property<byte>("MediumType").HasColumnType("tinyint unsigned");
 
-                b.Property<string>("Name").HasColumnType("longtext");
+                b.Property<string>("Name").HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<string>("Organization").HasColumnType("longtext");
+                b.Property<string>("Organization").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.Property<int?>("SscId").HasColumnType("int");
 
@@ -551,15 +551,15 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<uint>("Capacity").HasColumnType("int unsigned");
 
-                b.Property<bool>("DefaultDensity").HasColumnType("bit");
+                b.Property<bool>("DefaultDensity").HasColumnType("tinyint(1)");
 
-                b.Property<string>("Description").HasColumnType("longtext");
+                b.Property<string>("Description").HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<bool>("Duplicate").HasColumnType("bit");
+                b.Property<bool>("Duplicate").HasColumnType("tinyint(1)");
 
-                b.Property<string>("Name").HasColumnType("longtext");
+                b.Property<string>("Name").HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<string>("Organization").HasColumnType("longtext");
+                b.Property<string>("Organization").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.Property<byte>("PrimaryCode").HasColumnType("tinyint unsigned");
 
@@ -573,7 +573,7 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<ushort>("Width").HasColumnType("smallint unsigned");
 
-                b.Property<bool>("Writable").HasColumnType("bit");
+                b.Property<bool>("Writable").HasColumnType("tinyint(1)");
 
                 b.HasKey("Id");
 
@@ -612,71 +612,71 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<int?>("CHSId").HasColumnType("int");
 
-                b.Property<bool?>("CanReadAACS").HasColumnType("bit");
+                b.Property<bool?>("CanReadAACS").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadADIP").HasColumnType("bit");
+                b.Property<bool?>("CanReadADIP").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadATIP").HasColumnType("bit");
+                b.Property<bool?>("CanReadATIP").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadBCA").HasColumnType("bit");
+                b.Property<bool?>("CanReadBCA").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadC2Pointers").HasColumnType("bit");
+                b.Property<bool?>("CanReadC2Pointers").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadCMI").HasColumnType("bit");
+                b.Property<bool?>("CanReadCMI").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadCorrectedSubchannel").HasColumnType("bit");
+                b.Property<bool?>("CanReadCorrectedSubchannel").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadCorrectedSubchannelWithC2").HasColumnType("bit");
+                b.Property<bool?>("CanReadCorrectedSubchannelWithC2").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadDCB").HasColumnType("bit");
+                b.Property<bool?>("CanReadDCB").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadDDS").HasColumnType("bit");
+                b.Property<bool?>("CanReadDDS").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadDMI").HasColumnType("bit");
+                b.Property<bool?>("CanReadDMI").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadDiscInformation").HasColumnType("bit");
+                b.Property<bool?>("CanReadDiscInformation").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadFirstTrackPreGap").HasColumnType("bit");
+                b.Property<bool?>("CanReadFirstTrackPreGap").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadFullTOC").HasColumnType("bit");
+                b.Property<bool?>("CanReadFullTOC").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadHDCMI").HasColumnType("bit");
+                b.Property<bool?>("CanReadHDCMI").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadLayerCapacity").HasColumnType("bit");
+                b.Property<bool?>("CanReadLayerCapacity").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadLeadIn").HasColumnType("bit");
+                b.Property<bool?>("CanReadLeadIn").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadLeadOut").HasColumnType("bit");
+                b.Property<bool?>("CanReadLeadOut").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadMediaID").HasColumnType("bit");
+                b.Property<bool?>("CanReadMediaID").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadMediaSerial").HasColumnType("bit");
+                b.Property<bool?>("CanReadMediaSerial").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadPAC").HasColumnType("bit");
+                b.Property<bool?>("CanReadPAC").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadPFI").HasColumnType("bit");
+                b.Property<bool?>("CanReadPFI").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadPMA").HasColumnType("bit");
+                b.Property<bool?>("CanReadPMA").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadPQSubchannel").HasColumnType("bit");
+                b.Property<bool?>("CanReadPQSubchannel").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadPQSubchannelWithC2").HasColumnType("bit");
+                b.Property<bool?>("CanReadPQSubchannelWithC2").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadPRI").HasColumnType("bit");
+                b.Property<bool?>("CanReadPRI").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadRWSubchannel").HasColumnType("bit");
+                b.Property<bool?>("CanReadRWSubchannel").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadRWSubchannelWithC2").HasColumnType("bit");
+                b.Property<bool?>("CanReadRWSubchannelWithC2").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadRecordablePFI").HasColumnType("bit");
+                b.Property<bool?>("CanReadRecordablePFI").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadSpareAreaInformation").HasColumnType("bit");
+                b.Property<bool?>("CanReadSpareAreaInformation").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadTOC").HasColumnType("bit");
+                b.Property<bool?>("CanReadTOC").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadingIntersessionLeadIn").HasColumnType("bit");
+                b.Property<bool?>("CanReadingIntersessionLeadIn").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("CanReadingIntersessionLeadOut").HasColumnType("bit");
+                b.Property<bool?>("CanReadingIntersessionLeadOut").HasColumnType("tinyint(1)");
 
                 b.Property<byte[]>("CmiData").HasColumnType("longblob");
 
@@ -728,13 +728,13 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<uint?>("LongBlockSize").HasColumnType("int unsigned");
 
-                b.Property<string>("Manufacturer").HasColumnType("longtext");
+                b.Property<string>("Manufacturer").HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<bool>("MediaIsRecognized").HasColumnType("bit");
+                b.Property<bool>("MediaIsRecognized").HasColumnType("tinyint(1)");
 
                 b.Property<byte?>("MediumType").HasColumnType("tinyint unsigned");
 
-                b.Property<string>("MediumTypeName").HasColumnType("longtext");
+                b.Property<string>("MediumTypeName").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.Property<int?>("MmcId").HasColumnType("int");
 
@@ -742,7 +742,7 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<byte[]>("ModeSense6Data").HasColumnType("longblob");
 
-                b.Property<string>("Model").HasColumnType("longtext");
+                b.Property<string>("Model").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.Property<byte[]>("NecReadCddaData").HasColumnType("longblob");
 
@@ -822,73 +822,73 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<int?>("ScsiId").HasColumnType("int");
 
-                b.Property<bool?>("SolidStateDevice").HasColumnType("bit");
+                b.Property<bool?>("SolidStateDevice").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsHLDTSTReadRawDVD").HasColumnType("bit");
+                b.Property<bool?>("SupportsHLDTSTReadRawDVD").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsNECReadCDDA").HasColumnType("bit");
+                b.Property<bool?>("SupportsNECReadCDDA").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsPioneerReadCDDA").HasColumnType("bit");
+                b.Property<bool?>("SupportsPioneerReadCDDA").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsPioneerReadCDDAMSF").HasColumnType("bit");
+                b.Property<bool?>("SupportsPioneerReadCDDAMSF").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsPlextorReadCDDA").HasColumnType("bit");
+                b.Property<bool?>("SupportsPlextorReadCDDA").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsPlextorReadRawDVD").HasColumnType("bit");
+                b.Property<bool?>("SupportsPlextorReadRawDVD").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsRead10").HasColumnType("bit");
+                b.Property<bool?>("SupportsRead10").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsRead12").HasColumnType("bit");
+                b.Property<bool?>("SupportsRead12").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsRead16").HasColumnType("bit");
+                b.Property<bool?>("SupportsRead16").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsRead6").HasColumnType("bit");
+                b.Property<bool?>("SupportsRead6").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsReadCapacity").HasColumnType("bit");
+                b.Property<bool?>("SupportsReadCapacity").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsReadCapacity16").HasColumnType("bit");
+                b.Property<bool?>("SupportsReadCapacity16").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsReadCd").HasColumnType("bit");
+                b.Property<bool?>("SupportsReadCd").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsReadCdMsf").HasColumnType("bit");
+                b.Property<bool?>("SupportsReadCdMsf").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsReadCdMsfRaw").HasColumnType("bit");
+                b.Property<bool?>("SupportsReadCdMsfRaw").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsReadCdRaw").HasColumnType("bit");
+                b.Property<bool?>("SupportsReadCdRaw").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsReadDma").HasColumnType("bit");
+                b.Property<bool?>("SupportsReadDma").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsReadDmaLba").HasColumnType("bit");
+                b.Property<bool?>("SupportsReadDmaLba").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsReadDmaLba48").HasColumnType("bit");
+                b.Property<bool?>("SupportsReadDmaLba48").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsReadDmaRetry").HasColumnType("bit");
+                b.Property<bool?>("SupportsReadDmaRetry").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsReadDmaRetryLba").HasColumnType("bit");
+                b.Property<bool?>("SupportsReadDmaRetryLba").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsReadLba").HasColumnType("bit");
+                b.Property<bool?>("SupportsReadLba").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsReadLba48").HasColumnType("bit");
+                b.Property<bool?>("SupportsReadLba48").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsReadLong").HasColumnType("bit");
+                b.Property<bool?>("SupportsReadLong").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsReadLong16").HasColumnType("bit");
+                b.Property<bool?>("SupportsReadLong16").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsReadLongLba").HasColumnType("bit");
+                b.Property<bool?>("SupportsReadLongLba").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsReadLongRetry").HasColumnType("bit");
+                b.Property<bool?>("SupportsReadLongRetry").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsReadLongRetryLba").HasColumnType("bit");
+                b.Property<bool?>("SupportsReadLongRetryLba").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsReadRetry").HasColumnType("bit");
+                b.Property<bool?>("SupportsReadRetry").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsReadRetryLba").HasColumnType("bit");
+                b.Property<bool?>("SupportsReadRetryLba").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsReadSectors").HasColumnType("bit");
+                b.Property<bool?>("SupportsReadSectors").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsSeek").HasColumnType("bit");
+                b.Property<bool?>("SupportsSeek").HasColumnType("tinyint(1)");
 
-                b.Property<bool?>("SupportsSeekLba").HasColumnType("bit");
+                b.Property<bool?>("SupportsSeekLba").HasColumnType("tinyint(1)");
 
                 b.Property<byte[]>("TocData").HasColumnType("longblob");
 
@@ -917,23 +917,23 @@ namespace DiscImageChef.Server.Migrations
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
-                b.Property<bool?>("CanReadMediaSerial").HasColumnType("bit");
+                b.Property<bool?>("CanReadMediaSerial").HasColumnType("tinyint(1)");
 
                 b.Property<byte?>("Density").HasColumnType("tinyint unsigned");
 
-                b.Property<string>("Manufacturer").HasColumnType("longtext");
+                b.Property<string>("Manufacturer").HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<bool>("MediaIsRecognized").HasColumnType("bit");
+                b.Property<bool>("MediaIsRecognized").HasColumnType("tinyint(1)");
 
                 b.Property<byte?>("MediumType").HasColumnType("tinyint unsigned");
 
-                b.Property<string>("MediumTypeName").HasColumnType("longtext");
+                b.Property<string>("MediumTypeName").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.Property<byte[]>("ModeSense10Data").HasColumnType("longblob");
 
                 b.Property<byte[]>("ModeSense6Data").HasColumnType("longblob");
 
-                b.Property<string>("Model").HasColumnType("longtext");
+                b.Property<string>("Model").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.Property<int?>("SscId").HasColumnType("int");
 
@@ -950,13 +950,13 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<byte[]>("Descriptors").HasColumnType("longblob");
 
-                b.Property<string>("Manufacturer").HasColumnType("longtext");
+                b.Property<string>("Manufacturer").HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<string>("Product").HasColumnType("longtext");
+                b.Property<string>("Product").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.Property<ushort>("ProductID").HasColumnType("smallint unsigned");
 
-                b.Property<bool>("RemovableMedia").HasColumnType("bit");
+                b.Property<bool>("RemovableMedia").HasColumnType("tinyint(1)");
 
                 b.Property<ushort>("VendorID").HasColumnType("smallint unsigned");
 
@@ -971,7 +971,7 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<long>("Count").HasColumnType("bigint");
 
-                b.Property<string>("Name").HasColumnType("longtext");
+                b.Property<string>("Name").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.HasKey("Id");
 
@@ -986,9 +986,9 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<float>("Agreement").HasColumnType("float");
 
-                b.Property<string>("Manufacturer").HasColumnType("longtext");
+                b.Property<string>("Manufacturer").HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<string>("Model").HasColumnType("longtext");
+                b.Property<string>("Model").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.Property<DateTime>("ModifiedWhen").HasColumnType("datetime(6)");
 
@@ -1015,13 +1015,13 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<int?>("CdOffsetId").HasColumnType("int");
 
-                b.Property<bool>("CompactFlash").HasColumnType("bit");
+                b.Property<bool>("CompactFlash").HasColumnType("tinyint(1)");
 
                 b.Property<int?>("FireWireId").HasColumnType("int");
 
-                b.Property<string>("Manufacturer").HasColumnType("longtext");
+                b.Property<string>("Manufacturer").HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<string>("Model").HasColumnType("longtext");
+                b.Property<string>("Model").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.Property<DateTime?>("ModifiedWhen").HasColumnType("datetime(6)");
 
@@ -1031,7 +1031,7 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<int?>("PCMCIAId").HasColumnType("int");
 
-                b.Property<string>("Revision").HasColumnType("longtext");
+                b.Property<string>("Revision").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.Property<int?>("SCSIId").HasColumnType("int");
 
@@ -1070,15 +1070,15 @@ namespace DiscImageChef.Server.Migrations
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
-                b.Property<string>("Bus").HasColumnType("longtext");
+                b.Property<string>("Bus").HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<string>("Manufacturer").HasColumnType("longtext");
+                b.Property<string>("Manufacturer").HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<string>("Model").HasColumnType("longtext");
+                b.Property<string>("Model").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.Property<int?>("ReportId").HasColumnType("int");
 
-                b.Property<string>("Revision").HasColumnType("longtext");
+                b.Property<string>("Revision").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.HasKey("Id");
 
@@ -1093,7 +1093,7 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<long>("Count").HasColumnType("bigint");
 
-                b.Property<string>("Name").HasColumnType("longtext");
+                b.Property<string>("Name").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.HasKey("Id");
 
@@ -1106,7 +1106,7 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<long>("Count").HasColumnType("bigint");
 
-                b.Property<string>("Name").HasColumnType("longtext");
+                b.Property<string>("Name").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.HasKey("Id");
 
@@ -1119,9 +1119,9 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<long>("Count").HasColumnType("bigint");
 
-                b.Property<bool>("Real").HasColumnType("bit");
+                b.Property<bool>("Real").HasColumnType("tinyint(1)");
 
-                b.Property<string>("Type").HasColumnType("longtext");
+                b.Property<string>("Type").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.HasKey("Id");
 
@@ -1134,7 +1134,7 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<long>("Count").HasColumnType("bigint");
 
-                b.Property<string>("Name").HasColumnType("longtext");
+                b.Property<string>("Name").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.HasKey("Id");
 
@@ -1147,9 +1147,9 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<long>("Count").HasColumnType("bigint");
 
-                b.Property<string>("Name").HasColumnType("longtext");
+                b.Property<string>("Name").HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<string>("Version").HasColumnType("longtext");
+                b.Property<string>("Version").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.HasKey("Id");
 
@@ -1162,7 +1162,7 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<long>("Count").HasColumnType("bigint");
 
-                b.Property<string>("Name").HasColumnType("longtext");
+                b.Property<string>("Name").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.HasKey("Id");
 
@@ -1177,19 +1177,19 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<int?>("ATAPIId").HasColumnType("int");
 
-                b.Property<bool>("CompactFlash").HasColumnType("bit");
+                b.Property<bool>("CompactFlash").HasColumnType("tinyint(1)");
 
                 b.Property<int?>("FireWireId").HasColumnType("int");
 
-                b.Property<string>("Manufacturer").HasColumnType("longtext");
+                b.Property<string>("Manufacturer").HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<string>("Model").HasColumnType("longtext");
+                b.Property<string>("Model").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.Property<int?>("MultiMediaCardId").HasColumnType("int");
 
                 b.Property<int?>("PCMCIAId").HasColumnType("int");
 
-                b.Property<string>("Revision").HasColumnType("longtext");
+                b.Property<string>("Revision").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.Property<int?>("SCSIId").HasColumnType("int");
 
@@ -1230,7 +1230,7 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<DateTime>("ModifiedWhen").HasColumnType("datetime(6)");
 
-                b.Property<string>("Product").HasColumnType("longtext");
+                b.Property<string>("Product").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.Property<ushort>("ProductId").HasColumnType("smallint unsigned");
 
@@ -1255,7 +1255,7 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<DateTime>("ModifiedWhen").HasColumnType("datetime(6)");
 
-                b.Property<string>("Vendor").HasColumnType("longtext");
+                b.Property<string>("Vendor").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.Property<ushort>("VendorId").HasColumnType("smallint unsigned");
 
@@ -1274,7 +1274,7 @@ namespace DiscImageChef.Server.Migrations
 
                 b.Property<long>("Count").HasColumnType("bigint");
 
-                b.Property<string>("Value").HasColumnType("longtext");
+                b.Property<string>("Value").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.HasKey("Id");
 
@@ -1283,13 +1283,15 @@ namespace DiscImageChef.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
             {
-                b.Property<string>("Id").HasColumnType("varchar(255)");
+                b.Property<string>("Id").HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
-                b.Property<string>("ConcurrencyStamp").IsConcurrencyToken().HasColumnType("longtext");
+                b.Property<string>("ConcurrencyStamp").IsConcurrencyToken().
+                  HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<string>("Name").HasColumnType("varchar(256)").HasMaxLength(256);
+                b.Property<string>("Name").HasColumnType("varchar(256) CHARACTER SET utf8mb4").HasMaxLength(256);
 
-                b.Property<string>("NormalizedName").HasColumnType("varchar(256)").HasMaxLength(256);
+                b.Property<string>("NormalizedName").HasColumnType("varchar(256) CHARACTER SET utf8mb4").
+                  HasMaxLength(256);
 
                 b.HasKey("Id");
 
@@ -1302,11 +1304,11 @@ namespace DiscImageChef.Server.Migrations
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
-                b.Property<string>("ClaimType").HasColumnType("longtext");
+                b.Property<string>("ClaimType").HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<string>("ClaimValue").HasColumnType("longtext");
+                b.Property<string>("ClaimValue").HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<string>("RoleId").IsRequired().HasColumnType("varchar(255)");
+                b.Property<string>("RoleId").IsRequired().HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                 b.HasKey("Id");
 
@@ -1317,35 +1319,38 @@ namespace DiscImageChef.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
             {
-                b.Property<string>("Id").HasColumnType("varchar(255)");
+                b.Property<string>("Id").HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                 b.Property<int>("AccessFailedCount").HasColumnType("int");
 
-                b.Property<string>("ConcurrencyStamp").IsConcurrencyToken().HasColumnType("longtext");
+                b.Property<string>("ConcurrencyStamp").IsConcurrencyToken().
+                  HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<string>("Email").HasColumnType("varchar(256)").HasMaxLength(256);
+                b.Property<string>("Email").HasColumnType("varchar(256) CHARACTER SET utf8mb4").HasMaxLength(256);
 
-                b.Property<bool>("EmailConfirmed").HasColumnType("bit");
+                b.Property<bool>("EmailConfirmed").HasColumnType("tinyint(1)");
 
-                b.Property<bool>("LockoutEnabled").HasColumnType("bit");
+                b.Property<bool>("LockoutEnabled").HasColumnType("tinyint(1)");
 
                 b.Property<DateTimeOffset?>("LockoutEnd").HasColumnType("datetime(6)");
 
-                b.Property<string>("NormalizedEmail").HasColumnType("varchar(256)").HasMaxLength(256);
+                b.Property<string>("NormalizedEmail").HasColumnType("varchar(256) CHARACTER SET utf8mb4").
+                  HasMaxLength(256);
 
-                b.Property<string>("NormalizedUserName").HasColumnType("varchar(256)").HasMaxLength(256);
+                b.Property<string>("NormalizedUserName").HasColumnType("varchar(256) CHARACTER SET utf8mb4").
+                  HasMaxLength(256);
 
-                b.Property<string>("PasswordHash").HasColumnType("longtext");
+                b.Property<string>("PasswordHash").HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<string>("PhoneNumber").HasColumnType("longtext");
+                b.Property<string>("PhoneNumber").HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<bool>("PhoneNumberConfirmed").HasColumnType("bit");
+                b.Property<bool>("PhoneNumberConfirmed").HasColumnType("tinyint(1)");
 
-                b.Property<string>("SecurityStamp").HasColumnType("longtext");
+                b.Property<string>("SecurityStamp").HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<bool>("TwoFactorEnabled").HasColumnType("bit");
+                b.Property<bool>("TwoFactorEnabled").HasColumnType("tinyint(1)");
 
-                b.Property<string>("UserName").HasColumnType("varchar(256)").HasMaxLength(256);
+                b.Property<string>("UserName").HasColumnType("varchar(256) CHARACTER SET utf8mb4").HasMaxLength(256);
 
                 b.HasKey("Id");
 
@@ -1360,11 +1365,11 @@ namespace DiscImageChef.Server.Migrations
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
-                b.Property<string>("ClaimType").HasColumnType("longtext");
+                b.Property<string>("ClaimType").HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<string>("ClaimValue").HasColumnType("longtext");
+                b.Property<string>("ClaimValue").HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<string>("UserId").IsRequired().HasColumnType("varchar(255)");
+                b.Property<string>("UserId").IsRequired().HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                 b.HasKey("Id");
 
@@ -1375,13 +1380,14 @@ namespace DiscImageChef.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
             {
-                b.Property<string>("LoginProvider").HasColumnType("varchar(128)").HasMaxLength(128);
+                b.Property<string>("LoginProvider").HasColumnType("varchar(128) CHARACTER SET utf8mb4").
+                  HasMaxLength(128);
 
-                b.Property<string>("ProviderKey").HasColumnType("varchar(128)").HasMaxLength(128);
+                b.Property<string>("ProviderKey").HasColumnType("varchar(128) CHARACTER SET utf8mb4").HasMaxLength(128);
 
-                b.Property<string>("ProviderDisplayName").HasColumnType("longtext");
+                b.Property<string>("ProviderDisplayName").HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<string>("UserId").IsRequired().HasColumnType("varchar(255)");
+                b.Property<string>("UserId").IsRequired().HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                 b.HasKey("LoginProvider", "ProviderKey");
 
@@ -1392,9 +1398,9 @@ namespace DiscImageChef.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
             {
-                b.Property<string>("UserId").HasColumnType("varchar(255)");
+                b.Property<string>("UserId").HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
-                b.Property<string>("RoleId").HasColumnType("varchar(255)");
+                b.Property<string>("RoleId").HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                 b.HasKey("UserId", "RoleId");
 
@@ -1405,13 +1411,14 @@ namespace DiscImageChef.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
             {
-                b.Property<string>("UserId").HasColumnType("varchar(255)");
+                b.Property<string>("UserId").HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
-                b.Property<string>("LoginProvider").HasColumnType("varchar(128)").HasMaxLength(128);
+                b.Property<string>("LoginProvider").HasColumnType("varchar(128) CHARACTER SET utf8mb4").
+                  HasMaxLength(128);
 
-                b.Property<string>("Name").HasColumnType("varchar(128)").HasMaxLength(128);
+                b.Property<string>("Name").HasColumnType("varchar(128) CHARACTER SET utf8mb4").HasMaxLength(128);
 
-                b.Property<string>("Value").HasColumnType("longtext");
+                b.Property<string>("Value").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.HasKey("UserId", "LoginProvider", "Name");
 
