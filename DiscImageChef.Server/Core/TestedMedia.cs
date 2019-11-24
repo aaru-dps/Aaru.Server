@@ -374,6 +374,12 @@ namespace DiscImageChef.Server.App_Start
                 if(testedMedia.CanReadTOC == true)
                     mediaOneValue.Add("Device can read the Table of Contents from this medium");
 
+                if(testedMedia.CanReadingIntersessionLeadIn == true)
+                    mediaOneValue.Add("Device can read Lead-In between sessions");
+
+                if(testedMedia.CanReadingIntersessionLeadOut == true)
+                    mediaOneValue.Add("Device can read Lead-Out between sessions");
+
                 mediaOneValue.Add("");
             }
         }
