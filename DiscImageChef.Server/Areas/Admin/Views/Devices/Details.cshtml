@@ -226,7 +226,7 @@
                         @item
                     </td>
                     <td>
-                        <a asp-controller="UploadReport" asp-action="Details" asp-route-id="@item" class="btn btn-primary" target="_blank">Details</a>
+                        <a asp-controller="Reports" asp-action="Details" asp-route-id="@item" class="btn btn-primary" target="_blank">Details</a>
                         <a asp-action="MergeReports" asp-route-reportId="@item" asp-route-deviceId="@Model.Report.Id" class="btn btn-secondary">Merge</a>
                     </td>
                 </tr>
@@ -256,7 +256,7 @@
                         @item
                     </td>
                     <td>
-                        <a asp-controller="UploadReport" asp-action="Details" asp-route-id="@item" class="btn btn-primary" target="_blank">Details</a>
+                        <a asp-controller="Reports" asp-action="Details" asp-route-id="@item" class="btn btn-primary" target="_blank">Details</a>
                         <a asp-action="MergeReports" asp-route-reportId="@item" asp-route-deviceId="@Model.Report.Id" class="btn btn-secondary">Merge</a>
                     </td>
                 </tr>
