@@ -313,7 +313,14 @@
                         }
                         else
                         {
-                            @("Yes")
+                            @if (item.Report.Id == Model.Report.Id)
+                            {
+                                @("Us")
+                            }
+                            else
+                            {
+                                @("Yes")
+                            }
                         }
                     </td>
                     <td>

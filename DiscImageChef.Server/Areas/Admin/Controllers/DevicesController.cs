@@ -323,5 +323,28 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                 Id = deviceId
             });
         }
+
+        public IActionResult LinkReports(int? statsId, int? deviceId)
+        {
+            if(statsId is null ||
+               deviceId is null)
+                return NotFound();
+
+            Device     device = _context.Devices.FirstOrDefault(m => m.Id     == deviceId);
+            DeviceStat stat   = _context.DeviceStats.FirstOrDefault(m => m.Id == statsId);
+
+            if(device is null ||
+               stat is null)
+                return NotFound();
+
+            stat.Report = device;
+            _context.Update(stat);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Details), new
+            {
+                Id = deviceId
+            });
+        }
     }
 }
