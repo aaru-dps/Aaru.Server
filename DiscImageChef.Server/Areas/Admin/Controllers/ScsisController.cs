@@ -232,8 +232,8 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
                 if(fieldInfo.FieldType.IsArray)
                 {
-                    Array la = lv as Array;
-                    Array ra = rv as Array;
+                    var la = lv as Array;
+                    var ra = rv as Array;
 
                     switch(la)
                     {

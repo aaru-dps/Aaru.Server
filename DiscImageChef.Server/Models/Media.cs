@@ -73,11 +73,9 @@ namespace DiscImageChef.Server.Models
             }
         }
 
-        [NotMapped]
-        [DisplayName("Physical type")]
+        [NotMapped, DisplayName("Physical type")]
         public string PhysicalType => MediaType.type;
-        [NotMapped]
-        [DisplayName("Logical type")]
+        [NotMapped, DisplayName("Logical type")]
         public string LogicalType => MediaType.subType;
     }
 }

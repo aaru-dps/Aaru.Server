@@ -61,11 +61,11 @@ namespace DiscImageChef.Server.Models
             AddedWhen    = ModifiedWhen = DateTime.UtcNow;
         }
 
-        public         int                 Id           { get; set; }
+        public int Id { get; set; }
         [DisplayName("Added date")]
-        public         DateTime            AddedWhen    { get; set; }
+        public DateTime AddedWhen { get; set; }
         [DisplayName("Modification date")]
-        public         DateTime            ModifiedWhen { get; set; }
-        public virtual ICollection<Device> Devices      { get; set; }
+        public DateTime ModifiedWhen { get;               set; }
+        public virtual ICollection<Device> Devices { get; set; }
     }
 }

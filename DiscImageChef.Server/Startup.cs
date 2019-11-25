@@ -20,9 +20,10 @@ namespace DiscImageChef.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DicServerContext>(options =>
-                                                        options.UseMySql(Configuration.
-                                                                             GetConnectionString("DefaultConnection")).UseLazyLoadingProxies());
+            services.AddDbContext<DicServerContext>(options => options.
+                                                               UseMySql(Configuration.
+                                                                            GetConnectionString("DefaultConnection")).
+                                                               UseLazyLoadingProxies());
 
             services.AddDefaultIdentity<IdentityUser>(options =>
             {

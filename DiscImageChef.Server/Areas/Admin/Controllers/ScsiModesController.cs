@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading.Tasks;
 using DiscImageChef.CommonTypes.Metadata;
 using DiscImageChef.Server.Models;
