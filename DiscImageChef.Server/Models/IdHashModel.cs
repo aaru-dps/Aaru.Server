@@ -1,6 +1,6 @@
 namespace DiscImageChef.Server.Models
 {
-    public class IdHashModel
+    public class IdHashModel : BaseModel<int>
     {
         public IdHashModel(int id, string hash)
         {
@@ -8,7 +8,6 @@ namespace DiscImageChef.Server.Models
             Hash = hash;
         }
 
-        public int    Id          { get; set; }
         public string Hash        { get; set; }
         public string Description { get; set; }
         public int[]  Duplicates  { get; set; }

@@ -32,19 +32,16 @@
 
 using System;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DiscImageChef.CommonTypes;
 
 namespace DiscImageChef.Server.Models
 {
-    public class Media
+    public class Media : BaseModel<int>
     {
         [NotMapped]
         (string type, string subType) _mediaType;
 
-        [Key]
-        public int Id { get;       set; }
         public string Type  { get; set; }
         public bool   Real  { get; set; }
         public long   Count { get; set; }

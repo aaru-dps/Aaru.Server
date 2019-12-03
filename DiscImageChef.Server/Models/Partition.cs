@@ -30,15 +30,10 @@
 // Copyright © 2011-2019 Natalia Portillo
 // ****************************************************************************/
 
-using System.ComponentModel.DataAnnotations;
-
 namespace DiscImageChef.Server.Models
 {
-    public class Partition
+    public class Partition : BaseModel<int>
     {
-        [Key]
-        public int Id { get; set; }
-
         public string Name  { get; set; }
         public long   Count { get; set; }
     }

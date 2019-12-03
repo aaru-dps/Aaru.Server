@@ -2,9 +2,8 @@ using System.Collections.Generic;
 
 namespace DiscImageChef.Server.Models
 {
-    public class FindReportModel
+    public class FindReportModel : BaseModel<int>
     {
-        public int          Id           { get; set; }
         public string       Manufacturer { get; set; }
         public string       Model        { get; set; }
         public string       Revision     { get; set; }

@@ -31,12 +31,11 @@
 // ****************************************************************************/
 
 using System;
-using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
 namespace DiscImageChef.Server.Models
 {
-    public class UsbProduct
+    public class UsbProduct : BaseModel<int>
     {
         public UsbProduct() { }
 
@@ -47,9 +46,6 @@ namespace DiscImageChef.Server.Models
             AddedWhen = ModifiedWhen = DateTime.UtcNow;
             Vendor    = vendor;
         }
-
-        [Key]
-        public int Id { get; set; }
 
         public ushort   ProductId    { get; set; }
         public string   Product      { get; set; }

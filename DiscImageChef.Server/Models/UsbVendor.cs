@@ -38,7 +38,7 @@ using Newtonsoft.Json;
 
 namespace DiscImageChef.Server.Models
 {
-    public class UsbVendor
+    public class UsbVendor : BaseModel<int>
     {
         public UsbVendor() { }
 
@@ -48,9 +48,6 @@ namespace DiscImageChef.Server.Models
             Vendor    = vendor;
             AddedWhen = ModifiedWhen = DateTime.UtcNow;
         }
-
-        [Key]
-        public int Id { get; set; }
 
         [DisplayName("Manufacturer ID"), DisplayFormat(DataFormatString = "0x{0:X4}")]
         public ushort VendorId { get; set; }
