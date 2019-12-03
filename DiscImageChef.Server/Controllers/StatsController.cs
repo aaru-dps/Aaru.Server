@@ -114,7 +114,7 @@ namespace DiscImageChef.Server.Controllers
                     foreach(Version nvs in ctx.Versions)
                         versions.Add(new NameValueStats
                         {
-                            name = nvs.Value == "previous" ? "Previous than 3.4.99.0" : nvs.Value, Value = nvs.Count
+                            name = nvs.Name == "previous" ? "Previous than 3.4.99.0" : nvs.Name, Value = nvs.Count
                         });
 
                     ViewBag.repVersions = versions.OrderBy(ver => ver.name).ToList();
@@ -370,7 +370,7 @@ namespace DiscImageChef.Server.Controllers
             string[][] result =
             {
                 ctx.Versions.OrderByDescending(o => o.Count).Take(10).
-                    Select(v => v.Value == "previous" ? "Previous than 3.4.99.0" : v.Value).ToArray(),
+                    Select(v => v.Name == "previous" ? "Previous than 3.4.99.0" : v.Name).ToArray(),
                 ctx.Versions.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
             };
 

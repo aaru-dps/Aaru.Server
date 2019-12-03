@@ -150,12 +150,12 @@ namespace DiscImageChef.Server.Controllers
                 if(newstats.Versions != null)
                     foreach(NameValueStats nvs in newstats.Versions)
                     {
-                        Version existing = _ctx.Versions.FirstOrDefault(c => c.Value == nvs.name);
+                        Version existing = _ctx.Versions.FirstOrDefault(c => c.Name == nvs.name);
 
                         if(existing == null)
                             _ctx.Versions.Add(new Version
                             {
-                                Value = nvs.name, Count = nvs.Value
+                                Name = nvs.name, Count = nvs.Value
                             });
                         else
                             existing.Count += nvs.Value;

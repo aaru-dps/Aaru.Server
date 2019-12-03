@@ -32,9 +32,5 @@
 
 namespace DiscImageChef.Server.Models
 {
-    public class Version : BaseModel<int>
-    {
-        public string Value { get; set; }
-        public long   Count { get; set; }
-    }
+    public class Version : NameCountModel<int> { }
 }

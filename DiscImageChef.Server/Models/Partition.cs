@@ -32,9 +32,5 @@
 
 namespace DiscImageChef.Server.Models
 {
-    public class Partition : BaseModel<int>
-    {
-        public string Name  { get; set; }
-        public long   Count { get; set; }
-    }
+    public class Partition : NameCountModel<int> { }
 }

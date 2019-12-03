@@ -15,6 +15,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         public VersionsController(DicServerContext context) => _context = context;
 
         // GET: Admin/Versions
-        public async Task<IActionResult> Index() => View(await _context.Versions.OrderBy(v => v.Value).ToListAsync());
+        public async Task<IActionResult> Index() => View(await _context.Versions.OrderBy(v => v.Name).ToListAsync());
     }
 }

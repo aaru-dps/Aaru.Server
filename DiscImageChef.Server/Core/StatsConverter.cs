@@ -362,12 +362,12 @@ namespace DiscImageChef.Server
                     if(string.IsNullOrWhiteSpace(nvs.name))
                         continue;
 
-                    Version existing = ctx.Versions.FirstOrDefault(c => c.Value == nvs.name);
+                    Version existing = ctx.Versions.FirstOrDefault(c => c.Name == nvs.name);
 
                     if(existing == null)
                         ctx.Versions.Add(new Version
                         {
-                            Count = nvs.Value, Value = nvs.name
+                            Count = nvs.Value, Name = nvs.name
                         });
                     else
                         existing.Count += nvs.Value;
@@ -375,12 +375,12 @@ namespace DiscImageChef.Server
             }
             else
             {
-                Version existing = ctx.Versions.FirstOrDefault(c => c.Value == "previous");
+                Version existing = ctx.Versions.FirstOrDefault(c => c.Name == "previous");
 
                 if(existing == null)
                     ctx.Versions.Add(new Version
                     {
-                        Count = 1, Value = "previous"
+                        Count = 1, Name = "previous"
                     });
                 else
                     existing.Count++;
