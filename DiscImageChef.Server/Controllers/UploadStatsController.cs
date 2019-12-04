@@ -265,6 +265,53 @@ namespace DiscImageChef.Server.Controllers
                             });
                     }
 
+                if(newstats.RemoteApplications != null)
+                    foreach(OsStats application in newstats.RemoteApplications)
+                    {
+                        RemoteApplication existing =
+                            _ctx.RemoteApplications.FirstOrDefault(c => c.Name    == application.name &&
+                                                                        c.Version == application.version);
+
+                        if(existing == null)
+                            _ctx.RemoteApplications.Add(new RemoteApplication
+                            {
+                                Name = application.name, Version = application.version, Count = application.Value
+                            });
+                        else
+                            existing.Count += application.Value;
+                    }
+
+                if(newstats.RemoteArchitectures != null)
+                    foreach(NameValueStats nvs in newstats.RemoteArchitectures)
+                    {
+                        RemoteArchitecture existing = _ctx.RemoteArchitectures.FirstOrDefault(c => c.Name == nvs.name);
+
+                        if(existing == null)
+                            _ctx.RemoteArchitectures.Add(new RemoteArchitecture
+                            {
+                                Name = nvs.name, Count = nvs.Value
+                            });
+                        else
+                            existing.Count += nvs.Value;
+                    }
+
+                if(newstats.RemoteOperatingSystems != null)
+                    foreach(OsStats remoteOperatingSystem in newstats.RemoteOperatingSystems)
+                    {
+                        RemoteOperatingSystem existing =
+                            _ctx.RemoteOperatingSystems.FirstOrDefault(c => c.Name    == remoteOperatingSystem.name &&
+                                                                            c.Version == remoteOperatingSystem.version);
+
+                        if(existing == null)
+                            _ctx.RemoteOperatingSystems.Add(new RemoteOperatingSystem
+                            {
+                                Name  = remoteOperatingSystem.name, Version = remoteOperatingSystem.version,
+                                Count = remoteOperatingSystem.Value
+                            });
+                        else
+                            existing.Count += remoteOperatingSystem.Value;
+                    }
+
                 _ctx.SaveChanges();
 
                 response.Content = "ok";
