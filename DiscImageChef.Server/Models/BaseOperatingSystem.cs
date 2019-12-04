@@ -32,5 +32,10 @@
 
 namespace DiscImageChef.Server.Models
 {
-    public class OperatingSystem : BaseOperatingSystem { }
+    public abstract class BaseOperatingSystem : BaseModel<int>
+    {
+        public string Name    { get; set; }
+        public string Version { get; set; }
+        public long   Count   { get; set; }
+    }
 }
