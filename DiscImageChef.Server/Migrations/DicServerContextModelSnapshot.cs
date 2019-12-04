@@ -1173,6 +1173,49 @@ namespace DiscImageChef.Server.Migrations
                 b.ToTable("Partitions");
             });
 
+            modelBuilder.Entity("DiscImageChef.Server.Models.RemoteApplication", b =>
+            {
+                b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
+
+                b.Property<long>("Count").HasColumnType("bigint");
+
+                b.Property<string>("Name").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<string>("Version").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.HasKey("Id");
+
+                b.ToTable("RemoteApplications");
+            });
+
+            modelBuilder.Entity("DiscImageChef.Server.Models.RemoteArchitecture", b =>
+            {
+                b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
+
+                b.Property<long>("Count").HasColumnType("bigint");
+
+                b.Property<string>("Name").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.HasKey("Id");
+
+                b.ToTable("RemoteArchitectures");
+            });
+
+            modelBuilder.Entity("DiscImageChef.Server.Models.RemoteOperatingSystem", b =>
+            {
+                b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
+
+                b.Property<long>("Count").HasColumnType("bigint");
+
+                b.Property<string>("Name").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<string>("Version").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.HasKey("Id");
+
+                b.ToTable("RemoteOperatingSystems");
+            });
+
             modelBuilder.Entity("DiscImageChef.Server.Models.UploadedReport", b =>
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
