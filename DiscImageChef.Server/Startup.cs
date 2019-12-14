@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Prometheus;
 
 namespace DiscImageChef.Server
 {
@@ -42,6 +43,8 @@ namespace DiscImageChef.Server
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
+            app.UseHttpMetrics();
+
             if(env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -67,6 +70,8 @@ namespace DiscImageChef.Server
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            app.UseMetricServer();
         }
     }
 }

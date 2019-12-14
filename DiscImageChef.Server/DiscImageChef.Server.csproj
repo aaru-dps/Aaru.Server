@@ -43,6 +43,7 @@
     <PackageReference Include="MimeKit" Version="2.3.2" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.0.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design" Version="1.1.2" />
+    <PackageReference Include="prometheus-net.AspNetCore" Version="3.3.0" />
     <PackageReference Include="Unclassified.NetRevisionTask" Version="0.3.0" />
   </ItemGroup>
 
