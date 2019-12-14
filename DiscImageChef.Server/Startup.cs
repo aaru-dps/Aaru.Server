@@ -71,7 +71,13 @@ namespace DiscImageChef.Server
                 endpoints.MapRazorPages();
             });
 
-            app.UseMetricServer();
+            app.Map("/metrics", metricsApp =>
+            {
+                metricsApp.UseMiddleware<BasicAuthMiddleware>("DiscImageChef");
+
+                // We already specified URL prefix in .Map() above, no need to specify it again here.
+                metricsApp.UseMetricServer("");
+            });
         }
     }
 }
