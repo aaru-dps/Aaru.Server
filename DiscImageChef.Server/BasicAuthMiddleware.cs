@@ -8,6 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace DiscImageChef.Server
 {
@@ -65,7 +66,17 @@ namespace DiscImageChef.Server
 
         // Make your own implementation of this
         // Check that username and password are correct
-        public bool IsAuthorized(string username, string password) =>
-            username.Equals("User1", StringComparison.InvariantCultureIgnoreCase) && password.Equals("SecretPassword!");
+        public bool IsAuthorized(string username, string password)
+        {
+            IConfigurationBuilder builder       = new ConfigurationBuilder().AddJsonFile("appsettings.json");
+            IConfigurationRoot    configuration = builder.Build();
+            string                validUser     = configuration.GetValue<string>("MetricsAuthentication:Username");
+            string                validPassword = configuration.GetValue<string>("MetricsAuthentication:Password");
+
+            return!string.IsNullOrWhiteSpace(validUser)                                   &&
+                  !string.IsNullOrWhiteSpace(validPassword)                               &&
+                  username.Equals(validUser, StringComparison.InvariantCultureIgnoreCase) &&
+                  password.Equals(validPassword);
+        }
     }
 }
