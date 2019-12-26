@@ -256,6 +256,24 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                 _context.Update(masterReport);
             }
 
+            if(masterReport.SCSI?.SequentialDeviceId != null &&
+               masterReport.SCSI?.SequentialDeviceId != slaveReport.SCSI?.SequentialDeviceId)
+            {
+                foreach(TestedSequentialMedia testedMedia in
+                    _context.TestedSequentialMedia.Where(d => d.SscId == slaveReport.SCSI.SequentialDeviceId))
+                {
+                    testedMedia.SscId = masterReport.SCSI.SequentialDeviceId;
+                    _context.Update(testedMedia);
+                }
+            }
+            else if(masterReport.SCSI                     != null &&
+                    masterReport.SCSI?.SequentialDeviceId == null &&
+                    slaveReport.SCSI?.SequentialDeviceId  != null)
+            {
+                masterReport.SCSI.SequentialDeviceId = slaveReport.SCSI.SequentialDeviceId;
+                _context.Update(masterReport);
+            }
+
             _context.Remove(slaveReport);
             _context.SaveChanges();
 
