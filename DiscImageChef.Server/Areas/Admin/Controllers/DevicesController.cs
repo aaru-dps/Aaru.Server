@@ -119,30 +119,35 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
             int id, [Bind("OptimalMultipleSectorsRead,Id,CompactFlash,Manufacturer,Model,Revision,Type")]
-            Device device)
+            Device changedModel)
         {
-            if(id != device.Id)
-            {
+            if(id != changedModel.Id)
                 return NotFound();
-            }
 
             if(!ModelState.IsValid)
-                return View(device);
+                return View(changedModel);
+
+            Device model = await _context.Devices.FirstOrDefaultAsync(m => m.Id == id);
+
+            if(model is null)
+                return NotFound();
+
+            model.OptimalMultipleSectorsRead = changedModel.OptimalMultipleSectorsRead;
+            model.CompactFlash               = changedModel.CompactFlash;
+            model.Manufacturer               = changedModel.Manufacturer;
+            model.Model                      = changedModel.Model;
+            model.Revision                   = changedModel.Revision;
+            model.Type                       = changedModel.Type;
+            model.ModifiedWhen               = DateTime.UtcNow;
 
             try
             {
-                device.ModifiedWhen = DateTime.UtcNow;
-                _context.Update(device);
+                _context.Update(model);
                 await _context.SaveChangesAsync();
             }
             catch(DbUpdateConcurrencyException)
             {
-                if(!DeviceExists(device.Id))
-                {
-                    return NotFound();
-                }
-
-                throw;
+                ModelState.AddModelError("Concurrency", "Concurrency error, please report to the administrator.");
             }
 
             return RedirectToAction(nameof(Index));

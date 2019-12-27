@@ -75,34 +75,37 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
             int id, [Bind("Id,Blocks,BlockSize,LongBlockSize,Manufacturer,MediumTypeName,Model")]
-            TestedMedia testedMedia)
+            TestedMedia changedModel)
         {
-            if(id != testedMedia.Id)
-            {
+            if(id != changedModel.Id)
                 return NotFound();
-            }
 
-            if(ModelState.IsValid)
+            if(!ModelState.IsValid)
+                return View(changedModel);
+
+            TestedMedia model = await _context.TestedMedia.FirstOrDefaultAsync(m => m.Id == id);
+
+            if(model is null)
+                return NotFound();
+
+            model.Blocks         = changedModel.Blocks;
+            model.BlockSize      = changedModel.BlockSize;
+            model.LongBlockSize  = changedModel.LongBlockSize;
+            model.Manufacturer   = changedModel.Manufacturer;
+            model.MediumTypeName = changedModel.MediumTypeName;
+            model.Model          = changedModel.Model;
+
+            try
             {
-                try
-                {
-                    _context.Update(testedMedia);
-                    await _context.SaveChangesAsync();
-                }
-                catch(DbUpdateConcurrencyException)
-                {
-                    if(!TestedMediaExists(testedMedia.Id))
-                    {
-                        return NotFound();
-                    }
-
-                    throw;
-                }
-
-                return RedirectToAction(nameof(Index));
+                _context.Update(model);
+                await _context.SaveChangesAsync();
+            }
+            catch(DbUpdateConcurrencyException)
+            {
+                ModelState.AddModelError("Concurrency", "Concurrency error, please report to the administrator.");
             }
 
-            return View(testedMedia);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Admin/TestedMedias/Delete/5

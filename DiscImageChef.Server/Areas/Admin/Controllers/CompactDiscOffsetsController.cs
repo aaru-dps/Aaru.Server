@@ -43,30 +43,34 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Manufacturer,Model,Offset,Submissions,Agreement")]
-                                              CompactDiscOffset compactDiscOffset)
+                                              CompactDiscOffset changedModel)
         {
-            if(id != compactDiscOffset.Id)
-            {
+            if(id != changedModel.Id)
                 return NotFound();
-            }
 
             if(!ModelState.IsValid)
-                return View(compactDiscOffset);
+                return View(changedModel);
+
+            CompactDiscOffset model = await _context.CdOffsets.FirstOrDefaultAsync(m => m.Id == id);
+
+            if(model is null)
+                return NotFound();
+
+            model.Manufacturer = changedModel.Manufacturer;
+            model.Model        = changedModel.Model;
+            model.Offset       = changedModel.Offset;
+            model.Submissions  = changedModel.Submissions;
+            model.Agreement    = changedModel.Agreement;
+            model.ModifiedWhen = DateTime.UtcNow;
 
             try
             {
-                compactDiscOffset.ModifiedWhen = DateTime.UtcNow;
-                _context.Update(compactDiscOffset);
+                _context.Update(model);
                 await _context.SaveChangesAsync();
             }
             catch(DbUpdateConcurrencyException)
             {
-                if(!CompactDiscOffsetExists(compactDiscOffset.Id))
-                {
-                    return NotFound();
-                }
-
-                throw;
+                ModelState.AddModelError("Concurrency", "Concurrency error, please report to the administrator.");
             }
 
             return RedirectToAction(nameof(Index));
@@ -100,8 +104,6 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-        bool CompactDiscOffsetExists(int id) => _context.CdOffsets.Any(e => e.Id == id);
 
         public IActionResult Update() => throw new NotImplementedException();
     }

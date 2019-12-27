@@ -45,34 +45,36 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
             int id, [Bind("Id,VendorID,ProductID,Manufacturer,Product,RemovableMedia")]
-            FireWire fireWire)
+            FireWire changedModel)
         {
-            if(id != fireWire.Id)
-            {
+            if(id != changedModel.Id)
                 return NotFound();
-            }
 
-            if(ModelState.IsValid)
+            if(!ModelState.IsValid)
+                return View(changedModel);
+
+            FireWire model = await _context.FireWire.FirstOrDefaultAsync(m => m.Id == id);
+
+            if(model is null)
+                return NotFound();
+
+            model.VendorID       = changedModel.VendorID;
+            model.ProductID      = changedModel.ProductID;
+            model.Manufacturer   = changedModel.Manufacturer;
+            model.Product        = changedModel.Product;
+            model.RemovableMedia = changedModel.RemovableMedia;
+
+            try
             {
-                try
-                {
-                    _context.Update(fireWire);
-                    await _context.SaveChangesAsync();
-                }
-                catch(DbUpdateConcurrencyException)
-                {
-                    if(!FireWireExists(fireWire.Id))
-                    {
-                        return NotFound();
-                    }
-
-                    throw;
-                }
-
-                return RedirectToAction(nameof(Index));
+                _context.Update(model);
+                await _context.SaveChangesAsync();
+            }
+            catch(DbUpdateConcurrencyException)
+            {
+                ModelState.AddModelError("Concurrency", "Concurrency error, please report to the administrator.");
             }
 
-            return View(fireWire);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Admin/FireWires/Delete/5

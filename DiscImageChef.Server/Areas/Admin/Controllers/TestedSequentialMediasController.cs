@@ -43,29 +43,31 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Manufacturer,MediumTypeName,Model")]
-                                              TestedSequentialMedia testedSequentialMedia)
+                                              TestedSequentialMedia changedModel)
         {
-            if(id != testedSequentialMedia.Id)
-            {
+            if(id != changedModel.Id)
                 return NotFound();
-            }
 
             if(!ModelState.IsValid)
-                return View(testedSequentialMedia);
+                return View(changedModel);
+
+            TestedSequentialMedia model = await _context.TestedSequentialMedia.FirstOrDefaultAsync(m => m.Id == id);
+
+            if(model is null)
+                return NotFound();
+
+            model.Manufacturer   = changedModel.Manufacturer;
+            model.MediumTypeName = changedModel.MediumTypeName;
+            model.Model          = changedModel.Model;
 
             try
             {
-                _context.Update(testedSequentialMedia);
+                _context.Update(model);
                 await _context.SaveChangesAsync();
             }
             catch(DbUpdateConcurrencyException)
             {
-                if(!TestedSequentialMediaExists(testedSequentialMedia.Id))
-                {
-                    return NotFound();
-                }
-
-                throw;
+                ModelState.AddModelError("Concurrency", "Concurrency error, please report to the administrator.");
             }
 
             return RedirectToAction(nameof(Index));
@@ -100,7 +102,5 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-        bool TestedSequentialMediaExists(int id) => _context.TestedSequentialMedia.Any(e => e.Id == id);
     }
 }

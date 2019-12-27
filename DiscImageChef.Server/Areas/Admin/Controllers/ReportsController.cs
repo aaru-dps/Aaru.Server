@@ -106,29 +106,33 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,CompactFlash,Manufacturer,Model,Revision,Type")]
-                                              UploadedReport uploadedReport)
+                                              UploadedReport changedModel)
         {
-            if(id != uploadedReport.Id)
-            {
+            if(id != changedModel.Id)
                 return NotFound();
-            }
 
             if(!ModelState.IsValid)
-                return View(uploadedReport);
+                return View(changedModel);
+
+            UploadedReport model = await _context.Reports.FirstOrDefaultAsync(m => m.Id == id);
+
+            if(model is null)
+                return NotFound();
+
+            model.CompactFlash = changedModel.CompactFlash;
+            model.Manufacturer = changedModel.Manufacturer;
+            model.Model        = changedModel.Model;
+            model.Revision     = changedModel.Revision;
+            model.Type         = changedModel.Type;
 
             try
             {
-                _context.Update(uploadedReport);
+                _context.Update(model);
                 await _context.SaveChangesAsync();
             }
             catch(DbUpdateConcurrencyException)
             {
-                if(!UploadedReportExists(uploadedReport.Id))
-                {
-                    return NotFound();
-                }
-
-                throw;
+                ModelState.AddModelError("Concurrency", "Concurrency error, please report to the administrator.");
             }
 
             return RedirectToAction(nameof(Index));

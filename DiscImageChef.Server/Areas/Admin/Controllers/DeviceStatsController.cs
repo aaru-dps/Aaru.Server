@@ -42,34 +42,35 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Manufacturer,Model,Revision,Bus")]
-                                              DeviceStat deviceStat)
+                                              DeviceStat changedModel)
         {
-            if(id != deviceStat.Id)
-            {
+            if(id != changedModel.Id)
                 return NotFound();
-            }
 
-            if(ModelState.IsValid)
+            if(!ModelState.IsValid)
+                return View(changedModel);
+
+            DeviceStat model = await _context.DeviceStats.FirstOrDefaultAsync(m => m.Id == id);
+
+            if(model is null)
+                return NotFound();
+
+            model.Manufacturer = changedModel.Manufacturer;
+            model.Model        = changedModel.Model;
+            model.Revision     = changedModel.Revision;
+            model.Bus          = changedModel.Bus;
+
+            try
             {
-                try
-                {
-                    _context.Update(deviceStat);
-                    await _context.SaveChangesAsync();
-                }
-                catch(DbUpdateConcurrencyException)
-                {
-                    if(!DeviceStatExists(deviceStat.Id))
-                    {
-                        return NotFound();
-                    }
-
-                    throw;
-                }
-
-                return RedirectToAction(nameof(Index));
+                _context.Update(model);
+                await _context.SaveChangesAsync();
+            }
+            catch(DbUpdateConcurrencyException)
+            {
+                ModelState.AddModelError("Concurrency", "Concurrency error, please report to the administrator.");
             }
 
-            return View(deviceStat);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Admin/DeviceStats/Delete/5
@@ -100,7 +101,5 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-        bool DeviceStatExists(int id) => _context.DeviceStats.Any(e => e.Id == id);
     }
 }
