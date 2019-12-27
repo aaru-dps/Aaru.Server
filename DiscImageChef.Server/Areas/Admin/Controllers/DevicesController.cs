@@ -275,6 +275,14 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                     testedMedia.AtaId = device.ATAId;
                     _context.Update(testedMedia);
                 }
+
+                if(device.ATA != null                  &&
+                   device.ATA.ReadCapabilities is null &&
+                   report.ATA?.ReadCapabilities != null)
+                {
+                    device.ATA.ReadCapabilities = report.ATA.ReadCapabilities;
+                    _context.Update(device.ATA);
+                }
             }
             else if(device.ATAId == null &&
                     report.ATAId != null)
@@ -306,6 +314,32 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                 {
                     testedMedia.ScsiId = device.SCSIId;
                     _context.Update(testedMedia);
+                }
+
+                if(device.SCSI != null                  &&
+                   device.SCSI.ReadCapabilities is null &&
+                   report.SCSI?.ReadCapabilities != null)
+                {
+                    device.SCSI.ReadCapabilities = report.SCSI.ReadCapabilities;
+                    _context.Update(device.SCSI);
+                }
+
+                if(device.SCSI != null                  &&
+                   device.SCSI.MultiMediaDevice is null &&
+                   report.SCSI?.MultiMediaDevice != null)
+                {
+                    device.SCSI.MultiMediaDevice = report.SCSI.MultiMediaDevice;
+                    _context.Update(device.SCSI);
+                }
+                else if(device.SCSI?.MultiMediaDevice != null &&
+                        report.SCSI?.MultiMediaDevice != null)
+                {
+                    foreach(TestedMedia testedMedia in
+                        _context.TestedMedia.Where(d => d.MmcId == report.SCSI.MultiMediaDevice.Id))
+                    {
+                        testedMedia.MmcId = device.SCSI.MultiMediaDevice.Id;
+                        _context.Update(testedMedia);
+                    }
                 }
             }
             else if(device.SCSIId == null &&
