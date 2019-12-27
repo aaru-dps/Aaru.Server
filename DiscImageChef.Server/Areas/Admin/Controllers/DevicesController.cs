@@ -341,6 +341,24 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                         _context.Update(testedMedia);
                     }
                 }
+
+                if(device.SCSI != null                  &&
+                   device.SCSI.SequentialDevice is null &&
+                   report.SCSI?.SequentialDevice != null)
+                {
+                    device.SCSI.SequentialDevice = report.SCSI.SequentialDevice;
+                    _context.Update(device.SCSI);
+                }
+                else if(device.SCSI?.SequentialDevice != null &&
+                        report.SCSI?.SequentialDevice != null)
+                {
+                    foreach(TestedSequentialMedia testedSequentialMedia in
+                        _context.TestedSequentialMedia.Where(d => d.SscId == report.SCSI.SequentialDevice.Id))
+                    {
+                        testedSequentialMedia.SscId = device.SCSI.SequentialDevice.Id;
+                        _context.Update(testedSequentialMedia);
+                    }
+                }
             }
             else if(device.SCSIId == null &&
                     report.SCSIId != null)
