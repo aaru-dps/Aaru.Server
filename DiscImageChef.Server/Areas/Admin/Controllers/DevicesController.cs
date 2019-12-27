@@ -245,6 +245,8 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                 _context.Update(masterDevice);
             }
 
+            masterDevice.ModifiedWhen = DateTime.UtcNow;
+            _context.Update(masterDevice);
             _context.Remove(slaveDevice);
             _context.SaveChanges();
 
