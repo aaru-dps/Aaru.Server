@@ -34,4 +34,18 @@
     <ProjectReference Include="..\DiscImageChef.Server\DiscImageChef.Server.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="drive_offsets.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
