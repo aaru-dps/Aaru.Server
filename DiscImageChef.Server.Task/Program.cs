@@ -35,6 +35,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.Json;
 using DiscImageChef.Server.Models;
 using HtmlAgilityPack;
 using Microsoft.EntityFrameworkCore;
@@ -466,6 +467,54 @@ namespace DiscImageChef.Server.Task
 
                 end = DateTime.UtcNow;
                 System.Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
+
+                if(File.Exists("drive_offsets.json"))
+                {
+                    var sr = new StreamReader("drive_offsets.json");
+
+                    var offsets = JsonSerializer.Deserialize<CompactDiscOffset[]>(sr.ReadToEnd());
+
+                    if(offsets != null)
+                    {
+                        foreach(var offset in offsets)
+                        {
+                                     CompactDiscOffset cdOffset =
+                                         ctx.CdOffsets.FirstOrDefault(o => o.Manufacturer == offset.Manufacturer && o.Model == offset.Model);
+                                     if(cdOffset is null)
+                                     {
+                                         offset.ModifiedWhen = DateTime.UtcNow;
+
+                                         ctx.CdOffsets.Add(offset);
+                                       addedOffsets++;
+                                     }
+                                     else
+                                     {
+                                         if(Math.Abs(cdOffset.Agreement - offset.Agreement) > 0 || offset.Agreement < 0)
+                                         {
+                                             cdOffset.Agreement    = offset.Agreement;
+                                             cdOffset.ModifiedWhen = DateTime.UtcNow;
+                                         }
+
+                                         if(cdOffset.Offset != offset.Offset)
+                                         {
+                                             cdOffset.Offset       = offset.Offset;
+                                             cdOffset.ModifiedWhen = DateTime.UtcNow;
+                                         }
+
+                                         if(cdOffset.Submissions != offset.Submissions)
+                                         {
+                                             cdOffset.Submissions  = offset.Submissions;
+                                             cdOffset.ModifiedWhen = DateTime.UtcNow;
+                                         }
+
+                                         if(Math.Abs(cdOffset.Agreement - offset.Agreement) > 0       ||
+                                            cdOffset.Offset                           != offset.Offset ||
+                                            cdOffset.Submissions                      != offset.Submissions)
+                                             modifiedOffsets++;
+                                     }
+                        }
+                    }
+                }
 
                 System.Console.WriteLine("{0}: Committing changes...", DateTime.UtcNow);
                 start = DateTime.UtcNow;
