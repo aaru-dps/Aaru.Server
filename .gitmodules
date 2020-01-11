@@ -16,3 +16,6 @@
 [submodule "CICMMetadata"]
 	path = CICMMetadata
 	url = https://github.com/claunia/CICMMetadata.git
+[submodule "DiscImageChef.Checksums"]
+	path = DiscImageChef.Checksums
+	url = https://github.com/discimagechef/DiscImageChef.Checksums.git
