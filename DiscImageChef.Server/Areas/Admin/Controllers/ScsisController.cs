@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using DiscImageChef.CommonTypes.Metadata;
-using DiscImageChef.Decoders.SCSI;
+using DiscImageChef.CommonTypes.Structs.Devices.SCSI;
 using DiscImageChef.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -189,8 +189,8 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                 return View(model);
             }
 
-            Inquiry.SCSIInquiry? leftNullable  = left.Inquiry;
-            Inquiry.SCSIInquiry? rightNullable = right.Inquiry;
+            Inquiry? leftNullable  = left.Inquiry;
+            Inquiry? rightNullable = right.Inquiry;
             model.ValueNames  = new List<string>();
             model.LeftValues  = new List<string>();
             model.RightValues = new List<string>();
@@ -222,8 +222,8 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
                 return View(model);
             }
 
-            Inquiry.SCSIInquiry leftValue  = left.Inquiry.Value;
-            Inquiry.SCSIInquiry rightValue = right.Inquiry.Value;
+            Inquiry leftValue  = left.Inquiry.Value;
+            Inquiry rightValue = right.Inquiry.Value;
 
             foreach(FieldInfo fieldInfo in leftValue.GetType().GetFields())
             {
@@ -265,14 +265,14 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
                         switch(fieldInfo.Name)
                         {
-                            case nameof(Inquiry.SCSIInquiry.KreonIdentifier):
-                            case nameof(Inquiry.SCSIInquiry.ProductIdentification):
-                            case nameof(Inquiry.SCSIInquiry.ProductRevisionLevel):
-                            case nameof(Inquiry.SCSIInquiry.Qt_ModuleRevision):
-                            case nameof(Inquiry.SCSIInquiry.Seagate_Copyright):
-                            case nameof(Inquiry.SCSIInquiry.Seagate_DriveSerialNumber):
-                            case nameof(Inquiry.SCSIInquiry.Seagate_ServoPROMPartNo):
-                            case nameof(Inquiry.SCSIInquiry.VendorIdentification):
+                            case nameof(Inquiry.KreonIdentifier):
+                            case nameof(Inquiry.ProductIdentification):
+                            case nameof(Inquiry.ProductRevisionLevel):
+                            case nameof(Inquiry.Qt_ModuleRevision):
+                            case nameof(Inquiry.Seagate_Copyright):
+                            case nameof(Inquiry.Seagate_DriveSerialNumber):
+                            case nameof(Inquiry.Seagate_ServoPROMPartNo):
+                            case nameof(Inquiry.VendorIdentification):
                                 byte[] lb = new byte[ll.Count];
                                 byte[] rb = new byte[rl.Count];
 

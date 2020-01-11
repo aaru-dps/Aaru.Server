@@ -31,7 +31,7 @@
 // ****************************************************************************/
 
 using System.Collections.Generic;
-using DiscImageChef.Decoders.SCSI;
+using DiscImageChef.CommonTypes.Structs.Devices.SCSI;
 
 namespace DiscImageChef.Server
 {
@@ -43,14 +43,14 @@ namespace DiscImageChef.Server
         /// </summary>
         /// <param name="inquiryNullable">INQUIRY part of the report</param>
         /// <returns>List of values</returns>
-        internal static IEnumerable<string> Report(Inquiry.SCSIInquiry? inquiryNullable)
+        internal static IEnumerable<string> Report(Inquiry? inquiryNullable)
         {
             List<string> scsiOneValue = new List<string>();
 
             if(!inquiryNullable.HasValue)
                 return scsiOneValue;
 
-            Inquiry.SCSIInquiry inquiry = inquiryNullable.Value;
+            Inquiry inquiry = inquiryNullable.Value;
 
             switch((PeripheralQualifiers)inquiry.PeripheralQualifier)
             {

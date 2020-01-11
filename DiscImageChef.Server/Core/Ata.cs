@@ -32,8 +32,8 @@
 
 using System.Collections.Generic;
 using DiscImageChef.CommonTypes.Metadata;
-using DiscImageChef.Decoders.ATA;
-using DiscImageChef.Decoders.SCSI;
+using DiscImageChef.CommonTypes.Structs.Devices.ATA;
+using DiscImageChef.CommonTypes.Structs.Devices.SCSI;
 
 namespace DiscImageChef.Server
 {
@@ -708,22 +708,22 @@ namespace DiscImageChef.Server
                 {
                     case 1:
                         ataOneValue.
-                            Add($"{ataIdentify.BufferSize * logicalsectorsize / 1024} KiB of single ported single sector buffer");
+                            Add($"{(ataIdentify.BufferSize * logicalsectorsize) / 1024} KiB of single ported single sector buffer");
 
                         break;
                     case 2:
                         ataOneValue.
-                            Add($"{ataIdentify.BufferSize * logicalsectorsize / 1024} KiB of dual ported multi sector buffer");
+                            Add($"{(ataIdentify.BufferSize * logicalsectorsize) / 1024} KiB of dual ported multi sector buffer");
 
                         break;
                     case 3:
                         ataOneValue.
-                            Add($"{ataIdentify.BufferSize * logicalsectorsize / 1024} KiB of dual ported multi sector buffer with read caching");
+                            Add($"{(ataIdentify.BufferSize * logicalsectorsize) / 1024} KiB of dual ported multi sector buffer with read caching");
 
                         break;
                     default:
                         ataOneValue.
-                            Add($"{ataIdentify.BufferSize * logicalsectorsize / 1024} KiB of unknown type {ataIdentify.BufferType} buffer");
+                            Add($"{(ataIdentify.BufferSize * logicalsectorsize) / 1024} KiB of unknown type {ataIdentify.BufferType} buffer");
 
                         break;
                 }
@@ -1726,7 +1726,7 @@ namespace DiscImageChef.Server
                                         $"{ataReport.ReadCapabilities.CHS.Cylinders * ataReport.ReadCapabilities.CHS.Heads * ataReport.ReadCapabilities.CHS.Sectors} max., {currentSectors} current");
 
                         ataTwoValue.Add("Device size in CHS mode",
-                                        $"{(ulong)currentSectors * logicalsectorsize} bytes, {(ulong)currentSectors * logicalsectorsize / 1000 / 1000} Mb, {(double)((ulong)currentSectors * logicalsectorsize) / 1024 / 1024:F2} MiB");
+                                        $"{(ulong)currentSectors * logicalsectorsize} bytes, {((ulong)currentSectors * logicalsectorsize) / 1000 / 1000} Mb, {(double)((ulong)currentSectors * logicalsectorsize) / 1024 / 1024:F2} MiB");
                     }
                     else if(ataReport.ReadCapabilities.CHS != null)
                     {
@@ -1740,7 +1740,7 @@ namespace DiscImageChef.Server
                         ataTwoValue.Add("Sectors addressable in CHS mode", $"{currentSectors}");
 
                         ataTwoValue.Add("Device size in CHS mode",
-                                        $"{(ulong)currentSectors * logicalsectorsize} bytes, {(ulong)currentSectors * logicalsectorsize / 1000 / 1000} Mb, {(double)((ulong)currentSectors * logicalsectorsize) / 1024 / 1024:F2} MiB");
+                                        $"{(ulong)currentSectors * logicalsectorsize} bytes, {((ulong)currentSectors * logicalsectorsize) / 1000 / 1000} Mb, {(double)((ulong)currentSectors * logicalsectorsize) / 1024 / 1024:F2} MiB");
                     }
 
                     if(ataReport.ReadCapabilities.LBASectors != null)
@@ -1748,15 +1748,15 @@ namespace DiscImageChef.Server
                         ataTwoValue.Add("Sectors addressable in sectors in 28-bit LBA mode",
                                         $"{ataReport.ReadCapabilities.LBASectors}");
 
-                        if((ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize / 1024 / 1024 > 1000000)
+                        if(((ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize) / 1024 / 1024 > 1000000)
                             ataTwoValue.Add("Device size in 28-bit LBA mode",
-                                            $"{(ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize} bytes, {(ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize / 1000 / 1000 / 1000 / 1000} Tb, {(double)((ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
-                        else if((ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize / 1024 / 1024 > 1000)
+                                            $"{(ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize} bytes, {((ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize) / 1000 / 1000 / 1000 / 1000} Tb, {(double)((ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                        else if(((ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize) / 1024 / 1024 > 1000)
                             ataTwoValue.Add("Device size in 28-bit LBA mode",
-                                            $"{(ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize} bytes, {(ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize / 1000 / 1000 / 1000} Gb, {(double)((ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize) / 1024 / 1024 / 1024:F2} GiB");
+                                            $"{(ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize} bytes, {((ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize) / 1000 / 1000 / 1000} Gb, {(double)((ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize) / 1024 / 1024 / 1024:F2} GiB");
                         else
                             ataTwoValue.Add("Device size in 28-bit LBA mode",
-                                            $"{(ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize} bytes, {(ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize / 1000 / 1000} Mb, {(double)((ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize) / 1024 / 1024:F2} MiB");
+                                            $"{(ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize} bytes, {((ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize) / 1000 / 1000} Mb, {(double)((ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize) / 1024 / 1024:F2} MiB");
                     }
 
                     if(ataReport.ReadCapabilities.LBA48Sectors != null)
@@ -1764,15 +1764,15 @@ namespace DiscImageChef.Server
                         ataTwoValue.Add("Sectors addressable in sectors in 48-bit LBA mode",
                                         $"{ataReport.ReadCapabilities.LBA48Sectors}");
 
-                        if(ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize / 1024 / 1024 > 1000000)
+                        if((ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize) / 1024 / 1024 > 1000000)
                             ataTwoValue.Add("Device size in 48-bit LBA mode",
-                                            $"{ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize} bytes, {ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize / 1000 / 1000 / 1000 / 1000} Tb, {(double)(ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
-                        else if(ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize / 1024 / 1024 > 1000)
+                                            $"{ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize} bytes, {(ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize) / 1000 / 1000 / 1000 / 1000} Tb, {(double)(ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                        else if((ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize) / 1024 / 1024 > 1000)
                             ataTwoValue.Add("Device size in 48-bit LBA mode",
-                                            $"{ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize} bytes, {ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize / 1000 / 1000 / 1000} Gb, {(double)(ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize) / 1024 / 1024 / 1024:F2} GiB");
+                                            $"{ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize} bytes, {(ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize) / 1000 / 1000 / 1000} Gb, {(double)(ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize) / 1024 / 1024 / 1024:F2} GiB");
                         else
                             ataTwoValue.Add("Device size in 48-bit LBA mode",
-                                            $"{ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize} bytes, {ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize / 1000 / 1000} Mb, {(double)(ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize) / 1024 / 1024:F2} MiB");
+                                            $"{ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize} bytes, {(ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize) / 1000 / 1000} Mb, {(double)(ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize) / 1024 / 1024:F2} MiB");
                     }
 
                     if(ata1 || cfa)

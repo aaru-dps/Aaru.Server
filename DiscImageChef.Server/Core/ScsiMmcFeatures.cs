@@ -32,6 +32,7 @@
 
 using System.Collections.Generic;
 using DiscImageChef.CommonTypes.Metadata;
+using DiscImageChef.CommonTypes.Structs.Devices.SCSI;
 using DiscImageChef.Decoders.SCSI.MMC;
 
 namespace DiscImageChef.Server

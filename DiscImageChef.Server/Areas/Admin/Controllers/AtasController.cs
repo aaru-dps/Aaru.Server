@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using DiscImageChef.CommonTypes.Metadata;
-using DiscImageChef.Decoders.ATA;
+using DiscImageChef.CommonTypes.Structs.Devices.ATA;
 using DiscImageChef.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -442,15 +442,15 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
             // Serial number
             for(int i = 0; i < 20; i++)
-                ata.Identify[10 * 2 + i] = 0x20;
+                ata.Identify[(10 * 2) + i] = 0x20;
 
             // Media serial number
             for(int i = 0; i < 40; i++)
-                ata.Identify[176 * 2 + i] = 0x20;
+                ata.Identify[(176 * 2) + i] = 0x20;
 
             // WWN and WWN Extension
             for(int i = 0; i < 16; i++)
-                ata.Identify[108 * 2 + i] = 0;
+                ata.Identify[(108 * 2) + i] = 0;
 
             // We need to tell EFCore the entity has changed
             _context.Update(ata);
@@ -468,23 +468,23 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
             // ReservedWords121
             for(int i = 0; i < 10; i++)
-                ata.Identify[121 * 2 + i] = 0;
+                ata.Identify[(121 * 2) + i] = 0;
 
             // ReservedWords129
             for(int i = 0; i < 40; i++)
-                ata.Identify[129 * 2 + i] = 0;
+                ata.Identify[(129 * 2) + i] = 0;
 
             // ReservedCFA
             for(int i = 0; i < 14; i++)
-                ata.Identify[161 * 2 + i] = 0;
+                ata.Identify[(161 * 2) + i] = 0;
 
             // ReservedCEATA224
             for(int i = 0; i < 12; i++)
-                ata.Identify[224 * 2 + i] = 0;
+                ata.Identify[(224 * 2) + i] = 0;
 
             // ReservedWords
             for(int i = 0; i < 14; i++)
-                ata.Identify[161 * 2 + i] = 0;
+                ata.Identify[(161 * 2) + i] = 0;
 
             // We need to tell EFCore the entity has changed
             _context.Update(ata);
@@ -502,15 +502,15 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
 
                 // Serial number
                 for(int i = 0; i < 20; i++)
-                    ata.Identify[10 * 2 + i] = 0x20;
+                    ata.Identify[(10 * 2) + i] = 0x20;
 
                 // Media serial number
                 for(int i = 0; i < 40; i++)
-                    ata.Identify[176 * 2 + i] = 0x20;
+                    ata.Identify[(176 * 2) + i] = 0x20;
 
                 // WWN and WWN Extension
                 for(int i = 0; i < 16; i++)
-                    ata.Identify[108 * 2 + i] = 0;
+                    ata.Identify[(108 * 2) + i] = 0;
 
                 // We need to tell EFCore the entity has changed
                 _context.Update(ata);
@@ -527,23 +527,23 @@ namespace DiscImageChef.Server.Areas.Admin.Controllers
             {
                 // ReservedWords121
                 for(int i = 0; i < 10; i++)
-                    ata.Identify[121 * 2 + i] = 0;
+                    ata.Identify[(121 * 2) + i] = 0;
 
                 // ReservedWords129
                 for(int i = 0; i < 40; i++)
-                    ata.Identify[129 * 2 + i] = 0;
+                    ata.Identify[(129 * 2) + i] = 0;
 
                 // ReservedCFA
                 for(int i = 0; i < 14; i++)
-                    ata.Identify[161 * 2 + i] = 0;
+                    ata.Identify[(161 * 2) + i] = 0;
 
                 // ReservedCEATA224
                 for(int i = 0; i < 12; i++)
-                    ata.Identify[224 * 2 + i] = 0;
+                    ata.Identify[(224 * 2) + i] = 0;
 
                 // ReservedWords
                 for(int i = 0; i < 14; i++)
-                    ata.Identify[161 * 2 + i] = 0;
+                    ata.Identify[(161 * 2) + i] = 0;
 
                 // We need to tell EFCore the entity has changed
                 _context.Update(ata);

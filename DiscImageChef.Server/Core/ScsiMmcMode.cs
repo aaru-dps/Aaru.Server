@@ -32,7 +32,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using DiscImageChef.Decoders.SCSI;
+using DiscImageChef.CommonTypes.Structs.Devices.SCSI.Modes;
 
 namespace DiscImageChef.Server
 {
@@ -44,7 +44,7 @@ namespace DiscImageChef.Server
         /// </summary>
         /// <param name="mode">MODE PAGE 2Ah part of the report</param>
         /// <param name="mmcOneValue">List to put the values on</param>
-        public static void Report(Modes.ModePage_2A mode, ref List<string> mmcOneValue)
+        public static void Report(ModePage_2A mode, ref List<string> mmcOneValue)
         {
             if(mode.AudioPlay)
                 mmcOneValue.Add("Drive can play audio");
@@ -196,7 +196,7 @@ namespace DiscImageChef.Server
             }
 
             if(mode.WriteSpeedPerformanceDescriptors != null)
-                foreach(Modes.ModePage_2A_WriteDescriptor descriptor in
+                foreach(ModePage_2A_WriteDescriptor descriptor in
                     mode.WriteSpeedPerformanceDescriptors.Where(descriptor => descriptor.WriteSpeed > 0))
                     if(descriptor.RotationControl == 0)
                         mmcOneValue.Add($"Drive supports writing at {descriptor.WriteSpeed} Kbyte/sec. in CLV mode");
