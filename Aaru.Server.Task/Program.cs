@@ -50,7 +50,7 @@ namespace Aaru.Server.Task
 
             start = DateTime.UtcNow;
             System.Console.WriteLine("{0}: Connecting to database...", DateTime.UtcNow);
-            var ctx = new DicServerContext();
+            var ctx = new AaruServerContext();
             end = DateTime.UtcNow;
             System.Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
 

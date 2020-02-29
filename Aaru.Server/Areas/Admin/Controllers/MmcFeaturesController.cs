@@ -10,9 +10,9 @@ namespace Aaru.Server.Areas.Admin.Controllers
     [Area("Admin"), Authorize]
     public class MmcFeaturesController : Controller
     {
-        readonly DicServerContext _context;
+        readonly AaruServerContext _context;
 
-        public MmcFeaturesController(DicServerContext context) => _context = context;
+        public MmcFeaturesController(AaruServerContext context) => _context = context;
 
         // GET: Admin/MmcFeatures
         public async Task<IActionResult> Index() => View(await _context.MmcFeatures.ToListAsync());

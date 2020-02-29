@@ -16,9 +16,9 @@ namespace Aaru.Server.Areas.Admin.Controllers
     [Area("Admin"), Authorize]
     public class AtasController : Controller
     {
-        readonly DicServerContext _context;
+        readonly AaruServerContext _context;
 
-        public AtasController(DicServerContext context) => _context = context;
+        public AtasController(AaruServerContext context) => _context = context;
 
         // GET: Admin/Atas
         public IActionResult Index() => View(_context.Ata.AsEnumerable().OrderBy(m => m.IdentifyDevice?.Model).

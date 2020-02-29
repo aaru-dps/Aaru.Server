@@ -46,9 +46,9 @@ namespace Aaru.Server.Controllers
 {
     public class UpdateController : Controller
     {
-        readonly DicServerContext _ctx;
+        readonly AaruServerContext _ctx;
 
-        public UpdateController(DicServerContext ctx) => _ctx = ctx;
+        public UpdateController(AaruServerContext ctx) => _ctx = ctx;
 
         /// <summary>Receives a report from Aaru.Core, verifies it's in the correct format and stores it on the server</summary>
         /// <returns>HTTP response</returns>

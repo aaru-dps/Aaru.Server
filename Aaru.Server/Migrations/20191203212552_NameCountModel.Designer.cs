@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Aaru.Server.Migrations
 {
-    [DbContext(typeof(DicServerContext))]
+    [DbContext(typeof(AaruServerContext))]
     [Migration("20191203212552_NameCountModel")]
     partial class NameCountModel
     {
@@ -1385,7 +1385,7 @@ namespace Aaru.Server.Migrations
                     b.ToTable("Usb");
                 });
 
-            modelBuilder.Entity("Aaru.Server.Models.Command", b =>
+            modelBuilder.Entity("DiscImageChef.Server.Models.Command", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1402,7 +1402,7 @@ namespace Aaru.Server.Migrations
                     b.ToTable("Commands");
                 });
 
-            modelBuilder.Entity("Aaru.Server.Models.CompactDiscOffset", b =>
+            modelBuilder.Entity("DiscImageChef.Server.Models.CompactDiscOffset", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1436,7 +1436,7 @@ namespace Aaru.Server.Migrations
                     b.ToTable("CdOffsets");
                 });
 
-            modelBuilder.Entity("Aaru.Server.Models.Device", b =>
+            modelBuilder.Entity("DiscImageChef.Server.Models.Device", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1518,7 +1518,7 @@ namespace Aaru.Server.Migrations
                     b.ToTable("Devices");
                 });
 
-            modelBuilder.Entity("Aaru.Server.Models.DeviceStat", b =>
+            modelBuilder.Entity("DiscImageChef.Server.Models.DeviceStat", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1546,7 +1546,7 @@ namespace Aaru.Server.Migrations
                     b.ToTable("DeviceStats");
                 });
 
-            modelBuilder.Entity("Aaru.Server.Models.Filesystem", b =>
+            modelBuilder.Entity("DiscImageChef.Server.Models.Filesystem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1563,7 +1563,7 @@ namespace Aaru.Server.Migrations
                     b.ToTable("Filesystems");
                 });
 
-            modelBuilder.Entity("Aaru.Server.Models.Filter", b =>
+            modelBuilder.Entity("DiscImageChef.Server.Models.Filter", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1580,7 +1580,7 @@ namespace Aaru.Server.Migrations
                     b.ToTable("Filters");
                 });
 
-            modelBuilder.Entity("Aaru.Server.Models.Media", b =>
+            modelBuilder.Entity("DiscImageChef.Server.Models.Media", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1600,7 +1600,7 @@ namespace Aaru.Server.Migrations
                     b.ToTable("Medias");
                 });
 
-            modelBuilder.Entity("Aaru.Server.Models.MediaFormat", b =>
+            modelBuilder.Entity("DiscImageChef.Server.Models.MediaFormat", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1617,7 +1617,7 @@ namespace Aaru.Server.Migrations
                     b.ToTable("MediaFormats");
                 });
 
-            modelBuilder.Entity("Aaru.Server.Models.OperatingSystem", b =>
+            modelBuilder.Entity("DiscImageChef.Server.Models.OperatingSystem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1637,7 +1637,7 @@ namespace Aaru.Server.Migrations
                     b.ToTable("OperatingSystems");
                 });
 
-            modelBuilder.Entity("Aaru.Server.Models.Partition", b =>
+            modelBuilder.Entity("DiscImageChef.Server.Models.Partition", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1654,7 +1654,7 @@ namespace Aaru.Server.Migrations
                     b.ToTable("Partitions");
                 });
 
-            modelBuilder.Entity("Aaru.Server.Models.UploadedReport", b =>
+            modelBuilder.Entity("DiscImageChef.Server.Models.UploadedReport", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1723,7 +1723,7 @@ namespace Aaru.Server.Migrations
                     b.ToTable("Reports");
                 });
 
-            modelBuilder.Entity("Aaru.Server.Models.UsbProduct", b =>
+            modelBuilder.Entity("DiscImageChef.Server.Models.UsbProduct", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1755,7 +1755,7 @@ namespace Aaru.Server.Migrations
                     b.ToTable("UsbProducts");
                 });
 
-            modelBuilder.Entity("Aaru.Server.Models.UsbVendor", b =>
+            modelBuilder.Entity("DiscImageChef.Server.Models.UsbVendor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1783,7 +1783,7 @@ namespace Aaru.Server.Migrations
                     b.ToTable("UsbVendors");
                 });
 
-            modelBuilder.Entity("Aaru.Server.Models.Version", b =>
+            modelBuilder.Entity("DiscImageChef.Server.Models.Version", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2126,7 +2126,7 @@ namespace Aaru.Server.Migrations
                         .OnDelete(DeleteBehavior.SetNull);
                 });
 
-            modelBuilder.Entity("Aaru.Server.Models.Device", b =>
+            modelBuilder.Entity("DiscImageChef.Server.Models.Device", b =>
                 {
                     b.HasOne("Aaru.CommonTypes.Metadata.Ata", "ATA")
                         .WithMany()
@@ -2138,7 +2138,7 @@ namespace Aaru.Server.Migrations
                         .HasForeignKey("ATAPIId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("Aaru.Server.Models.CompactDiscOffset", "CdOffset")
+                    b.HasOne("DiscImageChef.Server.Models.CompactDiscOffset", "CdOffset")
                         .WithMany("Devices")
                         .HasForeignKey("CdOffsetId")
                         .OnDelete(DeleteBehavior.SetNull);
@@ -2174,15 +2174,15 @@ namespace Aaru.Server.Migrations
                         .OnDelete(DeleteBehavior.SetNull);
                 });
 
-            modelBuilder.Entity("Aaru.Server.Models.DeviceStat", b =>
+            modelBuilder.Entity("DiscImageChef.Server.Models.DeviceStat", b =>
                 {
-                    b.HasOne("Aaru.Server.Models.Device", "Report")
+                    b.HasOne("DiscImageChef.Server.Models.Device", "Report")
                         .WithMany()
                         .HasForeignKey("ReportId")
                         .OnDelete(DeleteBehavior.SetNull);
                 });
 
-            modelBuilder.Entity("Aaru.Server.Models.UploadedReport", b =>
+            modelBuilder.Entity("DiscImageChef.Server.Models.UploadedReport", b =>
                 {
                     b.HasOne("Aaru.CommonTypes.Metadata.Ata", "ATA")
                         .WithMany()
@@ -2225,9 +2225,9 @@ namespace Aaru.Server.Migrations
                         .OnDelete(DeleteBehavior.SetNull);
                 });
 
-            modelBuilder.Entity("Aaru.Server.Models.UsbProduct", b =>
+            modelBuilder.Entity("DiscImageChef.Server.Models.UsbProduct", b =>
                 {
-                    b.HasOne("Aaru.Server.Models.UsbVendor", "Vendor")
+                    b.HasOne("DiscImageChef.Server.Models.UsbVendor", "Vendor")
                         .WithMany("Products")
                         .HasForeignKey("VendorId")
                         .OnDelete(DeleteBehavior.Cascade)

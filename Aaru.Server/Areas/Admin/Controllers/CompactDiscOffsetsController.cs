@@ -11,9 +11,9 @@ namespace Aaru.Server.Areas.Admin.Controllers
     [Area("Admin"), Authorize]
     public class CompactDiscOffsetsController : Controller
     {
-        readonly DicServerContext _context;
+        readonly AaruServerContext _context;
 
-        public CompactDiscOffsetsController(DicServerContext context) => _context = context;
+        public CompactDiscOffsetsController(AaruServerContext context) => _context = context;
 
         // GET: Admin/CompactDiscOffsets
         public async Task<IActionResult> Index() =>

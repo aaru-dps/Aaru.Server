@@ -10,9 +10,9 @@ namespace Aaru.Server.Areas.Admin.Controllers
     [Area("Admin"), Authorize]
     public class ScsiPagesController : Controller
     {
-        readonly DicServerContext _context;
+        readonly AaruServerContext _context;
 
-        public ScsiPagesController(DicServerContext context) => _context = context;
+        public ScsiPagesController(AaruServerContext context) => _context = context;
 
         // GET: Admin/ScsiPages
         public async Task<IActionResult> Index() => View(await _context.ScsiPage.ToListAsync());

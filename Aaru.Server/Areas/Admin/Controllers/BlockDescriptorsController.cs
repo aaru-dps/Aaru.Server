@@ -10,9 +10,9 @@ namespace Aaru.Server.Areas.Admin.Controllers
     [Area("Admin"), Authorize]
     public class BlockDescriptorsController : Controller
     {
-        readonly DicServerContext _context;
+        readonly AaruServerContext _context;
 
-        public BlockDescriptorsController(DicServerContext context) => _context = context;
+        public BlockDescriptorsController(AaruServerContext context) => _context = context;
 
         // GET: Admin/BlockDescriptors
         public async Task<IActionResult> Index() =>

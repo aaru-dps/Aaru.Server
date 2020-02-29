@@ -10,9 +10,9 @@ namespace Aaru.Server.Areas.Admin.Controllers
     [Area("Admin"), Authorize]
     public class MediasController : Controller
     {
-        readonly DicServerContext _context;
+        readonly AaruServerContext _context;
 
-        public MediasController(DicServerContext context) => _context = context;
+        public MediasController(AaruServerContext context) => _context = context;
 
         // GET: Admin/Medias
         public IActionResult Index(bool? real)

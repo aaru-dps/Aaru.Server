@@ -12,9 +12,9 @@ namespace Aaru.Server.Areas.Admin.Controllers
     [Area("Admin"), Authorize]
     public class ReportsController : Controller
     {
-        readonly DicServerContext _context;
+        readonly AaruServerContext _context;
 
-        public ReportsController(DicServerContext context) => _context = context;
+        public ReportsController(AaruServerContext context) => _context = context;
 
         // GET: Admin/Reports
         public async Task<IActionResult> Index() =>

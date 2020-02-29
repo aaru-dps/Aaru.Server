@@ -16,9 +16,9 @@ namespace Aaru.Server.Areas.Admin.Controllers
     [Area("Admin"), Authorize]
     public class ScsisController : Controller
     {
-        readonly DicServerContext _context;
+        readonly AaruServerContext _context;
 
-        public ScsisController(DicServerContext context) => _context = context;
+        public ScsisController(AaruServerContext context) => _context = context;
 
         // GET: Admin/Scsis
         public IActionResult Index() => View(_context.Scsi.AsEnumerable().

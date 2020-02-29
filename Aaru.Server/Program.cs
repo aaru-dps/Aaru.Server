@@ -89,7 +89,7 @@ namespace Aaru.Server
                 {
                     start = DateTime.Now;
                     System.Console.WriteLine("\u001b[31;1mUpdating database with Entity Framework...\u001b[0m");
-                    var context = services.GetRequiredService<DicServerContext>();
+                    var context = services.GetRequiredService<AaruServerContext>();
                     context.Database.Migrate();
                     end = DateTime.Now;
 

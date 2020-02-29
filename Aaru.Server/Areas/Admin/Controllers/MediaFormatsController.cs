@@ -10,9 +10,9 @@ namespace Aaru.Server.Areas.Admin.Controllers
     [Area("Admin"), Authorize]
     public class MediaFormatsController : Controller
     {
-        readonly DicServerContext _context;
+        readonly AaruServerContext _context;
 
-        public MediaFormatsController(DicServerContext context) => _context = context;
+        public MediaFormatsController(AaruServerContext context) => _context = context;
 
         // GET: Admin/MediaFormats
         public async Task<IActionResult> Index() =>

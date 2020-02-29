@@ -41,7 +41,7 @@ namespace Aaru.Server
     {
         public static void Convert(Stats newStats)
         {
-            var ctx = new DicServerContext();
+            var ctx = new AaruServerContext();
 
             if(newStats.Commands != null)
             {

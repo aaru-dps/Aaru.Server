@@ -13,9 +13,9 @@ namespace Aaru.Server.Areas.Admin.Controllers
     [Area("Admin"), Authorize]
     public class ChsController : Controller
     {
-        readonly DicServerContext _context;
+        readonly AaruServerContext _context;
 
-        public ChsController(DicServerContext context) => _context = context;
+        public ChsController(AaruServerContext context) => _context = context;
 
         // GET: Admin/Chs
         public async Task<IActionResult> Index() =>

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Aaru.Server.Migrations
 {
-    [DbContext(typeof(DicServerContext))]
+    [DbContext(typeof(AaruServerContext))]
     [Migration("20191102132240_InitialMigration")]
     partial class InitialMigration
     {

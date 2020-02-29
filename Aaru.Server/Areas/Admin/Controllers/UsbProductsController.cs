@@ -10,9 +10,9 @@ namespace Aaru.Server.Areas.Admin.Controllers
     [Area("Admin"), Authorize]
     public class UsbProductsController : Controller
     {
-        readonly DicServerContext _context;
+        readonly AaruServerContext _context;
 
-        public UsbProductsController(DicServerContext context) => _context = context;
+        public UsbProductsController(AaruServerContext context) => _context = context;
 
         // GET: Admin/UsbProducts
         public async Task<IActionResult> Index() => View(await _context.

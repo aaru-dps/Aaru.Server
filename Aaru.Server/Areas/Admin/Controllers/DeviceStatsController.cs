@@ -10,9 +10,9 @@ namespace Aaru.Server.Areas.Admin.Controllers
     [Area("Admin"), Authorize]
     public class DeviceStatsController : Controller
     {
-        readonly DicServerContext _context;
+        readonly AaruServerContext _context;
 
-        public DeviceStatsController(DicServerContext context) => _context = context;
+        public DeviceStatsController(AaruServerContext context) => _context = context;
 
         // GET: Admin/DeviceStats
         public async Task<IActionResult> Index() =>

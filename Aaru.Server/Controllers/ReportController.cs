@@ -47,9 +47,9 @@ namespace Aaru.Server.Controllers
 {
     public class ReportController : Controller
     {
-        readonly DicServerContext _ctx;
+        readonly AaruServerContext _ctx;
 
-        public ReportController(DicServerContext context) => _ctx = context;
+        public ReportController(AaruServerContext context) => _ctx = context;
 
         public ActionResult Index() => RedirectToAction("View", "Report", new RouteValueDictionary
         {

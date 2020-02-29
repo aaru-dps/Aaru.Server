@@ -11,9 +11,9 @@ namespace Aaru.Server.Areas.Admin.Controllers
     [Area("Admin"), Authorize]
     public class MmcController : Controller
     {
-        readonly DicServerContext _context;
+        readonly AaruServerContext _context;
 
-        public MmcController(DicServerContext context) => _context = context;
+        public MmcController(AaruServerContext context) => _context = context;
 
         // GET: Admin/Mmc
         public IActionResult Index() => View(_context.Mmc.Where(m => m.ModeSense2AData != null).

@@ -51,10 +51,10 @@ namespace Aaru.Server.Controllers
 {
     public class UploadStatsController : Controller
     {
-        readonly DicServerContext _ctx;
+        readonly AaruServerContext _ctx;
         IWebHostEnvironment       _environment;
 
-        public UploadStatsController(IWebHostEnvironment environment, DicServerContext ctx)
+        public UploadStatsController(IWebHostEnvironment environment, AaruServerContext ctx)
         {
             _environment = environment;
             _ctx         = ctx;

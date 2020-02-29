@@ -13,9 +13,9 @@ namespace Aaru.Server.Areas.Admin.Controllers
     [Area("Admin"), Authorize]
     public class SscsController : Controller
     {
-        readonly DicServerContext _context;
+        readonly AaruServerContext _context;
 
-        public SscsController(DicServerContext context) => _context = context;
+        public SscsController(AaruServerContext context) => _context = context;
 
         // GET: Admin/Sscs
         public async Task<IActionResult> Index() =>

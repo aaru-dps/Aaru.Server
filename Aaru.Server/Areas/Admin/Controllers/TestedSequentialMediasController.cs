@@ -11,9 +11,9 @@ namespace Aaru.Server.Areas.Admin.Controllers
     [Area("Admin"), Authorize]
     public class TestedSequentialMediasController : Controller
     {
-        readonly DicServerContext _context;
+        readonly AaruServerContext _context;
 
-        public TestedSequentialMediasController(DicServerContext context) => _context = context;
+        public TestedSequentialMediasController(AaruServerContext context) => _context = context;
 
         // GET: Admin/TestedSequentialMedias
         public async Task<IActionResult> Index() =>

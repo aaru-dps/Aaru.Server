@@ -10,9 +10,9 @@ namespace Aaru.Server.Areas.Admin.Controllers
     [Area("Admin"), Authorize]
     public class PcmciasController : Controller
     {
-        readonly DicServerContext _context;
+        readonly AaruServerContext _context;
 
-        public PcmciasController(DicServerContext context) => _context = context;
+        public PcmciasController(AaruServerContext context) => _context = context;
 
         // GET: Admin/Pcmcias
         public async Task<IActionResult> Index() => View(await _context.Pcmcia.ToListAsync());

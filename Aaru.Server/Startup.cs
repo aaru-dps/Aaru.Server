@@ -21,7 +21,7 @@ namespace Aaru.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DicServerContext>(options => options.
+            services.AddDbContext<AaruServerContext>(options => options.
                                                                UseMySql(Configuration.
                                                                             GetConnectionString("DefaultConnection")).
                                                                UseLazyLoadingProxies());
@@ -30,7 +30,7 @@ namespace Aaru.Server
             {
                 options.SignIn.RequireConfirmedAccount = true;
                 options.User.RequireUniqueEmail        = true;
-            }).AddEntityFrameworkStores<DicServerContext>();
+            }).AddEntityFrameworkStores<AaruServerContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }

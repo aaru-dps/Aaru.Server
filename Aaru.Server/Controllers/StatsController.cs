@@ -52,10 +52,10 @@ namespace Aaru.Server.Controllers
     /// <summary>Renders a page with statistics, list of media type, devices, etc</summary>
     public class StatsController : Controller
     {
-        readonly DicServerContext    ctx;
+        readonly AaruServerContext    ctx;
         readonly IWebHostEnvironment env;
 
-        public StatsController(IWebHostEnvironment environment, DicServerContext context)
+        public StatsController(IWebHostEnvironment environment, AaruServerContext context)
         {
             env = environment;
             ctx = context;

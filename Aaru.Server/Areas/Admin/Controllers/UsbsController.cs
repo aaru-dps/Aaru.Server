@@ -13,9 +13,9 @@ namespace Aaru.Server.Areas.Admin.Controllers
     [Area("Admin"), Authorize]
     public class UsbsController : Controller
     {
-        readonly DicServerContext _context;
+        readonly AaruServerContext _context;
 
-        public UsbsController(DicServerContext context) => _context = context;
+        public UsbsController(AaruServerContext context) => _context = context;
 
         // GET: Admin/Usbs
         public async Task<IActionResult> Index() =>

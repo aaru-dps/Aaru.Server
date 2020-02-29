@@ -39,11 +39,11 @@ using Microsoft.Extensions.Configuration;
 
 namespace Aaru.Server.Models
 {
-    public sealed class DicServerContext : IdentityDbContext<IdentityUser>
+    public sealed class AaruServerContext : IdentityDbContext<IdentityUser>
     {
-        public DicServerContext() { }
+        public AaruServerContext() { }
 
-        public DicServerContext(DbContextOptions<DicServerContext> options) : base(options) { }
+        public AaruServerContext(DbContextOptions<AaruServerContext> options) : base(options) { }
 
         public DbSet<Device>                   Devices                { get; set; }
         public DbSet<UploadedReport>           Reports                { get; set; }
@@ -262,7 +262,7 @@ namespace Aaru.Server.Models
 
         internal static bool TableExists(string tableName)
         {
-            using var db = new DicServerContext();
+            using var db = new AaruServerContext();
 
             DbConnection connection = db.Database.GetDbConnection();
             connection.Open();

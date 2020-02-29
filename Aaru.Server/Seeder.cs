@@ -7,7 +7,7 @@ namespace Aaru.Server
 {
     public static class Seeder
     {
-        public static void Seed(DicServerContext ctx, IServiceProvider serviceProvider)
+        public static void Seed(AaruServerContext ctx, IServiceProvider serviceProvider)
         {
             string                    email       = "claunia@claunia.com";
             char[]                    randChars   = new char[16];
