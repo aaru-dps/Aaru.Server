@@ -2,20 +2,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Aaru.Server.Models;
-using DiscImageChef.CommonTypes.Metadata;
-using DiscImageChef.CommonTypes.Structs.Devices.SCSI;
-using DiscImageChef.Decoders.ATA;
-using DiscImageChef.Decoders.Bluray;
-using DiscImageChef.Decoders.CD;
-using DiscImageChef.Decoders.DVD;
-using DiscImageChef.Decoders.SCSI;
+using Aaru.CommonTypes.Metadata;
+using Aaru.CommonTypes.Structs.Devices.SCSI;
+using Aaru.Decoders.ATA;
+using Aaru.Decoders.Bluray;
+using Aaru.Decoders.CD;
+using Aaru.Decoders.DVD;
+using Aaru.Decoders.SCSI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Cartridge = DiscImageChef.Decoders.Bluray.Cartridge;
-using DDS = DiscImageChef.Decoders.Bluray.DDS;
-using DMI = DiscImageChef.Decoders.Xbox.DMI;
-using Spare = DiscImageChef.Decoders.Bluray.Spare;
+using Cartridge = Aaru.Decoders.Bluray.Cartridge;
+using DDS = Aaru.Decoders.Bluray.DDS;
+using DMI = Aaru.Decoders.Xbox.DMI;
+using Spare = Aaru.Decoders.Bluray.Spare;
 
 namespace Aaru.Server.Areas.Admin.Controllers
 {

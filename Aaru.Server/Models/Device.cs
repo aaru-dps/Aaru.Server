@@ -32,8 +32,8 @@
 
 using System;
 using System.ComponentModel;
-using DiscImageChef.CommonTypes.Enums;
-using DiscImageChef.CommonTypes.Metadata;
+using Aaru.CommonTypes.Enums;
+using Aaru.CommonTypes.Metadata;
 
 namespace Aaru.Server.Models
 {

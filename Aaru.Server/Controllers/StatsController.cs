@@ -39,12 +39,12 @@ using System.Threading;
 using System.Xml;
 using System.Xml.Serialization;
 using Aaru.Server.Models;
-using DiscImageChef.CommonTypes.Interop;
-using DiscImageChef.CommonTypes.Metadata;
+using Aaru.CommonTypes.Interop;
+using Aaru.CommonTypes.Metadata;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using OperatingSystem = Aaru.Server.Models.OperatingSystem;
-using PlatformID = DiscImageChef.CommonTypes.Interop.PlatformID;
+using PlatformID = Aaru.CommonTypes.Interop.PlatformID;
 using Version = Aaru.Server.Models.Version;
 
 namespace Aaru.Server.Controllers

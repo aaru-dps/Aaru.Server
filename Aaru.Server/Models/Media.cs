@@ -33,7 +33,7 @@
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
-using DiscImageChef.CommonTypes;
+using Aaru.CommonTypes;
 
 namespace Aaru.Server.Models
 {

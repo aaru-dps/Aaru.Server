@@ -1,6 +1,6 @@
-@using DiscImageChef.Decoders.SecureDigital
+@using Aaru.Decoders.SecureDigital
 @using Aaru.Server.Core
-@model DiscImageChef.CommonTypes.Metadata.MmcSd
+@model Aaru.CommonTypes.Metadata.MmcSd
 
 @{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -84,7 +84,7 @@
                     @Html.DisplayNameFor(model => model.CID)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.Raw(Html.EncodedMultiLineText(DiscImageChef.Decoders.MMC.Decoders.PrettifyCID(Model.CID)))
+                    @Html.Raw(Html.EncodedMultiLineText(Aaru.Decoders.MMC.Decoders.PrettifyCID(Model.CID)))
                 </dd>
             }
             if (Model.CSD != null)
@@ -93,7 +93,7 @@
                     @Html.DisplayNameFor(model => model.CSD)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.Raw(Html.EncodedMultiLineText(DiscImageChef.Decoders.MMC.Decoders.PrettifyCSD(Model.CSD)))
+                    @Html.Raw(Html.EncodedMultiLineText(Aaru.Decoders.MMC.Decoders.PrettifyCSD(Model.CSD)))
                 </dd>
             }
             if (Model.OCR != null)
@@ -102,7 +102,7 @@
                     @Html.DisplayNameFor(model => model.OCR)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.Raw(Html.EncodedMultiLineText(DiscImageChef.Decoders.MMC.Decoders.PrettifyOCR(Model.OCR)))
+                    @Html.Raw(Html.EncodedMultiLineText(Aaru.Decoders.MMC.Decoders.PrettifyOCR(Model.OCR)))
                 </dd>
             }
 
@@ -112,7 +112,7 @@
                     @Html.DisplayNameFor(model => model.ExtendedCSD)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.Raw(Html.EncodedMultiLineText(DiscImageChef.Decoders.MMC.Decoders.PrettifyExtendedCSD(Model.ExtendedCSD)))
+                    @Html.Raw(Html.EncodedMultiLineText(Aaru.Decoders.MMC.Decoders.PrettifyExtendedCSD(Model.ExtendedCSD)))
                 </dd>
             }
         }

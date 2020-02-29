@@ -31,9 +31,9 @@
 // ****************************************************************************/
 
 using System.Collections.Generic;
-using DiscImageChef.CommonTypes.Metadata;
-using DiscImageChef.CommonTypes.Structs.Devices.SCSI;
-using DiscImageChef.Decoders.SCSI;
+using Aaru.CommonTypes.Metadata;
+using Aaru.CommonTypes.Structs.Devices.SCSI;
+using Aaru.Decoders.SCSI;
 
 namespace Aaru.Server
 {

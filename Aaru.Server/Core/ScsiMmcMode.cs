@@ -32,7 +32,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using DiscImageChef.CommonTypes.Structs.Devices.SCSI.Modes;
+using Aaru.CommonTypes.Structs.Devices.SCSI.Modes;
 
 namespace Aaru.Server
 {

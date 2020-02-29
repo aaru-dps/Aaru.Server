@@ -34,14 +34,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Aaru.Server.Models;
-using DiscImageChef.CommonTypes.Metadata;
-using DiscImageChef.CommonTypes.Structs.Devices.SCSI;
-using DiscImageChef.Decoders.PCMCIA;
-using DiscImageChef.Decoders.SCSI;
+using Aaru.CommonTypes.Metadata;
+using Aaru.CommonTypes.Structs.Devices.SCSI;
+using Aaru.Decoders.PCMCIA;
+using Aaru.Decoders.SCSI;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Inquiry = DiscImageChef.CommonTypes.Structs.Devices.SCSI.Inquiry;
-using Tuple = DiscImageChef.Decoders.PCMCIA.Tuple;
+using Inquiry = Aaru.CommonTypes.Structs.Devices.SCSI.Inquiry;
+using Tuple = Aaru.Decoders.PCMCIA.Tuple;
 
 namespace Aaru.Server.Controllers
 {

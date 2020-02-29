@@ -15,7 +15,7 @@ namespace Aaru.Server.Migrations
             #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "3.0.0").HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.Ata", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.Ata", b =>
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
@@ -30,7 +30,7 @@ namespace Aaru.Server.Migrations
                 b.ToTable("Ata");
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.BlockDescriptor", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.BlockDescriptor", b =>
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
@@ -49,7 +49,7 @@ namespace Aaru.Server.Migrations
                 b.ToTable("BlockDescriptor");
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.Chs", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.Chs", b =>
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
@@ -64,7 +64,7 @@ namespace Aaru.Server.Migrations
                 b.ToTable("Chs");
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.DensityCode", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.DensityCode", b =>
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
@@ -79,7 +79,7 @@ namespace Aaru.Server.Migrations
                 b.ToTable("DensityCode");
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.FireWire", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.FireWire", b =>
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
@@ -98,7 +98,7 @@ namespace Aaru.Server.Migrations
                 b.ToTable("FireWire");
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.Mmc", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.Mmc", b =>
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
@@ -113,7 +113,7 @@ namespace Aaru.Server.Migrations
                 b.ToTable("Mmc");
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.MmcFeatures", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.MmcFeatures", b =>
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
@@ -370,7 +370,7 @@ namespace Aaru.Server.Migrations
                 b.ToTable("MmcFeatures");
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.MmcSd", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.MmcSd", b =>
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
@@ -389,7 +389,7 @@ namespace Aaru.Server.Migrations
                 b.ToTable("MmcSd");
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.Pcmcia", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.Pcmcia", b =>
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
@@ -410,7 +410,7 @@ namespace Aaru.Server.Migrations
                 b.ToTable("Pcmcia");
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.Scsi", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.Scsi", b =>
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
@@ -455,7 +455,7 @@ namespace Aaru.Server.Migrations
                 b.ToTable("Scsi");
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.ScsiMode", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.ScsiMode", b =>
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
@@ -476,7 +476,7 @@ namespace Aaru.Server.Migrations
                 b.ToTable("ScsiMode");
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.ScsiPage", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.ScsiPage", b =>
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
@@ -499,7 +499,7 @@ namespace Aaru.Server.Migrations
                 b.ToTable("ScsiPage");
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.Ssc", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.Ssc", b =>
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
@@ -514,7 +514,7 @@ namespace Aaru.Server.Migrations
                 b.ToTable("Ssc");
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.SscSupportedMedia", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.SscSupportedMedia", b =>
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
@@ -543,7 +543,7 @@ namespace Aaru.Server.Migrations
                 b.ToTable("SscSupportedMedia");
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.SupportedDensity", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.SupportedDensity", b =>
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
@@ -584,7 +584,7 @@ namespace Aaru.Server.Migrations
                 b.ToTable("SupportedDensity");
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.TestedMedia", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.TestedMedia", b =>
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
@@ -917,7 +917,7 @@ namespace Aaru.Server.Migrations
                 b.ToTable("TestedMedia");
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.TestedSequentialMedia", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.TestedSequentialMedia", b =>
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
@@ -948,7 +948,7 @@ namespace Aaru.Server.Migrations
                 b.ToTable("TestedSequentialMedia");
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.Usb", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.Usb", b =>
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
 
@@ -1472,125 +1472,125 @@ namespace Aaru.Server.Migrations
                 b.ToTable("AspNetUserTokens");
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.Ata", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.Ata", b =>
             {
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.TestedMedia", "ReadCapabilities").WithMany().
+                b.HasOne("Aaru.CommonTypes.Metadata.TestedMedia", "ReadCapabilities").WithMany().
                   HasForeignKey("ReadCapabilitiesId").OnDelete(DeleteBehavior.SetNull);
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.BlockDescriptor", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.BlockDescriptor", b =>
             {
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.ScsiMode", null).WithMany("BlockDescriptors").
+                b.HasOne("Aaru.CommonTypes.Metadata.ScsiMode", null).WithMany("BlockDescriptors").
                   HasForeignKey("ScsiModeId").OnDelete(DeleteBehavior.Cascade);
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.DensityCode", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.DensityCode", b =>
             {
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.SscSupportedMedia", null).WithMany("DensityCodes").
+                b.HasOne("Aaru.CommonTypes.Metadata.SscSupportedMedia", null).WithMany("DensityCodes").
                   HasForeignKey("SscSupportedMediaId").OnDelete(DeleteBehavior.Cascade);
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.Mmc", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.Mmc", b =>
             {
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.MmcFeatures", "Features").WithMany().
+                b.HasOne("Aaru.CommonTypes.Metadata.MmcFeatures", "Features").WithMany().
                   HasForeignKey("FeaturesId").OnDelete(DeleteBehavior.SetNull);
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.Scsi", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.Scsi", b =>
             {
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.ScsiMode", "ModeSense").WithMany().
+                b.HasOne("Aaru.CommonTypes.Metadata.ScsiMode", "ModeSense").WithMany().
                   HasForeignKey("ModeSenseId").OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Mmc", "MultiMediaDevice").WithMany().
+                b.HasOne("Aaru.CommonTypes.Metadata.Mmc", "MultiMediaDevice").WithMany().
                   HasForeignKey("MultiMediaDeviceId").OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.TestedMedia", "ReadCapabilities").WithMany().
+                b.HasOne("Aaru.CommonTypes.Metadata.TestedMedia", "ReadCapabilities").WithMany().
                   HasForeignKey("ReadCapabilitiesId").OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Ssc", "SequentialDevice").WithMany().
+                b.HasOne("Aaru.CommonTypes.Metadata.Ssc", "SequentialDevice").WithMany().
                   HasForeignKey("SequentialDeviceId").OnDelete(DeleteBehavior.SetNull);
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.ScsiPage", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.ScsiPage", b =>
             {
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Scsi", null).WithMany("EVPDPages").HasForeignKey("ScsiId").
+                b.HasOne("Aaru.CommonTypes.Metadata.Scsi", null).WithMany("EVPDPages").HasForeignKey("ScsiId").
                   OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.ScsiMode", null).WithMany("ModePages").
+                b.HasOne("Aaru.CommonTypes.Metadata.ScsiMode", null).WithMany("ModePages").
                   HasForeignKey("ScsiModeId").OnDelete(DeleteBehavior.SetNull);
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.SscSupportedMedia", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.SscSupportedMedia", b =>
             {
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Ssc", null).WithMany("SupportedMediaTypes").
+                b.HasOne("Aaru.CommonTypes.Metadata.Ssc", null).WithMany("SupportedMediaTypes").
                   HasForeignKey("SscId").OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.TestedSequentialMedia", null).
+                b.HasOne("Aaru.CommonTypes.Metadata.TestedSequentialMedia", null).
                   WithMany("SupportedMediaTypes").HasForeignKey("TestedSequentialMediaId").
                   OnDelete(DeleteBehavior.SetNull);
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.SupportedDensity", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.SupportedDensity", b =>
             {
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Ssc", null).WithMany("SupportedDensities").
+                b.HasOne("Aaru.CommonTypes.Metadata.Ssc", null).WithMany("SupportedDensities").
                   HasForeignKey("SscId").OnDelete(DeleteBehavior.Cascade);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.TestedSequentialMedia", null).
+                b.HasOne("Aaru.CommonTypes.Metadata.TestedSequentialMedia", null).
                   WithMany("SupportedDensities").HasForeignKey("TestedSequentialMediaId").
                   OnDelete(DeleteBehavior.Cascade);
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.TestedMedia", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.TestedMedia", b =>
             {
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Ata", null).WithMany("RemovableMedias").
+                b.HasOne("Aaru.CommonTypes.Metadata.Ata", null).WithMany("RemovableMedias").
                   HasForeignKey("AtaId").OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Chs", "CHS").WithMany().HasForeignKey("CHSId").
+                b.HasOne("Aaru.CommonTypes.Metadata.Chs", "CHS").WithMany().HasForeignKey("CHSId").
                   OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Chs", "CurrentCHS").WithMany().
+                b.HasOne("Aaru.CommonTypes.Metadata.Chs", "CurrentCHS").WithMany().
                   HasForeignKey("CurrentCHSId").OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Mmc", null).WithMany("TestedMedia").HasForeignKey("MmcId").
+                b.HasOne("Aaru.CommonTypes.Metadata.Mmc", null).WithMany("TestedMedia").HasForeignKey("MmcId").
                   OnDelete(DeleteBehavior.Cascade);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Scsi", null).WithMany("RemovableMedias").
+                b.HasOne("Aaru.CommonTypes.Metadata.Scsi", null).WithMany("RemovableMedias").
                   HasForeignKey("ScsiId").OnDelete(DeleteBehavior.SetNull);
             });
 
-            modelBuilder.Entity("DiscImageChef.CommonTypes.Metadata.TestedSequentialMedia", b =>
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.TestedSequentialMedia", b =>
             {
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Ssc", null).WithMany("TestedMedia").HasForeignKey("SscId").
+                b.HasOne("Aaru.CommonTypes.Metadata.Ssc", null).WithMany("TestedMedia").HasForeignKey("SscId").
                   OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity("DiscImageChef.Server.Models.Device", b =>
             {
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Ata", "ATA").WithMany().HasForeignKey("ATAId").
+                b.HasOne("Aaru.CommonTypes.Metadata.Ata", "ATA").WithMany().HasForeignKey("ATAId").
                   OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Ata", "ATAPI").WithMany().HasForeignKey("ATAPIId").
+                b.HasOne("Aaru.CommonTypes.Metadata.Ata", "ATAPI").WithMany().HasForeignKey("ATAPIId").
                   OnDelete(DeleteBehavior.SetNull);
 
                 b.HasOne("DiscImageChef.Server.Models.CompactDiscOffset", "CdOffset").WithMany("Devices").
                   HasForeignKey("CdOffsetId").OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.FireWire", "FireWire").WithMany().
+                b.HasOne("Aaru.CommonTypes.Metadata.FireWire", "FireWire").WithMany().
                   HasForeignKey("FireWireId").OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.MmcSd", "MultiMediaCard").WithMany().
+                b.HasOne("Aaru.CommonTypes.Metadata.MmcSd", "MultiMediaCard").WithMany().
                   HasForeignKey("MultiMediaCardId").OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Pcmcia", "PCMCIA").WithMany().HasForeignKey("PCMCIAId").
+                b.HasOne("Aaru.CommonTypes.Metadata.Pcmcia", "PCMCIA").WithMany().HasForeignKey("PCMCIAId").
                   OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Scsi", "SCSI").WithMany().HasForeignKey("SCSIId").
+                b.HasOne("Aaru.CommonTypes.Metadata.Scsi", "SCSI").WithMany().HasForeignKey("SCSIId").
                   OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.MmcSd", "SecureDigital").WithMany().
+                b.HasOne("Aaru.CommonTypes.Metadata.MmcSd", "SecureDigital").WithMany().
                   HasForeignKey("SecureDigitalId").OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Usb", "USB").WithMany().HasForeignKey("USBId").
+                b.HasOne("Aaru.CommonTypes.Metadata.Usb", "USB").WithMany().HasForeignKey("USBId").
                   OnDelete(DeleteBehavior.SetNull);
             });
 
@@ -1602,28 +1602,28 @@ namespace Aaru.Server.Migrations
 
             modelBuilder.Entity("DiscImageChef.Server.Models.UploadedReport", b =>
             {
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Ata", "ATA").WithMany().HasForeignKey("ATAId").
+                b.HasOne("Aaru.CommonTypes.Metadata.Ata", "ATA").WithMany().HasForeignKey("ATAId").
                   OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Ata", "ATAPI").WithMany().HasForeignKey("ATAPIId").
+                b.HasOne("Aaru.CommonTypes.Metadata.Ata", "ATAPI").WithMany().HasForeignKey("ATAPIId").
                   OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.FireWire", "FireWire").WithMany().
+                b.HasOne("Aaru.CommonTypes.Metadata.FireWire", "FireWire").WithMany().
                   HasForeignKey("FireWireId").OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.MmcSd", "MultiMediaCard").WithMany().
+                b.HasOne("Aaru.CommonTypes.Metadata.MmcSd", "MultiMediaCard").WithMany().
                   HasForeignKey("MultiMediaCardId").OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Pcmcia", "PCMCIA").WithMany().HasForeignKey("PCMCIAId").
+                b.HasOne("Aaru.CommonTypes.Metadata.Pcmcia", "PCMCIA").WithMany().HasForeignKey("PCMCIAId").
                   OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Scsi", "SCSI").WithMany().HasForeignKey("SCSIId").
+                b.HasOne("Aaru.CommonTypes.Metadata.Scsi", "SCSI").WithMany().HasForeignKey("SCSIId").
                   OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.MmcSd", "SecureDigital").WithMany().
+                b.HasOne("Aaru.CommonTypes.Metadata.MmcSd", "SecureDigital").WithMany().
                   HasForeignKey("SecureDigitalId").OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.CommonTypes.Metadata.Usb", "USB").WithMany().HasForeignKey("USBId").
+                b.HasOne("Aaru.CommonTypes.Metadata.Usb", "USB").WithMany().HasForeignKey("USBId").
                   OnDelete(DeleteBehavior.SetNull);
             });
 

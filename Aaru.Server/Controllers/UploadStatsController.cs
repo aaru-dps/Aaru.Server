@@ -39,7 +39,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Aaru.Server.Models;
-using DiscImageChef.CommonTypes.Metadata;
+using Aaru.CommonTypes.Metadata;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

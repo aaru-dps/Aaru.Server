@@ -40,7 +40,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Aaru.Server.Models;
 using Cinchoo.PGP;
-using DiscImageChef.CommonTypes.Metadata;
+using Aaru.CommonTypes.Metadata;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
