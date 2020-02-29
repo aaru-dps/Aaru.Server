@@ -50,7 +50,7 @@ namespace Aaru.Server.Controllers
 
         public UpdateController(DicServerContext ctx) => _ctx = ctx;
 
-        /// <summary>Receives a report from DiscImageChef.Core, verifies it's in the correct format and stores it on the server</summary>
+        /// <summary>Receives a report from Aaru.Core, verifies it's in the correct format and stores it on the server</summary>
         /// <returns>HTTP response</returns>
         [Route("api/update"), HttpGet]
         public ActionResult Update(long timestamp)

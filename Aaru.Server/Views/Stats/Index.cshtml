@@ -33,14 +33,14 @@
     // ****************************************************************************/
 }
 @{
-    ViewBag.Title = "DiscImageChef Statistics";
+    ViewBag.Title = "Aaru Statistics";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <header>
     Welcome to
     <i>
-        <a href="http://github.com/claunia/discimagechef" target="_blank">
-            DiscImageChef
+        <a href="http://github.com/aaru-dps/aaru" target="_blank">
+            Aaru
         </a>
     </i> Server version @ViewBag.Version
 </header>
@@ -89,7 +89,7 @@
                 <div class="card-header" id="osHeading">
                     <h2 class="mb-0">
                         <button aria-controls="osCollapse" aria-expanded="true" class="btn btn-link card-button collapsed" data-target="#osCollapse" data-toggle="collapse" type="button">
-                            All operating systems DiscImageChef has run on...
+                            All operating systems Aaru has run on...
                         </button>
                     </h2>
                 </div>
@@ -100,7 +100,7 @@
                             {
                                 <tr>
                                     <td class="text-left">
-                                        DiscImageChef has run on
+                                        Aaru has run on
                                         <i class="table-dark-em">@os.name</i> @os.Value times.
                                     </td>
                                 </tr>
@@ -124,7 +124,7 @@
                 <div class="card-header" id="versionsHeading">
                     <h2 class="mb-0">
                         <button aria-controls="versionsCollapse" aria-expanded="true" class="btn btn-link card-button collapsed" data-target="#versionsCollapse" data-toggle="collapse" type="button">
-                            All DiscImageChef versions...
+                            All Aaru versions...
                         </button>
                     </h2>
                 </div>
@@ -135,7 +135,7 @@
                             {
                                 <tr>
                                     <td class="text-left">
-                                        DiscImageChef version
+                                        Aaru version
                                         <i class="table-dark-em">@version.name</i> has been used @version.Value times.
                                     </td>
                                 </tr>
@@ -159,7 +159,7 @@
                 <div class="card-header" id="commandsHeading">
                     <h2 class="mb-0">
                         <button aria-controls="commandsCollapse" aria-expanded="true" class="btn btn-link card-button collapsed" data-target="#commandsCollapse" data-toggle="collapse" type="button">
-                            All DiscImageChef commands...
+                            All Aaru commands...
                         </button>
                     </h2>
                 </div>

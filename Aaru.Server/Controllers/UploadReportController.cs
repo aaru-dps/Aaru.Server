@@ -61,7 +61,7 @@ namespace Aaru.Server.Controllers
             _ctx         = ctx;
         }
 
-        /// <summary>Receives a report from DiscImageChef.Core, verifies it's in the correct format and stores it on the server</summary>
+        /// <summary>Receives a report from Aaru.Core, verifies it's in the correct format and stores it on the server</summary>
         /// <returns>HTTP response</returns>
         [Route("api/uploadreport"), HttpPost]
         public async Task<IActionResult> UploadReport()
@@ -235,7 +235,7 @@ namespace Aaru.Server.Controllers
             }
         }
 
-        /// <summary>Receives a report from DiscImageChef.Core, verifies it's in the correct format and stores it on the server</summary>
+        /// <summary>Receives a report from Aaru.Core, verifies it's in the correct format and stores it on the server</summary>
         /// <returns>HTTP response</returns>
         [Route("api/uploadreportv2"), HttpPost]
         public async Task<IActionResult> UploadReportV2()

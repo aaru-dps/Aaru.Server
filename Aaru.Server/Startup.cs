@@ -73,7 +73,7 @@ namespace Aaru.Server
 
             app.Map("/metrics", metricsApp =>
             {
-                metricsApp.UseMiddleware<BasicAuthMiddleware>("DiscImageChef");
+                metricsApp.UseMiddleware<BasicAuthMiddleware>("Aaru");
 
                 // We already specified URL prefix in .Map() above, no need to specify it again here.
                 metricsApp.UseMetricServer("");

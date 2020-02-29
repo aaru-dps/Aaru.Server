@@ -61,7 +61,7 @@ namespace Aaru.Server.Controllers
         }
 
         /// <summary>
-        ///     Receives statistics from DiscImageChef.Core, processes them and adds them to a server-side global statistics
+        ///     Receives statistics from Aaru.Core, processes them and adds them to a server-side global statistics
         ///     XML
         /// </summary>
         /// <returns>HTTP response</returns>
@@ -108,7 +108,7 @@ namespace Aaru.Server.Controllers
             }
         }
 
-        /// <summary>Receives a report from DiscImageChef.Core, verifies it's in the correct format and stores it on the server</summary>
+        /// <summary>Receives a report from Aaru.Core, verifies it's in the correct format and stores it on the server</summary>
         /// <returns>HTTP response</returns>
         [Route("api/uploadstatsv2"), HttpPost]
         public async Task<IActionResult> UploadStatsV2()
