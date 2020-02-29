@@ -23,11 +23,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DiscImageChef.CommonTypes\DiscImageChef.CommonTypes.csproj" />
-    <ProjectReference Include="..\DiscImageChef.Console\DiscImageChef.Console.csproj" />
-    <ProjectReference Include="..\DiscImageChef.Decoders\DiscImageChef.Decoders.csproj" />
-    <ProjectReference Include="..\DiscImageChef.Dto\DiscImageChef.Dto.csproj" />
-    <ProjectReference Include="..\DiscImageChef.Helpers\DiscImageChef.Helpers.csproj" />
+    <ProjectReference Include="..\Aaru.CommonTypes\Aaru.CommonTypes.csproj" />
+    <ProjectReference Include="..\Aaru.Console\Aaru.Console.csproj" />
+    <ProjectReference Include="..\Aaru.Decoders\Aaru.Decoders.csproj" />
+    <ProjectReference Include="..\Aaru.Dto\Aaru.Dto.csproj" />
+    <ProjectReference Include="..\Aaru.Helpers\Aaru.Helpers.csproj" />
   </ItemGroup>
 
   <ItemGroup>

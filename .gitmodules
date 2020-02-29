@@ -1,3 +1,21 @@
 [submodule "CICMMetadata"]
 	path = CICMMetadata
 	url = https://github.com/claunia/CICMMetadata.git
+[submodule "Aaru.Checksums"]
+	path = Aaru.Checksums
+	url = https://github.com/aaru-dps/Aaru.Checksums.git
+[submodule "Aaru.CommonTypes"]
+	path = Aaru.CommonTypes
+	url = https://github.com/aaru-dps/Aaru.CommonTypes.git
+[submodule "Aaru.Console"]
+	path = Aaru.Console
+	url = https://github.com/aaru-dps/Aaru.Console.git
+[submodule "Aaru.Decoders"]
+	path = Aaru.Decoders
+	url = https://github.com/aaru-dps/Aaru.Decoders.git
+[submodule "Aaru.Dto"]
+	path = Aaru.Dto
+	url = https://github.com/aaru-dps/Aaru.Dto.git
+[submodule "Aaru.Helpers"]
+	path = Aaru.Helpers
+	url = https://github.com/aaru-dps/Aaru.Helpers.git

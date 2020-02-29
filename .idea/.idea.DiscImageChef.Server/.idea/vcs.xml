@@ -7,11 +7,12 @@
   </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Aaru.Checksums" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Aaru.CommonTypes" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Aaru.Console" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Aaru.Decoders" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Aaru.Dto" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Aaru.Helpers" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/CICMMetadata" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/DiscImageChef.CommonTypes" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/DiscImageChef.Console" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/DiscImageChef.Decoders" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/DiscImageChef.Dto" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/DiscImageChef.Helpers" vcs="Git" />
   </component>
 </project>

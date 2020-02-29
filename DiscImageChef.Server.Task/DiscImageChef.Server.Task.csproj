@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DiscImageChef.Helpers\DiscImageChef.Helpers.csproj" />
+    <ProjectReference Include="..\Aaru.Helpers\Aaru.Helpers.csproj" />
     <ProjectReference Include="..\DiscImageChef.Server\DiscImageChef.Server.csproj" />
   </ItemGroup>
 
