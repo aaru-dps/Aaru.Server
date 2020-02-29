@@ -12,7 +12,7 @@
     <Company>Claunia.com</Company>
     <Copyright>Copyright © 2011-2020 Natalia Portillo</Copyright>
     <Product>The Disc Image Chef</Product>
-    <Title>DiscImageChef.Server</Title>
+    <Title>Aaru.Server.Task</Title>
     <ApplicationVersion>$(Version)</ApplicationVersion>
     <RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
   </PropertyGroup>
@@ -31,7 +31,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Aaru.Helpers\Aaru.Helpers.csproj" />
-    <ProjectReference Include="..\DiscImageChef.Server\DiscImageChef.Server.csproj" />
+    <ProjectReference Include="..\Aaru.Server\Aaru.Server.csproj" />
   </ItemGroup>
 
   <ItemGroup>

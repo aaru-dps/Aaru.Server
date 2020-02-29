@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscImageChef.Server", "DiscImageChef.Server\DiscImageChef.Server.csproj", "{911ADDF5-E5FA-445D-88CD-C7F8FFDBE645}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aaru.Server", "Aaru.Server\Aaru.Server.csproj", "{911ADDF5-E5FA-445D-88CD-C7F8FFDBE645}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscImageChef.Server.Task", "DiscImageChef.Server.Task\DiscImageChef.Server.Task.csproj", "{79D6A54E-47B6-4D0A-ABEB-4FA7B5ADF4B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aaru.Server.Task", "Aaru.Server.Task\Aaru.Server.Task.csproj", "{79D6A54E-47B6-4D0A-ABEB-4FA7B5ADF4B2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aaru.Checksums", "Aaru.Checksums\Aaru.Checksums.csproj", "{CC48B324-A532-4A45-87A6-6F91F7141E8D}"
 EndProject

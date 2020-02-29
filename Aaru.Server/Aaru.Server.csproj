@@ -11,7 +11,7 @@
     <Company>Claunia.com</Company>
     <Copyright>Copyright © 2011-2020 Natalia Portillo</Copyright>
     <Product>The Disc Image Chef</Product>
-    <Title>DiscImageChef.Server</Title>
+    <Title>Aaru.Server</Title>
     <ApplicationVersion>$(Version)</ApplicationVersion>
     <RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
   </PropertyGroup>
