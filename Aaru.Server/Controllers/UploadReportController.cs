@@ -207,7 +207,7 @@ namespace Aaru.Server.Controllers
                     }
                 };
 
-                message.From.Add(new MailboxAddress("DiscImageChef", "dic@claunia.com"));
+                message.From.Add(new MailboxAddress("Aaru Server", "aaru@claunia.com"));
                 message.To.Add(new MailboxAddress("Natalia Portillo", "claunia@claunia.com"));
 
                 using(var client = new SmtpClient())
@@ -367,7 +367,7 @@ namespace Aaru.Server.Controllers
                     }
                 };
 
-                message.From.Add(new MailboxAddress("DiscImageChef", "dic@claunia.com"));
+                message.From.Add(new MailboxAddress("Aaru Server", "aaru@claunia.com"));
                 message.To.Add(new MailboxAddress("Natalia Portillo", "claunia@claunia.com"));
 
                 using(var client = new SmtpClient())
