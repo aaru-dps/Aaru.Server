@@ -1,13 +1,13 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Aaru.Server.Models;
 using DiscImageChef.CommonTypes.Metadata;
-using DiscImageChef.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace DiscImageChef.Server.Areas.Admin.Controllers
+namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
     public class ReportsController : Controller

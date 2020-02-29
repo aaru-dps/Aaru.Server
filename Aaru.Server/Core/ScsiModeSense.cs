@@ -5,7 +5,7 @@
 // Filename       : ScsiModeSense.cs
 // Author(s)      : Natalia Portillo <claunia@claunia.com>
 //
-// Component      : DiscImageChef Server.
+// Component      : Aaru Server.
 //
 // --[ Description ] ----------------------------------------------------------
 //
@@ -35,7 +35,7 @@ using DiscImageChef.CommonTypes.Metadata;
 using DiscImageChef.CommonTypes.Structs.Devices.SCSI;
 using DiscImageChef.Decoders.SCSI;
 
-namespace DiscImageChef.Server
+namespace Aaru.Server
 {
     public static class ScsiModeSense
     {

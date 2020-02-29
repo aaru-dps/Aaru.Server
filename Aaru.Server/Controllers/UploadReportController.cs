@@ -38,9 +38,9 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using Aaru.Server.Models;
 using Cinchoo.PGP;
 using DiscImageChef.CommonTypes.Metadata;
-using DiscImageChef.Server.Models;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -48,7 +48,7 @@ using Microsoft.AspNetCore.Mvc;
 using MimeKit;
 using Newtonsoft.Json;
 
-namespace DiscImageChef.Server.Controllers
+namespace Aaru.Server.Controllers
 {
     public class UploadReportController : Controller
     {

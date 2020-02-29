@@ -31,11 +31,11 @@
 // ****************************************************************************/
 
 using System.Linq;
+using Aaru.Server.Models;
 using DiscImageChef.CommonTypes.Metadata;
-using DiscImageChef.Server.Models;
-using Version = DiscImageChef.Server.Models.Version;
+using Version = Aaru.Server.Models.Version;
 
-namespace DiscImageChef.Server
+namespace Aaru.Server
 {
     public static class StatsConverter
     {
@@ -362,10 +362,10 @@ namespace DiscImageChef.Server
                     if(string.IsNullOrWhiteSpace(nvs.name))
                         continue;
 
-                    Version existing = ctx.Versions.FirstOrDefault(c => c.Name == nvs.name);
+                    Models.Version existing = ctx.Versions.FirstOrDefault(c => c.Name == nvs.name);
 
                     if(existing == null)
-                        ctx.Versions.Add(new Version
+                        ctx.Versions.Add(new Models.Version
                         {
                             Count = nvs.Value, Name = nvs.name
                         });
@@ -375,10 +375,10 @@ namespace DiscImageChef.Server
             }
             else
             {
-                Version existing = ctx.Versions.FirstOrDefault(c => c.Name == "previous");
+                Models.Version existing = ctx.Versions.FirstOrDefault(c => c.Name == "previous");
 
                 if(existing == null)
-                    ctx.Versions.Add(new Version
+                    ctx.Versions.Add(new Models.Version
                     {
                         Count = 1, Name = "previous"
                     });

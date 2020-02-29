@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using DiscImageChef.CommonTypes.Metadata;
 
-namespace DiscImageChef.Server.Models
+namespace Aaru.Server.Models
 {
     public class UploadedReportDetails
     {

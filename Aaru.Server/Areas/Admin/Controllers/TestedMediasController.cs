@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using Aaru.Server.Models;
 using DiscImageChef.CommonTypes.Metadata;
 using DiscImageChef.CommonTypes.Structs.Devices.SCSI;
 using DiscImageChef.Decoders.ATA;
@@ -8,7 +9,6 @@ using DiscImageChef.Decoders.Bluray;
 using DiscImageChef.Decoders.CD;
 using DiscImageChef.Decoders.DVD;
 using DiscImageChef.Decoders.SCSI;
-using DiscImageChef.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +17,7 @@ using DDS = DiscImageChef.Decoders.Bluray.DDS;
 using DMI = DiscImageChef.Decoders.Xbox.DMI;
 using Spare = DiscImageChef.Decoders.Bluray.Spare;
 
-namespace DiscImageChef.Server.Areas.Admin.Controllers
+namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
     public class TestedMediasController : Controller

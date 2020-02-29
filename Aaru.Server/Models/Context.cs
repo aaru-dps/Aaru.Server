@@ -37,7 +37,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace DiscImageChef.Server.Models
+namespace Aaru.Server.Models
 {
     public sealed class DicServerContext : IdentityDbContext<IdentityUser>
     {

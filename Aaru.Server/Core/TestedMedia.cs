@@ -32,7 +32,7 @@
 
 using System.Collections.Generic;
 
-namespace DiscImageChef.Server.App_Start
+namespace Aaru.Server.App_Start
 {
     public static class TestedMedia
     {

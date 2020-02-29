@@ -5,7 +5,7 @@
 // Filename       : MediaItem.cs
 // Author(s)      : Natalia Portillo <claunia@claunia.com>
 //
-// Component      : DiscImageChef Server.
+// Component      : Aaru Server.
 //
 // --[ Description ] ----------------------------------------------------------
 //
@@ -30,7 +30,7 @@
 // Copyright © 2011-2020 Natalia Portillo
 // ****************************************************************************/
 
-namespace DiscImageChef.Server.Models
+namespace Aaru.Server.Models
 {
     public class MediaItem
     {

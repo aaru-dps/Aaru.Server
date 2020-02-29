@@ -5,7 +5,7 @@
 // Filename       : ScsiInquiry.cs
 // Author(s)      : Natalia Portillo <claunia@claunia.com>
 //
-// Component      : DiscImageChef Server.
+// Component      : Aaru Server.
 //
 // --[ Description ] ----------------------------------------------------------
 //
@@ -33,7 +33,7 @@
 using System.Collections.Generic;
 using DiscImageChef.CommonTypes.Structs.Devices.SCSI;
 
-namespace DiscImageChef.Server
+namespace Aaru.Server
 {
     internal static class ScsiInquiry
     {

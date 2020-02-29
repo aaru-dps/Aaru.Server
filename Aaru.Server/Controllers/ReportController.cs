@@ -5,7 +5,7 @@
 // Filename       : ReportController.cs
 // Author(s)      : Natalia Portillo <claunia@claunia.com>
 //
-// Component      : DiscImageChef Server.
+// Component      : Aaru Server.
 //
 // --[ Description ] ----------------------------------------------------------
 //
@@ -33,17 +33,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Aaru.Server.Models;
 using DiscImageChef.CommonTypes.Metadata;
 using DiscImageChef.CommonTypes.Structs.Devices.SCSI;
 using DiscImageChef.Decoders.PCMCIA;
 using DiscImageChef.Decoders.SCSI;
-using DiscImageChef.Server.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Inquiry = DiscImageChef.CommonTypes.Structs.Devices.SCSI.Inquiry;
 using Tuple = DiscImageChef.Decoders.PCMCIA.Tuple;
 
-namespace DiscImageChef.Server.Controllers
+namespace Aaru.Server.Controllers
 {
     public class ReportController : Controller
     {

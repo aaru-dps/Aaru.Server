@@ -34,7 +34,7 @@ using System;
 using System.ComponentModel;
 using DiscImageChef.CommonTypes.Metadata;
 
-namespace DiscImageChef.Server.Models
+namespace Aaru.Server.Models
 {
     public class UploadedReport : DeviceReportV2
     {

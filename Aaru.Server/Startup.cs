@@ -1,4 +1,4 @@
-using DiscImageChef.Server.Models;
+using Aaru.Server.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Prometheus;
 
-namespace DiscImageChef.Server
+namespace Aaru.Server
 {
     public class Startup
     {

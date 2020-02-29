@@ -1,6 +1,6 @@
 using System.Security.Cryptography;
 
-namespace DiscImageChef.Server
+namespace Aaru.Server
 {
     public static class Hash
     {

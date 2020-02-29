@@ -34,7 +34,7 @@ using System.Collections.Generic;
 using DiscImageChef.CommonTypes.Metadata;
 using DiscImageChef.Decoders.SCSI;
 
-namespace DiscImageChef.Server
+namespace Aaru.Server
 {
     public static class ScsiEvpd
     {

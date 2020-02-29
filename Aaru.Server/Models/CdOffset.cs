@@ -5,7 +5,7 @@
 // Filename       : CdOffset.cs
 // Author(s)      : Natalia Portillo <claunia@claunia.com>
 //
-// Component      : DiscImageChef Server.
+// Component      : Aaru Server.
 //
 // --[ Description ] ----------------------------------------------------------
 //
@@ -35,7 +35,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using DiscImageChef.CommonTypes.Metadata;
 
-namespace DiscImageChef.Server.Models
+namespace Aaru.Server.Models
 {
     public class CompactDiscOffset : CdOffset
     {

@@ -35,7 +35,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using DiscImageChef.CommonTypes;
 
-namespace DiscImageChef.Server.Models
+namespace Aaru.Server.Models
 {
     public class Media : BaseModel<int>
     {

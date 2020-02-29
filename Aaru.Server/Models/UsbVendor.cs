@@ -36,7 +36,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
-namespace DiscImageChef.Server.Models
+namespace Aaru.Server.Models
 {
     public class UsbVendor : BaseModel<int>
     {

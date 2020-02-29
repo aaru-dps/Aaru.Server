@@ -34,7 +34,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DiscImageChef.CommonTypes.Structs.Devices.SCSI.Modes;
 
-namespace DiscImageChef.Server
+namespace Aaru.Server
 {
     public static class ScsiMmcMode
     {

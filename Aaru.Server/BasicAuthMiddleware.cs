@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 
-namespace DiscImageChef.Server
+namespace Aaru.Server
 {
     public class BasicAuthMiddleware
     {

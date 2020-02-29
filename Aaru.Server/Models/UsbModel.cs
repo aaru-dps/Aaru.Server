@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace DiscImageChef.Server.Models
+namespace Aaru.Server.Models
 {
     public class UsbModel
     {

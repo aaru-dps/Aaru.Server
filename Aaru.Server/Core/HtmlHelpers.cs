@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 using DiscImageChef.CommonTypes.Metadata;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace DiscImageChef.Server.Core
+namespace Aaru.Server.Core
 {
     public static class HtmlHelpers
     {

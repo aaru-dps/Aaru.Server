@@ -5,7 +5,7 @@
 // Filename       : UsbProduct.cs
 // Author(s)      : Natalia Portillo <claunia@claunia.com>
 //
-// Component      : DiscImageChef Server.
+// Component      : Aaru Server.
 //
 // --[ Description ] ----------------------------------------------------------
 //
@@ -33,7 +33,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace DiscImageChef.Server.Models
+namespace Aaru.Server.Models
 {
     public class UsbProduct : BaseModel<int>
     {

@@ -1,13 +1,13 @@
 using System;
+using Aaru.Server.Models;
 using DiscImageChef.CommonTypes.Interop;
-using DiscImageChef.Server.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Version = DiscImageChef.CommonTypes.Interop.Version;
 
-namespace DiscImageChef.Server
+namespace Aaru.Server
 {
     public class Program
     {
@@ -68,7 +68,7 @@ namespace DiscImageChef.Server
                                  "\u001b[32m                           .dWMMM0;      dWMMMMXl.                        \u001b[37;1m          Thanks to all contributors, collaborators, translators, donators and friends.\u001b[0m\n"                                   +
                                  "\u001b[32m               .......,cd0WMMNk:           c0MMMMMWKkolc:clodc'\u001b[0m\n"                                                                                                                                                 +
                                  "\u001b[32m                 .';loddol:'.                 ':oxkkOkkxoc,.\u001b[0m\n"                                                                                                                                                    +
-                                 "\u001b[0m\n", Version.GetVersion(),
+                                 "\u001b[0m\n", System.Version.GetVersion(),
                              #if DEBUG
                                  "DEBUG"
                              #else
@@ -77,7 +77,7 @@ namespace DiscImageChef.Server
                                  , DetectOS.GetPlatformName(DetectOS.GetRealPlatformID()),
                                  Environment.Is64BitOperatingSystem ? 64 : 32, Environment.Is64BitProcess ? 64 : 32,
                                  DetectOS.IsMono ? "Mono" : ".NET Core",
-                                 DetectOS.IsMono ? Version.GetMonoVersion() : Version.GetNetCoreVersion());
+                                 DetectOS.IsMono ? System.Version.GetMonoVersion() : System.Version.GetNetCoreVersion());
 
             IHost host = CreateHostBuilder(args).Build();
 

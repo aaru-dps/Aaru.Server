@@ -5,7 +5,7 @@
 // Filename       : UploadReportController.cs
 // Author(s)      : Natalia Portillo <claunia@claunia.com>
 //
-// Component      : DiscImageChef Server.
+// Component      : Aaru Server.
 //
 // --[ Description ] ----------------------------------------------------------
 //
@@ -35,14 +35,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using Aaru.Server.Models;
 using DiscImageChef.CommonTypes.Metadata;
 using DiscImageChef.Dto;
-using DiscImageChef.Server.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
-namespace DiscImageChef.Server.Controllers
+namespace Aaru.Server.Controllers
 {
     public class UpdateController : Controller
     {

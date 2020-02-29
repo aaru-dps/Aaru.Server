@@ -1,4 +1,4 @@
-namespace DiscImageChef.Server.Models
+namespace Aaru.Server.Models
 {
     public class IdHashModel : BaseModel<int>
     {

@@ -38,16 +38,16 @@ using System.Reflection;
 using System.Threading;
 using System.Xml;
 using System.Xml.Serialization;
+using Aaru.Server.Models;
 using DiscImageChef.CommonTypes.Interop;
 using DiscImageChef.CommonTypes.Metadata;
-using DiscImageChef.Server.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using OperatingSystem = DiscImageChef.Server.Models.OperatingSystem;
+using OperatingSystem = Aaru.Server.Models.OperatingSystem;
 using PlatformID = DiscImageChef.CommonTypes.Interop.PlatformID;
-using Version = DiscImageChef.Server.Models.Version;
+using Version = Aaru.Server.Models.Version;
 
-namespace DiscImageChef.Server.Controllers
+namespace Aaru.Server.Controllers
 {
     /// <summary>Renders a page with statistics, list of media type, devices, etc</summary>
     public class StatsController : Controller
@@ -96,7 +96,7 @@ namespace DiscImageChef.Server.Controllers
                 {
                     List<NameValueStats> operatingSystems = new List<NameValueStats>();
 
-                    foreach(OperatingSystem nvs in ctx.OperatingSystems)
+                    foreach(Models.OperatingSystem nvs in ctx.OperatingSystems)
                         operatingSystems.Add(new NameValueStats
                         {
                             name =
@@ -111,7 +111,7 @@ namespace DiscImageChef.Server.Controllers
                 {
                     List<NameValueStats> versions = new List<NameValueStats>();
 
-                    foreach(Version nvs in ctx.Versions)
+                    foreach(Models.Version nvs in ctx.Versions)
                         versions.Add(new NameValueStats
                         {
                             name = nvs.Name == "previous" ? "Previous than 3.4.99.0" : nvs.Name, Value = nvs.Count

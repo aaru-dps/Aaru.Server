@@ -1,4 +1,4 @@
-namespace DiscImageChef.Server.Models
+namespace Aaru.Server.Models
 {
     public abstract class NameCountModel<T> : BaseModel<T>
     {

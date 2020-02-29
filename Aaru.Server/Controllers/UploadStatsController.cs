@@ -5,7 +5,7 @@
 // Filename       : UploadStatsController.cs
 // Author(s)      : Natalia Portillo <claunia@claunia.com>
 //
-// Component      : DiscImageChef Server.
+// Component      : Aaru Server.
 //
 // --[ Description ] ----------------------------------------------------------
 //
@@ -38,16 +38,16 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using Aaru.Server.Models;
 using DiscImageChef.CommonTypes.Metadata;
-using DiscImageChef.Server.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using OperatingSystem = DiscImageChef.Server.Models.OperatingSystem;
-using Version = DiscImageChef.Server.Models.Version;
+using OperatingSystem = Aaru.Server.Models.OperatingSystem;
+using Version = Aaru.Server.Models.Version;
 
-namespace DiscImageChef.Server.Controllers
+namespace Aaru.Server.Controllers
 {
     public class UploadStatsController : Controller
     {
@@ -150,10 +150,10 @@ namespace DiscImageChef.Server.Controllers
                 if(newstats.Versions != null)
                     foreach(NameValueStats nvs in newstats.Versions)
                     {
-                        Version existing = _ctx.Versions.FirstOrDefault(c => c.Name == nvs.name);
+                        Models.Version existing = _ctx.Versions.FirstOrDefault(c => c.Name == nvs.name);
 
                         if(existing == null)
-                            _ctx.Versions.Add(new Version
+                            _ctx.Versions.Add(new Models.Version
                             {
                                 Name = nvs.name, Count = nvs.Value
                             });
@@ -220,12 +220,12 @@ namespace DiscImageChef.Server.Controllers
                 if(newstats.OperatingSystems != null)
                     foreach(OsStats operatingSystem in newstats.OperatingSystems)
                     {
-                        OperatingSystem existing =
+                        Models.OperatingSystem existing =
                             _ctx.OperatingSystems.FirstOrDefault(c => c.Name    == operatingSystem.name &&
                                                                       c.Version == operatingSystem.version);
 
                         if(existing == null)
-                            _ctx.OperatingSystems.Add(new OperatingSystem
+                            _ctx.OperatingSystems.Add(new Models.OperatingSystem
                             {
                                 Name  = operatingSystem.name, Version = operatingSystem.version,
                                 Count = operatingSystem.Value

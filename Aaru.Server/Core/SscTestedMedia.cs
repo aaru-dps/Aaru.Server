@@ -5,7 +5,7 @@
 // Filename       : SscTestedMedia.cs
 // Author(s)      : Natalia Portillo <claunia@claunia.com>
 //
-// Component      : DiscImageChef Server.
+// Component      : Aaru Server.
 //
 // --[ Description ] ----------------------------------------------------------
 //
@@ -33,7 +33,7 @@
 using System.Collections.Generic;
 using DiscImageChef.CommonTypes.Metadata;
 
-namespace DiscImageChef.Server
+namespace Aaru.Server
 {
     public static class SscTestedMedia
     {

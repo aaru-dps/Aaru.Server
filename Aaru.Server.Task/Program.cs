@@ -36,11 +36,11 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.Json;
-using DiscImageChef.Server.Models;
+using Aaru.Server.Models;
 using HtmlAgilityPack;
 using Microsoft.EntityFrameworkCore;
 
-namespace DiscImageChef.Server.Task
+namespace Aaru.Server.Task
 {
     internal class Program
     {

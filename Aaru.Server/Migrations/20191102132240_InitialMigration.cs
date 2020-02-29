@@ -1,9 +1,9 @@
 ﻿using System;
-using DiscImageChef.Server.Models;
+using Aaru.Server.Models;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace DiscImageChef.Server.Migrations
+namespace Aaru.Server.Migrations
 {
     public partial class InitialMigration : Migration
     {

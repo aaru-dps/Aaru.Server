@@ -35,7 +35,7 @@ using DiscImageChef.CommonTypes.Metadata;
 using DiscImageChef.CommonTypes.Structs.Devices.ATA;
 using DiscImageChef.CommonTypes.Structs.Devices.SCSI;
 
-namespace DiscImageChef.Server
+namespace Aaru.Server
 {
     public static class Ata
     {

@@ -1,9 +1,9 @@
 using System;
-using DiscImageChef.Server.Models;
+using Aaru.Server.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DiscImageChef.Server
+namespace Aaru.Server
 {
     public static class Seeder
     {

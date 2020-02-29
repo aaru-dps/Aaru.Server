@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace DiscImageChef.Server.Migrations
+namespace Aaru.Server.Migrations
 {
     public partial class RemoteStatistics : Migration
     {

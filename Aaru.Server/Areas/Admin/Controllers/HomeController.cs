@@ -34,7 +34,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DiscImageChef.Server.Areas.Admin.Controllers
+namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
     public class HomeController : Controller

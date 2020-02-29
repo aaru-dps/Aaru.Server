@@ -35,7 +35,7 @@ using System.ComponentModel;
 using DiscImageChef.CommonTypes.Enums;
 using DiscImageChef.CommonTypes.Metadata;
 
-namespace DiscImageChef.Server.Models
+namespace Aaru.Server.Models
 {
     public class Device : DeviceReportV2
     {
