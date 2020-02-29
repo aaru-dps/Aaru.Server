@@ -1,7 +1,7 @@
 {
   "name": "DiscImageChef.Server",
   "version": "4.5.99.1663",
-  "description": "Server component for The Disc Image Chef",
+  "description": "Server component for Aaru Data Preservation Suite",
   "private": true,
   "author": "Natalia Portillo <claunia@claunia.com>",
   "homepage": "https://discimagechef.app",

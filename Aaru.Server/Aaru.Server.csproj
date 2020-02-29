@@ -10,7 +10,7 @@
     <Version>4.5.99.1693</Version>
     <Company>Claunia.com</Company>
     <Copyright>Copyright © 2011-2020 Natalia Portillo</Copyright>
-    <Product>The Disc Image Chef</Product>
+    <Product>Aaru Data Preservation Suite</Product>
     <Title>Aaru.Server</Title>
     <ApplicationVersion>$(Version)</ApplicationVersion>
     <RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
