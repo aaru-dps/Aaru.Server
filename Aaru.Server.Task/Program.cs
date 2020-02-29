@@ -5,7 +5,7 @@
 // Filename       : Program.cs
 // Author(s)      : Natalia Portillo <claunia@claunia.com>
 //
-// Component      : DiscImageChef Server Task.
+// Component      : Aaru Server Task.
 //
 // --[ Description ] ----------------------------------------------------------
 //
