@@ -185,7 +185,7 @@ namespace Aaru.Server.Models
                   OnDelete(DeleteBehavior.SetNull);
             });
 
-            modelBuilder.Entity("DiscImageChef.Server.Models.Device", b =>
+            modelBuilder.Entity("Aaru.Server.Models.Device", b =>
             {
                 b.HasOne("Aaru.CommonTypes.Metadata.Ata", "ATA").WithMany().HasForeignKey("ATAId").
                   OnDelete(DeleteBehavior.SetNull);
@@ -193,7 +193,7 @@ namespace Aaru.Server.Models
                 b.HasOne("Aaru.CommonTypes.Metadata.Ata", "ATAPI").WithMany().HasForeignKey("ATAPIId").
                   OnDelete(DeleteBehavior.SetNull);
 
-                b.HasOne("DiscImageChef.Server.Models.CompactDiscOffset", "CdOffset").WithMany("Devices").
+                b.HasOne("Aaru.Server.Models.CompactDiscOffset", "CdOffset").WithMany("Devices").
                   HasForeignKey("CdOffsetId").OnDelete(DeleteBehavior.SetNull);
 
                 b.HasOne("Aaru.CommonTypes.Metadata.FireWire", "FireWire").WithMany().
@@ -215,13 +215,13 @@ namespace Aaru.Server.Models
                   OnDelete(DeleteBehavior.SetNull);
             });
 
-            modelBuilder.Entity("DiscImageChef.Server.Models.DeviceStat", b =>
+            modelBuilder.Entity("Aaru.Server.Models.DeviceStat", b =>
             {
-                b.HasOne("DiscImageChef.Server.Models.Device", "Report").WithMany().HasForeignKey("ReportId").
+                b.HasOne("Aaru.Server.Models.Device", "Report").WithMany().HasForeignKey("ReportId").
                   OnDelete(DeleteBehavior.SetNull);
             });
 
-            modelBuilder.Entity("DiscImageChef.Server.Models.UploadedReport", b =>
+            modelBuilder.Entity("Aaru.Server.Models.UploadedReport", b =>
             {
                 b.HasOne("Aaru.CommonTypes.Metadata.Ata", "ATA").WithMany().HasForeignKey("ATAId").
                   OnDelete(DeleteBehavior.SetNull);
