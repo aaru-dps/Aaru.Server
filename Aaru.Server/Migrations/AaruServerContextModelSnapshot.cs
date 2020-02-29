@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 namespace Aaru.Server.Migrations
 {
     [DbContext(typeof(AaruServerContext))]
-    internal class DicServerContextModelSnapshot : ModelSnapshot
+    internal class AaruServerContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
