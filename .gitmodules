@@ -1,21 +1,3 @@
-[submodule "DiscImageChef.Decoders"]
-	path = DiscImageChef.Decoders
-	url = https://github.com/discimagechef/DiscImageChef.Decoders.git
-[submodule "DiscImageChef.Dto"]
-	path = DiscImageChef.Dto
-	url = https://github.com/discimagechef/DiscImageChef.Dto.git
-[submodule "DiscImageChef.CommonTypes"]
-	path = DiscImageChef.CommonTypes
-	url = https://github.com/discimagechef/DiscImageChef.CommonTypes.git
-[submodule "DiscImageChef.Console"]
-	path = DiscImageChef.Console
-	url = https://github.com/discimagechef/DiscImageChef.Console.git
-[submodule "DiscImageChef.Helpers"]
-	path = DiscImageChef.Helpers
-	url = https://github.com/discimagechef/DiscImageChef.Helpers.git
 [submodule "CICMMetadata"]
 	path = CICMMetadata
 	url = https://github.com/claunia/CICMMetadata.git
-[submodule "DiscImageChef.Checksums"]
-	path = DiscImageChef.Checksums
-	url = https://github.com/discimagechef/DiscImageChef.Checksums.git
