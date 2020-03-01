@@ -32,5 +32,5 @@
 
 namespace Aaru.Server.Models
 {
-    public class RemoteApplication : BaseOperatingSystem { }
+    public class RemoteApplication : BaseOperatingSystem {}
 }

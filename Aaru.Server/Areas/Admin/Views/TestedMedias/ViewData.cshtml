@@ -5,13 +5,13 @@
     Layout = "_Layout";
 }
 <h2>Showing data from @Model.DataName for tested media id @Model.TestedMediaId</h2>
-@if (Model.Decoded is null &&
-     Model.RawDataAsHex is null)
+@if(Model.Decoded is null &&
+    Model.RawDataAsHex is null)
 {
     <div>No data found</div>
 }
 
-@if (Model.RawDataAsHex != null)
+@if(Model.RawDataAsHex != null)
 {
     <h4>Hex dump:</h4>
     <div>
@@ -20,7 +20,7 @@
 }
 
 
-@if (Model.Decoded != null)
+@if(Model.Decoded != null)
 {
     <h4>Decoded information:</h4>
     <div>

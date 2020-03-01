@@ -22,9 +22,9 @@ namespace Aaru.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AaruServerContext>(options => options.
-                                                               UseMySql(Configuration.
-                                                                            GetConnectionString("DefaultConnection")).
-                                                               UseLazyLoadingProxies());
+                                                                UseMySql(Configuration.
+                                                                             GetConnectionString("DefaultConnection")).
+                                                                UseLazyLoadingProxies());
 
             services.AddDefaultIdentity<IdentityUser>(options =>
             {

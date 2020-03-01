@@ -40,7 +40,7 @@ namespace Aaru.Server.Models
 {
     public class UsbVendor : BaseModel<int>
     {
-        public UsbVendor() { }
+        public UsbVendor() {}
 
         public UsbVendor(ushort id, string vendor)
         {

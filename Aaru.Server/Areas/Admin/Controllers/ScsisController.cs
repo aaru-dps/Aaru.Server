@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Aaru.Server.Models;
 using Aaru.CommonTypes.Metadata;
 using Aaru.CommonTypes.Structs.Devices.SCSI;
+using Aaru.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -300,7 +300,7 @@ namespace Aaru.Server.Areas.Admin.Controllers
                     }
                 }
                 else if(lv == null &&
-                        rv == null) { }
+                        rv == null) {}
                 else if(lv != null &&
                         rv == null)
                 {

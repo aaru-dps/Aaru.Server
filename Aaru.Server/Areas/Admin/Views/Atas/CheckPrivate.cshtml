@@ -36,7 +36,7 @@
 }
 ATA IDENTIFY DEVICE responses with possible private data
 
-@if (!Model.Any())
+@if(!Model.Any())
 {
     <div>
         No private data found.
@@ -91,7 +91,7 @@ ATA IDENTIFY DEVICE responses with possible private data
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model)
+    @foreach(var item in Model)
     {
         <tr>
             <td>

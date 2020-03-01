@@ -32,5 +32,5 @@
 
 namespace Aaru.Server.Models
 {
-    public class Partition : NameCountModel<int> { }
+    public class Partition : NameCountModel<int> {}
 }

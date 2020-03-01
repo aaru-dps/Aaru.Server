@@ -38,9 +38,9 @@ using System.Reflection;
 using System.Threading;
 using System.Xml;
 using System.Xml.Serialization;
-using Aaru.Server.Models;
 using Aaru.CommonTypes.Interop;
 using Aaru.CommonTypes.Metadata;
+using Aaru.Server.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using OperatingSystem = Aaru.Server.Models.OperatingSystem;
@@ -52,7 +52,7 @@ namespace Aaru.Server.Controllers
     /// <summary>Renders a page with statistics, list of media type, devices, etc</summary>
     public class StatsController : Controller
     {
-        readonly AaruServerContext    ctx;
+        readonly AaruServerContext   ctx;
         readonly IWebHostEnvironment env;
 
         public StatsController(IWebHostEnvironment environment, AaruServerContext context)
@@ -96,7 +96,7 @@ namespace Aaru.Server.Controllers
                 {
                     List<NameValueStats> operatingSystems = new List<NameValueStats>();
 
-                    foreach(Models.OperatingSystem nvs in ctx.OperatingSystems)
+                    foreach(OperatingSystem nvs in ctx.OperatingSystems)
                         operatingSystems.Add(new NameValueStats
                         {
                             name =
@@ -111,7 +111,7 @@ namespace Aaru.Server.Controllers
                 {
                     List<NameValueStats> versions = new List<NameValueStats>();
 
-                    foreach(Models.Version nvs in ctx.Versions)
+                    foreach(Version nvs in ctx.Versions)
                         versions.Add(new NameValueStats
                         {
                             name = nvs.Name == "previous" ? "Previous than 3.4.99.0" : nvs.Name, Value = nvs.Count

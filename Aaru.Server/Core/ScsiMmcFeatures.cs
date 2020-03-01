@@ -33,7 +33,6 @@
 using System.Collections.Generic;
 using Aaru.CommonTypes.Metadata;
 using Aaru.CommonTypes.Structs.Devices.SCSI;
-using Aaru.Decoders.SCSI.MMC;
 
 namespace Aaru.Server
 {

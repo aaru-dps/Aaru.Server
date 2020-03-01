@@ -51,14 +51,14 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model)
+    @foreach(var item in Model)
     {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @if (item.FeaturesId != null)
+                @if(item.FeaturesId != null)
                 {
                     <a asp-action="details" asp-controller="MmcFeatures" asp-route-id="@item.FeaturesId" target="_blank">@Html.DisplayFor(modelItem => item.FeaturesId)</a>
                 }

@@ -368,15 +368,15 @@ namespace Aaru.Server.Task
 
                     switch(manufacturer)
                     {
-                        case"Lite-ON":
+                        case "Lite-ON":
                             manufacturer = "JLMS";
 
                             break;
-                        case"LG Electronics":
+                        case "LG Electronics":
                             manufacturer = "HL-DT-ST";
 
                             break;
-                        case"Panasonic":
+                        case "Panasonic":
                             manufacturer = "MATSHITA";
 
                             break;
@@ -472,46 +472,49 @@ namespace Aaru.Server.Task
                 {
                     var sr = new StreamReader("drive_offsets.json");
 
-                    var offsets = JsonSerializer.Deserialize<CompactDiscOffset[]>(sr.ReadToEnd());
+                    CompactDiscOffset[] offsets = JsonSerializer.Deserialize<CompactDiscOffset[]>(sr.ReadToEnd());
 
                     if(offsets != null)
                     {
-                        foreach(var offset in offsets)
+                        foreach(CompactDiscOffset offset in offsets)
                         {
-                                     CompactDiscOffset cdOffset =
-                                         ctx.CdOffsets.FirstOrDefault(o => o.Manufacturer == offset.Manufacturer && o.Model == offset.Model);
-                                     if(cdOffset is null)
-                                     {
-                                         offset.ModifiedWhen = DateTime.UtcNow;
+                            CompactDiscOffset cdOffset =
+                                ctx.CdOffsets.FirstOrDefault(o => o.Manufacturer == offset.Manufacturer &&
+                                                                  o.Model        == offset.Model);
 
-                                         ctx.CdOffsets.Add(offset);
-                                       addedOffsets++;
-                                     }
-                                     else
-                                     {
-                                         if(Math.Abs(cdOffset.Agreement - offset.Agreement) > 0 || offset.Agreement < 0)
-                                         {
-                                             cdOffset.Agreement    = offset.Agreement;
-                                             cdOffset.ModifiedWhen = DateTime.UtcNow;
-                                         }
+                            if(cdOffset is null)
+                            {
+                                offset.ModifiedWhen = DateTime.UtcNow;
 
-                                         if(cdOffset.Offset != offset.Offset)
-                                         {
-                                             cdOffset.Offset       = offset.Offset;
-                                             cdOffset.ModifiedWhen = DateTime.UtcNow;
-                                         }
+                                ctx.CdOffsets.Add(offset);
+                                addedOffsets++;
+                            }
+                            else
+                            {
+                                if(Math.Abs(cdOffset.Agreement - offset.Agreement) > 0 ||
+                                   offset.Agreement                                < 0)
+                                {
+                                    cdOffset.Agreement    = offset.Agreement;
+                                    cdOffset.ModifiedWhen = DateTime.UtcNow;
+                                }
 
-                                         if(cdOffset.Submissions != offset.Submissions)
-                                         {
-                                             cdOffset.Submissions  = offset.Submissions;
-                                             cdOffset.ModifiedWhen = DateTime.UtcNow;
-                                         }
+                                if(cdOffset.Offset != offset.Offset)
+                                {
+                                    cdOffset.Offset       = offset.Offset;
+                                    cdOffset.ModifiedWhen = DateTime.UtcNow;
+                                }
 
-                                         if(Math.Abs(cdOffset.Agreement - offset.Agreement) > 0       ||
-                                            cdOffset.Offset                           != offset.Offset ||
-                                            cdOffset.Submissions                      != offset.Submissions)
-                                             modifiedOffsets++;
-                                     }
+                                if(cdOffset.Submissions != offset.Submissions)
+                                {
+                                    cdOffset.Submissions  = offset.Submissions;
+                                    cdOffset.ModifiedWhen = DateTime.UtcNow;
+                                }
+
+                                if(Math.Abs(cdOffset.Agreement - offset.Agreement) > 0              ||
+                                   cdOffset.Offset                                 != offset.Offset ||
+                                   cdOffset.Submissions                            != offset.Submissions)
+                                    modifiedOffsets++;
+                            }
                         }
                     }
                 }

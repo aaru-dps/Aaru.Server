@@ -34,13 +34,13 @@
     // ****************************************************************************/
 }
 <h2>Comparing SCSI INQUIRY ID @Model.LeftId with ID @Model.RightId</h2>
-@if (Model.AreEqual)
+@if(Model.AreEqual)
 {
     <p>No differences found.</p>
     return;
 }
 
-@if (Model.HasError)
+@if(Model.HasError)
 {
     <p class="alert-info">@Model.ErrorMessage</p>
     return;
@@ -61,7 +61,7 @@
     </tr>
     </thead>
     <tbody>
-    @for (var i = 0; i < Model.ValueNames.Count; i++)
+    @for(var i = 0; i < Model.ValueNames.Count; i++)
     {
         <tr>
             <td>

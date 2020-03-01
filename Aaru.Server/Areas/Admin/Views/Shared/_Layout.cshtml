@@ -38,7 +38,7 @@
 <html>
 <meta charset="UTF-8">
 <head>
-    @switch (DateTime.UtcNow.DayOfYear)
+    @switch(DateTime.UtcNow.DayOfYear)
     {
         // 24th January, Macintosh launch
         case 24:
@@ -77,7 +77,7 @@
             DiscImageChef
         </a>
     </i> Server Administrative Area
-    @if (SignInManager.IsSignedIn(User))
+    @if(SignInManager.IsSignedIn(User))
     {
         <div>
             <a asp-area="Identity" asp-page="/Account/Manage/Index" class="text-dark" id="manage" title="Manage">Hello @UserManager.GetUserName(User)!</a>
@@ -103,7 +103,7 @@
         Claunia.com
     </a>
     <br />
-    @switch (DateTime.UtcNow.DayOfYear)
+    @switch(DateTime.UtcNow.DayOfYear)
     {
         // 24th January, Macintosh launch
         case 24:

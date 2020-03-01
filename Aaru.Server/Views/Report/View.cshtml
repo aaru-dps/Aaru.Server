@@ -42,7 +42,7 @@ Aaru Report for
 @ViewBag.lblModel
 @ViewBag.lblRevision
 
-@if (ViewBag.UsbItem != null)
+@if(ViewBag.UsbItem != null)
 {
     <div id="divUsb">
         <br />
@@ -55,7 +55,7 @@ Aaru Report for
     </div>
 }
 
-@if (ViewBag.FireWireItem != null)
+@if(ViewBag.FireWireItem != null)
 {
     <div id="divFireWire">
         <br />
@@ -68,7 +68,7 @@ Aaru Report for
     </div>
 }
 
-@if (ViewBag.PcmciaItem != null)
+@if(ViewBag.PcmciaItem != null)
 {
     <div id="divPcmcia">
         <br />
@@ -79,9 +79,9 @@ Aaru Report for
         <i>Manufacturer code:</i> @ViewBag.PcmciaItem.VendorDescription<br />
         <i>Card code:</i> @ViewBag.PcmciaItem.CardCode<br />
         <i>Compliance:</i> @ViewBag.PcmciaItem.Compliance<br />
-        @if (ViewBag.repPcmciaTuples != null)
+        @if(ViewBag.repPcmciaTuples != null)
         {
-            foreach (KeyValuePair<string, string> kvp in ViewBag.repPcmciaTuples)
+            foreach(KeyValuePair<string, string> kvp in ViewBag.repPcmciaTuples)
             {
                 <text>
                     <i>@kvp.Key</i>: @kvp.Value<br /></text>
@@ -90,7 +90,7 @@ Aaru Report for
     </div>
 }
 
-@if (ViewBag.AtaItem != null)
+@if(ViewBag.AtaItem != null)
 {
     <div id="divAta">
         <br />
@@ -99,19 +99,19 @@ Aaru Report for
         </b>
         <br />
         @ViewBag.lblAtaDeviceType<br />
-        @foreach (KeyValuePair<string, string> kvp in ViewBag.repAtaTwo)
+        @foreach(KeyValuePair<string, string> kvp in ViewBag.repAtaTwo)
         {
             <text>
                 <i>@kvp.Key</i>: @kvp.Value<br /></text>
         }
         <br />
-        @foreach (string item in ViewBag.repAtaOne)
+        @foreach(string item in ViewBag.repAtaOne)
         {
             @Html.Raw(item)<br />
         }
     </div>
 }
-@if (ViewBag.repScsi != null)
+@if(ViewBag.repScsi != null)
 {
     <div id="divScsi">
         <br />
@@ -120,11 +120,11 @@ Aaru Report for
         <i>Vendor: </i>@ViewBag.lblScsiVendor<br />
         <i>Product: </i>@ViewBag.lblScsiProduct<br />
         <i>Revision: </i>@ViewBag.lblScsiRevision<br />
-        @foreach (string item in ViewBag.repScsi)
+        @foreach(string item in ViewBag.repScsi)
         {
             @Html.Raw(item)<br />
         }
-        @if (ViewBag.repModeSense != null)
+        @if(ViewBag.repModeSense != null)
         {
             <div id="divScsiModeSense">
                 <br />
@@ -134,7 +134,7 @@ Aaru Report for
                         <th>Mode</th>
                         <th>Contents</th>
                     </tr>
-                    @foreach (KeyValuePair<string, string> kvp in ViewBag.repModeSense)
+                    @foreach(KeyValuePair<string, string> kvp in ViewBag.repModeSense)
                     {
                         <tr>
                             <td>
@@ -148,7 +148,7 @@ Aaru Report for
                 </table>
             </div>
         }
-        @if (ViewBag.repEvpd != null)
+        @if(ViewBag.repEvpd != null)
         {
             <div id="divScsiEvpd">
                 <br />
@@ -158,7 +158,7 @@ Aaru Report for
                         <th>EVPD</th>
                         <th>Contents</th>
                     </tr>
-                    @foreach (KeyValuePair<string, string> kvp in ViewBag.repEvpd)
+                    @foreach(KeyValuePair<string, string> kvp in ViewBag.repEvpd)
                     {
                         <tr>
                             <td>
@@ -172,31 +172,31 @@ Aaru Report for
                 </table>
             </div>
         }
-        @if (ViewBag.repScsiMmcMode != null)
+        @if(ViewBag.repScsiMmcMode != null)
         {
             <div id="divScsiMmcMode">
                 <br />
                 <b>SCSI CD-ROM capabilities:</b>
                 <br />
-                @foreach (string item in ViewBag.repScsiMmcMode)
+                @foreach(string item in ViewBag.repScsiMmcMode)
                 {
                     @Html.Raw(item)<br />
                 }
             </div>
         }
-        @if (ViewBag.repScsiMmcFeatures != null)
+        @if(ViewBag.repScsiMmcFeatures != null)
         {
             <div id="divScsiMmcFeatures">
                 <br />
                 <b>SCSI MMC features:</b>
                 <br />
-                @foreach (string item in ViewBag.repScsiMmcFeatures)
+                @foreach(string item in ViewBag.repScsiMmcFeatures)
                 {
                     @Html.Raw(item)<br />
                 }
             </div>
         }
-        @if (ViewBag.divScsiSscVisible == true)
+        @if(ViewBag.divScsiSscVisible == true)
         {
             <div id="divScsiSsc">
                 <br />
@@ -207,9 +207,9 @@ Aaru Report for
                 <br />
                 Minimum block length: @ViewBag.lblScsiSscMinBlock bytes
                 <br />
-                @if (ViewBag.repScsiSscDensities != null)
+                @if(ViewBag.repScsiSscDensities != null)
                 {
-                    foreach (SupportedDensity density in ViewBag.repScsiSscDensities)
+                    foreach(SupportedDensity density in ViewBag.repScsiSscDensities)
                     {
                         <text>
                             <br />
@@ -229,9 +229,9 @@ Aaru Report for
                         </text>
                     }
                 }
-                @if (ViewBag.repScsiSscMedias != null)
+                @if(ViewBag.repScsiSscMedias != null)
                 {
-                    foreach (SscSupportedMedia media in ViewBag.repScsiSscMedias)
+                    foreach(SscSupportedMedia media in ViewBag.repScsiSscMedias)
                     {
                         <text>
                             <br />
@@ -250,37 +250,37 @@ Aaru Report for
         }
     </div>
 }
-@if (ViewBag.repTestedMedia != null)
+@if(ViewBag.repTestedMedia != null)
 {
     <div id="divTestedMedia">
         <br />
         <b>Tested media:</b>
         <br />
-        @foreach (string item in ViewBag.repTestedMedia)
+        @foreach(string item in ViewBag.repTestedMedia)
         {
             @Html.Raw(item)<br />
         }
     </div>
 }
-@if (ViewBag.repMMC != null)
+@if(ViewBag.repMMC != null)
 {
     <div id="divMMC">
         <br />
         <b>MultiMediaCard device:</b>
         <br />
-        @foreach (string item in ViewBag.repMMC)
+        @foreach(string item in ViewBag.repMMC)
         {
             @Html.Raw(item)<br />
         }
     </div>
 }
-@if (ViewBag.repSD != null)
+@if(ViewBag.repSD != null)
 {
     <div id="divSD">
         <br />
         <b>SecureDigital device:</b>
         <br />
-        @foreach (string item in ViewBag.repSD)
+        @foreach(string item in ViewBag.repSD)
         {
             @Html.Raw(item)<br />
         }

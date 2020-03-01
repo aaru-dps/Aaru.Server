@@ -38,8 +38,8 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using Aaru.Server.Models;
 using Aaru.CommonTypes.Metadata;
+using Aaru.Server.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -52,7 +52,7 @@ namespace Aaru.Server.Controllers
     public class UploadStatsController : Controller
     {
         readonly AaruServerContext _ctx;
-        IWebHostEnvironment       _environment;
+        IWebHostEnvironment        _environment;
 
         public UploadStatsController(IWebHostEnvironment environment, AaruServerContext ctx)
         {
@@ -60,10 +60,7 @@ namespace Aaru.Server.Controllers
             _ctx         = ctx;
         }
 
-        /// <summary>
-        ///     Receives statistics from Aaru.Core, processes them and adds them to a server-side global statistics
-        ///     XML
-        /// </summary>
+        /// <summary>Receives statistics from Aaru.Core, processes them and adds them to a server-side global statistics XML</summary>
         /// <returns>HTTP response</returns>
         [Route("api/uploadstats"), HttpPost]
         public async Task<IActionResult> UploadStats()
@@ -122,9 +119,9 @@ namespace Aaru.Server.Controllers
             {
                 HttpRequest request = HttpContext.Request;
 
-                var    sr          = new StreamReader(request.Body);
-                string statsString = await sr.ReadToEndAsync();
-                var    newstats    = JsonConvert.DeserializeObject<StatsDto>(statsString);
+                var      sr          = new StreamReader(request.Body);
+                string   statsString = await sr.ReadToEndAsync();
+                StatsDto newstats    = JsonConvert.DeserializeObject<StatsDto>(statsString);
 
                 if(newstats == null)
                 {
@@ -150,10 +147,10 @@ namespace Aaru.Server.Controllers
                 if(newstats.Versions != null)
                     foreach(NameValueStats nvs in newstats.Versions)
                     {
-                        Models.Version existing = _ctx.Versions.FirstOrDefault(c => c.Name == nvs.name);
+                        Version existing = _ctx.Versions.FirstOrDefault(c => c.Name == nvs.name);
 
                         if(existing == null)
-                            _ctx.Versions.Add(new Models.Version
+                            _ctx.Versions.Add(new Version
                             {
                                 Name = nvs.name, Count = nvs.Value
                             });
@@ -220,12 +217,12 @@ namespace Aaru.Server.Controllers
                 if(newstats.OperatingSystems != null)
                     foreach(OsStats operatingSystem in newstats.OperatingSystems)
                     {
-                        Models.OperatingSystem existing =
+                        OperatingSystem existing =
                             _ctx.OperatingSystems.FirstOrDefault(c => c.Name    == operatingSystem.name &&
                                                                       c.Version == operatingSystem.version);
 
                         if(existing == null)
-                            _ctx.OperatingSystems.Add(new Models.OperatingSystem
+                            _ctx.OperatingSystems.Add(new OperatingSystem
                             {
                                 Name  = operatingSystem.name, Version = operatingSystem.version,
                                 Count = operatingSystem.Value

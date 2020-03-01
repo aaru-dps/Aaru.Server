@@ -32,5 +32,5 @@
 
 namespace Aaru.Server.Models
 {
-    public class Filesystem : NameCountModel<int> { }
+    public class Filesystem : NameCountModel<int> {}
 }

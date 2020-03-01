@@ -40,9 +40,9 @@
     <h4>MultiMediaCard / SecureDigital registers</h4>
     <hr />
     <dl class="row">
-        @if (Model.SCR != null)
+        @if(Model.SCR != null)
         {
-            if (Model.CID != null)
+            if(Model.CID != null)
             {
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.CID)
@@ -51,7 +51,7 @@
                     @Html.Raw(Html.EncodedMultiLineText(Decoders.PrettifyCID(Model.CID)))
                 </dd>
             }
-            if (Model.CSD != null)
+            if(Model.CSD != null)
             {
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.CSD)
@@ -60,7 +60,7 @@
                     @Html.Raw(Html.EncodedMultiLineText(Decoders.PrettifyCSD(Model.CSD)))
                 </dd>
             }
-            if (Model.OCR != null)
+            if(Model.OCR != null)
             {
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.OCR)
@@ -79,7 +79,7 @@
         }
         else
         {
-            if (Model.CID != null)
+            if(Model.CID != null)
             {
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.CID)
@@ -88,7 +88,7 @@
                     @Html.Raw(Html.EncodedMultiLineText(Aaru.Decoders.MMC.Decoders.PrettifyCID(Model.CID)))
                 </dd>
             }
-            if (Model.CSD != null)
+            if(Model.CSD != null)
             {
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.CSD)
@@ -97,7 +97,7 @@
                     @Html.Raw(Html.EncodedMultiLineText(Aaru.Decoders.MMC.Decoders.PrettifyCSD(Model.CSD)))
                 </dd>
             }
-            if (Model.OCR != null)
+            if(Model.OCR != null)
             {
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.OCR)
@@ -107,7 +107,7 @@
                 </dd>
             }
 
-            if (Model.ExtendedCSD != null)
+            if(Model.ExtendedCSD != null)
             {
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.ExtendedCSD)

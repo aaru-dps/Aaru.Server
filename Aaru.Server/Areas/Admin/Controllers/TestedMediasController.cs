@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-using Aaru.Server.Models;
 using Aaru.CommonTypes.Metadata;
 using Aaru.CommonTypes.Structs.Devices.SCSI;
 using Aaru.Decoders.ATA;
@@ -9,6 +8,7 @@ using Aaru.Decoders.Bluray;
 using Aaru.Decoders.CD;
 using Aaru.Decoders.DVD;
 using Aaru.Decoders.SCSI;
+using Aaru.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

@@ -91,61 +91,61 @@
     <a asp-action="Edit" asp-route-id="@Model.Report.Id" class="btn btn-primary">Edit</a>
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </div>
-@if (Model.ReadCapabilitiesId != 0)
+@if(Model.ReadCapabilitiesId != 0)
 {
     <div>
         <a asp-controller="TestedMedias" asp-action="Details" asp-route-id="@Model.ReadCapabilitiesId" target="_blank">Read capabilities</a>
     </div>
 }
-@if (Model.Report.ATA != null)
+@if(Model.Report.ATA != null)
 {
     <div>
         <a asp-controller="Atas" asp-action="Details" asp-route-id="@Model.Report.ATA.Id" target="_blank">ATA report</a>
     </div>
 }
-@if (Model.Report.ATAPI != null)
+@if(Model.Report.ATAPI != null)
 {
     <div>
         <a asp-controller="Atas" asp-action="Details" asp-route-id="@Model.Report.ATAPI.Id" target="_blank">ATAPI report</a>
     </div>
 }
-@if (Model.Report.SCSI != null)
+@if(Model.Report.SCSI != null)
 {
     <div>
         <a asp-controller="Scsis" asp-action="Details" asp-route-id="@Model.Report.SCSI.Id" target="_blank">SCSI report</a>
     </div>
 }
-@if (Model.Report.MultiMediaCard != null)
+@if(Model.Report.MultiMediaCard != null)
 {
     <div>
         <a asp-controller="MmcSds" asp-action="Details" asp-route-id="@Model.Report.MultiMediaCard.Id" target="_blank">MultiMediaCard report</a>
     </div>
 }
-@if (Model.Report.SecureDigital != null)
+@if(Model.Report.SecureDigital != null)
 {
     <div>
         <a asp-controller="MmcSds" asp-action="Details" asp-route-id="@Model.Report.SecureDigital.Id" target="_blank">SecureDigital report</a>
     </div>
 }
-@if (Model.Report.USB != null)
+@if(Model.Report.USB != null)
 {
     <div>
         <a asp-controller="Usbs" asp-action="Details" asp-route-id="@Model.Report.USB.Id" target="_blank">USB report</a>
     </div>
 }
-@if (Model.Report.FireWire != null)
+@if(Model.Report.FireWire != null)
 {
     <div>
         Has a FireWire report.
     </div>
 }
-@if (Model.Report.PCMCIA != null)
+@if(Model.Report.PCMCIA != null)
 {
     <div>
         Has a PCMCIA report.
     </div>
 }
-@if (Model.SameAll.Count > 0)
+@if(Model.SameAll.Count > 0)
 {
     <div>
         <h4>Other device reports with same manufacturer, model and revision:</h4>
@@ -159,7 +159,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var item in Model.SameAll)
+            @foreach(var item in Model.SameAll)
             {
                 <tr>
                     <td>
@@ -175,7 +175,7 @@
         </table>
     </div>
 }
-@if (Model.SameButManufacturer.Count > 0)
+@if(Model.SameButManufacturer.Count > 0)
 {
     <div>
         <h4>Other device reports with same model and revision:</h4>
@@ -189,7 +189,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var item in Model.SameButManufacturer)
+            @foreach(var item in Model.SameButManufacturer)
             {
                 <tr>
                     <td>
@@ -205,7 +205,7 @@
         </table>
     </div>
 }
-@if (Model.ReportAll.Count > 0)
+@if(Model.ReportAll.Count > 0)
 {
     <div>
         <h4>Uploaded reports with same manufacturer, model and revision:</h4>
@@ -219,7 +219,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var item in Model.ReportAll)
+            @foreach(var item in Model.ReportAll)
             {
                 <tr>
                     <td>
@@ -235,7 +235,7 @@
         </table>
     </div>
 }
-@if (Model.ReportButManufacturer.Count > 0)
+@if(Model.ReportButManufacturer.Count > 0)
 {
     <div>
         <h4>Device reports with same model and revision:</h4>
@@ -249,7 +249,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var item in Model.ReportButManufacturer)
+            @foreach(var item in Model.ReportButManufacturer)
             {
                 <tr>
                     <td>
@@ -265,7 +265,7 @@
         </table>
     </div>
 }
-@if (Model.StatsAll.Count > 0)
+@if(Model.StatsAll.Count > 0)
 {
     <div>
         <h4>Device statistics with same manufacturer, model and revision:</h4>
@@ -291,7 +291,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var item in Model.StatsAll)
+            @foreach(var item in Model.StatsAll)
             {
                 <tr>
                     <td>
@@ -307,13 +307,13 @@
                         @Html.DisplayFor(modelItem => item.Bus)
                     </td>
                     <td>
-                        @if (item.Report is null)
+                        @if(item.Report is null)
                         {
                             @("No")
                         }
                         else
                         {
-                            @if (item.Report.Id == Model.Report.Id)
+                            @if(item.Report.Id == Model.Report.Id)
                             {
                                 @("Us")
                             }
@@ -332,7 +332,7 @@
         </table>
     </div>
 }
-@if (Model.StatsButManufacturer.Count > 0)
+@if(Model.StatsButManufacturer.Count > 0)
 {
     <div>
         <h4>Device statistics with same model and revision:</h4>
@@ -358,7 +358,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var item in Model.StatsButManufacturer)
+            @foreach(var item in Model.StatsButManufacturer)
             {
                 <tr>
                     <td>
@@ -374,7 +374,7 @@
                         @Html.DisplayFor(modelItem => item.Bus)
                     </td>
                     <td>
-                        @if (item.Report is null)
+                        @if(item.Report is null)
                         {
                             @("No")
                         }
@@ -392,7 +392,7 @@
         </table>
     </div>
 }
-@if (Model.TestedMedias.Count > 0)
+@if(Model.TestedMedias.Count > 0)
 {
     <div>
         <h4>Tested media:</h4>
@@ -412,7 +412,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var item in Model.TestedMedias)
+            @foreach(var item in Model.TestedMedias)
             {
                 <tr>
                     <td>
@@ -433,7 +433,7 @@
         </table>
     </div>
 }
-@if (Model.TestedSequentialMedias.Count > 0)
+@if(Model.TestedSequentialMedias.Count > 0)
 {
     <div>
         <h4>Tested media:</h4>
@@ -453,7 +453,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var item in Model.TestedSequentialMedias)
+            @foreach(var item in Model.TestedSequentialMedias)
             {
                 <tr>
                     <td>

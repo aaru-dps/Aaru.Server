@@ -56,7 +56,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model)
+    @foreach(var item in Model)
     {
         <tr>
             <td>
@@ -72,7 +72,7 @@
                 @Html.DisplayFor(modelItem => item.Bus)
             </td>
             <td>
-                @if (item.Report is null)
+                @if(item.Report is null)
                 {
                     @("No")
                     <a asp-action="Find" asp-controller="Devices" asp-route-id="@item.Id" asp-route-manufacturer="@item.Manufacturer" asp-route-model="@item.Model" asp-route-revision="@item.Revision" asp-route-bus="@item.Bus" target="_blank">(Find)</a>

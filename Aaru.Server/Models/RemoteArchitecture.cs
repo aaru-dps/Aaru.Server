@@ -32,5 +32,5 @@
 
 namespace Aaru.Server.Models
 {
-    public class RemoteArchitecture : NameCountModel<int> { }
+    public class RemoteArchitecture : NameCountModel<int> {}
 }

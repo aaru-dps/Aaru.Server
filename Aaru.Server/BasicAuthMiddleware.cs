@@ -73,10 +73,10 @@ namespace Aaru.Server
             string                validUser     = configuration.GetValue<string>("MetricsAuthentication:Username");
             string                validPassword = configuration.GetValue<string>("MetricsAuthentication:Password");
 
-            return!string.IsNullOrWhiteSpace(validUser)                                   &&
-                  !string.IsNullOrWhiteSpace(validPassword)                               &&
-                  username.Equals(validUser, StringComparison.InvariantCultureIgnoreCase) &&
-                  password.Equals(validPassword);
+            return !string.IsNullOrWhiteSpace(validUser)                                   &&
+                   !string.IsNullOrWhiteSpace(validPassword)                               &&
+                   username.Equals(validUser, StringComparison.InvariantCultureIgnoreCase) &&
+                   password.Equals(validPassword);
         }
     }
 }

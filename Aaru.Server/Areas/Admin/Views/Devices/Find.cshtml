@@ -63,7 +63,7 @@
         </dd>
     </dl>
 </div>
-@if (Model.LikeDevices.Count == 0)
+@if(Model.LikeDevices.Count == 0)
 {
     <div>No device report with similar information has been found!</div>
 }
@@ -91,7 +91,7 @@ else
         </tr>
         </thead>
         <tbody>
-        @foreach (var item in Model.LikeDevices)
+        @foreach(var item in Model.LikeDevices)
         {
             <tr>
                 <td>

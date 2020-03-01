@@ -1,6 +1,6 @@
 using System;
-using Aaru.Server.Models;
 using Aaru.CommonTypes.Interop;
+using Aaru.Server.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -49,7 +49,7 @@ namespace Aaru.Server
                                  @"        _\////////////_____\///////////________\/////////__"                                                                                                                                                                         +
                                  "\n\u001b[0m"                                                                                                                                                                                                                          +
                                  "\u001b[32m                    :MMMMMK; cWMNkl:;;;:lxKMXc .0MMMMMO\u001b[0m\n"                                                                                                                                                         +
-                                 "\u001b[32m                   ..KMMMMMMNo,.             ,OMMMMMMW:,.                 \u001b[37;1m          DiscImageChef Website\u001b[0m\n"                                                                                           +
+                                 "\u001b[32m                   ..KMMMMMMNo,.             ,OMMMMMMW:,.                 \u001b[37;1m          Aaru Website\u001b[0m\n"                                                                                           +
                                  "\u001b[32m            .;d0NMMMMMMMMMMMMMMW0d:'    .;lOWMMMMMMMMMMMMMXkl.            \u001b[37;1m          Version \u001b[0m\u001b[33m{0}\u001b[37;1m-\u001b[0m\u001b[31m{1}\u001b[0m\n"                                               +
                                  "\u001b[32m          :KMMMMMMMMMMMMMMMMMMMMMMMMc  WMMMMMMMMMMMMMMMMMMMMMMWk'\u001b[0m\n"                                                                                                                                               +
                                  "\u001b[32m        ;NMMMMWX0kkkkO0XMMMMMMMMMMM0'  dNMMMMMMMMMMW0xl:;,;:oOWMMX;       \u001b[37;1m          Running under \u001b[35;1m{2}\u001b[37;1m, \u001b[35m{3}-bit\u001b[37;1m in \u001b[35m{4}-bit\u001b[37;1m mode.\u001b[0m\n" +
@@ -89,7 +89,7 @@ namespace Aaru.Server
                 {
                     start = DateTime.Now;
                     System.Console.WriteLine("\u001b[31;1mUpdating database with Entity Framework...\u001b[0m");
-                    var context = services.GetRequiredService<AaruServerContext>();
+                    AaruServerContext context = services.GetRequiredService<AaruServerContext>();
                     context.Database.Migrate();
                     end = DateTime.Now;
 

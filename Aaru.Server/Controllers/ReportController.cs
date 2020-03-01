@@ -33,11 +33,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Aaru.Server.Models;
 using Aaru.CommonTypes.Metadata;
 using Aaru.CommonTypes.Structs.Devices.SCSI;
 using Aaru.Decoders.PCMCIA;
 using Aaru.Decoders.SCSI;
+using Aaru.Server.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Inquiry = Aaru.CommonTypes.Structs.Devices.SCSI.Inquiry;

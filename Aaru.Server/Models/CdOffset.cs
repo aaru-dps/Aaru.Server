@@ -39,7 +39,7 @@ namespace Aaru.Server.Models
 {
     public class CompactDiscOffset : CdOffset
     {
-        public CompactDiscOffset() { }
+        public CompactDiscOffset() {}
 
         public CompactDiscOffset(string manufacturer, string model, short offset, int submissions, float agreement)
         {

@@ -35,9 +35,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using Aaru.Server.Models;
 using Aaru.CommonTypes.Metadata;
 using Aaru.Dto;
+using Aaru.Server.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -96,8 +96,8 @@ namespace Aaru.Server.Controllers
                                                                                                                      })),
                                                device.Id, device.OptimalMultipleSectorsRead));
 
-            JsonSerializer js = JsonSerializer.Create();
-            var            sw = new StringWriter();
+            var js = JsonSerializer.Create();
+            var sw = new StringWriter();
             js.Serialize(sw, sync);
 
             return new ContentResult

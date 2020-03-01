@@ -2,7 +2,7 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 <ul class="navbar-nav">
-    @if (SignInManager.IsSignedIn(User))
+    @if(SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
             <a asp-area="Identity" asp-page="/Account/Manage/Index" class="nav-link text-dark" id="manage" title="Manage">Hello @UserManager.GetUserName(User)!</a>

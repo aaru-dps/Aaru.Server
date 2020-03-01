@@ -31,8 +31,8 @@
 // ****************************************************************************/
 
 using System.Linq;
-using Aaru.Server.Models;
 using Aaru.CommonTypes.Metadata;
+using Aaru.Server.Models;
 using Version = Aaru.Server.Models.Version;
 
 namespace Aaru.Server
@@ -362,10 +362,10 @@ namespace Aaru.Server
                     if(string.IsNullOrWhiteSpace(nvs.name))
                         continue;
 
-                    Models.Version existing = ctx.Versions.FirstOrDefault(c => c.Name == nvs.name);
+                    Version existing = ctx.Versions.FirstOrDefault(c => c.Name == nvs.name);
 
                     if(existing == null)
-                        ctx.Versions.Add(new Models.Version
+                        ctx.Versions.Add(new Version
                         {
                             Count = nvs.Value, Name = nvs.name
                         });
@@ -375,10 +375,10 @@ namespace Aaru.Server
             }
             else
             {
-                Models.Version existing = ctx.Versions.FirstOrDefault(c => c.Name == "previous");
+                Version existing = ctx.Versions.FirstOrDefault(c => c.Name == "previous");
 
                 if(existing == null)
-                    ctx.Versions.Add(new Models.Version
+                    ctx.Versions.Add(new Version
                     {
                         Count = 1, Name = "previous"
                     });

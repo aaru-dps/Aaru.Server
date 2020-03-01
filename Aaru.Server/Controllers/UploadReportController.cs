@@ -38,9 +38,9 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using Aaru.CommonTypes.Metadata;
 using Aaru.Server.Models;
 using Cinchoo.PGP;
-using Aaru.CommonTypes.Metadata;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -52,7 +52,7 @@ namespace Aaru.Server.Controllers
 {
     public class UploadReportController : Controller
     {
-        readonly AaruServerContext    _ctx;
+        readonly AaruServerContext   _ctx;
         readonly IWebHostEnvironment _environment;
 
         public UploadReportController(IWebHostEnvironment environment, AaruServerContext ctx)
@@ -249,9 +249,9 @@ namespace Aaru.Server.Controllers
             {
                 HttpRequest request = HttpContext.Request;
 
-                var    sr         = new StreamReader(request.Body);
-                string reportJson = await sr.ReadToEndAsync();
-                var    newReport  = JsonConvert.DeserializeObject<DeviceReportV2>(reportJson);
+                var            sr         = new StreamReader(request.Body);
+                string         reportJson = await sr.ReadToEndAsync();
+                DeviceReportV2 newReport  = JsonConvert.DeserializeObject<DeviceReportV2>(reportJson);
 
                 if(newReport == null)
                 {
