@@ -3,7 +3,7 @@ Description=Aaru Server
 
 [Service]
 WorkingDirectory=/var/www/aaru-server
-ExecStart=/var/www/aaru-server/Aaru.Server
+ExecStart=/var/www/aaru-server/Aaru.Server --urls "http://*:5000"
 Restart=always
 # Restart service after 10 seconds if the dotnet service crashes:
 RestartSec=10
