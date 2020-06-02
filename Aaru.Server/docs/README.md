@@ -4,7 +4,7 @@ Aaru
 
 Copyright © 2011-2020 Natalia Portillo <claunia@claunia.com>
 
-[![Build status](https://dev.azure.com/Aaru/Aaru/_apis/build/status/Aaru-.NET%20Desktop-CI)](https://dev.azure.com/Aaru/Aaru/_build/latest?definitionId=4)
+[![Build Status](https://dev.azure.com/Aaru-dps/aaru/_apis/build/status/aaru-dps.Aaru?branchName=master)](https://dev.azure.com/Aaru-dps/aaru/_build/latest?definitionId=7&branchName=master)
 [![Build Status](https://travis-ci.org/aaru/Aaru.svg?branch=master)](https://travis-ci.org/aaru/Aaru)
 [![Build status](https://ci.appveyor.com/api/projects/status/vim4c8h028pn5oys?svg=true)](https://ci.appveyor.com/project/claunia/aaru)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fclaunia%2FAaru.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fclaunia%2FAaru?ref=badge_shield)
