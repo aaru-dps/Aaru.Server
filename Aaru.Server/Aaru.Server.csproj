@@ -32,18 +32,18 @@
 
   <ItemGroup>
     <PackageReference Include="ChoPGP" Version="1.0.1.2" />
-    <PackageReference Include="MailKit" Version="2.3.2" />
-    <PackageReference Include="Markdig" Version="0.18.0" />
+    <PackageReference Include="MailKit" Version="2.7.0" />
+    <PackageReference Include="Markdig" Version="0.20.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
-    <PackageReference Include="MimeKit" Version="2.3.2" />
+    <PackageReference Include="MimeKit" Version="2.8.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.0.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design" Version="1.1.2" />
-    <PackageReference Include="prometheus-net.AspNetCore" Version="3.3.0" />
+    <PackageReference Include="prometheus-net.AspNetCore" Version="3.5.0" />
     <PackageReference Include="Unclassified.NetRevisionTask" Version="0.3.0" />
   </ItemGroup>
 
