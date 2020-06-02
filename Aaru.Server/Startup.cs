@@ -32,6 +32,8 @@ namespace Aaru.Server
                 options.User.RequireUniqueEmail        = true;
             }).AddEntityFrameworkStores<AaruServerContext>();
 
+            services.AddApplicationInsightsTelemetry();
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
