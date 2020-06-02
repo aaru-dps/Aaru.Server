@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Server" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
-    <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/DiscImageChef.Server/DiscImageChef.Server.csproj" />
+    <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Aaru.Server/Aaru.Server.csproj" />
     <option name="LAUNCH_PROFILE_TFM" value=".NETCoreApp,Version=v3.0" />
-    <option name="LAUNCH_PROFILE_NAME" value="DiscImageChef.Server" />
+    <option name="LAUNCH_PROFILE_NAME" value="Aaru.Server" />
     <option name="USE_EXTERNAL_CONSOLE" value="0" />
     <option name="USE_MONO" value="0" />
     <option name="RUNTIME_ARGUMENTS" value="" />
@@ -12,7 +12,7 @@
     <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
     <method v="2">
       <option name="FwBeforeLaunchTask" enabled="true" />
-      <option name="Build" enabled="true" />
+      <option name="Build" />
     </method>
   </configuration>
 </component>
