@@ -45,39 +45,40 @@ namespace Aaru.Server.Models
 
         public AaruServerContext(DbContextOptions<AaruServerContext> options) : base(options) {}
 
-        public DbSet<Device>                   Devices                { get; set; }
-        public DbSet<UploadedReport>           Reports                { get; set; }
-        public DbSet<Command>                  Commands               { get; set; }
-        public DbSet<DeviceStat>               DeviceStats            { get; set; }
-        public DbSet<Filesystem>               Filesystems            { get; set; }
-        public DbSet<Filter>                   Filters                { get; set; }
-        public DbSet<Media>                    Medias                 { get; set; }
-        public DbSet<MediaFormat>              MediaFormats           { get; set; }
-        public DbSet<OperatingSystem>          OperatingSystems       { get; set; }
-        public DbSet<Partition>                Partitions             { get; set; }
-        public DbSet<Version>                  Versions               { get; set; }
-        public DbSet<UsbVendor>                UsbVendors             { get; set; }
-        public DbSet<UsbProduct>               UsbProducts            { get; set; }
-        public DbSet<CompactDiscOffset>        CdOffsets              { get; set; }
-        public DbSet<CommonTypes.Metadata.Ata> Ata                    { get; set; }
-        public DbSet<BlockDescriptor>          BlockDescriptor        { get; set; }
-        public DbSet<Chs>                      Chs                    { get; set; }
-        public DbSet<FireWire>                 FireWire               { get; set; }
-        public DbSet<Mmc>                      Mmc                    { get; set; }
-        public DbSet<MmcSd>                    MmcSd                  { get; set; }
-        public DbSet<MmcFeatures>              MmcFeatures            { get; set; }
-        public DbSet<Pcmcia>                   Pcmcia                 { get; set; }
-        public DbSet<Scsi>                     Scsi                   { get; set; }
-        public DbSet<ScsiMode>                 ScsiMode               { get; set; }
-        public DbSet<ScsiPage>                 ScsiPage               { get; set; }
-        public DbSet<Ssc>                      Ssc                    { get; set; }
-        public DbSet<SupportedDensity>         SupportedDensity       { get; set; }
-        public DbSet<TestedMedia>              TestedMedia            { get; set; }
-        public DbSet<TestedSequentialMedia>    TestedSequentialMedia  { get; set; }
-        public DbSet<Usb>                      Usb                    { get; set; }
-        public DbSet<RemoteApplication>        RemoteApplications     { get; set; }
-        public DbSet<RemoteArchitecture>       RemoteArchitectures    { get; set; }
-        public DbSet<RemoteOperatingSystem>    RemoteOperatingSystems { get; set; }
+        public DbSet<Device>                    Devices                   { get; set; }
+        public DbSet<UploadedReport>            Reports                   { get; set; }
+        public DbSet<Command>                   Commands                  { get; set; }
+        public DbSet<DeviceStat>                DeviceStats               { get; set; }
+        public DbSet<Filesystem>                Filesystems               { get; set; }
+        public DbSet<Filter>                    Filters                   { get; set; }
+        public DbSet<Media>                     Medias                    { get; set; }
+        public DbSet<MediaFormat>               MediaFormats              { get; set; }
+        public DbSet<OperatingSystem>           OperatingSystems          { get; set; }
+        public DbSet<Partition>                 Partitions                { get; set; }
+        public DbSet<Version>                   Versions                  { get; set; }
+        public DbSet<UsbVendor>                 UsbVendors                { get; set; }
+        public DbSet<UsbProduct>                UsbProducts               { get; set; }
+        public DbSet<CompactDiscOffset>         CdOffsets                 { get; set; }
+        public DbSet<CommonTypes.Metadata.Ata>  Ata                       { get; set; }
+        public DbSet<BlockDescriptor>           BlockDescriptor           { get; set; }
+        public DbSet<Chs>                       Chs                       { get; set; }
+        public DbSet<FireWire>                  FireWire                  { get; set; }
+        public DbSet<Mmc>                       Mmc                       { get; set; }
+        public DbSet<MmcSd>                     MmcSd                     { get; set; }
+        public DbSet<MmcFeatures>               MmcFeatures               { get; set; }
+        public DbSet<Pcmcia>                    Pcmcia                    { get; set; }
+        public DbSet<Scsi>                      Scsi                      { get; set; }
+        public DbSet<ScsiMode>                  ScsiMode                  { get; set; }
+        public DbSet<ScsiPage>                  ScsiPage                  { get; set; }
+        public DbSet<Ssc>                       Ssc                       { get; set; }
+        public DbSet<SupportedDensity>          SupportedDensity          { get; set; }
+        public DbSet<TestedMedia>               TestedMedia               { get; set; }
+        public DbSet<TestedSequentialMedia>     TestedSequentialMedia     { get; set; }
+        public DbSet<Usb>                       Usb                       { get; set; }
+        public DbSet<RemoteApplication>         RemoteApplications        { get; set; }
+        public DbSet<RemoteArchitecture>        RemoteArchitectures       { get; set; }
+        public DbSet<RemoteOperatingSystem>     RemoteOperatingSystems    { get; set; }
+        public DbSet<GdRomSwapDiscCapabilities> GdRomSwapDiscCapabilities { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

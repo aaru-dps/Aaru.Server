@@ -41,8 +41,7 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
             model.ReportAll = _context.
                               Devices.Where(d => d.Manufacturer == model.Report.Manufacturer &&
-                                                 d.Model        == model.Report.Model        &&
-                                                 d.Revision     == model.Report.Revision).
+                                                 d.Model == model.Report.Model && d.Revision == model.Report.Revision).
                               Select(d => d.Id).ToList();
 
             model.ReportButManufacturer = _context.
@@ -52,9 +51,8 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
             model.SameAll = _context.
                             Reports.Where(d => d.Manufacturer == model.Report.Manufacturer &&
-                                               d.Model        == model.Report.Model        &&
-                                               d.Revision     == model.Report.Revision     &&
-                                               d.Id           != id).Select(d => d.Id).ToList();
+                                               d.Model == model.Report.Model && d.Revision == model.Report.Revision &&
+                                               d.Id != id).Select(d => d.Id).ToList();
 
             model.SameButManufacturer = _context.
                                         Reports.Where(d => d.Model    == model.Report.Model    &&
@@ -187,7 +185,8 @@ namespace Aaru.Server.Areas.Admin.Controllers
                                     uploadedReport.MultiMediaCardId, uploadedReport.PCMCIAId,
                                     uploadedReport.SecureDigitalId, uploadedReport.SCSIId, uploadedReport.USBId,
                                     uploadedReport.UploadedWhen, uploadedReport.Manufacturer, uploadedReport.Model,
-                                    uploadedReport.Revision, uploadedReport.CompactFlash, uploadedReport.Type);
+                                    uploadedReport.Revision, uploadedReport.CompactFlash, uploadedReport.Type,
+                                    uploadedReport.GdRomSwapDiscCapabilitiesId);
 
             EntityEntry<Device> res = _context.Devices.Add(device);
             _context.Reports.Remove(uploadedReport);
@@ -275,6 +274,19 @@ namespace Aaru.Server.Areas.Admin.Controllers
                     slaveReport.SCSI?.SequentialDeviceId  != null)
             {
                 masterReport.SCSI.SequentialDeviceId = slaveReport.SCSI.SequentialDeviceId;
+                _context.Update(masterReport);
+            }
+
+            if(masterReport.GdRomSwapDiscCapabilitiesId == null &&
+               slaveReport.GdRomSwapDiscCapabilitiesId  != null)
+            {
+                masterReport.GdRomSwapDiscCapabilitiesId = slaveReport.GdRomSwapDiscCapabilitiesId;
+                _context.Update(masterReport);
+            }
+            else if(masterReport.GdRomSwapDiscCapabilitiesId != null &&
+                    slaveReport.GdRomSwapDiscCapabilitiesId  != null)
+            {
+                masterReport.GdRomSwapDiscCapabilitiesId = slaveReport.GdRomSwapDiscCapabilitiesId;
                 _context.Update(masterReport);
             }
 

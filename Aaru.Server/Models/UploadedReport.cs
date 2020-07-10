@@ -42,32 +42,34 @@ namespace Aaru.Server.Models
 
         public UploadedReport(DeviceReportV2 report)
         {
-            ATA            = report.ATA;
-            ATAPI          = report.ATAPI;
-            CompactFlash   = report.CompactFlash;
-            FireWire       = report.FireWire;
-            UploadedWhen   = DateTime.UtcNow;
-            MultiMediaCard = report.MultiMediaCard;
-            PCMCIA         = report.PCMCIA;
-            SCSI           = report.SCSI;
-            SecureDigital  = report.SecureDigital;
-            USB            = report.USB;
-            Manufacturer   = report.Manufacturer;
-            Model          = report.Model;
-            Revision       = report.Revision;
-            Type           = report.Type;
+            ATA                       = report.ATA;
+            ATAPI                     = report.ATAPI;
+            CompactFlash              = report.CompactFlash;
+            FireWire                  = report.FireWire;
+            UploadedWhen              = DateTime.UtcNow;
+            MultiMediaCard            = report.MultiMediaCard;
+            PCMCIA                    = report.PCMCIA;
+            SCSI                      = report.SCSI;
+            SecureDigital             = report.SecureDigital;
+            USB                       = report.USB;
+            Manufacturer              = report.Manufacturer;
+            Model                     = report.Model;
+            Revision                  = report.Revision;
+            Type                      = report.Type;
+            GdRomSwapDiscCapabilities = report.GdRomSwapDiscCapabilities;
         }
 
         [DisplayName("Uploaded when")]
         public DateTime UploadedWhen { get; set; }
 
-        public int? ATAId            { get; set; }
-        public int? ATAPIId          { get; set; }
-        public int? FireWireId       { get; set; }
-        public int? MultiMediaCardId { get; set; }
-        public int? PCMCIAId         { get; set; }
-        public int? SecureDigitalId  { get; set; }
-        public int? SCSIId           { get; set; }
-        public int? USBId            { get; set; }
+        public int? ATAId                       { get; set; }
+        public int? ATAPIId                     { get; set; }
+        public int? FireWireId                  { get; set; }
+        public int? MultiMediaCardId            { get; set; }
+        public int? PCMCIAId                    { get; set; }
+        public int? SecureDigitalId             { get; set; }
+        public int? SCSIId                      { get; set; }
+        public int? USBId                       { get; set; }
+        public int? GdRomSwapDiscCapabilitiesId { get; set; }
     }
 }

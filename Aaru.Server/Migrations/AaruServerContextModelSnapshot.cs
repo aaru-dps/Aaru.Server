@@ -98,6 +98,229 @@ namespace Aaru.Server.Migrations
                 b.ToTable("FireWire");
             });
 
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.GdRomSwapDiscCapabilities", b =>
+            {
+                b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
+
+                b.Property<byte[]>("Lba0Data").HasColumnType("longblob");
+
+                b.Property<string>("Lba0DecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba0Readable").HasColumnType("tinyint(1)");
+
+                b.Property<byte[]>("Lba0ScrambledData").HasColumnType("longblob");
+
+                b.Property<string>("Lba0ScrambledDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba0ScrambledReadable").HasColumnType("tinyint(1)");
+
+                b.Property<byte[]>("Lba0ScrambledSense").HasColumnType("longblob");
+
+                b.Property<byte[]>("Lba0Sense").HasColumnType("longblob");
+
+                b.Property<byte[]>("Lba100000Data").HasColumnType("longblob");
+
+                b.Property<string>("Lba100000DecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<byte[]>("Lba100000PqData").HasColumnType("longblob");
+
+                b.Property<string>("Lba100000PqDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba100000PqReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba100000PqReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba100000PqSense").HasColumnType("longblob");
+
+                b.Property<bool>("Lba100000Readable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba100000ReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba100000RwData").HasColumnType("longblob");
+
+                b.Property<string>("Lba100000RwDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba100000RwReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba100000RwReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba100000RwSense").HasColumnType("longblob");
+
+                b.Property<byte[]>("Lba100000Sense").HasColumnType("longblob");
+
+                b.Property<byte[]>("Lba400000Data").HasColumnType("longblob");
+
+                b.Property<string>("Lba400000DecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<byte[]>("Lba400000PqData").HasColumnType("longblob");
+
+                b.Property<string>("Lba400000PqDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba400000PqReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba400000PqReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba400000PqSense").HasColumnType("longblob");
+
+                b.Property<bool>("Lba400000Readable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba400000ReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba400000RwData").HasColumnType("longblob");
+
+                b.Property<string>("Lba400000RwDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba400000RwReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba400000RwReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba400000RwSense").HasColumnType("longblob");
+
+                b.Property<byte[]>("Lba400000Sense").HasColumnType("longblob");
+
+                b.Property<byte[]>("Lba44990Data").HasColumnType("longblob");
+
+                b.Property<string>("Lba44990DecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<byte[]>("Lba44990PqData").HasColumnType("longblob");
+
+                b.Property<string>("Lba44990PqDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba44990PqReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba44990PqReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba44990PqSense").HasColumnType("longblob");
+
+                b.Property<bool>("Lba44990Readable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba44990ReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba44990RwData").HasColumnType("longblob");
+
+                b.Property<string>("Lba44990RwDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba44990RwReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba44990RwReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba44990RwSense").HasColumnType("longblob");
+
+                b.Property<byte[]>("Lba44990Sense").HasColumnType("longblob");
+
+                b.Property<byte[]>("Lba450000Data").HasColumnType("longblob");
+
+                b.Property<string>("Lba450000DecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<byte[]>("Lba450000PqData").HasColumnType("longblob");
+
+                b.Property<string>("Lba450000PqDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba450000PqReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba450000PqReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba450000PqSense").HasColumnType("longblob");
+
+                b.Property<bool>("Lba450000Readable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba450000ReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba450000RwData").HasColumnType("longblob");
+
+                b.Property<string>("Lba450000RwDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba450000RwReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba450000RwReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba450000RwSense").HasColumnType("longblob");
+
+                b.Property<byte[]>("Lba450000Sense").HasColumnType("longblob");
+
+                b.Property<byte[]>("Lba45000Data").HasColumnType("longblob");
+
+                b.Property<string>("Lba45000DecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<byte[]>("Lba45000PqData").HasColumnType("longblob");
+
+                b.Property<string>("Lba45000PqDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba45000PqReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba45000PqReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba45000PqSense").HasColumnType("longblob");
+
+                b.Property<bool>("Lba45000Readable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba45000ReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba45000RwData").HasColumnType("longblob");
+
+                b.Property<string>("Lba45000RwDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba45000RwReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba45000RwReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba45000RwSense").HasColumnType("longblob");
+
+                b.Property<byte[]>("Lba45000Sense").HasColumnType("longblob");
+
+                b.Property<byte[]>("Lba50000Data").HasColumnType("longblob");
+
+                b.Property<string>("Lba50000DecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<byte[]>("Lba50000PqData").HasColumnType("longblob");
+
+                b.Property<string>("Lba50000PqDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba50000PqReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba50000PqReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba50000PqSense").HasColumnType("longblob");
+
+                b.Property<bool>("Lba50000Readable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba50000ReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba50000RwData").HasColumnType("longblob");
+
+                b.Property<string>("Lba50000RwDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba50000RwReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba50000RwReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba50000RwSense").HasColumnType("longblob");
+
+                b.Property<byte[]>("Lba50000Sense").HasColumnType("longblob");
+
+                b.Property<byte[]>("MaximumReadablePqInHdArea").HasColumnType("longblob");
+
+                b.Property<byte[]>("MaximumReadableRwInHdArea").HasColumnType("longblob");
+
+                b.Property<uint>("MaximumReadableSectorInHdArea").HasColumnType("int unsigned");
+
+                b.Property<uint>("MinimumReadableSectorInHdArea").HasColumnType("int unsigned");
+
+                b.Property<bool>("RecognizedSwapDisc").HasColumnType("tinyint(1)");
+
+                b.Property<byte>("SwapDiscLeadOutPFRAM").HasColumnType("tinyint unsigned");
+
+                b.Property<byte>("SwapDiscLeadOutPMIN").HasColumnType("tinyint unsigned");
+
+                b.Property<byte>("SwapDiscLeadOutPSEC").HasColumnType("tinyint unsigned");
+
+                b.Property<int>("SwapDiscLeadOutStart").HasColumnType("int");
+
+                b.HasKey("Id");
+
+                b.ToTable("GdRomSwapDiscCapabilities");
+            });
+
             modelBuilder.Entity("Aaru.CommonTypes.Metadata.Mmc", b =>
             {
                 b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int");
@@ -1023,6 +1246,8 @@ namespace Aaru.Server.Migrations
 
                 b.Property<int?>("FireWireId").HasColumnType("int");
 
+                b.Property<int?>("GdRomSwapDiscCapabilitiesId").HasColumnType("int");
+
                 b.Property<string>("Manufacturer").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.Property<string>("Model").HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -1054,6 +1279,8 @@ namespace Aaru.Server.Migrations
                 b.HasIndex("CdOffsetId");
 
                 b.HasIndex("FireWireId");
+
+                b.HasIndex("GdRomSwapDiscCapabilitiesId");
 
                 b.HasIndex("ModifiedWhen");
 
@@ -1228,6 +1455,8 @@ namespace Aaru.Server.Migrations
 
                 b.Property<int?>("FireWireId").HasColumnType("int");
 
+                b.Property<int?>("GdRomSwapDiscCapabilitiesId").HasColumnType("int");
+
                 b.Property<string>("Manufacturer").HasColumnType("longtext CHARACTER SET utf8mb4");
 
                 b.Property<string>("Model").HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -1255,6 +1484,8 @@ namespace Aaru.Server.Migrations
                 b.HasIndex("ATAPIId");
 
                 b.HasIndex("FireWireId");
+
+                b.HasIndex("GdRomSwapDiscCapabilitiesId");
 
                 b.HasIndex("MultiMediaCardId");
 
@@ -1576,6 +1807,9 @@ namespace Aaru.Server.Migrations
                 b.HasOne("Aaru.CommonTypes.Metadata.FireWire", "FireWire").WithMany().HasForeignKey("FireWireId").
                   OnDelete(DeleteBehavior.SetNull);
 
+                b.HasOne("Aaru.CommonTypes.Metadata.GdRomSwapDiscCapabilities", "GdRomSwapDiscCapabilities").WithMany().
+                  HasForeignKey("GdRomSwapDiscCapabilitiesId");
+
                 b.HasOne("Aaru.CommonTypes.Metadata.MmcSd", "MultiMediaCard").WithMany().
                   HasForeignKey("MultiMediaCardId").OnDelete(DeleteBehavior.SetNull);
 
@@ -1608,6 +1842,9 @@ namespace Aaru.Server.Migrations
 
                 b.HasOne("Aaru.CommonTypes.Metadata.FireWire", "FireWire").WithMany().HasForeignKey("FireWireId").
                   OnDelete(DeleteBehavior.SetNull);
+
+                b.HasOne("Aaru.CommonTypes.Metadata.GdRomSwapDiscCapabilities", "GdRomSwapDiscCapabilities").WithMany().
+                  HasForeignKey("GdRomSwapDiscCapabilitiesId");
 
                 b.HasOne("Aaru.CommonTypes.Metadata.MmcSd", "MultiMediaCard").WithMany().
                   HasForeignKey("MultiMediaCardId").OnDelete(DeleteBehavior.SetNull);
