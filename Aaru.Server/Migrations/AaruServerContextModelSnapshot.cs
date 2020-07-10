@@ -118,6 +118,36 @@ namespace Aaru.Server.Migrations
 
                 b.Property<byte[]>("Lba0Sense").HasColumnType("longblob");
 
+                b.Property<byte[]>("Lba100000AudioData").HasColumnType("longblob");
+
+                b.Property<string>("Lba100000AudioDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<byte[]>("Lba100000AudioPqData").HasColumnType("longblob");
+
+                b.Property<string>("Lba100000AudioPqDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba100000AudioPqReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba100000AudioPqReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba100000AudioPqSense").HasColumnType("longblob");
+
+                b.Property<bool>("Lba100000AudioReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba100000AudioReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba100000AudioRwData").HasColumnType("longblob");
+
+                b.Property<string>("Lba100000AudioRwDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba100000AudioRwReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba100000AudioRwReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba100000AudioRwSense").HasColumnType("longblob");
+
+                b.Property<byte[]>("Lba100000AudioSense").HasColumnType("longblob");
+
                 b.Property<byte[]>("Lba100000Data").HasColumnType("longblob");
 
                 b.Property<string>("Lba100000DecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -147,6 +177,36 @@ namespace Aaru.Server.Migrations
                 b.Property<byte[]>("Lba100000RwSense").HasColumnType("longblob");
 
                 b.Property<byte[]>("Lba100000Sense").HasColumnType("longblob");
+
+                b.Property<byte[]>("Lba400000AudioAudioData").HasColumnType("longblob");
+
+                b.Property<string>("Lba400000AudioDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<byte[]>("Lba400000AudioPqData").HasColumnType("longblob");
+
+                b.Property<string>("Lba400000AudioPqDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba400000AudioPqReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba400000AudioPqReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba400000AudioPqSense").HasColumnType("longblob");
+
+                b.Property<bool>("Lba400000AudioReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba400000AudioReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba400000AudioRwData").HasColumnType("longblob");
+
+                b.Property<string>("Lba400000AudioRwDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba400000AudioRwReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba400000AudioRwReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba400000AudioRwSense").HasColumnType("longblob");
+
+                b.Property<byte[]>("Lba400000AudioSense").HasColumnType("longblob");
 
                 b.Property<byte[]>("Lba400000Data").HasColumnType("longblob");
 
@@ -178,6 +238,36 @@ namespace Aaru.Server.Migrations
 
                 b.Property<byte[]>("Lba400000Sense").HasColumnType("longblob");
 
+                b.Property<byte[]>("Lba44990AudioData").HasColumnType("longblob");
+
+                b.Property<string>("Lba44990AudioDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<byte[]>("Lba44990AudioPqData").HasColumnType("longblob");
+
+                b.Property<string>("Lba44990AudioPqDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba44990AudioPqReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba44990AudioPqReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba44990AudioPqSense").HasColumnType("longblob");
+
+                b.Property<bool>("Lba44990AudioReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba44990AudioReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba44990AudioRwData").HasColumnType("longblob");
+
+                b.Property<string>("Lba44990AudioRwDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba44990AudioRwReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba44990AudioRwReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba44990AudioRwSense").HasColumnType("longblob");
+
+                b.Property<byte[]>("Lba44990AudioSense").HasColumnType("longblob");
+
                 b.Property<byte[]>("Lba44990Data").HasColumnType("longblob");
 
                 b.Property<string>("Lba44990DecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -207,6 +297,36 @@ namespace Aaru.Server.Migrations
                 b.Property<byte[]>("Lba44990RwSense").HasColumnType("longblob");
 
                 b.Property<byte[]>("Lba44990Sense").HasColumnType("longblob");
+
+                b.Property<byte[]>("Lba450000AudioData").HasColumnType("longblob");
+
+                b.Property<string>("Lba450000AudioDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<byte[]>("Lba450000AudioPqData").HasColumnType("longblob");
+
+                b.Property<string>("Lba450000AudioPqDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba450000AudioPqReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba450000AudioPqReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba450000AudioPqSense").HasColumnType("longblob");
+
+                b.Property<bool>("Lba450000AudioReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba450000AudioReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba450000AudioRwData").HasColumnType("longblob");
+
+                b.Property<string>("Lba450000AudioRwDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba450000AudioRwReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba450000AudioRwReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba450000AudioRwSense").HasColumnType("longblob");
+
+                b.Property<byte[]>("Lba450000AudioSense").HasColumnType("longblob");
 
                 b.Property<byte[]>("Lba450000Data").HasColumnType("longblob");
 
@@ -238,6 +358,36 @@ namespace Aaru.Server.Migrations
 
                 b.Property<byte[]>("Lba450000Sense").HasColumnType("longblob");
 
+                b.Property<byte[]>("Lba45000AudioData").HasColumnType("longblob");
+
+                b.Property<string>("Lba45000AudioDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<byte[]>("Lba45000AudioPqData").HasColumnType("longblob");
+
+                b.Property<string>("Lba45000AudioPqDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba45000AudioPqReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba45000AudioPqReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba45000AudioPqSense").HasColumnType("longblob");
+
+                b.Property<bool>("Lba45000AudioReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba45000AudioReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba45000AudioRwData").HasColumnType("longblob");
+
+                b.Property<string>("Lba45000AudioRwDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba45000AudioRwReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba45000AudioRwReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba45000AudioRwSense").HasColumnType("longblob");
+
+                b.Property<byte[]>("Lba45000AudioSense").HasColumnType("longblob");
+
                 b.Property<byte[]>("Lba45000Data").HasColumnType("longblob");
 
                 b.Property<string>("Lba45000DecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -267,6 +417,36 @@ namespace Aaru.Server.Migrations
                 b.Property<byte[]>("Lba45000RwSense").HasColumnType("longblob");
 
                 b.Property<byte[]>("Lba45000Sense").HasColumnType("longblob");
+
+                b.Property<byte[]>("Lba50000AudioData").HasColumnType("longblob");
+
+                b.Property<string>("Lba50000AudioDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<byte[]>("Lba50000AudioPqData").HasColumnType("longblob");
+
+                b.Property<string>("Lba50000AudioPqDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba50000AudioPqReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba50000AudioPqReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba50000AudioPqSense").HasColumnType("longblob");
+
+                b.Property<bool>("Lba50000AudioReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba50000AudioReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba50000AudioRwData").HasColumnType("longblob");
+
+                b.Property<string>("Lba50000AudioRwDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                b.Property<bool>("Lba50000AudioRwReadable").HasColumnType("tinyint(1)");
+
+                b.Property<int>("Lba50000AudioRwReadableCluster").HasColumnType("int");
+
+                b.Property<byte[]>("Lba50000AudioRwSense").HasColumnType("longblob");
+
+                b.Property<byte[]>("Lba50000AudioSense").HasColumnType("longblob");
 
                 b.Property<byte[]>("Lba50000Data").HasColumnType("longblob");
 
@@ -315,6 +495,8 @@ namespace Aaru.Server.Migrations
                 b.Property<byte>("SwapDiscLeadOutPSEC").HasColumnType("tinyint unsigned");
 
                 b.Property<int>("SwapDiscLeadOutStart").HasColumnType("int");
+
+                b.Property<bool>("TestCrashed").HasColumnType("tinyint(1)");
 
                 b.HasKey("Id");
 
