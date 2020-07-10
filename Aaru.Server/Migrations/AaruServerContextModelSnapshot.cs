@@ -1240,6 +1240,8 @@ namespace Aaru.Server.Migrations
 
                 b.Property<DateTime>("AddedWhen").HasColumnType("datetime(6)");
 
+                b.Property<bool?>("CanReadGdRomUsingSwapDisc").HasColumnType("tinyint(1)");
+
                 b.Property<int?>("CdOffsetId").HasColumnType("int");
 
                 b.Property<bool>("CompactFlash").HasColumnType("tinyint(1)");

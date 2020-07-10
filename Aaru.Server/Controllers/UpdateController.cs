@@ -94,7 +94,8 @@ namespace Aaru.Server.Controllers
                                                                                                                              = ReferenceLoopHandling.
                                                                                                                                  Ignore
                                                                                                                      })),
-                                               device.Id, device.OptimalMultipleSectorsRead));
+                                               device.Id, device.OptimalMultipleSectorsRead,
+                                               device.CanReadGdRomUsingSwapDisc));
 
             var js = JsonSerializer.Create();
             var sw = new StringWriter();

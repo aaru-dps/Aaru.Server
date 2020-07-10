@@ -41,8 +41,7 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
             model.ReportAll = _context.
                               Reports.Where(d => d.Manufacturer == model.Report.Manufacturer &&
-                                                 d.Model        == model.Report.Model        &&
-                                                 d.Revision     == model.Report.Revision).
+                                                 d.Model == model.Report.Model && d.Revision == model.Report.Revision).
                               Select(d => d.Id).ToList();
 
             model.ReportButManufacturer = _context.
@@ -52,9 +51,8 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
             model.SameAll = _context.
                             Devices.Where(d => d.Manufacturer == model.Report.Manufacturer &&
-                                               d.Model        == model.Report.Model        &&
-                                               d.Revision     == model.Report.Revision     &&
-                                               d.Id           != id).Select(d => d.Id).ToList();
+                                               d.Model == model.Report.Model && d.Revision == model.Report.Revision &&
+                                               d.Id != id).Select(d => d.Id).ToList();
 
             model.SameButManufacturer = _context.
                                         Devices.Where(d => d.Model    == model.Report.Model    &&
@@ -63,9 +61,8 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
             model.StatsAll = _context.DeviceStats.
                                       Where(d => d.Manufacturer == model.Report.Manufacturer &&
-                                                 d.Model        == model.Report.Model        &&
-                                                 d.Revision     == model.Report.Revision     &&
-                                                 d.Report.Id    != model.Report.Id).ToList();
+                                                 d.Model == model.Report.Model && d.Revision == model.Report.Revision &&
+                                                 d.Report.Id != model.Report.Id).ToList();
 
             model.StatsButManufacturer = _context.DeviceStats.
                                                   Where(d => d.Model     == model.Report.Model    &&
@@ -132,6 +129,7 @@ namespace Aaru.Server.Areas.Admin.Controllers
             if(model is null)
                 return NotFound();
 
+            model.CanReadGdRomUsingSwapDisc  = changedModel.CanReadGdRomUsingSwapDisc;
             model.OptimalMultipleSectorsRead = changedModel.OptimalMultipleSectorsRead;
             model.CompactFlash               = changedModel.CompactFlash;
             model.Manufacturer               = changedModel.Manufacturer;

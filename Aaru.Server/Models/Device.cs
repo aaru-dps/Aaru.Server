@@ -92,6 +92,8 @@ namespace Aaru.Server.Models
 
         [DefaultValue(0), DisplayName("Optimal no. of sectors to be read at once")]
         public int OptimalMultipleSectorsRead { get; set; }
+        [DefaultValue(null), DisplayName("Can read GD-ROM using swap disc trick")]
+        public bool? CanReadGdRomUsingSwapDisc { get; set; }
 
         public int? ATAId                       { get; set; }
         public int? ATAPIId                     { get; set; }
