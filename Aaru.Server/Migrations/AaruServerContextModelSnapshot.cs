@@ -178,7 +178,7 @@ namespace Aaru.Server.Migrations
 
                 b.Property<byte[]>("Lba100000Sense").HasColumnType("longblob");
 
-                b.Property<byte[]>("Lba400000AudioAudioData").HasColumnType("longblob");
+                b.Property<byte[]>("Lba400000AudioData").HasColumnType("longblob");
 
                 b.Property<string>("Lba400000AudioDecodedSense").HasColumnType("longtext CHARACTER SET utf8mb4");
 
