@@ -13,7 +13,7 @@ namespace Aaru.Server.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "3.0.0").HasAnnotation("Relational:MaxIdentifierLength", 64);
+            modelBuilder.HasAnnotation("ProductVersion", "3.1.5").HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Aaru.CommonTypes.Metadata.Ata", b =>
             {
@@ -1043,6 +1043,10 @@ namespace Aaru.Server.Migrations
 
                 b.Property<bool?>("CanReadDiscInformation").HasColumnType("tinyint(1)");
 
+                b.Property<bool?>("CanReadF1_06").HasColumnType("tinyint(1)");
+
+                b.Property<bool?>("CanReadF1_06LeadOut").HasColumnType("tinyint(1)");
+
                 b.Property<bool?>("CanReadFirstTrackPreGap").HasColumnType("tinyint(1)");
 
                 b.Property<bool?>("CanReadFullTOC").HasColumnType("tinyint(1)");
@@ -1206,6 +1210,10 @@ namespace Aaru.Server.Migrations
                 b.Property<byte[]>("ReadDmaRetryData").HasColumnType("longblob");
 
                 b.Property<byte[]>("ReadDmaRetryLbaData").HasColumnType("longblob");
+
+                b.Property<byte[]>("ReadF1_06Data").HasColumnType("longblob");
+
+                b.Property<byte[]>("ReadF1_06LeadOutData").HasColumnType("longblob");
 
                 b.Property<byte[]>("ReadLba48Data").HasColumnType("longblob");
 

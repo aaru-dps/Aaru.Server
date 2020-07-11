@@ -1454,6 +1454,44 @@
         @("<null>")
     }
 </dd>
+<dt class="col-sm-2">
+    @Html.DisplayNameFor(model => model.CanReadF1_06)
+</dt>
+<dd class="col-sm-10">
+    @Html.DisplayFor(model => model.CanReadF1_06)
+</dd>
+<dt class="col-sm-2">
+    @Html.DisplayNameFor(model => model.ReadF1_06Data)
+</dt>
+<dd class="col-sm-10">
+    @if(Model.ReadF1_06Data != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadF1_06Data)">@Model.ReadF1_06Data.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+    }
+</dd>
+<dt class="col-sm-2">
+    @Html.DisplayNameFor(model => model.CanReadF1_06LeadOut)
+</dt>
+<dd class="col-sm-10">
+    @Html.DisplayFor(model => model.CanReadF1_06LeadOut)
+</dd>
+<dt class="col-sm-2">
+    @Html.DisplayNameFor(model => model.ReadF1_06LeadOutData)
+</dt>
+<dd class="col-sm-10">
+    @if(Model.ReadF1_06LeadOutData != null)
+    {
+        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadF1_06LeadOutData)">@Model.ReadF1_06Data.Length bytes</a>
+    }
+    else
+    {
+        @("<null>")
+    }
+</dd>
 </dl>
 <form asp-action="Delete">
     <input type="hidden" asp-for="Id" />

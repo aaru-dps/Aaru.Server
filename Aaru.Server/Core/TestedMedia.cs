@@ -383,6 +383,12 @@ namespace Aaru.Server.App_Start
                 if(testedMedia.CanReadCdScrambled == true)
                     mediaOneValue.Add("Device can read scrambled sectors using standard READ CD command");
 
+                if(testedMedia.CanReadF1_06 == true)
+                    mediaOneValue.Add("Device can read from cache using F1h command with subcommand 06h");
+
+                if(testedMedia.CanReadF1_06LeadOut == true)
+                    mediaOneValue.Add("Device can read Lead-Out from cache using F1h command with subcommand 06h");
+
                 mediaOneValue.Add("");
             }
         }
