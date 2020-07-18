@@ -460,6 +460,14 @@ namespace Aaru.Server.Areas.Admin.Controllers
                     buffer = testedMedia.ReadCdScrambledData;
 
                     break;
+                case nameof(testedMedia.ReadF1_06Data):
+                    buffer = testedMedia.ReadF1_06Data;
+
+                    break;
+                case nameof(testedMedia.ReadF1_06LeadOutData):
+                    buffer = testedMedia.ReadF1_06LeadOutData;
+
+                    break;
                 default: return NotFound();
             }
 
