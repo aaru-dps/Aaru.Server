@@ -375,6 +375,10 @@ namespace Aaru.Server.Areas.Admin.Controllers
                     buffer = testedMedia.ReadCdMsfData;
 
                     break;
+                case nameof(testedMedia.ReadCdMsfFullData):
+                    buffer = testedMedia.ReadCdMsfFullData;
+
+                    break;
                 case nameof(testedMedia.ReadDmaData):
                     buffer = testedMedia.ReadDmaData;
 
