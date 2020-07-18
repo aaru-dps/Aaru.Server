@@ -1,0 +1,1146 @@
+@using Aaru.Decoders.SCSI
+@model Aaru.CommonTypes.Metadata.GdRomSwapDiscCapabilities
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Aaru Server";
+}
+@{
+    // /***************************************************************************
+    // Aaru Data Preservation Suite
+    // ----------------------------------------------------------------------------
+    //
+    // Filename       : Details.cshtml
+    // Author(s)      : Natalia Portillo <claunia@claunia.com>
+    //
+    // Component      : Aaru Server.
+    //
+    // --[ License ] --------------------------------------------------------------
+    //
+    //     This library is free software; you can redistribute it and/or modify
+    //     it under the terms of the GNU Lesser General Public License as
+    //     published by the Free Software Foundation; either version 2.1 of the
+    //     License, or (at your option) any later version.
+    //
+    //     This library is distributed in the hope that it will be useful, but
+    //     WITHOUT ANY WARRANTY; without even the implied warranty of
+    //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    //     Lesser General Public License for more details.
+    //
+    //     You should have received a copy of the GNU Lesser General Public
+    //     License along with this library; if not, see <http://www.gnu.org/licenses/>.
+    //
+    // ----------------------------------------------------------------------------
+    // Copyright © 2011-2020 Natalia Portillo
+    // ****************************************************************************/
+}
+<div>
+<h2>GD-ROM swap-trick capabilities report</h2>
+<hr />
+@if(Model.TestCrashed)
+{
+    <h4>Computer crashed while testing.</h4>
+}
+else if(Model.RecognizedSwapDisc)
+{
+    <h4>Swap disc Lead-Out starts at @($"{Model.SwapDiscLeadOutPMIN:X2}"):@($"{Model.SwapDiscLeadOutPSEC:X2}"):@($"{Model.SwapDiscLeadOutPFRAM:X2}") (@($"{Model.SwapDiscLeadOutStart}") sectors).</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-4">Minimum readable sector in HD area:</dt>
+        <dd class="col-sm-8">@Model.MinimumReadableSectorInHdArea</dd>
+        <dt class="col-sm-4">Maximum readable sector in HD area:</dt>
+        <dd class="col-sm-8">@Model.MaximumReadableSectorInHdArea</dd>
+        @if(Model.MaximumReadablePqInHdArea != null)
+        {
+            <dt class="col-sm-4">Contents of last readable sector in HD area (with PQ):</dt>
+            <dd class="col-sm-8">
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.MaximumReadablePqInHdArea)">@Model.MaximumReadablePqInHdArea.Length bytes</a>
+            </dd>
+        }
+        @if(Model.MaximumReadableRwInHdArea != null)
+        {
+            <dt class="col-sm-4">Contents of last readable sector in HD area (with RW):</dt>
+            <dd class="col-sm-8">
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.MaximumReadableRwInHdArea)">@Model.MaximumReadableRwInHdArea.Length bytes</a>
+            </dd>
+        }
+    </dl>
+    <table class="table-bordered">
+    <tr>
+        <th>LBA</th>
+        <th>Read mode</th>
+        <th>Status</th>
+        <th>Data</th>
+        <th>Sense</th>
+    </tr>
+    <tr>
+        <td>0</td>
+        <td>Data</td>
+        @if(Model.Lba0Readable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba0Data != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba0Data)">@Model.Lba0Data.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba0DecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba0Sense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>0</td>
+        <td>Audio (scrambled)</td>
+        @if(Model.Lba0ScrambledReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba0ScrambledData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba0ScrambledData)">@Model.Lba0ScrambledData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba0ScrambledDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba0ScrambledSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>44990</td>
+        <td>Data</td>
+        @if(Model.Lba44990Readable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba44990Data != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba44990Data)">@Model.Lba44990Data.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba44990DecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba44990Sense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>44990</td>
+        <td>Data (with PQ)</td>
+        @if(Model.Lba44990PqReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba44990PqData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba44990PqData)">@Model.Lba44990PqData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba44990PqDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba44990PqSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>44990</td>
+        <td>Data (with RW)</td>
+        @if(Model.Lba44990RwReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba44990RwData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba44990RwData)">@Model.Lba44990RwData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba44990RwDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba44990RwSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>44990</td>
+        <td>Audio</td>
+        @if(Model.Lba44990AudioReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba44990AudioData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba44990AudioData)">@Model.Lba44990AudioData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba44990AudioDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba44990AudioSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>44990</td>
+        <td>Audio (with PQ)</td>
+        @if(Model.Lba44990AudioPqReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba44990AudioRwData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba44990AudioRwData)">@Model.Lba44990AudioRwData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba44990AudioPqDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba44990AudioPqSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>44990</td>
+        <td>Audio (with RW)</td>
+        @if(Model.Lba44990AudioRwReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba44990AudioRwData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba44990AudioRwData)">@Model.Lba44990AudioRwData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba44990AudioRwDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba44990AudioRwSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>45000</td>
+        <td>Data</td>
+        @if(Model.Lba45000Readable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba45000Data != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba45000Data)">@Model.Lba45000Data.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba45000DecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba45000Sense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>45000</td>
+        <td>Data (with PQ)</td>
+        @if(Model.Lba45000PqReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba45000PqData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba45000PqData)">@Model.Lba45000PqData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba45000PqDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba45000PqSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>45000</td>
+        <td>Data (with RW)</td>
+        @if(Model.Lba45000RwReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba45000RwData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba45000RwData)">@Model.Lba45000RwData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba45000RwDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba45000RwSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>45000</td>
+        <td>Audio</td>
+        @if(Model.Lba45000AudioReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba45000AudioData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba45000AudioData)">@Model.Lba45000AudioData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba45000AudioDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba45000AudioSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>45000</td>
+        <td>Audio (with PQ)</td>
+        @if(Model.Lba45000AudioPqReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba45000AudioRwData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba45000AudioRwData)">@Model.Lba45000AudioRwData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba45000AudioPqDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba45000AudioPqSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>45000</td>
+        <td>Audio (with RW)</td>
+        @if(Model.Lba45000AudioRwReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba45000AudioRwData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba45000AudioRwData)">@Model.Lba45000AudioRwData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba45000AudioRwDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba45000AudioRwSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>50000</td>
+        <td>Data</td>
+        @if(Model.Lba50000Readable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba50000Data != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba50000Data)">@Model.Lba50000Data.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba50000DecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba50000Sense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>50000</td>
+        <td>Data (with PQ)</td>
+        @if(Model.Lba50000PqReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba50000PqData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba50000PqData)">@Model.Lba50000PqData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba50000PqDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba50000PqSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>50000</td>
+        <td>Data (with RW)</td>
+        @if(Model.Lba50000RwReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba50000RwData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba50000RwData)">@Model.Lba50000RwData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba50000RwDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba50000RwSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>50000</td>
+        <td>Audio</td>
+        @if(Model.Lba50000AudioReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba50000AudioData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba50000AudioData)">@Model.Lba50000AudioData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba50000AudioDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba50000AudioSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>50000</td>
+        <td>Audio (with PQ)</td>
+        @if(Model.Lba50000AudioPqReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba50000AudioRwData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba50000AudioRwData)">@Model.Lba50000AudioRwData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba50000AudioPqDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba50000AudioPqSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>50000</td>
+        <td>Audio (with RW)</td>
+        @if(Model.Lba50000AudioRwReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba50000AudioRwData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba50000AudioRwData)">@Model.Lba50000AudioRwData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba50000AudioRwDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba50000AudioRwSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>100000</td>
+        <td>Data</td>
+        @if(Model.Lba100000Readable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba100000Data != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba100000Data)">@Model.Lba100000Data.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba100000DecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba100000Sense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>100000</td>
+        <td>Data (with PQ)</td>
+        @if(Model.Lba100000PqReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba100000PqData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba100000PqData)">@Model.Lba100000PqData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba100000PqDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba100000PqSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>100000</td>
+        <td>Data (with RW)</td>
+        @if(Model.Lba100000RwReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba100000RwData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba100000RwData)">@Model.Lba100000RwData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba100000RwDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba100000RwSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>100000</td>
+        <td>Audio</td>
+        @if(Model.Lba100000AudioReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba100000AudioData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba100000AudioData)">@Model.Lba100000AudioData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba100000AudioDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba100000AudioSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>100000</td>
+        <td>Audio (with PQ)</td>
+        @if(Model.Lba100000AudioPqReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba100000AudioRwData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba100000AudioRwData)">@Model.Lba100000AudioRwData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba100000AudioPqDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba100000AudioPqSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>100000</td>
+        <td>Audio (with RW)</td>
+        @if(Model.Lba100000AudioRwReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba100000AudioRwData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba100000AudioRwData)">@Model.Lba100000AudioRwData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba100000AudioRwDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba100000AudioRwSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>400000</td>
+        <td>Data</td>
+        @if(Model.Lba400000Readable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba400000Data != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba400000Data)">@Model.Lba400000Data.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba400000DecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba400000Sense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>400000</td>
+        <td>Data (with PQ)</td>
+        @if(Model.Lba400000PqReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba400000PqData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba400000PqData)">@Model.Lba400000PqData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba400000PqDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba400000PqSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>400000</td>
+        <td>Data (with RW)</td>
+        @if(Model.Lba400000RwReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba400000RwData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba400000RwData)">@Model.Lba400000RwData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba400000RwDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba400000RwSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>400000</td>
+        <td>Audio</td>
+        @if(Model.Lba400000AudioReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba400000AudioData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba400000AudioData)">@Model.Lba400000AudioData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba400000AudioDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba400000AudioSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>400000</td>
+        <td>Audio (with PQ)</td>
+        @if(Model.Lba400000AudioPqReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba400000AudioRwData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba400000AudioRwData)">@Model.Lba400000AudioRwData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba400000AudioPqDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba400000AudioPqSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>400000</td>
+        <td>Audio (with RW)</td>
+        @if(Model.Lba400000AudioRwReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba400000AudioRwData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba400000AudioRwData)">@Model.Lba400000AudioRwData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba400000AudioRwDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba400000AudioRwSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>450000</td>
+        <td>Data</td>
+        @if(Model.Lba450000Readable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba450000Data != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba450000Data)">@Model.Lba450000Data.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba450000DecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba450000Sense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>450000</td>
+        <td>Data (with PQ)</td>
+        @if(Model.Lba450000PqReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba450000PqData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba450000PqData)">@Model.Lba450000PqData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba450000PqDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba450000PqSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>450000</td>
+        <td>Data (with RW)</td>
+        @if(Model.Lba450000RwReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba450000RwData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba450000RwData)">@Model.Lba450000RwData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba450000RwDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba450000RwSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>450000</td>
+        <td>Audio</td>
+        @if(Model.Lba450000AudioReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba450000AudioData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba450000AudioData)">@Model.Lba450000AudioData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba450000AudioDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba450000AudioSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>450000</td>
+        <td>Audio (with PQ)</td>
+        @if(Model.Lba450000AudioPqReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba450000AudioRwData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba450000AudioRwData)">@Model.Lba450000AudioRwData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba450000AudioPqDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba450000AudioPqSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>450000</td>
+        <td>Audio (with RW)</td>
+        @if(Model.Lba450000AudioRwReadable)
+        {
+            <td>
+                <span style="color: green;">✔️</span>
+            </td>
+        }
+        else
+        {
+            <td>
+                <span style="color: red;">❌️</span>
+            </td>
+        }
+        <td>
+            @if(Model.Lba450000AudioRwData != null)
+            {
+                <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Lba450000AudioRwData)">@Model.Lba450000AudioRwData.Length bytes</a>
+            }
+        </td>
+        <td>
+            @if(Model.Lba450000AudioRwDecodedSense != null)
+            {
+                @Html.Raw(Html.Encode(Sense.PrettifySense(Model.Lba450000AudioRwSense)).Replace("&#xA;", "<br />"))
+            }
+        </td>
+    </tr>
+    </table>
+}
+else
+{
+    <h4>Swap disc not recognized, or firmware reset after tray opened.</h4>
+}
+</div>

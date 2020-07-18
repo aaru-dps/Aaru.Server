@@ -139,6 +139,12 @@
         <a asp-controller="Usbs" asp-action="Details" asp-route-id="@Model.Report.USB.Id" target="_blank">USB report</a>
     </div>
 }
+@if(Model.Report.GdRomSwapDiscCapabilitiesId != null)
+{
+    <div>
+        <a asp-controller="GdRomSwapDiscCapabilities" asp-action="Details" asp-route-id="@Model.Report.GdRomSwapDiscCapabilitiesId" target="_blank">GD-ROM swap-trick capabilities report</a>
+    </div>
+}
 @if(Model.Report.FireWire != null)
 {
     <div>
