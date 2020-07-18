@@ -1,4 +1,6 @@
+using System;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Aaru.CommonTypes.Metadata;
@@ -140,16 +142,6 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
         bool TestedMediaExists(int id) => _context.TestedMedia.Any(e => e.Id == id);
 
-        /*    public static string Zero(int n, int max)
-        {
-            var s = $"{n:X}";
-
-            while(s.Length < max)
-                s = '0' + s;
-
-            return s;
-        }*/
-
         public IActionResult ViewData(int id, string data)
         {
             if(string.IsNullOrWhiteSpace(data))
@@ -167,7 +159,13 @@ namespace Aaru.Server.Areas.Admin.Controllers
                 TestedMediaId = id, DataName = data
             };
 
-            byte[] buffer;
+            byte[]        buffer;
+            StringBuilder sb;
+            byte[]        sector    = new byte[2352];
+            byte[]        subq      = new byte[16];
+            byte[]        fullsub   = new byte[96];
+            bool          c2Errors  = false;
+            bool          scrambled = false;
 
             switch(data)
             {
@@ -207,6 +205,27 @@ namespace Aaru.Server.Areas.Admin.Controllers
                 case nameof(testedMedia.C2PointersData):
                     buffer = testedMedia.C2PointersData;
 
+                    if(buffer is null       ||
+                       buffer.Length < 2352 ||
+                       buffer.All(c => c == 0))
+                        break;
+
+                    Array.Copy(buffer, 0, sector, 0, 2352);
+
+                    model.Decoded = Sector.Prettify(sector);
+
+                    for(int i = 2352; i < buffer.Length; i++)
+                    {
+                        if(buffer[i] == 0x00)
+                            continue;
+
+                        c2Errors = true;
+
+                        break;
+                    }
+
+                    model.Decoded += "\n" + (c2Errors ? "C2 errors found." : "No C2 errors.");
+
                     break;
                 case nameof(testedMedia.CmiData):
                     buffer        = testedMedia.CmiData;
@@ -216,9 +235,49 @@ namespace Aaru.Server.Areas.Admin.Controllers
                 case nameof(testedMedia.CorrectedSubchannelData):
                     buffer = testedMedia.CorrectedSubchannelData;
 
+                    if(buffer is null       ||
+                       buffer.Length < 2352 ||
+                       buffer.All(c => c == 0))
+                        break;
+
+                    Array.Copy(buffer, 0, sector, 0, 2352);
+
+                    model.Decoded = Sector.Prettify(sector);
+
+                    if(buffer.Length < 2448)
+                        break;
+
+                    Array.Copy(buffer, 2352, fullsub, 0, 96);
+
+                    model.Decoded += "\n" + GetPrettySub(fullsub);
+
                     break;
                 case nameof(testedMedia.CorrectedSubchannelWithC2Data):
                     buffer = testedMedia.CorrectedSubchannelWithC2Data;
+
+                    if(buffer is null       ||
+                       buffer.Length < 2352 ||
+                       buffer.All(c => c == 0))
+                        break;
+
+                    Array.Copy(buffer, 0, sector, 0, 2352);
+
+                    model.Decoded = Sector.Prettify(sector);
+
+                    if(buffer.Length < 2448)
+                        break;
+
+                    for(int i = 2352; i < 2616; i++)
+                    {
+                        if(buffer[i] == 0x00)
+                            continue;
+
+                        c2Errors = true;
+
+                        break;
+                    }
+
+                    model.Decoded += "\n" + (c2Errors ? "C2 errors found." : "No C2 errors.");
 
                     break;
                 case nameof(testedMedia.DcbData):
@@ -288,11 +347,13 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
                     break;
                 case nameof(testedMedia.LeadInData):
-                    buffer = testedMedia.LeadInData;
+                    buffer        = testedMedia.LeadInData;
+                    model.Decoded = Sector.Prettify(buffer);
 
                     break;
                 case nameof(testedMedia.LeadOutData):
-                    buffer = testedMedia.LeadOutData;
+                    buffer        = testedMedia.LeadOutData;
+                    model.Decoded = Sector.Prettify(buffer);
 
                     break;
                 case nameof(testedMedia.ModeSense6Data):
@@ -338,9 +399,55 @@ namespace Aaru.Server.Areas.Admin.Controllers
                 case nameof(testedMedia.PQSubchannelData):
                     buffer = testedMedia.PQSubchannelData;
 
+                    if(buffer is null       ||
+                       buffer.Length < 2352 ||
+                       buffer.All(c => c == 0))
+                        break;
+
+                    Array.Copy(buffer, 0, sector, 0, 2352);
+
+                    model.Decoded = Sector.Prettify(sector);
+
+                    if(buffer.Length < 2368)
+                        break;
+
+                    Array.Copy(buffer, 2352, subq, 0, 16);
+                    fullsub = Subchannel.ConvertQToRaw(subq);
+
+                    model.Decoded += "\n" + GetPrettySub(fullsub);
+
                     break;
                 case nameof(testedMedia.PQSubchannelWithC2Data):
                     buffer = testedMedia.PQSubchannelWithC2Data;
+
+                    if(buffer is null       ||
+                       buffer.Length < 2352 ||
+                       buffer.All(c => c == 0))
+                        break;
+
+                    Array.Copy(buffer, 0, sector, 0, 2352);
+
+                    model.Decoded = Sector.Prettify(sector);
+
+                    if(buffer.Length < 2368)
+                        break;
+
+                    Array.Copy(buffer, 2646, subq, 0, 16);
+                    fullsub = Subchannel.ConvertQToRaw(subq);
+
+                    model.Decoded += "\n" + GetPrettySub(fullsub);
+
+                    for(int i = 2352; i < 2646; i++)
+                    {
+                        if(buffer[i] == 0x00)
+                            continue;
+
+                        c2Errors = true;
+
+                        break;
+                    }
+
+                    model.Decoded += "\n" + (c2Errors ? "C2 errors found." : "No C2 errors.");
 
                     break;
                 case nameof(testedMedia.PriData):
@@ -368,7 +475,8 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
                     break;
                 case nameof(testedMedia.ReadCdFullData):
-                    buffer = testedMedia.ReadCdFullData;
+                    buffer        = testedMedia.ReadCdFullData;
+                    model.Decoded = Sector.Prettify(buffer);
 
                     break;
                 case nameof(testedMedia.ReadCdMsfData):
@@ -376,7 +484,8 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
                     break;
                 case nameof(testedMedia.ReadCdMsfFullData):
-                    buffer = testedMedia.ReadCdMsfFullData;
+                    buffer        = testedMedia.ReadCdMsfFullData;
+                    model.Decoded = Sector.Prettify(buffer);
 
                     break;
                 case nameof(testedMedia.ReadDmaData):
@@ -446,9 +555,53 @@ namespace Aaru.Server.Areas.Admin.Controllers
                 case nameof(testedMedia.RWSubchannelData):
                     buffer = testedMedia.RWSubchannelData;
 
+                    if(buffer is null       ||
+                       buffer.Length < 2352 ||
+                       buffer.All(c => c == 0))
+                        break;
+
+                    Array.Copy(buffer, 0, sector, 0, 2352);
+
+                    model.Decoded = Sector.Prettify(sector);
+
+                    if(buffer.Length < 2448)
+                        break;
+
+                    Array.Copy(buffer, 2352, fullsub, 0, 96);
+
+                    model.Decoded += "\n" + GetPrettySub(fullsub);
+
                     break;
                 case nameof(testedMedia.RWSubchannelWithC2Data):
                     buffer = testedMedia.RWSubchannelWithC2Data;
+
+                    if(buffer is null       ||
+                       buffer.Length < 2352 ||
+                       buffer.All(c => c == 0))
+                        break;
+
+                    Array.Copy(buffer, 0, sector, 0, 2352);
+
+                    model.Decoded = Sector.Prettify(sector);
+
+                    if(buffer.Length < 2448)
+                        break;
+
+                    Array.Copy(buffer, 2352, fullsub, 0, 96);
+
+                    model.Decoded += "\n" + GetPrettySub(fullsub);
+
+                    for(int i = 2448; i < buffer.Length; i++)
+                    {
+                        if(buffer[i] != 0x00)
+                        {
+                            c2Errors = true;
+
+                            break;
+                        }
+                    }
+
+                    model.Decoded += "\n" + (c2Errors ? "C2 errors found." : "No C2 errors.");
 
                     break;
                 case nameof(testedMedia.TocData):
@@ -459,6 +612,8 @@ namespace Aaru.Server.Areas.Admin.Controllers
                 case nameof(testedMedia.Track1PregapData):
                     buffer = testedMedia.Track1PregapData;
 
+                    model.Decoded = Sector.Prettify(buffer);
+
                     break;
                 case nameof(testedMedia.ReadCdScrambledData):
                     buffer = testedMedia.ReadCdScrambledData;
@@ -467,9 +622,85 @@ namespace Aaru.Server.Areas.Admin.Controllers
                 case nameof(testedMedia.ReadF1_06Data):
                     buffer = testedMedia.ReadF1_06Data;
 
+                    if(buffer.Length != 0xB00)
+                    {
+                        model.Decoded = Sense.PrettifySense(buffer);
+
+                        break;
+                    }
+
+                    Array.Copy(buffer, 0, sector, 0, 2352);
+
+                    if((sector[0xD] & 0x80) == 0x80)
+                    {
+                        scrambled = true;
+                        Sector.Scramble(sector);
+                    }
+
+                    model.Decoded = Sector.Prettify(sector) + "\n" + (scrambled ? "Scrambled." : "Descrambled.");
+
+                    Array.Copy(buffer, 2352, fullsub, 0, 96);
+
+                    model.Decoded += "\n" + GetPrettySub(fullsub);
+
+                    Array.Copy(buffer, 2448, subq, 0, 16);
+                    fullsub = Subchannel.ConvertQToRaw(subq);
+
+                    model.Decoded += "\n" + GetPrettySub(fullsub);
+
+                    for(int i = 2468; i < 2762; i++)
+                    {
+                        if(buffer[i] == 0x00)
+                            continue;
+
+                        c2Errors = true;
+
+                        break;
+                    }
+
+                    model.Decoded += "\n" + (c2Errors ? "C2 errors found." : "No C2 errors.");
+
                     break;
                 case nameof(testedMedia.ReadF1_06LeadOutData):
                     buffer = testedMedia.ReadF1_06LeadOutData;
+
+                    if(buffer.Length != 0xB00)
+                    {
+                        model.Decoded = Sense.PrettifySense(buffer);
+
+                        break;
+                    }
+
+                    Array.Copy(buffer, 0, sector, 0, 2352);
+
+                    if((sector[0xD] & 0x80) == 0x80)
+                    {
+                        scrambled = true;
+                        Sector.Scramble(sector);
+                    }
+
+                    model.Decoded = Sector.Prettify(sector) + "\n" + (scrambled ? "Scrambled." : "Descrambled.");
+
+                    Array.Copy(buffer, 2352, fullsub, 0, 96);
+
+                    model.Decoded += "\n" + GetPrettySub(fullsub);
+
+                    Array.Copy(buffer, 2448, subq, 0, 16);
+                    fullsub = Subchannel.ConvertQToRaw(subq);
+
+                    model.Decoded += "\n" + GetPrettySub(fullsub);
+
+                    for(int i = 2468; i < 2762; i++)
+                    {
+                        if(buffer[i] == 0x00)
+                            continue;
+
+                        c2Errors = true;
+
+                        break;
+                    }
+
+                    model.Decoded += "\n" + (c2Errors ? "C2 errors found." : "No C2 errors.");
 
                     break;
                 default: return NotFound();
@@ -484,6 +715,40 @@ namespace Aaru.Server.Areas.Admin.Controllers
                 model.Decoded = HttpUtility.HtmlEncode(model.Decoded).Replace("\n", "<br/>");
 
             return View(model);
+        }
+
+        static string GetPrettySub(byte[] sub)
+        {
+            byte[] deint = Subchannel.Deinterleave(sub);
+
+            bool validP  = true;
+            bool validRw = true;
+
+            for(int i = 0; i < 12; i++)
+            {
+                if(deint[i] == 0x00 ||
+                   deint[i] == 0xFF)
+                    continue;
+
+                validP = false;
+
+                break;
+            }
+
+            for(int i = 24; i < 96; i++)
+            {
+                if(deint[i] == 0x00)
+                    continue;
+
+                validRw = false;
+
+                break;
+            }
+
+            byte[] q = new byte[12];
+            Array.Copy(deint, 12, q, 0, 12);
+
+            return Subchannel.PrettifyQ(q, deint[21] > 0x10, 16, !validP, false, validRw);
         }
     }
 }
