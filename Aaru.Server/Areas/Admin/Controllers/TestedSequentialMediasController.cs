@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
-    public class TestedSequentialMediasController : Controller
+    public sealed class TestedSequentialMediasController : Controller
     {
         readonly AaruServerContext _context;
 

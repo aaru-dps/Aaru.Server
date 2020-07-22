@@ -31,18 +31,13 @@
 // ****************************************************************************/
 
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
-    public class HomeController : Controller
+    public sealed class HomeController : Controller
     {
-        readonly IWebHostEnvironment _environment;
-
-        public HomeController(IWebHostEnvironment environment) => _environment = environment;
-
         public ActionResult Index() => View();
     }
 }

@@ -35,12 +35,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Aaru.CommonTypes.Metadata;
+using Aaru.Server.Core;
 using Aaru.Server.Models;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -49,16 +48,11 @@ using Version = Aaru.Server.Models.Version;
 
 namespace Aaru.Server.Controllers
 {
-    public class UploadStatsController : Controller
+    public sealed class UploadStatsController : Controller
     {
         readonly AaruServerContext _ctx;
-        IWebHostEnvironment        _environment;
 
-        public UploadStatsController(IWebHostEnvironment environment, AaruServerContext ctx)
-        {
-            _environment = environment;
-            _ctx         = ctx;
-        }
+        public UploadStatsController(AaruServerContext ctx) => _ctx = ctx;
 
         /// <summary>Receives statistics from Aaru.Core, processes them and adds them to a server-side global statistics XML</summary>
         /// <returns>HTTP response</returns>
@@ -67,7 +61,8 @@ namespace Aaru.Server.Controllers
         {
             var response = new ContentResult
             {
-                StatusCode = (int)HttpStatusCode.OK, ContentType = "text/plain"
+                StatusCode  = (int)HttpStatusCode.OK,
+                ContentType = "text/plain"
             };
 
             try
@@ -93,7 +88,7 @@ namespace Aaru.Server.Controllers
 
                 return response;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
             #if DEBUG
                 if(Debugger.IsAttached)
@@ -112,7 +107,8 @@ namespace Aaru.Server.Controllers
         {
             var response = new ContentResult
             {
-                StatusCode = (int)HttpStatusCode.OK, ContentType = "text/plain"
+                StatusCode  = (int)HttpStatusCode.OK,
+                ContentType = "text/plain"
             };
 
             try
@@ -136,9 +132,10 @@ namespace Aaru.Server.Controllers
                         Command existing = _ctx.Commands.FirstOrDefault(c => c.Name == nvs.name);
 
                         if(existing == null)
-                            _ctx.Commands.Add(new Command
+                            await _ctx.Commands.AddAsync(new Command
                             {
-                                Name = nvs.name, Count = nvs.Value
+                                Name  = nvs.name,
+                                Count = nvs.Value
                             });
                         else
                             existing.Count += nvs.Value;
@@ -150,9 +147,10 @@ namespace Aaru.Server.Controllers
                         Version existing = _ctx.Versions.FirstOrDefault(c => c.Name == nvs.name);
 
                         if(existing == null)
-                            _ctx.Versions.Add(new Version
+                            await _ctx.Versions.AddAsync(new Version
                             {
-                                Name = nvs.name, Count = nvs.Value
+                                Name  = nvs.name,
+                                Count = nvs.Value
                             });
                         else
                             existing.Count += nvs.Value;
@@ -164,9 +162,10 @@ namespace Aaru.Server.Controllers
                         Filesystem existing = _ctx.Filesystems.FirstOrDefault(c => c.Name == nvs.name);
 
                         if(existing == null)
-                            _ctx.Filesystems.Add(new Filesystem
+                            await _ctx.Filesystems.AddAsync(new Filesystem
                             {
-                                Name = nvs.name, Count = nvs.Value
+                                Name  = nvs.name,
+                                Count = nvs.Value
                             });
                         else
                             existing.Count += nvs.Value;
@@ -178,9 +177,10 @@ namespace Aaru.Server.Controllers
                         Partition existing = _ctx.Partitions.FirstOrDefault(c => c.Name == nvs.name);
 
                         if(existing == null)
-                            _ctx.Partitions.Add(new Partition
+                            await _ctx.Partitions.AddAsync(new Partition
                             {
-                                Name = nvs.name, Count = nvs.Value
+                                Name  = nvs.name,
+                                Count = nvs.Value
                             });
                         else
                             existing.Count += nvs.Value;
@@ -192,9 +192,10 @@ namespace Aaru.Server.Controllers
                         MediaFormat existing = _ctx.MediaFormats.FirstOrDefault(c => c.Name == nvs.name);
 
                         if(existing == null)
-                            _ctx.MediaFormats.Add(new MediaFormat
+                            await _ctx.MediaFormats.AddAsync(new MediaFormat
                             {
-                                Name = nvs.name, Count = nvs.Value
+                                Name  = nvs.name,
+                                Count = nvs.Value
                             });
                         else
                             existing.Count += nvs.Value;
@@ -206,9 +207,10 @@ namespace Aaru.Server.Controllers
                         Filter existing = _ctx.Filters.FirstOrDefault(c => c.Name == nvs.name);
 
                         if(existing == null)
-                            _ctx.Filters.Add(new Filter
+                            await _ctx.Filters.AddAsync(new Filter
                             {
-                                Name = nvs.name, Count = nvs.Value
+                                Name  = nvs.name,
+                                Count = nvs.Value
                             });
                         else
                             existing.Count += nvs.Value;
@@ -222,10 +224,11 @@ namespace Aaru.Server.Controllers
                                                                       c.Version == operatingSystem.version);
 
                         if(existing == null)
-                            _ctx.OperatingSystems.Add(new OperatingSystem
+                            await _ctx.OperatingSystems.AddAsync(new OperatingSystem
                             {
-                                Name  = operatingSystem.name, Version = operatingSystem.version,
-                                Count = operatingSystem.Value
+                                Name    = operatingSystem.name,
+                                Version = operatingSystem.version,
+                                Count   = operatingSystem.Value
                             });
                         else
                             existing.Count += operatingSystem.Value;
@@ -237,29 +240,33 @@ namespace Aaru.Server.Controllers
                         Media existing = _ctx.Medias.FirstOrDefault(c => c.Type == media.type && c.Real == media.real);
 
                         if(existing == null)
-                            _ctx.Medias.Add(new Media
+                            await _ctx.Medias.AddAsync(new Media
                             {
-                                Type = media.type, Real = media.real, Count = media.Value
+                                Type  = media.type,
+                                Real  = media.real,
+                                Count = media.Value
                             });
                         else
                             existing.Count += media.Value;
                     }
 
                 if(newstats.Devices != null)
-                    foreach(DeviceStats device in newstats.Devices)
+                    foreach(DeviceStats device in from device in newstats.Devices let existing =
+                                                      _ctx.DeviceStats.FirstOrDefault(c => c.Bus == device.Bus &&
+                                                                                           c.Manufacturer ==
+                                                                                           device.Manufacturer     &&
+                                                                                           c.Model == device.Model &&
+                                                                                           c.Revision ==
+                                                                                           device.Revision)
+                                                  where existing == null select device)
                     {
-                        DeviceStat existing =
-                            _ctx.DeviceStats.FirstOrDefault(c => c.Bus          == device.Bus          &&
-                                                                 c.Manufacturer == device.Manufacturer &&
-                                                                 c.Model        == device.Model        &&
-                                                                 c.Revision     == device.Revision);
-
-                        if(existing == null)
-                            _ctx.DeviceStats.Add(new DeviceStat
-                            {
-                                Bus      = device.Bus, Manufacturer = device.Manufacturer, Model = device.Model,
-                                Revision = device.Revision
-                            });
+                        await _ctx.DeviceStats.AddAsync(new DeviceStat
+                        {
+                            Bus          = device.Bus,
+                            Manufacturer = device.Manufacturer,
+                            Model        = device.Model,
+                            Revision     = device.Revision
+                        });
                     }
 
                 if(newstats.RemoteApplications != null)
@@ -270,9 +277,11 @@ namespace Aaru.Server.Controllers
                                                                         c.Version == application.version);
 
                         if(existing == null)
-                            _ctx.RemoteApplications.Add(new RemoteApplication
+                            await _ctx.RemoteApplications.AddAsync(new RemoteApplication
                             {
-                                Name = application.name, Version = application.version, Count = application.Value
+                                Name    = application.name,
+                                Version = application.version,
+                                Count   = application.Value
                             });
                         else
                             existing.Count += application.Value;
@@ -284,9 +293,10 @@ namespace Aaru.Server.Controllers
                         RemoteArchitecture existing = _ctx.RemoteArchitectures.FirstOrDefault(c => c.Name == nvs.name);
 
                         if(existing == null)
-                            _ctx.RemoteArchitectures.Add(new RemoteArchitecture
+                            await _ctx.RemoteArchitectures.AddAsync(new RemoteArchitecture
                             {
-                                Name = nvs.name, Count = nvs.Value
+                                Name  = nvs.name,
+                                Count = nvs.Value
                             });
                         else
                             existing.Count += nvs.Value;
@@ -300,16 +310,17 @@ namespace Aaru.Server.Controllers
                                                                             c.Version == remoteOperatingSystem.version);
 
                         if(existing == null)
-                            _ctx.RemoteOperatingSystems.Add(new RemoteOperatingSystem
+                            await _ctx.RemoteOperatingSystems.AddAsync(new RemoteOperatingSystem
                             {
-                                Name  = remoteOperatingSystem.name, Version = remoteOperatingSystem.version,
-                                Count = remoteOperatingSystem.Value
+                                Name    = remoteOperatingSystem.name,
+                                Version = remoteOperatingSystem.version,
+                                Count   = remoteOperatingSystem.Value
                             });
                         else
                             existing.Count += remoteOperatingSystem.Value;
                     }
 
-                _ctx.SaveChanges();
+                await _ctx.SaveChangesAsync();
 
                 response.Content = "ok";
 
@@ -327,30 +338,6 @@ namespace Aaru.Server.Controllers
 
                 return response;
             }
-        }
-
-        FileStream WaitForFile(string fullPath, FileMode mode, FileAccess access, FileShare share)
-        {
-            for(int numTries = 0; numTries < 100; numTries++)
-            {
-                FileStream fs = null;
-
-                try
-                {
-                    fs = new FileStream(fullPath, mode, access, share);
-
-                    return fs;
-                }
-                catch(IOException)
-                {
-                    if(fs != null)
-                        fs.Dispose();
-
-                    Thread.Sleep(50);
-                }
-            }
-
-            return null;
         }
     }
 }

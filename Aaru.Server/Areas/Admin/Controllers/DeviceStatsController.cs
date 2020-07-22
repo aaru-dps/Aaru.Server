@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
-    public class DeviceStatsController : Controller
+    public sealed class DeviceStatsController : Controller
     {
         readonly AaruServerContext _context;
 

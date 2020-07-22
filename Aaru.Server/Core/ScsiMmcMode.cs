@@ -34,7 +34,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Aaru.CommonTypes.Structs.Devices.SCSI.Modes;
 
-namespace Aaru.Server
+namespace Aaru.Server.Core
 {
     public static class ScsiMmcMode
     {

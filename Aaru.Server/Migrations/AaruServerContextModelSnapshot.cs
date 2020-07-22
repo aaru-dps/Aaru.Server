@@ -1895,29 +1895,22 @@ namespace Aaru.Server.Migrations
                 b.ToTable("AspNetUserTokens");
             });
 
-            modelBuilder.Entity("Aaru.CommonTypes.Metadata.Ata", b =>
-            {
-                b.HasOne("Aaru.CommonTypes.Metadata.TestedMedia", "ReadCapabilities").WithMany().
-                  HasForeignKey("ReadCapabilitiesId").OnDelete(DeleteBehavior.SetNull);
-            });
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.Ata",
+                                b => b.HasOne("Aaru.CommonTypes.Metadata.TestedMedia", "ReadCapabilities").WithMany().
+                                       HasForeignKey("ReadCapabilitiesId").OnDelete(DeleteBehavior.SetNull));
 
-            modelBuilder.Entity("Aaru.CommonTypes.Metadata.BlockDescriptor", b =>
-            {
-                b.HasOne("Aaru.CommonTypes.Metadata.ScsiMode", null).WithMany("BlockDescriptors").
-                  HasForeignKey("ScsiModeId").OnDelete(DeleteBehavior.Cascade);
-            });
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.BlockDescriptor",
+                                b => b.HasOne("Aaru.CommonTypes.Metadata.ScsiMode", null).WithMany("BlockDescriptors").
+                                       HasForeignKey("ScsiModeId").OnDelete(DeleteBehavior.Cascade));
 
-            modelBuilder.Entity("Aaru.CommonTypes.Metadata.DensityCode", b =>
-            {
-                b.HasOne("Aaru.CommonTypes.Metadata.SscSupportedMedia", null).WithMany("DensityCodes").
-                  HasForeignKey("SscSupportedMediaId").OnDelete(DeleteBehavior.Cascade);
-            });
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.DensityCode",
+                                b => b.HasOne("Aaru.CommonTypes.Metadata.SscSupportedMedia", null).
+                                       WithMany("DensityCodes").HasForeignKey("SscSupportedMediaId").
+                                       OnDelete(DeleteBehavior.Cascade));
 
-            modelBuilder.Entity("Aaru.CommonTypes.Metadata.Mmc", b =>
-            {
-                b.HasOne("Aaru.CommonTypes.Metadata.MmcFeatures", "Features").WithMany().HasForeignKey("FeaturesId").
-                  OnDelete(DeleteBehavior.SetNull);
-            });
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.Mmc",
+                                b => b.HasOne("Aaru.CommonTypes.Metadata.MmcFeatures", "Features").WithMany().
+                                       HasForeignKey("FeaturesId").OnDelete(DeleteBehavior.SetNull));
 
             modelBuilder.Entity("Aaru.CommonTypes.Metadata.Scsi", b =>
             {
@@ -1979,11 +1972,9 @@ namespace Aaru.Server.Migrations
                   OnDelete(DeleteBehavior.SetNull);
             });
 
-            modelBuilder.Entity("Aaru.CommonTypes.Metadata.TestedSequentialMedia", b =>
-            {
-                b.HasOne("Aaru.CommonTypes.Metadata.Ssc", null).WithMany("TestedMedia").HasForeignKey("SscId").
-                  OnDelete(DeleteBehavior.SetNull);
-            });
+            modelBuilder.Entity("Aaru.CommonTypes.Metadata.TestedSequentialMedia",
+                                b => b.HasOne("Aaru.CommonTypes.Metadata.Ssc", null).WithMany("TestedMedia").
+                                       HasForeignKey("SscId").OnDelete(DeleteBehavior.SetNull));
 
             modelBuilder.Entity("Aaru.Server.Models.Device", b =>
             {
@@ -2018,11 +2009,9 @@ namespace Aaru.Server.Migrations
                   OnDelete(DeleteBehavior.SetNull);
             });
 
-            modelBuilder.Entity("Aaru.Server.Models.DeviceStat", b =>
-            {
-                b.HasOne("Aaru.Server.Models.Device", "Report").WithMany().HasForeignKey("ReportId").
-                  OnDelete(DeleteBehavior.SetNull);
-            });
+            modelBuilder.Entity("Aaru.Server.Models.DeviceStat",
+                                b => b.HasOne("Aaru.Server.Models.Device", "Report").WithMany().
+                                       HasForeignKey("ReportId").OnDelete(DeleteBehavior.SetNull));
 
             modelBuilder.Entity("Aaru.Server.Models.UploadedReport", b =>
             {
@@ -2054,29 +2043,21 @@ namespace Aaru.Server.Migrations
                   OnDelete(DeleteBehavior.SetNull);
             });
 
-            modelBuilder.Entity("Aaru.Server.Models.UsbProduct", b =>
-            {
-                b.HasOne("Aaru.Server.Models.UsbVendor", "Vendor").WithMany("Products").HasForeignKey("VendorId").
-                  OnDelete(DeleteBehavior.Cascade).IsRequired();
-            });
+            modelBuilder.Entity("Aaru.Server.Models.UsbProduct",
+                                b => b.HasOne("Aaru.Server.Models.UsbVendor", "Vendor").WithMany("Products").
+                                       HasForeignKey("VendorId").OnDelete(DeleteBehavior.Cascade).IsRequired());
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-            {
-                b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null).WithMany().HasForeignKey("RoleId").
-                  OnDelete(DeleteBehavior.Cascade).IsRequired();
-            });
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>",
+                                b => b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null).WithMany().
+                                       HasForeignKey("RoleId").OnDelete(DeleteBehavior.Cascade).IsRequired());
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-            {
-                b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null).WithMany().HasForeignKey("UserId").
-                  OnDelete(DeleteBehavior.Cascade).IsRequired();
-            });
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>",
+                                b => b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null).WithMany().
+                                       HasForeignKey("UserId").OnDelete(DeleteBehavior.Cascade).IsRequired());
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-            {
-                b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null).WithMany().HasForeignKey("UserId").
-                  OnDelete(DeleteBehavior.Cascade).IsRequired();
-            });
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>",
+                                b => b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null).WithMany().
+                                       HasForeignKey("UserId").OnDelete(DeleteBehavior.Cascade).IsRequired());
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
             {
@@ -2087,11 +2068,9 @@ namespace Aaru.Server.Migrations
                   OnDelete(DeleteBehavior.Cascade).IsRequired();
             });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-            {
-                b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null).WithMany().HasForeignKey("UserId").
-                  OnDelete(DeleteBehavior.Cascade).IsRequired();
-            });
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>",
+                                b => b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null).WithMany().
+                                       HasForeignKey("UserId").OnDelete(DeleteBehavior.Cascade).IsRequired());
             #pragma warning restore 612, 618
         }
     }

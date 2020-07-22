@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
-    public class SscsController : Controller
+    public sealed class SscsController : Controller
     {
         readonly AaruServerContext _context;
 
@@ -55,16 +55,20 @@ namespace Aaru.Server.Areas.Admin.Controllers
         {
             List<SscModel> dups = _context.Ssc.GroupBy(x => new
             {
-                x.BlockSizeGranularity, x.MaxBlockLength, x.MinBlockLength
+                x.BlockSizeGranularity,
+                x.MaxBlockLength,
+                x.MinBlockLength
             }).Where(x => x.Count() > 1).Select(x => new SscModel
             {
-                BlockSizeGranularity = x.Key.BlockSizeGranularity, MaxBlockLength = x.Key.MaxBlockLength,
+                BlockSizeGranularity = x.Key.BlockSizeGranularity,
+                MaxBlockLength       = x.Key.MaxBlockLength,
                 MinBlockLength       = x.Key.MinBlockLength
             }).ToList();
 
             return View(new SscModelForView
             {
-                List = dups, Json = JsonConvert.SerializeObject(dups)
+                List = dups,
+                Json = JsonConvert.SerializeObject(dups)
             });
         }
 

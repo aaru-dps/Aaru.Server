@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
-    public class SupportedDensitiesController : Controller
+    public sealed class SupportedDensitiesController : Controller
     {
         readonly AaruServerContext _context;
 

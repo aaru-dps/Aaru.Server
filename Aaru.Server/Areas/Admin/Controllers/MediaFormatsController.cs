@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
-    public class MediaFormatsController : Controller
+    public sealed class MediaFormatsController : Controller
     {
         readonly AaruServerContext _context;
 

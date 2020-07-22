@@ -35,7 +35,7 @@ using Aaru.CommonTypes.Metadata;
 using Aaru.CommonTypes.Structs.Devices.SCSI;
 using Aaru.Decoders.SCSI;
 
-namespace Aaru.Server
+namespace Aaru.Server.Core
 {
     public static class ScsiModeSense
     {

@@ -142,8 +142,7 @@ namespace Aaru.Server.Task
                             System.Console.
                                    WriteLine("{0}: Will modify product with ID {1:X4} and vendor {2} ({3:X4}) from \"{4}\" to \"{5}\"",
                                              DateTime.UtcNow, product.ProductId, product.Vendor?.Vendor ?? "null",
-                                             product.Vendor?.VendorId                                   ?? 0,
-                                             product.Product, name);
+                                             product.Vendor?.VendorId ?? 0, product.Product, name);
 
                             product.Product      = name;
                             product.ModifiedWhen = DateTime.UtcNow;
@@ -399,7 +398,7 @@ namespace Aaru.Server.Task
                     if(!int.TryParse(column2, out int submissions))
                         continue;
 
-                    if(column3[column3.Length - 1] != '%')
+                    if(column3[^1] != '%')
                         continue;
 
                     column3 = column3.Substring(0, column3.Length - 1);
@@ -413,8 +412,12 @@ namespace Aaru.Server.Task
                     {
                         cdOffset = new CompactDiscOffset
                         {
-                            AddedWhen    = DateTime.UtcNow, ModifiedWhen = DateTime.UtcNow, Agreement = percentage,
-                            Manufacturer = manufacturer, Model           = model, Offset              = offset,
+                            AddedWhen    = DateTime.UtcNow,
+                            ModifiedWhen = DateTime.UtcNow,
+                            Agreement    = percentage,
+                            Manufacturer = manufacturer,
+                            Model        = model,
+                            Offset       = offset,
                             Submissions  = submissions
                         };
 
@@ -451,10 +454,9 @@ namespace Aaru.Server.Task
                                              Devices.
                                              Where(d => d.Manufacturer == null && d.Model != null &&
                                                         d.Model.Trim() == model).
-                                             Union(ctx.Devices.Where(d => d.Manufacturer        != null         &&
+                                             Union(ctx.Devices.Where(d => d.Manufacturer != null &&
                                                                           d.Manufacturer.Trim() == manufacturer &&
-                                                                          d.Model               != null         &&
-                                                                          d.Model               == model)))
+                                                                          d.Model != null && d.Model == model)))
                     {
                         if(device.CdOffset     == cdOffset &&
                            device.ModifiedWhen == cdOffset.ModifiedWhen)

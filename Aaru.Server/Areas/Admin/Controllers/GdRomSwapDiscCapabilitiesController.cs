@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Aaru.CommonTypes.Metadata;
 using Aaru.Decoders.CD;
+using Aaru.Helpers;
 using Aaru.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
-    public class GdRomSwapDiscCapabilitiesController : Controller
+    public sealed class GdRomSwapDiscCapabilitiesController : Controller
     {
         readonly AaruServerContext _context;
 
@@ -82,7 +83,8 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
             var model = new TestedMediaDataModel
             {
-                TestedMediaId = id, DataName = data
+                TestedMediaId = id,
+                DataName      = data
             };
 
             byte[] buffer;

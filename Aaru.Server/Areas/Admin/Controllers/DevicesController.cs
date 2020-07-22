@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
-    public class DevicesController : Controller
+    public sealed class DevicesController : Controller
     {
         readonly AaruServerContext _context;
 
@@ -406,9 +406,12 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
             var found = new FindReportModel
             {
-                Id          = id, Manufacturer = manufacturer, Model = model, Revision = revision,
-                Bus         = bus,
-                LikeDevices = _context.Devices.Where(r => r.Model.ToLower().Contains(model.ToLower())).ToList()
+                Id           = id,
+                Manufacturer = manufacturer,
+                Model        = model,
+                Revision     = revision,
+                Bus          = bus,
+                LikeDevices  = _context.Devices.Where(r => r.Model.ToLower().Contains(model.ToLower())).ToList()
             };
 
             return View(found);

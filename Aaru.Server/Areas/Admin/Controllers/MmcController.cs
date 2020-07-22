@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
-    public class MmcController : Controller
+    public sealed class MmcController : Controller
     {
         readonly AaruServerContext _context;
 
@@ -19,13 +19,15 @@ namespace Aaru.Server.Areas.Admin.Controllers
         public IActionResult Index() => View(_context.Mmc.Where(m => m.ModeSense2AData != null).
                                                       Select(m => new MmcModelForView
                                                       {
-                                                          Id         = m.Id, FeaturesId = m.FeaturesId,
+                                                          Id         = m.Id,
+                                                          FeaturesId = m.FeaturesId,
                                                           DataLength = m.ModeSense2AData.Length
                                                       }).ToList().
                                                       Concat(_context.Mmc.Where(m => m.ModeSense2AData == null).
                                                                       Select(m => new MmcModelForView
                                                                       {
-                                                                          Id         = m.Id, FeaturesId = m.FeaturesId,
+                                                                          Id         = m.Id,
+                                                                          FeaturesId = m.FeaturesId,
                                                                           DataLength = 0
                                                                       }).ToList()).OrderBy(m => m.Id));
 

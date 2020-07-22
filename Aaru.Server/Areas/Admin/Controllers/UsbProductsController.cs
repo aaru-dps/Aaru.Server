@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
-    public class UsbProductsController : Controller
+    public sealed class UsbProductsController : Controller
     {
         readonly AaruServerContext _context;
 
@@ -20,9 +20,10 @@ namespace Aaru.Server.Areas.Admin.Controllers
                                                                OrderBy(p => p.Vendor.Vendor).ThenBy(p => p.Product).
                                                                ThenBy(p => p.ProductId).Select(p => new UsbProductModel
                                                                {
-                                                                   ProductId  = p.ProductId, ProductName = p.Product,
-                                                                   VendorId   = p.Vendor.Id,
-                                                                   VendorName = p.Vendor.Vendor
+                                                                   ProductId   = p.ProductId,
+                                                                   ProductName = p.Product,
+                                                                   VendorId    = p.Vendor.Id,
+                                                                   VendorName  = p.Vendor.Vendor
                                                                }).ToListAsync());
     }
 }

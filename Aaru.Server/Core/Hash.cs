@@ -1,6 +1,6 @@
 using System.Security.Cryptography;
 
-namespace Aaru.Server
+namespace Aaru.Server.Core
 {
     public static class Hash
     {

@@ -40,6 +40,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using Aaru.CommonTypes.Interop;
 using Aaru.CommonTypes.Metadata;
+using Aaru.Server.Core;
 using Aaru.Server.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -50,15 +51,15 @@ using Version = Aaru.Server.Models.Version;
 namespace Aaru.Server.Controllers
 {
     /// <summary>Renders a page with statistics, list of media type, devices, etc</summary>
-    public class StatsController : Controller
+    public sealed class StatsController : Controller
     {
-        readonly AaruServerContext   ctx;
-        readonly IWebHostEnvironment env;
+        readonly AaruServerContext   _ctx;
+        readonly IWebHostEnvironment _env;
 
         public StatsController(IWebHostEnvironment environment, AaruServerContext context)
         {
-            env = environment;
-            ctx = context;
+            _env = environment;
+            _ctx = context;
         }
 
         public ActionResult Index()
@@ -67,7 +68,7 @@ namespace Aaru.Server.Controllers
 
             try
             {
-                if(System.IO.File.Exists(Path.Combine(env.ContentRootPath ?? throw new InvalidOperationException(),
+                if(System.IO.File.Exists(Path.Combine(_env.ContentRootPath ?? throw new InvalidOperationException(),
                                                       "Statistics", "Statistics.xml")))
                     try
                     {
@@ -76,7 +77,7 @@ namespace Aaru.Server.Controllers
                         var xs = new XmlSerializer(statistics.GetType());
 
                         FileStream fs =
-                            WaitForFile(Path.Combine(env.ContentRootPath ?? throw new InvalidOperationException(), "Statistics", "Statistics.xml"),
+                            WaitForFile(Path.Combine(_env.ContentRootPath ?? throw new InvalidOperationException(), "Statistics", "Statistics.xml"),
                                         FileMode.Open, FileAccess.Read, FileShare.Read);
 
                         statistics = (Stats)xs.Deserialize(fs);
@@ -84,19 +85,20 @@ namespace Aaru.Server.Controllers
 
                         StatsConverter.Convert(statistics);
 
-                        System.IO.File.Delete(Path.Combine(env.ContentRootPath ?? throw new InvalidOperationException(),
-                                                           "Statistics", "Statistics.xml"));
+                        System.IO.File.
+                               Delete(Path.Combine(_env.ContentRootPath ?? throw new InvalidOperationException(),
+                                                   "Statistics", "Statistics.xml"));
                     }
                     catch(XmlException)
                     {
                         // Do nothing
                     }
 
-                if(ctx.OperatingSystems.Any())
+                if(_ctx.OperatingSystems.Any())
                 {
                     List<NameValueStats> operatingSystems = new List<NameValueStats>();
 
-                    foreach(OperatingSystem nvs in ctx.OperatingSystems)
+                    foreach(OperatingSystem nvs in _ctx.OperatingSystems)
                         operatingSystems.Add(new NameValueStats
                         {
                             name =
@@ -107,40 +109,41 @@ namespace Aaru.Server.Controllers
                     ViewBag.repOperatingSystems = operatingSystems.OrderBy(os => os.name).ToList();
                 }
 
-                if(ctx.Versions.Any())
+                if(_ctx.Versions.Any())
                 {
                     List<NameValueStats> versions = new List<NameValueStats>();
 
-                    foreach(Version nvs in ctx.Versions)
+                    foreach(Version nvs in _ctx.Versions)
                         versions.Add(new NameValueStats
                         {
-                            name = nvs.Name == "previous" ? "Previous than 3.4.99.0" : nvs.Name, Value = nvs.Count
+                            name  = nvs.Name == "previous" ? "Previous than 3.4.99.0" : nvs.Name,
+                            Value = nvs.Count
                         });
 
                     ViewBag.repVersions = versions.OrderBy(ver => ver.name).ToList();
                 }
 
-                if(ctx.Commands.Any())
-                    ViewBag.repCommands = ctx.Commands.OrderBy(c => c.Name).ToList();
+                if(_ctx.Commands.Any())
+                    ViewBag.repCommands = _ctx.Commands.OrderBy(c => c.Name).ToList();
 
-                if(ctx.Filters.Any())
-                    ViewBag.repFilters = ctx.Filters.OrderBy(filter => filter.Name).ToList();
+                if(_ctx.Filters.Any())
+                    ViewBag.repFilters = _ctx.Filters.OrderBy(filter => filter.Name).ToList();
 
-                if(ctx.MediaFormats.Any())
-                    ViewBag.repMediaImages = ctx.MediaFormats.OrderBy(filter => filter.Name).ToList();
+                if(_ctx.MediaFormats.Any())
+                    ViewBag.repMediaImages = _ctx.MediaFormats.OrderBy(filter => filter.Name).ToList();
 
-                if(ctx.Partitions.Any())
-                    ViewBag.repPartitions = ctx.Partitions.OrderBy(filter => filter.Name).ToList();
+                if(_ctx.Partitions.Any())
+                    ViewBag.repPartitions = _ctx.Partitions.OrderBy(filter => filter.Name).ToList();
 
-                if(ctx.Filesystems.Any())
-                    ViewBag.repFilesystems = ctx.Filesystems.OrderBy(filter => filter.Name).ToList();
+                if(_ctx.Filesystems.Any())
+                    ViewBag.repFilesystems = _ctx.Filesystems.OrderBy(filter => filter.Name).ToList();
 
-                if(ctx.Medias.Any())
+                if(_ctx.Medias.Any())
                 {
                     List<MediaItem> realMedia    = new List<MediaItem>();
                     List<MediaItem> virtualMedia = new List<MediaItem>();
 
-                    foreach(Media nvs in ctx.Medias)
+                    foreach(Media nvs in _ctx.Medias)
                         try
                         {
                             (string type, string subType) mediaType =
@@ -150,12 +153,16 @@ namespace Aaru.Server.Controllers
                             if(nvs.Real)
                                 realMedia.Add(new MediaItem
                                 {
-                                    Type = mediaType.type, SubType = mediaType.subType, Count = nvs.Count
+                                    Type    = mediaType.type,
+                                    SubType = mediaType.subType,
+                                    Count   = nvs.Count
                                 });
                             else
                                 virtualMedia.Add(new MediaItem
                                 {
-                                    Type = mediaType.type, SubType = mediaType.subType, Count = nvs.Count
+                                    Type    = mediaType.type,
+                                    SubType = mediaType.subType,
+                                    Count   = nvs.Count
                                 });
                         }
                         catch
@@ -163,12 +170,16 @@ namespace Aaru.Server.Controllers
                             if(nvs.Real)
                                 realMedia.Add(new MediaItem
                                 {
-                                    Type = nvs.Type, SubType = null, Count = nvs.Count
+                                    Type    = nvs.Type,
+                                    SubType = null,
+                                    Count   = nvs.Count
                                 });
                             else
                                 virtualMedia.Add(new MediaItem
                                 {
-                                    Type = nvs.Type, SubType = null, Count = nvs.Count
+                                    Type    = nvs.Type,
+                                    SubType = null,
+                                    Count   = nvs.Count
                                 });
                         }
 
@@ -181,11 +192,11 @@ namespace Aaru.Server.Controllers
                             virtualMedia.OrderBy(media => media.Type).ThenBy(media => media.SubType).ToList();
                 }
 
-                if(ctx.DeviceStats.Any())
+                if(_ctx.DeviceStats.Any())
                 {
                     List<DeviceItem> devices = new List<DeviceItem>();
 
-                    foreach(DeviceStat device in ctx.DeviceStats.ToList())
+                    foreach(DeviceStat device in _ctx.DeviceStats.ToList())
                     {
                         string xmlFile;
 
@@ -204,14 +215,14 @@ namespace Aaru.Server.Controllers
 
                         xmlFile = xmlFile.Replace('/', '_').Replace('\\', '_').Replace('?', '_');
 
-                        if(System.IO.File.Exists(Path.Combine(env.ContentRootPath, "Reports", xmlFile)))
+                        if(System.IO.File.Exists(Path.Combine(_env.ContentRootPath, "Reports", xmlFile)))
                         {
                             var deviceReport = new DeviceReport();
 
                             var xs = new XmlSerializer(deviceReport.GetType());
 
                             FileStream fs =
-                                WaitForFile(Path.Combine(env.ContentRootPath ?? throw new InvalidOperationException(), "Reports", xmlFile),
+                                WaitForFile(Path.Combine(_env.ContentRootPath ?? throw new InvalidOperationException(), "Reports", xmlFile),
                                             FileMode.Open, FileAccess.Read, FileShare.Read);
 
                             deviceReport = (DeviceReport)xs.Deserialize(fs);
@@ -219,17 +230,19 @@ namespace Aaru.Server.Controllers
 
                             var deviceReportV2 = new DeviceReportV2(deviceReport);
 
-                            device.Report = ctx.Devices.Add(new Device(deviceReportV2)).Entity;
-                            ctx.SaveChanges();
+                            device.Report = _ctx.Devices.Add(new Device(deviceReportV2)).Entity;
+                            _ctx.SaveChanges();
 
                             System.IO.File.
-                                   Delete(Path.Combine(env.ContentRootPath ?? throw new InvalidOperationException(),
+                                   Delete(Path.Combine(_env.ContentRootPath ?? throw new InvalidOperationException(),
                                                        "Reports", xmlFile));
                         }
 
                         devices.Add(new DeviceItem
                         {
-                            Manufacturer = device.Manufacturer, Model = device.Model, Revision = device.Revision,
+                            Manufacturer = device.Manufacturer,
+                            Model        = device.Model,
+                            Revision     = device.Revision,
                             Bus          = device.Bus,
                             ReportId     = device.Report != null && device.Report.Id != 0 ? device.Report.Id : 0
                         });
@@ -275,12 +288,13 @@ namespace Aaru.Server.Controllers
 
         public IActionResult GetOsData()
         {
-            var query = ctx.OperatingSystems.GroupBy(x => new
+            var query = _ctx.OperatingSystems.GroupBy(x => new
             {
                 x.Name
             }, x => x.Count).Select(g => new
             {
-                g.Key.Name, Count = g.Sum()
+                g.Key.Name,
+                Count = g.Sum()
             });
 
             string[][] result = new string[2][];
@@ -297,13 +311,13 @@ namespace Aaru.Server.Controllers
         {
             string[][] result =
             {
-                ctx.OperatingSystems.Where(o => o.Name == PlatformID.Linux.ToString()).OrderByDescending(o => o.Count).
-                    Take(10).
-                    Select(x =>
-                               $"{DetectOS.GetPlatformName(PlatformID.Linux, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}").
-                    ToArray(),
-                ctx.OperatingSystems.Where(o => o.Name == PlatformID.Linux.ToString()).OrderByDescending(o => o.Count).
-                    Take(10).Select(x => x.Count.ToString()).ToArray()
+                _ctx.OperatingSystems.Where(o => o.Name == PlatformID.Linux.ToString()).OrderByDescending(o => o.Count).
+                     Take(10).
+                     Select(x =>
+                                $"{DetectOS.GetPlatformName(PlatformID.Linux, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}").
+                     ToArray(),
+                _ctx.OperatingSystems.Where(o => o.Name == PlatformID.Linux.ToString()).OrderByDescending(o => o.Count).
+                     Take(10).Select(x => x.Count.ToString()).ToArray()
             };
 
             if(result[0].Length < 10)
@@ -311,7 +325,7 @@ namespace Aaru.Server.Controllers
 
             result[0][9] = "Other";
 
-            result[1][9] = (ctx.OperatingSystems.Where(o => o.Name == PlatformID.Linux.ToString()).Sum(o => o.Count) -
+            result[1][9] = (_ctx.OperatingSystems.Where(o => o.Name == PlatformID.Linux.ToString()).Sum(o => o.Count) -
                             result[1].Take(9).Sum(long.Parse)).ToString();
 
             return Json(result);
@@ -321,13 +335,13 @@ namespace Aaru.Server.Controllers
         {
             string[][] result =
             {
-                ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()).OrderByDescending(o => o.Count).
-                    Take(10).
-                    Select(x =>
-                               $"{DetectOS.GetPlatformName(PlatformID.MacOSX, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}").
-                    ToArray(),
-                ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()).OrderByDescending(o => o.Count).
-                    Take(10).Select(x => x.Count.ToString()).ToArray()
+                _ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()).
+                     OrderByDescending(o => o.Count).Take(10).
+                     Select(x =>
+                                $"{DetectOS.GetPlatformName(PlatformID.MacOSX, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}").
+                     ToArray(),
+                _ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()).
+                     OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
             };
 
             if(result[0].Length < 10)
@@ -335,7 +349,7 @@ namespace Aaru.Server.Controllers
 
             result[0][9] = "Other";
 
-            result[1][9] = (ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()).Sum(o => o.Count) -
+            result[1][9] = (_ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()).Sum(o => o.Count) -
                             result[1].Take(9).Sum(long.Parse)).ToString();
 
             return Json(result);
@@ -345,13 +359,13 @@ namespace Aaru.Server.Controllers
         {
             string[][] result =
             {
-                ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).
-                    OrderByDescending(o => o.Count).Take(10).
-                    Select(x =>
-                               $"{DetectOS.GetPlatformName(PlatformID.Win32NT, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}").
-                    ToArray(),
-                ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).
-                    OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
+                _ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).
+                     OrderByDescending(o => o.Count).Take(10).
+                     Select(x =>
+                                $"{DetectOS.GetPlatformName(PlatformID.Win32NT, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}").
+                     ToArray(),
+                _ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).
+                     OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
             };
 
             if(result[0].Length < 10)
@@ -359,8 +373,9 @@ namespace Aaru.Server.Controllers
 
             result[0][9] = "Other";
 
-            result[1][9] = (ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).Sum(o => o.Count) -
-                            result[1].Take(9).Sum(long.Parse)).ToString();
+            result[1][9] =
+                (_ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).Sum(o => o.Count) -
+                 result[1].Take(9).Sum(long.Parse)).ToString();
 
             return Json(result);
         }
@@ -369,9 +384,9 @@ namespace Aaru.Server.Controllers
         {
             string[][] result =
             {
-                ctx.Versions.OrderByDescending(o => o.Count).Take(10).
-                    Select(v => v.Name == "previous" ? "Previous than 3.4.99.0" : v.Name).ToArray(),
-                ctx.Versions.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
+                _ctx.Versions.OrderByDescending(o => o.Count).Take(10).
+                     Select(v => v.Name == "previous" ? "Previous than 3.4.99.0" : v.Name).ToArray(),
+                _ctx.Versions.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
             };
 
             if(result[0].Length < 10)
@@ -379,7 +394,7 @@ namespace Aaru.Server.Controllers
 
             result[0][9] = "Other";
 
-            result[1][9] = (ctx.Versions.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
+            result[1][9] = (_ctx.Versions.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
 
             return Json(result);
         }
@@ -388,8 +403,8 @@ namespace Aaru.Server.Controllers
         {
             string[][] result =
             {
-                ctx.Commands.OrderByDescending(o => o.Count).Take(10).Select(v => v.Name).ToArray(),
-                ctx.Commands.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
+                _ctx.Commands.OrderByDescending(o => o.Count).Take(10).Select(v => v.Name).ToArray(),
+                _ctx.Commands.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
             };
 
             if(result[0].Length < 10)
@@ -397,7 +412,7 @@ namespace Aaru.Server.Controllers
 
             result[0][9] = "Other";
 
-            result[1][9] = (ctx.Commands.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
+            result[1][9] = (_ctx.Commands.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
 
             return Json(result);
         }
@@ -406,8 +421,8 @@ namespace Aaru.Server.Controllers
         {
             string[][] result =
             {
-                ctx.Filters.OrderByDescending(o => o.Count).Take(10).Select(v => v.Name).ToArray(),
-                ctx.Filters.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
+                _ctx.Filters.OrderByDescending(o => o.Count).Take(10).Select(v => v.Name).ToArray(),
+                _ctx.Filters.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
             };
 
             if(result[0].Length < 10)
@@ -415,7 +430,7 @@ namespace Aaru.Server.Controllers
 
             result[0][9] = "Other";
 
-            result[1][9] = (ctx.Filters.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
+            result[1][9] = (_ctx.Filters.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
 
             return Json(result);
         }
@@ -424,8 +439,8 @@ namespace Aaru.Server.Controllers
         {
             string[][] result =
             {
-                ctx.MediaFormats.OrderByDescending(o => o.Count).Take(10).Select(v => v.Name).ToArray(),
-                ctx.MediaFormats.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
+                _ctx.MediaFormats.OrderByDescending(o => o.Count).Take(10).Select(v => v.Name).ToArray(),
+                _ctx.MediaFormats.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
             };
 
             if(result[0].Length < 10)
@@ -433,7 +448,7 @@ namespace Aaru.Server.Controllers
 
             result[0][9] = "Other";
 
-            result[1][9] = (ctx.MediaFormats.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
+            result[1][9] = (_ctx.MediaFormats.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
 
             return Json(result);
         }
@@ -442,8 +457,8 @@ namespace Aaru.Server.Controllers
         {
             string[][] result =
             {
-                ctx.Partitions.OrderByDescending(o => o.Count).Take(10).Select(v => v.Name).ToArray(),
-                ctx.Partitions.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
+                _ctx.Partitions.OrderByDescending(o => o.Count).Take(10).Select(v => v.Name).ToArray(),
+                _ctx.Partitions.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
             };
 
             if(result[0].Length < 10)
@@ -451,7 +466,7 @@ namespace Aaru.Server.Controllers
 
             result[0][9] = "Other";
 
-            result[1][9] = (ctx.Partitions.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
+            result[1][9] = (_ctx.Partitions.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
 
             return Json(result);
         }
@@ -460,8 +475,8 @@ namespace Aaru.Server.Controllers
         {
             string[][] result =
             {
-                ctx.Filesystems.OrderByDescending(o => o.Count).Take(10).Select(v => v.Name).ToArray(),
-                ctx.Filesystems.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
+                _ctx.Filesystems.OrderByDescending(o => o.Count).Take(10).Select(v => v.Name).ToArray(),
+                _ctx.Filesystems.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
             };
 
             if(result[0].Length < 10)
@@ -469,14 +484,14 @@ namespace Aaru.Server.Controllers
 
             result[0][9] = "Other";
 
-            result[1][9] = (ctx.Filesystems.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
+            result[1][9] = (_ctx.Filesystems.Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
 
             return Json(result);
         }
 
         public IActionResult GetVirtualMediaData()
         {
-            Media[] virtualMedias = ctx.Medias.Where(o => !o.Real).OrderByDescending(o => o.Count).Take(10).ToArray();
+            Media[] virtualMedias = _ctx.Medias.Where(o => !o.Real).OrderByDescending(o => o.Count).Take(10).ToArray();
 
             foreach(Media media in virtualMedias)
             {
@@ -504,7 +519,7 @@ namespace Aaru.Server.Controllers
 
             result[0][9] = "Other";
 
-            result[1][9] = (ctx.Medias.Where(o => !o.Real).Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).
+            result[1][9] = (_ctx.Medias.Where(o => !o.Real).Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).
                 ToString();
 
             return Json(result);
@@ -512,7 +527,7 @@ namespace Aaru.Server.Controllers
 
         public IActionResult GetRealMediaData()
         {
-            Media[] realMedias = ctx.Medias.Where(o => o.Real).OrderByDescending(o => o.Count).Take(10).ToArray();
+            Media[] realMedias = _ctx.Medias.Where(o => o.Real).OrderByDescending(o => o.Count).Take(10).ToArray();
 
             foreach(Media media in realMedias)
             {
@@ -540,7 +555,7 @@ namespace Aaru.Server.Controllers
 
             result[0][9] = "Other";
 
-            result[1][9] = (ctx.Medias.Where(o => o.Real).Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).
+            result[1][9] = (_ctx.Medias.Where(o => o.Real).Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).
                 ToString();
 
             return Json(result);
@@ -548,12 +563,14 @@ namespace Aaru.Server.Controllers
 
         public IActionResult GetDevicesByBusData()
         {
-            var data = ctx.DeviceStats.Select(d => d.Bus).Distinct().Select(deviceBus => new
+            var data = _ctx.DeviceStats.Select(d => d.Bus).Distinct().Select(deviceBus => new
             {
-                deviceBus, deviceBusCount = ctx.DeviceStats.Count(d => d.Bus == deviceBus)
+                deviceBus,
+                deviceBusCount = _ctx.DeviceStats.Count(d => d.Bus == deviceBus)
             }).Select(t => new
             {
-                Name = t.deviceBus, Count = t.deviceBusCount
+                Name  = t.deviceBus,
+                Count = t.deviceBusCount
             }).ToList();
 
             string[][] result =
@@ -574,14 +591,16 @@ namespace Aaru.Server.Controllers
 
         public IActionResult GetDevicesByManufacturerData()
         {
-            List<Device> devices = ctx.Devices.Where(d => d.Manufacturer != null && d.Manufacturer != "").ToList();
+            List<Device> devices = _ctx.Devices.Where(d => d.Manufacturer != null && d.Manufacturer != "").ToList();
 
             var data = devices.Select(d => d.Manufacturer.ToLowerInvariant()).Distinct().Select(manufacturer => new
             {
-                manufacturer, manufacturerCount = devices.Count(d => d.Manufacturer?.ToLowerInvariant() == manufacturer)
+                manufacturer,
+                manufacturerCount = devices.Count(d => d.Manufacturer?.ToLowerInvariant() == manufacturer)
             }).Select(t => new
             {
-                Name = t.manufacturer, Count = t.manufacturerCount
+                Name  = t.manufacturer,
+                Count = t.manufacturerCount
             }).ToList();
 
             string[][] result =

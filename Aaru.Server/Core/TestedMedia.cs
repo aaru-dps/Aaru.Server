@@ -32,12 +32,11 @@
 
 using System.Collections.Generic;
 
-namespace Aaru.Server.App_Start
+namespace Aaru.Server.Core
 {
     public static class TestedMedia
     {
         /// <summary>Takes the tested media from a device report and prints it as a list of values</summary>
-        /// <param name="ata"><c>true</c> if device report is from an ATA device</param>
         /// <param name="mediaOneValue">List to put values on</param>
         /// <param name="testedMedias">List of tested media</param>
         public static void Report(List<CommonTypes.Metadata.TestedMedia> testedMedias, ref List<string> mediaOneValue)
@@ -276,7 +275,7 @@ namespace Aaru.Server.App_Start
                     mediaOneValue.Add("Device can use the PLEXTOR vendor READ CD-DA command with this medium");
 
                 if(testedMedia.SupportsPlextorReadRawDVD == true)
-                    mediaOneValue.Add("Device can use the PLEXOR vendor READ DVD (RAW) command with this medium");
+                    mediaOneValue.Add("Device can use the PLEXTOR vendor READ DVD (RAW) command with this medium");
 
                 if(testedMedia.CanReadAACS == true)
                     mediaOneValue.Add("Device can read the Advanced Access Content System from this medium");
@@ -310,7 +309,7 @@ namespace Aaru.Server.App_Start
                     mediaOneValue.Add("Device can read the Disc Definition Structure from this medium");
 
                 if(testedMedia.CanReadDMI == true)
-                    mediaOneValue.Add("Device can read the Disc Manufacurer Information from this medium");
+                    mediaOneValue.Add("Device can read the Disc Manufacturer Information from this medium");
 
                 if(testedMedia.CanReadDiscInformation == true)
                     mediaOneValue.Add("Device can read the Disc Information from this medium");

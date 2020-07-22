@@ -34,7 +34,7 @@ using System.Collections.Generic;
 using Aaru.CommonTypes.Metadata;
 using Aaru.Decoders.SCSI;
 
-namespace Aaru.Server
+namespace Aaru.Server.Core
 {
     public static class ScsiEvpd
     {

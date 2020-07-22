@@ -11,33 +11,27 @@ namespace Aaru.Server.Migrations
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                Name  = table.Column<string>(nullable: true), Version = table.Column<string>(nullable: true),
-                Count = table.Column<long>()
-            }, constraints: table =>
-            {
-                table.PrimaryKey("PK_RemoteApplications", x => x.Id);
-            });
+                Name    = table.Column<string>(nullable: true),
+                Version = table.Column<string>(nullable: true),
+                Count   = table.Column<long>()
+            }, constraints: table => table.PrimaryKey("PK_RemoteApplications", x => x.Id));
 
             migrationBuilder.CreateTable("RemoteArchitectures", table => new
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                Name = table.Column<string>(nullable: true), Count = table.Column<long>()
-            }, constraints: table =>
-            {
-                table.PrimaryKey("PK_RemoteArchitectures", x => x.Id);
-            });
+                Name  = table.Column<string>(nullable: true),
+                Count = table.Column<long>()
+            }, constraints: table => table.PrimaryKey("PK_RemoteArchitectures", x => x.Id));
 
             migrationBuilder.CreateTable("RemoteOperatingSystems", table => new
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                Name  = table.Column<string>(nullable: true), Version = table.Column<string>(nullable: true),
-                Count = table.Column<long>()
-            }, constraints: table =>
-            {
-                table.PrimaryKey("PK_RemoteOperatingSystems", x => x.Id);
-            });
+                Name    = table.Column<string>(nullable: true),
+                Version = table.Column<string>(nullable: true),
+                Count   = table.Column<long>()
+            }, constraints: table => table.PrimaryKey("PK_RemoteOperatingSystems", x => x.Id));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

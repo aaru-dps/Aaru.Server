@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Aaru.CommonTypes.Metadata;
@@ -10,6 +9,7 @@ using Aaru.Decoders.Bluray;
 using Aaru.Decoders.CD;
 using Aaru.Decoders.DVD;
 using Aaru.Decoders.SCSI;
+using Aaru.Helpers;
 using Aaru.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +22,7 @@ using Spare = Aaru.Decoders.Bluray.Spare;
 namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
-    public class TestedMediasController : Controller
+    public sealed class TestedMediasController : Controller
     {
         readonly AaruServerContext _context;
 
@@ -140,8 +140,6 @@ namespace Aaru.Server.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        bool TestedMediaExists(int id) => _context.TestedMedia.Any(e => e.Id == id);
-
         public IActionResult ViewData(int id, string data)
         {
             if(string.IsNullOrWhiteSpace(data))
@@ -156,16 +154,16 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
             var model = new TestedMediaDataModel
             {
-                TestedMediaId = id, DataName = data
+                TestedMediaId = id,
+                DataName      = data
             };
 
-            byte[]        buffer;
-            StringBuilder sb;
-            byte[]        sector    = new byte[2352];
-            byte[]        subq      = new byte[16];
-            byte[]        fullsub   = new byte[96];
-            bool          c2Errors  = false;
-            bool          scrambled = false;
+            byte[] buffer;
+            byte[] sector    = new byte[2352];
+            byte[] subq      = new byte[16];
+            byte[] fullsub   = new byte[96];
+            bool   c2Errors  = false;
+            bool   scrambled = false;
 
             switch(data)
             {

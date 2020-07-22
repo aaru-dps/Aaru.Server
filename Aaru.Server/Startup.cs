@@ -12,7 +12,7 @@ using Prometheus;
 
 namespace Aaru.Server
 {
-    public class Startup
+    public sealed class Startup
     {
         public Startup(IConfiguration configuration) => Configuration = configuration;
 
@@ -33,7 +33,7 @@ namespace Aaru.Server
             }).AddEntityFrameworkStores<AaruServerContext>();
 
             services.AddApplicationInsightsTelemetry();
-            
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 

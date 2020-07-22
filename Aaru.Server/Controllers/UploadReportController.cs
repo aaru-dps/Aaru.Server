@@ -50,7 +50,7 @@ using Newtonsoft.Json;
 
 namespace Aaru.Server.Controllers
 {
-    public class UploadReportController : Controller
+    public sealed class UploadReportController : Controller
     {
         readonly AaruServerContext   _ctx;
         readonly IWebHostEnvironment _environment;
@@ -68,7 +68,8 @@ namespace Aaru.Server.Controllers
         {
             var response = new ContentResult
             {
-                StatusCode = (int)HttpStatusCode.OK, ContentType = "text/plain"
+                StatusCode  = (int)HttpStatusCode.OK,
+                ContentType = "text/plain"
             };
 
             try
@@ -92,10 +93,11 @@ namespace Aaru.Server.Controllers
                 var reportV2 = new DeviceReportV2(newReport);
                 var jsonSw   = new StringWriter();
 
-                jsonSw.Write(JsonConvert.SerializeObject(reportV2, Formatting.Indented, new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore
-                }));
+                await jsonSw.WriteAsync(JsonConvert.SerializeObject(reportV2, Formatting.Indented,
+                                                                    new JsonSerializerSettings
+                                                                    {
+                                                                        NullValueHandling = NullValueHandling.Ignore
+                                                                    }));
 
                 string reportV2String = jsonSw.ToString();
                 jsonSw.Close();
@@ -185,23 +187,24 @@ namespace Aaru.Server.Controllers
                     }
                 }
 
-                _ctx.Reports.Add(newUploadedReport);
-                _ctx.SaveChanges();
+                await _ctx.Reports.AddAsync(newUploadedReport);
+                await _ctx.SaveChangesAsync();
 
                 var pgpIn  = new MemoryStream(Encoding.UTF8.GetBytes(reportV2String));
                 var pgpOut = new MemoryStream();
                 var pgp    = new ChoPGPEncryptDecrypt();
 
-                pgp.Encrypt(pgpIn, pgpOut,
-                            Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
-                                         "public.asc"));
+                await pgp.EncryptAsync(pgpIn, pgpOut,
+                                       Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
+                                                    "public.asc"));
 
                 pgpOut.Position = 0;
                 reportV2String  = Encoding.UTF8.GetString(pgpOut.ToArray());
 
                 var message = new MimeMessage
                 {
-                    Subject = "New device report (old version)", Body = new TextPart("plain")
+                    Subject = "New device report (old version)",
+                    Body = new TextPart("plain")
                     {
                         Text = reportV2String
                     }
@@ -212,9 +215,9 @@ namespace Aaru.Server.Controllers
 
                 using(var client = new SmtpClient())
                 {
-                    client.Connect("mail.claunia.com", 25, false);
-                    client.Send(message);
-                    client.Disconnect(true);
+                    await client.ConnectAsync("mail.claunia.com", 25, false);
+                    await client.SendAsync(message);
+                    await client.DisconnectAsync(true);
                 }
 
                 response.Content = "ok";
@@ -242,7 +245,8 @@ namespace Aaru.Server.Controllers
         {
             var response = new ContentResult
             {
-                StatusCode = (int)HttpStatusCode.OK, ContentType = "text/plain"
+                StatusCode  = (int)HttpStatusCode.OK,
+                ContentType = "text/plain"
             };
 
             try
@@ -345,23 +349,24 @@ namespace Aaru.Server.Controllers
                     }
                 }
 
-                _ctx.Reports.Add(newUploadedReport);
-                _ctx.SaveChanges();
+                await _ctx.Reports.AddAsync(newUploadedReport);
+                await _ctx.SaveChangesAsync();
 
                 var pgpIn  = new MemoryStream(Encoding.UTF8.GetBytes(reportJson));
                 var pgpOut = new MemoryStream();
                 var pgp    = new ChoPGPEncryptDecrypt();
 
-                pgp.Encrypt(pgpIn, pgpOut,
-                            Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
-                                         "public.asc"));
+                await pgp.EncryptAsync(pgpIn, pgpOut,
+                                       Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
+                                                    "public.asc"));
 
                 pgpOut.Position = 0;
                 reportJson      = Encoding.UTF8.GetString(pgpOut.ToArray());
 
                 var message = new MimeMessage
                 {
-                    Subject = "New device report", Body = new TextPart("plain")
+                    Subject = "New device report",
+                    Body = new TextPart("plain")
                     {
                         Text = reportJson
                     }
@@ -372,9 +377,9 @@ namespace Aaru.Server.Controllers
 
                 using(var client = new SmtpClient())
                 {
-                    client.Connect("mail.claunia.com", 25, false);
-                    client.Send(message);
-                    client.Disconnect(true);
+                    await client.ConnectAsync("mail.claunia.com", 25, false);
+                    await client.SendAsync(message);
+                    await client.DisconnectAsync(true);
                 }
 
                 response.Content = "ok";

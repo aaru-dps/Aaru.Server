@@ -8,10 +8,7 @@
             <a asp-area="Identity" asp-page="/Account/Manage/Index" class="nav-link text-dark" id="manage" title="Manage">Hello @UserManager.GetUserName(User)!</a>
         </li>
         <li class="nav-item">
-            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new
-                                                                                                                          {
-                                                                                                                              area = ""
-                                                                                                                          })">
+            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                 <button class="btn btn-link nav-link text-dark" id="logout" type="submit">Logout</button>
             </form>
         </li>

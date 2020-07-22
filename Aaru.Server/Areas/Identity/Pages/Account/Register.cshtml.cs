@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace Aaru.Server.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class RegisterModel : PageModel
+    public sealed class RegisterModel : PageModel
     {
         public IActionResult OnGetAsync(string returnUrl = null) => RedirectToPage("Login");
 

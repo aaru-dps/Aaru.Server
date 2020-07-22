@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
-    public class FilesystemsController : Controller
+    public sealed class FilesystemsController : Controller
     {
         readonly AaruServerContext _context;
 

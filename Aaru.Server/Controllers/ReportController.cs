@@ -33,19 +33,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Aaru.CommonTypes.Metadata;
 using Aaru.CommonTypes.Structs.Devices.SCSI;
 using Aaru.Decoders.PCMCIA;
 using Aaru.Decoders.SCSI;
+using Aaru.Helpers;
+using Aaru.Server.Core;
 using Aaru.Server.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Ata = Aaru.CommonTypes.Metadata.Ata;
 using Inquiry = Aaru.CommonTypes.Structs.Devices.SCSI.Inquiry;
+using TestedMedia = Aaru.CommonTypes.Metadata.TestedMedia;
 using Tuple = Aaru.Decoders.PCMCIA.Tuple;
 
 namespace Aaru.Server.Controllers
 {
-    public class ReportController : Controller
+    public sealed class ReportController : Controller
     {
         readonly AaruServerContext _ctx;
 
@@ -81,8 +84,7 @@ namespace Aaru.Server.Controllers
                     string usbProductDescription = null;
 
                     UsbProduct dbProduct =
-                        _ctx.UsbProducts.FirstOrDefault(p => p.ProductId       == report.USB.ProductID &&
-                                                             p.Vendor          != null                 &&
+                        _ctx.UsbProducts.FirstOrDefault(p => p.ProductId == report.USB.ProductID && p.Vendor != null &&
                                                              p.Vendor.VendorId == report.USB.VendorID);
 
                     if(dbProduct is null)
@@ -100,7 +102,8 @@ namespace Aaru.Server.Controllers
 
                     ViewBag.UsbItem = new Item
                     {
-                        Manufacturer = report.USB.Manufacturer, Product = report.USB.Product,
+                        Manufacturer = report.USB.Manufacturer,
+                        Product      = report.USB.Product,
                         VendorDescription = usbVendorDescription != null
                                                 ? $"0x{report.USB.VendorID:x4} ({usbVendorDescription})"
                                                 : $"0x{report.USB.VendorID:x4}",
@@ -113,7 +116,8 @@ namespace Aaru.Server.Controllers
                 if(report.FireWire != null)
                     ViewBag.FireWireItem = new Item
                     {
-                        Manufacturer       = report.FireWire.Manufacturer, Product = report.FireWire.Product,
+                        Manufacturer       = report.FireWire.Manufacturer,
+                        Product            = report.FireWire.Product,
                         VendorDescription  = $"0x{report.FireWire.VendorID:x8}",
                         ProductDescription = $"0x{report.FireWire.ProductID:x8}"
                     };
@@ -122,9 +126,11 @@ namespace Aaru.Server.Controllers
                 {
                     ViewBag.PcmciaItem = new PcmciaItem
                     {
-                        Manufacturer       = report.PCMCIA.Manufacturer, Product = report.PCMCIA.ProductName,
+                        Manufacturer       = report.PCMCIA.Manufacturer,
+                        Product            = report.PCMCIA.ProductName,
                         VendorDescription  = $"0x{report.PCMCIA.ManufacturerCode:x4}",
-                        ProductDescription = $"0x{report.PCMCIA.CardCode:x4}", Compliance = report.PCMCIA.Compliance
+                        ProductDescription = $"0x{report.PCMCIA.CardCode:x4}",
+                        Compliance         = report.PCMCIA.Compliance
                     };
 
                     Tuple[] tuples = CIS.GetTuples(report.PCMCIA.CIS);
@@ -214,17 +220,15 @@ namespace Aaru.Server.Controllers
 
                 bool              removable   = true;
                 List<TestedMedia> testedMedia = null;
-                bool              ata         = false;
                 bool              atapi       = false;
                 bool              sscMedia    = false;
 
                 if(report.ATA   != null ||
                    report.ATAPI != null)
                 {
-                    ata = true;
                     List<string>               ataOneValue = new List<string>();
                     Dictionary<string, string> ataTwoValue = new Dictionary<string, string>();
-                    CommonTypes.Metadata.Ata   ataReport;
+                    Ata                        ataReport;
 
                     if(report.ATAPI != null)
                     {
@@ -247,7 +251,8 @@ namespace Aaru.Server.Controllers
                     else
                         ViewBag.lblAtaDeviceType = "ATA device";
 
-                    Ata.Report(ataReport, cfa, atapi, ref removable, ref ataOneValue, ref ataTwoValue, ref testedMedia);
+                    Core.Ata.Report(ataReport, cfa, atapi, ref removable, ref ataOneValue, ref ataTwoValue,
+                                    ref testedMedia);
 
                     ViewBag.repAtaOne = ataOneValue;
                     ViewBag.repAtaTwo = ataTwoValue;
@@ -371,8 +376,7 @@ namespace Aaru.Server.Controllers
                                 scsiOneValue.
                                     Add($"Device size: {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize} bytes, {(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize) / 1000 / 1000 / 1000 / 1000} Tb, {(double)(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
                             else if((report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize) /
-                                    1024                                                                           /
-                                    1024 > 1000)
+                                    1024 / 1024 > 1000)
                                 scsiOneValue.
                                     Add($"Device size: {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize} bytes, {(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize) / 1000 / 1000 / 1000} Gb, {(double)(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
                             else
@@ -506,7 +510,7 @@ namespace Aaru.Server.Controllers
                    testedMedia != null)
                 {
                     List<string> mediaOneValue = new List<string>();
-                    App_Start.TestedMedia.Report(testedMedia, ref mediaOneValue);
+                    Core.TestedMedia.Report(testedMedia, ref mediaOneValue);
 
                     if(mediaOneValue.Count > 0)
                         ViewBag.repTestedMedia = mediaOneValue;
@@ -532,7 +536,7 @@ namespace Aaru.Server.Controllers
         public string VendorDescription;
     }
 
-    public class PcmciaItem : Item
+    public sealed class PcmciaItem : Item
     {
         public string Compliance;
     }

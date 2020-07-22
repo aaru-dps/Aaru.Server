@@ -5,16 +5,19 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Aaru.CommonTypes.Metadata;
 using Aaru.CommonTypes.Structs.Devices.SCSI;
+using Aaru.Helpers;
+using Aaru.Server.Core;
 using Aaru.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using TestedMedia = Aaru.CommonTypes.Metadata.TestedMedia;
 
 namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
-    public class ScsisController : Controller
+    public sealed class ScsisController : Controller
     {
         readonly AaruServerContext _context;
 
@@ -99,7 +102,8 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
             return View(new IdHashModelForView
             {
-                List = dups, Json = JsonConvert.SerializeObject(dups)
+                List = dups,
+                Json = JsonConvert.SerializeObject(dups)
             });
         }
 
@@ -167,7 +171,8 @@ namespace Aaru.Server.Areas.Admin.Controllers
         {
             var model = new CompareModel
             {
-                LeftId = id, RightId = rightId
+                LeftId  = id,
+                RightId = rightId
             };
 
             Scsi left  = _context.Scsi.FirstOrDefault(l => l.Id == id);
@@ -335,7 +340,8 @@ namespace Aaru.Server.Areas.Admin.Controllers
             if(master is null)
                 return RedirectToAction(nameof(Compare), new
                 {
-                    id = masterId, rightId = slaveId
+                    id      = masterId,
+                    rightId = slaveId
                 });
 
             Scsi slave = _context.Scsi.FirstOrDefault(m => m.Id == slaveId);
@@ -343,7 +349,8 @@ namespace Aaru.Server.Areas.Admin.Controllers
             if(slave is null)
                 return RedirectToAction(nameof(Compare), new
                 {
-                    id = masterId, rightId = slaveId
+                    id      = masterId,
+                    rightId = slaveId
                 });
 
             foreach(Device scsiDevice in _context.Devices.Where(d => d.SCSI.Id == slaveId))

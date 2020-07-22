@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
-    public class MmcSdsController : Controller
+    public sealed class MmcSdsController : Controller
     {
         readonly AaruServerContext _context;
 

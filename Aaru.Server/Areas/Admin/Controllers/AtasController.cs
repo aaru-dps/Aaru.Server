@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Aaru.CommonTypes.Metadata;
 using Aaru.CommonTypes.Structs.Devices.ATA;
+using Aaru.Server.Core;
 using Aaru.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Ata = Aaru.CommonTypes.Metadata.Ata;
+using TestedMedia = Aaru.CommonTypes.Metadata.TestedMedia;
 
 namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
-    public class AtasController : Controller
+    public sealed class AtasController : Controller
     {
         readonly AaruServerContext _context;
 
@@ -32,7 +34,7 @@ namespace Aaru.Server.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            CommonTypes.Metadata.Ata ata = await _context.Ata.FirstOrDefaultAsync(m => m.Id == id);
+            Ata ata = await _context.Ata.FirstOrDefaultAsync(m => m.Id == id);
 
             if(ata == null)
             {
@@ -50,7 +52,7 @@ namespace Aaru.Server.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            CommonTypes.Metadata.Ata ata = await _context.Ata.FirstOrDefaultAsync(m => m.Id == id);
+            Ata ata = await _context.Ata.FirstOrDefaultAsync(m => m.Id == id);
 
             if(ata == null)
             {
@@ -64,7 +66,7 @@ namespace Aaru.Server.Areas.Admin.Controllers
         [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            CommonTypes.Metadata.Ata ata = await _context.Ata.FindAsync(id);
+            Ata ata = await _context.Ata.FindAsync(id);
             _context.Ata.Remove(ata);
             await _context.SaveChangesAsync();
 
@@ -81,7 +83,7 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
             for(int i = 0; i < dups.Count; i++)
             {
-                CommonTypes.Metadata.Ata unique = _context.Ata.First(a => a.Id == dups[i].Id);
+                Ata unique = _context.Ata.First(a => a.Id == dups[i].Id);
 
                 dups[i].Description = unique.IdentifyDevice?.Model;
                 dups[i].Duplicates  = hashes.Where(h => h.Hash == dups[i].Hash).Skip(1).Select(x => x.Id).ToArray();
@@ -89,7 +91,8 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
             return View(new IdHashModelForView
             {
-                List = dups, Json = JsonConvert.SerializeObject(dups)
+                List = dups,
+                Json = JsonConvert.SerializeObject(dups)
             });
         }
 
@@ -112,14 +115,14 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
             foreach(IdHashModel duplicate in duplicates)
             {
-                CommonTypes.Metadata.Ata master = _context.Ata.FirstOrDefault(m => m.Id == duplicate.Id);
+                Ata master = _context.Ata.FirstOrDefault(m => m.Id == duplicate.Id);
 
                 if(master is null)
                     continue;
 
                 foreach(int duplicateId in duplicate.Duplicates)
                 {
-                    CommonTypes.Metadata.Ata slave = _context.Ata.FirstOrDefault(m => m.Id == duplicateId);
+                    Ata slave = _context.Ata.FirstOrDefault(m => m.Id == duplicateId);
 
                     if(slave is null)
                         continue;
@@ -165,20 +168,22 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
         public IActionResult ConsolidateWithIds(int masterId, int slaveId)
         {
-            CommonTypes.Metadata.Ata master = _context.Ata.FirstOrDefault(m => m.Id == masterId);
+            Ata master = _context.Ata.FirstOrDefault(m => m.Id == masterId);
 
             if(master is null)
                 return RedirectToAction(nameof(Compare), new
                 {
-                    id = masterId, rightId = slaveId
+                    id      = masterId,
+                    rightId = slaveId
                 });
 
-            CommonTypes.Metadata.Ata slave = _context.Ata.FirstOrDefault(m => m.Id == slaveId);
+            Ata slave = _context.Ata.FirstOrDefault(m => m.Id == slaveId);
 
             if(slave is null)
                 return RedirectToAction(nameof(Compare), new
                 {
-                    id = masterId, rightId = slaveId
+                    id      = masterId,
+                    rightId = slaveId
                 });
 
             foreach(Device ataDevice in _context.Devices.Where(d => d.ATA.Id == slaveId))
@@ -222,11 +227,12 @@ namespace Aaru.Server.Areas.Admin.Controllers
         {
             var model = new CompareModel
             {
-                LeftId = id, RightId = rightId
+                LeftId  = id,
+                RightId = rightId
             };
 
-            CommonTypes.Metadata.Ata left  = _context.Ata.FirstOrDefault(l => l.Id == id);
-            CommonTypes.Metadata.Ata right = _context.Ata.FirstOrDefault(r => r.Id == rightId);
+            Ata left  = _context.Ata.FirstOrDefault(l => l.Id == id);
+            Ata right = _context.Ata.FirstOrDefault(r => r.Id == rightId);
 
             if(left is null)
             {
@@ -356,10 +362,10 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
         public IActionResult CheckPrivate()
         {
-            List<CommonTypes.Metadata.Ata> havePrivacy = new List<CommonTypes.Metadata.Ata>();
-            byte[]                         tmp;
+            List<Ata> havePrivacy = new List<Ata>();
+            byte[]    tmp;
 
-            foreach(CommonTypes.Metadata.Ata ata in _context.Ata)
+            foreach(Ata ata in _context.Ata)
             {
                 Identify.IdentifyDevice? id = ata.IdentifyDevice;
 
@@ -435,7 +441,7 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
         public IActionResult ClearPrivate(int id)
         {
-            CommonTypes.Metadata.Ata ata = _context.Ata.FirstOrDefault(a => a.Id == id);
+            Ata ata = _context.Ata.FirstOrDefault(a => a.Id == id);
 
             if(ata is null)
                 return RedirectToAction(nameof(CheckPrivate));
@@ -461,7 +467,7 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
         public IActionResult ClearReserved(int id)
         {
-            CommonTypes.Metadata.Ata ata = _context.Ata.FirstOrDefault(a => a.Id == id);
+            Ata ata = _context.Ata.FirstOrDefault(a => a.Id == id);
 
             if(ata is null)
                 return RedirectToAction(nameof(CheckPrivate));
@@ -495,7 +501,7 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
         public IActionResult ClearPrivateAll()
         {
-            foreach(CommonTypes.Metadata.Ata ata in _context.Ata)
+            foreach(Ata ata in _context.Ata)
             {
                 if(ata is null)
                     return RedirectToAction(nameof(CheckPrivate));
@@ -523,7 +529,7 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
         public IActionResult ClearReservedAll()
         {
-            foreach(CommonTypes.Metadata.Ata ata in _context.Ata)
+            foreach(Ata ata in _context.Ata)
             {
                 // ReservedWords121
                 for(int i = 0; i < 10; i++)

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
-    public class ScsiModesController : Controller
+    public sealed class ScsiModesController : Controller
     {
         readonly AaruServerContext _context;
 

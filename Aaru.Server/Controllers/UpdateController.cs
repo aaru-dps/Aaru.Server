@@ -37,6 +37,7 @@ using System.Linq;
 using System.Net;
 using Aaru.CommonTypes.Metadata;
 using Aaru.Dto;
+using Aaru.Helpers;
 using Aaru.Server.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -44,7 +45,7 @@ using Newtonsoft.Json;
 
 namespace Aaru.Server.Controllers
 {
-    public class UpdateController : Controller
+    public sealed class UpdateController : Controller
     {
         readonly AaruServerContext _ctx;
 
@@ -63,7 +64,8 @@ namespace Aaru.Server.Controllers
             foreach(UsbVendor vendor in _ctx.UsbVendors.Where(v => v.ModifiedWhen > lastSync))
                 sync.UsbVendors.Add(new UsbVendorDto
                 {
-                    VendorId = vendor.VendorId, Vendor = vendor.Vendor
+                    VendorId = vendor.VendorId,
+                    Vendor   = vendor.Vendor
                 });
 
             sync.UsbProducts = new List<UsbProductDto>();
@@ -71,8 +73,10 @@ namespace Aaru.Server.Controllers
             foreach(UsbProduct product in _ctx.UsbProducts.Include(p => p.Vendor).Where(p => p.ModifiedWhen > lastSync))
                 sync.UsbProducts.Add(new UsbProductDto
                 {
-                    Id       = product.Id, Product = product.Product, ProductId = product.ProductId,
-                    VendorId = product.Vendor.VendorId
+                    Id        = product.Id,
+                    Product   = product.Product,
+                    ProductId = product.ProductId,
+                    VendorId  = product.Vendor.VendorId
                 });
 
             sync.Offsets = new List<CdOffsetDto>();
@@ -103,7 +107,9 @@ namespace Aaru.Server.Controllers
 
             return new ContentResult
             {
-                StatusCode = (int)HttpStatusCode.OK, Content = sw.ToString(), ContentType = "application/json"
+                StatusCode  = (int)HttpStatusCode.OK,
+                Content     = sw.ToString(),
+                ContentType = "application/json"
             };
         }
     }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
-    public class UsbVendorsController : Controller
+    public sealed class UsbVendorsController : Controller
     {
         readonly AaruServerContext _context;
 
@@ -35,17 +35,14 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
             return View(new UsbVendorModel
             {
-                Vendor = usbVendor.Vendor, VendorId = usbVendor.VendorId, Products = _context.
-                                                                                     UsbProducts.
-                                                                                     Where(p => p.VendorId ==
-                                                                                                usbVendor.Id).
-                                                                                     OrderBy(p => p.Product).
-                                                                                     ThenBy(p => p.ProductId).
-                                                                                     Select(p => new UsbProductModel
-                                                                                     {
-                                                                                         ProductId   = p.ProductId,
-                                                                                         ProductName = p.Product
-                                                                                     }).ToList()
+                Vendor   = usbVendor.Vendor,
+                VendorId = usbVendor.VendorId,
+                Products = _context.UsbProducts.Where(p => p.VendorId == usbVendor.Id).OrderBy(p => p.Product).
+                                    ThenBy(p => p.ProductId).Select(p => new UsbProductModel
+                                    {
+                                        ProductId   = p.ProductId,
+                                        ProductName = p.Product
+                                    }).ToList()
             });
         }
     }

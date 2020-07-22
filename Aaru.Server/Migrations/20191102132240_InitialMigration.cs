@@ -10,53 +10,53 @@ namespace Aaru.Server.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             #region Check for old tables
-            bool AtasExists                   = AaruServerContext.TableExists("Atas");
-            bool BlockDescriptorsExists       = AaruServerContext.TableExists("BlockDescriptors");
-            bool ChsExists                    = AaruServerContext.TableExists("Chs");
-            bool CommandsExists               = AaruServerContext.TableExists("Commands");
-            bool CompactDiscOffsetsExists     = AaruServerContext.TableExists("CompactDiscOffsets");
-            bool DensityCodesExists           = AaruServerContext.TableExists("DensityCodes");
-            bool DevicesExists                = AaruServerContext.TableExists("Devices");
-            bool DeviceStatsExists            = AaruServerContext.TableExists("DeviceStats");
-            bool FilesystemsExists            = AaruServerContext.TableExists("Filesystems");
-            bool FiltersExists                = AaruServerContext.TableExists("Filters");
-            bool FireWiresExists              = AaruServerContext.TableExists("FireWires");
-            bool MediaExists                  = AaruServerContext.TableExists("Media");
-            bool MediaFormatsExists           = AaruServerContext.TableExists("MediaFormats");
-            bool MmcFeaturesExists            = AaruServerContext.TableExists("MmcFeatures");
-            bool MmcsExists                   = AaruServerContext.TableExists("Mmcs");
-            bool MmcSdsExists                 = AaruServerContext.TableExists("MmcSds");
-            bool OperatingSystemsExists       = AaruServerContext.TableExists("OperatingSystems");
-            bool PartitionsExists             = AaruServerContext.TableExists("Partitions");
-            bool PcmciasExists                = AaruServerContext.TableExists("Pcmcias");
-            bool ScsiModesExists              = AaruServerContext.TableExists("ScsiModes");
-            bool ScsiPagesExists              = AaruServerContext.TableExists("ScsiPages");
-            bool ScsisExists                  = AaruServerContext.TableExists("Scsis");
-            bool SscsExists                   = AaruServerContext.TableExists("Sscs");
-            bool SscSupportedMediasExists     = AaruServerContext.TableExists("SscSupportedMedias");
-            bool SupportedDensitiesExists     = AaruServerContext.TableExists("SupportedDensities");
-            bool TestedMediasExists           = AaruServerContext.TableExists("TestedMedias");
-            bool TestedSequentialMediasExists = AaruServerContext.TableExists("TestedSequentialMedias");
-            bool UploadedReportsExists        = AaruServerContext.TableExists("UploadedReports");
-            bool UsbProductsExists            = AaruServerContext.TableExists("UsbProducts");
-            bool UsbsExists                   = AaruServerContext.TableExists("Usbs");
-            bool UsbVendorsExists             = AaruServerContext.TableExists("UsbVendors");
-            bool VersionsExists               = AaruServerContext.TableExists("Versions");
-            bool EFExists                     = AaruServerContext.TableExists("__MigrationHistory");
+            bool atasExists                   = AaruServerContext.TableExists("Atas");
+            bool blockDescriptorsExists       = AaruServerContext.TableExists("BlockDescriptors");
+            bool chsExists                    = AaruServerContext.TableExists("Chs");
+            bool commandsExists               = AaruServerContext.TableExists("Commands");
+            bool compactDiscOffsetsExists     = AaruServerContext.TableExists("CompactDiscOffsets");
+            bool densityCodesExists           = AaruServerContext.TableExists("DensityCodes");
+            bool devicesExists                = AaruServerContext.TableExists("Devices");
+            bool deviceStatsExists            = AaruServerContext.TableExists("DeviceStats");
+            bool filesystemsExists            = AaruServerContext.TableExists("Filesystems");
+            bool filtersExists                = AaruServerContext.TableExists("Filters");
+            bool fireWiresExists              = AaruServerContext.TableExists("FireWires");
+            bool mediaExists                  = AaruServerContext.TableExists("Media");
+            bool mediaFormatsExists           = AaruServerContext.TableExists("MediaFormats");
+            bool mmcFeaturesExists            = AaruServerContext.TableExists("MmcFeatures");
+            bool mmcsExists                   = AaruServerContext.TableExists("Mmcs");
+            bool mmcSdsExists                 = AaruServerContext.TableExists("MmcSds");
+            bool operatingSystemsExists       = AaruServerContext.TableExists("OperatingSystems");
+            bool partitionsExists             = AaruServerContext.TableExists("Partitions");
+            bool pcmciasExists                = AaruServerContext.TableExists("Pcmcias");
+            bool scsiModesExists              = AaruServerContext.TableExists("ScsiModes");
+            bool scsiPagesExists              = AaruServerContext.TableExists("ScsiPages");
+            bool scsisExists                  = AaruServerContext.TableExists("Scsis");
+            bool sscsExists                   = AaruServerContext.TableExists("Sscs");
+            bool sscSupportedMediasExists     = AaruServerContext.TableExists("SscSupportedMedias");
+            bool supportedDensitiesExists     = AaruServerContext.TableExists("SupportedDensities");
+            bool testedMediasExists           = AaruServerContext.TableExists("TestedMedias");
+            bool testedSequentialMediasExists = AaruServerContext.TableExists("TestedSequentialMedias");
+            bool uploadedReportsExists        = AaruServerContext.TableExists("UploadedReports");
+            bool usbProductsExists            = AaruServerContext.TableExists("UsbProducts");
+            bool usbsExists                   = AaruServerContext.TableExists("Usbs");
+            bool usbVendorsExists             = AaruServerContext.TableExists("UsbVendors");
+            bool versionsExists               = AaruServerContext.TableExists("Versions");
+            bool efExists                     = AaruServerContext.TableExists("__MigrationHistory");
             #endregion
 
             #region Drop old restrictions
-            if(AtasExists)
+            if(atasExists)
                 migrationBuilder.DropForeignKey("FK_Atas_TestedMedias_ReadCapabilities_Id", "Atas");
 
-            if(BlockDescriptorsExists)
+            if(blockDescriptorsExists)
                 migrationBuilder.DropForeignKey("FK_BlockDescriptors_ScsiModes_ScsiMode_Id", "BlockDescriptors");
 
-            if(DensityCodesExists)
+            if(densityCodesExists)
                 migrationBuilder.DropForeignKey("FK_DensityCodes_SscSupportedMedias_SscSupportedMedia_Id",
                                                 "DensityCodes");
 
-            if(DevicesExists)
+            if(devicesExists)
             {
                 migrationBuilder.DropForeignKey("FK_Devices_Atas_ATA_Id", "Devices");
                 migrationBuilder.DropForeignKey("FK_Devices_Atas_ATAPI_Id", "Devices");
@@ -69,19 +69,19 @@ namespace Aaru.Server.Migrations
                 migrationBuilder.DropForeignKey("FK_Devices_Usbs_USB_Id", "Devices");
             }
 
-            if(DeviceStatsExists)
+            if(deviceStatsExists)
                 migrationBuilder.DropForeignKey("FK_DeviceStats_Devices_Report_Id", "DeviceStats");
 
-            if(MmcsExists)
+            if(mmcsExists)
                 migrationBuilder.DropForeignKey("FK_Mmcs_MmcFeatures_Features_Id", "Mmcs");
 
-            if(ScsiPagesExists)
+            if(scsiPagesExists)
             {
                 migrationBuilder.DropForeignKey("FK_ScsiPages_ScsiModes_ScsiMode_Id", "ScsiPages");
                 migrationBuilder.DropForeignKey("FK_ScsiPages_Scsis_Scsi_Id", "ScsiPages");
             }
 
-            if(ScsisExists)
+            if(scsisExists)
             {
                 migrationBuilder.DropForeignKey("FK_Scsis_Mmcs_MultiMediaDevice_Id", "Scsis");
                 migrationBuilder.DropForeignKey("FK_Scsis_ScsiModes_ModeSense_Id", "Scsis");
@@ -89,19 +89,19 @@ namespace Aaru.Server.Migrations
                 migrationBuilder.DropForeignKey("FK_Scsis_TestedMedias_ReadCapabilities_Id", "Scsis");
             }
 
-            if(SscSupportedMediasExists)
+            if(sscSupportedMediasExists)
             {
                 migrationBuilder.DropForeignKey("FK_a812ec60296b45bcb3d245a5c6d01d73", "SscSupportedMedias");
                 migrationBuilder.DropForeignKey("FK_SscSupportedMedias_Sscs_Ssc_Id", "SscSupportedMedias");
             }
 
-            if(SupportedDensitiesExists)
+            if(supportedDensitiesExists)
             {
                 migrationBuilder.DropForeignKey("FK_783f1b3552774280af1caf44fb27e285", "SupportedDensities");
                 migrationBuilder.DropForeignKey("FK_SupportedDensities_Sscs_Ssc_Id", "SupportedDensities");
             }
 
-            if(TestedMediasExists)
+            if(testedMediasExists)
             {
                 migrationBuilder.DropForeignKey("FK_TestedMedias_Atas_Ata_Id", "TestedMedias");
                 migrationBuilder.DropForeignKey("FK_TestedMedias_Chs_CHS_Id", "TestedMedias");
@@ -110,10 +110,10 @@ namespace Aaru.Server.Migrations
                 migrationBuilder.DropForeignKey("FK_TestedMedias_Scsis_Scsi_Id", "TestedMedias");
             }
 
-            if(TestedSequentialMediasExists)
+            if(testedSequentialMediasExists)
                 migrationBuilder.DropForeignKey("FK_TestedSequentialMedias_Sscs_Ssc_Id", "TestedSequentialMedias");
 
-            if(UploadedReportsExists)
+            if(uploadedReportsExists)
             {
                 migrationBuilder.DropForeignKey("FK_UploadedReports_Atas_ATA_Id", "UploadedReports");
                 migrationBuilder.DropForeignKey("FK_UploadedReports_Atas_ATAPI_Id", "UploadedReports");
@@ -125,7 +125,7 @@ namespace Aaru.Server.Migrations
                 migrationBuilder.DropForeignKey("FK_UploadedReports_Usbs_USB_Id", "UploadedReports");
             }
 
-            if(UsbProductsExists)
+            if(usbProductsExists)
                 migrationBuilder.DropForeignKey("FK_UsbProducts_UsbVendors_VendorId", "UsbProducts");
             #endregion
 
@@ -134,16 +134,16 @@ namespace Aaru.Server.Migrations
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                Manufacturer = table.Column<string>(nullable: true), Model = table.Column<string>(nullable: true),
-                Offset       = table.Column<short>(), Submissions          = table.Column<int>(),
+                Manufacturer = table.Column<string>(nullable: true),
+                Model        = table.Column<string>(nullable: true),
+                Offset       = table.Column<short>(),
+                Submissions  = table.Column<int>(),
                 Agreement    = table.Column<float>(),
-                AddedWhen    = table.Column<DateTime>(), ModifiedWhen = table.Column<DateTime>()
-            }, constraints: table =>
-            {
-                table.PrimaryKey("PK_CdOffsets", x => x.Id);
-            });
+                AddedWhen    = table.Column<DateTime>(),
+                ModifiedWhen = table.Column<DateTime>()
+            }, constraints: table => table.PrimaryKey("PK_CdOffsets", x => x.Id));
 
-            if(CompactDiscOffsetsExists)
+            if(compactDiscOffsetsExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO CdOffsets (Id, Manufacturer, Model, Offset, Submissions, Agreement, AddedWhen, ModifiedWhen) SELECT Id, Manufacturer, Model, Offset, Submissions, Agreement, AddedWhen, ModifiedWhen FROM CompactDiscOffsets");
@@ -153,23 +153,22 @@ namespace Aaru.Server.Migrations
             #endregion
 
             #region TABLE: Chs
-            if(ChsExists)
+            if(chsExists)
                 migrationBuilder.RenameTable("Chs", newName: "Chs_old");
 
             migrationBuilder.CreateTable("Chs", table => new
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                Cylinders    = table.Column<ushort>(), Heads = table.Column<ushort>(),
+                Cylinders    = table.Column<ushort>(),
+                Heads        = table.Column<ushort>(),
                 Sectors      = table.Column<ushort>(),
-                CylindersSql = table.Column<short>(), HeadsSql = table.Column<short>(),
+                CylindersSql = table.Column<short>(),
+                HeadsSql     = table.Column<short>(),
                 SectorsSql   = table.Column<short>()
-            }, constraints: table =>
-            {
-                table.PrimaryKey("PK_Chs", x => x.Id);
-            });
+            }, constraints: table => table.PrimaryKey("PK_Chs", x => x.Id));
 
-            if(ChsExists)
+            if(chsExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO Chs (Id, Cylinders, Heads, Sectors, CylindersSql, HeadsSql, SectorsSql) SELECT Id, CylindersSql AS Cylinders, HeadsSql AS Heads, SectorsSql AS Sectors, CylindersSql, HeadsSql, SectorsSql FROM Chs_old");
@@ -179,20 +178,18 @@ namespace Aaru.Server.Migrations
             #endregion
 
             #region TABLE: Commands
-            if(CommandsExists)
+            if(commandsExists)
                 migrationBuilder.RenameTable("Commands", newName: "Commands_old");
 
             migrationBuilder.CreateTable("Commands", table => new
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                Name = table.Column<string>(nullable: true), Count = table.Column<long>()
-            }, constraints: table =>
-            {
-                table.PrimaryKey("PK_Commands", x => x.Id);
-            });
+                Name  = table.Column<string>(nullable: true),
+                Count = table.Column<long>()
+            }, constraints: table => table.PrimaryKey("PK_Commands", x => x.Id));
 
-            if(CommandsExists)
+            if(commandsExists)
             {
                 migrationBuilder.Sql("INSERT INTO Commands (Id, Name, Count) SELECT Id, Name, Count FROM Commands_old");
                 migrationBuilder.DropTable("Commands_old");
@@ -200,20 +197,18 @@ namespace Aaru.Server.Migrations
             #endregion
 
             #region TABLE: Filesystems
-            if(FilesystemsExists)
+            if(filesystemsExists)
                 migrationBuilder.RenameTable("Filesystems", newName: "Filesystems_old");
 
             migrationBuilder.CreateTable("Filesystems", table => new
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                Name = table.Column<string>(nullable: true), Count = table.Column<long>()
-            }, constraints: table =>
-            {
-                table.PrimaryKey("PK_Filesystems", x => x.Id);
-            });
+                Name  = table.Column<string>(nullable: true),
+                Count = table.Column<long>()
+            }, constraints: table => table.PrimaryKey("PK_Filesystems", x => x.Id));
 
-            if(FilesystemsExists)
+            if(filesystemsExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO Filesystems (Id, Name, Count) SELECT Id, Name, Count FROM Filesystems_old");
@@ -223,20 +218,18 @@ namespace Aaru.Server.Migrations
             #endregion
 
             #region TABLE: Filters
-            if(FiltersExists)
+            if(filtersExists)
                 migrationBuilder.RenameTable("Filters", newName: "Filters_old");
 
             migrationBuilder.CreateTable("Filters", table => new
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                Name = table.Column<string>(nullable: true), Count = table.Column<long>()
-            }, constraints: table =>
-            {
-                table.PrimaryKey("PK_Filters", x => x.Id);
-            });
+                Name  = table.Column<string>(nullable: true),
+                Count = table.Column<long>()
+            }, constraints: table => table.PrimaryKey("PK_Filters", x => x.Id));
 
-            if(FiltersExists)
+            if(filtersExists)
             {
                 migrationBuilder.Sql("INSERT INTO Filters (Id, Name, Count) SELECT Id, Name, Count FROM Filters_old");
                 migrationBuilder.DropTable("Filters_old");
@@ -248,16 +241,16 @@ namespace Aaru.Server.Migrations
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                VendorID       = table.Column<uint>(), ProductID               = table.Column<uint>(),
-                Manufacturer   = table.Column<string>(nullable: true), Product = table.Column<string>(nullable: true),
-                RemovableMedia = table.Column<bool>(), VendorIDSql             = table.Column<int>(),
+                VendorID       = table.Column<uint>(),
+                ProductID      = table.Column<uint>(),
+                Manufacturer   = table.Column<string>(nullable: true),
+                Product        = table.Column<string>(nullable: true),
+                RemovableMedia = table.Column<bool>(),
+                VendorIDSql    = table.Column<int>(),
                 ProductIDSql   = table.Column<int>()
-            }, constraints: table =>
-            {
-                table.PrimaryKey("PK_FireWire", x => x.Id);
-            });
+            }, constraints: table => table.PrimaryKey("PK_FireWire", x => x.Id));
 
-            if(FireWiresExists)
+            if(fireWiresExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO FireWire (Id, VendorID, ProductID, Manufacturer, Product, RemovableMedia, VendorIDSql, ProductIDSql) SELECT Id, VendorIDSql AS VendorID, ProductIDSql AS ProductID, Manufacturer, Product, RemovableMedia, VendorIDSql, ProductIDSql FROM FireWires");
@@ -267,20 +260,18 @@ namespace Aaru.Server.Migrations
             #endregion
 
             #region TABLE: MediaFormats
-            if(MediaFormatsExists)
+            if(mediaFormatsExists)
                 migrationBuilder.RenameTable("MediaFormats", newName: "MediaFormats_old");
 
             migrationBuilder.CreateTable("MediaFormats", table => new
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                Name = table.Column<string>(nullable: true), Count = table.Column<long>()
-            }, constraints: table =>
-            {
-                table.PrimaryKey("PK_MediaFormats", x => x.Id);
-            });
+                Name  = table.Column<string>(nullable: true),
+                Count = table.Column<long>()
+            }, constraints: table => table.PrimaryKey("PK_MediaFormats", x => x.Id));
 
-            if(MediaFormatsExists)
+            if(mediaFormatsExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO MediaFormats (Id, Name, Count) SELECT Id, Name, Count FROM MediaFormats_old");
@@ -294,13 +285,12 @@ namespace Aaru.Server.Migrations
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                Type = table.Column<string>(nullable: true), Real = table.Column<bool>(), Count = table.Column<long>()
-            }, constraints: table =>
-            {
-                table.PrimaryKey("PK_Medias", x => x.Id);
-            });
+                Type  = table.Column<string>(nullable: true),
+                Real  = table.Column<bool>(),
+                Count = table.Column<long>()
+            }, constraints: table => table.PrimaryKey("PK_Medias", x => x.Id));
 
-            if(MediaExists)
+            if(mediaExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO Medias (`Id`, `Type`, `Real`, `Count`) SELECT `Id`, `Type`, `Real`, `Count` FROM Media");
@@ -310,7 +300,7 @@ namespace Aaru.Server.Migrations
             #endregion
 
             #region TABLE: MmcFeatures
-            if(MmcFeaturesExists)
+            if(mmcFeaturesExists)
                 migrationBuilder.RenameTable("MmcFeatures", newName: "MmcFeatures_old");
 
             migrationBuilder.CreateTable("MmcFeatures", table => new
@@ -445,12 +435,9 @@ namespace Aaru.Server.Migrations
                 LogicalBlockSizeSql                = table.Column<int>(nullable: true),
                 PhysicalInterfaceStandardNumberSql = table.Column<int>(nullable: true),
                 VolumeLevelsSql                    = table.Column<short>(nullable: true)
-            }, constraints: table =>
-            {
-                table.PrimaryKey("PK_MmcFeatures", x => x.Id);
-            });
+            }, constraints: table => table.PrimaryKey("PK_MmcFeatures", x => x.Id));
 
-            if(MmcFeaturesExists)
+            if(mmcFeaturesExists)
             {
                 migrationBuilder.Sql(@"INSERT INTO MmcFeatures (AACSVersion,
 AGIDs,
@@ -973,15 +960,14 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                CID         = table.Column<byte[]>(nullable: true), CSD = table.Column<byte[]>(nullable: true),
-                OCR         = table.Column<byte[]>(nullable: true), SCR = table.Column<byte[]>(nullable: true),
+                CID         = table.Column<byte[]>(nullable: true),
+                CSD         = table.Column<byte[]>(nullable: true),
+                OCR         = table.Column<byte[]>(nullable: true),
+                SCR         = table.Column<byte[]>(nullable: true),
                 ExtendedCSD = table.Column<byte[]>(nullable: true)
-            }, constraints: table =>
-            {
-                table.PrimaryKey("PK_MmcSd", x => x.Id);
-            });
+            }, constraints: table => table.PrimaryKey("PK_MmcSd", x => x.Id));
 
-            if(MmcSdsExists)
+            if(mmcSdsExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO MmcSd (Id, CID, CSD, OCR, SCR, ExtendedCSD) SELECT Id, CID, CSD, OCR, SCR, ExtendedCSD FROM MmcSds");
@@ -991,21 +977,19 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
             #endregion
 
             #region TABLE: OperatingSystems
-            if(OperatingSystemsExists)
+            if(operatingSystemsExists)
                 migrationBuilder.RenameTable("OperatingSystems", newName: "OperatingSystems_old");
 
             migrationBuilder.CreateTable("OperatingSystems", table => new
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                Name  = table.Column<string>(nullable: true), Version = table.Column<string>(nullable: true),
-                Count = table.Column<long>()
-            }, constraints: table =>
-            {
-                table.PrimaryKey("PK_OperatingSystems", x => x.Id);
-            });
+                Name    = table.Column<string>(nullable: true),
+                Version = table.Column<string>(nullable: true),
+                Count   = table.Column<long>()
+            }, constraints: table => table.PrimaryKey("PK_OperatingSystems", x => x.Id));
 
-            if(OperatingSystemsExists)
+            if(operatingSystemsExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO OperatingSystems (Id, Name, Version, Count) SELECT Id, Name, Version, Count FROM OperatingSystems_old");
@@ -1015,20 +999,18 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
             #endregion
 
             #region TABLE: Partitions
-            if(PartitionsExists)
+            if(partitionsExists)
                 migrationBuilder.RenameTable("Partitions", newName: "Partitions_old");
 
             migrationBuilder.CreateTable("Partitions", table => new
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                Name = table.Column<string>(nullable: true), Count = table.Column<long>()
-            }, constraints: table =>
-            {
-                table.PrimaryKey("PK_Partitions", x => x.Id);
-            });
+                Name  = table.Column<string>(nullable: true),
+                Count = table.Column<long>()
+            }, constraints: table => table.PrimaryKey("PK_Partitions", x => x.Id));
 
-            if(PartitionsExists)
+            if(partitionsExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO Partitions (Id, Name, Count) SELECT Id, Name, Count FROM Partitions_old");
@@ -1050,12 +1032,9 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
                 ProductName         = table.Column<string>(nullable: true),
                 ManufacturerCodeSql = table.Column<short>(nullable: true),
                 CardCodeSql         = table.Column<short>(nullable: true)
-            }, constraints: table =>
-            {
-                table.PrimaryKey("PK_Pcmcia", x => x.Id);
-            });
+            }, constraints: table => table.PrimaryKey("PK_Pcmcia", x => x.Id));
 
-            if(PcmciasExists)
+            if(pcmciasExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO Pcmcia (Id, CIS, Compliance, ManufacturerCode, CardCode, Manufacturer, ProductName, ManufacturerCodeSql, CardCodeSql) SELECT Id, CIS, Compliance, ManufacturerCodeSql AS ManufacturerCode, CardCodeSql AS CardCode, Manufacturer, ProductName, ManufacturerCodeSql, CardCodeSql FROM Pcmcias");
@@ -1069,16 +1048,15 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                MediumType        = table.Column<byte>(nullable: true), WriteProtected = table.Column<bool>(),
+                MediumType        = table.Column<byte>(nullable: true),
+                WriteProtected    = table.Column<bool>(),
                 Speed             = table.Column<byte>(nullable: true),
                 BufferedMode      = table.Column<byte>(nullable: true),
-                BlankCheckEnabled = table.Column<bool>(), DPOandFUA = table.Column<bool>()
-            }, constraints: table =>
-            {
-                table.PrimaryKey("PK_ScsiMode", x => x.Id);
-            });
+                BlankCheckEnabled = table.Column<bool>(),
+                DPOandFUA         = table.Column<bool>()
+            }, constraints: table => table.PrimaryKey("PK_ScsiMode", x => x.Id));
 
-            if(ScsiModesExists)
+            if(scsiModesExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO ScsiMode (Id, MediumType, WriteProtected, Speed, BufferedMode, BlankCheckEnabled, DPOandFUA) SELECT Id, MediumType, WriteProtected, Speed, BufferedMode, BlankCheckEnabled, DPOandFUA FROM ScsiModes");
@@ -1097,12 +1075,9 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
                 MinBlockLength       = table.Column<uint>(nullable: true),
                 MaxBlockLengthSql    = table.Column<int>(nullable: true),
                 MinBlockLengthSql    = table.Column<int>(nullable: true)
-            }, constraints: table =>
-            {
-                table.PrimaryKey("PK_Ssc", x => x.Id);
-            });
+            }, constraints: table => table.PrimaryKey("PK_Ssc", x => x.Id));
 
-            if(SscsExists)
+            if(sscsExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO Ssc (Id, BlockSizeGranularity, MaxBlockLength, MinBlockLength, MaxBlockLengthSql, MinBlockLengthSql) SELECT Id, BlockSizeGranularity, MaxBlockLengthSql AS MaxBlockLength, MinBlockLengthSql AS MinBlockLength, MaxBlockLengthSql, MinBlockLengthSql FROM Sscs");
@@ -1116,16 +1091,17 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                VendorID       = table.Column<ushort>(), ProductID             = table.Column<ushort>(),
-                Manufacturer   = table.Column<string>(nullable: true), Product = table.Column<string>(nullable: true),
-                RemovableMedia = table.Column<bool>(), Descriptors             = table.Column<byte[]>(nullable: true),
-                VendorIDSql    = table.Column<short>(), ProductIDSql           = table.Column<short>()
-            }, constraints: table =>
-            {
-                table.PrimaryKey("PK_Usb", x => x.Id);
-            });
+                VendorID       = table.Column<ushort>(),
+                ProductID      = table.Column<ushort>(),
+                Manufacturer   = table.Column<string>(nullable: true),
+                Product        = table.Column<string>(nullable: true),
+                RemovableMedia = table.Column<bool>(),
+                Descriptors    = table.Column<byte[]>(nullable: true),
+                VendorIDSql    = table.Column<short>(),
+                ProductIDSql   = table.Column<short>()
+            }, constraints: table => table.PrimaryKey("PK_Usb", x => x.Id));
 
-            if(UsbsExists)
+            if(usbsExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO Usb (Id, VendorID, ProductID, Manufacturer, Product, RemovableMedia, Descriptors, VendorIDSql, ProductIDSql) SELECT Id, VendorIDSql AS VendorID, ProductIDSql AS ProductID, Manufacturer, Product, RemovableMedia, Descriptors, VendorIDSql, ProductIDSql FROM Usbs WHERE VendorIDSql >= 0 AND ProductIDSql >= 0");
@@ -1144,21 +1120,20 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
             #endregion
 
             #region TABLE: UsbVendors
-            if(UsbVendorsExists)
+            if(usbVendorsExists)
                 migrationBuilder.RenameTable("UsbVendors", newName: "UsbVendors_old");
 
             migrationBuilder.CreateTable("UsbVendors", table => new
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                VendorId  = table.Column<int>(), Vendor            = table.Column<string>(nullable: true),
-                AddedWhen = table.Column<DateTime>(), ModifiedWhen = table.Column<DateTime>()
-            }, constraints: table =>
-            {
-                table.PrimaryKey("PK_UsbVendors", x => x.Id);
-            });
+                VendorId     = table.Column<int>(),
+                Vendor       = table.Column<string>(nullable: true),
+                AddedWhen    = table.Column<DateTime>(),
+                ModifiedWhen = table.Column<DateTime>()
+            }, constraints: table => table.PrimaryKey("PK_UsbVendors", x => x.Id));
 
-            if(UsbVendorsExists)
+            if(usbVendorsExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO UsbVendors (Id, VendorId, Vendor, AddedWhen, ModifiedWhen) SELECT Id, VendorId, Vendor, AddedWhen, ModifiedWhen FROM UsbVendors_old");
@@ -1168,20 +1143,18 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
             #endregion
 
             #region TABLE: Versions
-            if(VersionsExists)
+            if(versionsExists)
                 migrationBuilder.RenameTable("Versions", newName: "Versions_old");
 
             migrationBuilder.CreateTable("Versions", table => new
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                Value = table.Column<string>(nullable: true), Count = table.Column<long>()
-            }, constraints: table =>
-            {
-                table.PrimaryKey("PK_Versions", x => x.Id);
-            });
+                Value = table.Column<string>(nullable: true),
+                Count = table.Column<long>()
+            }, constraints: table => table.PrimaryKey("PK_Versions", x => x.Id));
 
-            if(VersionsExists)
+            if(versionsExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO Versions (`Id`, `Value`, `Count`) SELECT `Id`, `Value`, `Count` FROM Versions_old");
@@ -1195,7 +1168,8 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                FeaturesId = table.Column<int>(nullable: true), ModeSense2AData = table.Column<byte[]>(nullable: true)
+                FeaturesId      = table.Column<int>(nullable: true),
+                ModeSense2AData = table.Column<byte[]>(nullable: true)
             }, constraints: table =>
             {
                 table.PrimaryKey("PK_Mmc", x => x.Id);
@@ -1204,7 +1178,7 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
                                  onDelete: ReferentialAction.Restrict);
             });
 
-            if(MmcsExists)
+            if(mmcsExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO Mmc (Id, FeaturesId, ModeSense2AData) SELECT Id, Features_Id, ModeSense2AData FROM Mmcs WHERE EXISTS(SELECT 1 FROM MmcFeatures WHERE MmcFeatures.Id = Features_Id) OR Features_Id IS NULL");
@@ -1218,9 +1192,12 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                Density        = table.Column<byte>(), Blocks                  = table.Column<ulong>(nullable: true),
-                BlockLength    = table.Column<uint>(nullable: true), BlocksSql = table.Column<long>(nullable: true),
-                BlockLengthSql = table.Column<int>(nullable: true), ScsiModeId = table.Column<int>(nullable: true)
+                Density        = table.Column<byte>(),
+                Blocks         = table.Column<ulong>(nullable: true),
+                BlockLength    = table.Column<uint>(nullable: true),
+                BlocksSql      = table.Column<long>(nullable: true),
+                BlockLengthSql = table.Column<int>(nullable: true),
+                ScsiModeId     = table.Column<int>(nullable: true)
             }, constraints: table =>
             {
                 table.PrimaryKey("PK_BlockDescriptor", x => x.Id);
@@ -1229,7 +1206,7 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
                                  onDelete: ReferentialAction.Restrict);
             });
 
-            if(BlockDescriptorsExists)
+            if(blockDescriptorsExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO BlockDescriptor (Id, Density, Blocks, BlocksSql, BlockLength, BlockLengthSql, ScsiModeId) SELECT Id, Density, BlocksSql AS Blocks, BlocksSql, BlockLengthSql AS BlockLength, BlockLengthSql, ScsiMode_Id FROM BlockDescriptors");
@@ -1245,7 +1222,8 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                 CanReadMediaSerial = table.Column<bool>(nullable: true),
                 Density            = table.Column<byte>(nullable: true),
-                Manufacturer       = table.Column<string>(nullable: true), MediaIsRecognized = table.Column<bool>(),
+                Manufacturer       = table.Column<string>(nullable: true),
+                MediaIsRecognized  = table.Column<bool>(),
                 MediumType         = table.Column<byte>(nullable: true),
                 MediumTypeName     = table.Column<string>(nullable: true),
                 Model              = table.Column<string>(nullable: true),
@@ -1260,7 +1238,7 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
                                  onDelete: ReferentialAction.Restrict);
             });
 
-            if(TestedSequentialMediasExists)
+            if(testedSequentialMediasExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO TestedSequentialMedia (Id, CanReadMediaSerial, Density, Manufacturer, MediaIsRecognized, MediumType, MediumTypeName, Model, ModeSense6Data, ModeSense10Data, SscId) SELECT Id, CanReadMediaSerial, Density, Manufacturer, MediaIsRecognized, MediumType, MediumTypeName, Model, ModeSense6Data, ModeSense10Data, Ssc_Id FROM TestedSequentialMedias");
@@ -1270,16 +1248,18 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
             #endregion
 
             #region TABLE: UsbProducts
-            if(UsbProductsExists)
+            if(usbProductsExists)
                 migrationBuilder.RenameTable("UsbProducts", newName: "UsbProducts_old");
 
             migrationBuilder.CreateTable("UsbProducts", table => new
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                ProductId = table.Column<int>(), Product           = table.Column<string>(nullable: true),
-                AddedWhen = table.Column<DateTime>(), ModifiedWhen = table.Column<DateTime>(),
-                VendorId  = table.Column<int>()
+                ProductId    = table.Column<int>(),
+                Product      = table.Column<string>(nullable: true),
+                AddedWhen    = table.Column<DateTime>(),
+                ModifiedWhen = table.Column<DateTime>(),
+                VendorId     = table.Column<int>()
             }, constraints: table =>
             {
                 table.PrimaryKey("PK_UsbProducts", x => x.Id);
@@ -1288,7 +1268,7 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
                                  onDelete: ReferentialAction.Cascade);
             });
 
-            if(UsbProductsExists)
+            if(usbProductsExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO UsbProducts (Id, ProductId, Product, AddedWhen, ModifiedWhen, VendorId) SELECT Id, ProductId, Product, AddedWhen, ModifiedWhen, VendorId FROM UsbProducts_old");
@@ -1302,11 +1282,13 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                MediumType              = table.Column<byte>(), Width = table.Column<ushort>(),
+                MediumType              = table.Column<byte>(),
+                Width                   = table.Column<ushort>(),
                 Length                  = table.Column<ushort>(),
                 Organization            = table.Column<string>(nullable: true),
                 Name                    = table.Column<string>(nullable: true),
-                Description             = table.Column<string>(nullable: true), WidthSql = table.Column<short>(),
+                Description             = table.Column<string>(nullable: true),
+                WidthSql                = table.Column<short>(),
                 LengthSql               = table.Column<short>(),
                 SscId                   = table.Column<int>(nullable: true),
                 TestedSequentialMediaId = table.Column<int>(nullable: true)
@@ -1322,7 +1304,7 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
                                  onDelete: ReferentialAction.Restrict);
             });
 
-            if(SscSupportedMediasExists)
+            if(sscSupportedMediasExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO SscSupportedMedia (Id, MediumType, Width, Length, Organization, Name, Description, WidthSql, LengthSql, SscId, TestedSequentialMediaId) SELECT Id, MediumType, WidthSql AS Width, LengthSql AS Length, Organization, Name, Description, WidthSql, LengthSql, Ssc_Id, TestedSequentialMedia_Id FROM SscSupportedMedias");
@@ -1336,15 +1318,21 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                PrimaryCode             = table.Column<byte>(), SecondaryCode = table.Column<byte>(),
-                Writable                = table.Column<bool>(), Duplicate     = table.Column<bool>(),
-                DefaultDensity          = table.Column<bool>(), BitsPerMm     = table.Column<uint>(),
+                PrimaryCode             = table.Column<byte>(),
+                SecondaryCode           = table.Column<byte>(),
+                Writable                = table.Column<bool>(),
+                Duplicate               = table.Column<bool>(),
+                DefaultDensity          = table.Column<bool>(),
+                BitsPerMm               = table.Column<uint>(),
                 Width                   = table.Column<ushort>(),
-                Tracks                  = table.Column<ushort>(), Capacity = table.Column<uint>(),
+                Tracks                  = table.Column<ushort>(),
+                Capacity                = table.Column<uint>(),
                 Organization            = table.Column<string>(nullable: true),
                 Name                    = table.Column<string>(nullable: true),
-                Description             = table.Column<string>(nullable: true), BitsPerMmSql = table.Column<int>(),
-                WidthSql                = table.Column<short>(), TracksSql                   = table.Column<short>(),
+                Description             = table.Column<string>(nullable: true),
+                BitsPerMmSql            = table.Column<int>(),
+                WidthSql                = table.Column<short>(),
+                TracksSql               = table.Column<short>(),
                 CapacitySql             = table.Column<int>(),
                 SscId                   = table.Column<int>(nullable: true),
                 TestedSequentialMediaId = table.Column<int>(nullable: true)
@@ -1360,7 +1348,7 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
                                  onDelete: ReferentialAction.Restrict);
             });
 
-            if(SupportedDensitiesExists)
+            if(supportedDensitiesExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO SupportedDensity (PrimaryCode, SecondaryCode, Writable, Duplicate, DefaultDensity, BitsPerMm, Width, Tracks, Capacity, Organization, Name, Description, BitsPerMmSql, WidthSql, TracksSql, CapacitySql, SscId, TestedSequentialMediaId) SELECT PrimaryCode, SecondaryCode, Writable, Duplicate, DefaultDensity, BitsPerMmSql AS BitsPerMm, WidthSql AS Width, TracksSql AS Tracks, CapacitySql AS Capacity, Organization, Name, Description, BitsPerMmSql, WidthSql, TracksSql, CapacitySql, Ssc_Id, TestedSequentialMedia_Id FROM SupportedDensities");
@@ -1374,7 +1362,8 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                Code = table.Column<int>(), SscSupportedMediaId = table.Column<int>(nullable: true)
+                Code                = table.Column<int>(),
+                SscSupportedMediaId = table.Column<int>(nullable: true)
             }, constraints: table =>
             {
                 table.PrimaryKey("PK_DensityCode", x => x.Id);
@@ -1383,7 +1372,7 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
                                  "SscSupportedMedia", "Id", onDelete: ReferentialAction.Restrict);
             });
 
-            if(DensityCodesExists)
+            if(densityCodesExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO DensityCode (Id, Code, SscSupportedMediaId) SELECT Id, Code, SscSupportedMedia_Id FROM DensityCodes");
@@ -1393,27 +1382,30 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
             #endregion
 
             #region TABLE: Devices
-            if(DevicesExists)
+            if(devicesExists)
                 migrationBuilder.RenameTable("Devices", newName: "Devices_old");
 
             migrationBuilder.CreateTable("Devices", table => new
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                USBId            = table.Column<int>(nullable: true),
-                FireWireId       = table.Column<int>(nullable: true),
-                PCMCIAId         = table.Column<int>(nullable: true), CompactFlash = table.Column<bool>(),
-                ATAId            = table.Column<int>(nullable: true),
-                ATAPIId          = table.Column<int>(nullable: true),
-                SCSIId           = table.Column<int>(nullable: true),
-                MultiMediaCardId = table.Column<int>(nullable: true),
-                SecureDigitalId  = table.Column<int>(nullable: true),
-                Manufacturer     = table.Column<string>(nullable: true),
-                Model            = table.Column<string>(nullable: true),
-                Revision         = table.Column<string>(nullable: true), Type = table.Column<int>(),
-                AddedWhen        = table.Column<DateTime>(),
-                ModifiedWhen     = table.Column<DateTime>(nullable: true),
-                CdOffsetId       = table.Column<int>(nullable: true), OptimalMultipleSectorsRead = table.Column<int>()
+                USBId                      = table.Column<int>(nullable: true),
+                FireWireId                 = table.Column<int>(nullable: true),
+                PCMCIAId                   = table.Column<int>(nullable: true),
+                CompactFlash               = table.Column<bool>(),
+                ATAId                      = table.Column<int>(nullable: true),
+                ATAPIId                    = table.Column<int>(nullable: true),
+                SCSIId                     = table.Column<int>(nullable: true),
+                MultiMediaCardId           = table.Column<int>(nullable: true),
+                SecureDigitalId            = table.Column<int>(nullable: true),
+                Manufacturer               = table.Column<string>(nullable: true),
+                Model                      = table.Column<string>(nullable: true),
+                Revision                   = table.Column<string>(nullable: true),
+                Type                       = table.Column<int>(),
+                AddedWhen                  = table.Column<DateTime>(),
+                ModifiedWhen               = table.Column<DateTime>(nullable: true),
+                CdOffsetId                 = table.Column<int>(nullable: true),
+                OptimalMultipleSectorsRead = table.Column<int>()
             }, constraints: table =>
             {
                 table.PrimaryKey("PK_Devices", x => x.Id);
@@ -1437,7 +1429,7 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
                                  onDelete: ReferentialAction.Restrict);
             });
 
-            if(DevicesExists)
+            if(devicesExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO Devices (Id, USBId, FireWireId, PCMCIAId, CompactFlash, ATAId, ATAPIId, SCSIId, MultiMediaCardId, SecureDigitalId, Manufacturer, Model, Revision, Type, AddedWhen, ModifiedWhen, CdOffsetId, OptimalMultipleSectorsRead) SELECT Id, USB_Id, FireWire_Id, PCMCIA_Id, CompactFlash, ATA_Id, ATAPI_Id, SCSI_Id, MultiMediaCard_Id, SecureDigital_Id, Manufacturer, Model, Revision, Type, AddedWhen, ModifiedWhen, CdOffset_Id, OptimalMultipleSectorsRead FROM Devices_old");
@@ -1447,15 +1439,17 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
             #endregion
 
             #region TABLE: DeviceStats
-            if(DeviceStatsExists)
+            if(deviceStatsExists)
                 migrationBuilder.RenameTable("DeviceStats", newName: "DeviceStats_old");
 
             migrationBuilder.CreateTable("DeviceStats", table => new
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                Manufacturer = table.Column<string>(nullable: true), Model = table.Column<string>(nullable: true),
-                Revision     = table.Column<string>(nullable: true), Bus   = table.Column<string>(nullable: true),
+                Manufacturer = table.Column<string>(nullable: true),
+                Model        = table.Column<string>(nullable: true),
+                Revision     = table.Column<string>(nullable: true),
+                Bus          = table.Column<string>(nullable: true),
                 ReportId     = table.Column<int>(nullable: true)
             }, constraints: table =>
             {
@@ -1465,7 +1459,7 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
                                  onDelete: ReferentialAction.Restrict);
             });
 
-            if(DeviceStatsExists)
+            if(deviceStatsExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO DeviceStats (Id, Manufacturer, Model, Revision, Bus, ReportId) SELECT Id, Manufacturer, Model, Revision, Bus, Report_Id FROM DeviceStats_old");
@@ -1481,14 +1475,17 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                 USBId            = table.Column<int>(nullable: true),
                 FireWireId       = table.Column<int>(nullable: true),
-                PCMCIAId         = table.Column<int>(nullable: true), CompactFlash = table.Column<bool>(),
+                PCMCIAId         = table.Column<int>(nullable: true),
+                CompactFlash     = table.Column<bool>(),
                 ATAId            = table.Column<int>(nullable: true),
                 ATAPIId          = table.Column<int>(nullable: true),
                 SCSIId           = table.Column<int>(nullable: true),
                 MultiMediaCardId = table.Column<int>(nullable: true),
                 SecureDigitalId  = table.Column<int>(nullable: true),
-                Manufacturer     = table.Column<string>(nullable: true), Model = table.Column<string>(nullable: true),
-                Revision         = table.Column<string>(nullable: true), Type  = table.Column<int>(),
+                Manufacturer     = table.Column<string>(nullable: true),
+                Model            = table.Column<string>(nullable: true),
+                Revision         = table.Column<string>(nullable: true),
+                Type             = table.Column<int>(),
                 UploadedWhen     = table.Column<DateTime>()
             }, constraints: table =>
             {
@@ -1510,7 +1507,7 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
                                  onDelete: ReferentialAction.Restrict);
             });
 
-            if(UploadedReportsExists)
+            if(uploadedReportsExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO Reports (Id, USBId, FireWireId, PCMCIAId, CompactFlash, ATAId, ATAPIId, SCSIId, MultiMediaCardId, SecureDigitalId, Manufacturer, Model, Revision, Type, UploadedWhen) SELECT Id, USB_Id, FireWire_Id, PCMCIA_Id, CompactFlash, ATA_Id, ATAPI_Id, SCSI_Id, MultiMediaCard_Id, SecureDigital_Id, Manufacturer, Model, Revision, Type, UploadedWhen FROM UploadedReports");
@@ -1703,7 +1700,7 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
                                  onDelete: ReferentialAction.Restrict);
             });
 
-            if(TestedMediasExists)
+            if(testedMediasExists)
             {
                 string preFormat =
                     @"INSERT INTO TestedMedia (Id, IdentifyData, Blocks, BlockSize, CanReadAACS, CanReadADIP,
@@ -1792,7 +1789,8 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                Identify = table.Column<byte[]>(nullable: true), ReadCapabilitiesId = table.Column<int>(nullable: true)
+                Identify           = table.Column<byte[]>(nullable: true),
+                ReadCapabilitiesId = table.Column<int>(nullable: true)
             }, constraints: table =>
             {
                 table.PrimaryKey("PK_Ata", x => x.Id);
@@ -1801,7 +1799,7 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
                                  "Id", onDelete: ReferentialAction.Restrict);
             });
 
-            if(AtasExists)
+            if(atasExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO Ata (Id, Identify, ReadCapabilitiesId) SELECT Id, Identify, ReadCapabilities_Id FROM Atas");
@@ -1846,7 +1844,7 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
                                  onDelete: ReferentialAction.Restrict);
             });
 
-            if(ScsisExists)
+            if(scsisExists)
             {
                 migrationBuilder.Sql(
                                      "INSERT INTO Scsi (Id, InquiryData, SupportsModeSense6, SupportsModeSense10, SupportsModeSubpages, ModeSenseId, MultiMediaDeviceId, ReadCapabilitiesId, SequentialDeviceId, ModeSense6Data, ModeSense10Data, ModeSense6CurrentData, ModeSense10CurrentData, ModeSense6ChangeableData, ModeSense10ChangeableData) SELECT Id, InquiryData, SupportsModeSense6, SupportsModeSense10, SupportsModeSubpages, ModeSense_Id, MultiMediaDevice_Id, ReadCapabilities_Id, SequentialDevice_Id, ModeSense6Data, ModeSense10Data, ModeSense6CurrentData, ModeSense10CurrentData, ModeSense6ChangeableData, ModeSense10ChangeableData FROM Scsis WHERE EXISTS(SELECT 1 from Mmc WHERE Mmc.Id = Scsis.MultiMediaDevice_Id) OR MultiMediaDevice_Id IS NULL");
@@ -1860,8 +1858,10 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
             {
                 Id = table.Column<int>().
                            Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                page       = table.Column<byte>(), subpage                = table.Column<byte>(nullable: true),
-                value      = table.Column<byte[]>(nullable: true), ScsiId = table.Column<int>(nullable: true),
+                page       = table.Column<byte>(),
+                subpage    = table.Column<byte>(nullable: true),
+                value      = table.Column<byte[]>(nullable: true),
+                ScsiId     = table.Column<int>(nullable: true),
                 ScsiModeId = table.Column<int>(nullable: true)
             }, constraints: table =>
             {
@@ -1874,7 +1874,7 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
                                  onDelete: ReferentialAction.Restrict);
             });
 
-            if(ScsiPagesExists)
+            if(scsiPagesExists)
             {
                 migrationBuilder.
                     Sql("INSERT INTO ScsiPage (Id, page, subpage, value, ScsiId, ScsiModeId) SELECT Id, page, subpage, value, Scsi_Id, ScsiMode_Id FROM ScsiPages");
@@ -2002,7 +2002,7 @@ VolumeLevelsSql FROM MmcFeatures_old WHERE VolumeLevelsSql < 0");
             migrationBuilder.AddForeignKey("FK_TestedMedia_Scsi_ScsiId", "TestedMedia", "ScsiId", "Scsi",
                                            principalColumn: "Id", onDelete: ReferentialAction.Restrict);
 
-            if(EFExists)
+            if(efExists)
                 migrationBuilder.DropTable("__MigrationHistory");
         }
 

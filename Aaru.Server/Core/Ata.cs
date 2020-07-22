@@ -31,11 +31,10 @@
 // ****************************************************************************/
 
 using System.Collections.Generic;
-using Aaru.CommonTypes.Metadata;
 using Aaru.CommonTypes.Structs.Devices.ATA;
 using Aaru.CommonTypes.Structs.Devices.SCSI;
 
-namespace Aaru.Server
+namespace Aaru.Server.Core
 {
     public static class Ata
     {
@@ -52,9 +51,9 @@ namespace Aaru.Server
         /// <param name="testedMedia">List of tested media</param>
         public static void Report(CommonTypes.Metadata.Ata ataReport, bool cfa, bool atapi, ref bool removable,
                                   ref List<string> ataOneValue, ref Dictionary<string, string> ataTwoValue,
-                                  ref List<TestedMedia> testedMedia)
+                                  ref List<CommonTypes.Metadata.TestedMedia> testedMedia)
         {
-            uint logicalsectorsize = 0;
+            uint logicalSectorSize = 0;
 
             Identify.IdentifyDevice? ataIdentifyNullable = Identify.Decode(ataReport.Identify);
 
@@ -117,113 +116,111 @@ namespace Aaru.Server
                 acs4 |= ataIdentify.MajorVersion.HasFlag(Identify.MajorVersionBit.ACS4);
             }
 
-            int    maxatalevel = 0;
-            int    minatalevel = 255;
+            int    maxAtaLevel = 0;
+            int    minAtaLevel = 255;
             string tmpString   = "";
 
             if(ata1)
             {
                 tmpString   += "ATA-1 ";
-                maxatalevel =  1;
-
-                if(minatalevel > 1)
-                    minatalevel = 1;
+                maxAtaLevel =  1;
+                minAtaLevel =  1;
             }
 
             if(ata2)
             {
                 tmpString   += "ATA-2 ";
-                maxatalevel =  2;
+                maxAtaLevel =  2;
 
-                if(minatalevel > 2)
-                    minatalevel = 2;
+                if(minAtaLevel > 2)
+                    minAtaLevel = 2;
             }
 
             if(ata3)
             {
                 tmpString   += "ATA-3 ";
-                maxatalevel =  3;
+                maxAtaLevel =  3;
 
-                if(minatalevel > 3)
-                    minatalevel = 3;
+                if(minAtaLevel > 3)
+                    minAtaLevel = 3;
             }
 
             if(ata4)
             {
                 tmpString   += "ATA/ATAPI-4 ";
-                maxatalevel =  4;
+                maxAtaLevel =  4;
 
-                if(minatalevel > 4)
-                    minatalevel = 4;
+                if(minAtaLevel > 4)
+                    minAtaLevel = 4;
             }
 
             if(ata5)
             {
                 tmpString   += "ATA/ATAPI-5 ";
-                maxatalevel =  5;
+                maxAtaLevel =  5;
 
-                if(minatalevel > 5)
-                    minatalevel = 5;
+                if(minAtaLevel > 5)
+                    minAtaLevel = 5;
             }
 
             if(ata6)
             {
                 tmpString   += "ATA/ATAPI-6 ";
-                maxatalevel =  6;
+                maxAtaLevel =  6;
 
-                if(minatalevel > 6)
-                    minatalevel = 6;
+                if(minAtaLevel > 6)
+                    minAtaLevel = 6;
             }
 
             if(ata7)
             {
                 tmpString   += "ATA/ATAPI-7 ";
-                maxatalevel =  7;
+                maxAtaLevel =  7;
 
-                if(minatalevel > 7)
-                    minatalevel = 7;
+                if(minAtaLevel > 7)
+                    minAtaLevel = 7;
             }
 
             if(acs)
             {
                 tmpString   += "ATA8-ACS ";
-                maxatalevel =  8;
+                maxAtaLevel =  8;
 
-                if(minatalevel > 8)
-                    minatalevel = 8;
+                if(minAtaLevel > 8)
+                    minAtaLevel = 8;
             }
 
             if(acs2)
             {
                 tmpString   += "ATA8-ACS2 ";
-                maxatalevel =  9;
+                maxAtaLevel =  9;
 
-                if(minatalevel > 9)
-                    minatalevel = 9;
+                if(minAtaLevel > 9)
+                    minAtaLevel = 9;
             }
 
             if(acs3)
             {
                 tmpString   += "ATA8-ACS3 ";
-                maxatalevel =  10;
+                maxAtaLevel =  10;
 
-                if(minatalevel > 10)
-                    minatalevel = 10;
+                if(minAtaLevel > 10)
+                    minAtaLevel = 10;
             }
 
             if(acs4)
             {
                 tmpString   += "ATA8-ACS4 ";
-                maxatalevel =  11;
+                maxAtaLevel =  11;
 
-                if(minatalevel > 11)
-                    minatalevel = 11;
+                if(minAtaLevel > 11)
+                    minAtaLevel = 11;
             }
 
             if(tmpString != "")
                 ataTwoValue.Add("Supported ATA versions", tmpString);
 
-            if(maxatalevel >= 3)
+            if(maxAtaLevel >= 3)
             {
                 switch(ataIdentify.MinorVersion)
                 {
@@ -613,7 +610,7 @@ namespace Aaru.Server
             }
             else if(!cfa)
             {
-                if(minatalevel >= 5)
+                if(minAtaLevel >= 5)
                     if(ataIdentify.GeneralConfiguration.HasFlag(Identify.GeneralConfigurationBit.IncompleteResponse))
                         ataOneValue.Add("Incomplete identify response");
 
@@ -623,7 +620,7 @@ namespace Aaru.Server
                 if(ataIdentify.GeneralConfiguration.HasFlag(Identify.GeneralConfigurationBit.Removable))
                     ataOneValue.Add("Device is removable");
 
-                if(minatalevel <= 5)
+                if(minAtaLevel <= 5)
                     if(ataIdentify.GeneralConfiguration.HasFlag(Identify.GeneralConfigurationBit.Fixed))
                         ataOneValue.Add("Device is fixed");
 
@@ -708,29 +705,29 @@ namespace Aaru.Server
                 {
                     case 1:
                         ataOneValue.
-                            Add($"{(ataIdentify.BufferSize * logicalsectorsize) / 1024} KiB of single ported single sector buffer");
+                            Add($"{(ataIdentify.BufferSize * logicalSectorSize) / 1024} KiB of single ported single sector buffer");
 
                         break;
                     case 2:
                         ataOneValue.
-                            Add($"{(ataIdentify.BufferSize * logicalsectorsize) / 1024} KiB of dual ported multi sector buffer");
+                            Add($"{(ataIdentify.BufferSize * logicalSectorSize) / 1024} KiB of dual ported multi sector buffer");
 
                         break;
                     case 3:
                         ataOneValue.
-                            Add($"{(ataIdentify.BufferSize * logicalsectorsize) / 1024} KiB of dual ported multi sector buffer with read caching");
+                            Add($"{(ataIdentify.BufferSize * logicalSectorSize) / 1024} KiB of dual ported multi sector buffer with read caching");
 
                         break;
                     default:
                         ataOneValue.
-                            Add($"{(ataIdentify.BufferSize * logicalsectorsize) / 1024} KiB of unknown type {ataIdentify.BufferType} buffer");
+                            Add($"{(ataIdentify.BufferSize * logicalSectorSize) / 1024} KiB of unknown type {ataIdentify.BufferType} buffer");
 
                         break;
                 }
 
             ataOneValue.Add("<i>Device capabilities:</i>");
 
-            if(ataIdentify.Capabilities.HasFlag(Identify.CapabilitiesBit.StandardStanbyTimer))
+            if(ataIdentify.Capabilities.HasFlag(Identify.CapabilitiesBit.StandardStandbyTimer))
                 ataOneValue.Add("Standby time values are standard");
 
             if(ataIdentify.Capabilities.HasFlag(Identify.CapabilitiesBit.IORDY))
@@ -776,7 +773,7 @@ namespace Aaru.Server
                 if(ataIdentify.TrustedComputing.HasFlag(Identify.TrustedComputingBit.TrustedComputing))
                     ataOneValue.Add("Device supports doubleword I/O");
 
-            if(minatalevel <= 3)
+            if(minAtaLevel <= 3)
             {
                 if(ataIdentify.PIOTransferTimingMode > 0)
                     ataTwoValue.Add("PIO timing mode", $"{ataIdentify.PIOTransferTimingMode}");
@@ -814,7 +811,7 @@ namespace Aaru.Server
             if(!string.IsNullOrEmpty(tmpString))
                 ataTwoValue.Add("Advanced PIO", tmpString);
 
-            if(minatalevel <= 3 &&
+            if(minAtaLevel <= 3 &&
                !atapi)
             {
                 tmpString = "";
@@ -1119,7 +1116,7 @@ namespace Aaru.Server
             if(ataIdentify.InterseekDelay != 0x0000 &&
                ataIdentify.InterseekDelay != 0xFFFF)
                 ataOneValue.
-                    Add($"{ataIdentify.InterseekDelay} microseconds of interseek delay for ISO-7779 accoustic testing");
+                    Add($"{ataIdentify.InterseekDelay} microseconds of interseek delay for ISO-7779 acoustic testing");
 
             if((ushort)ataIdentify.DeviceFormFactor != 0x0000 &&
                (ushort)ataIdentify.DeviceFormFactor != 0xFFFF)
@@ -1498,7 +1495,7 @@ namespace Aaru.Server
                 }
 
             if(!ata1 &&
-               maxatalevel >= 8)
+               maxAtaLevel >= 8)
                 if(ataIdentify.TrustedComputing.HasFlag(Identify.TrustedComputingBit.Set)    &&
                    !ataIdentify.TrustedComputing.HasFlag(Identify.TrustedComputingBit.Clear) &&
                    ataIdentify.TrustedComputing.HasFlag(Identify.TrustedComputingBit.TrustedComputing))
@@ -1600,7 +1597,7 @@ namespace Aaru.Server
                                         ? "Security is frozen" : "Security is not frozen");
 
                     ataOneValue.Add(ataIdentify.SecurityStatus.HasFlag(Identify.SecurityStatusBit.Expired)
-                                        ? "Security count has expired" : "Security count has notexpired");
+                                        ? "Security count has expired" : "Security count has not expired");
 
                     ataOneValue.Add(ataIdentify.SecurityStatus.HasFlag(Identify.SecurityStatusBit.Maximum)
                                         ? "Security level is maximum" : "Security level is high");
@@ -1668,7 +1665,7 @@ namespace Aaru.Server
                     ataOneValue.Add($"Version {(ataIdentify.NVCacheCaps & 0x0F00) >> 8}");
                 }
 
-                ataOneValue.Add($"Non-Volatile Cache is {ataIdentify.NVCacheSize * logicalsectorsize} bytes");
+                ataOneValue.Add($"Non-Volatile Cache is {ataIdentify.NVCacheSize * logicalSectorSize} bytes");
             }
 
             if(ataReport.ReadCapabilities != null)
@@ -1687,7 +1684,7 @@ namespace Aaru.Server
                     if(ataReport.ReadCapabilities.BlockSize != null)
                     {
                         ataTwoValue.Add("Logical sector size", $"{ataReport.ReadCapabilities.BlockSize} bytes");
-                        logicalsectorsize = ataReport.ReadCapabilities.BlockSize.Value;
+                        logicalSectorSize = ataReport.ReadCapabilities.BlockSize.Value;
                     }
 
                     if(ataReport.ReadCapabilities.PhysicalBlockSize != null)
@@ -1726,7 +1723,7 @@ namespace Aaru.Server
                                         $"{ataReport.ReadCapabilities.CHS.Cylinders * ataReport.ReadCapabilities.CHS.Heads * ataReport.ReadCapabilities.CHS.Sectors} max., {currentSectors} current");
 
                         ataTwoValue.Add("Device size in CHS mode",
-                                        $"{(ulong)currentSectors * logicalsectorsize} bytes, {((ulong)currentSectors * logicalsectorsize) / 1000 / 1000} Mb, {(double)((ulong)currentSectors * logicalsectorsize) / 1024 / 1024:F2} MiB");
+                                        $"{(ulong)currentSectors * logicalSectorSize} bytes, {((ulong)currentSectors * logicalSectorSize) / 1000 / 1000} Mb, {(double)((ulong)currentSectors * logicalSectorSize) / 1024 / 1024:F2} MiB");
                     }
                     else if(ataReport.ReadCapabilities.CHS != null)
                     {
@@ -1740,7 +1737,7 @@ namespace Aaru.Server
                         ataTwoValue.Add("Sectors addressable in CHS mode", $"{currentSectors}");
 
                         ataTwoValue.Add("Device size in CHS mode",
-                                        $"{(ulong)currentSectors * logicalsectorsize} bytes, {((ulong)currentSectors * logicalsectorsize) / 1000 / 1000} Mb, {(double)((ulong)currentSectors * logicalsectorsize) / 1024 / 1024:F2} MiB");
+                                        $"{(ulong)currentSectors * logicalSectorSize} bytes, {((ulong)currentSectors * logicalSectorSize) / 1000 / 1000} Mb, {(double)((ulong)currentSectors * logicalSectorSize) / 1024 / 1024:F2} MiB");
                     }
 
                     if(ataReport.ReadCapabilities.LBASectors != null)
@@ -1748,15 +1745,15 @@ namespace Aaru.Server
                         ataTwoValue.Add("Sectors addressable in sectors in 28-bit LBA mode",
                                         $"{ataReport.ReadCapabilities.LBASectors}");
 
-                        if(((ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize) / 1024 / 1024 > 1000000)
+                        if(((ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize) / 1024 / 1024 > 1000000)
                             ataTwoValue.Add("Device size in 28-bit LBA mode",
-                                            $"{(ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize} bytes, {((ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize) / 1000 / 1000 / 1000 / 1000} Tb, {(double)((ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
-                        else if(((ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize) / 1024 / 1024 > 1000)
+                                            $"{(ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize} bytes, {((ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize) / 1000 / 1000 / 1000 / 1000} Tb, {(double)((ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                        else if(((ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize) / 1024 / 1024 > 1000)
                             ataTwoValue.Add("Device size in 28-bit LBA mode",
-                                            $"{(ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize} bytes, {((ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize) / 1000 / 1000 / 1000} Gb, {(double)((ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize) / 1024 / 1024 / 1024:F2} GiB");
+                                            $"{(ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize} bytes, {((ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize) / 1000 / 1000 / 1000} Gb, {(double)((ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize) / 1024 / 1024 / 1024:F2} GiB");
                         else
                             ataTwoValue.Add("Device size in 28-bit LBA mode",
-                                            $"{(ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize} bytes, {((ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize) / 1000 / 1000} Mb, {(double)((ulong)ataReport.ReadCapabilities.LBASectors * logicalsectorsize) / 1024 / 1024:F2} MiB");
+                                            $"{(ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize} bytes, {((ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize) / 1000 / 1000} Mb, {(double)((ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize) / 1024 / 1024:F2} MiB");
                     }
 
                     if(ataReport.ReadCapabilities.LBA48Sectors != null)
@@ -1764,15 +1761,15 @@ namespace Aaru.Server
                         ataTwoValue.Add("Sectors addressable in sectors in 48-bit LBA mode",
                                         $"{ataReport.ReadCapabilities.LBA48Sectors}");
 
-                        if((ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize) / 1024 / 1024 > 1000000)
+                        if((ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize) / 1024 / 1024 > 1000000)
                             ataTwoValue.Add("Device size in 48-bit LBA mode",
-                                            $"{ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize} bytes, {(ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize) / 1000 / 1000 / 1000 / 1000} Tb, {(double)(ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
-                        else if((ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize) / 1024 / 1024 > 1000)
+                                            $"{ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize} bytes, {(ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize) / 1000 / 1000 / 1000 / 1000} Tb, {(double)(ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                        else if((ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize) / 1024 / 1024 > 1000)
                             ataTwoValue.Add("Device size in 48-bit LBA mode",
-                                            $"{ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize} bytes, {(ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize) / 1000 / 1000 / 1000} Gb, {(double)(ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize) / 1024 / 1024 / 1024:F2} GiB");
+                                            $"{ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize} bytes, {(ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize) / 1000 / 1000 / 1000} Gb, {(double)(ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize) / 1024 / 1024 / 1024:F2} GiB");
                         else
                             ataTwoValue.Add("Device size in 48-bit LBA mode",
-                                            $"{ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize} bytes, {(ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize) / 1000 / 1000} Mb, {(double)(ataReport.ReadCapabilities.LBA48Sectors * logicalsectorsize) / 1024 / 1024:F2} MiB");
+                                            $"{ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize} bytes, {(ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize) / 1000 / 1000} Mb, {(double)(ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize) / 1024 / 1024:F2} MiB");
                     }
 
                     if(ata1 || cfa)

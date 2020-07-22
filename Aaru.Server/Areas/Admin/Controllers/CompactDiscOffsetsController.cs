@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
-    public class CompactDiscOffsetsController : Controller
+    public sealed class CompactDiscOffsetsController : Controller
     {
         readonly AaruServerContext _context;
 

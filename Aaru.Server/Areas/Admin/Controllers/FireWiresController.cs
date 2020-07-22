@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
-    public class FireWiresController : Controller
+    public sealed class FireWiresController : Controller
     {
         readonly AaruServerContext _context;
 
@@ -112,17 +112,24 @@ namespace Aaru.Server.Areas.Admin.Controllers
         {
             List<FireWireModel> dups = _context.FireWire.GroupBy(x => new
             {
-                x.VendorID, x.ProductID, x.Manufacturer, x.Product,
+                x.VendorID,
+                x.ProductID,
+                x.Manufacturer,
+                x.Product,
                 x.RemovableMedia
             }).Where(x => x.Count() > 1).Select(x => new FireWireModel
             {
-                VendorID = x.Key.VendorID, ProductID     = x.Key.ProductID, Manufacturer = x.Key.Manufacturer,
-                Product  = x.Key.Product, RemovableMedia = x.Key.RemovableMedia
+                VendorID       = x.Key.VendorID,
+                ProductID      = x.Key.ProductID,
+                Manufacturer   = x.Key.Manufacturer,
+                Product        = x.Key.Product,
+                RemovableMedia = x.Key.RemovableMedia
             }).ToList();
 
             return View(new FireWireModelForView
             {
-                List = dups, Json = JsonConvert.SerializeObject(dups)
+                List = dups,
+                Json = JsonConvert.SerializeObject(dups)
             });
         }
 

@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
-    public class UsbsController : Controller
+    public sealed class UsbsController : Controller
     {
         readonly AaruServerContext _context;
 
@@ -73,16 +73,22 @@ namespace Aaru.Server.Areas.Admin.Controllers
         {
             List<UsbModel> dups = _context.Usb.GroupBy(x => new
             {
-                x.Manufacturer, x.Product, x.VendorID, x.ProductID
+                x.Manufacturer,
+                x.Product,
+                x.VendorID,
+                x.ProductID
             }).Where(x => x.Count() > 1).Select(x => new UsbModel
             {
-                Manufacturer = x.Key.Manufacturer, Product = x.Key.Product, VendorID = x.Key.VendorID,
+                Manufacturer = x.Key.Manufacturer,
+                Product      = x.Key.Product,
+                VendorID     = x.Key.VendorID,
                 ProductID    = x.Key.ProductID
             }).ToList();
 
             return View(new UsbModelForView
             {
-                List = dups, Json = JsonConvert.SerializeObject(dups)
+                List = dups,
+                Json = JsonConvert.SerializeObject(dups)
             });
         }
 

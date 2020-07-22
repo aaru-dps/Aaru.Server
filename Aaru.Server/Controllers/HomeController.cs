@@ -39,7 +39,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Aaru.Server.Controllers
 {
-    public class HomeController : Controller
+    public sealed class HomeController : Controller
     {
         readonly IWebHostEnvironment _environment;
 
@@ -59,7 +59,7 @@ namespace Aaru.Server.Controllers
 
             ViewBag.Markdown = Markdown.ToHtml(mdcontent);
 
-            ViewBag.lblVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            ViewBag.lblVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
 
             return View();
         }
@@ -78,7 +78,7 @@ namespace Aaru.Server.Controllers
 
             ViewBag.Markdown = Markdown.ToHtml(mdcontent);
 
-            ViewBag.lblVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            ViewBag.lblVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
 
             return View();
         }
@@ -97,7 +97,7 @@ namespace Aaru.Server.Controllers
 
             ViewBag.Markdown = Markdown.ToHtml(mdcontent);
 
-            ViewBag.lblVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            ViewBag.lblVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
 
             return View();
         }
@@ -116,7 +116,7 @@ namespace Aaru.Server.Controllers
 
             ViewBag.Markdown = Markdown.ToHtml(mdcontent);
 
-            ViewBag.lblVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            ViewBag.lblVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
 
             return View();
         }
@@ -135,13 +135,13 @@ namespace Aaru.Server.Controllers
 
             ViewBag.Markdown = Markdown.ToHtml(mdcontent);
 
-            ViewBag.lblVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            ViewBag.lblVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
 
             return View();
         }
 
         [Route("CONTRIBUTING")]
-        public ActionResult CONTRIBUTING()
+        public ActionResult Contributing()
         {
             var sr =
                 new StreamReader(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
@@ -173,7 +173,7 @@ namespace Aaru.Server.Controllers
 
             ViewBag.Markdown = Markdown.ToHtml(mdcontent);
 
-            ViewBag.lblVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            ViewBag.lblVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
 
             return View();
         }
@@ -192,13 +192,13 @@ namespace Aaru.Server.Controllers
 
             ViewBag.Markdown = Markdown.ToHtml(mdcontent);
 
-            ViewBag.lblVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            ViewBag.lblVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
 
             return View();
         }
 
         [Route("TODO")]
-        public ActionResult TODO()
+        public ActionResult Todo()
         {
             var sr =
                 new StreamReader(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
@@ -211,7 +211,7 @@ namespace Aaru.Server.Controllers
 
             ViewBag.Markdown = Markdown.ToHtml(mdcontent);
 
-            ViewBag.lblVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            ViewBag.lblVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
 
             return View();
         }

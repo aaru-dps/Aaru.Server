@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 namespace Aaru.Server.Areas.Admin.Controllers
 {
     [Area("Admin"), Authorize]
-    public class ReportsController : Controller
+    public sealed class ReportsController : Controller
     {
         readonly AaruServerContext _context;
 
@@ -164,8 +164,6 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-        bool UploadedReportExists(int id) => _context.Reports.Any(e => e.Id == id);
 
         public IActionResult Promote(int? id)
         {

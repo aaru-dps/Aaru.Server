@@ -26,7 +26,10 @@ namespace Aaru.Server
 
             var user = new IdentityUser
             {
-                Email              = email, NormalizedEmail = email, EmailConfirmed = true, UserName = email,
+                Email              = email,
+                NormalizedEmail    = email,
+                EmailConfirmed     = true,
+                UserName           = email,
                 NormalizedUserName = email
             };
 

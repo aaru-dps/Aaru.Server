@@ -33,7 +33,7 @@
 using System.Collections.Generic;
 using Aaru.CommonTypes.Structs.Devices.SCSI;
 
-namespace Aaru.Server
+namespace Aaru.Server.Core
 {
     internal static class ScsiInquiry
     {
@@ -328,19 +328,19 @@ namespace Aaru.Server
             switch((TGPSValues)inquiry.TPGS)
             {
                 case TGPSValues.NotSupported:
-                    scsiOneValue.Add("Device does not support assymetrical access");
+                    scsiOneValue.Add("Device does not support asymmetrical access");
 
                     break;
                 case TGPSValues.OnlyImplicit:
-                    scsiOneValue.Add("Device only supports implicit assymetrical access");
+                    scsiOneValue.Add("Device only supports implicit asymmetrical access");
 
                     break;
                 case TGPSValues.OnlyExplicit:
-                    scsiOneValue.Add("Device only supports explicit assymetrical access");
+                    scsiOneValue.Add("Device only supports explicit asymmetrical access");
 
                     break;
                 case TGPSValues.Both:
-                    scsiOneValue.Add("Device supports implicit and explicit assymetrical access");
+                    scsiOneValue.Add("Device supports implicit and explicit asymmetrical access");
 
                     break;
                 default:

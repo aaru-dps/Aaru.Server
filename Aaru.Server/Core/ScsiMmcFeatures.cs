@@ -34,7 +34,7 @@ using System.Collections.Generic;
 using Aaru.CommonTypes.Metadata;
 using Aaru.CommonTypes.Structs.Devices.SCSI;
 
-namespace Aaru.Server
+namespace Aaru.Server.Core
 {
     public static class ScsiMmcFeatures
     {
@@ -121,7 +121,7 @@ namespace Aaru.Server
                 mmcOneValue.Add("Drive has an analogue audio output");
 
             if(ftr.CanPseudoOverwriteBDR)
-                mmcOneValue.Add("Drive can write BD-R on Pseudo-OVerwrite SRM mode");
+                mmcOneValue.Add("Drive can write BD-R on Pseudo-OverWrite SRM mode");
 
             if(ftr.CanReadAllDualR)
                 mmcOneValue.Add("Drive can read DVD-R DL from all recording modes");
@@ -431,7 +431,7 @@ namespace Aaru.Server
 
             if(ftr.SupportsCPRM &&
                ftr.CPRMVersion.HasValue)
-                mmcOneValue.Add($"Drive supports DVD CPPM version {ftr.CPRMVersion}");
+                mmcOneValue.Add($"Drive supports DVD CPRM version {ftr.CPRMVersion}");
             else if(ftr.SupportsCPRM)
                 mmcOneValue.Add("Drive supports DVD CPRM");
 

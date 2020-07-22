@@ -12,23 +12,22 @@ using Microsoft.Extensions.Configuration;
 
 namespace Aaru.Server
 {
-    public class BasicAuthMiddleware
+    public sealed class BasicAuthMiddleware
     {
-        readonly RequestDelegate next;
-        readonly string          realm;
+        readonly RequestDelegate _next;
+        readonly string          _realm;
 
         public BasicAuthMiddleware(RequestDelegate next, string realm)
         {
-            this.next  = next;
-            this.realm = realm;
+            _next  = next;
+            _realm = realm;
         }
 
         public async Task Invoke(HttpContext context)
         {
             string authHeader = context.Request.Headers["Authorization"];
 
-            if(authHeader != null &&
-               authHeader.StartsWith("Basic "))
+            if(authHeader?.StartsWith("Basic ") == true)
             {
                 // Get the encoded username and password
                 string encodedUsernamePassword =
@@ -45,7 +44,7 @@ namespace Aaru.Server
                 // Check if login is correct
                 if(IsAuthorized(username, password))
                 {
-                    await next.Invoke(context);
+                    await _next.Invoke(context);
 
                     return;
                 }
@@ -55,9 +54,9 @@ namespace Aaru.Server
             context.Response.Headers["WWW-Authenticate"] = "Basic";
 
             // Add realm if it is not null
-            if(!string.IsNullOrWhiteSpace(realm))
+            if(!string.IsNullOrWhiteSpace(_realm))
             {
-                context.Response.Headers["WWW-Authenticate"] += $" realm=\"{realm}\"";
+                context.Response.Headers["WWW-Authenticate"] += $" realm=\"{_realm}\"";
             }
 
             // Return unauthorized
@@ -73,8 +72,7 @@ namespace Aaru.Server
             string                validUser     = configuration.GetValue<string>("MetricsAuthentication:Username");
             string                validPassword = configuration.GetValue<string>("MetricsAuthentication:Password");
 
-            return !string.IsNullOrWhiteSpace(validUser)                                   &&
-                   !string.IsNullOrWhiteSpace(validPassword)                               &&
+            return !string.IsNullOrWhiteSpace(validUser) && !string.IsNullOrWhiteSpace(validPassword) &&
                    username.Equals(validUser, StringComparison.InvariantCultureIgnoreCase) &&
                    password.Equals(validPassword);
         }
