@@ -1,8 +1,42 @@
-[{
-  "Manufacturer": "PLDS",
-  "Model": "DVD-RW DA8AESH",
-  "Offset": 6,
-  "Submissions": 1,
-  "Agreement": -1,
-  "AddedWhen": "2020-01-03T00:00:00Z"
-}]
+[
+  {
+    "Manufacturer": "PLDS",
+    "Model": "DVD-RW DA8AESH",
+    "Offset": 6,
+    "Submissions": 1,
+    "Agreement": -1,
+    "AddedWhen": "2020-01-03T00:00:00Z"
+  },
+  {
+    "Manufacturer": "MATSHITA",
+    "Model": "DVD+-RW UJ890",
+    "Offset": 690,
+    "Submissions": 1,
+    "Agreement": -1,
+    "AddedWhen": "2020-11-08T13:40:00Z"
+  },
+  {
+    "Manufacturer": "MATSHITA",
+    "Model": "DVD-RAM UJ890",
+    "Offset": 690,
+    "Submissions": 1,
+    "Agreement": -1,
+    "AddedWhen": "2020-11-08T13:40:00Z"
+  },
+  {
+    "Manufacturer": "MATSHITA",
+    "Model": "DVD-RAM UJ890AS",
+    "Offset": 690,
+    "Submissions": 1,
+    "Agreement": -1,
+    "AddedWhen": "2020-11-08T13:40:00Z"
+  },
+  {
+    "Manufacturer": "MATSHITA",
+    "Model": "DVD-RAM UJ890ES",
+    "Offset": 690,
+    "Submissions": 1,
+    "Agreement": -1,
+    "AddedWhen": "2020-11-08T13:40:00Z"
+  }
+]
