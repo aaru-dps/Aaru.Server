@@ -8,7 +8,7 @@
   <PropertyGroup>
     <ReleaseVersion>$(Version)</ReleaseVersion>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
-    <Version>5.1.99.298</Version>
+    <Version>5.2.99.304</Version>
     <Company>Claunia.com</Company>
     <Copyright>Copyright © 2011-2020 Natalia Portillo</Copyright>
     <Product>Aaru Data Preservation Suite</Product>
