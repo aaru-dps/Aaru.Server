@@ -196,24 +196,5 @@ namespace Aaru.Server.Controllers
 
             return View();
         }
-
-        [Route("TODO")]
-        public ActionResult Todo()
-        {
-            var sr =
-                new StreamReader(Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
-                                              "docs", "TODO.md"));
-
-            string mdcontent = sr.ReadToEnd();
-            sr.Close();
-
-            mdcontent = mdcontent.Replace(".md)", ")");
-
-            ViewBag.Markdown = Markdown.ToHtml(mdcontent);
-
-            ViewBag.lblVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
-
-            return View();
-        }
     }
 }
