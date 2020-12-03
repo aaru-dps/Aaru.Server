@@ -110,7 +110,7 @@ else
                     @Html.DisplayFor(modelItem => item.Type)
                 </td>
                 <td>
-                    <a asp-action="LinkReports" asp-route-statsId="@Model.Id" asp-route-deviceId="@item.Id" class="btn btn-secondary">Link</a>
+                    <a asp-action="LinkReports" asp-route-deviceId="@item.Id" asp-route-statsId="@Model.Id" class="btn btn-secondary">Link</a>
                 </td>
             </tr>
         }

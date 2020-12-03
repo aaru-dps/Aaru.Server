@@ -17,9 +17,10 @@ namespace Aaru.Server.Areas.Admin.Controllers
         public ReportsController(AaruServerContext context) => _context = context;
 
         // GET: Admin/Reports
-        public async Task<IActionResult> Index() =>
-            View(await _context.Reports.OrderBy(r => r.Manufacturer).ThenBy(r => r.Model).ThenBy(r => r.Revision).
-                                ThenBy(r => r.CompactFlash).ThenBy(r => r.Type).ToListAsync());
+        public async Task<IActionResult> Index() => View(await _context.Reports.OrderBy(r => r.Manufacturer).
+                                                                        ThenBy(r => r.Model).ThenBy(r => r.Revision).
+                                                                        ThenBy(r => r.CompactFlash).ThenBy(r => r.Type).
+                                                                        ToListAsync());
 
         // GET: Admin/Reports/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -39,25 +40,25 @@ namespace Aaru.Server.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            model.ReportAll = _context.
-                              Devices.Where(d => d.Manufacturer == model.Report.Manufacturer &&
-                                                 d.Model == model.Report.Model && d.Revision == model.Report.Revision).
-                              Select(d => d.Id).ToList();
+            model.ReportAll = _context.Devices.
+                                       Where(d => d.Manufacturer == model.Report.Manufacturer &&
+                                                  d.Model == model.Report.Model && d.Revision == model.Report.Revision).
+                                       Select(d => d.Id).ToList();
 
-            model.ReportButManufacturer = _context.
-                                          Devices.Where(d => d.Model    == model.Report.Model &&
-                                                             d.Revision == model.Report.Revision).Select(d => d.Id).
-                                          Where(d => model.ReportAll.All(r => r != d)).ToList();
+            model.ReportButManufacturer = _context.Devices.
+                                                   Where(d => d.Model    == model.Report.Model &&
+                                                              d.Revision == model.Report.Revision).Select(d => d.Id).
+                                                   Where(d => model.ReportAll.All(r => r != d)).ToList();
 
-            model.SameAll = _context.
-                            Reports.Where(d => d.Manufacturer == model.Report.Manufacturer &&
-                                               d.Model == model.Report.Model && d.Revision == model.Report.Revision &&
-                                               d.Id != id).Select(d => d.Id).ToList();
+            model.SameAll = _context.Reports.
+                                     Where(d => d.Manufacturer == model.Report.Manufacturer &&
+                                                d.Model == model.Report.Model && d.Revision == model.Report.Revision &&
+                                                d.Id != id).Select(d => d.Id).ToList();
 
-            model.SameButManufacturer = _context.
-                                        Reports.Where(d => d.Model    == model.Report.Model    &&
-                                                           d.Revision == model.Report.Revision && d.Id != id).
-                                        Select(d => d.Id).Where(d => model.SameAll.All(r => r != d)).ToList();
+            model.SameButManufacturer = _context.Reports.
+                                                 Where(d => d.Model    == model.Report.Model    &&
+                                                            d.Revision == model.Report.Revision && d.Id != id).
+                                                 Select(d => d.Id).Where(d => model.SameAll.All(r => r != d)).ToList();
 
             model.ReadCapabilitiesId =
                 model.Report.ATA?.ReadCapabilities?.Id ?? model.Report.SCSI?.ReadCapabilities?.Id ?? 0;

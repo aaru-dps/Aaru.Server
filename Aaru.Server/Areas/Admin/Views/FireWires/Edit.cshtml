@@ -39,7 +39,7 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input asp-for="Id" type="hidden" />
             <div class="form-group">
                 <label asp-for="VendorID" class="control-label"></label>
                 <input asp-for="VendorID" class="form-control" />
@@ -62,7 +62,7 @@
             </div>
             <div class="form-check form-group">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="RemovableMedia" /> @Html.DisplayNameFor(model => model.RemovableMedia)
+                    <input asp-for="RemovableMedia" class="form-check-input" /> @Html.DisplayNameFor(model => model.RemovableMedia)
                 </label>
             </div>
             <div class="form-group">

@@ -450,13 +450,12 @@ namespace Aaru.Server.Task
                             modifiedOffsets++;
                     }
 
-                    foreach(Device device in ctx.
-                                             Devices.
-                                             Where(d => d.Manufacturer == null && d.Model != null &&
-                                                        d.Model.Trim() == model).
-                                             Union(ctx.Devices.Where(d => d.Manufacturer != null &&
-                                                                          d.Manufacturer.Trim() == manufacturer &&
-                                                                          d.Model != null && d.Model == model)))
+                    foreach(Device device in ctx.Devices.
+                                                 Where(d => d.Manufacturer == null && d.Model != null &&
+                                                            d.Model.Trim() == model).
+                                                 Union(ctx.Devices.Where(d => d.Manufacturer != null &&
+                                                                              d.Manufacturer.Trim() == manufacturer &&
+                                                                              d.Model != null && d.Model == model)))
                     {
                         if(device.CdOffset     == cdOffset &&
                            device.ModifiedWhen == cdOffset.ModifiedWhen)

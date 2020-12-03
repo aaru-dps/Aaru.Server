@@ -124,8 +124,8 @@ namespace Aaru.Server.Controllers
                 {
                     Chs existingChs =
                         _ctx.Chs.FirstOrDefault(c =>
-                                                    c.Cylinders == newUploadedReport.
-                                                                   ATA.ReadCapabilities.CHS.Cylinders             &&
+                                                    c.Cylinders == newUploadedReport.ATA.ReadCapabilities.CHS.
+                                                        Cylinders                                                 &&
                                                     c.Heads   == newUploadedReport.ATA.ReadCapabilities.CHS.Heads &&
                                                     c.Sectors == newUploadedReport.ATA.ReadCapabilities.CHS.Sectors);
 
@@ -137,12 +137,11 @@ namespace Aaru.Server.Controllers
                 {
                     Chs existingChs =
                         _ctx.Chs.FirstOrDefault(c =>
-                                                    c.Cylinders == newUploadedReport.
-                                                                   ATA.ReadCapabilities.CurrentCHS.Cylinders &&
-                                                    c.Heads == newUploadedReport.
-                                                               ATA.ReadCapabilities.CurrentCHS.Heads &&
-                                                    c.Sectors == newUploadedReport.
-                                                                 ATA.ReadCapabilities.CurrentCHS.Sectors);
+                                                    c.Cylinders == newUploadedReport.ATA.ReadCapabilities.CurrentCHS.
+                                                        Cylinders &&
+                                                    c.Heads == newUploadedReport.ATA.ReadCapabilities.CurrentCHS.
+                                                        Heads && c.Sectors == newUploadedReport.ATA.ReadCapabilities.
+                                                        CurrentCHS.Sectors);
 
                     if(existingChs != null)
                         newUploadedReport.ATA.ReadCapabilities.CurrentCHS = existingChs;
@@ -286,8 +285,8 @@ namespace Aaru.Server.Controllers
                 {
                     Chs existingChs =
                         _ctx.Chs.FirstOrDefault(c =>
-                                                    c.Cylinders == newUploadedReport.
-                                                                   ATA.ReadCapabilities.CHS.Cylinders             &&
+                                                    c.Cylinders == newUploadedReport.ATA.ReadCapabilities.CHS.
+                                                        Cylinders                                                 &&
                                                     c.Heads   == newUploadedReport.ATA.ReadCapabilities.CHS.Heads &&
                                                     c.Sectors == newUploadedReport.ATA.ReadCapabilities.CHS.Sectors);
 
@@ -299,12 +298,11 @@ namespace Aaru.Server.Controllers
                 {
                     Chs existingChs =
                         _ctx.Chs.FirstOrDefault(c =>
-                                                    c.Cylinders == newUploadedReport.
-                                                                   ATA.ReadCapabilities.CurrentCHS.Cylinders &&
-                                                    c.Heads == newUploadedReport.
-                                                               ATA.ReadCapabilities.CurrentCHS.Heads &&
-                                                    c.Sectors == newUploadedReport.
-                                                                 ATA.ReadCapabilities.CurrentCHS.Sectors);
+                                                    c.Cylinders == newUploadedReport.ATA.ReadCapabilities.CurrentCHS.
+                                                        Cylinders &&
+                                                    c.Heads == newUploadedReport.ATA.ReadCapabilities.CurrentCHS.
+                                                        Heads && c.Sectors == newUploadedReport.ATA.ReadCapabilities.
+                                                        CurrentCHS.Sectors);
 
                     if(existingChs != null)
                         newUploadedReport.ATA.ReadCapabilities.CurrentCHS = existingChs;

@@ -184,12 +184,12 @@ namespace Aaru.Server.Controllers
                         }
 
                     if(realMedia.Count > 0)
-                        ViewBag.repRealMedia =
-                            realMedia.OrderBy(media => media.Type).ThenBy(media => media.SubType).ToList();
+                        ViewBag.repRealMedia = realMedia.OrderBy(media => media.Type).ThenBy(media => media.SubType).
+                                                         ToList();
 
                     if(virtualMedia.Count > 0)
-                        ViewBag.repVirtualMedia =
-                            virtualMedia.OrderBy(media => media.Type).ThenBy(media => media.SubType).ToList();
+                        ViewBag.repVirtualMedia = virtualMedia.OrderBy(media => media.Type).
+                                                               ThenBy(media => media.SubType).ToList();
                 }
 
                 if(_ctx.DeviceStats.Any())
@@ -499,7 +499,7 @@ namespace Aaru.Server.Controllers
                 {
                     (string type, string subType) mediaType =
                         MediaType.MediaTypeToString((CommonTypes.MediaType)Enum.Parse(typeof(CommonTypes.MediaType),
-                                                                                      media.Type));
+                                                        media.Type));
 
                     media.Type = $"{mediaType.type} ({mediaType.subType})";
                 }
@@ -535,7 +535,7 @@ namespace Aaru.Server.Controllers
                 {
                     (string type, string subType) mediaType =
                         MediaType.MediaTypeToString((CommonTypes.MediaType)Enum.Parse(typeof(CommonTypes.MediaType),
-                                                                                      media.Type));
+                                                        media.Type));
 
                     media.Type = $"{mediaType.type} ({mediaType.subType})";
                 }

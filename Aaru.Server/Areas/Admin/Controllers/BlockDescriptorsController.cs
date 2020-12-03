@@ -15,8 +15,8 @@ namespace Aaru.Server.Areas.Admin.Controllers
         public BlockDescriptorsController(AaruServerContext context) => _context = context;
 
         // GET: Admin/BlockDescriptors
-        public async Task<IActionResult> Index() =>
-            View(await _context.BlockDescriptor.OrderBy(b => b.BlockLength).ThenBy(b => b.Blocks).
-                                ThenBy(b => b.Density).ToListAsync());
+        public async Task<IActionResult> Index() => View(await _context.BlockDescriptor.OrderBy(b => b.BlockLength).
+                                                                        ThenBy(b => b.Blocks).ThenBy(b => b.Density).
+                                                                        ToListAsync());
     }
 }

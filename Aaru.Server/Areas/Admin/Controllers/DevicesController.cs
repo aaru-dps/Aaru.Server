@@ -17,9 +17,10 @@ namespace Aaru.Server.Areas.Admin.Controllers
         public DevicesController(AaruServerContext context) => _context = context;
 
         // GET: Admin/Devices
-        public async Task<IActionResult> Index() =>
-            View(await _context.Devices.OrderBy(d => d.Manufacturer).ThenBy(d => d.Model).ThenBy(d => d.Revision).
-                                ThenBy(d => d.CompactFlash).ThenBy(d => d.Type).ToListAsync());
+        public async Task<IActionResult> Index() => View(await _context.Devices.OrderBy(d => d.Manufacturer).
+                                                                        ThenBy(d => d.Model).ThenBy(d => d.Revision).
+                                                                        ThenBy(d => d.CompactFlash).ThenBy(d => d.Type).
+                                                                        ToListAsync());
 
         // GET: Admin/Devices/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -39,25 +40,25 @@ namespace Aaru.Server.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            model.ReportAll = _context.
-                              Reports.Where(d => d.Manufacturer == model.Report.Manufacturer &&
-                                                 d.Model == model.Report.Model && d.Revision == model.Report.Revision).
-                              Select(d => d.Id).ToList();
+            model.ReportAll = _context.Reports.
+                                       Where(d => d.Manufacturer == model.Report.Manufacturer &&
+                                                  d.Model == model.Report.Model && d.Revision == model.Report.Revision).
+                                       Select(d => d.Id).ToList();
 
-            model.ReportButManufacturer = _context.
-                                          Reports.Where(d => d.Model    == model.Report.Model &&
-                                                             d.Revision == model.Report.Revision).Select(d => d.Id).
-                                          Where(d => model.ReportAll.All(r => r != d)).ToList();
+            model.ReportButManufacturer = _context.Reports.
+                                                   Where(d => d.Model    == model.Report.Model &&
+                                                              d.Revision == model.Report.Revision).Select(d => d.Id).
+                                                   Where(d => model.ReportAll.All(r => r != d)).ToList();
 
-            model.SameAll = _context.
-                            Devices.Where(d => d.Manufacturer == model.Report.Manufacturer &&
-                                               d.Model == model.Report.Model && d.Revision == model.Report.Revision &&
-                                               d.Id != id).Select(d => d.Id).ToList();
+            model.SameAll = _context.Devices.
+                                     Where(d => d.Manufacturer == model.Report.Manufacturer &&
+                                                d.Model == model.Report.Model && d.Revision == model.Report.Revision &&
+                                                d.Id != id).Select(d => d.Id).ToList();
 
-            model.SameButManufacturer = _context.
-                                        Devices.Where(d => d.Model    == model.Report.Model    &&
-                                                           d.Revision == model.Report.Revision && d.Id != id).
-                                        Select(d => d.Id).Where(d => model.SameAll.All(r => r != d)).ToList();
+            model.SameButManufacturer = _context.Devices.
+                                                 Where(d => d.Model    == model.Report.Model    &&
+                                                            d.Revision == model.Report.Revision && d.Id != id).
+                                                 Select(d => d.Id).Where(d => model.SameAll.All(r => r != d)).ToList();
 
             model.StatsAll = _context.DeviceStats.
                                       Where(d => d.Manufacturer == model.Report.Manufacturer &&

@@ -25,15 +25,12 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
         // GET: Admin/Scsis
         public IActionResult Index() => View(_context.Scsi.AsEnumerable().
-                                                      OrderBy(m =>
-                                                                  StringHandlers.CToString(m.Inquiry?.
-                                                                                             VendorIdentification)).
-                                                      ThenBy(m =>
-                                                                 StringHandlers.CToString(m.Inquiry?.
-                                                                                            ProductIdentification)).
-                                                      ThenBy(m =>
-                                                                 StringHandlers.CToString(m.Inquiry?.
-                                                                                            ProductRevisionLevel)));
+                                                      OrderBy(m => StringHandlers.CToString(m.Inquiry?.
+                                                                  VendorIdentification)).
+                                                      ThenBy(m => StringHandlers.CToString(m.Inquiry?.
+                                                                 ProductIdentification)).
+                                                      ThenBy(m => StringHandlers.CToString(m.Inquiry?.
+                                                                 ProductRevisionLevel)));
 
         // GET: Admin/Scsis/Details/5
         public async Task<IActionResult> Details(int? id)

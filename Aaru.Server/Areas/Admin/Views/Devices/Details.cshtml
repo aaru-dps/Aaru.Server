@@ -100,49 +100,49 @@
 @if(Model.ReadCapabilitiesId != 0)
 {
     <div>
-        <a asp-controller="TestedMedias" asp-action="Details" asp-route-id="@Model.ReadCapabilitiesId" target="_blank">Read capabilities</a>
+        <a asp-action="Details" asp-controller="TestedMedias" asp-route-id="@Model.ReadCapabilitiesId" target="_blank">Read capabilities</a>
     </div>
 }
 @if(Model.Report.ATA != null)
 {
     <div>
-        <a asp-controller="Atas" asp-action="Details" asp-route-id="@Model.Report.ATA.Id" target="_blank">ATA report</a>
+        <a asp-action="Details" asp-controller="Atas" asp-route-id="@Model.Report.ATA.Id" target="_blank">ATA report</a>
     </div>
 }
 @if(Model.Report.ATAPI != null)
 {
     <div>
-        <a asp-controller="Atas" asp-action="Details" asp-route-id="@Model.Report.ATAPI.Id" target="_blank">ATAPI report</a>
+        <a asp-action="Details" asp-controller="Atas" asp-route-id="@Model.Report.ATAPI.Id" target="_blank">ATAPI report</a>
     </div>
 }
 @if(Model.Report.SCSI != null)
 {
     <div>
-        <a asp-controller="Scsis" asp-action="Details" asp-route-id="@Model.Report.SCSI.Id" target="_blank">SCSI report</a>
+        <a asp-action="Details" asp-controller="Scsis" asp-route-id="@Model.Report.SCSI.Id" target="_blank">SCSI report</a>
     </div>
 }
 @if(Model.Report.MultiMediaCard != null)
 {
     <div>
-        <a asp-controller="MmcSds" asp-action="Details" asp-route-id="@Model.Report.MultiMediaCard.Id" target="_blank">MultiMediaCard report</a>
+        <a asp-action="Details" asp-controller="MmcSds" asp-route-id="@Model.Report.MultiMediaCard.Id" target="_blank">MultiMediaCard report</a>
     </div>
 }
 @if(Model.Report.SecureDigital != null)
 {
     <div>
-        <a asp-controller="MmcSds" asp-action="Details" asp-route-id="@Model.Report.SecureDigital.Id" target="_blank">SecureDigital report</a>
+        <a asp-action="Details" asp-controller="MmcSds" asp-route-id="@Model.Report.SecureDigital.Id" target="_blank">SecureDigital report</a>
     </div>
 }
 @if(Model.Report.USB != null)
 {
     <div>
-        <a asp-controller="Usbs" asp-action="Details" asp-route-id="@Model.Report.USB.Id" target="_blank">USB report</a>
+        <a asp-action="Details" asp-controller="Usbs" asp-route-id="@Model.Report.USB.Id" target="_blank">USB report</a>
     </div>
 }
 @if(Model.Report.GdRomSwapDiscCapabilitiesId != null)
 {
     <div>
-        <a asp-controller="GdRomSwapDiscCapabilities" asp-action="Details" asp-route-id="@Model.Report.GdRomSwapDiscCapabilitiesId" target="_blank">GD-ROM swap-trick capabilities report</a>
+        <a asp-action="Details" asp-controller="GdRomSwapDiscCapabilities" asp-route-id="@Model.Report.GdRomSwapDiscCapabilitiesId" target="_blank">GD-ROM swap-trick capabilities report</a>
     </div>
 }
 @if(Model.Report.FireWire != null)
@@ -179,7 +179,7 @@
                     </td>
                     <td>
                         <a asp-action="Details" asp-route-id="@item" class="btn btn-primary" target="_blank">Details</a>
-                        <a asp-action="Merge" asp-route-slave="@item" asp-route-master="@Model.Report.Id" class="btn btn-secondary">Merge</a>
+                        <a asp-action="Merge" asp-route-master="@Model.Report.Id" asp-route-slave="@item" class="btn btn-secondary">Merge</a>
                     </td>
                 </tr>
             }
@@ -209,7 +209,7 @@
                     </td>
                     <td>
                         <a asp-action="Details" asp-route-id="@item" class="btn btn-primary" target="_blank">Details</a>
-                        <a asp-action="Merge" asp-route-slave="@item" asp-route-master="@Model.Report.Id" class="btn btn-secondary">Merge</a>
+                        <a asp-action="Merge" asp-route-master="@Model.Report.Id" asp-route-slave="@item" class="btn btn-secondary">Merge</a>
                     </td>
                 </tr>
             }
@@ -238,8 +238,8 @@
                         @item
                     </td>
                     <td>
-                        <a asp-controller="Reports" asp-action="Details" asp-route-id="@item" class="btn btn-primary" target="_blank">Details</a>
-                        <a asp-action="MergeReports" asp-route-reportId="@item" asp-route-deviceId="@Model.Report.Id" class="btn btn-secondary">Merge</a>
+                        <a asp-action="Details" asp-controller="Reports" asp-route-id="@item" class="btn btn-primary" target="_blank">Details</a>
+                        <a asp-action="MergeReports" asp-route-deviceId="@Model.Report.Id" asp-route-reportId="@item" class="btn btn-secondary">Merge</a>
                     </td>
                 </tr>
             }
@@ -268,8 +268,8 @@
                         @item
                     </td>
                     <td>
-                        <a asp-controller="Reports" asp-action="Details" asp-route-id="@item" class="btn btn-primary" target="_blank">Details</a>
-                        <a asp-action="MergeReports" asp-route-reportId="@item" asp-route-deviceId="@Model.Report.Id" class="btn btn-secondary">Merge</a>
+                        <a asp-action="Details" asp-controller="Reports" asp-route-id="@item" class="btn btn-primary" target="_blank">Details</a>
+                        <a asp-action="MergeReports" asp-route-deviceId="@Model.Report.Id" asp-route-reportId="@item" class="btn btn-secondary">Merge</a>
                     </td>
                 </tr>
             }
@@ -336,7 +336,7 @@
                         }
                     </td>
                     <td>
-                        <a asp-action="LinkReports" asp-route-statsId="@item.Id" asp-route-deviceId="@Model.Report.Id" class="btn btn-secondary">Link</a>
+                        <a asp-action="LinkReports" asp-route-deviceId="@Model.Report.Id" asp-route-statsId="@item.Id" class="btn btn-secondary">Link</a>
                     </td>
                 </tr>
             }
@@ -392,11 +392,10 @@
                         }
                         else
                         {
-                            <a asp-action="Details" asp-route-id="@item.Report.Id" target="_blank">Yes</a>
-                        }
+                            <a asp-action="Details" asp-route-id="@item.Report.Id" target="_blank">Yes</a>                        }
                     </td>
                     <td>
-                        <a asp-action="LinkReports" asp-route-statsId="@item.Id" asp-route-deviceId="@Model.Report.Id" class="btn btn-secondary">Link</a>
+                        <a asp-action="LinkReports" asp-route-deviceId="@Model.Report.Id" asp-route-statsId="@item.Id" class="btn btn-secondary">Link</a>
                     </td>
                 </tr>
             }
@@ -437,7 +436,7 @@
                         @Html.DisplayFor(modelItem => item.MediumTypeName)
                     </td>
                     <td>
-                        <a asp-controller="TestedMedias" asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary" target="_blank">Details</a>
+                        <a asp-action="Details" asp-controller="TestedMedias" asp-route-id="@item.Id" class="btn btn-secondary" target="_blank">Details</a>
                     </td>
                 </tr>
             }
@@ -478,7 +477,7 @@
                         @Html.DisplayFor(modelItem => item.MediumTypeName)
                     </td>
                     <td>
-                        <a asp-controller="TestedSequentialMedias" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" target="_blank">Delete</a>
+                        <a asp-action="Delete" asp-controller="TestedSequentialMedias" asp-route-id="@item.Id" class="btn btn-danger" target="_blank">Delete</a>
                     </td>
                 </tr>
             }

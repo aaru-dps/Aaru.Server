@@ -705,22 +705,22 @@ namespace Aaru.Server.Core
                 {
                     case 1:
                         ataOneValue.
-                            Add($"{(ataIdentify.BufferSize * logicalSectorSize) / 1024} KiB of single ported single sector buffer");
+                            Add($"{ataIdentify.BufferSize * logicalSectorSize / 1024} KiB of single ported single sector buffer");
 
                         break;
                     case 2:
                         ataOneValue.
-                            Add($"{(ataIdentify.BufferSize * logicalSectorSize) / 1024} KiB of dual ported multi sector buffer");
+                            Add($"{ataIdentify.BufferSize * logicalSectorSize / 1024} KiB of dual ported multi sector buffer");
 
                         break;
                     case 3:
                         ataOneValue.
-                            Add($"{(ataIdentify.BufferSize * logicalSectorSize) / 1024} KiB of dual ported multi sector buffer with read caching");
+                            Add($"{ataIdentify.BufferSize * logicalSectorSize / 1024} KiB of dual ported multi sector buffer with read caching");
 
                         break;
                     default:
                         ataOneValue.
-                            Add($"{(ataIdentify.BufferSize * logicalSectorSize) / 1024} KiB of unknown type {ataIdentify.BufferType} buffer");
+                            Add($"{ataIdentify.BufferSize * logicalSectorSize / 1024} KiB of unknown type {ataIdentify.BufferType} buffer");
 
                         break;
                 }
@@ -1257,7 +1257,7 @@ namespace Aaru.Server.Core
 
                 if(ataIdentify.CommandSet2.HasFlag(Identify.CommandSetBit2.AddressOffsetReservedAreaBoot))
                     ataOneValue.Add(ataIdentify.EnabledCommandSet2.HasFlag(Identify.CommandSetBit2.
-                                                                                    AddressOffsetReservedAreaBoot)
+                                                                               AddressOffsetReservedAreaBoot)
                                         ? "Address Offset Reserved Area Boot is supported and enabled"
                                         : "Address Offset Reserved Area Boot is supported");
 
@@ -1271,7 +1271,7 @@ namespace Aaru.Server.Core
 
                 if(ataIdentify.CommandSet2.HasFlag(Identify.CommandSetBit2.RemovableNotification))
                     ataOneValue.Add(ataIdentify.EnabledCommandSet2.HasFlag(Identify.CommandSetBit2.
-                                                                                    RemovableNotification)
+                                                                               RemovableNotification)
                                         ? "Removable Media Status Notification is supported and enabled"
                                         : "Removable Media Status Notification is supported");
 
@@ -1389,7 +1389,7 @@ namespace Aaru.Server.Core
 
                 if(ataIdentify.CommandSet4.HasFlag(Identify.CommandSetBit4.SegmentedDownloadMicrocode))
                     ataOneValue.Add(ataIdentify.EnabledCommandSet4.HasFlag(Identify.CommandSetBit4.
-                                                                                    SegmentedDownloadMicrocode)
+                                                                               SegmentedDownloadMicrocode)
                                         ? "Segmented feature in DOWNLOAD MICROCODE is supported and enabled"
                                         : "Segmented feature in DOWNLOAD MICROCODE is supported");
 
@@ -1519,7 +1519,7 @@ namespace Aaru.Server.Core
                     {
                         if(ataIdentify.SATAFeatures.HasFlag(Identify.SATAFeaturesBit.NonZeroBufferOffset))
                             ataOneValue.Add(ataIdentify.EnabledSATAFeatures.HasFlag(Identify.SATAFeaturesBit.
-                                                                                             NonZeroBufferOffset)
+                                                NonZeroBufferOffset)
                                                 ? "Non-zero buffer offsets are supported and enabled"
                                                 : "Non-zero buffer offsets are supported");
 
@@ -1530,20 +1530,20 @@ namespace Aaru.Server.Core
 
                         if(ataIdentify.SATAFeatures.HasFlag(Identify.SATAFeaturesBit.InitPowerMgmt))
                             ataOneValue.Add(ataIdentify.EnabledSATAFeatures.HasFlag(Identify.SATAFeaturesBit.
-                                                                                             InitPowerMgmt)
+                                                InitPowerMgmt)
                                                 ? "Device-initiated power management is supported and enabled"
                                                 : "Device-initiated power management is supported");
 
                         if(ataIdentify.SATAFeatures.HasFlag(Identify.SATAFeaturesBit.InOrderData))
-                            ataOneValue.Add(ataIdentify.
-                                            EnabledSATAFeatures.HasFlag(Identify.SATAFeaturesBit.InOrderData)
+                            ataOneValue.Add(ataIdentify.EnabledSATAFeatures.HasFlag(Identify.SATAFeaturesBit.
+                                                InOrderData)
                                                 ? "In-order data delivery is supported and enabled"
                                                 : "In-order data delivery is supported");
 
                         if(!atapi)
                             if(ataIdentify.SATAFeatures.HasFlag(Identify.SATAFeaturesBit.HardwareFeatureControl))
                                 ataOneValue.Add(ataIdentify.EnabledSATAFeatures.HasFlag(Identify.SATAFeaturesBit.
-                                                                                                 HardwareFeatureControl)
+                                                    HardwareFeatureControl)
                                                     ? "Hardware Feature Control is supported and enabled"
                                                     : "Hardware Feature Control is supported");
 
@@ -1723,7 +1723,7 @@ namespace Aaru.Server.Core
                                         $"{ataReport.ReadCapabilities.CHS.Cylinders * ataReport.ReadCapabilities.CHS.Heads * ataReport.ReadCapabilities.CHS.Sectors} max., {currentSectors} current");
 
                         ataTwoValue.Add("Device size in CHS mode",
-                                        $"{(ulong)currentSectors * logicalSectorSize} bytes, {((ulong)currentSectors * logicalSectorSize) / 1000 / 1000} Mb, {(double)((ulong)currentSectors * logicalSectorSize) / 1024 / 1024:F2} MiB");
+                                        $"{(ulong)currentSectors * logicalSectorSize} bytes, {(ulong)currentSectors * logicalSectorSize / 1000 / 1000} Mb, {(double)((ulong)currentSectors * logicalSectorSize) / 1024 / 1024:F2} MiB");
                     }
                     else if(ataReport.ReadCapabilities.CHS != null)
                     {
@@ -1737,7 +1737,7 @@ namespace Aaru.Server.Core
                         ataTwoValue.Add("Sectors addressable in CHS mode", $"{currentSectors}");
 
                         ataTwoValue.Add("Device size in CHS mode",
-                                        $"{(ulong)currentSectors * logicalSectorSize} bytes, {((ulong)currentSectors * logicalSectorSize) / 1000 / 1000} Mb, {(double)((ulong)currentSectors * logicalSectorSize) / 1024 / 1024:F2} MiB");
+                                        $"{(ulong)currentSectors * logicalSectorSize} bytes, {(ulong)currentSectors * logicalSectorSize / 1000 / 1000} Mb, {(double)((ulong)currentSectors * logicalSectorSize) / 1024 / 1024:F2} MiB");
                     }
 
                     if(ataReport.ReadCapabilities.LBASectors != null)
@@ -1745,15 +1745,15 @@ namespace Aaru.Server.Core
                         ataTwoValue.Add("Sectors addressable in sectors in 28-bit LBA mode",
                                         $"{ataReport.ReadCapabilities.LBASectors}");
 
-                        if(((ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize) / 1024 / 1024 > 1000000)
+                        if((ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize / 1024 / 1024 > 1000000)
                             ataTwoValue.Add("Device size in 28-bit LBA mode",
-                                            $"{(ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize} bytes, {((ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize) / 1000 / 1000 / 1000 / 1000} Tb, {(double)((ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
-                        else if(((ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize) / 1024 / 1024 > 1000)
+                                            $"{(ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize} bytes, {(ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)((ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                        else if((ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize / 1024 / 1024 > 1000)
                             ataTwoValue.Add("Device size in 28-bit LBA mode",
-                                            $"{(ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize} bytes, {((ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize) / 1000 / 1000 / 1000} Gb, {(double)((ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize) / 1024 / 1024 / 1024:F2} GiB");
+                                            $"{(ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize} bytes, {(ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize / 1000 / 1000 / 1000} Gb, {(double)((ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize) / 1024 / 1024 / 1024:F2} GiB");
                         else
                             ataTwoValue.Add("Device size in 28-bit LBA mode",
-                                            $"{(ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize} bytes, {((ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize) / 1000 / 1000} Mb, {(double)((ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize) / 1024 / 1024:F2} MiB");
+                                            $"{(ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize} bytes, {(ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize / 1000 / 1000} Mb, {(double)((ulong)ataReport.ReadCapabilities.LBASectors * logicalSectorSize) / 1024 / 1024:F2} MiB");
                     }
 
                     if(ataReport.ReadCapabilities.LBA48Sectors != null)
@@ -1761,15 +1761,15 @@ namespace Aaru.Server.Core
                         ataTwoValue.Add("Sectors addressable in sectors in 48-bit LBA mode",
                                         $"{ataReport.ReadCapabilities.LBA48Sectors}");
 
-                        if((ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize) / 1024 / 1024 > 1000000)
+                        if(ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize / 1024 / 1024 > 1000000)
                             ataTwoValue.Add("Device size in 48-bit LBA mode",
-                                            $"{ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize} bytes, {(ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize) / 1000 / 1000 / 1000 / 1000} Tb, {(double)(ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
-                        else if((ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize) / 1024 / 1024 > 1000)
+                                            $"{ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize} bytes, {ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)(ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                        else if(ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize / 1024 / 1024 > 1000)
                             ataTwoValue.Add("Device size in 48-bit LBA mode",
-                                            $"{ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize} bytes, {(ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize) / 1000 / 1000 / 1000} Gb, {(double)(ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize) / 1024 / 1024 / 1024:F2} GiB");
+                                            $"{ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize} bytes, {ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize / 1000 / 1000 / 1000} Gb, {(double)(ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize) / 1024 / 1024 / 1024:F2} GiB");
                         else
                             ataTwoValue.Add("Device size in 48-bit LBA mode",
-                                            $"{ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize} bytes, {(ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize) / 1000 / 1000} Mb, {(double)(ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize) / 1024 / 1024:F2} MiB");
+                                            $"{ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize} bytes, {ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize / 1000 / 1000} Mb, {(double)(ataReport.ReadCapabilities.LBA48Sectors * logicalSectorSize) / 1024 / 1024:F2} MiB");
                     }
 
                     if(ata1 || cfa)

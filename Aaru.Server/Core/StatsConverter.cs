@@ -481,13 +481,13 @@ namespace Aaru.Server.Core
                 }
 
             if(newStats.Devices != null)
-                foreach(DeviceStats device in newStats.
-                                              Devices.Where(device => !string.IsNullOrWhiteSpace(device.Model)).
-                                              Where(device => !ctx.DeviceStats.Any(c => c.Bus == device.Bus &&
-                                                                                        c.Manufacturer ==
-                                                                                        device.Manufacturer        &&
-                                                                                        c.Model    == device.Model &&
-                                                                                        c.Revision == device.Revision)))
+                foreach(DeviceStats device in newStats.Devices.
+                                                       Where(device => !string.IsNullOrWhiteSpace(device.Model)).
+                                                       Where(device => !ctx.DeviceStats.Any(c => c.Bus == device.Bus &&
+                                                                           c.Manufacturer ==
+                                                                           device.Manufacturer        &&
+                                                                           c.Model    == device.Model &&
+                                                                           c.Revision == device.Revision)))
                 {
                     ctx.DeviceStats.Add(new DeviceStat
                     {

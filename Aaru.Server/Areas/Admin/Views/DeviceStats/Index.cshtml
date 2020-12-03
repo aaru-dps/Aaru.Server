@@ -75,12 +75,10 @@
                 @if(item.Report is null)
                 {
                     @("No")
-                    <a asp-action="Find" asp-controller="Devices" asp-route-id="@item.Id" asp-route-manufacturer="@item.Manufacturer" asp-route-model="@item.Model" asp-route-revision="@item.Revision" asp-route-bus="@item.Bus" target="_blank">(Find)</a>
-                }
+                    <a asp-action="Find" asp-controller="Devices" asp-route-bus="@item.Bus" asp-route-id="@item.Id" asp-route-manufacturer="@item.Manufacturer" asp-route-model="@item.Model" asp-route-revision="@item.Revision" target="_blank">(Find)</a>                }
                 else
                 {
-                    <a asp-action="Details" asp-controller="Devices" asp-route-id="@item.Report.Id" target="_blank">Yes</a>
-                }
+                    <a asp-action="Details" asp-controller="Devices" asp-route-id="@item.Report.Id" target="_blank">Yes</a>                }
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">Edit</a>

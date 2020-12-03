@@ -253,12 +253,10 @@ namespace Aaru.Server.Controllers
                 if(newstats.Devices != null)
                     foreach(DeviceStats device in from device in newstats.Devices let existing =
                                                       _ctx.DeviceStats.FirstOrDefault(c => c.Bus == device.Bus &&
-                                                                                           c.Manufacturer ==
-                                                                                           device.Manufacturer     &&
-                                                                                           c.Model == device.Model &&
-                                                                                           c.Revision ==
-                                                                                           device.Revision)
-                                                  where existing == null select device)
+                                                          c.Manufacturer == device.Manufacturer &&
+                                                          c.Model == device.Model &&
+                                                          c.Revision == device.Revision) where existing == null
+                                                  select device)
                     {
                         await _ctx.DeviceStats.AddAsync(new DeviceStat
                         {

@@ -89,16 +89,11 @@ namespace Aaru.Server.Controllers
             foreach(Device device in _ctx.Devices.Where(d => d.ModifiedWhen > lastSync).ToList())
                 sync.Devices.Add(new DeviceDto(JsonConvert.
                                                    DeserializeObject<DeviceReportV2>(JsonConvert.SerializeObject(device,
-                                                                                                                 Formatting.
-                                                                                                                     None,
-                                                                                                                 new
-                                                                                                                     JsonSerializerSettings
-                                                                                                                     {
-                                                                                                                         ReferenceLoopHandling
-                                                                                                                             = ReferenceLoopHandling.
-                                                                                                                                 Ignore
-                                                                                                                     })),
-                                               device.Id, device.OptimalMultipleSectorsRead,
+                                                       Formatting.None, new JsonSerializerSettings
+                                                       {
+                                                           ReferenceLoopHandling =
+                                                               ReferenceLoopHandling.Ignore
+                                                       })), device.Id, device.OptimalMultipleSectorsRead,
                                                device.CanReadGdRomUsingSwapDisc));
 
             var js = JsonSerializer.Create();

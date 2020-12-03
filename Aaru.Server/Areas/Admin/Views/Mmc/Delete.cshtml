@@ -41,7 +41,7 @@
     <hr />
     @Html.Raw(Html.EncodedMultiLineText(Modes.PrettifyModePage_2A(Model.ModeSense2AData)))
     <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
+        <input asp-for="Id" type="hidden" />
         <a asp-action="Index" class="btn btn-primary">Back to List</a>
         <input class="btn btn-danger" type="submit" value="Delete" />
     </form>

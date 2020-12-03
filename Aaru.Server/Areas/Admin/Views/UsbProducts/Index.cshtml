@@ -53,7 +53,7 @@
     {
         <tr>
             <td>
-                <a asp-controller="UsbVendors" asp-action="Details" asp-route-id="@item.VendorId" target="_blank">@Html.DisplayFor(modelItem => item.VendorName)</a>
+                <a asp-action="Details" asp-controller="UsbVendors" asp-route-id="@item.VendorId" target="_blank">@Html.DisplayFor(modelItem => item.VendorName)</a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProductName)

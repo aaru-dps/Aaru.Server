@@ -18,9 +18,9 @@ namespace Aaru.Server.Areas.Admin.Controllers
         public ChsController(AaruServerContext context) => _context = context;
 
         // GET: Admin/Chs
-        public async Task<IActionResult> Index() =>
-            View(await _context.Chs.OrderBy(c => c.Cylinders).ThenBy(c => c.Heads).ThenBy(c => c.Sectors).
-                                ToListAsync());
+        public async Task<IActionResult> Index() => View(await _context.Chs.OrderBy(c => c.Cylinders).
+                                                                        ThenBy(c => c.Heads).ThenBy(c => c.Sectors).
+                                                                        ToListAsync());
 
         public IActionResult Consolidate()
         {

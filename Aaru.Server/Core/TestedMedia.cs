@@ -85,15 +85,15 @@ namespace Aaru.Server.Core
                 {
                     mediaOneValue.Add($"Medium has {testedMedia.Blocks} blocks of {testedMedia.BlockSize} bytes each");
 
-                    if((testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024 > 1000000)
+                    if(testedMedia.Blocks * testedMedia.BlockSize / 1024 / 1024 > 1000000)
                         mediaOneValue.
-                            Add($"Medium size: {testedMedia.Blocks * testedMedia.BlockSize} bytes, {(testedMedia.Blocks * testedMedia.BlockSize) / 1000 / 1000 / 1000 / 1000} Tb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
-                    else if((testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024 > 1000)
+                            Add($"Medium size: {testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                    else if(testedMedia.Blocks * testedMedia.BlockSize / 1024 / 1024 > 1000)
                         mediaOneValue.
-                            Add($"Medium size: {testedMedia.Blocks * testedMedia.BlockSize} bytes, {(testedMedia.Blocks * testedMedia.BlockSize) / 1000 / 1000 / 1000} Gb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
+                            Add($"Medium size: {testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
                     else
                         mediaOneValue.
-                            Add($"Medium size: {testedMedia.Blocks * testedMedia.BlockSize} bytes, {(testedMedia.Blocks * testedMedia.BlockSize) / 1000 / 1000} Mb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+                            Add($"Medium size: {testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
                 }
 
                 if(testedMedia.CHS        != null &&
@@ -114,7 +114,7 @@ namespace Aaru.Server.Core
                         Add($"Sectors addressable in CHS mode: {testedMedia.CHS.Cylinders * testedMedia.CHS.Heads * testedMedia.CHS.Sectors} max., {currentSectors} current");
 
                     mediaOneValue.
-                        Add($"Medium size in CHS mode: {(ulong)currentSectors * testedMedia.BlockSize} bytes, {((ulong)currentSectors * testedMedia.BlockSize) / 1000 / 1000} Mb, {(double)((ulong)currentSectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+                        Add($"Medium size in CHS mode: {(ulong)currentSectors * testedMedia.BlockSize} bytes, {(ulong)currentSectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)((ulong)currentSectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
                 }
                 else if(testedMedia.CHS != null)
                 {
@@ -125,37 +125,37 @@ namespace Aaru.Server.Core
                     mediaOneValue.Add($"Sectors addressable in CHS mode: {currentSectors}");
 
                     mediaOneValue.
-                        Add($"Medium size in CHS mode: {(ulong)currentSectors * testedMedia.BlockSize} bytes, {((ulong)currentSectors * testedMedia.BlockSize) / 1000 / 1000} Mb, {(double)((ulong)currentSectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+                        Add($"Medium size in CHS mode: {(ulong)currentSectors * testedMedia.BlockSize} bytes, {(ulong)currentSectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)((ulong)currentSectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
                 }
 
                 if(testedMedia.LBASectors != null)
                 {
                     mediaOneValue.Add($"Sectors addressable in sectors in 28-bit LBA mode: {testedMedia.LBASectors}");
 
-                    if(((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024 > 1000000)
+                    if((ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1024 / 1024 > 1000000)
                         mediaOneValue.
-                            Add($"Medium size in 28-bit LBA mode: {(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1000 / 1000 / 1000 / 1000} Tb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
-                    else if(((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024 > 1000)
+                            Add($"Medium size in 28-bit LBA mode: {(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                    else if((ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1024 / 1024 > 1000)
                         mediaOneValue.
-                            Add($"Medium size in 28-bit LBA mode: {(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1000 / 1000 / 1000} Gb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
+                            Add($"Medium size in 28-bit LBA mode: {(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
                     else
                         mediaOneValue.
-                            Add($"Medium size in 28-bit LBA mode: {(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1000 / 1000} Mb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+                            Add($"Medium size in 28-bit LBA mode: {(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
                 }
 
                 if(testedMedia.LBA48Sectors != null)
                 {
                     mediaOneValue.Add($"Sectors addressable in sectors in 48-bit LBA mode: {testedMedia.LBA48Sectors}");
 
-                    if((testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024 > 1000000)
+                    if(testedMedia.LBA48Sectors * testedMedia.BlockSize / 1024 / 1024 > 1000000)
                         mediaOneValue.
-                            Add($"Medium size in 48-bit LBA mode: {testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1000 / 1000 / 1000 / 1000} Tb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
-                    else if((testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024 > 1000)
+                            Add($"Medium size in 48-bit LBA mode: {testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                    else if(testedMedia.LBA48Sectors * testedMedia.BlockSize / 1024 / 1024 > 1000)
                         mediaOneValue.
-                            Add($"Medium size in 48-bit LBA mode: {testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1000 / 1000 / 1000} Gb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
+                            Add($"Medium size in 48-bit LBA mode: {testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
                     else
                         mediaOneValue.
-                            Add($"Medium size in 48-bit LBA mode: {testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1000 / 1000} Mb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+                            Add($"Medium size in 48-bit LBA mode: {testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
                 }
 
                 if(testedMedia.NominalRotationRate != null   &&

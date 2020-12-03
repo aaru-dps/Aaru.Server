@@ -75,8 +75,8 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
         public IActionResult Consolidate()
         {
-            List<IdHashModel> hashes =
-                _context.Ata.Select(m => new IdHashModel(m.Id, Hash.Sha512(m.Identify))).ToList();
+            List<IdHashModel> hashes = _context.Ata.Select(m => new IdHashModel(m.Id, Hash.Sha512(m.Identify))).
+                                                ToList();
 
             List<IdHashModel> dups = hashes.GroupBy(x => x.Hash).Where(g => g.Count() > 1).
                                             Select(x => hashes.FirstOrDefault(y => y.Hash == x.Key)).ToList();

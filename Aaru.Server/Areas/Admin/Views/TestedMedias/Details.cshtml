@@ -43,8 +43,7 @@
 <dd class="col-sm-10">
     @if(Model.IdentifyData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.IdentifyData)">@Model.IdentifyData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.IdentifyData)" asp-route-id="@Model.Id" target="_blank">@Model.IdentifyData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -418,8 +417,7 @@
 <dd class="col-sm-10">
     @if(Model.ModeSense6Data != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ModeSense6Data)">@Model.ModeSense6Data.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ModeSense6Data)" asp-route-id="@Model.Id" target="_blank">@Model.ModeSense6Data.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -431,8 +429,7 @@
 <dd class="col-sm-10">
     @if(Model.ModeSense10Data != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ModeSense10Data)">@Model.ModeSense10Data.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ModeSense10Data)" asp-route-id="@Model.Id" target="_blank">@Model.ModeSense10Data.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -608,8 +605,7 @@
 <dd class="col-sm-10">
     @if(Model.IntersessionLeadInData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.IntersessionLeadInData)">@Model.IntersessionLeadInData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.IntersessionLeadInData)" asp-route-id="@Model.Id" target="_blank">@Model.IntersessionLeadInData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -621,8 +617,7 @@
 <dd class="col-sm-10">
     @if(Model.IntersessionLeadOutData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.IntersessionLeadOutData)">@Model.IntersessionLeadOutData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.IntersessionLeadOutData)" asp-route-id="@Model.Id" target="_blank">@Model.IntersessionLeadOutData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -634,8 +629,7 @@
 <dd class="col-sm-10">
     @if(Model.Read6Data != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Read6Data)">@Model.Read6Data.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.Read6Data)" asp-route-id="@Model.Id" target="_blank">@Model.Read6Data.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -647,8 +641,7 @@
 <dd class="col-sm-10">
     @if(Model.Read10Data != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Read10Data)">@Model.Read10Data.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.Read10Data)" asp-route-id="@Model.Id" target="_blank">@Model.Read10Data.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -660,8 +653,7 @@
 <dd class="col-sm-10">
     @if(Model.Read12Data != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Read12Data)">@Model.Read12Data.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.Read12Data)" asp-route-id="@Model.Id" target="_blank">@Model.Read12Data.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -673,8 +665,7 @@
 <dd class="col-sm-10">
     @if(Model.Read16Data != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Read16Data)">@Model.Read16Data.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.Read16Data)" asp-route-id="@Model.Id" target="_blank">@Model.Read16Data.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -686,8 +677,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadLong10Data != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadLong10Data)">@Model.ReadLong10Data.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadLong10Data)" asp-route-id="@Model.Id" target="_blank">@Model.ReadLong10Data.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -699,8 +689,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadLong16Data != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadLong16Data)">@Model.ReadLong16Data.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadLong16Data)" asp-route-id="@Model.Id" target="_blank">@Model.ReadLong16Data.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -712,8 +701,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadSectorsData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadSectorsData)">@Model.ReadSectorsData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadSectorsData)" asp-route-id="@Model.Id" target="_blank">@Model.ReadSectorsData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -725,8 +713,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadSectorsRetryData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadSectorsRetryData)">@Model.ReadSectorsRetryData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadSectorsRetryData)" asp-route-id="@Model.Id" target="_blank">@Model.ReadSectorsRetryData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -738,8 +725,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadDmaData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadDmaData)">@Model.ReadDmaData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadDmaData)" asp-route-id="@Model.Id" target="_blank">@Model.ReadDmaData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -751,8 +737,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadDmaRetryData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadDmaRetryData)">@Model.ReadDmaRetryData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadDmaRetryData)" asp-route-id="@Model.Id" target="_blank">@Model.ReadDmaRetryData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -764,8 +749,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadLbaData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadLbaData)">@Model.ReadLbaData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadLbaData)" asp-route-id="@Model.Id" target="_blank">@Model.ReadLbaData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -777,8 +761,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadRetryLbaData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadRetryLbaData)">@Model.ReadRetryLbaData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadRetryLbaData)" asp-route-id="@Model.Id" target="_blank">@Model.ReadRetryLbaData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -790,8 +773,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadDmaLbaData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadDmaLbaData)">@Model.ReadDmaLbaData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadDmaLbaData)" asp-route-id="@Model.Id" target="_blank">@Model.ReadDmaLbaData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -803,8 +785,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadDmaRetryLbaData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadDmaRetryLbaData)">@Model.ReadDmaRetryLbaData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadDmaRetryLbaData)" asp-route-id="@Model.Id" target="_blank">@Model.ReadDmaRetryLbaData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -816,8 +797,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadLba48Data != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadLba48Data)">@Model.ReadLba48Data.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadLba48Data)" asp-route-id="@Model.Id" target="_blank">@Model.ReadLba48Data.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -829,8 +809,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadDmaLba48Data != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadDmaLba48Data)">@Model.ReadDmaLba48Data.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadDmaLba48Data)" asp-route-id="@Model.Id" target="_blank">@Model.ReadDmaLba48Data.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -842,8 +821,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadLongData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadLongData)">@Model.ReadLongData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadLongData)" asp-route-id="@Model.Id" target="_blank">@Model.ReadLongData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -855,8 +833,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadLongRetryData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadLongRetryData)">@Model.ReadLongRetryData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadLongRetryData)" asp-route-id="@Model.Id" target="_blank">@Model.ReadLongRetryData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -868,8 +845,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadLongLbaData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadLongLbaData)">@Model.ReadLongLbaData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadLongLbaData)" asp-route-id="@Model.Id" target="_blank">@Model.ReadLongLbaData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -881,8 +857,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadLongRetryLbaData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadLongRetryLbaData)">@Model.ReadLongRetryLbaData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadLongRetryLbaData)" asp-route-id="@Model.Id" target="_blank">@Model.ReadLongRetryLbaData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -894,8 +869,7 @@
 <dd class="col-sm-10">
     @if(Model.TocData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.TocData)">@Model.TocData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.TocData)" asp-route-id="@Model.Id" target="_blank">@Model.TocData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -907,8 +881,7 @@
 <dd class="col-sm-10">
     @if(Model.FullTocData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.FullTocData)">@Model.FullTocData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.FullTocData)" asp-route-id="@Model.Id" target="_blank">@Model.FullTocData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -920,8 +893,7 @@
 <dd class="col-sm-10">
     @if(Model.AtipData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.AtipData)">@Model.AtipData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.AtipData)" asp-route-id="@Model.Id" target="_blank">@Model.AtipData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -933,8 +905,7 @@
 <dd class="col-sm-10">
     @if(Model.PmaData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.PmaData)">@Model.PmaData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.PmaData)" asp-route-id="@Model.Id" target="_blank">@Model.PmaData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -946,8 +917,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadCdData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadCdData)">@Model.ReadCdData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadCdData)" asp-route-id="@Model.Id" target="_blank">@Model.ReadCdData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -959,8 +929,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadCdMsfData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadCdMsfData)">@Model.ReadCdMsfData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadCdMsfData)" asp-route-id="@Model.Id" target="_blank">@Model.ReadCdMsfData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -972,8 +941,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadCdFullData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadCdFullData)">@Model.ReadCdFullData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadCdFullData)" asp-route-id="@Model.Id" target="_blank">@Model.ReadCdFullData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -985,8 +953,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadCdMsfFullData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadCdMsfFullData)">@Model.ReadCdMsfFullData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadCdMsfFullData)" asp-route-id="@Model.Id" target="_blank">@Model.ReadCdMsfFullData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -998,8 +965,7 @@
 <dd class="col-sm-10">
     @if(Model.Track1PregapData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.Track1PregapData)">@Model.Track1PregapData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.Track1PregapData)" asp-route-id="@Model.Id" target="_blank">@Model.Track1PregapData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1011,8 +977,7 @@
 <dd class="col-sm-10">
     @if(Model.LeadInData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.LeadInData)">@Model.LeadInData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.LeadInData)" asp-route-id="@Model.Id" target="_blank">@Model.LeadInData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1024,8 +989,7 @@
 <dd class="col-sm-10">
     @if(Model.LeadOutData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.LeadOutData)">@Model.LeadOutData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.LeadOutData)" asp-route-id="@Model.Id" target="_blank">@Model.LeadOutData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1037,8 +1001,7 @@
 <dd class="col-sm-10">
     @if(Model.C2PointersData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.C2PointersData)">@Model.C2PointersData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.C2PointersData)" asp-route-id="@Model.Id" target="_blank">@Model.C2PointersData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1050,8 +1013,7 @@
 <dd class="col-sm-10">
     @if(Model.PQSubchannelData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.PQSubchannelData)">@Model.PQSubchannelData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.PQSubchannelData)" asp-route-id="@Model.Id" target="_blank">@Model.PQSubchannelData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1063,8 +1025,7 @@
 <dd class="col-sm-10">
     @if(Model.RWSubchannelData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.RWSubchannelData)">@Model.RWSubchannelData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.RWSubchannelData)" asp-route-id="@Model.Id" target="_blank">@Model.RWSubchannelData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1076,8 +1037,7 @@
 <dd class="col-sm-10">
     @if(Model.CorrectedSubchannelData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.CorrectedSubchannelData)">@Model.CorrectedSubchannelData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.CorrectedSubchannelData)" asp-route-id="@Model.Id" target="_blank">@Model.CorrectedSubchannelData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1089,8 +1049,7 @@
 <dd class="col-sm-10">
     @if(Model.PQSubchannelWithC2Data != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.PQSubchannelWithC2Data)">@Model.PQSubchannelWithC2Data.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.PQSubchannelWithC2Data)" asp-route-id="@Model.Id" target="_blank">@Model.PQSubchannelWithC2Data.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1102,8 +1061,7 @@
 <dd class="col-sm-10">
     @if(Model.RWSubchannelWithC2Data != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.RWSubchannelWithC2Data)">@Model.RWSubchannelWithC2Data.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.RWSubchannelWithC2Data)" asp-route-id="@Model.Id" target="_blank">@Model.RWSubchannelWithC2Data.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1115,8 +1073,7 @@
 <dd class="col-sm-10">
     @if(Model.CorrectedSubchannelWithC2Data != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.CorrectedSubchannelWithC2Data)">@Model.CorrectedSubchannelWithC2Data.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.CorrectedSubchannelWithC2Data)" asp-route-id="@Model.Id" target="_blank">@Model.CorrectedSubchannelWithC2Data.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1128,8 +1085,7 @@
 <dd class="col-sm-10">
     @if(Model.PfiData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.PfiData)">@Model.PfiData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.PfiData)" asp-route-id="@Model.Id" target="_blank">@Model.PfiData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1141,8 +1097,7 @@
 <dd class="col-sm-10">
     @if(Model.DmiData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.DmiData)">@Model.DmiData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.DmiData)" asp-route-id="@Model.Id" target="_blank">@Model.DmiData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1154,8 +1109,7 @@
 <dd class="col-sm-10">
     @if(Model.CmiData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.CmiData)">@Model.CmiData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.CmiData)" asp-route-id="@Model.Id" target="_blank">@Model.CmiData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1167,8 +1121,7 @@
 <dd class="col-sm-10">
     @if(Model.DvdBcaData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.DvdBcaData)">@Model.DvdBcaData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.DvdBcaData)" asp-route-id="@Model.Id" target="_blank">@Model.DvdBcaData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1180,8 +1133,7 @@
 <dd class="col-sm-10">
     @if(Model.DvdAacsData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.DvdAacsData)">@Model.DvdAacsData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.DvdAacsData)" asp-route-id="@Model.Id" target="_blank">@Model.DvdAacsData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1193,8 +1145,7 @@
 <dd class="col-sm-10">
     @if(Model.DvdDdsData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.DvdDdsData)">@Model.DvdDdsData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.DvdDdsData)" asp-route-id="@Model.Id" target="_blank">@Model.DvdDdsData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1206,8 +1157,7 @@
 <dd class="col-sm-10">
     @if(Model.DvdSaiData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.DvdSaiData)">@Model.DvdSaiData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.DvdSaiData)" asp-route-id="@Model.Id" target="_blank">@Model.DvdSaiData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1219,8 +1169,7 @@
 <dd class="col-sm-10">
     @if(Model.PriData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.PriData)">@Model.PriData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.PriData)" asp-route-id="@Model.Id" target="_blank">@Model.PriData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1232,8 +1181,7 @@
 <dd class="col-sm-10">
     @if(Model.EmbossedPfiData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.EmbossedPfiData)">@Model.EmbossedPfiData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.EmbossedPfiData)" asp-route-id="@Model.Id" target="_blank">@Model.EmbossedPfiData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1245,8 +1193,7 @@
 <dd class="col-sm-10">
     @if(Model.AdipData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.AdipData)">@Model.AdipData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.AdipData)" asp-route-id="@Model.Id" target="_blank">@Model.AdipData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1258,8 +1205,7 @@
 <dd class="col-sm-10">
     @if(Model.DcbData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.DcbData)">@Model.DcbData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.DcbData)" asp-route-id="@Model.Id" target="_blank">@Model.DcbData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1271,8 +1217,7 @@
 <dd class="col-sm-10">
     @if(Model.HdCmiData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.HdCmiData)">@Model.HdCmiData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.HdCmiData)" asp-route-id="@Model.Id" target="_blank">@Model.HdCmiData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1284,8 +1229,7 @@
 <dd class="col-sm-10">
     @if(Model.DvdLayerData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.DvdLayerData)">@Model.DvdLayerData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.DvdLayerData)" asp-route-id="@Model.Id" target="_blank">@Model.DvdLayerData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1297,8 +1241,7 @@
 <dd class="col-sm-10">
     @if(Model.BluBcaData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.BluBcaData)">@Model.BluBcaData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.BluBcaData)" asp-route-id="@Model.Id" target="_blank">@Model.BluBcaData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1310,8 +1253,7 @@
 <dd class="col-sm-10">
     @if(Model.BluDdsData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.BluDdsData)">@Model.BluDdsData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.BluDdsData)" asp-route-id="@Model.Id" target="_blank">@Model.BluDdsData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1323,8 +1265,7 @@
 <dd class="col-sm-10">
     @if(Model.BluSaiData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.BluSaiData)">@Model.BluSaiData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.BluSaiData)" asp-route-id="@Model.Id" target="_blank">@Model.BluSaiData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1336,8 +1277,7 @@
 <dd class="col-sm-10">
     @if(Model.BluDiData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.BluDiData)">@Model.BluDiData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.BluDiData)" asp-route-id="@Model.Id" target="_blank">@Model.BluDiData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1349,8 +1289,7 @@
 <dd class="col-sm-10">
     @if(Model.PlextorReadCddaData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.PlextorReadCddaData)">@Model.PlextorReadCddaData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.PlextorReadCddaData)" asp-route-id="@Model.Id" target="_blank">@Model.PlextorReadCddaData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1362,8 +1301,7 @@
 <dd class="col-sm-10">
     @if(Model.PlextorReadCddaData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.PlextorReadCddaData)">@Model.PlextorReadCddaData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.PlextorReadCddaData)" asp-route-id="@Model.Id" target="_blank">@Model.PlextorReadCddaData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1375,8 +1313,7 @@
 <dd class="col-sm-10">
     @if(Model.PioneerReadCddaData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.PioneerReadCddaData)">@Model.PioneerReadCddaData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.PioneerReadCddaData)" asp-route-id="@Model.Id" target="_blank">@Model.PioneerReadCddaData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1388,8 +1325,7 @@
 <dd class="col-sm-10">
     @if(Model.PioneerReadCddaMsfData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.PioneerReadCddaMsfData)">@Model.PioneerReadCddaMsfData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.PioneerReadCddaMsfData)" asp-route-id="@Model.Id" target="_blank">@Model.PioneerReadCddaMsfData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1401,8 +1337,7 @@
 <dd class="col-sm-10">
     @if(Model.NecReadCddaData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.NecReadCddaData)">@Model.NecReadCddaData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.NecReadCddaData)" asp-route-id="@Model.Id" target="_blank">@Model.NecReadCddaData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1414,8 +1349,7 @@
 <dd class="col-sm-10">
     @if(Model.PlextorReadRawDVDData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.PlextorReadRawDVDData)">@Model.PlextorReadRawDVDData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.PlextorReadRawDVDData)" asp-route-id="@Model.Id" target="_blank">@Model.PlextorReadRawDVDData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1427,8 +1361,7 @@
 <dd class="col-sm-10">
     @if(Model.HLDTSTReadRawDVDData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.HLDTSTReadRawDVDData)">@Model.HLDTSTReadRawDVDData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.HLDTSTReadRawDVDData)" asp-route-id="@Model.Id" target="_blank">@Model.HLDTSTReadRawDVDData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1446,8 +1379,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadCdScrambledData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadCdScrambledData)">@Model.ReadCdScrambledData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadCdScrambledData)" asp-route-id="@Model.Id" target="_blank">@Model.ReadCdScrambledData.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1465,8 +1397,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadF1_06Data != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadF1_06Data)">@Model.ReadF1_06Data.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadF1_06Data)" asp-route-id="@Model.Id" target="_blank">@Model.ReadF1_06Data.Length bytes</a>    }
     else
     {
         @("<null>")
@@ -1484,8 +1415,7 @@
 <dd class="col-sm-10">
     @if(Model.ReadF1_06LeadOutData != null)
     {
-        <a asp-action="ViewData" target="_blank" asp-route-id="@Model.Id" asp-route-data="@nameof(Model.ReadF1_06LeadOutData)">@Model.ReadF1_06LeadOutData.Length bytes</a>
-    }
+        <a asp-action="ViewData" asp-route-data="@nameof(Model.ReadF1_06LeadOutData)" asp-route-id="@Model.Id" target="_blank">@Model.ReadF1_06LeadOutData.Length bytes</a>    }
     else
     {
         @("<null>")

@@ -18,9 +18,10 @@ namespace Aaru.Server.Areas.Admin.Controllers
         public SscsController(AaruServerContext context) => _context = context;
 
         // GET: Admin/Sscs
-        public async Task<IActionResult> Index() =>
-            View(await _context.Ssc.OrderBy(s => s.MinBlockLength).ThenBy(s => s.MaxBlockLength).
-                                ThenBy(s => s.BlockSizeGranularity).ToListAsync());
+        public async Task<IActionResult> Index() => View(await _context.Ssc.OrderBy(s => s.MinBlockLength).
+                                                                        ThenBy(s => s.MaxBlockLength).
+                                                                        ThenBy(s => s.BlockSizeGranularity).
+                                                                        ToListAsync());
 
         // GET: Admin/Sscs/Delete/5
         public async Task<IActionResult> Delete(int? id)
