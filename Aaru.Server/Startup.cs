@@ -22,9 +22,9 @@ namespace Aaru.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AaruServerContext>(options => options.
-                                                                UseMySql(Configuration.
-                                                                             GetConnectionString("DefaultConnection")).
-                                                                UseLazyLoadingProxies());
+                                                                        UseMySql(Configuration.GetConnectionString("DefaultConnection"),
+                                                                            new MariaDbServerVersion(new System.Version(10,
+                                                                                4, 0))).UseLazyLoadingProxies());
 
             services.AddDefaultIdentity<IdentityUser>(options =>
             {
