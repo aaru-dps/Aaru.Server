@@ -23,14 +23,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Aaru.CommonTypes\Aaru.CommonTypes.csproj" />
-    <ProjectReference Include="..\Aaru.Console\Aaru.Console.csproj" />
-    <ProjectReference Include="..\Aaru.Decoders\Aaru.Decoders.csproj" />
-    <ProjectReference Include="..\Aaru.Dto\Aaru.Dto.csproj" />
-    <ProjectReference Include="..\Aaru.Helpers\Aaru.Helpers.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Aaru.CommonTypes" Version="5.2.99.3380-alpha" />
+    <PackageReference Include="Aaru.Decoders" Version="5.2.99.3380-alpha" />
+    <PackageReference Include="Aaru.Dto" Version="5.2.99.3380-alpha" />
+    <PackageReference Include="Aaru.Helpers" Version="5.2.99.3380-alpha" />
     <PackageReference Include="ChoPGP" Version="1.0.1.2" />
     <PackageReference Include="MailKit" Version="2.7.0" />
     <PackageReference Include="Markdig" Version="0.20.0" />

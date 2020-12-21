@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Aaru.Helpers\Aaru.Helpers.csproj" />
     <ProjectReference Include="..\Aaru.Server\Aaru.Server.csproj" />
   </ItemGroup>
 
