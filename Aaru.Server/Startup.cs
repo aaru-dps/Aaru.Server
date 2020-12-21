@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Prometheus;
+using Version = System.Version;
 
 namespace Aaru.Server
 {
@@ -22,9 +23,10 @@ namespace Aaru.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AaruServerContext>(options => options.
-                                                                        UseMySql(Configuration.GetConnectionString("DefaultConnection"),
-                                                                            new MariaDbServerVersion(new System.Version(10,
-                                                                                4, 0))).UseLazyLoadingProxies());
+                                                                UseMySql(Configuration.GetConnectionString("DefaultConnection"),
+                                                                         new MariaDbServerVersion(new Version(10, 4,
+                                                                             0))).
+                                                                UseLazyLoadingProxies());
 
             services.AddDefaultIdentity<IdentityUser>(options =>
             {

@@ -45,7 +45,7 @@ namespace Aaru.Server.Core
         /// <returns>List of values</returns>
         internal static IEnumerable<string> Report(Inquiry? inquiryNullable)
         {
-            List<string> scsiOneValue = new List<string>();
+            List<string> scsiOneValue = new();
 
             if(!inquiryNullable.HasValue)
                 return scsiOneValue;

@@ -87,10 +87,10 @@ namespace Aaru.Server.Models
 
             IConfigurationBuilder builder       = new ConfigurationBuilder().AddJsonFile("appsettings.json");
             IConfigurationRoot    configuration = builder.Build();
+
             optionsBuilder.
                 UseMySql(configuration.GetConnectionString("DefaultConnection"),
-                         new MariaDbServerVersion(new System.Version(10, 4, 0))).
-                UseLazyLoadingProxies();
+                         new MariaDbServerVersion(new System.Version(10, 4, 0))).UseLazyLoadingProxies();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -418,7 +418,7 @@ namespace Aaru.Server.Core
                         break;
                 }
 
-            Dictionary<string, string> newModePages = new Dictionary<string, string>();
+            Dictionary<string, string> newModePages = new();
 
             foreach(KeyValuePair<string, string> kvp in modePages)
                 newModePages.Add(kvp.Key,

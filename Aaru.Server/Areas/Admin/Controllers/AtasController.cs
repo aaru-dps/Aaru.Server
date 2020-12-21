@@ -362,7 +362,7 @@ namespace Aaru.Server.Areas.Admin.Controllers
 
         public IActionResult CheckPrivate()
         {
-            List<Ata> havePrivacy = new List<Ata>();
+            List<Ata> havePrivacy = new();
             byte[]    tmp;
 
             foreach(Ata ata in _context.Ata)

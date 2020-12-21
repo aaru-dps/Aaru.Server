@@ -137,7 +137,7 @@ namespace Aaru.Server.Controllers
 
                     if(tuples != null)
                     {
-                        Dictionary<string, string> decodedTuples = new Dictionary<string, string>();
+                        Dictionary<string, string> decodedTuples = new();
 
                         foreach(Tuple tuple in tuples)
                             switch(tuple.Code)
@@ -226,8 +226,8 @@ namespace Aaru.Server.Controllers
                 if(report.ATA   != null ||
                    report.ATAPI != null)
                 {
-                    List<string>               ataOneValue = new List<string>();
-                    Dictionary<string, string> ataTwoValue = new Dictionary<string, string>();
+                    List<string>               ataOneValue = new();
+                    Dictionary<string, string> ataTwoValue = new();
                     Ata                        ataReport;
 
                     if(report.ATAPI != null)
@@ -260,9 +260,9 @@ namespace Aaru.Server.Controllers
 
                 if(report.SCSI != null)
                 {
-                    List<string>               scsiOneValue = new List<string>();
-                    Dictionary<string, string> modePages    = new Dictionary<string, string>();
-                    Dictionary<string, string> evpdPages    = new Dictionary<string, string>();
+                    List<string>               scsiOneValue = new();
+                    Dictionary<string, string> modePages    = new();
+                    Dictionary<string, string> evpdPages    = new();
 
                     string vendorId = StringHandlers.CToString(report.SCSI.Inquiry?.VendorIdentification);
 
@@ -313,7 +313,7 @@ namespace Aaru.Server.Controllers
 
                         if(report.SCSI.MultiMediaDevice.ModeSense2A != null)
                         {
-                            List<string> mmcModeOneValue = new List<string>();
+                            List<string> mmcModeOneValue = new();
                             ScsiMmcMode.Report(report.SCSI.MultiMediaDevice.ModeSense2A, ref mmcModeOneValue);
 
                             if(mmcModeOneValue.Count > 0)
@@ -322,7 +322,7 @@ namespace Aaru.Server.Controllers
 
                         if(report.SCSI.MultiMediaDevice.Features != null)
                         {
-                            List<string> mmcFeaturesOneValue = new List<string>();
+                            List<string> mmcFeaturesOneValue = new();
                             ScsiMmcFeatures.Report(report.SCSI.MultiMediaDevice.Features, ref mmcFeaturesOneValue);
 
                             if(mmcFeaturesOneValue.Count > 0)
@@ -350,7 +350,7 @@ namespace Aaru.Server.Controllers
 
                         if(report.SCSI.SequentialDevice.TestedMedia != null)
                         {
-                            List<string> mediaOneValue = new List<string>();
+                            List<string> mediaOneValue = new();
                             SscTestedMedia.Report(report.SCSI.SequentialDevice.TestedMedia, ref mediaOneValue);
 
                             if(mediaOneValue.Count > 0)
@@ -429,7 +429,7 @@ namespace Aaru.Server.Controllers
 
                 if(report.MultiMediaCard != null)
                 {
-                    List<string> mmcOneValue = new List<string>();
+                    List<string> mmcOneValue = new();
 
                     if(report.MultiMediaCard.CID != null)
                     {
@@ -468,7 +468,7 @@ namespace Aaru.Server.Controllers
 
                 if(report.SecureDigital != null)
                 {
-                    List<string> sdOneValue = new List<string>();
+                    List<string> sdOneValue = new();
 
                     if(report.SecureDigital.CID != null)
                     {
@@ -509,7 +509,7 @@ namespace Aaru.Server.Controllers
                    !sscMedia &&
                    testedMedia != null)
                 {
-                    List<string> mediaOneValue = new List<string>();
+                    List<string> mediaOneValue = new();
                     Core.TestedMedia.Report(testedMedia, ref mediaOneValue);
 
                     if(mediaOneValue.Count > 0)

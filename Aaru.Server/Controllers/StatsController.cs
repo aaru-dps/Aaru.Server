@@ -96,7 +96,7 @@ namespace Aaru.Server.Controllers
 
                 if(_ctx.OperatingSystems.Any())
                 {
-                    List<NameValueStats> operatingSystems = new List<NameValueStats>();
+                    List<NameValueStats> operatingSystems = new();
 
                     foreach(OperatingSystem nvs in _ctx.OperatingSystems)
                         operatingSystems.Add(new NameValueStats
@@ -111,7 +111,7 @@ namespace Aaru.Server.Controllers
 
                 if(_ctx.Versions.Any())
                 {
-                    List<NameValueStats> versions = new List<NameValueStats>();
+                    List<NameValueStats> versions = new();
 
                     foreach(Version nvs in _ctx.Versions)
                         versions.Add(new NameValueStats
@@ -140,8 +140,8 @@ namespace Aaru.Server.Controllers
 
                 if(_ctx.Medias.Any())
                 {
-                    List<MediaItem> realMedia    = new List<MediaItem>();
-                    List<MediaItem> virtualMedia = new List<MediaItem>();
+                    List<MediaItem> realMedia    = new();
+                    List<MediaItem> virtualMedia = new();
 
                     foreach(Media nvs in _ctx.Medias)
                         try
@@ -194,7 +194,7 @@ namespace Aaru.Server.Controllers
 
                 if(_ctx.DeviceStats.Any())
                 {
-                    List<DeviceItem> devices = new List<DeviceItem>();
+                    List<DeviceItem> devices = new();
 
                     foreach(DeviceStat device in _ctx.DeviceStats.ToList())
                     {

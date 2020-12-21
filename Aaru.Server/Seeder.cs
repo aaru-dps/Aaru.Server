@@ -19,7 +19,7 @@ namespace Aaru.Server
                 randChars[i] = (char)rnd.Next(32, 126);
             }
 
-            string password = new string(randChars);
+            string password = new(randChars);
 
             if(userManager.FindByEmailAsync(email).Result != null)
                 return;
