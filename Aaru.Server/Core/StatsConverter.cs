@@ -45,13 +45,13 @@ namespace Aaru.Server.Core
 
             if(newStats.Commands?.Analyze > 0)
             {
-                Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "analyze");
+                Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "fs-info");
 
                 if(existing == null)
-                    ctx.Commands.Add(new Command
+                    ctx.Commands.Add(new()
                     {
                         Count = newStats.Commands.Analyze,
-                        Name  = "analyze"
+                        Name  = "fs-info"
                     });
                 else
                     existing.Count += newStats.Commands.Analyze;
@@ -62,7 +62,7 @@ namespace Aaru.Server.Core
                 Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "benchmark");
 
                 if(existing == null)
-                    ctx.Commands.Add(new Command
+                    ctx.Commands.Add(new()
                     {
                         Count = newStats.Commands.Benchmark,
                         Name  = "benchmark"
@@ -76,7 +76,7 @@ namespace Aaru.Server.Core
                 Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "checksum");
 
                 if(existing == null)
-                    ctx.Commands.Add(new Command
+                    ctx.Commands.Add(new()
                     {
                         Count = newStats.Commands.Checksum,
                         Name  = "checksum"
@@ -90,7 +90,7 @@ namespace Aaru.Server.Core
                 Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "compare");
 
                 if(existing == null)
-                    ctx.Commands.Add(new Command
+                    ctx.Commands.Add(new()
                     {
                         Count = newStats.Commands.Compare,
                         Name  = "compare"
@@ -104,7 +104,7 @@ namespace Aaru.Server.Core
                 Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "create-sidecar");
 
                 if(existing == null)
-                    ctx.Commands.Add(new Command
+                    ctx.Commands.Add(new()
                     {
                         Count = newStats.Commands.CreateSidecar,
                         Name  = "create-sidecar"
@@ -118,7 +118,7 @@ namespace Aaru.Server.Core
                 Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "decode");
 
                 if(existing == null)
-                    ctx.Commands.Add(new Command
+                    ctx.Commands.Add(new()
                     {
                         Count = newStats.Commands.Decode,
                         Name  = "decode"
@@ -132,7 +132,7 @@ namespace Aaru.Server.Core
                 Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "device-info");
 
                 if(existing == null)
-                    ctx.Commands.Add(new Command
+                    ctx.Commands.Add(new()
                     {
                         Count = newStats.Commands.DeviceInfo,
                         Name  = "device-info"
@@ -146,7 +146,7 @@ namespace Aaru.Server.Core
                 Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "device-report");
 
                 if(existing == null)
-                    ctx.Commands.Add(new Command
+                    ctx.Commands.Add(new()
                     {
                         Count = newStats.Commands.DeviceReport,
                         Name  = "device-report"
@@ -160,7 +160,7 @@ namespace Aaru.Server.Core
                 Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "dump-media");
 
                 if(existing == null)
-                    ctx.Commands.Add(new Command
+                    ctx.Commands.Add(new()
                     {
                         Count = newStats.Commands.DumpMedia,
                         Name  = "dump-media"
@@ -174,7 +174,7 @@ namespace Aaru.Server.Core
                 Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "entropy");
 
                 if(existing == null)
-                    ctx.Commands.Add(new Command
+                    ctx.Commands.Add(new()
                     {
                         Count = newStats.Commands.Entropy,
                         Name  = "entropy"
@@ -188,7 +188,7 @@ namespace Aaru.Server.Core
                 Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "formats");
 
                 if(existing == null)
-                    ctx.Commands.Add(new Command
+                    ctx.Commands.Add(new()
                     {
                         Count = newStats.Commands.Formats,
                         Name  = "formats"
@@ -202,7 +202,7 @@ namespace Aaru.Server.Core
                 Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "media-info");
 
                 if(existing == null)
-                    ctx.Commands.Add(new Command
+                    ctx.Commands.Add(new()
                     {
                         Count = newStats.Commands.MediaInfo,
                         Name  = "media-info"
@@ -216,7 +216,7 @@ namespace Aaru.Server.Core
                 Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "media-scan");
 
                 if(existing == null)
-                    ctx.Commands.Add(new Command
+                    ctx.Commands.Add(new()
                     {
                         Count = newStats.Commands.MediaScan,
                         Name  = "media-scan"
@@ -230,7 +230,7 @@ namespace Aaru.Server.Core
                 Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "printhex");
 
                 if(existing == null)
-                    ctx.Commands.Add(new Command
+                    ctx.Commands.Add(new()
                     {
                         Count = newStats.Commands.PrintHex,
                         Name  = "printhex"
@@ -244,7 +244,7 @@ namespace Aaru.Server.Core
                 Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "verify");
 
                 if(existing == null)
-                    ctx.Commands.Add(new Command
+                    ctx.Commands.Add(new()
                     {
                         Count = newStats.Commands.Verify,
                         Name  = "verify"
@@ -258,7 +258,7 @@ namespace Aaru.Server.Core
                 Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "ls");
 
                 if(existing == null)
-                    ctx.Commands.Add(new Command
+                    ctx.Commands.Add(new()
                     {
                         Count = newStats.Commands.Ls,
                         Name  = "ls"
@@ -272,7 +272,7 @@ namespace Aaru.Server.Core
                 Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "extract-files");
 
                 if(existing == null)
-                    ctx.Commands.Add(new Command
+                    ctx.Commands.Add(new()
                     {
                         Count = newStats.Commands.ExtractFiles,
                         Name  = "extract-files"
@@ -286,7 +286,7 @@ namespace Aaru.Server.Core
                 Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "list-devices");
 
                 if(existing == null)
-                    ctx.Commands.Add(new Command
+                    ctx.Commands.Add(new()
                     {
                         Count = newStats.Commands.ListDevices,
                         Name  = "list-devices"
@@ -300,7 +300,7 @@ namespace Aaru.Server.Core
                 Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "list-encodings");
 
                 if(existing == null)
-                    ctx.Commands.Add(new Command
+                    ctx.Commands.Add(new()
                     {
                         Count = newStats.Commands.ListEncodings,
                         Name  = "list-encodings"
@@ -314,7 +314,7 @@ namespace Aaru.Server.Core
                 Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "convert-image");
 
                 if(existing == null)
-                    ctx.Commands.Add(new Command
+                    ctx.Commands.Add(new()
                     {
                         Count = newStats.Commands.ConvertImage,
                         Name  = "convert-image"
@@ -328,7 +328,7 @@ namespace Aaru.Server.Core
                 Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "image-info");
 
                 if(existing == null)
-                    ctx.Commands.Add(new Command
+                    ctx.Commands.Add(new()
                     {
                         Count = newStats.Commands.ImageInfo,
                         Name  = "image-info"
@@ -350,7 +350,7 @@ namespace Aaru.Server.Core
                                                                  c.Version == operatingSystem.version);
 
                     if(existing == null)
-                        ctx.OperatingSystems.Add(new OperatingSystem
+                        ctx.OperatingSystems.Add(new()
                         {
                             Count   = operatingSystem.Value,
                             Name    = operatingSystem.name,
@@ -366,7 +366,7 @@ namespace Aaru.Server.Core
                     ctx.OperatingSystems.FirstOrDefault(c => c.Name == "Linux" && c.Version == null);
 
                 if(existing == null)
-                    ctx.OperatingSystems.Add(new OperatingSystem
+                    ctx.OperatingSystems.Add(new()
                     {
                         Count = 1,
                         Name  = "Linux"
@@ -385,7 +385,7 @@ namespace Aaru.Server.Core
                     Version existing = ctx.Versions.FirstOrDefault(c => c.Name == nvs.name);
 
                     if(existing == null)
-                        ctx.Versions.Add(new Version
+                        ctx.Versions.Add(new()
                         {
                             Count = nvs.Value,
                             Name  = nvs.name
@@ -399,7 +399,7 @@ namespace Aaru.Server.Core
                 Version existing = ctx.Versions.FirstOrDefault(c => c.Name == "previous");
 
                 if(existing == null)
-                    ctx.Versions.Add(new Version
+                    ctx.Versions.Add(new()
                     {
                         Count = 1,
                         Name  = "previous"
@@ -417,7 +417,7 @@ namespace Aaru.Server.Core
                     Filesystem existing = ctx.Filesystems.FirstOrDefault(c => c.Name == nvs.name);
 
                     if(existing == null)
-                        ctx.Filesystems.Add(new Filesystem
+                        ctx.Filesystems.Add(new()
                         {
                             Count = nvs.Value,
                             Name  = nvs.name
@@ -435,7 +435,7 @@ namespace Aaru.Server.Core
                     Partition existing = ctx.Partitions.FirstOrDefault(c => c.Name == nvs.name);
 
                     if(existing == null)
-                        ctx.Partitions.Add(new Partition
+                        ctx.Partitions.Add(new()
                         {
                             Count = nvs.Value,
                             Name  = nvs.name
@@ -453,7 +453,7 @@ namespace Aaru.Server.Core
                     MediaFormat existing = ctx.MediaFormats.FirstOrDefault(c => c.Name == nvs.name);
 
                     if(existing == null)
-                        ctx.MediaFormats.Add(new MediaFormat
+                        ctx.MediaFormats.Add(new()
                         {
                             Count = nvs.Value,
                             Name  = nvs.name
@@ -471,7 +471,7 @@ namespace Aaru.Server.Core
                     Filter existing = ctx.Filters.FirstOrDefault(c => c.Name == nvs.name);
 
                     if(existing == null)
-                        ctx.Filters.Add(new Filter
+                        ctx.Filters.Add(new()
                         {
                             Count = nvs.Value,
                             Name  = nvs.name
@@ -489,7 +489,7 @@ namespace Aaru.Server.Core
                                                                            c.Model    == device.Model &&
                                                                            c.Revision == device.Revision)))
                 {
-                    ctx.DeviceStats.Add(new DeviceStat
+                    ctx.DeviceStats.Add(new()
                     {
                         Bus          = device.Bus,
                         Manufacturer = device.Manufacturer,
@@ -507,7 +507,7 @@ namespace Aaru.Server.Core
                     Media existing = ctx.Medias.FirstOrDefault(c => c.Type == media.type && c.Real == media.real);
 
                     if(existing == null)
-                        ctx.Medias.Add(new Media
+                        ctx.Medias.Add(new()
                         {
                             Count = media.Value,
                             Real  = media.real,

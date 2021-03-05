@@ -129,10 +129,13 @@ namespace Aaru.Server.Controllers
                 if(newstats.Commands != null)
                     foreach(NameValueStats nvs in newstats.Commands)
                     {
+                        if(nvs.name == "analyze")
+                            nvs.name = "fs-info";
+
                         Command existing = _ctx.Commands.FirstOrDefault(c => c.Name == nvs.name);
 
                         if(existing == null)
-                            await _ctx.Commands.AddAsync(new Command
+                            await _ctx.Commands.AddAsync(new()
                             {
                                 Name  = nvs.name,
                                 Count = nvs.Value
@@ -147,7 +150,7 @@ namespace Aaru.Server.Controllers
                         Version existing = _ctx.Versions.FirstOrDefault(c => c.Name == nvs.name);
 
                         if(existing == null)
-                            await _ctx.Versions.AddAsync(new Version
+                            await _ctx.Versions.AddAsync(new()
                             {
                                 Name  = nvs.name,
                                 Count = nvs.Value
@@ -162,7 +165,7 @@ namespace Aaru.Server.Controllers
                         Filesystem existing = _ctx.Filesystems.FirstOrDefault(c => c.Name == nvs.name);
 
                         if(existing == null)
-                            await _ctx.Filesystems.AddAsync(new Filesystem
+                            await _ctx.Filesystems.AddAsync(new()
                             {
                                 Name  = nvs.name,
                                 Count = nvs.Value
@@ -177,7 +180,7 @@ namespace Aaru.Server.Controllers
                         Partition existing = _ctx.Partitions.FirstOrDefault(c => c.Name == nvs.name);
 
                         if(existing == null)
-                            await _ctx.Partitions.AddAsync(new Partition
+                            await _ctx.Partitions.AddAsync(new()
                             {
                                 Name  = nvs.name,
                                 Count = nvs.Value
@@ -192,7 +195,7 @@ namespace Aaru.Server.Controllers
                         MediaFormat existing = _ctx.MediaFormats.FirstOrDefault(c => c.Name == nvs.name);
 
                         if(existing == null)
-                            await _ctx.MediaFormats.AddAsync(new MediaFormat
+                            await _ctx.MediaFormats.AddAsync(new()
                             {
                                 Name  = nvs.name,
                                 Count = nvs.Value
@@ -207,7 +210,7 @@ namespace Aaru.Server.Controllers
                         Filter existing = _ctx.Filters.FirstOrDefault(c => c.Name == nvs.name);
 
                         if(existing == null)
-                            await _ctx.Filters.AddAsync(new Filter
+                            await _ctx.Filters.AddAsync(new()
                             {
                                 Name  = nvs.name,
                                 Count = nvs.Value
@@ -224,7 +227,7 @@ namespace Aaru.Server.Controllers
                                                                       c.Version == operatingSystem.version);
 
                         if(existing == null)
-                            await _ctx.OperatingSystems.AddAsync(new OperatingSystem
+                            await _ctx.OperatingSystems.AddAsync(new()
                             {
                                 Name    = operatingSystem.name,
                                 Version = operatingSystem.version,
@@ -240,7 +243,7 @@ namespace Aaru.Server.Controllers
                         Media existing = _ctx.Medias.FirstOrDefault(c => c.Type == media.type && c.Real == media.real);
 
                         if(existing == null)
-                            await _ctx.Medias.AddAsync(new Media
+                            await _ctx.Medias.AddAsync(new()
                             {
                                 Type  = media.type,
                                 Real  = media.real,
@@ -258,7 +261,7 @@ namespace Aaru.Server.Controllers
                                                           c.Revision == device.Revision) where existing == null
                                                   select device)
                     {
-                        await _ctx.DeviceStats.AddAsync(new DeviceStat
+                        await _ctx.DeviceStats.AddAsync(new()
                         {
                             Bus          = device.Bus,
                             Manufacturer = device.Manufacturer,
@@ -275,7 +278,7 @@ namespace Aaru.Server.Controllers
                                                                         c.Version == application.version);
 
                         if(existing == null)
-                            await _ctx.RemoteApplications.AddAsync(new RemoteApplication
+                            await _ctx.RemoteApplications.AddAsync(new()
                             {
                                 Name    = application.name,
                                 Version = application.version,
@@ -291,7 +294,7 @@ namespace Aaru.Server.Controllers
                         RemoteArchitecture existing = _ctx.RemoteArchitectures.FirstOrDefault(c => c.Name == nvs.name);
 
                         if(existing == null)
-                            await _ctx.RemoteArchitectures.AddAsync(new RemoteArchitecture
+                            await _ctx.RemoteArchitectures.AddAsync(new()
                             {
                                 Name  = nvs.name,
                                 Count = nvs.Value
@@ -308,7 +311,7 @@ namespace Aaru.Server.Controllers
                                                                             c.Version == remoteOperatingSystem.version);
 
                         if(existing == null)
-                            await _ctx.RemoteOperatingSystems.AddAsync(new RemoteOperatingSystem
+                            await _ctx.RemoteOperatingSystems.AddAsync(new()
                             {
                                 Name    = remoteOperatingSystem.name,
                                 Version = remoteOperatingSystem.version,
