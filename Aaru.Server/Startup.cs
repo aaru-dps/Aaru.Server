@@ -42,7 +42,7 @@ namespace Aaru.Server
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            app.UseForwardedHeaders(new()
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
@@ -62,6 +62,9 @@ namespace Aaru.Server
             }
 
             app.UseStaticFiles();
+
+            // Add other security headers
+            app.UseMiddleware<SecurityHeadersMiddleware>();
 
             app.UseRouting();
 
