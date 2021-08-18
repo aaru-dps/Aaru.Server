@@ -76,6 +76,49 @@
     <None Update="aaru-server.service">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="wwwroot\css\amiga\aaruserver.css" />
+    <None Include="wwwroot\css\amiga\aaruserver.css.map" />
+    <None Include="wwwroot\css\amiga\aaruserver.scss" />
+    <None Include="wwwroot\css\amiga\_colors.scss" />
+    <None Include="wwwroot\css\amiga\_font.scss" />
+    <None Include="wwwroot\css\amiga\_fontstyles.scss" />
+    <None Include="wwwroot\css\dos\aaruserver.css" />
+    <None Include="wwwroot\css\dos\aaruserver.css.map" />
+    <None Include="wwwroot\css\dos\aaruserver.scss" />
+    <None Include="wwwroot\css\dos\_colors.scss" />
+    <None Include="wwwroot\css\dos\_font.scss" />
+    <None Include="wwwroot\css\dos\_fontstyles.scss" />
+    <None Include="wwwroot\css\mac\aaruserver.css" />
+    <None Include="wwwroot\css\mac\aaruserver.css.map" />
+    <None Include="wwwroot\css\mac\aaruserver.scss" />
+    <None Include="wwwroot\css\mac\_colors.scss" />
+    <None Include="wwwroot\css\mac\_font.scss" />
+    <None Include="wwwroot\css\mac\_fontstyles.scss" />
+    <None Include="wwwroot\favicon.ico" />
+    <None Include="wwwroot\fonts\.htaccess" />
+    <None Include="wwwroot\fonts\ChicagoFLF.eot" />
+    <None Include="wwwroot\fonts\ChicagoFLF.ttf" />
+    <None Include="wwwroot\fonts\ChicagoFLF.woff" />
+    <None Include="wwwroot\fonts\ChicagoFLF.woff2" />
+    <None Include="wwwroot\fonts\Topaz_a500_v1.0.eot" />
+    <None Include="wwwroot\fonts\Topaz_a500_v1.0.ttf" />
+    <None Include="wwwroot\fonts\Topaz_a500_v1.0.woff" />
+    <None Include="wwwroot\fonts\Topaz_a500_v1.0.woff2" />
+    <None Include="wwwroot\fonts\vga_squarepx.eot" />
+    <None Include="wwwroot\fonts\vga_squarepx.ttf" />
+    <None Include="wwwroot\fonts\vga_squarepx.woff" />
+    <None Include="wwwroot\fonts\vga_squarepx.woff2" />
+    <None Include="wwwroot\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+    <None Include="wwwroot\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <None Include="wwwroot\jquery-validation-unobtrusive\LICENSE.txt" />
+    <None Include="wwwroot\jquery-validation\dist\additional-methods.js" />
+    <None Include="wwwroot\jquery-validation\dist\additional-methods.min.js" />
+    <None Include="wwwroot\jquery-validation\dist\jquery.validate.js" />
+    <None Include="wwwroot\jquery-validation\dist\jquery.validate.min.js" />
+    <None Include="wwwroot\jquery-validation\LICENSE.md" />
+    <None Include="wwwroot\js\colors\amiga.js" />
+    <None Include="wwwroot\js\colors\dos.js" />
+    <None Include="wwwroot\js\colors\mac.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -116,6 +159,10 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot.bak" />
   </ItemGroup>
 
 </Project>
