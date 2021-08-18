@@ -136,6 +136,13 @@
     <_ContentIncludedByDefault Remove="Areas\Admin\Views\Device\Edit.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Admin\Views\Device\Index.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Admin\Views\Atas\EditorTemplates\IdHashModel.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Home\Changelog.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Home\CODE_OF_CONDUCT.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Home\CONTRIBUTING.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Home\ISSUE_TEMPLATE.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Home\NEEDED.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Home\NEEDINFO.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Home\PULL_REQUEST_TEMPLATE.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

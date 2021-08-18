@@ -61,6 +61,7 @@ namespace Aaru.Server
                 app.UseHsts();
             }
 
+            app.UseDefaultFiles();
             app.UseStaticFiles();
 
             // Add other security headers
