@@ -95,7 +95,7 @@
                 </div>
                 <div aria-labelledby="osHeading" class="collapse" data-parent="#osAccordion" id="osCollapse">
                     <div class="card-body">
-                        <table class="table-dark">
+                        <table class="table-centered table-dark">
                             @foreach(NameValueStats os in ViewBag.repOperatingSystems)
                             {
                                 <tr>
@@ -130,7 +130,7 @@
                 </div>
                 <div aria-labelledby="versionsHeading" class="collapse" data-parent="#versionsAccordion" id="versionsCollapse">
                     <div class="card-body">
-                        <table class="table-dark">
+                        <table class="table-centered table-dark">
                             @foreach(NameValueStats version in ViewBag.repVersions)
                             {
                                 <tr>
@@ -165,7 +165,7 @@
                 </div>
                 <div aria-labelledby="commandsHeading" class="collapse" data-parent="#commandsAccordion" id="commandsCollapse">
                     <div class="card-body">
-                        <table class="table-dark">
+                        <table class="table-centered table-dark">
                             @foreach(Command command in ViewBag.repCommands)
                             {
                                 <tr>
@@ -529,7 +529,8 @@ function DrawPie(elementName, label, dataLabels, data)
                     datasets: [{
                         label: label,
                         data: data,
-                        backgroundColor: themeColors
+                        backgroundColor: themeColors,
+                        borderColor: '#8b0000'
                     }]
                 },
                 options: {

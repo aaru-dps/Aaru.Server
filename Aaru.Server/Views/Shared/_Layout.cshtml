@@ -35,23 +35,8 @@
 <html>
 <meta charset="UTF-8">
 <head>
-    @switch(DateTime.UtcNow.DayOfYear)
-    {
-        // 24th January, Macintosh launch
-        case 24:
-            <link href="~/css/mac/aaruserver.css" rel="stylesheet" type="text/css" />
-            <script src="~/js/colors/mac.js"></script>
-            break;
-        // 23rd July, Amiga launch
-        case 204:
-            <link href="~/css/amiga/aaruserver.css" rel="stylesheet" type="text/css" />
-            <script src="~/js/colors/amiga.js"></script>
-            break;
-        default:
-            <link href="~/css/dos/aaruserver.css" rel="stylesheet" type="text/css" />
-            <script src="~/js/colors/dos.js"></script>
-            break;
-    }
+    <script src="~/js/colors.js"></script>
+    <link href="~/css/aaruserver.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8" />
     <title>@ViewBag.Title</title>
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -70,33 +55,7 @@
 <body>
 @RenderBody()
 <footer class="container-fluid">
-    © 2011-2021
-    <a href="http://www.claunia.com" target="_blank">
-        Claunia.com
-    </a>
-    <br />
-    @switch(DateTime.UtcNow.DayOfYear)
-    {
-        // 24th January, Macintosh launch
-        case 24:
-            @Html.Raw("Fonts are © 2014 <a href=\"http://christtrekker.users.sourceforge.net/fnt/chicago.shtml\" target=\"_blank\">Robin Casady</a>")
-            break;
-        // 23rd July, Amiga launch
-        case 204:
-            @Html.Raw("Fonts are © 2013 <a href=\"https://github.com/rewtnull/amigafonts\" target=\"_blank\">TrueSchool Ascii</a>")
-            break;
-        default:
-            @Html.Raw("Fonts are © 2015 - 2016 <a href=\"http://int10h.org\" target=\"_blank\">VileR</a>")
-            break;
-    }
-    <br />
-    CSS © 2018-2019
-    <a href="https://getbootstrap.com/" target="_blank">
-        Bootstrap
-    </a> and
-    <a href="http://www.claunia.com" target="_blank">
-        Claunia.com
-    </a>
+    © 2011-2021 Natalia Portillo
 </footer>
 @RenderSection("Scripts", false)
 <script crossorigin="anonymous" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
