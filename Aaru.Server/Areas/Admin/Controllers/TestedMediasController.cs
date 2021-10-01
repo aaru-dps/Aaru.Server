@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using Cartridge = Aaru.Decoders.Bluray.Cartridge;
 using DDS = Aaru.Decoders.Bluray.DDS;
 using DMI = Aaru.Decoders.Xbox.DMI;
+using MediaType = Aaru.CommonTypes.MediaType;
 using Spare = Aaru.Decoders.Bluray.Spare;
 
 namespace Aaru.Server.Areas.Admin.Controllers
@@ -316,7 +317,7 @@ namespace Aaru.Server.Areas.Admin.Controllers
                     break;
                 case nameof(testedMedia.EmbossedPfiData):
                     buffer        = testedMedia.EmbossedPfiData;
-                    model.Decoded = PFI.Prettify(buffer);
+                    model.Decoded = PFI.Prettify(buffer, MediaType.DVDROM); // TODO: Get real media type here
 
                     break;
                 case nameof(testedMedia.FullTocData):
@@ -371,7 +372,7 @@ namespace Aaru.Server.Areas.Admin.Controllers
                     break;
                 case nameof(testedMedia.PfiData):
                     buffer        = testedMedia.PfiData;
-                    model.Decoded = PFI.Prettify(buffer);
+                    model.Decoded = PFI.Prettify(buffer, MediaType.DVDROM); // TODO: Get real media type here
 
                     break;
                 case nameof(testedMedia.PioneerReadCddaData):
