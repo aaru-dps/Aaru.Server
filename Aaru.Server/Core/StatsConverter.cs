@@ -30,9 +30,8 @@
 // Copyright © 2011-2021 Natalia Portillo
 // ****************************************************************************/
 
-using System.Linq;
 using Aaru.CommonTypes.Metadata;
-using Aaru.Server.Models;
+using OperatingSystem = Aaru.Server.Models.OperatingSystem;
 using Version = Aaru.Server.Models.Version;
 
 namespace Aaru.Server.Core;

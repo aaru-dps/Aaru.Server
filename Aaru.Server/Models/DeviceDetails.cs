@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Aaru.CommonTypes.Metadata;
 
 namespace Aaru.Server.Models;

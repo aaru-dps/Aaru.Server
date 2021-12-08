@@ -30,10 +30,7 @@
 // Copyright © 2011-2021 Natalia Portillo
 // ****************************************************************************/
 
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Xml;
@@ -41,9 +38,7 @@ using System.Xml.Serialization;
 using Aaru.CommonTypes.Interop;
 using Aaru.CommonTypes.Metadata;
 using Aaru.Server.Core;
-using Aaru.Server.Models;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using OperatingSystem = Aaru.Server.Models.OperatingSystem;
 using PlatformID = Aaru.CommonTypes.Interop.PlatformID;
 using Version = Aaru.Server.Models.Version;

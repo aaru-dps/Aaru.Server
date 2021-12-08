@@ -30,18 +30,13 @@
 // Copyright © 2011-2021 Natalia Portillo
 // ****************************************************************************/
 
-using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Aaru.CommonTypes.Metadata;
 using Aaru.Server.Core;
-using Aaru.Server.Models;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using OperatingSystem = Aaru.Server.Models.OperatingSystem;
 using Version = Aaru.Server.Models.Version;

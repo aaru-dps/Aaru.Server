@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Web;
 using Aaru.CommonTypes.Metadata;
 using Aaru.CommonTypes.Structs.Devices.SCSI;
@@ -10,10 +7,6 @@ using Aaru.Decoders.CD;
 using Aaru.Decoders.DVD;
 using Aaru.Decoders.SCSI;
 using Aaru.Helpers;
-using Aaru.Server.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Cartridge = Aaru.Decoders.Bluray.Cartridge;
 using DDS = Aaru.Decoders.Bluray.DDS;
 using DMI = Aaru.Decoders.Xbox.DMI;

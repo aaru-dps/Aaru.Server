@@ -30,16 +30,11 @@
 // Copyright © 2011-2021 Natalia Portillo
 // ****************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Aaru.CommonTypes.Structs.Devices.SCSI;
 using Aaru.Decoders.PCMCIA;
 using Aaru.Decoders.SCSI;
 using Aaru.Helpers;
 using Aaru.Server.Core;
-using Aaru.Server.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Ata = Aaru.CommonTypes.Metadata.Ata;
 using Inquiry = Aaru.CommonTypes.Structs.Devices.SCSI.Inquiry;

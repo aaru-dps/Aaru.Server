@@ -1,15 +1,8 @@
-using System;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using Aaru.CommonTypes.Metadata;
 using Aaru.Decoders.CD;
 using Aaru.Helpers;
-using Aaru.Server.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 

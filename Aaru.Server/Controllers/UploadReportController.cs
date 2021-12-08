@@ -30,21 +30,16 @@
 // Copyright © 2011-2021 Natalia Portillo
 // ****************************************************************************/
 
-using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Aaru.CommonTypes.Metadata;
-using Aaru.Server.Models;
 using Cinchoo.PGP;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using MimeKit;
 using Newtonsoft.Json;
 

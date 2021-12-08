@@ -34,7 +34,6 @@ using System.Data.Common;
 using Aaru.CommonTypes.Metadata;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace Aaru.Server.Models;

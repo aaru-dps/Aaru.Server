@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Aaru.Server.Models;
 
 public class CompareModel

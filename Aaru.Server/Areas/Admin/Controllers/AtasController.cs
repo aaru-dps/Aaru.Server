@@ -1,14 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Aaru.CommonTypes.Structs.Devices.ATA;
 using Aaru.Server.Core;
-using Aaru.Server.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Ata = Aaru.CommonTypes.Metadata.Ata;
 using TestedMedia = Aaru.CommonTypes.Metadata.TestedMedia;

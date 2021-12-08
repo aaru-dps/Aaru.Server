@@ -1,5 +1,4 @@
-﻿using System;
-using Aaru.Server.Models;
+﻿using Aaru.Server.Models;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 

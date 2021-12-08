@@ -30,9 +30,6 @@
 // Copyright © 2011-2021 Natalia Portillo
 // ****************************************************************************/
 
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-
 namespace Aaru.Server.Areas.Admin.Controllers;
 
 [Area("Admin"), Authorize]

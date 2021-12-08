@@ -30,8 +30,6 @@
 // Copyright © 2011-2021 Natalia Portillo
 // ****************************************************************************/
 
-using System.Collections.Generic;
-using System.Linq;
 using Aaru.CommonTypes.Structs.Devices.SCSI.Modes;
 
 namespace Aaru.Server.Core;

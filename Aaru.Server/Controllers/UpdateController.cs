@@ -30,17 +30,11 @@
 // Copyright © 2011-2021 Natalia Portillo
 // ****************************************************************************/
 
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using Aaru.CommonTypes.Metadata;
 using Aaru.Dto;
 using Aaru.Helpers;
-using Aaru.Server.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace Aaru.Server.Controllers;

@@ -30,7 +30,6 @@
 // Copyright © 2011-2021 Natalia Portillo
 // ****************************************************************************/
 
-using System;
 using Newtonsoft.Json;
 
 namespace Aaru.Server.Models;

@@ -30,8 +30,6 @@
 // Copyright © 2011-2021 Natalia Portillo
 // ****************************************************************************/
 
-using System.Collections.Generic;
-
 namespace Aaru.Server.Core;
 
 public static class TestedMedia
