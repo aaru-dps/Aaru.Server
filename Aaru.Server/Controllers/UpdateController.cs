@@ -43,69 +43,68 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
-namespace Aaru.Server.Controllers
+namespace Aaru.Server.Controllers;
+
+public sealed class UpdateController : Controller
 {
-    public sealed class UpdateController : Controller
+    readonly AaruServerContext _ctx;
+
+    public UpdateController(AaruServerContext ctx) => _ctx = ctx;
+
+    /// <summary>Receives a report from Aaru.Core, verifies it's in the correct format and stores it on the server</summary>
+    /// <returns>HTTP response</returns>
+    [Route("api/update"), HttpGet]
+    public ActionResult Update(long timestamp)
     {
-        readonly AaruServerContext _ctx;
+        var      sync     = new SyncDto();
+        DateTime lastSync = DateHandlers.UnixToDateTime(timestamp);
 
-        public UpdateController(AaruServerContext ctx) => _ctx = ctx;
+        sync.UsbVendors = new List<UsbVendorDto>();
 
-        /// <summary>Receives a report from Aaru.Core, verifies it's in the correct format and stores it on the server</summary>
-        /// <returns>HTTP response</returns>
-        [Route("api/update"), HttpGet]
-        public ActionResult Update(long timestamp)
-        {
-            var      sync     = new SyncDto();
-            DateTime lastSync = DateHandlers.UnixToDateTime(timestamp);
-
-            sync.UsbVendors = new List<UsbVendorDto>();
-
-            foreach(UsbVendor vendor in _ctx.UsbVendors.Where(v => v.ModifiedWhen > lastSync))
-                sync.UsbVendors.Add(new UsbVendorDto
-                {
-                    VendorId = vendor.VendorId,
-                    Vendor   = vendor.Vendor
-                });
-
-            sync.UsbProducts = new List<UsbProductDto>();
-
-            foreach(UsbProduct product in _ctx.UsbProducts.Include(p => p.Vendor).Where(p => p.ModifiedWhen > lastSync))
-                sync.UsbProducts.Add(new UsbProductDto
-                {
-                    Id        = product.Id,
-                    Product   = product.Product,
-                    ProductId = product.ProductId,
-                    VendorId  = product.Vendor.VendorId
-                });
-
-            sync.Offsets = new List<CdOffsetDto>();
-
-            foreach(CompactDiscOffset offset in _ctx.CdOffsets.Where(o => o.ModifiedWhen > lastSync))
-                sync.Offsets.Add(new CdOffsetDto(offset, offset.Id));
-
-            sync.Devices = new List<DeviceDto>();
-
-            foreach(Device device in _ctx.Devices.Where(d => d.ModifiedWhen > lastSync).ToList())
-                sync.Devices.Add(new DeviceDto(JsonConvert.
-                                                   DeserializeObject<DeviceReportV2>(JsonConvert.SerializeObject(device,
-                                                       Formatting.None, new JsonSerializerSettings
-                                                       {
-                                                           ReferenceLoopHandling =
-                                                               ReferenceLoopHandling.Ignore
-                                                       })), device.Id, device.OptimalMultipleSectorsRead,
-                                               device.CanReadGdRomUsingSwapDisc));
-
-            var js = JsonSerializer.Create();
-            var sw = new StringWriter();
-            js.Serialize(sw, sync);
-
-            return new ContentResult
+        foreach(UsbVendor vendor in _ctx.UsbVendors.Where(v => v.ModifiedWhen > lastSync))
+            sync.UsbVendors.Add(new UsbVendorDto
             {
-                StatusCode  = (int)HttpStatusCode.OK,
-                Content     = sw.ToString(),
-                ContentType = "application/json"
-            };
-        }
+                VendorId = vendor.VendorId,
+                Vendor   = vendor.Vendor
+            });
+
+        sync.UsbProducts = new List<UsbProductDto>();
+
+        foreach(UsbProduct product in _ctx.UsbProducts.Include(p => p.Vendor).Where(p => p.ModifiedWhen > lastSync))
+            sync.UsbProducts.Add(new UsbProductDto
+            {
+                Id        = product.Id,
+                Product   = product.Product,
+                ProductId = product.ProductId,
+                VendorId  = product.Vendor.VendorId
+            });
+
+        sync.Offsets = new List<CdOffsetDto>();
+
+        foreach(CompactDiscOffset offset in _ctx.CdOffsets.Where(o => o.ModifiedWhen > lastSync))
+            sync.Offsets.Add(new CdOffsetDto(offset, offset.Id));
+
+        sync.Devices = new List<DeviceDto>();
+
+        foreach(Device device in _ctx.Devices.Where(d => d.ModifiedWhen > lastSync).ToList())
+            sync.Devices.Add(new DeviceDto(JsonConvert.
+                                               DeserializeObject<DeviceReportV2>(JsonConvert.SerializeObject(device,
+                                                   Formatting.None, new JsonSerializerSettings
+                                                   {
+                                                       ReferenceLoopHandling =
+                                                           ReferenceLoopHandling.Ignore
+                                                   })), device.Id, device.OptimalMultipleSectorsRead,
+                                           device.CanReadGdRomUsingSwapDisc));
+
+        var js = JsonSerializer.Create();
+        var sw = new StringWriter();
+        js.Serialize(sw, sync);
+
+        return new ContentResult
+        {
+            StatusCode  = (int)HttpStatusCode.OK,
+            Content     = sw.ToString(),
+            ContentType = "application/json"
+        };
     }
 }

@@ -33,27 +33,26 @@
 using System;
 using Newtonsoft.Json;
 
-namespace Aaru.Server.Models
+namespace Aaru.Server.Models;
+
+public class UsbProduct : BaseModel<int>
 {
-    public class UsbProduct : BaseModel<int>
+    public UsbProduct() {}
+
+    public UsbProduct(UsbVendor vendor, ushort id, string product)
     {
-        public UsbProduct() {}
-
-        public UsbProduct(UsbVendor vendor, ushort id, string product)
-        {
-            ProductId = id;
-            Product   = product;
-            AddedWhen = ModifiedWhen = DateTime.UtcNow;
-            Vendor    = vendor;
-        }
-
-        public ushort   ProductId    { get; set; }
-        public string   Product      { get; set; }
-        public DateTime AddedWhen    { get; set; }
-        public DateTime ModifiedWhen { get; set; }
-        public int      VendorId     { get; set; }
-
-        [JsonIgnore]
-        public virtual UsbVendor Vendor { get; set; }
+        ProductId = id;
+        Product   = product;
+        AddedWhen = ModifiedWhen = DateTime.UtcNow;
+        Vendor    = vendor;
     }
+
+    public ushort   ProductId    { get; set; }
+    public string   Product      { get; set; }
+    public DateTime AddedWhen    { get; set; }
+    public DateTime ModifiedWhen { get; set; }
+    public int      VendorId     { get; set; }
+
+    [JsonIgnore]
+    public virtual UsbVendor Vendor { get; set; }
 }

@@ -35,37 +35,36 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Aaru.CommonTypes.Metadata;
 
-namespace Aaru.Server.Models
+namespace Aaru.Server.Models;
+
+public class CompactDiscOffset : CdOffset
 {
-    public class CompactDiscOffset : CdOffset
+    public CompactDiscOffset() {}
+
+    public CompactDiscOffset(string manufacturer, string model, short offset, int submissions, float agreement)
     {
-        public CompactDiscOffset() {}
-
-        public CompactDiscOffset(string manufacturer, string model, short offset, int submissions, float agreement)
-        {
-            Manufacturer = manufacturer;
-            Model        = model;
-            Offset       = offset;
-            Submissions  = submissions;
-            Agreement    = agreement;
-            AddedWhen    = ModifiedWhen = DateTime.UtcNow;
-        }
-
-        public CompactDiscOffset(CdOffset offset)
-        {
-            Manufacturer = offset.Manufacturer;
-            Model        = offset.Model;
-            Offset       = offset.Offset;
-            Submissions  = offset.Submissions;
-            Agreement    = offset.Agreement;
-            AddedWhen    = ModifiedWhen = DateTime.UtcNow;
-        }
-
-        public int Id { get; set; }
-        [DisplayName("Added date")]
-        public DateTime AddedWhen { get; set; }
-        [DisplayName("Modification date")]
-        public DateTime ModifiedWhen { get;               set; }
-        public virtual ICollection<Device> Devices { get; set; }
+        Manufacturer = manufacturer;
+        Model        = model;
+        Offset       = offset;
+        Submissions  = submissions;
+        Agreement    = agreement;
+        AddedWhen    = ModifiedWhen = DateTime.UtcNow;
     }
+
+    public CompactDiscOffset(CdOffset offset)
+    {
+        Manufacturer = offset.Manufacturer;
+        Model        = offset.Model;
+        Offset       = offset.Offset;
+        Submissions  = offset.Submissions;
+        Agreement    = offset.Agreement;
+        AddedWhen    = ModifiedWhen = DateTime.UtcNow;
+    }
+
+    public int Id { get; set; }
+    [DisplayName("Added date")]
+    public DateTime AddedWhen { get; set; }
+    [DisplayName("Modification date")]
+    public DateTime ModifiedWhen { get;               set; }
+    public virtual ICollection<Device> Devices { get; set; }
 }

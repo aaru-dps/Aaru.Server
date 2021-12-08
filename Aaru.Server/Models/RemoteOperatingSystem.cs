@@ -30,7 +30,6 @@
 // Copyright © 2011-2021 Natalia Portillo
 // ****************************************************************************/
 
-namespace Aaru.Server.Models
-{
-    public class RemoteOperatingSystem : BaseOperatingSystem {}
-}
+namespace Aaru.Server.Models;
+
+public class RemoteOperatingSystem : BaseOperatingSystem {}

@@ -1,10 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Aaru.Server.Models
+namespace Aaru.Server.Models;
+
+public abstract class BaseModel<T>
 {
-    public abstract class BaseModel<T>
-    {
-        [Key]
-        public T Id { get; set; }
-    }
+    [Key]
+    public T Id { get; set; }
 }

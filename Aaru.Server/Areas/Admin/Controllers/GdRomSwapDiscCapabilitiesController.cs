@@ -11,383 +11,382 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Aaru.Server.Areas.Admin.Controllers
+namespace Aaru.Server.Areas.Admin.Controllers;
+
+[Area("Admin"), Authorize]
+public sealed class GdRomSwapDiscCapabilitiesController : Controller
 {
-    [Area("Admin"), Authorize]
-    public sealed class GdRomSwapDiscCapabilitiesController : Controller
+    readonly AaruServerContext _context;
+
+    public GdRomSwapDiscCapabilitiesController(AaruServerContext context) => _context = context;
+
+    // GET: Admin/GdRomSwapDiscCapabilities/Details/5
+    public async Task<IActionResult> Details(int? id)
     {
-        readonly AaruServerContext _context;
-
-        public GdRomSwapDiscCapabilitiesController(AaruServerContext context) => _context = context;
-
-        // GET: Admin/GdRomSwapDiscCapabilities/Details/5
-        public async Task<IActionResult> Details(int? id)
+        if(id == null)
         {
-            if(id == null)
-            {
-                return NotFound();
-            }
-
-            GdRomSwapDiscCapabilities caps =
-                await _context.GdRomSwapDiscCapabilities.FirstOrDefaultAsync(m => m.Id == id);
-
-            if(caps == null)
-            {
-                return NotFound();
-            }
-
-            return View(caps);
+            return NotFound();
         }
 
-        // GET: Admin/GdRomSwapDiscCapabilities/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        GdRomSwapDiscCapabilities caps =
+            await _context.GdRomSwapDiscCapabilities.FirstOrDefaultAsync(m => m.Id == id);
+
+        if(caps == null)
         {
-            if(id == null)
-            {
-                return NotFound();
-            }
-
-            GdRomSwapDiscCapabilities caps =
-                await _context.GdRomSwapDiscCapabilities.FirstOrDefaultAsync(m => m.Id == id);
-
-            if(caps == null)
-            {
-                return NotFound();
-            }
-
-            return View(caps);
+            return NotFound();
         }
 
-        // POST: Admin/GdRomSwapDiscCapabilities/Delete/5
-        [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            GdRomSwapDiscCapabilities caps = await _context.GdRomSwapDiscCapabilities.FindAsync(id);
-            _context.GdRomSwapDiscCapabilities.Remove(caps);
-            await _context.SaveChangesAsync();
+        return View(caps);
+    }
 
-            return RedirectToAction("Index", "Admin");
+    // GET: Admin/GdRomSwapDiscCapabilities/Delete/5
+    public async Task<IActionResult> Delete(int? id)
+    {
+        if(id == null)
+        {
+            return NotFound();
         }
 
-        public IActionResult ViewData(int id, string data)
+        GdRomSwapDiscCapabilities caps =
+            await _context.GdRomSwapDiscCapabilities.FirstOrDefaultAsync(m => m.Id == id);
+
+        if(caps == null)
         {
-            if(string.IsNullOrWhiteSpace(data))
-                return NotFound();
+            return NotFound();
+        }
 
-            GdRomSwapDiscCapabilities caps = _context.GdRomSwapDiscCapabilities.FirstOrDefault(m => m.Id == id);
+        return View(caps);
+    }
 
-            if(caps == null)
-            {
-                return NotFound();
-            }
+    // POST: Admin/GdRomSwapDiscCapabilities/Delete/5
+    [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        GdRomSwapDiscCapabilities caps = await _context.GdRomSwapDiscCapabilities.FindAsync(id);
+        _context.GdRomSwapDiscCapabilities.Remove(caps);
+        await _context.SaveChangesAsync();
 
-            var model = new TestedMediaDataModel
-            {
-                TestedMediaId = id,
-                DataName      = data
-            };
+        return RedirectToAction("Index", "Admin");
+    }
 
-            byte[] buffer;
-            var    sb      = new StringBuilder();
-            byte[] sector  = new byte[2352];
-            byte[] subq    = new byte[16];
-            byte[] fullsub = new byte[96];
+    public IActionResult ViewData(int id, string data)
+    {
+        if(string.IsNullOrWhiteSpace(data))
+            return NotFound();
 
-            bool audio = true;
-            bool pq    = false;
-            bool rw    = false;
+        GdRomSwapDiscCapabilities caps = _context.GdRomSwapDiscCapabilities.FirstOrDefault(m => m.Id == id);
 
-            switch(data)
-            {
-                case nameof(caps.Lba0Data):
-                    buffer = caps.Lba0Data;
-                    audio  = false;
+        if(caps == null)
+        {
+            return NotFound();
+        }
 
-                    break;
-                case nameof(caps.Lba0ScrambledData):
-                    buffer = caps.Lba0ScrambledData;
+        var model = new TestedMediaDataModel
+        {
+            TestedMediaId = id,
+            DataName      = data
+        };
 
-                    break;
-                case nameof(caps.Lba44990Data):
-                    buffer = caps.Lba44990Data;
-                    audio  = false;
+        byte[] buffer;
+        var    sb      = new StringBuilder();
+        byte[] sector  = new byte[2352];
+        byte[] subq    = new byte[16];
+        byte[] fullsub = new byte[96];
 
-                    break;
-                case nameof(caps.Lba44990PqData):
-                    buffer = caps.Lba44990PqData;
-                    audio  = false;
-                    pq     = true;
+        bool audio = true;
+        bool pq    = false;
+        bool rw    = false;
 
-                    break;
-                case nameof(caps.Lba44990RwData):
-                    buffer = caps.Lba44990RwData;
-                    audio  = false;
-                    rw     = true;
+        switch(data)
+        {
+            case nameof(caps.Lba0Data):
+                buffer = caps.Lba0Data;
+                audio  = false;
 
-                    break;
-                case nameof(caps.Lba44990AudioData):
-                    buffer = caps.Lba44990AudioData;
+                break;
+            case nameof(caps.Lba0ScrambledData):
+                buffer = caps.Lba0ScrambledData;
 
-                    break;
-                case nameof(caps.Lba44990AudioPqData):
-                    buffer = caps.Lba44990AudioPqData;
-                    pq     = true;
+                break;
+            case nameof(caps.Lba44990Data):
+                buffer = caps.Lba44990Data;
+                audio  = false;
 
-                    break;
-                case nameof(caps.Lba44990AudioRwData):
-                    buffer = caps.Lba44990AudioRwData;
-                    rw     = true;
+                break;
+            case nameof(caps.Lba44990PqData):
+                buffer = caps.Lba44990PqData;
+                audio  = false;
+                pq     = true;
 
-                    break;
-                case nameof(caps.Lba45000Data):
-                    buffer = caps.Lba45000Data;
-                    audio  = false;
+                break;
+            case nameof(caps.Lba44990RwData):
+                buffer = caps.Lba44990RwData;
+                audio  = false;
+                rw     = true;
 
-                    break;
-                case nameof(caps.Lba45000PqData):
-                    buffer = caps.Lba45000PqData;
-                    audio  = false;
-                    pq     = true;
+                break;
+            case nameof(caps.Lba44990AudioData):
+                buffer = caps.Lba44990AudioData;
 
-                    break;
-                case nameof(caps.Lba45000RwData):
-                    buffer = caps.Lba45000RwData;
-                    audio  = false;
-                    rw     = true;
+                break;
+            case nameof(caps.Lba44990AudioPqData):
+                buffer = caps.Lba44990AudioPqData;
+                pq     = true;
 
-                    break;
-                case nameof(caps.Lba45000AudioData):
-                    buffer = caps.Lba45000AudioData;
+                break;
+            case nameof(caps.Lba44990AudioRwData):
+                buffer = caps.Lba44990AudioRwData;
+                rw     = true;
 
-                    break;
-                case nameof(caps.Lba45000AudioPqData):
-                    buffer = caps.Lba45000AudioPqData;
-                    pq     = true;
+                break;
+            case nameof(caps.Lba45000Data):
+                buffer = caps.Lba45000Data;
+                audio  = false;
 
-                    break;
-                case nameof(caps.Lba45000AudioRwData):
-                    buffer = caps.Lba45000AudioRwData;
-                    rw     = true;
+                break;
+            case nameof(caps.Lba45000PqData):
+                buffer = caps.Lba45000PqData;
+                audio  = false;
+                pq     = true;
 
-                    break;
-                case nameof(caps.Lba50000Data):
-                    buffer = caps.Lba50000Data;
-                    audio  = false;
+                break;
+            case nameof(caps.Lba45000RwData):
+                buffer = caps.Lba45000RwData;
+                audio  = false;
+                rw     = true;
 
-                    break;
-                case nameof(caps.Lba50000PqData):
-                    buffer = caps.Lba50000PqData;
-                    audio  = false;
-                    pq     = true;
+                break;
+            case nameof(caps.Lba45000AudioData):
+                buffer = caps.Lba45000AudioData;
 
-                    break;
-                case nameof(caps.Lba50000RwData):
-                    buffer = caps.Lba50000RwData;
-                    audio  = false;
-                    rw     = true;
+                break;
+            case nameof(caps.Lba45000AudioPqData):
+                buffer = caps.Lba45000AudioPqData;
+                pq     = true;
 
-                    break;
-                case nameof(caps.Lba50000AudioData):
-                    buffer = caps.Lba50000AudioData;
+                break;
+            case nameof(caps.Lba45000AudioRwData):
+                buffer = caps.Lba45000AudioRwData;
+                rw     = true;
 
-                    break;
-                case nameof(caps.Lba50000AudioPqData):
-                    buffer = caps.Lba50000AudioPqData;
-                    pq     = true;
+                break;
+            case nameof(caps.Lba50000Data):
+                buffer = caps.Lba50000Data;
+                audio  = false;
 
-                    break;
-                case nameof(caps.Lba50000AudioRwData):
-                    buffer = caps.Lba50000AudioRwData;
-                    rw     = true;
+                break;
+            case nameof(caps.Lba50000PqData):
+                buffer = caps.Lba50000PqData;
+                audio  = false;
+                pq     = true;
 
-                    break;
-                case nameof(caps.Lba100000Data):
-                    buffer = caps.Lba100000Data;
-                    audio  = false;
+                break;
+            case nameof(caps.Lba50000RwData):
+                buffer = caps.Lba50000RwData;
+                audio  = false;
+                rw     = true;
 
-                    break;
-                case nameof(caps.Lba100000PqData):
-                    buffer = caps.Lba100000PqData;
-                    audio  = false;
-                    pq     = true;
+                break;
+            case nameof(caps.Lba50000AudioData):
+                buffer = caps.Lba50000AudioData;
 
-                    break;
-                case nameof(caps.Lba100000RwData):
-                    buffer = caps.Lba100000RwData;
-                    audio  = false;
-                    rw     = true;
+                break;
+            case nameof(caps.Lba50000AudioPqData):
+                buffer = caps.Lba50000AudioPqData;
+                pq     = true;
 
-                    break;
-                case nameof(caps.Lba100000AudioData):
-                    buffer = caps.Lba100000AudioData;
+                break;
+            case nameof(caps.Lba50000AudioRwData):
+                buffer = caps.Lba50000AudioRwData;
+                rw     = true;
 
-                    break;
-                case nameof(caps.Lba100000AudioPqData):
-                    buffer = caps.Lba100000AudioPqData;
-                    pq     = true;
+                break;
+            case nameof(caps.Lba100000Data):
+                buffer = caps.Lba100000Data;
+                audio  = false;
 
-                    break;
-                case nameof(caps.Lba100000AudioRwData):
-                    buffer = caps.Lba100000AudioRwData;
-                    rw     = true;
+                break;
+            case nameof(caps.Lba100000PqData):
+                buffer = caps.Lba100000PqData;
+                audio  = false;
+                pq     = true;
 
-                    break;
-                case nameof(caps.Lba400000Data):
-                    buffer = caps.Lba400000Data;
-                    audio  = false;
+                break;
+            case nameof(caps.Lba100000RwData):
+                buffer = caps.Lba100000RwData;
+                audio  = false;
+                rw     = true;
 
-                    break;
-                case nameof(caps.Lba400000PqData):
-                    buffer = caps.Lba400000PqData;
-                    audio  = false;
-                    pq     = true;
+                break;
+            case nameof(caps.Lba100000AudioData):
+                buffer = caps.Lba100000AudioData;
 
-                    break;
-                case nameof(caps.Lba400000RwData):
-                    buffer = caps.Lba400000RwData;
-                    audio  = false;
-                    rw     = true;
+                break;
+            case nameof(caps.Lba100000AudioPqData):
+                buffer = caps.Lba100000AudioPqData;
+                pq     = true;
 
-                    break;
-                case nameof(caps.Lba400000AudioData):
-                    buffer = caps.Lba400000AudioData;
+                break;
+            case nameof(caps.Lba100000AudioRwData):
+                buffer = caps.Lba100000AudioRwData;
+                rw     = true;
 
-                    break;
-                case nameof(caps.Lba400000AudioPqData):
-                    buffer = caps.Lba400000AudioPqData;
-                    pq     = true;
+                break;
+            case nameof(caps.Lba400000Data):
+                buffer = caps.Lba400000Data;
+                audio  = false;
 
-                    break;
-                case nameof(caps.Lba400000AudioRwData):
-                    buffer = caps.Lba400000AudioRwData;
-                    rw     = true;
+                break;
+            case nameof(caps.Lba400000PqData):
+                buffer = caps.Lba400000PqData;
+                audio  = false;
+                pq     = true;
 
-                    break;
-                case nameof(caps.Lba450000Data):
-                    buffer = caps.Lba450000Data;
-                    audio  = false;
+                break;
+            case nameof(caps.Lba400000RwData):
+                buffer = caps.Lba400000RwData;
+                audio  = false;
+                rw     = true;
 
-                    break;
-                case nameof(caps.Lba450000PqData):
-                    buffer = caps.Lba450000PqData;
-                    audio  = false;
-                    pq     = true;
+                break;
+            case nameof(caps.Lba400000AudioData):
+                buffer = caps.Lba400000AudioData;
 
-                    break;
-                case nameof(caps.Lba450000RwData):
-                    buffer = caps.Lba450000RwData;
-                    audio  = false;
-                    rw     = true;
+                break;
+            case nameof(caps.Lba400000AudioPqData):
+                buffer = caps.Lba400000AudioPqData;
+                pq     = true;
 
-                    break;
-                case nameof(caps.Lba450000AudioData):
-                    buffer = caps.Lba450000AudioData;
+                break;
+            case nameof(caps.Lba400000AudioRwData):
+                buffer = caps.Lba400000AudioRwData;
+                rw     = true;
 
-                    break;
-                case nameof(caps.Lba450000AudioPqData):
-                    buffer = caps.Lba450000AudioPqData;
-                    pq     = true;
+                break;
+            case nameof(caps.Lba450000Data):
+                buffer = caps.Lba450000Data;
+                audio  = false;
 
-                    break;
-                case nameof(caps.Lba450000AudioRwData):
-                    buffer = caps.Lba450000AudioRwData;
-                    rw     = true;
+                break;
+            case nameof(caps.Lba450000PqData):
+                buffer = caps.Lba450000PqData;
+                audio  = false;
+                pq     = true;
 
-                    break;
-                default: return NotFound();
-            }
+                break;
+            case nameof(caps.Lba450000RwData):
+                buffer = caps.Lba450000RwData;
+                audio  = false;
+                rw     = true;
 
-            if(pq                           &&
-               buffer               != null &&
-               buffer.Length % 2368 != 0)
-                pq = false;
+                break;
+            case nameof(caps.Lba450000AudioData):
+                buffer = caps.Lba450000AudioData;
 
-            if(rw                           &&
-               buffer               != null &&
-               buffer.Length % 2448 != 0)
-                rw = false;
+                break;
+            case nameof(caps.Lba450000AudioPqData):
+                buffer = caps.Lba450000AudioPqData;
+                pq     = true;
 
-            int blockSize = pq
-                                ? 2368
-                                : rw
-                                    ? 2448
-                                    : 2352;
+                break;
+            case nameof(caps.Lba450000AudioRwData):
+                buffer = caps.Lba450000AudioRwData;
+                rw     = true;
 
-            model.RawDataAsHex = PrintHex.ByteArrayToHexArrayString(buffer);
+                break;
+            default: return NotFound();
+        }
 
-            if(model.RawDataAsHex != null)
-                model.RawDataAsHex = HttpUtility.HtmlEncode(model.RawDataAsHex).Replace("\n", "<br/>");
+        if(pq                           &&
+           buffer               != null &&
+           buffer.Length % 2368 != 0)
+            pq = false;
 
-            if(buffer == null)
-                return View(model);
+        if(rw                           &&
+           buffer               != null &&
+           buffer.Length % 2448 != 0)
+            rw = false;
 
-            for(int i = 0; i < buffer.Length; i += blockSize)
-            {
-                if(audio)
-                {
-                    sb.AppendLine("Audio or scrambled data sector.");
-                }
-                else
-                {
-                    Array.Copy(buffer, i, sector, 0, 2352);
+        int blockSize = pq
+                            ? 2368
+                            : rw
+                                ? 2448
+                                : 2352;
 
-                    sb.AppendLine(Sector.Prettify(sector));
-                }
+        model.RawDataAsHex = PrintHex.ByteArrayToHexArrayString(buffer);
 
-                if(pq)
-                {
-                    Array.Copy(buffer, i + 2352, subq, 0, 16);
-                    fullsub = Subchannel.ConvertQToRaw(subq);
+        if(model.RawDataAsHex != null)
+            model.RawDataAsHex = HttpUtility.HtmlEncode(model.RawDataAsHex).Replace("\n", "<br/>");
 
-                    sb.AppendLine(GetPrettySub(fullsub));
-                }
-                else if(rw)
-                {
-                    Array.Copy(buffer, i + 2352, fullsub, 0, 96);
-
-                    sb.AppendLine(GetPrettySub(fullsub));
-                }
-
-                sb.AppendLine();
-            }
-
-            model.Decoded = HttpUtility.HtmlEncode(sb.ToString()).Replace("\n", "<br/>");
-
+        if(buffer == null)
             return View(model);
-        }
 
-        static string GetPrettySub(byte[] sub)
+        for(int i = 0; i < buffer.Length; i += blockSize)
         {
-            byte[] deint = Subchannel.Deinterleave(sub);
-
-            bool validP  = true;
-            bool validRw = true;
-
-            for(int i = 0; i < 12; i++)
+            if(audio)
             {
-                if(deint[i] == 0x00 ||
-                   deint[i] == 0xFF)
-                    continue;
+                sb.AppendLine("Audio or scrambled data sector.");
+            }
+            else
+            {
+                Array.Copy(buffer, i, sector, 0, 2352);
 
-                validP = false;
-
-                break;
+                sb.AppendLine(Sector.Prettify(sector));
             }
 
-            for(int i = 24; i < 96; i++)
+            if(pq)
             {
-                if(deint[i] == 0x00)
-                    continue;
+                Array.Copy(buffer, i + 2352, subq, 0, 16);
+                fullsub = Subchannel.ConvertQToRaw(subq);
 
-                validRw = false;
+                sb.AppendLine(GetPrettySub(fullsub));
+            }
+            else if(rw)
+            {
+                Array.Copy(buffer, i + 2352, fullsub, 0, 96);
 
-                break;
+                sb.AppendLine(GetPrettySub(fullsub));
             }
 
-            byte[] q = new byte[12];
-            Array.Copy(deint, 12, q, 0, 12);
-
-            return Subchannel.PrettifyQ(q, deint[21] > 0x10, 16, !validP, false, validRw);
+            sb.AppendLine();
         }
+
+        model.Decoded = HttpUtility.HtmlEncode(sb.ToString()).Replace("\n", "<br/>");
+
+        return View(model);
+    }
+
+    static string GetPrettySub(byte[] sub)
+    {
+        byte[] deint = Subchannel.Deinterleave(sub);
+
+        bool validP  = true;
+        bool validRw = true;
+
+        for(int i = 0; i < 12; i++)
+        {
+            if(deint[i] == 0x00 ||
+               deint[i] == 0xFF)
+                continue;
+
+            validP = false;
+
+            break;
+        }
+
+        for(int i = 24; i < 96; i++)
+        {
+            if(deint[i] == 0x00)
+                continue;
+
+            validRw = false;
+
+            break;
+        }
+
+        byte[] q = new byte[12];
+        Array.Copy(deint, 12, q, 0, 12);
+
+        return Subchannel.PrettifyQ(q, deint[21] > 0x10, 16, !validP, false, validRw);
     }
 }

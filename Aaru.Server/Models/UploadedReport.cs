@@ -34,42 +34,41 @@ using System;
 using System.ComponentModel;
 using Aaru.CommonTypes.Metadata;
 
-namespace Aaru.Server.Models
+namespace Aaru.Server.Models;
+
+public class UploadedReport : DeviceReportV2
 {
-    public class UploadedReport : DeviceReportV2
+    public UploadedReport() => UploadedWhen = DateTime.UtcNow;
+
+    public UploadedReport(DeviceReportV2 report)
     {
-        public UploadedReport() => UploadedWhen = DateTime.UtcNow;
-
-        public UploadedReport(DeviceReportV2 report)
-        {
-            ATA                       = report.ATA;
-            ATAPI                     = report.ATAPI;
-            CompactFlash              = report.CompactFlash;
-            FireWire                  = report.FireWire;
-            UploadedWhen              = DateTime.UtcNow;
-            MultiMediaCard            = report.MultiMediaCard;
-            PCMCIA                    = report.PCMCIA;
-            SCSI                      = report.SCSI;
-            SecureDigital             = report.SecureDigital;
-            USB                       = report.USB;
-            Manufacturer              = report.Manufacturer;
-            Model                     = report.Model;
-            Revision                  = report.Revision;
-            Type                      = report.Type;
-            GdRomSwapDiscCapabilities = report.GdRomSwapDiscCapabilities;
-        }
-
-        [DisplayName("Uploaded when")]
-        public DateTime UploadedWhen { get; set; }
-
-        public int? ATAId                       { get; set; }
-        public int? ATAPIId                     { get; set; }
-        public int? FireWireId                  { get; set; }
-        public int? MultiMediaCardId            { get; set; }
-        public int? PCMCIAId                    { get; set; }
-        public int? SecureDigitalId             { get; set; }
-        public int? SCSIId                      { get; set; }
-        public int? USBId                       { get; set; }
-        public int? GdRomSwapDiscCapabilitiesId { get; set; }
+        ATA                       = report.ATA;
+        ATAPI                     = report.ATAPI;
+        CompactFlash              = report.CompactFlash;
+        FireWire                  = report.FireWire;
+        UploadedWhen              = DateTime.UtcNow;
+        MultiMediaCard            = report.MultiMediaCard;
+        PCMCIA                    = report.PCMCIA;
+        SCSI                      = report.SCSI;
+        SecureDigital             = report.SecureDigital;
+        USB                       = report.USB;
+        Manufacturer              = report.Manufacturer;
+        Model                     = report.Model;
+        Revision                  = report.Revision;
+        Type                      = report.Type;
+        GdRomSwapDiscCapabilities = report.GdRomSwapDiscCapabilities;
     }
+
+    [DisplayName("Uploaded when")]
+    public DateTime UploadedWhen { get; set; }
+
+    public int? ATAId                       { get; set; }
+    public int? ATAPIId                     { get; set; }
+    public int? FireWireId                  { get; set; }
+    public int? MultiMediaCardId            { get; set; }
+    public int? PCMCIAId                    { get; set; }
+    public int? SecureDigitalId             { get; set; }
+    public int? SCSIId                      { get; set; }
+    public int? USBId                       { get; set; }
+    public int? GdRomSwapDiscCapabilitiesId { get; set; }
 }

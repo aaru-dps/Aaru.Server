@@ -33,11 +33,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Aaru.Server.Areas.Admin.Controllers
+namespace Aaru.Server.Areas.Admin.Controllers;
+
+[Area("Admin"), Authorize]
+public sealed class HomeController : Controller
 {
-    [Area("Admin"), Authorize]
-    public sealed class HomeController : Controller
-    {
-        public ActionResult Index() => View();
-    }
+    public ActionResult Index() => View();
 }

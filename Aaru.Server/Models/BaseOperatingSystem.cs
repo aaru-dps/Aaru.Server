@@ -30,12 +30,11 @@
 // Copyright © 2011-2021 Natalia Portillo
 // ****************************************************************************/
 
-namespace Aaru.Server.Models
+namespace Aaru.Server.Models;
+
+public abstract class BaseOperatingSystem : BaseModel<int>
 {
-    public abstract class BaseOperatingSystem : BaseModel<int>
-    {
-        public string Name    { get; set; }
-        public string Version { get; set; }
-        public long   Count   { get; set; }
-    }
+    public string Name    { get; set; }
+    public string Version { get; set; }
+    public long   Count   { get; set; }
 }

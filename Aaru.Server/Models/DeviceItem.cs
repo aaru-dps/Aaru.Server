@@ -30,14 +30,13 @@
 // Copyright © 2011-2021 Natalia Portillo
 // ****************************************************************************/
 
-namespace Aaru.Server.Models
+namespace Aaru.Server.Models;
+
+public class DeviceItem
 {
-    public class DeviceItem
-    {
-        public string Manufacturer { get; set; }
-        public string Model        { get; set; }
-        public string Revision     { get; set; }
-        public string Bus          { get; set; }
-        public int    ReportId     { get; set; }
-    }
+    public string Manufacturer { get; set; }
+    public string Model        { get; set; }
+    public string Revision     { get; set; }
+    public string Bus          { get; set; }
+    public int    ReportId     { get; set; }
 }

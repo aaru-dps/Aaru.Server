@@ -35,44 +35,43 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using Aaru.CommonTypes;
 
-namespace Aaru.Server.Models
+namespace Aaru.Server.Models;
+
+public class Media : BaseModel<int>
 {
-    public class Media : BaseModel<int>
+    [NotMapped]
+    (string type, string subType) _mediaType;
+
+    public string Type  { get; set; }
+    public bool   Real  { get; set; }
+    public long   Count { get; set; }
+
+    [NotMapped]
+    (string type, string subType) MediaType
     {
-        [NotMapped]
-        (string type, string subType) _mediaType;
-
-        public string Type  { get; set; }
-        public bool   Real  { get; set; }
-        public long   Count { get; set; }
-
-        [NotMapped]
-        (string type, string subType) MediaType
+        get
         {
-            get
-            {
-                if(_mediaType != default)
-                    return _mediaType;
-
-                try
-                {
-                    if(Enum.TryParse(Type, out MediaType enumMediaType))
-                        _mediaType = CommonTypes.Metadata.MediaType.MediaTypeToString(enumMediaType);
-                    else if(int.TryParse(Type, out int asInt))
-                        _mediaType = CommonTypes.Metadata.MediaType.MediaTypeToString((MediaType)asInt);
-                }
-                catch
-                {
-                    // Could not get media type/subtype pair from type, so just leave it as is
-                }
-
+            if(_mediaType != default)
                 return _mediaType;
-            }
-        }
 
-        [NotMapped, DisplayName("Physical type")]
-        public string PhysicalType => MediaType.type;
-        [NotMapped, DisplayName("Logical type")]
-        public string LogicalType => MediaType.subType;
+            try
+            {
+                if(Enum.TryParse(Type, out MediaType enumMediaType))
+                    _mediaType = CommonTypes.Metadata.MediaType.MediaTypeToString(enumMediaType);
+                else if(int.TryParse(Type, out int asInt))
+                    _mediaType = CommonTypes.Metadata.MediaType.MediaTypeToString((MediaType)asInt);
+            }
+            catch
+            {
+                // Could not get media type/subtype pair from type, so just leave it as is
+            }
+
+            return _mediaType;
+        }
     }
+
+    [NotMapped, DisplayName("Physical type")]
+    public string PhysicalType => MediaType.type;
+    [NotMapped, DisplayName("Logical type")]
+    public string LogicalType => MediaType.subType;
 }

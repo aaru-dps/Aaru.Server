@@ -36,27 +36,26 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
-namespace Aaru.Server.Models
+namespace Aaru.Server.Models;
+
+public class UsbVendor : BaseModel<int>
 {
-    public class UsbVendor : BaseModel<int>
+    public UsbVendor() {}
+
+    public UsbVendor(ushort id, string vendor)
     {
-        public UsbVendor() {}
-
-        public UsbVendor(ushort id, string vendor)
-        {
-            VendorId  = id;
-            Vendor    = vendor;
-            AddedWhen = ModifiedWhen = DateTime.UtcNow;
-        }
-
-        [DisplayName("Manufacturer ID"), DisplayFormat(DataFormatString = "0x{0:X4}")]
-        public ushort VendorId { get; set; }
-        [DisplayName("Manufacturer")]
-        public string Vendor { get;         set; }
-        public DateTime AddedWhen    { get; set; }
-        public DateTime ModifiedWhen { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<UsbProduct> Products { get; set; }
+        VendorId  = id;
+        Vendor    = vendor;
+        AddedWhen = ModifiedWhen = DateTime.UtcNow;
     }
+
+    [DisplayName("Manufacturer ID"), DisplayFormat(DataFormatString = "0x{0:X4}")]
+    public ushort VendorId { get; set; }
+    [DisplayName("Manufacturer")]
+    public string Vendor { get;         set; }
+    public DateTime AddedWhen    { get; set; }
+    public DateTime ModifiedWhen { get; set; }
+
+    [JsonIgnore]
+    public virtual ICollection<UsbProduct> Products { get; set; }
 }

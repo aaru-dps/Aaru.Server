@@ -1,15 +1,14 @@
-namespace Aaru.Server.Models
-{
-    public class IdHashModel : BaseModel<int>
-    {
-        public IdHashModel(int id, string hash)
-        {
-            Id   = id;
-            Hash = hash;
-        }
+namespace Aaru.Server.Models;
 
-        public string Hash        { get; set; }
-        public string Description { get; set; }
-        public int[]  Duplicates  { get; set; }
+public class IdHashModel : BaseModel<int>
+{
+    public IdHashModel(int id, string hash)
+    {
+        Id   = id;
+        Hash = hash;
     }
+
+    public string Hash        { get; set; }
+    public string Description { get; set; }
+    public int[]  Duplicates  { get; set; }
 }

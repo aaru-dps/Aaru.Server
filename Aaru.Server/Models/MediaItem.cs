@@ -30,12 +30,11 @@
 // Copyright © 2011-2021 Natalia Portillo
 // ****************************************************************************/
 
-namespace Aaru.Server.Models
+namespace Aaru.Server.Models;
+
+public class MediaItem
 {
-    public class MediaItem
-    {
-        public string Type    { get; set; }
-        public string SubType { get; set; }
-        public long   Count   { get; set; }
-    }
+    public string Type    { get; set; }
+    public string SubType { get; set; }
+    public long   Count   { get; set; }
 }
