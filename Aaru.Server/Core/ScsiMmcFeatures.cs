@@ -299,8 +299,7 @@ public static class ScsiMmcFeatures
 
                     break;
                 default:
-                    mmcOneValue.
-                        Add($"Drive uses an unknown interface with code {(uint)ftr.PhysicalInterfaceStandard}");
+                    mmcOneValue.Add($"Drive uses an unknown interface with code {(uint)ftr.PhysicalInterfaceStandard}");
 
                     break;
             }

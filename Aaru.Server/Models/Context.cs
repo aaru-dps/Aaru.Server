@@ -105,9 +105,8 @@ public sealed class AaruServerContext : IdentityDbContext<IdentityUser>
                                    HasForeignKey("ScsiModeId").OnDelete(DeleteBehavior.Cascade));
 
         modelBuilder.Entity("Aaru.CommonTypes.Metadata.DensityCode",
-                            b => b.HasOne("Aaru.CommonTypes.Metadata.SscSupportedMedia", null).
-                                   WithMany("DensityCodes").HasForeignKey("SscSupportedMediaId").
-                                   OnDelete(DeleteBehavior.Cascade));
+                            b => b.HasOne("Aaru.CommonTypes.Metadata.SscSupportedMedia", null).WithMany("DensityCodes").
+                                   HasForeignKey("SscSupportedMediaId").OnDelete(DeleteBehavior.Cascade));
 
         modelBuilder.Entity("Aaru.CommonTypes.Metadata.Mmc",
                             b => b.HasOne("Aaru.CommonTypes.Metadata.MmcFeatures", "Features").WithMany().
@@ -191,8 +190,8 @@ public sealed class AaruServerContext : IdentityDbContext<IdentityUser>
             b.HasOne("Aaru.CommonTypes.Metadata.FireWire", "FireWire").WithMany().HasForeignKey("FireWireId").
               OnDelete(DeleteBehavior.SetNull);
 
-            b.HasOne("Aaru.CommonTypes.Metadata.MmcSd", "MultiMediaCard").WithMany().
-              HasForeignKey("MultiMediaCardId").OnDelete(DeleteBehavior.SetNull);
+            b.HasOne("Aaru.CommonTypes.Metadata.MmcSd", "MultiMediaCard").WithMany().HasForeignKey("MultiMediaCardId").
+              OnDelete(DeleteBehavior.SetNull);
 
             b.HasOne("Aaru.CommonTypes.Metadata.Pcmcia", "PCMCIA").WithMany().HasForeignKey("PCMCIAId").
               OnDelete(DeleteBehavior.SetNull);
@@ -200,16 +199,16 @@ public sealed class AaruServerContext : IdentityDbContext<IdentityUser>
             b.HasOne("Aaru.CommonTypes.Metadata.Scsi", "SCSI").WithMany().HasForeignKey("SCSIId").
               OnDelete(DeleteBehavior.SetNull);
 
-            b.HasOne("Aaru.CommonTypes.Metadata.MmcSd", "SecureDigital").WithMany().
-              HasForeignKey("SecureDigitalId").OnDelete(DeleteBehavior.SetNull);
+            b.HasOne("Aaru.CommonTypes.Metadata.MmcSd", "SecureDigital").WithMany().HasForeignKey("SecureDigitalId").
+              OnDelete(DeleteBehavior.SetNull);
 
             b.HasOne("Aaru.CommonTypes.Metadata.Usb", "USB").WithMany().HasForeignKey("USBId").
               OnDelete(DeleteBehavior.SetNull);
         });
 
         modelBuilder.Entity("Aaru.Server.Models.DeviceStat",
-                            b => b.HasOne("Aaru.Server.Models.Device", "Report").WithMany().
-                                   HasForeignKey("ReportId").OnDelete(DeleteBehavior.SetNull));
+                            b => b.HasOne("Aaru.Server.Models.Device", "Report").WithMany().HasForeignKey("ReportId").
+                                   OnDelete(DeleteBehavior.SetNull));
 
         modelBuilder.Entity("Aaru.Server.Models.UploadedReport", b =>
         {
@@ -222,8 +221,8 @@ public sealed class AaruServerContext : IdentityDbContext<IdentityUser>
             b.HasOne("Aaru.CommonTypes.Metadata.FireWire", "FireWire").WithMany().HasForeignKey("FireWireId").
               OnDelete(DeleteBehavior.SetNull);
 
-            b.HasOne("Aaru.CommonTypes.Metadata.MmcSd", "MultiMediaCard").WithMany().
-              HasForeignKey("MultiMediaCardId").OnDelete(DeleteBehavior.SetNull);
+            b.HasOne("Aaru.CommonTypes.Metadata.MmcSd", "MultiMediaCard").WithMany().HasForeignKey("MultiMediaCardId").
+              OnDelete(DeleteBehavior.SetNull);
 
             b.HasOne("Aaru.CommonTypes.Metadata.Pcmcia", "PCMCIA").WithMany().HasForeignKey("PCMCIAId").
               OnDelete(DeleteBehavior.SetNull);
@@ -231,8 +230,8 @@ public sealed class AaruServerContext : IdentityDbContext<IdentityUser>
             b.HasOne("Aaru.CommonTypes.Metadata.Scsi", "SCSI").WithMany().HasForeignKey("SCSIId").
               OnDelete(DeleteBehavior.SetNull);
 
-            b.HasOne("Aaru.CommonTypes.Metadata.MmcSd", "SecureDigital").WithMany().
-              HasForeignKey("SecureDigitalId").OnDelete(DeleteBehavior.SetNull);
+            b.HasOne("Aaru.CommonTypes.Metadata.MmcSd", "SecureDigital").WithMany().HasForeignKey("SecureDigitalId").
+              OnDelete(DeleteBehavior.SetNull);
 
             b.HasOne("Aaru.CommonTypes.Metadata.Usb", "USB").WithMany().HasForeignKey("USBId").
               OnDelete(DeleteBehavior.SetNull);

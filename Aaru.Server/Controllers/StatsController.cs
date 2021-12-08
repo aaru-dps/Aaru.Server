@@ -80,9 +80,8 @@ public sealed class StatsController : Controller
 
                     StatsConverter.Convert(statistics);
 
-                    System.IO.File.
-                           Delete(Path.Combine(_env.ContentRootPath ?? throw new InvalidOperationException(),
-                                               "Statistics", "Statistics.xml"));
+                    System.IO.File.Delete(Path.Combine(_env.ContentRootPath ?? throw new InvalidOperationException(),
+                                                       "Statistics", "Statistics.xml"));
                 }
                 catch(XmlException)
                 {
@@ -142,8 +141,8 @@ public sealed class StatsController : Controller
                     try
                     {
                         (string type, string subType) mediaType =
-                            MediaType.MediaTypeToString((CommonTypes.MediaType)
-                                                        Enum.Parse(typeof(CommonTypes.MediaType), nvs.Type));
+                            MediaType.MediaTypeToString((CommonTypes.MediaType)Enum.Parse(typeof(CommonTypes.MediaType),
+                                                            nvs.Type));
 
                         if(nvs.Real)
                             realMedia.Add(new MediaItem
@@ -183,8 +182,8 @@ public sealed class StatsController : Controller
                                                      ToList();
 
                 if(virtualMedia.Count > 0)
-                    ViewBag.repVirtualMedia = virtualMedia.OrderBy(media => media.Type).
-                                                           ThenBy(media => media.SubType).ToList();
+                    ViewBag.repVirtualMedia = virtualMedia.OrderBy(media => media.Type).ThenBy(media => media.SubType).
+                                                           ToList();
             }
 
             if(_ctx.DeviceStats.Any())
@@ -244,8 +243,7 @@ public sealed class StatsController : Controller
                 }
 
                 ViewBag.repDevices = devices.OrderBy(device => device.Manufacturer).ThenBy(device => device.Model).
-                                             ThenBy(device => device.Revision).ThenBy(device => device.Bus).
-                                             ToList();
+                                             ThenBy(device => device.Revision).ThenBy(device => device.Bus).ToList();
             }
         }
         catch(Exception)
@@ -330,13 +328,13 @@ public sealed class StatsController : Controller
     {
         string[][] result =
         {
-            _ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()).
-                 OrderByDescending(o => o.Count).Take(10).
+            _ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()).OrderByDescending(o => o.Count).
+                 Take(10).
                  Select(x =>
                             $"{DetectOS.GetPlatformName(PlatformID.MacOSX, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}").
                  ToArray(),
-            _ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()).
-                 OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
+            _ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()).OrderByDescending(o => o.Count).
+                 Take(10).Select(x => x.Count.ToString()).ToArray()
         };
 
         if(result[0].Length < 10)
@@ -354,13 +352,13 @@ public sealed class StatsController : Controller
     {
         string[][] result =
         {
-            _ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).
-                 OrderByDescending(o => o.Count).Take(10).
+            _ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).OrderByDescending(o => o.Count).
+                 Take(10).
                  Select(x =>
                             $"{DetectOS.GetPlatformName(PlatformID.Win32NT, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}").
                  ToArray(),
-            _ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).
-                 OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
+            _ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).OrderByDescending(o => o.Count).
+                 Take(10).Select(x => x.Count.ToString()).ToArray()
         };
 
         if(result[0].Length < 10)
@@ -368,9 +366,8 @@ public sealed class StatsController : Controller
 
         result[0][9] = "Other";
 
-        result[1][9] =
-            (_ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).Sum(o => o.Count) -
-             result[1].Take(9).Sum(long.Parse)).ToString();
+        result[1][9] = (_ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).Sum(o => o.Count) -
+                        result[1].Take(9).Sum(long.Parse)).ToString();
 
         return Json(result);
     }
@@ -514,8 +511,8 @@ public sealed class StatsController : Controller
 
         result[0][9] = "Other";
 
-        result[1][9] = (_ctx.Medias.Where(o => !o.Real).Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).
-            ToString();
+        result[1][9] =
+            (_ctx.Medias.Where(o => !o.Real).Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).ToString();
 
         return Json(result);
     }

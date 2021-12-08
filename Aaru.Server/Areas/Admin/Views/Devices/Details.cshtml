@@ -392,7 +392,8 @@
                         }
                         else
                         {
-                            <a asp-action="Details" asp-route-id="@item.Report.Id" target="_blank">Yes</a>                        }
+                            <a asp-action="Details" asp-route-id="@item.Report.Id" target="_blank">Yes</a>
+                        }
                     </td>
                     <td>
                         <a asp-action="LinkReports" asp-route-deviceId="@Model.Report.Id" asp-route-statsId="@item.Id" class="btn btn-secondary">Link</a>

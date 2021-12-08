@@ -34,8 +34,8 @@ public sealed class CompactDiscOffsetsController : Controller
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost, ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Manufacturer,Model,Offset,Submissions,Agreement")]
-                                          CompactDiscOffset changedModel)
+    public async Task<IActionResult> Edit(
+        int id, [Bind("Id,Manufacturer,Model,Offset,Submissions,Agreement")] CompactDiscOffset changedModel)
     {
         if(id != changedModel.Id)
             return NotFound();

@@ -17,10 +17,12 @@ public sealed class ScsisController : Controller
 
     // GET: Admin/Scsis
     public IActionResult Index() => View(_context.Scsi.AsEnumerable().
-                                                  OrderBy(m => StringHandlers.CToString(m.Inquiry?.
-                                                              VendorIdentification)).
-                                                  ThenBy(m => StringHandlers.CToString(m.Inquiry?.
-                                                             ProductIdentification)).
+                                                  OrderBy(m =>
+                                                              StringHandlers.
+                                                                  CToString(m.Inquiry?.VendorIdentification)).
+                                                  ThenBy(m =>
+                                                             StringHandlers.
+                                                                 CToString(m.Inquiry?.ProductIdentification)).
                                                   ThenBy(m => StringHandlers.CToString(m.Inquiry?.
                                                              ProductRevisionLevel)));
 

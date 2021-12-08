@@ -117,8 +117,7 @@ public static class ScsiMmcMode
         }
         else
         {
-            mmcOneValue.Add(mode.LockState
-                                ? "Drive is locked, media cannot be ejected, but if empty, can be inserted"
+            mmcOneValue.Add(mode.LockState ? "Drive is locked, media cannot be ejected, but if empty, can be inserted"
                                 : "Drive is not locked, media can be ejected and inserted");
         }
 
@@ -194,8 +193,8 @@ public static class ScsiMmcMode
         }
 
         if(mode.WriteSpeedPerformanceDescriptors != null)
-            foreach(ModePage_2A_WriteDescriptor descriptor in
-                    mode.WriteSpeedPerformanceDescriptors.Where(descriptor => descriptor.WriteSpeed > 0))
+            foreach(ModePage_2A_WriteDescriptor descriptor in mode.WriteSpeedPerformanceDescriptors.Where(descriptor =>
+                        descriptor.WriteSpeed > 0))
                 if(descriptor.RotationControl == 0)
                     mmcOneValue.Add($"Drive supports writing at {descriptor.WriteSpeed} Kbyte/sec. in CLV mode");
                 else if(descriptor.RotationControl == 1)

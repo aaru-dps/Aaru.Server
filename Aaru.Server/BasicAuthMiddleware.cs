@@ -28,12 +28,10 @@ public sealed class BasicAuthMiddleware
         if(authHeader?.StartsWith("Basic ") == true)
         {
             // Get the encoded username and password
-            string encodedUsernamePassword =
-                authHeader.Split(' ', 2, StringSplitOptions.RemoveEmptyEntries)[1]?.Trim();
+            string encodedUsernamePassword = authHeader.Split(' ', 2, StringSplitOptions.RemoveEmptyEntries)[1]?.Trim();
 
             // Decode from Base64 to string
-            string decodedUsernamePassword =
-                Encoding.UTF8.GetString(Convert.FromBase64String(encodedUsernamePassword));
+            string decodedUsernamePassword = Encoding.UTF8.GetString(Convert.FromBase64String(encodedUsernamePassword));
 
             // Split username and password
             string username = decodedUsernamePassword.Split(':', 2)[0];

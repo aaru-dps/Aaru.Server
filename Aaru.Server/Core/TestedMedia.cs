@@ -349,8 +349,7 @@ public static class TestedMedia
                 mediaOneValue.Add("Device can read the P to Q subchannels from this medium");
 
             if(testedMedia.CanReadPQSubchannelWithC2 == true)
-                mediaOneValue.
-                    Add("Device can read the P to Q subchannels from this medium reporting the C2 pointers");
+                mediaOneValue.Add("Device can read the P to Q subchannels from this medium reporting the C2 pointers");
 
             if(testedMedia.CanReadPRI == true)
                 mediaOneValue.Add("Device can read the Pre-Recorded Information from this medium");
@@ -359,8 +358,7 @@ public static class TestedMedia
                 mediaOneValue.Add("Device can read the R to W subchannels from this medium");
 
             if(testedMedia.CanReadRWSubchannelWithC2 == true)
-                mediaOneValue.
-                    Add("Device can read the R to W subchannels from this medium reporting the C2 pointers");
+                mediaOneValue.Add("Device can read the R to W subchannels from this medium reporting the C2 pointers");
 
             if(testedMedia.CanReadRecordablePFI == true)
                 mediaOneValue.Add("Device can read the Physical Format Information from Lead-In from this medium");

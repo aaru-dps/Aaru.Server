@@ -465,8 +465,7 @@ public static class Ata
 
                 break;
             default:
-                ataTwoValue.Add("Unknown transport type",
-                                $"0x{(ataIdentify.TransportMajorVersion & 0xF000) >> 12:X1}");
+                ataTwoValue.Add("Unknown transport type", $"0x{(ataIdentify.TransportMajorVersion & 0xF000) >> 12:X1}");
 
                 break;
         }
@@ -652,8 +651,7 @@ public static class Ata
                 if(ataIdentify.GeneralConfiguration.HasFlag(Identify.GeneralConfigurationBit.DataStrobeOffset))
                     ataOneValue.Add("Data strobe offset option is available");
 
-                if(ataIdentify.GeneralConfiguration.HasFlag(Identify.GeneralConfigurationBit.
-                                                                     RotationalSpeedTolerance))
+                if(ataIdentify.GeneralConfiguration.HasFlag(Identify.GeneralConfigurationBit.RotationalSpeedTolerance))
                     ataOneValue.Add("Rotational speed tolerance is higher than 0,5%");
 
                 if(ataIdentify.GeneralConfiguration.HasFlag(Identify.GeneralConfigurationBit.SpindleControl))
@@ -1023,9 +1021,8 @@ public static class Ata
 
         if(ataIdentify.MinMDMACycleTime != 0 &&
            ataIdentify.RecMDMACycleTime != 0)
-            ataOneValue.
-                Add($"At minimum {ataIdentify.MinMDMACycleTime} ns. transfer cycle time per word in MDMA, " +
-                    $"{ataIdentify.RecMDMACycleTime} ns. recommended");
+            ataOneValue.Add($"At minimum {ataIdentify.MinMDMACycleTime} ns. transfer cycle time per word in MDMA, " +
+                            $"{ataIdentify.RecMDMACycleTime} ns. recommended");
 
         if(ataIdentify.MinPIOCycleTimeNoFlow != 0)
             ataOneValue.
@@ -1033,9 +1030,8 @@ public static class Ata
                     "without flow control");
 
         if(ataIdentify.MinPIOCycleTimeFlow != 0)
-            ataOneValue.
-                Add($"At minimum {ataIdentify.MinPIOCycleTimeFlow} ns. transfer cycle time per word in PIO, " +
-                    "with IORDY flow control");
+            ataOneValue.Add($"At minimum {ataIdentify.MinPIOCycleTimeFlow} ns. transfer cycle time per word in PIO, " +
+                            "with IORDY flow control");
 
         if(ataIdentify.MaxQueueDepth != 0)
             ataOneValue.Add($"{ataIdentify.MaxQueueDepth + 1} depth of queue maximum");
@@ -1043,12 +1039,10 @@ public static class Ata
         if(atapi)
         {
             if(ataIdentify.PacketBusRelease != 0)
-                ataOneValue.
-                    Add($"{ataIdentify.PacketBusRelease} ns. typical to release bus from receipt of PACKET");
+                ataOneValue.Add($"{ataIdentify.PacketBusRelease} ns. typical to release bus from receipt of PACKET");
 
             if(ataIdentify.ServiceBusyClear != 0)
-                ataOneValue.
-                    Add($"{ataIdentify.ServiceBusyClear} ns. typical to clear BSY bit from receipt of SERVICE");
+                ataOneValue.Add($"{ataIdentify.ServiceBusyClear} ns. typical to clear BSY bit from receipt of SERVICE");
         }
 
         if((ataIdentify.TransportMajorVersion & 0xF000) >> 12 == 0x1 ||
@@ -1181,8 +1175,7 @@ public static class Ata
 
         if(ataIdentify.CommandSet.HasFlag(Identify.CommandSetBit.HPA))
             ataOneValue.Add(ataIdentify.EnabledCommandSet.HasFlag(Identify.CommandSetBit.HPA)
-                                ? "Host Protected Area is supported and enabled"
-                                : "Host Protected Area is supported");
+                                ? "Host Protected Area is supported and enabled" : "Host Protected Area is supported");
 
         if(ataIdentify.CommandSet.HasFlag(Identify.CommandSetBit.DeviceReset))
             ataOneValue.Add(ataIdentify.EnabledCommandSet.HasFlag(Identify.CommandSetBit.DeviceReset)
@@ -1269,8 +1262,7 @@ public static class Ata
                                     : "Power-up in standby is supported");
 
             if(ataIdentify.CommandSet2.HasFlag(Identify.CommandSetBit2.RemovableNotification))
-                ataOneValue.Add(ataIdentify.EnabledCommandSet2.HasFlag(Identify.CommandSetBit2.
-                                                                           RemovableNotification)
+                ataOneValue.Add(ataIdentify.EnabledCommandSet2.HasFlag(Identify.CommandSetBit2.RemovableNotification)
                                     ? "Removable Media Status Notification is supported and enabled"
                                     : "Removable Media Status Notification is supported");
 
@@ -1405,8 +1397,7 @@ public static class Ata
             if(ataIdentify.CommandSet4.HasFlag(Identify.CommandSetBit4.WRV))
             {
                 ataOneValue.Add(ataIdentify.EnabledCommandSet4.HasFlag(Identify.CommandSetBit4.WRV)
-                                    ? "Write/Read/Verify is supported and enabled"
-                                    : "Write/Read/Verify is supported");
+                                    ? "Write/Read/Verify is supported and enabled" : "Write/Read/Verify is supported");
 
                 ataOneValue.Add($"{ataIdentify.WRVSectorCountMode2} sectors for Write/Read/Verify mode 2");
                 ataOneValue.Add($"{ataIdentify.WRVSectorCountMode3} sectors for Write/Read/Verify mode 3");
@@ -1528,14 +1519,12 @@ public static class Ata
                                             : "DMA Setup auto-activation is supported");
 
                     if(ataIdentify.SATAFeatures.HasFlag(Identify.SATAFeaturesBit.InitPowerMgmt))
-                        ataOneValue.Add(ataIdentify.EnabledSATAFeatures.HasFlag(Identify.SATAFeaturesBit.
-                                                                                    InitPowerMgmt)
+                        ataOneValue.Add(ataIdentify.EnabledSATAFeatures.HasFlag(Identify.SATAFeaturesBit.InitPowerMgmt)
                                             ? "Device-initiated power management is supported and enabled"
                                             : "Device-initiated power management is supported");
 
                     if(ataIdentify.SATAFeatures.HasFlag(Identify.SATAFeaturesBit.InOrderData))
-                        ataOneValue.Add(ataIdentify.EnabledSATAFeatures.HasFlag(Identify.SATAFeaturesBit.
-                                                                                    InOrderData)
+                        ataOneValue.Add(ataIdentify.EnabledSATAFeatures.HasFlag(Identify.SATAFeaturesBit.InOrderData)
                                             ? "In-order data delivery is supported and enabled"
                                             : "In-order data delivery is supported");
 
@@ -1687,16 +1676,14 @@ public static class Ata
                 }
 
                 if(ataReport.ReadCapabilities.PhysicalBlockSize != null)
-                    ataTwoValue.Add("Physical sector size",
-                                    $"{ataReport.ReadCapabilities.PhysicalBlockSize} bytes");
+                    ataTwoValue.Add("Physical sector size", $"{ataReport.ReadCapabilities.PhysicalBlockSize} bytes");
 
                 if(ataReport.ReadCapabilities.LongBlockSize != null)
                     ataTwoValue.Add("READ LONG sector size", $"{ataReport.ReadCapabilities.LongBlockSize} bytes");
 
-                if(ataReport.ReadCapabilities.BlockSize         != null &&
+                if(ataReport.ReadCapabilities.BlockSize != null &&
                    ataReport.ReadCapabilities.PhysicalBlockSize != null &&
-                   ataReport.ReadCapabilities.BlockSize.Value !=
-                   ataReport.ReadCapabilities.PhysicalBlockSize.Value               &&
+                   ataReport.ReadCapabilities.BlockSize.Value != ataReport.ReadCapabilities.PhysicalBlockSize.Value &&
                    (ataReport.ReadCapabilities.LogicalAlignment & 0x8000) == 0x0000 &&
                    (ataReport.ReadCapabilities.LogicalAlignment & 0x4000) == 0x4000)
                     ataOneValue.
@@ -1727,8 +1714,7 @@ public static class Ata
                 else if(ataReport.ReadCapabilities.CHS != null)
                 {
                     int currentSectors = ataReport.ReadCapabilities.CHS.Cylinders *
-                                         ataReport.ReadCapabilities.CHS.Heads     *
-                                         ataReport.ReadCapabilities.CHS.Sectors;
+                                         ataReport.ReadCapabilities.CHS.Heads * ataReport.ReadCapabilities.CHS.Sectors;
 
                     ataTwoValue.Add("Cylinders", $"{ataReport.ReadCapabilities.CHS.Cylinders}");
                     ataTwoValue.Add("Heads", $"{ataReport.ReadCapabilities.CHS.Heads}");
@@ -1774,12 +1760,10 @@ public static class Ata
                 if(ata1 || cfa)
                 {
                     if(ataReport.ReadCapabilities.UnformattedBPT > 0)
-                        ataTwoValue.Add("Bytes per unformatted track",
-                                        $"{ataReport.ReadCapabilities.UnformattedBPT}");
+                        ataTwoValue.Add("Bytes per unformatted track", $"{ataReport.ReadCapabilities.UnformattedBPT}");
 
                     if(ataReport.ReadCapabilities.UnformattedBPS > 0)
-                        ataTwoValue.Add("Bytes per unformatted sector",
-                                        $"{ataReport.ReadCapabilities.UnformattedBPS}");
+                        ataTwoValue.Add("Bytes per unformatted sector", $"{ataReport.ReadCapabilities.UnformattedBPS}");
                 }
             }
 

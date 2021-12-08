@@ -66,8 +66,8 @@ public sealed class ReportsController : Controller
 
         model.TestedMedias = _context.TestedMedia.
                                       Where(t => t.AtaId == ataId || t.AtaId == atapiId || t.ScsiId == scsiId ||
-                                                 t.MmcId == mmcId).OrderBy(t => t.Manufacturer).
-                                      ThenBy(t => t.Model).ThenBy(t => t.MediumTypeName).ToList();
+                                                 t.MmcId == mmcId).OrderBy(t => t.Manufacturer).ThenBy(t => t.Model).
+                                      ThenBy(t => t.MediumTypeName).ToList();
 
         model.TestedSequentialMedias = _context.TestedSequentialMedia.Where(t => t.SscId == sscId).
                                                 OrderBy(t => t.Manufacturer).ThenBy(t => t.Model).
@@ -98,8 +98,8 @@ public sealed class ReportsController : Controller
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost, ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,CompactFlash,Manufacturer,Model,Revision,Type")]
-                                          UploadedReport changedModel)
+    public async Task<IActionResult> Edit(
+        int id, [Bind("Id,CompactFlash,Manufacturer,Model,Revision,Type")] UploadedReport changedModel)
     {
         if(id != changedModel.Id)
             return NotFound();

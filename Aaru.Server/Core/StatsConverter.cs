@@ -47,7 +47,7 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "fs-info");
 
             if(existing == null)
-                ctx.Commands.Add(new()
+                ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.Analyze,
                     Name  = "fs-info"
@@ -61,7 +61,7 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "benchmark");
 
             if(existing == null)
-                ctx.Commands.Add(new()
+                ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.Benchmark,
                     Name  = "benchmark"
@@ -75,7 +75,7 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "checksum");
 
             if(existing == null)
-                ctx.Commands.Add(new()
+                ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.Checksum,
                     Name  = "checksum"
@@ -89,7 +89,7 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "compare");
 
             if(existing == null)
-                ctx.Commands.Add(new()
+                ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.Compare,
                     Name  = "compare"
@@ -103,7 +103,7 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "create-sidecar");
 
             if(existing == null)
-                ctx.Commands.Add(new()
+                ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.CreateSidecar,
                     Name  = "create-sidecar"
@@ -117,7 +117,7 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "decode");
 
             if(existing == null)
-                ctx.Commands.Add(new()
+                ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.Decode,
                     Name  = "decode"
@@ -131,7 +131,7 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "device-info");
 
             if(existing == null)
-                ctx.Commands.Add(new()
+                ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.DeviceInfo,
                     Name  = "device-info"
@@ -145,7 +145,7 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "device-report");
 
             if(existing == null)
-                ctx.Commands.Add(new()
+                ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.DeviceReport,
                     Name  = "device-report"
@@ -159,7 +159,7 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "dump-media");
 
             if(existing == null)
-                ctx.Commands.Add(new()
+                ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.DumpMedia,
                     Name  = "dump-media"
@@ -173,7 +173,7 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "entropy");
 
             if(existing == null)
-                ctx.Commands.Add(new()
+                ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.Entropy,
                     Name  = "entropy"
@@ -187,7 +187,7 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "formats");
 
             if(existing == null)
-                ctx.Commands.Add(new()
+                ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.Formats,
                     Name  = "formats"
@@ -201,7 +201,7 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "media-info");
 
             if(existing == null)
-                ctx.Commands.Add(new()
+                ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.MediaInfo,
                     Name  = "media-info"
@@ -215,7 +215,7 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "media-scan");
 
             if(existing == null)
-                ctx.Commands.Add(new()
+                ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.MediaScan,
                     Name  = "media-scan"
@@ -229,7 +229,7 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "printhex");
 
             if(existing == null)
-                ctx.Commands.Add(new()
+                ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.PrintHex,
                     Name  = "printhex"
@@ -243,7 +243,7 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "verify");
 
             if(existing == null)
-                ctx.Commands.Add(new()
+                ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.Verify,
                     Name  = "verify"
@@ -257,7 +257,7 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "ls");
 
             if(existing == null)
-                ctx.Commands.Add(new()
+                ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.Ls,
                     Name  = "ls"
@@ -271,7 +271,7 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "extract-files");
 
             if(existing == null)
-                ctx.Commands.Add(new()
+                ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.ExtractFiles,
                     Name  = "extract-files"
@@ -285,7 +285,7 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "list-devices");
 
             if(existing == null)
-                ctx.Commands.Add(new()
+                ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.ListDevices,
                     Name  = "list-devices"
@@ -299,7 +299,7 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "list-encodings");
 
             if(existing == null)
-                ctx.Commands.Add(new()
+                ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.ListEncodings,
                     Name  = "list-encodings"
@@ -313,7 +313,7 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "convert-image");
 
             if(existing == null)
-                ctx.Commands.Add(new()
+                ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.ConvertImage,
                     Name  = "convert-image"
@@ -327,7 +327,7 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "image-info");
 
             if(existing == null)
-                ctx.Commands.Add(new()
+                ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.ImageInfo,
                     Name  = "image-info"
@@ -349,7 +349,7 @@ public static class StatsConverter
                                                              c.Version == operatingSystem.version);
 
                 if(existing == null)
-                    ctx.OperatingSystems.Add(new()
+                    ctx.OperatingSystems.Add(new OperatingSystem
                     {
                         Count   = operatingSystem.Value,
                         Name    = operatingSystem.name,
@@ -361,11 +361,10 @@ public static class StatsConverter
         }
         else
         {
-            OperatingSystem existing =
-                ctx.OperatingSystems.FirstOrDefault(c => c.Name == "Linux" && c.Version == null);
+            OperatingSystem existing = ctx.OperatingSystems.FirstOrDefault(c => c.Name == "Linux" && c.Version == null);
 
             if(existing == null)
-                ctx.OperatingSystems.Add(new()
+                ctx.OperatingSystems.Add(new OperatingSystem
                 {
                     Count = 1,
                     Name  = "Linux"
@@ -384,7 +383,7 @@ public static class StatsConverter
                 Version existing = ctx.Versions.FirstOrDefault(c => c.Name == nvs.name);
 
                 if(existing == null)
-                    ctx.Versions.Add(new()
+                    ctx.Versions.Add(new Version
                     {
                         Count = nvs.Value,
                         Name  = nvs.name
@@ -398,7 +397,7 @@ public static class StatsConverter
             Version existing = ctx.Versions.FirstOrDefault(c => c.Name == "previous");
 
             if(existing == null)
-                ctx.Versions.Add(new()
+                ctx.Versions.Add(new Version
                 {
                     Count = 1,
                     Name  = "previous"
@@ -416,7 +415,7 @@ public static class StatsConverter
                 Filesystem existing = ctx.Filesystems.FirstOrDefault(c => c.Name == nvs.name);
 
                 if(existing == null)
-                    ctx.Filesystems.Add(new()
+                    ctx.Filesystems.Add(new Filesystem
                     {
                         Count = nvs.Value,
                         Name  = nvs.name
@@ -434,7 +433,7 @@ public static class StatsConverter
                 Partition existing = ctx.Partitions.FirstOrDefault(c => c.Name == nvs.name);
 
                 if(existing == null)
-                    ctx.Partitions.Add(new()
+                    ctx.Partitions.Add(new Partition
                     {
                         Count = nvs.Value,
                         Name  = nvs.name
@@ -452,7 +451,7 @@ public static class StatsConverter
                 MediaFormat existing = ctx.MediaFormats.FirstOrDefault(c => c.Name == nvs.name);
 
                 if(existing == null)
-                    ctx.MediaFormats.Add(new()
+                    ctx.MediaFormats.Add(new MediaFormat
                     {
                         Count = nvs.Value,
                         Name  = nvs.name
@@ -470,7 +469,7 @@ public static class StatsConverter
                 Filter existing = ctx.Filters.FirstOrDefault(c => c.Name == nvs.name);
 
                 if(existing == null)
-                    ctx.Filters.Add(new()
+                    ctx.Filters.Add(new Filter
                     {
                         Count = nvs.Value,
                         Name  = nvs.name
@@ -480,15 +479,13 @@ public static class StatsConverter
             }
 
         if(newStats.Devices != null)
-            foreach(DeviceStats device in newStats.Devices.
-                                                   Where(device => !string.IsNullOrWhiteSpace(device.Model)).
+            foreach(DeviceStats device in newStats.Devices.Where(device => !string.IsNullOrWhiteSpace(device.Model)).
                                                    Where(device => !ctx.DeviceStats.Any(c => c.Bus == device.Bus &&
-                                                                       c.Manufacturer ==
-                                                                       device.Manufacturer        &&
-                                                                       c.Model    == device.Model &&
+                                                                       c.Manufacturer == device.Manufacturer &&
+                                                                       c.Model == device.Model &&
                                                                        c.Revision == device.Revision)))
             {
-                ctx.DeviceStats.Add(new()
+                ctx.DeviceStats.Add(new DeviceStat
                 {
                     Bus          = device.Bus,
                     Manufacturer = device.Manufacturer,
@@ -506,7 +503,7 @@ public static class StatsConverter
                 Media existing = ctx.Medias.FirstOrDefault(c => c.Type == media.type && c.Real == media.real);
 
                 if(existing == null)
-                    ctx.Medias.Add(new()
+                    ctx.Medias.Add(new Media
                     {
                         Count = media.Value,
                         Real  = media.real,

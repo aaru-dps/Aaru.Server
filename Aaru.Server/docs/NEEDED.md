@@ -1,16 +1,16 @@
-This is a list of hardware, software, and general information needed to expand and better support various unique hardware and
-software configurations for Aaru. We accept donation of this hardware, or loans: paying for shipping is greatly appreciated,
-but can make other arrangements depending on cost. For media, we do accept loans, but please be aware that due to it’s age, there is
-no guarantee it will still be working after it is returned and thus donations are preferred.
+This is a list of hardware, software, and general information needed to expand and better support various unique
+hardware and software configurations for Aaru. We accept donation of this hardware, or loans: paying for shipping is
+greatly appreciated, but can make other arrangements depending on cost. For media, we do accept loans, but please be
+aware that due to it’s age, there is no guarantee it will still be working after it is returned and thus donations are
+preferred.
 
 Drives
 ======
-This is a list of drives. The reason we need these drives is because it is the only way to add enhanced support for them (e.g. media
-detection, ECC support, raw dumping, etc.). Also some drives depart from the specifications and need special workarounds. If a drive is
-listed here, but the media it uses is not listed below, we already have media for it. Drives are preferred in ATA/ATAPI, SCSI, USB or
-FireWire buses. Parallel port drives require a larger amount of work, and there is no guarantee it can work, at all, with other drives. If in
-doubt, please contact us.
-
+This is a list of drives. The reason we need these drives is because it is the only way to add enhanced support for
+them (e.g. media detection, ECC support, raw dumping, etc.). Also some drives depart from the specifications and need
+special workarounds. If a drive is listed here, but the media it uses is not listed below, we already have media for it.
+Drives are preferred in ATA/ATAPI, SCSI, USB or FireWire buses. Parallel port drives require a larger amount of work,
+and there is no guarantee it can work, at all, with other drives. If in doubt, please contact us.
 
 - 5.25" magneto-optical (preferibly the 9.6Gb supporting one)
 - 8" shugart floppy drive (preferibly the 240VAC one)
@@ -43,7 +43,9 @@ doubt, please contact us.
 
 Media
 =====
-This is the media for the drives listed above, or media for drives we do have, but lack and thus cannot test the actual hardware.
+This is the media for the drives listed above, or media for drives we do have, but lack and thus cannot test the actual
+hardware.
+
 - 5.25" magneto-optical media: 128MiB
 - ADR tapes
 - AIT tapes
@@ -72,9 +74,8 @@ This is the media for the drives listed above, or media for drives we do have, b
 
 Software
 ==================
-This is a list of software whose physical media has some characteristics that needs
-to be investigated to allow correct dumping of such characteristics. Usually those
-are copy protections.
+This is a list of software whose physical media has some characteristics that needs to be investigated to allow correct
+dumping of such characteristics. Usually those are copy protections.
 
 - CD-i Ready
     - Accelerator

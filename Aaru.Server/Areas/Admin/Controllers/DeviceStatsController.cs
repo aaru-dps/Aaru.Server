@@ -34,8 +34,7 @@ public sealed class DeviceStatsController : Controller
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost, ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Manufacturer,Model,Revision,Bus")]
-                                          DeviceStat changedModel)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,Manufacturer,Model,Revision,Bus")] DeviceStat changedModel)
     {
         if(id != changedModel.Id)
             return NotFound();

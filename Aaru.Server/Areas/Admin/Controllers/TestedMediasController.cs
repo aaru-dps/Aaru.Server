@@ -24,8 +24,7 @@ public sealed class TestedMediasController : Controller
 
     // GET: Admin/TestedMedias
     public async Task<IActionResult> Index() => View(await _context.TestedMedia.OrderBy(m => m.Manufacturer).
-                                                                    ThenBy(m => m.Model).
-                                                                    ThenBy(m => m.MediumTypeName).
+                                                                    ThenBy(m => m.Model).ThenBy(m => m.MediumTypeName).
                                                                     ThenBy(m => m.MediaIsRecognized).
                                                                     ThenBy(m => m.LongBlockSize).
                                                                     ThenBy(m => m.BlockSize).ThenBy(m => m.Blocks).
@@ -72,8 +71,7 @@ public sealed class TestedMediasController : Controller
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(
-        int id, [Bind("Id,Blocks,BlockSize,LongBlockSize,Manufacturer,MediumTypeName,Model")]
-        TestedMedia changedModel)
+        int id, [Bind("Id,Blocks,BlockSize,LongBlockSize,Manufacturer,MediumTypeName,Model")] TestedMedia changedModel)
     {
         if(id != changedModel.Id)
             return NotFound();

@@ -60,10 +60,9 @@ public class Device : DeviceReportV2
         GdRomSwapDiscCapabilities = report.GdRomSwapDiscCapabilities;
     }
 
-    public Device(int? ataId, int? atapiId, int? firewireId, int? multimediacardId, int? pcmciaId,
-                  int? securedigitalId, int? scsiId, int? usbId, DateTime uploadedWhen, string manufacturer,
-                  string model, string revision, bool compactFlash, DeviceType type,
-                  int? gdRomSwapDiscCapabilitiesId)
+    public Device(int? ataId, int? atapiId, int? firewireId, int? multimediacardId, int? pcmciaId, int? securedigitalId,
+                  int? scsiId, int? usbId, DateTime uploadedWhen, string manufacturer, string model, string revision,
+                  bool compactFlash, DeviceType type, int? gdRomSwapDiscCapabilitiesId)
     {
         ATAId                       = ataId;
         ATAPIId                     = atapiId;

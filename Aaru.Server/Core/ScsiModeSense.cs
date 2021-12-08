@@ -409,9 +409,8 @@ public static class ScsiModeSense
                 }
                 default:
                 {
-                    modePages.
-                        Add(page.subpage != 0 ? $"MODE page {page.page:X2}h subpage {page.subpage:X2}h" : $"MODE page {page.page:X2}h",
-                            "Unknown mode page");
+                    modePages.Add(page.subpage != 0 ? $"MODE page {page.page:X2}h subpage {page.subpage:X2}h" : $"MODE page {page.page:X2}h",
+                                  "Unknown mode page");
                 }
 
                     break;

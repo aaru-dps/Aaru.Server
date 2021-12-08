@@ -10,10 +10,9 @@ public sealed class TestedSequentialMediasController : Controller
     public TestedSequentialMediasController(AaruServerContext context) => _context = context;
 
     // GET: Admin/TestedSequentialMedias
-    public async Task<IActionResult> Index() => View(await _context.TestedSequentialMedia.
-                                                                    OrderBy(m => m.Manufacturer).
-                                                                    ThenBy(m => m.Model).
-                                                                    ThenBy(m => m.MediumTypeName).ToListAsync());
+    public async Task<IActionResult> Index() => View(await _context.TestedSequentialMedia.OrderBy(m => m.Manufacturer).
+                                                                    ThenBy(m => m.Model).ThenBy(m => m.MediumTypeName).
+                                                                    ToListAsync());
 
     // GET: Admin/TestedSequentialMedias/Edit/5
     public async Task<IActionResult> Edit(int? id)
@@ -37,8 +36,8 @@ public sealed class TestedSequentialMediasController : Controller
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost, ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Manufacturer,MediumTypeName,Model")]
-                                          TestedSequentialMedia changedModel)
+    public async Task<IActionResult> Edit(
+        int id, [Bind("Id,Manufacturer,MediumTypeName,Model")] TestedSequentialMedia changedModel)
     {
         if(id != changedModel.Id)
             return NotFound();

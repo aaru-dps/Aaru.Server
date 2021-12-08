@@ -77,8 +77,9 @@ public sealed class Program
 
         builder.Services.AddDbContext<AaruServerContext>(options => options.
                                                                     UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
-                                                                             new MariaDbServerVersion(new System.
-                                                                                 Version(10, 4, 0))).
+                                                                             new
+                                                                                 MariaDbServerVersion(new System.
+                                                                                     Version(10, 4, 0))).
                                                                     UseLazyLoadingProxies());
 
         builder.Services.AddDefaultIdentity<IdentityUser>(options =>

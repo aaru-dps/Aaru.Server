@@ -37,8 +37,7 @@ public sealed class FireWiresController : Controller
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(
-        int id, [Bind("Id,VendorID,ProductID,Manufacturer,Product,RemovableMedia")]
-        FireWire changedModel)
+        int id, [Bind("Id,VendorID,ProductID,Manufacturer,Product,RemovableMedia")] FireWire changedModel)
     {
         if(id != changedModel.Id)
             return NotFound();

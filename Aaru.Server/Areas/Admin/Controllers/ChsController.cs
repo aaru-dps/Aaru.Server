@@ -11,9 +11,8 @@ public sealed class ChsController : Controller
     public ChsController(AaruServerContext context) => _context = context;
 
     // GET: Admin/Chs
-    public async Task<IActionResult> Index() => View(await _context.Chs.OrderBy(c => c.Cylinders).
-                                                                    ThenBy(c => c.Heads).ThenBy(c => c.Sectors).
-                                                                    ToListAsync());
+    public async Task<IActionResult> Index() => View(await _context.Chs.OrderBy(c => c.Cylinders).ThenBy(c => c.Heads).
+                                                                    ThenBy(c => c.Sectors).ToListAsync());
 
     public IActionResult Consolidate()
     {
@@ -56,15 +55,14 @@ public sealed class ChsController : Controller
         foreach(ChsModel duplicate in duplicates)
         {
             Chs master = _context.Chs.FirstOrDefault(m => m.Cylinders == duplicate.Cylinders &&
-                                                          m.Heads     == duplicate.Heads     &&
-                                                          m.Sectors   == duplicate.Sectors);
+                                                          m.Heads == duplicate.Heads && m.Sectors == duplicate.Sectors);
 
             if(master is null)
                 continue;
 
             foreach(Chs chs in _context.Chs.Where(m => m.Cylinders == duplicate.Cylinders &&
-                                                       m.Heads     == duplicate.Heads     &&
-                                                       m.Sectors   == duplicate.Sectors).Skip(1).ToArray())
+                                                       m.Heads == duplicate.Heads && m.Sectors == duplicate.Sectors).
+                                        Skip(1).ToArray())
             {
                 foreach(TestedMedia media in _context.TestedMedia.Where(d => d.CHS.Id == chs.Id))
                 {

@@ -13,8 +13,7 @@ public sealed class SscsController : Controller
     // GET: Admin/Sscs
     public async Task<IActionResult> Index() => View(await _context.Ssc.OrderBy(s => s.MinBlockLength).
                                                                     ThenBy(s => s.MaxBlockLength).
-                                                                    ThenBy(s => s.BlockSizeGranularity).
-                                                                    ToListAsync());
+                                                                    ThenBy(s => s.BlockSizeGranularity).ToListAsync());
 
     // GET: Admin/Sscs/Delete/5
     public async Task<IActionResult> Delete(int? id)
@@ -85,18 +84,16 @@ public sealed class SscsController : Controller
 
         foreach(SscModel duplicate in duplicates)
         {
-            Ssc master =
-                _context.Ssc.FirstOrDefault(m => m.BlockSizeGranularity == duplicate.BlockSizeGranularity &&
-                                                 m.MaxBlockLength       == duplicate.MaxBlockLength       &&
-                                                 m.MinBlockLength       == duplicate.MinBlockLength);
+            Ssc master = _context.Ssc.FirstOrDefault(m => m.BlockSizeGranularity == duplicate.BlockSizeGranularity &&
+                                                          m.MaxBlockLength       == duplicate.MaxBlockLength       &&
+                                                          m.MinBlockLength       == duplicate.MinBlockLength);
 
             if(master is null)
                 continue;
 
             foreach(Ssc ssc in _context.Ssc.Where(m => m.BlockSizeGranularity == duplicate.BlockSizeGranularity &&
-                                                       m.MaxBlockLength       == duplicate.MaxBlockLength       &&
-                                                       m.MinBlockLength       == duplicate.MinBlockLength).Skip(1).
-                                        ToArray())
+                                                       m.MaxBlockLength == duplicate.MaxBlockLength &&
+                                                       m.MinBlockLength == duplicate.MinBlockLength).Skip(1).ToArray())
             {
                 foreach(TestedSequentialMedia media in _context.TestedSequentialMedia.Where(d => d.SscId == ssc.Id))
                 {

@@ -21,8 +21,7 @@ public sealed class GdRomSwapDiscCapabilitiesController : Controller
             return NotFound();
         }
 
-        GdRomSwapDiscCapabilities caps =
-            await _context.GdRomSwapDiscCapabilities.FirstOrDefaultAsync(m => m.Id == id);
+        GdRomSwapDiscCapabilities caps = await _context.GdRomSwapDiscCapabilities.FirstOrDefaultAsync(m => m.Id == id);
 
         if(caps == null)
         {
@@ -40,8 +39,7 @@ public sealed class GdRomSwapDiscCapabilitiesController : Controller
             return NotFound();
         }
 
-        GdRomSwapDiscCapabilities caps =
-            await _context.GdRomSwapDiscCapabilities.FirstOrDefaultAsync(m => m.Id == id);
+        GdRomSwapDiscCapabilities caps = await _context.GdRomSwapDiscCapabilities.FirstOrDefaultAsync(m => m.Id == id);
 
         if(caps == null)
         {

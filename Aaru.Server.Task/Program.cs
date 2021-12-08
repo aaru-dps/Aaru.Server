@@ -174,8 +174,8 @@ internal class Program
                     vendor = new UsbVendor(number, name);
                     ctx.UsbVendors.Add(vendor);
 
-                    System.Console.WriteLine("{0}: Will add vendor {1} with ID {2:X4}", DateTime.UtcNow,
-                                             vendor.Vendor, vendor.VendorId);
+                    System.Console.WriteLine("{0}: Will add vendor {1} with ID {2:X4}", DateTime.UtcNow, vendor.Vendor,
+                                             vendor.VendorId);
 
                     newVendors++;
                     counter++;
@@ -221,8 +221,7 @@ internal class Program
             System.Console.WriteLine("{0}: Looking up a product", DateTime.UtcNow);
             start = DateTime.UtcNow;
 
-            UsbProduct prd =
-                ctx.UsbProducts.FirstOrDefault(p => p.ProductId == 0x0001 && p.Vendor.VendorId == 0x8086);
+            UsbProduct prd = ctx.UsbProducts.FirstOrDefault(p => p.ProductId == 0x0001 && p.Vendor.VendorId == 0x8086);
 
             if(prd is null)
                 System.Console.WriteLine("{0}: Error, could not find product.", DateTime.UtcNow);
@@ -258,8 +257,7 @@ internal class Program
 
         try
         {
-            System.Console.WriteLine("{0}: Retrieving CompactDisc read offsets from AccurateRip...",
-                                     DateTime.UtcNow);
+            System.Console.WriteLine("{0}: Retrieving CompactDisc read offsets from AccurateRip...", DateTime.UtcNow);
 
             start = DateTime.UtcNow;
 
@@ -290,8 +288,7 @@ internal class Program
 
                 if(columns.Length != 4)
                 {
-                    System.Console.WriteLine("{0}: Row does not have correct number of columns...",
-                                             DateTime.UtcNow);
+                    System.Console.WriteLine("{0}: Row does not have correct number of columns...", DateTime.UtcNow);
 
                     continue;
                 }

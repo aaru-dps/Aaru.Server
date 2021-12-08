@@ -8,8 +8,7 @@ public sealed class MediaFormatsController : Controller
     public MediaFormatsController(AaruServerContext context) => _context = context;
 
     // GET: Admin/MediaFormats
-    public async Task<IActionResult> Index() =>
-        View(await _context.MediaFormats.OrderBy(mf => mf.Name).ToListAsync());
+    public async Task<IActionResult> Index() => View(await _context.MediaFormats.OrderBy(mf => mf.Name).ToListAsync());
 
     // GET: Admin/MediaFormats/Delete/5
     public async Task<IActionResult> Delete(int? id)

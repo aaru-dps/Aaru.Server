@@ -2024,8 +2024,7 @@ internal static class ScsiInquiry
 
                     break;
                 case 0x1622:
-                    scsiOneValue.
-                        Add("Device complies with ATA/ATAPI-8 ATA8-AST Serial Transport (no version claimed)");
+                    scsiOneValue.Add("Device complies with ATA/ATAPI-8 ATA8-AST Serial Transport (no version claimed)");
 
                     break;
                 case 0x1623:
@@ -2038,8 +2037,7 @@ internal static class ScsiInquiry
 
                     break;
                 case 0x162A:
-                    scsiOneValue.
-                        Add("Device complies with ATA/ATAPI-8 ATA8-ACS ANSI INCITS 452-2009 w/ Amendment 1");
+                    scsiOneValue.Add("Device complies with ATA/ATAPI-8 ATA8-ACS ANSI INCITS 452-2009 w/ Amendment 1");
 
                     break;
                 case 0x1728:
@@ -2051,8 +2049,7 @@ internal static class ScsiInquiry
 
                     break;
                 case 0x1730:
-                    scsiOneValue.
-                        Add("Device complies with USB Mass Storage Class Bulk-Only Transport, Revision 1.0");
+                    scsiOneValue.Add("Device complies with USB Mass Storage Class Bulk-Only Transport, Revision 1.0");
 
                     break;
                 case 0x1740:

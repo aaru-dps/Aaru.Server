@@ -1,12 +1,12 @@
 {
-  "name": "Aaru.Server",
-  "version": "4.5.99.1663",
-  "description": "Server component for Aaru Data Preservation Suite",
-  "private": true,
-  "author": "Natalia Portillo <claunia@claunia.com>",
-  "homepage": "https://www.aaru.app",
-  "license": "LGPL",
-  "repository": "github:aaru-dps/Aaru.Server",
+  "name"        : "Aaru.Server",
+  "version"     : "4.5.99.1663",
+  "description" : "Server component for Aaru Data Preservation Suite",
+  "private"     : true,
+  "author"      : "Natalia Portillo <claunia@claunia.com>",
+  "homepage"    : "https://www.aaru.app",
+  "license"     : "LGPL",
+  "repository"  : "github:aaru-dps/Aaru.Server",
   "dependencies": {
     "bootstrap": "^4.3.1"
   }

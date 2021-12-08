@@ -75,8 +75,7 @@ public sealed class UploadReportController : Controller
             var xs = new XmlSerializer(newReport.GetType());
 
             newReport =
-                (DeviceReport)
-                xs.Deserialize(new StringReader(await new StreamReader(request.Body).ReadToEndAsync()));
+                (DeviceReport)xs.Deserialize(new StringReader(await new StreamReader(request.Body).ReadToEndAsync()));
 
             if(newReport == null)
             {
@@ -118,11 +117,9 @@ public sealed class UploadReportController : Controller
             if(newUploadedReport.ATA?.ReadCapabilities?.CHS != null)
             {
                 Chs existingChs =
-                    _ctx.Chs.FirstOrDefault(c =>
-                                                c.Cylinders == newUploadedReport.ATA.ReadCapabilities.CHS.
-                                                    Cylinders                                                 &&
-                                                c.Heads   == newUploadedReport.ATA.ReadCapabilities.CHS.Heads &&
-                                                c.Sectors == newUploadedReport.ATA.ReadCapabilities.CHS.Sectors);
+                    _ctx.Chs.FirstOrDefault(c => c.Cylinders == newUploadedReport.ATA.ReadCapabilities.CHS.Cylinders &&
+                                                 c.Heads     == newUploadedReport.ATA.ReadCapabilities.CHS.Heads     &&
+                                                 c.Sectors   == newUploadedReport.ATA.ReadCapabilities.CHS.Sectors);
 
                 if(existingChs != null)
                     newUploadedReport.ATA.ReadCapabilities.CHS = existingChs;
@@ -133,10 +130,9 @@ public sealed class UploadReportController : Controller
                 Chs existingChs =
                     _ctx.Chs.FirstOrDefault(c =>
                                                 c.Cylinders == newUploadedReport.ATA.ReadCapabilities.CurrentCHS.
-                                                    Cylinders &&
-                                                c.Heads == newUploadedReport.ATA.ReadCapabilities.CurrentCHS.
-                                                                             Heads && c.Sectors == newUploadedReport.ATA.ReadCapabilities.
-                                                    CurrentCHS.Sectors);
+                                                    Cylinders                                                        &&
+                                                c.Heads   == newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Heads &&
+                                                c.Sectors == newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Sectors);
 
                 if(existingChs != null)
                     newUploadedReport.ATA.ReadCapabilities.CurrentCHS = existingChs;
@@ -161,8 +157,7 @@ public sealed class UploadReportController : Controller
                     {
                         Chs existingChs =
                             _ctx.Chs.FirstOrDefault(c => c.Cylinders == media.CHS.Cylinders &&
-                                                         c.Heads     == media.CHS.Heads     &&
-                                                         c.Sectors   == media.CHS.Sectors);
+                                                         c.Heads == media.CHS.Heads && c.Sectors == media.CHS.Sectors);
 
                         if(existingChs != null)
                             media.CHS = existingChs;
@@ -279,11 +274,9 @@ public sealed class UploadReportController : Controller
             if(newUploadedReport.ATA?.ReadCapabilities?.CHS != null)
             {
                 Chs existingChs =
-                    _ctx.Chs.FirstOrDefault(c =>
-                                                c.Cylinders == newUploadedReport.ATA.ReadCapabilities.CHS.
-                                                    Cylinders                                                 &&
-                                                c.Heads   == newUploadedReport.ATA.ReadCapabilities.CHS.Heads &&
-                                                c.Sectors == newUploadedReport.ATA.ReadCapabilities.CHS.Sectors);
+                    _ctx.Chs.FirstOrDefault(c => c.Cylinders == newUploadedReport.ATA.ReadCapabilities.CHS.Cylinders &&
+                                                 c.Heads     == newUploadedReport.ATA.ReadCapabilities.CHS.Heads     &&
+                                                 c.Sectors   == newUploadedReport.ATA.ReadCapabilities.CHS.Sectors);
 
                 if(existingChs != null)
                     newUploadedReport.ATA.ReadCapabilities.CHS = existingChs;
@@ -294,10 +287,9 @@ public sealed class UploadReportController : Controller
                 Chs existingChs =
                     _ctx.Chs.FirstOrDefault(c =>
                                                 c.Cylinders == newUploadedReport.ATA.ReadCapabilities.CurrentCHS.
-                                                    Cylinders &&
-                                                c.Heads == newUploadedReport.ATA.ReadCapabilities.CurrentCHS.
-                                                                             Heads && c.Sectors == newUploadedReport.ATA.ReadCapabilities.
-                                                    CurrentCHS.Sectors);
+                                                    Cylinders                                                        &&
+                                                c.Heads   == newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Heads &&
+                                                c.Sectors == newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Sectors);
 
                 if(existingChs != null)
                     newUploadedReport.ATA.ReadCapabilities.CurrentCHS = existingChs;
@@ -322,8 +314,7 @@ public sealed class UploadReportController : Controller
                     {
                         Chs existingChs =
                             _ctx.Chs.FirstOrDefault(c => c.Cylinders == media.CHS.Cylinders &&
-                                                         c.Heads     == media.CHS.Heads     &&
-                                                         c.Sectors   == media.CHS.Sectors);
+                                                         c.Heads == media.CHS.Heads && c.Sectors == media.CHS.Sectors);
 
                         if(existingChs != null)
                             media.CHS = existingChs;

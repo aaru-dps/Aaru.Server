@@ -12,14 +12,12 @@ public sealed class SupportedDensitiesController : Controller
     // GET: Admin/SupportedDensities
     public async Task<IActionResult> Index() => View(await _context.SupportedDensity.OrderBy(d => d.Organization).
                                                                     ThenBy(d => d.Name).ThenBy(d => d.Description).
-                                                                    ThenBy(d => d.Capacity).
-                                                                    ThenBy(d => d.PrimaryCode).
+                                                                    ThenBy(d => d.Capacity).ThenBy(d => d.PrimaryCode).
                                                                     ThenBy(d => d.SecondaryCode).
                                                                     ThenBy(d => d.BitsPerMm).ThenBy(d => d.Width).
-                                                                    ThenBy(d => d.Tracks).
-                                                                    ThenBy(d => d.DefaultDensity).
-                                                                    ThenBy(d => d.Writable).
-                                                                    ThenBy(d => d.Duplicate).ToListAsync());
+                                                                    ThenBy(d => d.Tracks).ThenBy(d => d.DefaultDensity).
+                                                                    ThenBy(d => d.Writable).ThenBy(d => d.Duplicate).
+                                                                    ToListAsync());
 
     // GET: Admin/SupportedDensities/Delete/5
     public async Task<IActionResult> Delete(int? id)

@@ -16,14 +16,13 @@ public sealed class MmcController : Controller
                                                       Id         = m.Id,
                                                       FeaturesId = m.FeaturesId,
                                                       DataLength = m.ModeSense2AData.Length
-                                                  }).ToList().
-                                                  Concat(_context.Mmc.Where(m => m.ModeSense2AData == null).
-                                                                  Select(m => new MmcModelForView
-                                                                  {
-                                                                      Id         = m.Id,
-                                                                      FeaturesId = m.FeaturesId,
-                                                                      DataLength = 0
-                                                                  }).ToList()).OrderBy(m => m.Id));
+                                                  }).ToList().Concat(_context.Mmc.Where(m => m.ModeSense2AData == null).
+                                                                              Select(m => new MmcModelForView
+                                                                              {
+                                                                                  Id         = m.Id,
+                                                                                  FeaturesId = m.FeaturesId,
+                                                                                  DataLength = 0
+                                                                              }).ToList()).OrderBy(m => m.Id));
 
     // GET: Admin/Mmc/Details/5
     public async Task<IActionResult> Details(int? id)
