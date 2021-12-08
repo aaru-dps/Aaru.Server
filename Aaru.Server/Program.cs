@@ -1,10 +1,15 @@
 using System;
 using Aaru.CommonTypes.Interop;
 using Aaru.Server.Models;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Prometheus;
 using Version = Aaru.CommonTypes.Interop.Version;
 
 namespace Aaru.Server
@@ -70,9 +75,72 @@ namespace Aaru.Server
                                  DetectOS.IsMono ? "Mono" : ".NET Core",
                                  DetectOS.IsMono ? Version.GetMonoVersion() : Version.GetNetCoreVersion());
 
-            IHost host = CreateHostBuilder(args).Build();
+            System.Console.WriteLine("\u001b[31;1mBuilding web application...\u001b[0m");
 
-            using(IServiceScope scope = host.Services.CreateScope())
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddDbContext<AaruServerContext>(options => options.
+                                                                        UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+                                                                            new MariaDbServerVersion(new System.
+                                                                                Version(10, 4, 0))).
+                                                                        UseLazyLoadingProxies());
+
+            builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = true;
+                options.User.RequireUniqueEmail        = true;
+            }).AddEntityFrameworkStores<AaruServerContext>();
+
+            builder.Services.AddApplicationInsightsTelemetry();
+
+            builder.Services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
+            WebApplication app = builder.Build();
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
+            app.UseHttpMetrics();
+
+            if(builder.Environment.IsDevelopment())
+                app.UseDeveloperExceptionPage();
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
+            // Add other security headers
+            app.UseMiddleware<SecurityHeadersMiddleware>();
+
+            app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute("areas", "{area}/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
+            });
+
+            app.Map("/metrics", metricsApp =>
+            {
+                metricsApp.UseMiddleware<BasicAuthMiddleware>("Aaru");
+
+                // We already specified URL prefix in .Map() above, no need to specify it again here.
+                metricsApp.UseMetricServer("");
+            });
+
+            using(IServiceScope scope = app.Services.CreateScope())
             {
                 IServiceProvider services = scope.ServiceProvider;
 
@@ -107,12 +175,8 @@ namespace Aaru.Server
             }
 
             System.Console.WriteLine("\u001b[31;1mStarting web server...\u001b[0m");
-            host.Run();
-        }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilder(args).
-                                                                            ConfigureWebHostDefaults(webBuilder =>
-                                                                                webBuilder.
-                                                                                    UseStartup<Startup>());
+            app.Run();
+        }
     }
 }
