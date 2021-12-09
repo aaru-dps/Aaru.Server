@@ -90,6 +90,25 @@ public sealed class UpdateController : Controller
                                                    })), device.Id, device.OptimalMultipleSectorsRead,
                                            device.CanReadGdRomUsingSwapDisc));
 
+        sync.NesHeaders = new List<NesHeaderDto>();
+
+        foreach(NesHeaderInfo header in _ctx.NesHeaders.Where(v => v.ModifiedWhen > lastSync))
+            sync.NesHeaders.Add(new NesHeaderDto
+            {
+                Id                     = header.Id,
+                BatteryPresent         = header.BatteryPresent,
+                ConsoleType            = header.ConsoleType,
+                DefaultExpansionDevice = header.DefaultExpansionDevice,
+                ExtendedConsoleType    = header.ExtendedConsoleType,
+                FourScreenMode         = header.FourScreenMode,
+                Mapper                 = header.Mapper,
+                NametableMirroring     = header.NametableMirroring,
+                Sha256                 = header.Sha256,
+                Submapper              = header.Submapper,
+                VsHardwareType         = header.VsHardwareType,
+                VsPpuType              = header.VsPpuType
+            });
+
         var js = JsonSerializer.Create();
         var sw = new StringWriter();
         js.Serialize(sw, sync);

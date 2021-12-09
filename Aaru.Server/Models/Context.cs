@@ -78,6 +78,7 @@ public sealed class AaruServerContext : IdentityDbContext<IdentityUser>
     public DbSet<RemoteArchitecture>        RemoteArchitectures       { get; set; }
     public DbSet<RemoteOperatingSystem>     RemoteOperatingSystems    { get; set; }
     public DbSet<GdRomSwapDiscCapabilities> GdRomSwapDiscCapabilities { get; set; }
+    public DbSet<NesHeaderInfo>             NesHeaders                { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -247,6 +248,9 @@ public sealed class AaruServerContext : IdentityDbContext<IdentityUser>
 
         modelBuilder.Entity<UsbVendor>().HasIndex(b => b.ModifiedWhen);
         modelBuilder.Entity<UsbVendor>().HasIndex(b => b.VendorId).IsUnique();
+
+        modelBuilder.Entity<NesHeaderInfo>().HasIndex(b => b.ModifiedWhen);
+        modelBuilder.Entity<NesHeaderInfo>().HasIndex(b => b.Sha256).IsUnique();
     }
 
     internal static bool TableExists(string tableName)
