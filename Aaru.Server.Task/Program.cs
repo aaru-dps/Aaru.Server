@@ -35,7 +35,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Text.Json;
+using Aaru.CommonTypes.Enums;
 using Aaru.Server.Models;
 using HtmlAgilityPack;
 using Microsoft.EntityFrameworkCore;
@@ -47,6 +49,7 @@ internal class Program
     public static void Main(string[] args)
     {
         DateTime start, end;
+        int      counter = 0;
 
         start = DateTime.UtcNow;
         System.Console.WriteLine("{0}: Connecting to database...", DateTime.UtcNow);
@@ -76,7 +79,6 @@ internal class Program
             int       newProducts      = 0;
             int       modifiedVendors  = 0;
             int       modifiedProducts = 0;
-            int       counter          = 0;
 
             start = DateTime.UtcNow;
             System.Console.WriteLine("{0}: Adding and updating database entries...", DateTime.UtcNow);
@@ -534,5 +536,197 @@ internal class Program
         #endif
             System.Console.WriteLine("{0}: Exception {1} filling CompactDisc read offsets...", DateTime.UtcNow, ex);
         }
+
+        if(!Directory.Exists("nes"))
+            return;
+
+        System.Console.WriteLine("{0}: Reading iNES/NES 2.0 headers...", DateTime.UtcNow);
+        start = DateTime.UtcNow;
+        int newHeaders     = 0;
+        int updatedHeaders = 0;
+        counter = 0;
+
+        foreach(string file in Directory.GetFiles("nes"))
+        {
+            try
+            {
+                var fs = new FileStream(file, FileMode.Open, FileAccess.Read);
+
+                if(fs.Length <= 16)
+                    continue;
+
+                byte[] header = new byte[16];
+                byte[] data   = new byte[fs.Length - 16];
+
+                fs.Read(header, 0, 16);
+                fs.Read(data, 0, data.Length);
+
+                bool ines;
+                bool nes20;
+
+                ines  = header[0] == 'N' && header[1]          == 'E' && header[2] == 'S' && header[3] == 0x1A;
+                nes20 = ines             && (header[7] & 0x0C) == 0x08;
+
+                if(!ines)
+                    continue;
+
+                counter++;
+
+                var info = new NesHeaderInfo
+                {
+                    NametableMirroring = (header[6] & 0x1) == 0x1,
+                    BatteryPresent     = (header[6] & 0x2) == 0x2,
+                    FourScreenMode     = (header[6] & 0x8) == 0x8,
+                    Mapper             = (ushort)(header[6] >> 4),
+                    ConsoleType        = (NesConsoleType)(header[7] & 0x3)
+                };
+
+                info.Mapper += (ushort)(header[7] & 0xF0);
+
+                if(nes20)
+                {
+                    info.Mapper     += (ushort)((header[8] & 0xF) << 8);
+                    info.Submapper  =  (byte)(header[8]           >> 4);
+                    info.TimingMode =  (NesTimingMode)(header[12] & 0x3);
+
+                    switch(info.ConsoleType)
+                    {
+                        case NesConsoleType.Vs:
+                            info.VsPpuType      = (NesVsPpuType)(header[13] & 0xF);
+                            info.VsHardwareType = (NesVsHardwareType)(header[13] >> 4);
+
+                            break;
+                        case NesConsoleType.Extended:
+                            info.ExtendedConsoleType = (NesExtendedConsoleType)(header[13] & 0xF);
+
+                            break;
+                    }
+
+                    info.DefaultExpansionDevice = (NesDefaultExpansionDevice)header[15];
+                }
+
+                var    hasher    = SHA256.Create();
+                byte[] hashBytes = hasher.ComputeHash(data);
+                char[] hashChars = new char[64];
+
+                for(int i = 0; i < 32; i++)
+                {
+                    int a = hashBytes[i] >> 4;
+                    int b = hashBytes[i] & 0xF;
+
+                    hashChars[i * 2] = a > 9 ? (char)(a + 0x57) : (char)(a      + 0x30);
+                    hashChars[(i * 2)                   + 1] = b > 9 ? (char)(b + 0x57) : (char)(b + 0x30);
+                }
+
+                info.Sha256 = new string(hashChars);
+
+                NesHeaderInfo existing = ctx.NesHeaders.FirstOrDefault(h => h.Sha256 == info.Sha256);
+
+                if(existing == null)
+                {
+                    info.AddedWhen    = DateTime.UtcNow;
+                    info.ModifiedWhen = info.AddedWhen;
+                    ctx.NesHeaders.Add(info);
+                    newHeaders++;
+
+                    continue;
+                }
+
+                bool modified = false;
+
+                if(existing.NametableMirroring != info.NametableMirroring)
+                {
+                    existing.NametableMirroring = info.NametableMirroring;
+                    modified                    = true;
+                }
+
+                if(existing.BatteryPresent != info.BatteryPresent)
+                {
+                    existing.BatteryPresent = info.BatteryPresent;
+                    modified                = true;
+                }
+
+                if(existing.FourScreenMode != info.FourScreenMode)
+                {
+                    existing.FourScreenMode = info.FourScreenMode;
+                    modified                = true;
+                }
+
+                if(existing.Mapper != info.Mapper)
+                {
+                    existing.Mapper = info.Mapper;
+                    modified        = true;
+                }
+
+                if(existing.ConsoleType != info.ConsoleType)
+                {
+                    existing.ConsoleType = info.ConsoleType;
+                    modified             = true;
+                }
+
+                if(existing.Submapper != info.Submapper)
+                {
+                    existing.Submapper = info.Submapper;
+                    modified           = true;
+                }
+
+                if(existing.TimingMode != info.TimingMode)
+                {
+                    existing.TimingMode = info.TimingMode;
+                    modified            = true;
+                }
+
+                if(existing.VsPpuType != info.VsPpuType)
+                {
+                    existing.VsPpuType = info.VsPpuType;
+                    modified           = true;
+                }
+
+                if(existing.VsHardwareType != info.VsHardwareType)
+                {
+                    existing.VsHardwareType = info.VsHardwareType;
+                    modified                = true;
+                }
+
+                if(existing.ExtendedConsoleType != info.ExtendedConsoleType)
+                {
+                    existing.ExtendedConsoleType = info.ExtendedConsoleType;
+                    modified                     = true;
+                }
+
+                if(existing.DefaultExpansionDevice != info.DefaultExpansionDevice)
+                {
+                    existing.DefaultExpansionDevice = info.DefaultExpansionDevice;
+                    modified                        = true;
+                }
+
+                if(!modified)
+                    continue;
+
+                existing.ModifiedWhen = DateTime.UtcNow;
+                updatedHeaders++;
+            }
+            catch(Exception ex)
+            {
+            #if DEBUG
+                if(Debugger.IsAttached)
+                    throw;
+            #endif
+                System.Console.WriteLine("{0}: Exception {1} with file {2}...", DateTime.UtcNow, ex, file);
+            }
+        }
+
+        end = DateTime.UtcNow;
+        System.Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
+
+        System.Console.WriteLine("{0}: Processed {1} iNES/NES 2.0 headers...", DateTime.UtcNow, counter);
+        System.Console.WriteLine("{0}: Added {1} iNES/NES 2.0 headers...", DateTime.UtcNow, newHeaders);
+        System.Console.WriteLine("{0}: Updated {1} iNES/NES 2.0 headers...", DateTime.UtcNow, updatedHeaders);
+
+        System.Console.WriteLine("{0}: Committing changes...", DateTime.UtcNow);
+        start = DateTime.UtcNow;
+        ctx.SaveChanges();
+        end = DateTime.UtcNow;
+        System.Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
     }
 }
