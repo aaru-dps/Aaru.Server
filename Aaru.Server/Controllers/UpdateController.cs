@@ -105,6 +105,7 @@ public sealed class UpdateController : Controller
                 NametableMirroring     = header.NametableMirroring,
                 Sha256                 = header.Sha256,
                 Submapper              = header.Submapper,
+                TimingMode             = header.TimingMode,
                 VsHardwareType         = header.VsHardwareType,
                 VsPpuType              = header.VsPpuType
             });
