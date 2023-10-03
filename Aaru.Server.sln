@@ -7,6 +7,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aaru.Server", "Aaru.Server\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aaru.Server.Task", "Aaru.Server.Task\Aaru.Server.Task.csproj", "{79D6A54E-47B6-4D0A-ABEB-4FA7B5ADF4B2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution files", "Solution files", "{CF9EB732-03B9-4B3B-B96B-E0E685063700}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		.gitmodules = .gitmodules
+		codealike.json = codealike.json
+		LICENSE = LICENSE
+		LICENSE.LGPL = LICENSE.LGPL
+		LICENSE.MIT = LICENSE.MIT
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
