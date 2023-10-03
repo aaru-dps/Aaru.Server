@@ -1680,7 +1680,7 @@ public static class Ata
                     if(ataIdentify.SATAFeatures.HasFlag(Identify.SATAFeaturesBit.NonZeroBufferOffset))
                     {
                         ataOneValue.Add(ataIdentify.EnabledSATAFeatures.HasFlag(Identify.SATAFeaturesBit.
-                                            NonZeroBufferOffset)
+                                                NonZeroBufferOffset)
                                             ? "Non-zero buffer offsets are supported and enabled"
                                             : "Non-zero buffer offsets are supported");
                     }
@@ -1711,7 +1711,7 @@ public static class Ata
                         if(ataIdentify.SATAFeatures.HasFlag(Identify.SATAFeaturesBit.HardwareFeatureControl))
                         {
                             ataOneValue.Add(ataIdentify.EnabledSATAFeatures.HasFlag(Identify.SATAFeaturesBit.
-                                                HardwareFeatureControl)
+                                                    HardwareFeatureControl)
                                                 ? "Hardware Feature Control is supported and enabled"
                                                 : "Hardware Feature Control is supported");
                         }

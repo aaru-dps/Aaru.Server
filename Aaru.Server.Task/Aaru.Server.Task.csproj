@@ -25,13 +25,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.39" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
-    <PackageReference Include="Unclassified.NetRevisionTask" Version="0.4.2" PrivateAssets="all" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.39"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0"/>
+    <PackageReference Include="Unclassified.NetRevisionTask" Version="0.4.2" PrivateAssets="all"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Aaru.Server\Aaru.Server.csproj" />
+    <ProjectReference Include="..\Aaru.Server\Aaru.Server.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
