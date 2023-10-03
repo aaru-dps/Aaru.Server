@@ -58,7 +58,8 @@ public sealed class UploadReportController : Controller
 
     /// <summary>Receives a report from Aaru.Core, verifies it's in the correct format and stores it on the server</summary>
     /// <returns>HTTP response</returns>
-    [Route("api/uploadreport"), HttpPost]
+    [Route("api/uploadreport")]
+    [HttpPost]
     public async Task<IActionResult> UploadReport()
     {
         var response = new ContentResult
@@ -93,7 +94,7 @@ public sealed class UploadReportController : Controller
                                                                     NullValueHandling = NullValueHandling.Ignore
                                                                 }));
 
-            string reportV2String = jsonSw.ToString();
+            var reportV2String = jsonSw.ToString();
             jsonSw.Close();
 
             var newUploadedReport = new UploadedReport(reportV2);
@@ -108,9 +109,7 @@ public sealed class UploadReportController : Controller
                    newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Heads &&
                    newUploadedReport.ATA.ReadCapabilities.CHS.Sectors ==
                    newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Sectors)
-                {
                     newUploadedReport.ATA.ReadCapabilities.CHS = newUploadedReport.ATA.ReadCapabilities.CurrentCHS;
-                }
             }
 
             // Check if the CHS or CurrentCHS of this report already exist in the database
@@ -148,9 +147,7 @@ public sealed class UploadReportController : Controller
                         if(media.CHS.Cylinders == media.CurrentCHS.Cylinders &&
                            media.CHS.Heads     == media.CurrentCHS.Heads     &&
                            media.CHS.Sectors   == media.CurrentCHS.Sectors)
-                        {
                             media.CHS = media.CurrentCHS;
-                        }
                     }
 
                     if(media.CHS != null)
@@ -199,7 +196,7 @@ public sealed class UploadReportController : Controller
                 }
             };
 
-            message.From.Add(new MailboxAddress("Aaru Server", "aaru@claunia.com"));
+            message.From.Add(new MailboxAddress("Aaru Server",    "aaru@claunia.com"));
             message.To.Add(new MailboxAddress("Natalia Portillo", "claunia@claunia.com"));
 
             using(var client = new SmtpClient())
@@ -229,7 +226,8 @@ public sealed class UploadReportController : Controller
 
     /// <summary>Receives a report from Aaru.Core, verifies it's in the correct format and stores it on the server</summary>
     /// <returns>HTTP response</returns>
-    [Route("api/uploadreportv2"), HttpPost]
+    [Route("api/uploadreportv2")]
+    [HttpPost]
     public async Task<IActionResult> UploadReportV2()
     {
         var response = new ContentResult
@@ -265,9 +263,7 @@ public sealed class UploadReportController : Controller
                    newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Heads &&
                    newUploadedReport.ATA.ReadCapabilities.CHS.Sectors ==
                    newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Sectors)
-                {
                     newUploadedReport.ATA.ReadCapabilities.CHS = newUploadedReport.ATA.ReadCapabilities.CurrentCHS;
-                }
             }
 
             // Check if the CHS or CurrentCHS of this report already exist in the database
@@ -305,9 +301,7 @@ public sealed class UploadReportController : Controller
                         if(media.CHS.Cylinders == media.CurrentCHS.Cylinders &&
                            media.CHS.Heads     == media.CurrentCHS.Heads     &&
                            media.CHS.Sectors   == media.CurrentCHS.Sectors)
-                        {
                             media.CHS = media.CurrentCHS;
-                        }
                     }
 
                     if(media.CHS != null)
@@ -356,7 +350,7 @@ public sealed class UploadReportController : Controller
                 }
             };
 
-            message.From.Add(new MailboxAddress("Aaru Server", "aaru@claunia.com"));
+            message.From.Add(new MailboxAddress("Aaru Server",    "aaru@claunia.com"));
             message.To.Add(new MailboxAddress("Natalia Portillo", "claunia@claunia.com"));
 
             using(var client = new SmtpClient())

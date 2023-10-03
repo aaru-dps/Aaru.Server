@@ -2,7 +2,8 @@ using Aaru.CommonTypes.Metadata;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
-[Area("Admin"), Authorize]
+[Area("Admin")]
+[Authorize]
 public sealed class MmcController : Controller
 {
     readonly AaruServerContext _context;
@@ -28,16 +29,12 @@ public sealed class MmcController : Controller
     public async Task<IActionResult> Details(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         Mmc mmc = await _context.Mmc.FirstOrDefaultAsync(m => m.Id == id);
 
         if(mmc == null)
-        {
             return NotFound();
-        }
 
         return View(mmc);
     }
@@ -46,22 +43,20 @@ public sealed class MmcController : Controller
     public async Task<IActionResult> Delete(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         Mmc mmc = await _context.Mmc.FirstOrDefaultAsync(m => m.Id == id);
 
         if(mmc == null)
-        {
             return NotFound();
-        }
 
         return View(mmc);
     }
 
     // POST: Admin/Mmc/Delete/5
-    [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Delete")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         Mmc         mmc     = await _context.Mmc.FindAsync(id);

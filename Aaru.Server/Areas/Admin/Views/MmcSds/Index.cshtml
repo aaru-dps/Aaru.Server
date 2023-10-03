@@ -1,3 +1,4 @@
+@using Aaru.CommonTypes.Metadata
 @model IEnumerable<Aaru.CommonTypes.Metadata.MmcSd>
 
 @{
@@ -44,7 +45,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach(var item in Model)
+    @foreach(MmcSd item in Model)
     {
         <tr>
             <td>

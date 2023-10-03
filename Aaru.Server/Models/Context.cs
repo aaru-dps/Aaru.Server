@@ -265,7 +265,7 @@ public sealed class AaruServerContext : IdentityDbContext<IdentityUser>
         command.CommandText =
             $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME=\"{tableName}\"";
 
-        long result = (long)command.ExecuteScalar();
+        var result = (long)command.ExecuteScalar();
 
         return result != 0;
     }

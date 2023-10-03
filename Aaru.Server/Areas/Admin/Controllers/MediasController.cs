@@ -1,6 +1,7 @@
 namespace Aaru.Server.Areas.Admin.Controllers;
 
-[Area("Admin"), Authorize]
+[Area("Admin")]
+[Authorize]
 public sealed class MediasController : Controller
 {
     readonly AaruServerContext _context;
@@ -25,22 +26,20 @@ public sealed class MediasController : Controller
     public async Task<IActionResult> Delete(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         Media media = await _context.Medias.FirstOrDefaultAsync(m => m.Id == id);
 
         if(media == null)
-        {
             return NotFound();
-        }
 
         return View(media);
     }
 
     // POST: Admin/Medias/Delete/5
-    [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Delete")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         Media media = await _context.Medias.FindAsync(id);

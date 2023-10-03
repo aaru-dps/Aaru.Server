@@ -24,25 +24,25 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aaru.CommonTypes" Version="6.0.0-alpha8" />
-    <PackageReference Include="Aaru.Decoders" Version="6.0.0-alpha8" />
-    <PackageReference Include="Aaru.Dto" Version="6.0.0-alpha8" />
-    <PackageReference Include="Aaru.Helpers" Version="6.0.0-alpha8" />
-    <PackageReference Include="ChoPGP" Version="1.0.1.5" />
-    <PackageReference Include="MailKit" Version="2.15.0" />
-    <PackageReference Include="Markdig" Version="0.26.0" />
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.19.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.0" />
-    <PackageReference Include="MimeKit" Version="2.15.1" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.0" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design" Version="1.1.2" />
-    <PackageReference Include="prometheus-net.AspNetCore" Version="5.0.2" />
-    <PackageReference Include="Unclassified.NetRevisionTask" Version="0.4.2" PrivateAssets="all" />
+    <PackageReference Include="Aaru.CommonTypes" Version="6.0.0-alpha8"/>
+    <PackageReference Include="Aaru.Decoders" Version="6.0.0-alpha8"/>
+    <PackageReference Include="Aaru.Dto" Version="6.0.0-alpha8"/>
+    <PackageReference Include="Aaru.Helpers" Version="6.0.0-alpha8"/>
+    <PackageReference Include="ChoPGP" Version="1.0.1.5"/>
+    <PackageReference Include="MailKit" Version="2.15.0"/>
+    <PackageReference Include="Markdig" Version="0.26.0"/>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.19.0"/>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.0"/>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.0"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.0"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0"/>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.0"/>
+    <PackageReference Include="MimeKit" Version="2.15.1"/>
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.0"/>
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design" Version="1.1.2"/>
+    <PackageReference Include="prometheus-net.AspNetCore" Version="5.0.2"/>
+    <PackageReference Include="Unclassified.NetRevisionTask" Version="0.4.2" PrivateAssets="all"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -76,60 +76,60 @@
     <None Update="aaru-server.service">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwroot\favicon.ico" />
-    <None Include="wwwroot\fonts\.htaccess" />
-    <None Include="wwwroot\fonts\ChicagoFLF.eot" />
-    <None Include="wwwroot\fonts\ChicagoFLF.ttf" />
-    <None Include="wwwroot\fonts\ChicagoFLF.woff" />
-    <None Include="wwwroot\fonts\ChicagoFLF.woff2" />
-    <None Include="wwwroot\fonts\Topaz_a500_v1.0.eot" />
-    <None Include="wwwroot\fonts\Topaz_a500_v1.0.ttf" />
-    <None Include="wwwroot\fonts\Topaz_a500_v1.0.woff" />
-    <None Include="wwwroot\fonts\Topaz_a500_v1.0.woff2" />
-    <None Include="wwwroot\fonts\vga_squarepx.eot" />
-    <None Include="wwwroot\fonts\vga_squarepx.ttf" />
-    <None Include="wwwroot\fonts\vga_squarepx.woff" />
-    <None Include="wwwroot\fonts\vga_squarepx.woff2" />
-    <None Include="wwwroot\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
-    <None Include="wwwroot\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
-    <None Include="wwwroot\jquery-validation-unobtrusive\LICENSE.txt" />
-    <None Include="wwwroot\jquery-validation\dist\additional-methods.js" />
-    <None Include="wwwroot\jquery-validation\dist\additional-methods.min.js" />
-    <None Include="wwwroot\jquery-validation\dist\jquery.validate.js" />
-    <None Include="wwwroot\jquery-validation\dist\jquery.validate.min.js" />
-    <None Include="wwwroot\jquery-validation\LICENSE.md" />
+    <None Include="wwwroot\favicon.ico"/>
+    <None Include="wwwroot\fonts\.htaccess"/>
+    <None Include="wwwroot\fonts\ChicagoFLF.eot"/>
+    <None Include="wwwroot\fonts\ChicagoFLF.ttf"/>
+    <None Include="wwwroot\fonts\ChicagoFLF.woff"/>
+    <None Include="wwwroot\fonts\ChicagoFLF.woff2"/>
+    <None Include="wwwroot\fonts\Topaz_a500_v1.0.eot"/>
+    <None Include="wwwroot\fonts\Topaz_a500_v1.0.ttf"/>
+    <None Include="wwwroot\fonts\Topaz_a500_v1.0.woff"/>
+    <None Include="wwwroot\fonts\Topaz_a500_v1.0.woff2"/>
+    <None Include="wwwroot\fonts\vga_squarepx.eot"/>
+    <None Include="wwwroot\fonts\vga_squarepx.ttf"/>
+    <None Include="wwwroot\fonts\vga_squarepx.woff"/>
+    <None Include="wwwroot\fonts\vga_squarepx.woff2"/>
+    <None Include="wwwroot\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js"/>
+    <None Include="wwwroot\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js"/>
+    <None Include="wwwroot\jquery-validation-unobtrusive\LICENSE.txt"/>
+    <None Include="wwwroot\jquery-validation\dist\additional-methods.js"/>
+    <None Include="wwwroot\jquery-validation\dist\additional-methods.min.js"/>
+    <None Include="wwwroot\jquery-validation\dist\jquery.validate.js"/>
+    <None Include="wwwroot\jquery-validation\dist\jquery.validate.min.js"/>
+    <None Include="wwwroot\jquery-validation\LICENSE.md"/>
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="wwwroot\js\site.js" />
-    <_ContentIncludedByDefault Remove="wwwroot\css\js\colors\dos.js" />
-    <_ContentIncludedByDefault Remove="wwwroot\css\js\colors\mac.js" />
-    <_ContentIncludedByDefault Remove="Areas\Admin\Shared\Error.cshtml" />
-    <_ContentIncludedByDefault Remove="Areas\Admin\Shared\_CookieConsentPartial.cshtml" />
-    <_ContentIncludedByDefault Remove="Areas\Admin\Shared\_Layout.cshtml" />
-    <_ContentIncludedByDefault Remove="Areas\Admin\Shared\_LoginPartial.cshtml" />
-    <_ContentIncludedByDefault Remove="Areas\Admin\Shared\_ValidationScriptsPartial.cshtml" />
-    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Device\Create.cshtml" />
-    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Device\Delete.cshtml" />
-    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Device\Details.cshtml" />
-    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Device\Edit.cshtml" />
-    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Device\Index.cshtml" />
-    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Atas\EditorTemplates\IdHashModel.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Home\Changelog.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Home\CODE_OF_CONDUCT.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Home\CONTRIBUTING.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Home\ISSUE_TEMPLATE.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Home\NEEDED.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Home\NEEDINFO.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Home\PULL_REQUEST_TEMPLATE.cshtml" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\site.js"/>
+    <_ContentIncludedByDefault Remove="wwwroot\css\js\colors\dos.js"/>
+    <_ContentIncludedByDefault Remove="wwwroot\css\js\colors\mac.js"/>
+    <_ContentIncludedByDefault Remove="Areas\Admin\Shared\Error.cshtml"/>
+    <_ContentIncludedByDefault Remove="Areas\Admin\Shared\_CookieConsentPartial.cshtml"/>
+    <_ContentIncludedByDefault Remove="Areas\Admin\Shared\_Layout.cshtml"/>
+    <_ContentIncludedByDefault Remove="Areas\Admin\Shared\_LoginPartial.cshtml"/>
+    <_ContentIncludedByDefault Remove="Areas\Admin\Shared\_ValidationScriptsPartial.cshtml"/>
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Device\Create.cshtml"/>
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Device\Delete.cshtml"/>
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Device\Details.cshtml"/>
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Device\Edit.cshtml"/>
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Device\Index.cshtml"/>
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Atas\EditorTemplates\IdHashModel.cshtml"/>
+    <_ContentIncludedByDefault Remove="Views\Home\Changelog.cshtml"/>
+    <_ContentIncludedByDefault Remove="Views\Home\CODE_OF_CONDUCT.cshtml"/>
+    <_ContentIncludedByDefault Remove="Views\Home\CONTRIBUTING.cshtml"/>
+    <_ContentIncludedByDefault Remove="Views\Home\ISSUE_TEMPLATE.cshtml"/>
+    <_ContentIncludedByDefault Remove="Views\Home\NEEDED.cshtml"/>
+    <_ContentIncludedByDefault Remove="Views\Home\NEEDINFO.cshtml"/>
+    <_ContentIncludedByDefault Remove="Views\Home\PULL_REQUEST_TEMPLATE.cshtml"/>
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Areas\Admin\Shared\Error.cshtml" />
-    <UpToDateCheckInput Remove="Areas\Admin\Shared\_CookieConsentPartial.cshtml" />
-    <UpToDateCheckInput Remove="Areas\Admin\Shared\_Layout.cshtml" />
-    <UpToDateCheckInput Remove="Areas\Admin\Shared\_LoginPartial.cshtml" />
-    <UpToDateCheckInput Remove="Areas\Admin\Shared\_ValidationScriptsPartial.cshtml" />
+    <UpToDateCheckInput Remove="Areas\Admin\Shared\Error.cshtml"/>
+    <UpToDateCheckInput Remove="Areas\Admin\Shared\_CookieConsentPartial.cshtml"/>
+    <UpToDateCheckInput Remove="Areas\Admin\Shared\_Layout.cshtml"/>
+    <UpToDateCheckInput Remove="Areas\Admin\Shared\_LoginPartial.cshtml"/>
+    <UpToDateCheckInput Remove="Areas\Admin\Shared\_ValidationScriptsPartial.cshtml"/>
   </ItemGroup>
 
   <ItemGroup>

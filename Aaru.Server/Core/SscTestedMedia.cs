@@ -51,13 +51,9 @@ public static class SscTestedMedia
                     mediaOneValue.Add($"Medium type code: {media.MediumType:X2}h");
             }
             else if(media.MediumType.HasValue)
-            {
                 mediaOneValue.Add($"<i>Information for medium type {media.MediumType:X2}h</i>");
-            }
             else
-            {
                 mediaOneValue.Add("<i>Information for unknown medium type</i>");
-            }
 
             if(!string.IsNullOrWhiteSpace(media.Manufacturer))
                 mediaOneValue.Add($"Medium manufactured by: {media.Manufacturer}");

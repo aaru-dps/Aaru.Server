@@ -47,11 +47,13 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "fs-info");
 
             if(existing == null)
+            {
                 ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.Analyze,
                     Name  = "fs-info"
                 });
+            }
             else
                 existing.Count += newStats.Commands.Analyze;
         }
@@ -61,11 +63,13 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "benchmark");
 
             if(existing == null)
+            {
                 ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.Benchmark,
                     Name  = "benchmark"
                 });
+            }
             else
                 existing.Count += newStats.Commands.Benchmark;
         }
@@ -75,11 +79,13 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "checksum");
 
             if(existing == null)
+            {
                 ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.Checksum,
                     Name  = "checksum"
                 });
+            }
             else
                 existing.Count += newStats.Commands.Checksum;
         }
@@ -89,11 +95,13 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "compare");
 
             if(existing == null)
+            {
                 ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.Compare,
                     Name  = "compare"
                 });
+            }
             else
                 existing.Count += newStats.Commands.Compare;
         }
@@ -103,11 +111,13 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "create-sidecar");
 
             if(existing == null)
+            {
                 ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.CreateSidecar,
                     Name  = "create-sidecar"
                 });
+            }
             else
                 existing.Count += newStats.Commands.CreateSidecar;
         }
@@ -117,11 +127,13 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "decode");
 
             if(existing == null)
+            {
                 ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.Decode,
                     Name  = "decode"
                 });
+            }
             else
                 existing.Count += newStats.Commands.Decode;
         }
@@ -131,11 +143,13 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "device-info");
 
             if(existing == null)
+            {
                 ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.DeviceInfo,
                     Name  = "device-info"
                 });
+            }
             else
                 existing.Count += newStats.Commands.DeviceInfo;
         }
@@ -145,11 +159,13 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "device-report");
 
             if(existing == null)
+            {
                 ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.DeviceReport,
                     Name  = "device-report"
                 });
+            }
             else
                 existing.Count += newStats.Commands.DeviceReport;
         }
@@ -159,11 +175,13 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "dump-media");
 
             if(existing == null)
+            {
                 ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.DumpMedia,
                     Name  = "dump-media"
                 });
+            }
             else
                 existing.Count += newStats.Commands.DumpMedia;
         }
@@ -173,11 +191,13 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "entropy");
 
             if(existing == null)
+            {
                 ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.Entropy,
                     Name  = "entropy"
                 });
+            }
             else
                 existing.Count += newStats.Commands.Entropy;
         }
@@ -187,11 +207,13 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "formats");
 
             if(existing == null)
+            {
                 ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.Formats,
                     Name  = "formats"
                 });
+            }
             else
                 existing.Count += newStats.Commands.Formats;
         }
@@ -201,11 +223,13 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "media-info");
 
             if(existing == null)
+            {
                 ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.MediaInfo,
                     Name  = "media-info"
                 });
+            }
             else
                 existing.Count += newStats.Commands.MediaInfo;
         }
@@ -215,11 +239,13 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "media-scan");
 
             if(existing == null)
+            {
                 ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.MediaScan,
                     Name  = "media-scan"
                 });
+            }
             else
                 existing.Count += newStats.Commands.MediaScan;
         }
@@ -229,11 +255,13 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "printhex");
 
             if(existing == null)
+            {
                 ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.PrintHex,
                     Name  = "printhex"
                 });
+            }
             else
                 existing.Count += newStats.Commands.PrintHex;
         }
@@ -243,11 +271,13 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "verify");
 
             if(existing == null)
+            {
                 ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.Verify,
                     Name  = "verify"
                 });
+            }
             else
                 existing.Count += newStats.Commands.Verify;
         }
@@ -257,11 +287,13 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "ls");
 
             if(existing == null)
+            {
                 ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.Ls,
                     Name  = "ls"
                 });
+            }
             else
                 existing.Count += newStats.Commands.Ls;
         }
@@ -271,11 +303,13 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "extract-files");
 
             if(existing == null)
+            {
                 ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.ExtractFiles,
                     Name  = "extract-files"
                 });
+            }
             else
                 existing.Count += newStats.Commands.ExtractFiles;
         }
@@ -285,11 +319,13 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "list-devices");
 
             if(existing == null)
+            {
                 ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.ListDevices,
                     Name  = "list-devices"
                 });
+            }
             else
                 existing.Count += newStats.Commands.ListDevices;
         }
@@ -299,11 +335,13 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "list-encodings");
 
             if(existing == null)
+            {
                 ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.ListEncodings,
                     Name  = "list-encodings"
                 });
+            }
             else
                 existing.Count += newStats.Commands.ListEncodings;
         }
@@ -313,11 +351,13 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "convert-image");
 
             if(existing == null)
+            {
                 ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.ConvertImage,
                     Name  = "convert-image"
                 });
+            }
             else
                 existing.Count += newStats.Commands.ConvertImage;
         }
@@ -327,11 +367,13 @@ public static class StatsConverter
             Command existing = ctx.Commands.FirstOrDefault(c => c.Name == "image-info");
 
             if(existing == null)
+            {
                 ctx.Commands.Add(new Command
                 {
                     Count = newStats.Commands.ImageInfo,
                     Name  = "image-info"
                 });
+            }
             else
                 existing.Count += newStats.Commands.ImageInfo;
         }
@@ -349,12 +391,14 @@ public static class StatsConverter
                                                              c.Version == operatingSystem.version);
 
                 if(existing == null)
+                {
                     ctx.OperatingSystems.Add(new OperatingSystem
                     {
                         Count   = operatingSystem.Value,
                         Name    = operatingSystem.name,
                         Version = operatingSystem.version
                     });
+                }
                 else
                     existing.Count += operatingSystem.Value;
             }
@@ -364,11 +408,13 @@ public static class StatsConverter
             OperatingSystem existing = ctx.OperatingSystems.FirstOrDefault(c => c.Name == "Linux" && c.Version == null);
 
             if(existing == null)
+            {
                 ctx.OperatingSystems.Add(new OperatingSystem
                 {
                     Count = 1,
                     Name  = "Linux"
                 });
+            }
             else
                 existing.Count++;
         }
@@ -383,11 +429,13 @@ public static class StatsConverter
                 Version existing = ctx.Versions.FirstOrDefault(c => c.Name == nvs.name);
 
                 if(existing == null)
+                {
                     ctx.Versions.Add(new Version
                     {
                         Count = nvs.Value,
                         Name  = nvs.name
                     });
+                }
                 else
                     existing.Count += nvs.Value;
             }
@@ -397,16 +445,19 @@ public static class StatsConverter
             Version existing = ctx.Versions.FirstOrDefault(c => c.Name == "previous");
 
             if(existing == null)
+            {
                 ctx.Versions.Add(new Version
                 {
                     Count = 1,
                     Name  = "previous"
                 });
+            }
             else
                 existing.Count++;
         }
 
         if(newStats.Filesystems != null)
+        {
             foreach(NameValueStats nvs in newStats.Filesystems)
             {
                 if(string.IsNullOrWhiteSpace(nvs.name))
@@ -415,16 +466,20 @@ public static class StatsConverter
                 Filesystem existing = ctx.Filesystems.FirstOrDefault(c => c.Name == nvs.name);
 
                 if(existing == null)
+                {
                     ctx.Filesystems.Add(new Filesystem
                     {
                         Count = nvs.Value,
                         Name  = nvs.name
                     });
+                }
                 else
                     existing.Count += nvs.Value;
             }
+        }
 
         if(newStats.Partitions != null)
+        {
             foreach(NameValueStats nvs in newStats.Partitions)
             {
                 if(string.IsNullOrWhiteSpace(nvs.name))
@@ -433,16 +488,20 @@ public static class StatsConverter
                 Partition existing = ctx.Partitions.FirstOrDefault(c => c.Name == nvs.name);
 
                 if(existing == null)
+                {
                     ctx.Partitions.Add(new Partition
                     {
                         Count = nvs.Value,
                         Name  = nvs.name
                     });
+                }
                 else
                     existing.Count += nvs.Value;
             }
+        }
 
         if(newStats.MediaImages != null)
+        {
             foreach(NameValueStats nvs in newStats.MediaImages)
             {
                 if(string.IsNullOrWhiteSpace(nvs.name))
@@ -451,16 +510,20 @@ public static class StatsConverter
                 MediaFormat existing = ctx.MediaFormats.FirstOrDefault(c => c.Name == nvs.name);
 
                 if(existing == null)
+                {
                     ctx.MediaFormats.Add(new MediaFormat
                     {
                         Count = nvs.Value,
                         Name  = nvs.name
                     });
+                }
                 else
                     existing.Count += nvs.Value;
             }
+        }
 
         if(newStats.Filters != null)
+        {
             foreach(NameValueStats nvs in newStats.Filters)
             {
                 if(string.IsNullOrWhiteSpace(nvs.name))
@@ -469,21 +532,25 @@ public static class StatsConverter
                 Filter existing = ctx.Filters.FirstOrDefault(c => c.Name == nvs.name);
 
                 if(existing == null)
+                {
                     ctx.Filters.Add(new Filter
                     {
                         Count = nvs.Value,
                         Name  = nvs.name
                     });
+                }
                 else
                     existing.Count += nvs.Value;
             }
+        }
 
         if(newStats.Devices != null)
+        {
             foreach(DeviceStats device in newStats.Devices.Where(device => !string.IsNullOrWhiteSpace(device.Model)).
                                                    Where(device => !ctx.DeviceStats.Any(c => c.Bus == device.Bus &&
-                                                                       c.Manufacturer == device.Manufacturer &&
-                                                                       c.Model == device.Model &&
-                                                                       c.Revision == device.Revision)))
+                                                                           c.Manufacturer == device.Manufacturer &&
+                                                                           c.Model == device.Model &&
+                                                                           c.Revision == device.Revision)))
             {
                 ctx.DeviceStats.Add(new DeviceStat
                 {
@@ -493,8 +560,10 @@ public static class StatsConverter
                     Revision     = device.Revision
                 });
             }
+        }
 
         if(newStats.Medias != null)
+        {
             foreach(MediaStats media in newStats.Medias)
             {
                 if(string.IsNullOrWhiteSpace(media.type))
@@ -503,15 +572,18 @@ public static class StatsConverter
                 Media existing = ctx.Medias.FirstOrDefault(c => c.Type == media.type && c.Real == media.real);
 
                 if(existing == null)
+                {
                     ctx.Medias.Add(new Media
                     {
                         Count = media.Value,
                         Real  = media.real,
                         Type  = media.type
                     });
+                }
                 else
                     existing.Count += media.Value;
             }
+        }
 
         ctx.SaveChanges();
     }

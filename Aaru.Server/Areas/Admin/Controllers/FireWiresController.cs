@@ -3,7 +3,8 @@ using Newtonsoft.Json;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
-[Area("Admin"), Authorize]
+[Area("Admin")]
+[Authorize]
 public sealed class FireWiresController : Controller
 {
     readonly AaruServerContext _context;
@@ -18,16 +19,12 @@ public sealed class FireWiresController : Controller
     public async Task<IActionResult> Edit(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         FireWire fireWire = await _context.FireWire.FindAsync(id);
 
         if(fireWire == null)
-        {
             return NotFound();
-        }
 
         return View(fireWire);
     }
@@ -35,7 +32,8 @@ public sealed class FireWiresController : Controller
     // POST: Admin/FireWires/Edit/5
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost, ValidateAntiForgeryToken]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(
         int id, [Bind("Id,VendorID,ProductID,Manufacturer,Product,RemovableMedia")] FireWire changedModel)
     {
@@ -73,22 +71,20 @@ public sealed class FireWiresController : Controller
     public async Task<IActionResult> Delete(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         FireWire fireWire = await _context.FireWire.FirstOrDefaultAsync(m => m.Id == id);
 
         if(fireWire == null)
-        {
             return NotFound();
-        }
 
         return View(fireWire);
     }
 
     // POST: Admin/FireWires/Delete/5
-    [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Delete")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         FireWire fireWire = await _context.FireWire.FindAsync(id);
@@ -102,7 +98,7 @@ public sealed class FireWiresController : Controller
 
     public IActionResult Consolidate()
     {
-        List<FireWireModel> dups = _context.FireWire.GroupBy(x => new
+        var dups = _context.FireWire.GroupBy(x => new
         {
             x.VendorID,
             x.ProductID,
@@ -125,7 +121,9 @@ public sealed class FireWiresController : Controller
         });
     }
 
-    [HttpPost, ActionName("Consolidate"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Consolidate")]
+    [ValidateAntiForgeryToken]
     public IActionResult ConsolidateConfirmed(string models)
     {
         FireWireModel[] duplicates;
@@ -161,14 +159,10 @@ public sealed class FireWiresController : Controller
                                                   Skip(1).ToArray())
             {
                 foreach(Device device in _context.Devices.Where(d => d.FireWire.Id == firewire.Id))
-                {
                     device.FireWire = master;
-                }
 
                 foreach(UploadedReport report in _context.Reports.Where(d => d.FireWire.Id == firewire.Id))
-                {
                     report.FireWire = master;
-                }
 
                 _context.FireWire.Remove(firewire);
             }

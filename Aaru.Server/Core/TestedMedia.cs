@@ -49,15 +49,12 @@ public static class TestedMedia
                     mediaOneValue.Add($"Medium type code: {testedMedia.MediumType:X2}h");
             }
             else if(testedMedia.MediumType != null)
-            {
                 mediaOneValue.Add($"<i>Information for medium type {testedMedia.MediumType:X2}h</i>");
-            }
             else
-            {
                 mediaOneValue.Add("<i>Information for unknown medium type</i>");
-            }
 
-            mediaOneValue.Add(testedMedia.MediaIsRecognized ? "Drive recognizes this medium."
+            mediaOneValue.Add(testedMedia.MediaIsRecognized
+                                  ? "Drive recognizes this medium."
                                   : "Drive does not recognize this medium.");
 
             if(!string.IsNullOrWhiteSpace(testedMedia.Manufacturer))
@@ -84,14 +81,23 @@ public static class TestedMedia
                 mediaOneValue.Add($"Medium has {testedMedia.Blocks} blocks of {testedMedia.BlockSize} bytes each");
 
                 if(testedMedia.Blocks * testedMedia.BlockSize / 1024 / 1024 > 1000000)
+                {
                     mediaOneValue.
-                        Add($"Medium size: {testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                        Add(
+                            $"Medium size: {testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                }
                 else if(testedMedia.Blocks * testedMedia.BlockSize / 1024 / 1024 > 1000)
+                {
                     mediaOneValue.
-                        Add($"Medium size: {testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
+                        Add(
+                            $"Medium size: {testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
+                }
                 else
+                {
                     mediaOneValue.
-                        Add($"Medium size: {testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+                        Add(
+                            $"Medium size: {testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+                }
             }
 
             if(testedMedia.CHS        != null &&
@@ -109,10 +115,12 @@ public static class TestedMedia
                     Add($"Sectors per track: {testedMedia.CHS.Sectors} max., {testedMedia.CurrentCHS.Sectors} current");
 
                 mediaOneValue.
-                    Add($"Sectors addressable in CHS mode: {testedMedia.CHS.Cylinders * testedMedia.CHS.Heads * testedMedia.CHS.Sectors} max., {currentSectors} current");
+                    Add(
+                        $"Sectors addressable in CHS mode: {testedMedia.CHS.Cylinders * testedMedia.CHS.Heads * testedMedia.CHS.Sectors} max., {currentSectors} current");
 
                 mediaOneValue.
-                    Add($"Medium size in CHS mode: {(ulong)currentSectors * testedMedia.BlockSize} bytes, {(ulong)currentSectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)((ulong)currentSectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+                    Add(
+                        $"Medium size in CHS mode: {(ulong)currentSectors * testedMedia.BlockSize} bytes, {(ulong)currentSectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)((ulong)currentSectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
             }
             else if(testedMedia.CHS != null)
             {
@@ -123,7 +131,8 @@ public static class TestedMedia
                 mediaOneValue.Add($"Sectors addressable in CHS mode: {currentSectors}");
 
                 mediaOneValue.
-                    Add($"Medium size in CHS mode: {(ulong)currentSectors * testedMedia.BlockSize} bytes, {(ulong)currentSectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)((ulong)currentSectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+                    Add(
+                        $"Medium size in CHS mode: {(ulong)currentSectors * testedMedia.BlockSize} bytes, {(ulong)currentSectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)((ulong)currentSectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
             }
 
             if(testedMedia.LBASectors != null)
@@ -131,14 +140,23 @@ public static class TestedMedia
                 mediaOneValue.Add($"Sectors addressable in sectors in 28-bit LBA mode: {testedMedia.LBASectors}");
 
                 if((ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1024 / 1024 > 1000000)
+                {
                     mediaOneValue.
-                        Add($"Medium size in 28-bit LBA mode: {(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                        Add(
+                            $"Medium size in 28-bit LBA mode: {(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                }
                 else if((ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1024 / 1024 > 1000)
+                {
                     mediaOneValue.
-                        Add($"Medium size in 28-bit LBA mode: {(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
+                        Add(
+                            $"Medium size in 28-bit LBA mode: {(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
+                }
                 else
+                {
                     mediaOneValue.
-                        Add($"Medium size in 28-bit LBA mode: {(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+                        Add(
+                            $"Medium size in 28-bit LBA mode: {(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+                }
             }
 
             if(testedMedia.LBA48Sectors != null)
@@ -146,29 +164,44 @@ public static class TestedMedia
                 mediaOneValue.Add($"Sectors addressable in sectors in 48-bit LBA mode: {testedMedia.LBA48Sectors}");
 
                 if(testedMedia.LBA48Sectors * testedMedia.BlockSize / 1024 / 1024 > 1000000)
+                {
                     mediaOneValue.
-                        Add($"Medium size in 48-bit LBA mode: {testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                        Add(
+                            $"Medium size in 48-bit LBA mode: {testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                }
                 else if(testedMedia.LBA48Sectors * testedMedia.BlockSize / 1024 / 1024 > 1000)
+                {
                     mediaOneValue.
-                        Add($"Medium size in 48-bit LBA mode: {testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
+                        Add(
+                            $"Medium size in 48-bit LBA mode: {testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
+                }
                 else
+                {
                     mediaOneValue.
-                        Add($"Medium size in 48-bit LBA mode: {testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+                        Add(
+                            $"Medium size in 48-bit LBA mode: {testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+                }
             }
 
             if(testedMedia.NominalRotationRate != null   &&
                testedMedia.NominalRotationRate != 0x0000 &&
                testedMedia.NominalRotationRate != 0xFFFF)
-                mediaOneValue.Add(testedMedia.NominalRotationRate == 0x0001 ? "Medium does not rotate."
+            {
+                mediaOneValue.Add(testedMedia.NominalRotationRate == 0x0001
+                                      ? "Medium does not rotate."
                                       : $"Medium rotates at {testedMedia.NominalRotationRate} rpm");
+            }
 
             if(testedMedia.BlockSize                   != null                                &&
                testedMedia.PhysicalBlockSize           != null                                &&
                testedMedia.BlockSize.Value             != testedMedia.PhysicalBlockSize.Value &&
                (testedMedia.LogicalAlignment & 0x8000) == 0x0000                              &&
                (testedMedia.LogicalAlignment & 0x4000) == 0x4000)
+            {
                 mediaOneValue.
-                    Add($"Logical sector starts at offset {testedMedia.LogicalAlignment & 0x3FFF} from physical sector");
+                    Add(
+                        $"Logical sector starts at offset {testedMedia.LogicalAlignment & 0x3FFF} from physical sector");
+            }
 
             if(testedMedia.SupportsReadSectors == true)
                 mediaOneValue.Add("Device can use the READ SECTOR(S) command in CHS mode with this medium");
@@ -192,8 +225,10 @@ public static class TestedMedia
                 mediaOneValue.Add("Device can use the READ SECTOR(S) command in 28-bit LBA mode with this medium");
 
             if(testedMedia.SupportsReadRetryLba == true)
+            {
                 mediaOneValue.
                     Add("Device can use the READ SECTOR(S) RETRY command in 28-bit LBA mode with this medium");
+            }
 
             if(testedMedia.SupportsReadDmaLba == true)
                 mediaOneValue.Add("Device can use the READ DMA command in 28-bit LBA mode with this medium");
@@ -250,12 +285,16 @@ public static class TestedMedia
                 mediaOneValue.Add("Device can use the READ CD command with MM:SS:FF addressing with this medium");
 
             if(testedMedia.SupportsReadCdRaw == true)
+            {
                 mediaOneValue.
                     Add("Device can use the READ CD command with LBA addressing with this medium to read raw sector");
+            }
 
             if(testedMedia.SupportsReadCdMsfRaw == true)
+            {
                 mediaOneValue.
                     Add("Device can use the READ CD command with MM:SS:FF addressing with this medium read raw sector");
+            }
 
             if(testedMedia.SupportsHLDTSTReadRawDVD == true)
                 mediaOneValue.Add("Device can use the HL-DT-ST vendor READ DVD (RAW) command with this medium");
@@ -297,8 +336,10 @@ public static class TestedMedia
                 mediaOneValue.Add("Device can correct subchannels when reading from this medium");
 
             if(testedMedia.CanReadCorrectedSubchannelWithC2 == true)
+            {
                 mediaOneValue.
                     Add("Device can correct subchannels and report the C2 pointers when reading from this medium");
+            }
 
             if(testedMedia.CanReadDCB == true)
                 mediaOneValue.Add("Device can read the Disc Control Blocks from this medium");

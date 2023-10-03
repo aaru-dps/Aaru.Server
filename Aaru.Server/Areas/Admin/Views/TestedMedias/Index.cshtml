@@ -1,3 +1,4 @@
+@using Aaru.CommonTypes.Metadata
 @model IEnumerable<Aaru.CommonTypes.Metadata.TestedMedia>
 
 @{
@@ -62,7 +63,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach(var item in Model)
+    @foreach(TestedMedia item in Model)
     {
         <tr>
             <td>

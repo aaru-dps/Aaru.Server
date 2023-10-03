@@ -1,3 +1,4 @@
+@using Aaru.CommonTypes.Metadata
 @model IEnumerable<Aaru.CommonTypes.Metadata.ScsiPage>
 
 @{
@@ -47,7 +48,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach(var item in Model)
+    @foreach(ScsiPage item in Model)
     {
         <tr>
             <td>

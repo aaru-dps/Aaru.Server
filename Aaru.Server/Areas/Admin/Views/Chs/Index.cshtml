@@ -1,3 +1,4 @@
+@using Aaru.CommonTypes.Metadata
 @model IEnumerable<Aaru.CommonTypes.Metadata.Chs>
 
 @{
@@ -51,7 +52,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach(var item in Model)
+    @foreach(Chs item in Model)
     {
         <tr>
             <td>

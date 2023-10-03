@@ -50,7 +50,7 @@ public class Media : BaseModel<int>
     {
         get
         {
-            if(_mediaType != default)
+            if(_mediaType != default((string type, string subType)))
                 return _mediaType;
 
             try
@@ -69,8 +69,11 @@ public class Media : BaseModel<int>
         }
     }
 
-    [NotMapped, DisplayName("Physical type")]
+    [NotMapped]
+    [DisplayName("Physical type")]
     public string PhysicalType => MediaType.type;
-    [NotMapped, DisplayName("Logical type")]
+
+    [NotMapped]
+    [DisplayName("Logical type")]
     public string LogicalType => MediaType.subType;
 }

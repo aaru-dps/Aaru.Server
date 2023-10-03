@@ -47,7 +47,8 @@ public sealed class UpdateController : Controller
 
     /// <summary>Receives a report from Aaru.Core, verifies it's in the correct format and stores it on the server</summary>
     /// <returns>HTTP response</returns>
-    [Route("api/update"), HttpGet]
+    [Route("api/update")]
+    [HttpGet]
     public ActionResult Update(long timestamp)
     {
         var      sync     = new SyncDto();
@@ -56,15 +57,18 @@ public sealed class UpdateController : Controller
         sync.UsbVendors = new List<UsbVendorDto>();
 
         foreach(UsbVendor vendor in _ctx.UsbVendors.Where(v => v.ModifiedWhen > lastSync))
+        {
             sync.UsbVendors.Add(new UsbVendorDto
             {
                 VendorId = vendor.VendorId,
                 Vendor   = vendor.Vendor
             });
+        }
 
         sync.UsbProducts = new List<UsbProductDto>();
 
         foreach(UsbProduct product in _ctx.UsbProducts.Include(p => p.Vendor).Where(p => p.ModifiedWhen > lastSync))
+        {
             sync.UsbProducts.Add(new UsbProductDto
             {
                 Id        = product.Id,
@@ -72,6 +76,7 @@ public sealed class UpdateController : Controller
                 ProductId = product.ProductId,
                 VendorId  = product.Vendor.VendorId
             });
+        }
 
         sync.Offsets = new List<CdOffsetDto>();
 
@@ -81,18 +86,21 @@ public sealed class UpdateController : Controller
         sync.Devices = new List<DeviceDto>();
 
         foreach(Device device in _ctx.Devices.Where(d => d.ModifiedWhen > lastSync).ToList())
+        {
             sync.Devices.Add(new DeviceDto(JsonConvert.
                                                DeserializeObject<DeviceReportV2>(JsonConvert.SerializeObject(device,
-                                                   Formatting.None, new JsonSerializerSettings
-                                                   {
-                                                       ReferenceLoopHandling =
-                                                           ReferenceLoopHandling.Ignore
-                                                   })), device.Id, device.OptimalMultipleSectorsRead,
+                                                       Formatting.None, new JsonSerializerSettings
+                                                       {
+                                                           ReferenceLoopHandling =
+                                                               ReferenceLoopHandling.Ignore
+                                                       })), device.Id, device.OptimalMultipleSectorsRead,
                                            device.CanReadGdRomUsingSwapDisc));
+        }
 
         sync.NesHeaders = new List<NesHeaderDto>();
 
         foreach(NesHeaderInfo header in _ctx.NesHeaders.Where(v => v.ModifiedWhen > lastSync))
+        {
             sync.NesHeaders.Add(new NesHeaderDto
             {
                 Id                     = header.Id,
@@ -109,6 +117,7 @@ public sealed class UpdateController : Controller
                 VsHardwareType         = header.VsHardwareType,
                 VsPpuType              = header.VsPpuType
             });
+        }
 
         var js = JsonSerializer.Create();
         var sw = new StringWriter();

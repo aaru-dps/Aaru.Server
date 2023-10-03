@@ -1,6 +1,7 @@
 namespace Aaru.Server.Areas.Admin.Controllers;
 
-[Area("Admin"), Authorize]
+[Area("Admin")]
+[Authorize]
 public sealed class UsbVendorsController : Controller
 {
     readonly AaruServerContext _context;
@@ -15,16 +16,12 @@ public sealed class UsbVendorsController : Controller
     public async Task<IActionResult> Details(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         UsbVendor usbVendor = await _context.UsbVendors.FirstOrDefaultAsync(m => m.Id == id);
 
         if(usbVendor == null)
-        {
             return NotFound();
-        }
 
         return View(new UsbVendorModel
         {

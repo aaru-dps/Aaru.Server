@@ -6,7 +6,8 @@ using Aaru.Helpers;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
-[Area("Admin"), Authorize]
+[Area("Admin")]
+[Authorize]
 public sealed class GdRomSwapDiscCapabilitiesController : Controller
 {
     readonly AaruServerContext _context;
@@ -17,16 +18,12 @@ public sealed class GdRomSwapDiscCapabilitiesController : Controller
     public async Task<IActionResult> Details(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         GdRomSwapDiscCapabilities caps = await _context.GdRomSwapDiscCapabilities.FirstOrDefaultAsync(m => m.Id == id);
 
         if(caps == null)
-        {
             return NotFound();
-        }
 
         return View(caps);
     }
@@ -35,22 +32,20 @@ public sealed class GdRomSwapDiscCapabilitiesController : Controller
     public async Task<IActionResult> Delete(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         GdRomSwapDiscCapabilities caps = await _context.GdRomSwapDiscCapabilities.FirstOrDefaultAsync(m => m.Id == id);
 
         if(caps == null)
-        {
             return NotFound();
-        }
 
         return View(caps);
     }
 
     // POST: Admin/GdRomSwapDiscCapabilities/Delete/5
-    [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Delete")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         GdRomSwapDiscCapabilities caps = await _context.GdRomSwapDiscCapabilities.FindAsync(id);
@@ -68,9 +63,7 @@ public sealed class GdRomSwapDiscCapabilitiesController : Controller
         GdRomSwapDiscCapabilities caps = _context.GdRomSwapDiscCapabilities.FirstOrDefault(m => m.Id == id);
 
         if(caps == null)
-        {
             return NotFound();
-        }
 
         var model = new TestedMediaDataModel
         {
@@ -80,13 +73,13 @@ public sealed class GdRomSwapDiscCapabilitiesController : Controller
 
         byte[] buffer;
         var    sb      = new StringBuilder();
-        byte[] sector  = new byte[2352];
-        byte[] subq    = new byte[16];
-        byte[] fullsub = new byte[96];
+        var    sector  = new byte[2352];
+        var    subq    = new byte[16];
+        var    fullsub = new byte[96];
 
-        bool audio = true;
-        bool pq    = false;
-        bool rw    = false;
+        var audio = true;
+        var pq    = false;
+        var rw    = false;
 
         switch(data)
         {
@@ -285,7 +278,8 @@ public sealed class GdRomSwapDiscCapabilitiesController : Controller
                 rw     = true;
 
                 break;
-            default: return NotFound();
+            default:
+                return NotFound();
         }
 
         if(pq                           &&
@@ -312,12 +306,10 @@ public sealed class GdRomSwapDiscCapabilitiesController : Controller
         if(buffer == null)
             return View(model);
 
-        for(int i = 0; i < buffer.Length; i += blockSize)
+        for(var i = 0; i < buffer.Length; i += blockSize)
         {
             if(audio)
-            {
                 sb.AppendLine("Audio or scrambled data sector.");
-            }
             else
             {
                 Array.Copy(buffer, i, sector, 0, 2352);
@@ -351,10 +343,10 @@ public sealed class GdRomSwapDiscCapabilitiesController : Controller
     {
         byte[] deint = Subchannel.Deinterleave(sub);
 
-        bool validP  = true;
-        bool validRw = true;
+        var validP  = true;
+        var validRw = true;
 
-        for(int i = 0; i < 12; i++)
+        for(var i = 0; i < 12; i++)
         {
             if(deint[i] == 0x00 ||
                deint[i] == 0xFF)
@@ -365,7 +357,7 @@ public sealed class GdRomSwapDiscCapabilitiesController : Controller
             break;
         }
 
-        for(int i = 24; i < 96; i++)
+        for(var i = 24; i < 96; i++)
         {
             if(deint[i] == 0x00)
                 continue;
@@ -375,7 +367,7 @@ public sealed class GdRomSwapDiscCapabilitiesController : Controller
             break;
         }
 
-        byte[] q = new byte[12];
+        var q = new byte[12];
         Array.Copy(deint, 12, q, 0, 12);
 
         return Subchannel.PrettifyQ(q, deint[21] > 0x10, 16, !validP, false, validRw);

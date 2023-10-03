@@ -47,7 +47,7 @@ public static class ScsiModeSense
     /// <param name="deviceType">SCSI peripheral device type</param>
     /// <param name="scsiOneValue">List to put values on</param>
     /// <param name="modePages">List to put key=value pairs on</param>
-    public static void Report(ScsiMode modeSense, string vendor, PeripheralDeviceTypes deviceType,
+    public static void Report(ScsiMode         modeSense,    string vendor, PeripheralDeviceTypes deviceType,
                               ref List<string> scsiOneValue, ref Dictionary<string, string> modePages)
     {
         if(modeSense.MediumType.HasValue)
@@ -57,13 +57,20 @@ public static class ScsiModeSense
             scsiOneValue.Add("Device is write protected.");
 
         if(modeSense.BlockDescriptors != null)
+        {
             foreach(BlockDescriptor descriptor in modeSense.BlockDescriptors)
+            {
                 if(descriptor.Blocks.HasValue &&
                    descriptor.BlockLength.HasValue)
+                {
                     scsiOneValue.
-                        Add($"Density code {descriptor.Density:X2}h has {descriptor.Blocks} blocks of {descriptor.BlockLength} bytes each");
+                        Add(
+                            $"Density code {descriptor.Density:X2}h has {descriptor.Blocks} blocks of {descriptor.BlockLength} bytes each");
+                }
                 else
                     scsiOneValue.Add($"Density code {descriptor.Density:X2}h");
+            }
+        }
 
         if(modeSense.DPOandFUA)
             scsiOneValue.Add("Drive supports DPO and FUA bits");
@@ -72,6 +79,7 @@ public static class ScsiModeSense
             scsiOneValue.Add("Blank checking during write is enabled");
 
         if(modeSense.BufferedMode.HasValue)
+        {
             switch(modeSense.BufferedMode)
             {
                 case 0:
@@ -91,11 +99,13 @@ public static class ScsiModeSense
 
                     break;
             }
+        }
 
         if(modeSense.ModePages == null)
             return;
 
         foreach(ScsiPage page in modeSense.ModePages)
+        {
             switch(page.page)
             {
                 case 0x00:
@@ -104,19 +114,26 @@ public static class ScsiModeSense
                        page.subpage == 0)
                         modePages.Add($"MODE page {page.page:X2}h", Modes.PrettifyModePage_00_SFF(page.value));
                     else
+                    {
                         modePages.
-                            Add(page.subpage != 0 ? $"MODE page {page.page:X2}h subpage {page.subpage:X2}h" : $"MODE page {page.page:X2}h",
+                            Add(
+                                page.subpage != 0
+                                    ? $"MODE page {page.page:X2}h subpage {page.subpage:X2}h"
+                                    : $"MODE page {page.page:X2}h",
                                 "Unknown vendor mode page");
+                    }
 
                     break;
                 }
                 case 0x01:
                 {
                     if(page.subpage == 0)
+                    {
                         modePages.Add($"MODE page {page.page:X2}h",
                                       deviceType == PeripheralDeviceTypes.MultiMediaDevice
                                           ? Modes.PrettifyModePage_01_MMC(page.value)
                                           : Modes.PrettifyModePage_01(page.value));
+                    }
                     else
                         goto default;
 
@@ -170,10 +187,12 @@ public static class ScsiModeSense
                 case 0x07:
                 {
                     if(page.subpage == 0)
+                    {
                         modePages.Add($"MODE page {page.page:X2}h",
                                       deviceType == PeripheralDeviceTypes.MultiMediaDevice
                                           ? Modes.PrettifyModePage_07_MMC(page.value)
                                           : Modes.PrettifyModePage_07(page.value));
+                    }
                     else
                         goto default;
 
@@ -193,8 +212,10 @@ public static class ScsiModeSense
                     if(page.subpage == 0)
                         modePages.Add($"MODE page {page.page:X2}h", Modes.PrettifyModePage_0A(page.value));
                     else if(page.subpage == 1)
+                    {
                         modePages.Add($"MODE page {page.page:X2}h subpage {page.subpage:X2}h",
                                       Modes.PrettifyModePage_0A_S01(page.value));
+                    }
                     else
                         goto default;
 
@@ -239,10 +260,12 @@ public static class ScsiModeSense
                 case 0x10:
                 {
                     if(page.subpage == 0)
+                    {
                         modePages.Add($"MODE page {page.page:X2}h",
                                       deviceType == PeripheralDeviceTypes.SequentialAccess
                                           ? Modes.PrettifyModePage_10_SSC(page.value)
                                           : Modes.PrettifyModePage_10(page.value));
+                    }
                     else
                         goto default;
 
@@ -273,8 +296,10 @@ public static class ScsiModeSense
                     if(page.subpage == 0)
                         modePages.Add($"MODE page {page.page:X2}h", Modes.PrettifyModePage_1A(page.value));
                     else if(page.subpage == 1)
+                    {
                         modePages.Add($"MODE page {page.page:X2}h subpage {page.subpage:X2}h",
                                       Modes.PrettifyModePage_1A_S01(page.value));
+                    }
                     else
                         goto default;
 
@@ -292,13 +317,17 @@ public static class ScsiModeSense
                 case 0x1C:
                 {
                     if(page.subpage == 0)
+                    {
                         modePages.Add($"MODE page {page.page:X2}h",
                                       deviceType == PeripheralDeviceTypes.MultiMediaDevice
                                           ? Modes.PrettifyModePage_1C_SFF(page.value)
                                           : Modes.PrettifyModePage_1C(page.value));
+                    }
                     else if(page.subpage == 1)
+                    {
                         modePages.Add($"MODE page {page.page:X2}h subpage {page.subpage:X2}h",
                                       Modes.PrettifyModePage_1C_S01(page.value));
+                    }
                     else
                         goto default;
 
@@ -409,18 +438,24 @@ public static class ScsiModeSense
                 }
                 default:
                 {
-                    modePages.Add(page.subpage != 0 ? $"MODE page {page.page:X2}h subpage {page.subpage:X2}h" : $"MODE page {page.page:X2}h",
-                                  "Unknown mode page");
+                    modePages.Add(
+                        page.subpage != 0
+                            ? $"MODE page {page.page:X2}h subpage {page.subpage:X2}h"
+                            : $"MODE page {page.page:X2}h",
+                        "Unknown mode page");
                 }
 
                     break;
             }
+        }
 
         Dictionary<string, string> newModePages = new();
 
         foreach(KeyValuePair<string, string> kvp in modePages)
+        {
             newModePages.Add(kvp.Key,
                              string.IsNullOrWhiteSpace(kvp.Value) ? "Undecoded" : kvp.Value.Replace("\n", "<br/>"));
+        }
 
         modePages = newModePages;
     }

@@ -10,7 +10,7 @@
     <table class="table">
         <thead>
         <tbody>
-        @foreach(var item in Model.List)
+        @foreach(ChsModel item in Model.List)
         {
             <tr>
                 <td>
@@ -24,8 +24,8 @@
 <div>
     Do you want to remove the duplicates?
     <form asp-action="Consolidate" enctype="multipart/form-data">
-        <input asp-for="Json" name="models" type="hidden" />
+        <input asp-for="Json" name="models" type="hidden"/>
         <a asp-action="Index" class="btn btn-primary">Back to List</a>
-        <input class="btn btn-danger" type="submit" value="Consolidate" />
+        <input class="btn btn-danger" type="submit" value="Consolidate"/>
     </form>
 </div>

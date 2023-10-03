@@ -44,12 +44,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aaru.Server.Task;
 
-internal class Program
+class Program
 {
     public static void Main(string[] args)
     {
         DateTime start, end;
-        int      counter = 0;
+        var      counter = 0;
 
         start = DateTime.UtcNow;
         System.Console.WriteLine("{0}: Connecting to database...", DateTime.UtcNow);
@@ -75,10 +75,10 @@ internal class Program
             System.Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
 
             UsbVendor vendor           = null;
-            int       newVendors       = 0;
-            int       newProducts      = 0;
-            int       modifiedVendors  = 0;
-            int       modifiedProducts = 0;
+            var       newVendors       = 0;
+            var       newProducts      = 0;
+            var       modifiedVendors  = 0;
+            var       modifiedProducts = 0;
 
             start = DateTime.UtcNow;
             System.Console.WriteLine("{0}: Adding and updating database entries...", DateTime.UtcNow);
@@ -142,9 +142,10 @@ internal class Program
                     else if(name != product.Product)
                     {
                         System.Console.
-                               WriteLine("{0}: Will modify product with ID {1:X4} and vendor {2} ({3:X4}) from \"{4}\" to \"{5}\"",
-                                         DateTime.UtcNow, product.ProductId, product.Vendor?.Vendor ?? "null",
-                                         product.Vendor?.VendorId ?? 0, product.Product, name);
+                               WriteLine(
+                                   "{0}: Will modify product with ID {1:X4} and vendor {2} ({3:X4}) from \"{4}\" to \"{5}\"",
+                                   DateTime.UtcNow, product.ProductId, product.Vendor?.Vendor ?? "null",
+                                   product.Vendor?.VendorId ?? 0, product.Product, name);
 
                         product.Product      = name;
                         product.ModifiedWhen = DateTime.UtcNow;
@@ -203,9 +204,9 @@ internal class Program
             end = DateTime.UtcNow;
             System.Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
 
-            System.Console.WriteLine("{0}: {1} vendors added.", DateTime.UtcNow, newVendors);
-            System.Console.WriteLine("{0}: {1} products added.", DateTime.UtcNow, newProducts);
-            System.Console.WriteLine("{0}: {1} vendors modified.", DateTime.UtcNow, modifiedVendors);
+            System.Console.WriteLine("{0}: {1} vendors added.",     DateTime.UtcNow, newVendors);
+            System.Console.WriteLine("{0}: {1} products added.",    DateTime.UtcNow, newProducts);
+            System.Console.WriteLine("{0}: {1} vendors modified.",  DateTime.UtcNow, modifiedVendors);
             System.Console.WriteLine("{0}: {1} products modified.", DateTime.UtcNow, modifiedProducts);
 
             System.Console.WriteLine("{0}: Looking up a vendor", DateTime.UtcNow);
@@ -276,10 +277,10 @@ internal class Program
             doc.LoadHtml(html);
             HtmlNode firstTable = doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/table[1]");
 
-            bool firstRow = true;
+            var firstRow = true;
 
-            int addedOffsets    = 0;
-            int modifiedOffsets = 0;
+            var addedOffsets    = 0;
+            var modifiedOffsets = 0;
 
             System.Console.WriteLine("{0}: Processing offsets...", DateTime.UtcNow);
             start = DateTime.UtcNow;
@@ -525,7 +526,7 @@ internal class Program
             end = DateTime.UtcNow;
             System.Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
 
-            System.Console.WriteLine("{0}: Added {1} offsets", end, addedOffsets);
+            System.Console.WriteLine("{0}: Added {1} offsets",    end, addedOffsets);
             System.Console.WriteLine("{0}: Modified {1} offsets", end, modifiedOffsets);
         }
         catch(Exception ex)
@@ -542,8 +543,8 @@ internal class Program
 
         System.Console.WriteLine("{0}: Reading iNES/NES 2.0 headers...", DateTime.UtcNow);
         start = DateTime.UtcNow;
-        int newHeaders     = 0;
-        int updatedHeaders = 0;
+        var newHeaders     = 0;
+        var updatedHeaders = 0;
         counter = 0;
 
         foreach(string file in Directory.GetFiles("nes"))
@@ -555,11 +556,11 @@ internal class Program
                 if(fs.Length <= 16)
                     continue;
 
-                byte[] header = new byte[16];
-                byte[] data   = new byte[fs.Length - 16];
+                var header = new byte[16];
+                var data   = new byte[fs.Length - 16];
 
                 fs.Read(header, 0, 16);
-                fs.Read(data, 0, data.Length);
+                fs.Read(data,   0, data.Length);
 
                 bool ines;
                 bool nes20;
@@ -607,15 +608,15 @@ internal class Program
 
                 var    hasher    = SHA256.Create();
                 byte[] hashBytes = hasher.ComputeHash(data);
-                char[] hashChars = new char[64];
+                var    hashChars = new char[64];
 
-                for(int i = 0; i < 32; i++)
+                for(var i = 0; i < 32; i++)
                 {
                     int a = hashBytes[i] >> 4;
                     int b = hashBytes[i] & 0xF;
 
                     hashChars[i * 2] = a > 9 ? (char)(a + 0x57) : (char)(a      + 0x30);
-                    hashChars[(i * 2)                   + 1] = b > 9 ? (char)(b + 0x57) : (char)(b + 0x30);
+                    hashChars[i * 2                     + 1] = b > 9 ? (char)(b + 0x57) : (char)(b + 0x30);
                 }
 
                 info.Sha256 = new string(hashChars);
@@ -632,7 +633,7 @@ internal class Program
                     continue;
                 }
 
-                bool modified = false;
+                var modified = false;
 
                 if(existing.NametableMirroring != info.NametableMirroring)
                 {
@@ -720,8 +721,8 @@ internal class Program
         System.Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
 
         System.Console.WriteLine("{0}: Processed {1} iNES/NES 2.0 headers...", DateTime.UtcNow, counter);
-        System.Console.WriteLine("{0}: Added {1} iNES/NES 2.0 headers...", DateTime.UtcNow, newHeaders);
-        System.Console.WriteLine("{0}: Updated {1} iNES/NES 2.0 headers...", DateTime.UtcNow, updatedHeaders);
+        System.Console.WriteLine("{0}: Added {1} iNES/NES 2.0 headers...",     DateTime.UtcNow, newHeaders);
+        System.Console.WriteLine("{0}: Updated {1} iNES/NES 2.0 headers...",   DateTime.UtcNow, updatedHeaders);
 
         System.Console.WriteLine("{0}: Committing changes...", DateTime.UtcNow);
         start = DateTime.UtcNow;

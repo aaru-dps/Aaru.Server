@@ -7,7 +7,8 @@ using TestedMedia = Aaru.CommonTypes.Metadata.TestedMedia;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
-[Area("Admin"), Authorize]
+[Area("Admin")]
+[Authorize]
 public sealed class AtasController : Controller
 {
     readonly AaruServerContext _context;
@@ -22,16 +23,12 @@ public sealed class AtasController : Controller
     public async Task<IActionResult> Details(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         Ata ata = await _context.Ata.FirstOrDefaultAsync(m => m.Id == id);
 
         if(ata == null)
-        {
             return NotFound();
-        }
 
         return View(ata);
     }
@@ -40,22 +37,20 @@ public sealed class AtasController : Controller
     public async Task<IActionResult> Delete(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         Ata ata = await _context.Ata.FirstOrDefaultAsync(m => m.Id == id);
 
         if(ata == null)
-        {
             return NotFound();
-        }
 
         return View(ata);
     }
 
     // POST: Admin/Atas/Delete/5
-    [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Delete")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         Ata ata = await _context.Ata.FindAsync(id);
@@ -67,12 +62,12 @@ public sealed class AtasController : Controller
 
     public IActionResult Consolidate()
     {
-        List<IdHashModel> hashes = _context.Ata.Select(m => new IdHashModel(m.Id, Hash.Sha512(m.Identify))).ToList();
+        var hashes = _context.Ata.Select(m => new IdHashModel(m.Id, Hash.Sha512(m.Identify))).ToList();
 
-        List<IdHashModel> dups = hashes.GroupBy(x => x.Hash).Where(g => g.Count() > 1).
-                                        Select(x => hashes.FirstOrDefault(y => y.Hash == x.Key)).ToList();
+        var dups = hashes.GroupBy(x => x.Hash).Where(g => g.Count() > 1).
+                          Select(x => hashes.FirstOrDefault(y => y.Hash == x.Key)).ToList();
 
-        for(int i = 0; i < dups.Count; i++)
+        for(var i = 0; i < dups.Count; i++)
         {
             Ata unique = _context.Ata.First(a => a.Id == dups[i].Id);
 
@@ -87,7 +82,9 @@ public sealed class AtasController : Controller
         });
     }
 
-    [HttpPost, ActionName("Consolidate"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Consolidate")]
+    [ValidateAntiForgeryToken]
     public IActionResult ConsolidateConfirmed(string models)
     {
         IdHashModel[] duplicates;
@@ -119,24 +116,16 @@ public sealed class AtasController : Controller
                     continue;
 
                 foreach(Device ataDevice in _context.Devices.Where(d => d.ATA.Id == duplicateId))
-                {
                     ataDevice.ATA = master;
-                }
 
                 foreach(Device atapiDevice in _context.Devices.Where(d => d.ATAPI.Id == duplicateId))
-                {
                     atapiDevice.ATAPI = master;
-                }
 
                 foreach(UploadedReport ataReport in _context.Reports.Where(d => d.ATA.Id == duplicateId))
-                {
                     ataReport.ATA = master;
-                }
 
                 foreach(UploadedReport atapiReport in _context.Reports.Where(d => d.ATAPI.Id == duplicateId))
-                {
                     atapiReport.ATAPI = master;
-                }
 
                 foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.AtaId == duplicateId))
                 {
@@ -162,40 +151,36 @@ public sealed class AtasController : Controller
         Ata master = _context.Ata.FirstOrDefault(m => m.Id == masterId);
 
         if(master is null)
+        {
             return RedirectToAction(nameof(Compare), new
             {
                 id      = masterId,
                 rightId = slaveId
             });
+        }
 
         Ata slave = _context.Ata.FirstOrDefault(m => m.Id == slaveId);
 
         if(slave is null)
+        {
             return RedirectToAction(nameof(Compare), new
             {
                 id      = masterId,
                 rightId = slaveId
             });
+        }
 
         foreach(Device ataDevice in _context.Devices.Where(d => d.ATA.Id == slaveId))
-        {
             ataDevice.ATA = master;
-        }
 
         foreach(Device atapiDevice in _context.Devices.Where(d => d.ATAPI.Id == slaveId))
-        {
             atapiDevice.ATAPI = master;
-        }
 
         foreach(UploadedReport ataReport in _context.Reports.Where(d => d.ATA.Id == slaveId))
-        {
             ataReport.ATA = master;
-        }
 
         foreach(UploadedReport atapiReport in _context.Reports.Where(d => d.ATAPI.Id == slaveId))
-        {
             atapiReport.ATAPI = master;
-        }
 
         foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.AtaId == slaveId))
         {
@@ -289,7 +274,8 @@ public sealed class AtasController : Controller
 
                 switch(la)
                 {
-                    case null when ra is null: continue;
+                    case null when ra is null:
+                        continue;
                     case null:
                         model.ValueNames.Add(fieldInfo.Name);
                         model.LeftValues.Add("null");
@@ -307,10 +293,10 @@ public sealed class AtasController : Controller
                     continue;
                 }
 
-                List<object> ll = la.Cast<object>().ToList();
-                List<object> rl = ra.Cast<object>().ToList();
+                var ll = la.Cast<object>().ToList();
+                var rl = ra.Cast<object>().ToList();
 
-                for(int i = 0; i < ll.Count; i++)
+                for(var i = 0; i < ll.Count; i++)
                 {
                     if(ll[i].Equals(rl[i]))
                         continue;
@@ -422,9 +408,7 @@ public sealed class AtasController : Controller
 
             if(tmp.All(b => b > 0x20) &&
                tmp.All(b => b <= 0x5F))
-            {
                 havePrivacy.Add(ata);
-            }
         }
 
         return View(havePrivacy);
@@ -438,16 +422,16 @@ public sealed class AtasController : Controller
             return RedirectToAction(nameof(CheckPrivate));
 
         // Serial number
-        for(int i = 0; i < 20; i++)
-            ata.Identify[(10 * 2) + i] = 0x20;
+        for(var i = 0; i < 20; i++)
+            ata.Identify[10 * 2 + i] = 0x20;
 
         // Media serial number
-        for(int i = 0; i < 40; i++)
-            ata.Identify[(176 * 2) + i] = 0x20;
+        for(var i = 0; i < 40; i++)
+            ata.Identify[176 * 2 + i] = 0x20;
 
         // WWN and WWN Extension
-        for(int i = 0; i < 16; i++)
-            ata.Identify[(108 * 2) + i] = 0;
+        for(var i = 0; i < 16; i++)
+            ata.Identify[108 * 2 + i] = 0;
 
         // We need to tell EFCore the entity has changed
         _context.Update(ata);
@@ -464,24 +448,24 @@ public sealed class AtasController : Controller
             return RedirectToAction(nameof(CheckPrivate));
 
         // ReservedWords121
-        for(int i = 0; i < 10; i++)
-            ata.Identify[(121 * 2) + i] = 0;
+        for(var i = 0; i < 10; i++)
+            ata.Identify[121 * 2 + i] = 0;
 
         // ReservedWords129
-        for(int i = 0; i < 40; i++)
-            ata.Identify[(129 * 2) + i] = 0;
+        for(var i = 0; i < 40; i++)
+            ata.Identify[129 * 2 + i] = 0;
 
         // ReservedCFA
-        for(int i = 0; i < 14; i++)
-            ata.Identify[(161 * 2) + i] = 0;
+        for(var i = 0; i < 14; i++)
+            ata.Identify[161 * 2 + i] = 0;
 
         // ReservedCEATA224
-        for(int i = 0; i < 12; i++)
-            ata.Identify[(224 * 2) + i] = 0;
+        for(var i = 0; i < 12; i++)
+            ata.Identify[224 * 2 + i] = 0;
 
         // ReservedWords
-        for(int i = 0; i < 14; i++)
-            ata.Identify[(161 * 2) + i] = 0;
+        for(var i = 0; i < 14; i++)
+            ata.Identify[161 * 2 + i] = 0;
 
         // We need to tell EFCore the entity has changed
         _context.Update(ata);
@@ -498,16 +482,16 @@ public sealed class AtasController : Controller
                 return RedirectToAction(nameof(CheckPrivate));
 
             // Serial number
-            for(int i = 0; i < 20; i++)
-                ata.Identify[(10 * 2) + i] = 0x20;
+            for(var i = 0; i < 20; i++)
+                ata.Identify[10 * 2 + i] = 0x20;
 
             // Media serial number
-            for(int i = 0; i < 40; i++)
-                ata.Identify[(176 * 2) + i] = 0x20;
+            for(var i = 0; i < 40; i++)
+                ata.Identify[176 * 2 + i] = 0x20;
 
             // WWN and WWN Extension
-            for(int i = 0; i < 16; i++)
-                ata.Identify[(108 * 2) + i] = 0;
+            for(var i = 0; i < 16; i++)
+                ata.Identify[108 * 2 + i] = 0;
 
             // We need to tell EFCore the entity has changed
             _context.Update(ata);
@@ -523,24 +507,24 @@ public sealed class AtasController : Controller
         foreach(Ata ata in _context.Ata)
         {
             // ReservedWords121
-            for(int i = 0; i < 10; i++)
-                ata.Identify[(121 * 2) + i] = 0;
+            for(var i = 0; i < 10; i++)
+                ata.Identify[121 * 2 + i] = 0;
 
             // ReservedWords129
-            for(int i = 0; i < 40; i++)
-                ata.Identify[(129 * 2) + i] = 0;
+            for(var i = 0; i < 40; i++)
+                ata.Identify[129 * 2 + i] = 0;
 
             // ReservedCFA
-            for(int i = 0; i < 14; i++)
-                ata.Identify[(161 * 2) + i] = 0;
+            for(var i = 0; i < 14; i++)
+                ata.Identify[161 * 2 + i] = 0;
 
             // ReservedCEATA224
-            for(int i = 0; i < 12; i++)
-                ata.Identify[(224 * 2) + i] = 0;
+            for(var i = 0; i < 12; i++)
+                ata.Identify[224 * 2 + i] = 0;
 
             // ReservedWords
-            for(int i = 0; i < 14; i++)
-                ata.Identify[(161 * 2) + i] = 0;
+            for(var i = 0; i < 14; i++)
+                ata.Identify[161 * 2 + i] = 0;
 
             // We need to tell EFCore the entity has changed
             _context.Update(ata);

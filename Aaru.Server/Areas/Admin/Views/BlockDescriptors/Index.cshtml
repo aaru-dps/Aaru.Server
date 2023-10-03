@@ -1,3 +1,4 @@
+@using Aaru.CommonTypes.Metadata
 @model IEnumerable<Aaru.CommonTypes.Metadata.BlockDescriptor>
 
 @{
@@ -49,7 +50,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach(var item in Model)
+    @foreach(BlockDescriptor item in Model)
     {
         <tr>
             <td>

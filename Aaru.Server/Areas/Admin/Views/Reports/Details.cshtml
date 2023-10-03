@@ -1,3 +1,4 @@
+@using Aaru.CommonTypes.Metadata
 @model UploadedReportDetails
 
 @{
@@ -5,7 +6,7 @@
 }
 <div>
     <h4>Uploaded report</h4>
-    <hr />
+    <hr/>
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Report.UploadedWhen)
@@ -124,7 +125,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach(var item in Model.SameAll)
+            @foreach(int item in Model.SameAll)
             {
                 <tr>
                     <td>
@@ -154,7 +155,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach(var item in Model.SameButManufacturer)
+            @foreach(int item in Model.SameButManufacturer)
             {
                 <tr>
                     <td>
@@ -184,7 +185,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach(var item in Model.ReportAll)
+            @foreach(int item in Model.ReportAll)
             {
                 <tr>
                     <td>
@@ -214,7 +215,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach(var item in Model.ReportButManufacturer)
+            @foreach(int item in Model.ReportButManufacturer)
             {
                 <tr>
                     <td>
@@ -250,7 +251,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach(var item in Model.TestedMedias)
+            @foreach(TestedMedia item in Model.TestedMedias)
             {
                 <tr>
                     <td>
@@ -291,7 +292,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach(var item in Model.TestedSequentialMedias)
+            @foreach(TestedSequentialMedia item in Model.TestedSequentialMedias)
             {
                 <tr>
                     <td>

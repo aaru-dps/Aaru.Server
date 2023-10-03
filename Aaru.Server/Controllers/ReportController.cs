@@ -51,9 +51,7 @@ public sealed class ReportController : Controller
 
     public ActionResult Index() => RedirectToAction("View", "Report", new RouteValueDictionary
     {
-        {
-            "id", 1
-        }
+        { "id", 1 }
     });
 
     public ActionResult View(int? id)
@@ -109,6 +107,7 @@ public sealed class ReportController : Controller
             }
 
             if(report.FireWire != null)
+            {
                 ViewBag.FireWireItem = new Item
                 {
                     Manufacturer       = report.FireWire.Manufacturer,
@@ -116,6 +115,7 @@ public sealed class ReportController : Controller
                     VendorDescription  = $"0x{report.FireWire.VendorID:x8}",
                     ProductDescription = $"0x{report.FireWire.ProductID:x8}"
                 };
+            }
 
             if(report.PCMCIA != null)
             {
@@ -135,34 +135,38 @@ public sealed class ReportController : Controller
                     Dictionary<string, string> decodedTuples = new();
 
                     foreach(Tuple tuple in tuples)
+                    {
                         switch(tuple.Code)
                         {
                             case TupleCodes.CISTPL_NULL:
                             case TupleCodes.CISTPL_END:
                             case TupleCodes.CISTPL_MANFID:
-                            case TupleCodes.CISTPL_VERS_1: break;
+                            case TupleCodes.CISTPL_VERS_1:
+                                break;
                             case TupleCodes.CISTPL_DEVICEGEO:
                             case TupleCodes.CISTPL_DEVICEGEO_A:
                                 DeviceGeometryTuple geom = CIS.DecodeDeviceGeometryTuple(tuple.Data);
 
                                 if(geom?.Geometries != null)
+                                {
                                     foreach(DeviceGeometry geometry in geom.Geometries)
                                     {
                                         decodedTuples.Add("Device width",
-                                                          $"{(1 << (geometry.CardInterface - 1)) * 8} bits");
+                                                          $"{(1 << geometry.CardInterface - 1) * 8} bits");
 
                                         decodedTuples.Add("Erase block",
-                                                          $"{(1 << (geometry.EraseBlockSize - 1)) * (1 << (geometry.Interleaving - 1))} bytes");
+                                                          $"{(1 << geometry.EraseBlockSize - 1) * (1 << geometry.Interleaving - 1)} bytes");
 
                                         decodedTuples.Add("Read block",
-                                                          $"{(1 << (geometry.ReadBlockSize - 1)) * (1 << (geometry.Interleaving - 1))} bytes");
+                                                          $"{(1 << geometry.ReadBlockSize - 1) * (1 << geometry.Interleaving - 1)} bytes");
 
                                         decodedTuples.Add("Write block",
-                                                          $"{(1 << (geometry.WriteBlockSize - 1)) * (1 << (geometry.Interleaving - 1))} bytes");
+                                                          $"{(1 << geometry.WriteBlockSize - 1) * (1 << geometry.Interleaving - 1)} bytes");
 
                                         decodedTuples.Add("Partition alignment",
-                                                          $"{(1 << (geometry.EraseBlockSize - 1)) * (1 << (geometry.Interleaving - 1)) * (1 << (geometry.Partitions - 1))} bytes");
+                                                          $"{(1 << geometry.EraseBlockSize - 1) * (1 << geometry.Interleaving - 1) * (1 << geometry.Partitions - 1)} bytes");
                                     }
+                                }
 
                                 break;
                             case TupleCodes.CISTPL_ALTSTR:
@@ -207,16 +211,17 @@ public sealed class ReportController : Controller
 
                                 break;
                         }
+                    }
 
                     if(decodedTuples.Count > 0)
                         ViewBag.repPcmciaTuples = decodedTuples;
                 }
             }
 
-            bool              removable   = true;
+            var               removable   = true;
             List<TestedMedia> testedMedia = null;
-            bool              atapi       = false;
-            bool              sscMedia    = false;
+            var               atapi       = false;
+            var               sscMedia    = false;
 
             if(report.ATA   != null ||
                report.ATAPI != null)
@@ -266,7 +271,8 @@ public sealed class ReportController : Controller
                     Inquiry inq = report.SCSI.Inquiry.Value;
 
                     ViewBag.lblScsiVendor = VendorString.Prettify(vendorId) != vendorId
-                                                ? $"{vendorId} ({VendorString.Prettify(vendorId)})" : vendorId;
+                                                ? $"{vendorId} ({VendorString.Prettify(vendorId)})"
+                                                : vendorId;
 
                     ViewBag.lblScsiProduct  = StringHandlers.CToString(inq.ProductIdentification);
                     ViewBag.lblScsiRevision = StringHandlers.CToString(inq.ProductRevisionLevel);
@@ -364,19 +370,29 @@ public sealed class ReportController : Controller
                        report.SCSI.ReadCapabilities.BlockSize.HasValue)
                     {
                         scsiOneValue.
-                            Add($"Device has {report.SCSI.ReadCapabilities.Blocks} blocks of {report.SCSI.ReadCapabilities.BlockSize} bytes each");
+                            Add(
+                                $"Device has {report.SCSI.ReadCapabilities.Blocks} blocks of {report.SCSI.ReadCapabilities.BlockSize} bytes each");
 
                         if(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize / 1024 / 1024 >
                            1000000)
+                        {
                             scsiOneValue.
-                                Add($"Device size: {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize} bytes, {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                                Add(
+                                    $"Device size: {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize} bytes, {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                        }
                         else if(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize / 1024 /
                                 1024 > 1000)
+                        {
                             scsiOneValue.
-                                Add($"Device size: {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize} bytes, {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize / 1000 / 1000 / 1000} Gb, {(double)(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
+                                Add(
+                                    $"Device size: {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize} bytes, {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize / 1000 / 1000 / 1000} Gb, {(double)(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
+                        }
                         else
+                        {
                             scsiOneValue.
-                                Add($"Device size: {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize} bytes, {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize / 1000 / 1000} Mb, {(double)(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize) / 1024 / 1024:F2} MiB");
+                                Add(
+                                    $"Device size: {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize} bytes, {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize / 1000 / 1000} Mb, {(double)(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize) / 1024 / 1024:F2} MiB");
+                        }
                     }
 
                     if(report.SCSI.ReadCapabilities.MediumType.HasValue)
@@ -415,9 +431,7 @@ public sealed class ReportController : Controller
                         scsiOneValue.Add("Device supports READ LONG (16) command.");
                 }
                 else
-                {
                     testedMedia = report.SCSI.RemovableMedias;
-                }
 
                 ViewBag.repScsi = scsiOneValue;
             }

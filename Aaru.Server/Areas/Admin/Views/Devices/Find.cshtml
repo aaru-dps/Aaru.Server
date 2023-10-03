@@ -35,7 +35,7 @@
 }
 <div>
     <h4>Found device reports with similar data</h4>
-    <hr />
+    <hr/>
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Manufacturer)
@@ -91,7 +91,7 @@ else
         </tr>
         </thead>
         <tbody>
-        @foreach(var item in Model.LikeDevices)
+        @foreach(Device item in Model.LikeDevices)
         {
             <tr>
                 <td>

@@ -14,9 +14,9 @@ public static class Hash
             hash = sha.ComputeHash(data);
         }
 
-        char[] chars = new char[hash.Length * 2];
+        var chars = new char[hash.Length * 2];
 
-        int j = 0;
+        var j = 0;
 
         foreach(byte b in hash)
         {

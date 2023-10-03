@@ -2,7 +2,8 @@ using Aaru.CommonTypes.Metadata;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
-[Area("Admin"), Authorize]
+[Area("Admin")]
+[Authorize]
 public sealed class MmcFeaturesController : Controller
 {
     readonly AaruServerContext _context;
@@ -16,16 +17,12 @@ public sealed class MmcFeaturesController : Controller
     public async Task<IActionResult> Details(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         MmcFeatures mmcFeatures = await _context.MmcFeatures.FirstOrDefaultAsync(m => m.Id == id);
 
         if(mmcFeatures == null)
-        {
             return NotFound();
-        }
 
         return View(mmcFeatures);
     }

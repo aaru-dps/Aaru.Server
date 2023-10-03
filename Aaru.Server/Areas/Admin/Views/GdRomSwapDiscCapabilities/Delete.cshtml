@@ -37,7 +37,7 @@
 <h3>Are you sure you want to delete this?</h3>
 <div>
 <h2>GD-ROM swap-trick capabilities report</h2>
-<hr />
+<hr/>
 @if(Model.TestCrashed)
 {
     <h4>Computer crashed while testing.</h4>
@@ -45,7 +45,7 @@
 else if(Model.RecognizedSwapDisc)
 {
     <h4>Swap disc Lead-Out starts at @($"{Model.SwapDiscLeadOutPMIN:X2}"):@($"{Model.SwapDiscLeadOutPSEC:X2}"):@($"{Model.SwapDiscLeadOutPFRAM:X2}") (@($"{Model.SwapDiscLeadOutStart}") sectors).</h4>
-    <hr />
+    <hr/>
     <dl class="row">
         <dt class="col-sm-4">Minimum readable sector in HD area:</dt>
         <dd class="col-sm-8">@Model.MinimumReadableSectorInHdArea</dd>
@@ -1145,7 +1145,7 @@ else
     <h4>Swap disc not recognized, or firmware reset after tray opened.</h4>
 }
 <form asp-action="Delete">
-    <input asp-for="Id" type="hidden" />
-    <input class="btn btn-danger" type="submit" value="Delete" />
+    <input asp-for="Id" type="hidden"/>
+    <input class="btn btn-danger" type="submit" value="Delete"/>
 </form>
 </div>

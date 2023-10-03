@@ -2,7 +2,8 @@ using Aaru.CommonTypes.Metadata;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
-[Area("Admin"), Authorize]
+[Area("Admin")]
+[Authorize]
 public sealed class ScsiPagesController : Controller
 {
     readonly AaruServerContext _context;
@@ -16,22 +17,20 @@ public sealed class ScsiPagesController : Controller
     public async Task<IActionResult> Delete(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         ScsiPage scsiPage = await _context.ScsiPage.FirstOrDefaultAsync(m => m.Id == id);
 
         if(scsiPage == null)
-        {
             return NotFound();
-        }
 
         return View(scsiPage);
     }
 
     // POST: Admin/ScsiPages/Delete/5
-    [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Delete")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         ScsiPage scsiPage = await _context.ScsiPage.FindAsync(id);

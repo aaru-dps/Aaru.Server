@@ -1,3 +1,4 @@
+@using Aaru.CommonTypes.Metadata
 @model IEnumerable<Aaru.CommonTypes.Metadata.ScsiMode>
 
 @{
@@ -59,7 +60,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach(var item in Model)
+    @foreach(ScsiMode item in Model)
     {
         <tr>
             <td>

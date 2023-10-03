@@ -60,9 +60,12 @@ public class CompactDiscOffset : CdOffset
     }
 
     public int Id { get; set; }
+
     [DisplayName("Added date")]
     public DateTime AddedWhen { get; set; }
+
     [DisplayName("Modification date")]
-    public DateTime ModifiedWhen { get;               set; }
+    public DateTime ModifiedWhen { get; set; }
+
     public virtual ICollection<Device> Devices { get; set; }
 }

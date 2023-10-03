@@ -8,7 +8,8 @@ using TestedMedia = Aaru.CommonTypes.Metadata.TestedMedia;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
-[Area("Admin"), Authorize]
+[Area("Admin")]
+[Authorize]
 public sealed class ScsisController : Controller
 {
     readonly AaruServerContext _context;
@@ -24,22 +25,18 @@ public sealed class ScsisController : Controller
                                                              StringHandlers.
                                                                  CToString(m.Inquiry?.ProductIdentification)).
                                                   ThenBy(m => StringHandlers.CToString(m.Inquiry?.
-                                                             ProductRevisionLevel)));
+                                                                 ProductRevisionLevel)));
 
     // GET: Admin/Scsis/Details/5
     public async Task<IActionResult> Details(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         Scsi scsi = await _context.Scsi.FirstOrDefaultAsync(m => m.Id == id);
 
         if(scsi == null)
-        {
             return NotFound();
-        }
 
         return View(scsi);
     }
@@ -48,22 +45,20 @@ public sealed class ScsisController : Controller
     public async Task<IActionResult> Delete(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         Scsi scsi = await _context.Scsi.FirstOrDefaultAsync(m => m.Id == id);
 
         if(scsi == null)
-        {
             return NotFound();
-        }
 
         return View(scsi);
     }
 
     // POST: Admin/Scsis/Delete/5
-    [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Delete")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         Scsi scsi = await _context.Scsi.FindAsync(id);
@@ -75,13 +70,13 @@ public sealed class ScsisController : Controller
 
     public IActionResult Consolidate()
     {
-        List<IdHashModel> hashes = _context.Scsi.Where(m => m.InquiryData != null).
-                                            Select(m => new IdHashModel(m.Id, Hash.Sha512(m.InquiryData))).ToList();
+        var hashes = _context.Scsi.Where(m => m.InquiryData != null).
+                              Select(m => new IdHashModel(m.Id, Hash.Sha512(m.InquiryData))).ToList();
 
-        List<IdHashModel> dups = hashes.GroupBy(x => x.Hash).Where(g => g.Count() > 1).
-                                        Select(x => hashes.FirstOrDefault(y => y.Hash == x.Key)).ToList();
+        var dups = hashes.GroupBy(x => x.Hash).Where(g => g.Count() > 1).
+                          Select(x => hashes.FirstOrDefault(y => y.Hash == x.Key)).ToList();
 
-        for(int i = 0; i < dups.Count; i++)
+        for(var i = 0; i < dups.Count; i++)
         {
             Scsi unique = _context.Scsi.First(a => a.Id == dups[i].Id);
 
@@ -98,7 +93,9 @@ public sealed class ScsisController : Controller
         });
     }
 
-    [HttpPost, ActionName("Consolidate"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Consolidate")]
+    [ValidateAntiForgeryToken]
     public IActionResult ConsolidateConfirmed(string models)
     {
         IdHashModel[] duplicates;
@@ -130,14 +127,10 @@ public sealed class ScsisController : Controller
                     continue;
 
                 foreach(Device scsiDevice in _context.Devices.Where(d => d.SCSI.Id == duplicateId))
-                {
                     scsiDevice.SCSI = master;
-                }
 
                 foreach(UploadedReport scsiReport in _context.Reports.Where(d => d.SCSI.Id == duplicateId))
-                {
                     scsiReport.SCSI = master;
-                }
 
                 foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.ScsiId == duplicateId))
                 {
@@ -233,7 +226,8 @@ public sealed class ScsisController : Controller
 
                 switch(la)
                 {
-                    case null when ra is null: continue;
+                    case null when ra is null:
+                        continue;
                     case null:
                         model.ValueNames.Add(fieldInfo.Name);
                         model.LeftValues.Add("null");
@@ -251,10 +245,10 @@ public sealed class ScsisController : Controller
                     continue;
                 }
 
-                List<object> ll = la.Cast<object>().ToList();
-                List<object> rl = ra.Cast<object>().ToList();
+                var ll = la.Cast<object>().ToList();
+                var rl = ra.Cast<object>().ToList();
 
-                for(int i = 0; i < ll.Count; i++)
+                for(var i = 0; i < ll.Count; i++)
                 {
                     if(ll[i].Equals(rl[i]))
                         continue;
@@ -269,13 +263,13 @@ public sealed class ScsisController : Controller
                         case nameof(Inquiry.Seagate_DriveSerialNumber):
                         case nameof(Inquiry.Seagate_ServoPROMPartNo):
                         case nameof(Inquiry.VendorIdentification):
-                            byte[] lb = new byte[ll.Count];
-                            byte[] rb = new byte[rl.Count];
+                            var lb = new byte[ll.Count];
+                            var rb = new byte[rl.Count];
 
-                            for(int j = 0; j < ll.Count; j++)
+                            for(var j = 0; j < ll.Count; j++)
                                 lb[j] = (byte)ll[j];
 
-                            for(int j = 0; j < ll.Count; j++)
+                            for(var j = 0; j < ll.Count; j++)
                                 rb[j] = (byte)rl[j];
 
                             model.ValueNames.Add(fieldInfo.Name);
@@ -329,30 +323,30 @@ public sealed class ScsisController : Controller
         Scsi master = _context.Scsi.FirstOrDefault(m => m.Id == masterId);
 
         if(master is null)
+        {
             return RedirectToAction(nameof(Compare), new
             {
                 id      = masterId,
                 rightId = slaveId
             });
+        }
 
         Scsi slave = _context.Scsi.FirstOrDefault(m => m.Id == slaveId);
 
         if(slave is null)
+        {
             return RedirectToAction(nameof(Compare), new
             {
                 id      = masterId,
                 rightId = slaveId
             });
+        }
 
         foreach(Device scsiDevice in _context.Devices.Where(d => d.SCSI.Id == slaveId))
-        {
             scsiDevice.SCSI = master;
-        }
 
         foreach(UploadedReport scsiReport in _context.Reports.Where(d => d.SCSI.Id == slaveId))
-        {
             scsiReport.SCSI = master;
-        }
 
         foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.ScsiId == slaveId))
         {

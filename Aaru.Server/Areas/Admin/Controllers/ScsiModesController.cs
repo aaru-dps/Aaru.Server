@@ -2,7 +2,8 @@ using Aaru.CommonTypes.Metadata;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
-[Area("Admin"), Authorize]
+[Area("Admin")]
+[Authorize]
 public sealed class ScsiModesController : Controller
 {
     readonly AaruServerContext _context;
@@ -16,22 +17,20 @@ public sealed class ScsiModesController : Controller
     public async Task<IActionResult> Delete(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         ScsiMode scsiMode = await _context.ScsiMode.FirstOrDefaultAsync(m => m.Id == id);
 
         if(scsiMode == null)
-        {
             return NotFound();
-        }
 
         return View(scsiMode);
     }
 
     // POST: Admin/ScsiModes/Delete/5
-    [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Delete")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         ScsiMode scsiMode = await _context.ScsiMode.FindAsync(id);

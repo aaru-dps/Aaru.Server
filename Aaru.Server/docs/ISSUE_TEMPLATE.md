@@ -36,15 +36,15 @@
 * **Manufacturer**:
 * **Model**:
 * **Bus**:
-    * [ ] Parallel ATA
-    * [ ] Serial ATA
-    * [ ] SCSI (any)
-    * [ ] ATAPI (mark above if parallel or serial)
-    * [ ] USB
-    * [ ] FireWire
-    * [ ] PCMCIA
-    * [ ] SecureDigital
-    * [ ] MultiMediaCard
+  * [ ] Parallel ATA
+  * [ ] Serial ATA
+  * [ ] SCSI (any)
+  * [ ] ATAPI (mark above if parallel or serial)
+  * [ ] USB
+  * [ ] FireWire
+  * [ ] PCMCIA
+  * [ ] SecureDigital
+  * [ ] MultiMediaCard
 
 ### Output of command execution with debug output enabled
 

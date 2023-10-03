@@ -84,13 +84,18 @@ public class Device : DeviceReportV2
 
     [DisplayName("Added when")]
     public DateTime AddedWhen { get; set; }
+
     [DisplayName("Modified when")]
-    public DateTime? ModifiedWhen { get;             set; }
+    public DateTime? ModifiedWhen { get; set; }
+
     public virtual CompactDiscOffset CdOffset { get; set; }
 
-    [DefaultValue(0), DisplayName("Optimal no. of sectors to be read at once")]
+    [DefaultValue(0)]
+    [DisplayName("Optimal no. of sectors to be read at once")]
     public int OptimalMultipleSectorsRead { get; set; }
-    [DefaultValue(null), DisplayName("Can read GD-ROM using swap disc trick")]
+
+    [DefaultValue(null)]
+    [DisplayName("Can read GD-ROM using swap disc trick")]
     public bool? CanReadGdRomUsingSwapDisc { get; set; }
 
     public int? ATAId                       { get; set; }

@@ -3,7 +3,8 @@ using Newtonsoft.Json;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
-[Area("Admin"), Authorize]
+[Area("Admin")]
+[Authorize]
 public sealed class SscsController : Controller
 {
     readonly AaruServerContext _context;
@@ -19,22 +20,20 @@ public sealed class SscsController : Controller
     public async Task<IActionResult> Delete(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         Ssc ssc = await _context.Ssc.FirstOrDefaultAsync(m => m.Id == id);
 
         if(ssc == null)
-        {
             return NotFound();
-        }
 
         return View(ssc);
     }
 
     // POST: Admin/Sscs/Delete/5
-    [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Delete")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         Ssc ssc = await _context.Ssc.FindAsync(id);
@@ -46,7 +45,7 @@ public sealed class SscsController : Controller
 
     public IActionResult Consolidate()
     {
-        List<SscModel> dups = _context.Ssc.GroupBy(x => new
+        var dups = _context.Ssc.GroupBy(x => new
         {
             x.BlockSizeGranularity,
             x.MaxBlockLength,
@@ -65,7 +64,9 @@ public sealed class SscsController : Controller
         });
     }
 
-    [HttpPost, ActionName("Consolidate"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Consolidate")]
+    [ValidateAntiForgeryToken]
     public IActionResult ConsolidateConfirmed(string models)
     {
         SscModel[] duplicates;
@@ -96,9 +97,7 @@ public sealed class SscsController : Controller
                                                        m.MinBlockLength == duplicate.MinBlockLength).Skip(1).ToArray())
             {
                 foreach(TestedSequentialMedia media in _context.TestedSequentialMedia.Where(d => d.SscId == ssc.Id))
-                {
                     media.SscId = master.Id;
-                }
 
                 _context.Ssc.Update(ssc);
                 _context.Ssc.Remove(ssc);

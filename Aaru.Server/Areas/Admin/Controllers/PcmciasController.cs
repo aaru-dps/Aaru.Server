@@ -2,7 +2,8 @@ using Aaru.CommonTypes.Metadata;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
-[Area("Admin"), Authorize]
+[Area("Admin")]
+[Authorize]
 public sealed class PcmciasController : Controller
 {
     readonly AaruServerContext _context;
@@ -16,22 +17,20 @@ public sealed class PcmciasController : Controller
     public async Task<IActionResult> Delete(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         Pcmcia pcmcia = await _context.Pcmcia.FirstOrDefaultAsync(m => m.Id == id);
 
         if(pcmcia == null)
-        {
             return NotFound();
-        }
 
         return View(pcmcia);
     }
 
     // POST: Admin/Pcmcias/Delete/5
-    [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Delete")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         Pcmcia pcmcia = await _context.Pcmcia.FindAsync(id);

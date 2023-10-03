@@ -32,7 +32,8 @@
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
-[Area("Admin"), Authorize]
+[Area("Admin")]
+[Authorize]
 public sealed class HomeController : Controller
 {
     public ActionResult Index() => View();

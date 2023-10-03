@@ -37,15 +37,15 @@
 }
 <div>
     <h4>SCSI INQUIRY - ID = @Model.Id</h4>
-    <hr />
+    <hr/>
     @Html.Raw(Html.EncodedMultiLineText(Inquiry.Prettify(Model.InquiryData)))
 </div>
 <div>
     <form asp-action="Compare">
-        <input asp-for="Id" type="hidden" />
+        <input asp-for="Id" type="hidden"/>
         Compare to:
-        <input name="RightId" type="number" />
+        <input name="RightId" type="number"/>
         <a asp-action="Index" class="btn btn-secondary">Back to List</a>
-        <input class="btn btn-primary" type="submit" value="Compare" />
+        <input class="btn btn-primary" type="submit" value="Compare"/>
     </form>
 </div>

@@ -51,7 +51,8 @@ public sealed class UploadStatsController : Controller
 
     /// <summary>Receives statistics from Aaru.Core, processes them and adds them to a server-side global statistics XML</summary>
     /// <returns>HTTP response</returns>
-    [Route("api/uploadstats"), HttpPost]
+    [Route("api/uploadstats")]
+    [HttpPost]
     public async Task<IActionResult> UploadStats()
     {
         var response = new ContentResult
@@ -96,7 +97,8 @@ public sealed class UploadStatsController : Controller
 
     /// <summary>Receives a report from Aaru.Core, verifies it's in the correct format and stores it on the server</summary>
     /// <returns>HTTP response</returns>
-    [Route("api/uploadstatsv2"), HttpPost]
+    [Route("api/uploadstatsv2")]
+    [HttpPost]
     public async Task<IActionResult> UploadStatsV2()
     {
         var response = new ContentResult
@@ -121,6 +123,7 @@ public sealed class UploadStatsController : Controller
             }
 
             if(newstats.Commands != null)
+            {
                 foreach(NameValueStats nvs in newstats.Commands)
                 {
                     if(nvs.name == "analyze")
@@ -129,91 +132,115 @@ public sealed class UploadStatsController : Controller
                     Command existing = _ctx.Commands.FirstOrDefault(c => c.Name == nvs.name);
 
                     if(existing == null)
+                    {
                         await _ctx.Commands.AddAsync(new Command
                         {
                             Name  = nvs.name,
                             Count = nvs.Value
                         });
+                    }
                     else
                         existing.Count += nvs.Value;
                 }
+            }
 
             if(newstats.Versions != null)
+            {
                 foreach(NameValueStats nvs in newstats.Versions)
                 {
                     Version existing = _ctx.Versions.FirstOrDefault(c => c.Name == nvs.name);
 
                     if(existing == null)
+                    {
                         await _ctx.Versions.AddAsync(new Version
                         {
                             Name  = nvs.name,
                             Count = nvs.Value
                         });
+                    }
                     else
                         existing.Count += nvs.Value;
                 }
+            }
 
             if(newstats.Filesystems != null)
+            {
                 foreach(NameValueStats nvs in newstats.Filesystems)
                 {
                     Filesystem existing = _ctx.Filesystems.FirstOrDefault(c => c.Name == nvs.name);
 
                     if(existing == null)
+                    {
                         await _ctx.Filesystems.AddAsync(new Filesystem
                         {
                             Name  = nvs.name,
                             Count = nvs.Value
                         });
+                    }
                     else
                         existing.Count += nvs.Value;
                 }
+            }
 
             if(newstats.Partitions != null)
+            {
                 foreach(NameValueStats nvs in newstats.Partitions)
                 {
                     Partition existing = _ctx.Partitions.FirstOrDefault(c => c.Name == nvs.name);
 
                     if(existing == null)
+                    {
                         await _ctx.Partitions.AddAsync(new Partition
                         {
                             Name  = nvs.name,
                             Count = nvs.Value
                         });
+                    }
                     else
                         existing.Count += nvs.Value;
                 }
+            }
 
             if(newstats.MediaFormats != null)
+            {
                 foreach(NameValueStats nvs in newstats.MediaFormats)
                 {
                     MediaFormat existing = _ctx.MediaFormats.FirstOrDefault(c => c.Name == nvs.name);
 
                     if(existing == null)
+                    {
                         await _ctx.MediaFormats.AddAsync(new MediaFormat
                         {
                             Name  = nvs.name,
                             Count = nvs.Value
                         });
+                    }
                     else
                         existing.Count += nvs.Value;
                 }
+            }
 
             if(newstats.Filters != null)
+            {
                 foreach(NameValueStats nvs in newstats.Filters)
                 {
                     Filter existing = _ctx.Filters.FirstOrDefault(c => c.Name == nvs.name);
 
                     if(existing == null)
+                    {
                         await _ctx.Filters.AddAsync(new Filter
                         {
                             Name  = nvs.name,
                             Count = nvs.Value
                         });
+                    }
                     else
                         existing.Count += nvs.Value;
                 }
+            }
 
             if(newstats.OperatingSystems != null)
+            {
                 foreach(OsStats operatingSystem in newstats.OperatingSystems)
                 {
                     OperatingSystem existing =
@@ -221,38 +248,48 @@ public sealed class UploadStatsController : Controller
                                                                   c.Version == operatingSystem.version);
 
                     if(existing == null)
+                    {
                         await _ctx.OperatingSystems.AddAsync(new OperatingSystem
                         {
                             Name    = operatingSystem.name,
                             Version = operatingSystem.version,
                             Count   = operatingSystem.Value
                         });
+                    }
                     else
                         existing.Count += operatingSystem.Value;
                 }
+            }
 
             if(newstats.Medias != null)
+            {
                 foreach(MediaStats media in newstats.Medias)
                 {
                     Media existing = _ctx.Medias.FirstOrDefault(c => c.Type == media.type && c.Real == media.real);
 
                     if(existing == null)
+                    {
                         await _ctx.Medias.AddAsync(new Media
                         {
                             Type  = media.type,
                             Real  = media.real,
                             Count = media.Value
                         });
+                    }
                     else
                         existing.Count += media.Value;
                 }
+            }
 
             if(newstats.Devices != null)
-                foreach(DeviceStats device in from device in newstats.Devices let existing =
+            {
+                foreach(DeviceStats device in from device in newstats.Devices
+                                              let existing =
                                                   _ctx.DeviceStats.FirstOrDefault(c => c.Bus == device.Bus &&
                                                       c.Manufacturer == device.Manufacturer &&
                                                       c.Model == device.Model && c.Revision == device.Revision)
-                                              where existing == null select device)
+                                              where existing == null
+                                              select device)
                 {
                     await _ctx.DeviceStats.AddAsync(new DeviceStat
                     {
@@ -262,8 +299,10 @@ public sealed class UploadStatsController : Controller
                         Revision     = device.Revision
                     });
                 }
+            }
 
             if(newstats.RemoteApplications != null)
+            {
                 foreach(OsStats application in newstats.RemoteApplications)
                 {
                     RemoteApplication existing =
@@ -271,32 +310,40 @@ public sealed class UploadStatsController : Controller
                                                                     c.Version == application.version);
 
                     if(existing == null)
+                    {
                         await _ctx.RemoteApplications.AddAsync(new RemoteApplication
                         {
                             Name    = application.name,
                             Version = application.version,
                             Count   = application.Value
                         });
+                    }
                     else
                         existing.Count += application.Value;
                 }
+            }
 
             if(newstats.RemoteArchitectures != null)
+            {
                 foreach(NameValueStats nvs in newstats.RemoteArchitectures)
                 {
                     RemoteArchitecture existing = _ctx.RemoteArchitectures.FirstOrDefault(c => c.Name == nvs.name);
 
                     if(existing == null)
+                    {
                         await _ctx.RemoteArchitectures.AddAsync(new RemoteArchitecture
                         {
                             Name  = nvs.name,
                             Count = nvs.Value
                         });
+                    }
                     else
                         existing.Count += nvs.Value;
                 }
+            }
 
             if(newstats.RemoteOperatingSystems != null)
+            {
                 foreach(OsStats remoteOperatingSystem in newstats.RemoteOperatingSystems)
                 {
                     RemoteOperatingSystem existing =
@@ -304,15 +351,18 @@ public sealed class UploadStatsController : Controller
                                                                         c.Version == remoteOperatingSystem.version);
 
                     if(existing == null)
+                    {
                         await _ctx.RemoteOperatingSystems.AddAsync(new RemoteOperatingSystem
                         {
                             Name    = remoteOperatingSystem.name,
                             Version = remoteOperatingSystem.version,
                             Count   = remoteOperatingSystem.Value
                         });
+                    }
                     else
                         existing.Count += remoteOperatingSystem.Value;
                 }
+            }
 
             await _ctx.SaveChangesAsync();
 

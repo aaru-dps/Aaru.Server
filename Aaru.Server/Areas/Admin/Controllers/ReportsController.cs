@@ -3,7 +3,8 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
-[Area("Admin"), Authorize]
+[Area("Admin")]
+[Authorize]
 public sealed class ReportsController : Controller
 {
     readonly AaruServerContext _context;
@@ -20,9 +21,7 @@ public sealed class ReportsController : Controller
     public async Task<IActionResult> Details(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         var model = new UploadedReportDetails
         {
@@ -30,9 +29,7 @@ public sealed class ReportsController : Controller
         };
 
         if(model.Report is null)
-        {
             return NotFound();
-        }
 
         model.ReportAll = _context.Devices.
                                    Where(d => d.Manufacturer == model.Report.Manufacturer &&
@@ -80,16 +77,12 @@ public sealed class ReportsController : Controller
     public async Task<IActionResult> Edit(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         UploadedReport uploadedReport = await _context.Reports.FindAsync(id);
 
         if(uploadedReport == null)
-        {
             return NotFound();
-        }
 
         return View(uploadedReport);
     }
@@ -97,7 +90,8 @@ public sealed class ReportsController : Controller
     // POST: Admin/Reports/Edit/5
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost, ValidateAntiForgeryToken]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(
         int id, [Bind("Id,CompactFlash,Manufacturer,Model,Revision,Type")] UploadedReport changedModel)
     {
@@ -135,22 +129,20 @@ public sealed class ReportsController : Controller
     public async Task<IActionResult> Delete(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         UploadedReport uploadedReport = await _context.Reports.FirstOrDefaultAsync(m => m.Id == id);
 
         if(uploadedReport == null)
-        {
             return NotFound();
-        }
 
         return View(uploadedReport);
     }
 
     // POST: Admin/Reports/Delete/5
-    [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Delete")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         UploadedReport uploadedReport = await _context.Reports.FindAsync(id);
@@ -163,16 +155,12 @@ public sealed class ReportsController : Controller
     public IActionResult Promote(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         UploadedReport uploadedReport = _context.Reports.FirstOrDefault(m => m.Id == id);
 
         if(uploadedReport == null)
-        {
             return NotFound();
-        }
 
         var device = new Device(uploadedReport.ATAId, uploadedReport.ATAPIId, uploadedReport.FireWireId,
                                 uploadedReport.MultiMediaCardId, uploadedReport.PCMCIAId,

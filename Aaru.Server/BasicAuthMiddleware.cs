@@ -51,9 +51,7 @@ public sealed class BasicAuthMiddleware
 
         // Add realm if it is not null
         if(!string.IsNullOrWhiteSpace(_realm))
-        {
             context.Response.Headers["WWW-Authenticate"] += $" realm=\"{_realm}\"";
-        }
 
         // Return unauthorized
         context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;

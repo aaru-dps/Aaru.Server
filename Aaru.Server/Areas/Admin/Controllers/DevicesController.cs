@@ -2,7 +2,8 @@ using Aaru.CommonTypes.Metadata;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
-[Area("Admin"), Authorize]
+[Area("Admin")]
+[Authorize]
 public sealed class DevicesController : Controller
 {
     readonly AaruServerContext _context;
@@ -19,9 +20,7 @@ public sealed class DevicesController : Controller
     public async Task<IActionResult> Details(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         var model = new DeviceDetails
         {
@@ -29,9 +28,7 @@ public sealed class DevicesController : Controller
         };
 
         if(model.Report is null)
-        {
             return NotFound();
-        }
 
         model.ReportAll = _context.Reports.
                                    Where(d => d.Manufacturer == model.Report.Manufacturer &&
@@ -90,16 +87,12 @@ public sealed class DevicesController : Controller
     public async Task<IActionResult> Edit(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         Device device = await _context.Devices.FindAsync(id);
 
         if(device == null)
-        {
             return NotFound();
-        }
 
         return View(device);
     }
@@ -107,10 +100,12 @@ public sealed class DevicesController : Controller
     // POST: Admin/Devices/Edit/5
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost, ValidateAntiForgeryToken]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(
         int id,
-        [Bind("OptimalMultipleSectorsRead,Id,CompactFlash,Manufacturer,Model,Revision,Type")] Device changedModel)
+        [Bind("OptimalMultipleSectorsRead,Id,CompactFlash,Manufacturer,Model,Revision,Type")]
+        Device changedModel)
     {
         if(id != changedModel.Id)
             return NotFound();
@@ -149,22 +144,20 @@ public sealed class DevicesController : Controller
     public async Task<IActionResult> Delete(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         Device device = await _context.Devices.FirstOrDefaultAsync(m => m.Id == id);
 
         if(device == null)
-        {
             return NotFound();
-        }
 
         return View(device);
     }
 
     // POST: Admin/Devices/Delete/5
-    [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Delete")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         Device device = await _context.Devices.FindAsync(id);
@@ -329,7 +322,7 @@ public sealed class DevicesController : Controller
                     report.SCSI?.MultiMediaDevice != null)
             {
                 foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.MmcId == report.SCSI.
-                                                                                  MultiMediaDevice.Id))
+                                                                                      MultiMediaDevice.Id))
                 {
                     testedMedia.MmcId = device.SCSI.MultiMediaDevice.Id;
                     _context.Update(testedMedia);

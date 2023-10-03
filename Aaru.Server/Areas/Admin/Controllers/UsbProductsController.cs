@@ -1,6 +1,7 @@
 namespace Aaru.Server.Areas.Admin.Controllers;
 
-[Area("Admin"), Authorize]
+[Area("Admin")]
+[Authorize]
 public sealed class UsbProductsController : Controller
 {
     readonly AaruServerContext _context;

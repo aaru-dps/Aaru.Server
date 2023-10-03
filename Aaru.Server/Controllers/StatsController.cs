@@ -65,6 +65,7 @@ public sealed class StatsController : Controller
         {
             if(System.IO.File.Exists(Path.Combine(_env.ContentRootPath ?? throw new InvalidOperationException(),
                                                   "Statistics", "Statistics.xml")))
+            {
                 try
                 {
                     var statistics = new Stats();
@@ -72,8 +73,10 @@ public sealed class StatsController : Controller
                     var xs = new XmlSerializer(statistics.GetType());
 
                     FileStream fs =
-                        WaitForFile(Path.Combine(_env.ContentRootPath ?? throw new InvalidOperationException(), "Statistics", "Statistics.xml"),
-                                    FileMode.Open, FileAccess.Read, FileShare.Read);
+                        WaitForFile(
+                            Path.Combine(_env.ContentRootPath ?? throw new InvalidOperationException(), "Statistics",
+                                         "Statistics.xml"),
+                            FileMode.Open, FileAccess.Read, FileShare.Read);
 
                     statistics = (Stats)xs.Deserialize(fs);
                     fs.Close();
@@ -87,18 +90,21 @@ public sealed class StatsController : Controller
                 {
                     // Do nothing
                 }
+            }
 
             if(_ctx.OperatingSystems.Any())
             {
                 List<NameValueStats> operatingSystems = new();
 
                 foreach(OperatingSystem nvs in _ctx.OperatingSystems)
+                {
                     operatingSystems.Add(new NameValueStats
                     {
                         name =
                             $"{DetectOS.GetPlatformName((PlatformID)Enum.Parse(typeof(PlatformID), nvs.Name), nvs.Version)}{(string.IsNullOrEmpty(nvs.Version) ? "" : " ")}{nvs.Version}",
                         Value = nvs.Count
                     });
+                }
 
                 ViewBag.repOperatingSystems = operatingSystems.OrderBy(os => os.name).ToList();
             }
@@ -108,11 +114,13 @@ public sealed class StatsController : Controller
                 List<NameValueStats> versions = new();
 
                 foreach(Version nvs in _ctx.Versions)
+                {
                     versions.Add(new NameValueStats
                     {
                         name  = nvs.Name == "previous" ? "Previous than 3.4.99.0" : nvs.Name,
                         Value = nvs.Count
                     });
+                }
 
                 ViewBag.repVersions = versions.OrderBy(ver => ver.name).ToList();
             }
@@ -138,6 +146,7 @@ public sealed class StatsController : Controller
                 List<MediaItem> virtualMedia = new();
 
                 foreach(Media nvs in _ctx.Medias)
+                {
                     try
                     {
                         (string type, string subType) mediaType =
@@ -145,45 +154,58 @@ public sealed class StatsController : Controller
                                                             nvs.Type));
 
                         if(nvs.Real)
+                        {
                             realMedia.Add(new MediaItem
                             {
                                 Type    = mediaType.type,
                                 SubType = mediaType.subType,
                                 Count   = nvs.Count
                             });
+                        }
                         else
+                        {
                             virtualMedia.Add(new MediaItem
                             {
                                 Type    = mediaType.type,
                                 SubType = mediaType.subType,
                                 Count   = nvs.Count
                             });
+                        }
                     }
                     catch
                     {
                         if(nvs.Real)
+                        {
                             realMedia.Add(new MediaItem
                             {
                                 Type    = nvs.Type,
                                 SubType = null,
                                 Count   = nvs.Count
                             });
+                        }
                         else
+                        {
                             virtualMedia.Add(new MediaItem
                             {
                                 Type    = nvs.Type,
                                 SubType = null,
                                 Count   = nvs.Count
                             });
+                        }
                     }
+                }
 
                 if(realMedia.Count > 0)
+                {
                     ViewBag.repRealMedia = realMedia.OrderBy(media => media.Type).ThenBy(media => media.SubType).
                                                      ToList();
+                }
 
                 if(virtualMedia.Count > 0)
+                {
                     ViewBag.repVirtualMedia = virtualMedia.OrderBy(media => media.Type).ThenBy(media => media.SubType).
                                                            ToList();
+                }
             }
 
             if(_ctx.DeviceStats.Any())
@@ -216,8 +238,10 @@ public sealed class StatsController : Controller
                         var xs = new XmlSerializer(deviceReport.GetType());
 
                         FileStream fs =
-                            WaitForFile(Path.Combine(_env.ContentRootPath ?? throw new InvalidOperationException(), "Reports", xmlFile),
-                                        FileMode.Open, FileAccess.Read, FileShare.Read);
+                            WaitForFile(
+                                Path.Combine(_env.ContentRootPath ?? throw new InvalidOperationException(), "Reports",
+                                             xmlFile),
+                                FileMode.Open, FileAccess.Read, FileShare.Read);
 
                         deviceReport = (DeviceReport)xs.Deserialize(fs);
                         fs.Close();
@@ -259,7 +283,7 @@ public sealed class StatsController : Controller
 
     static FileStream WaitForFile(string fullPath, FileMode mode, FileAccess access, FileShare share)
     {
-        for(int numTries = 0; numTries < 100; numTries++)
+        for(var numTries = 0; numTries < 100; numTries++)
         {
             FileStream fs = null;
 
@@ -290,11 +314,11 @@ public sealed class StatsController : Controller
             Count = g.Sum()
         });
 
-        string[][] result = new string[2][];
+        var result = new string[2][];
         result[0] = query.Select(x => x.Name).ToArray();
         result[1] = query.Select(x => x.Count.ToString()).ToArray();
 
-        for(int i = 0; i < result[0].Length; i++)
+        for(var i = 0; i < result[0].Length; i++)
             result[0][i] = DetectOS.GetPlatformName((PlatformID)Enum.Parse(typeof(PlatformID), result[0][i]));
 
         return Json(result);
@@ -583,7 +607,7 @@ public sealed class StatsController : Controller
 
     public IActionResult GetDevicesByManufacturerData()
     {
-        List<Device> devices = _ctx.Devices.Where(d => d.Manufacturer != null && d.Manufacturer != "").ToList();
+        var devices = _ctx.Devices.Where(d => d.Manufacturer != null && d.Manufacturer != "").ToList();
 
         var data = devices.Select(d => d.Manufacturer.ToLowerInvariant()).Distinct().Select(manufacturer => new
         {

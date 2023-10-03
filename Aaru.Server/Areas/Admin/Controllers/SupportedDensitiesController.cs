@@ -2,7 +2,8 @@ using Aaru.CommonTypes.Metadata;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
-[Area("Admin"), Authorize]
+[Area("Admin")]
+[Authorize]
 public sealed class SupportedDensitiesController : Controller
 {
     readonly AaruServerContext _context;
@@ -23,22 +24,20 @@ public sealed class SupportedDensitiesController : Controller
     public async Task<IActionResult> Delete(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         SupportedDensity supportedDensity = await _context.SupportedDensity.FirstOrDefaultAsync(m => m.Id == id);
 
         if(supportedDensity == null)
-        {
             return NotFound();
-        }
 
         return View(supportedDensity);
     }
 
     // POST: Admin/SupportedDensities/Delete/5
-    [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Delete")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         SupportedDensity supportedDensity = await _context.SupportedDensity.FindAsync(id);

@@ -1,6 +1,7 @@
 namespace Aaru.Server.Areas.Admin.Controllers;
 
-[Area("Admin"), Authorize]
+[Area("Admin")]
+[Authorize]
 public sealed class DeviceStatsController : Controller
 {
     readonly AaruServerContext _context;
@@ -16,16 +17,12 @@ public sealed class DeviceStatsController : Controller
     public async Task<IActionResult> Edit(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         DeviceStat deviceStat = await _context.DeviceStats.FindAsync(id);
 
         if(deviceStat == null)
-        {
             return NotFound();
-        }
 
         return View(deviceStat);
     }
@@ -33,7 +30,8 @@ public sealed class DeviceStatsController : Controller
     // POST: Admin/DeviceStats/Edit/5
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost, ValidateAntiForgeryToken]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, [Bind("Id,Manufacturer,Model,Revision,Bus")] DeviceStat changedModel)
     {
         if(id != changedModel.Id)
@@ -69,22 +67,20 @@ public sealed class DeviceStatsController : Controller
     public async Task<IActionResult> Delete(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         DeviceStat deviceStat = await _context.DeviceStats.FirstOrDefaultAsync(m => m.Id == id);
 
         if(deviceStat == null)
-        {
             return NotFound();
-        }
 
         return View(deviceStat);
     }
 
     // POST: Admin/DeviceStats/Delete/5
-    [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Delete")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         DeviceStat deviceStat = await _context.DeviceStats.FindAsync(id);

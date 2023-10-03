@@ -47,10 +47,13 @@ public class UsbVendor : BaseModel<int>
         AddedWhen = ModifiedWhen = DateTime.UtcNow;
     }
 
-    [DisplayName("Manufacturer ID"), DisplayFormat(DataFormatString = "0x{0:X4}")]
+    [DisplayName("Manufacturer ID")]
+    [DisplayFormat(DataFormatString = "0x{0:X4}")]
     public ushort VendorId { get; set; }
+
     [DisplayName("Manufacturer")]
-    public string Vendor { get;         set; }
+    public string Vendor { get; set; }
+
     public DateTime AddedWhen    { get; set; }
     public DateTime ModifiedWhen { get; set; }
 

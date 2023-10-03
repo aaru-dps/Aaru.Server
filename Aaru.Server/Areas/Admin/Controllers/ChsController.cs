@@ -3,7 +3,8 @@ using Newtonsoft.Json;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
-[Area("Admin"), Authorize]
+[Area("Admin")]
+[Authorize]
 public sealed class ChsController : Controller
 {
     readonly AaruServerContext _context;
@@ -16,7 +17,7 @@ public sealed class ChsController : Controller
 
     public IActionResult Consolidate()
     {
-        List<ChsModel> dups = _context.Chs.GroupBy(x => new
+        var dups = _context.Chs.GroupBy(x => new
         {
             x.Cylinders,
             x.Heads,
@@ -35,7 +36,9 @@ public sealed class ChsController : Controller
         });
     }
 
-    [HttpPost, ActionName("Consolidate"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Consolidate")]
+    [ValidateAntiForgeryToken]
     public IActionResult ConsolidateConfirmed(string models)
     {
         ChsModel[] duplicates;
@@ -65,14 +68,10 @@ public sealed class ChsController : Controller
                                         Skip(1).ToArray())
             {
                 foreach(TestedMedia media in _context.TestedMedia.Where(d => d.CHS.Id == chs.Id))
-                {
                     media.CHS = master;
-                }
 
                 foreach(TestedMedia media in _context.TestedMedia.Where(d => d.CurrentCHS.Id == chs.Id))
-                {
                     media.CurrentCHS = master;
-                }
 
                 _context.Chs.Remove(chs);
             }

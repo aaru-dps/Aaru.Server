@@ -36,7 +36,7 @@
 }
 <div>
 <h2>GD-ROM swap-trick capabilities report</h2>
-<hr />
+<hr/>
 @if(Model.TestCrashed)
 {
     <h4>Computer crashed while testing.</h4>
@@ -44,7 +44,7 @@
 else if(Model.RecognizedSwapDisc)
 {
     <h4>Swap disc Lead-Out starts at @($"{Model.SwapDiscLeadOutPMIN:X2}"):@($"{Model.SwapDiscLeadOutPSEC:X2}"):@($"{Model.SwapDiscLeadOutPFRAM:X2}") (@($"{Model.SwapDiscLeadOutStart}") sectors).</h4>
-    <hr />
+    <hr/>
     <dl class="row">
         <dt class="col-sm-4">Minimum readable sector in HD area:</dt>
         <dd class="col-sm-8">@Model.MinimumReadableSectorInHdArea</dd>

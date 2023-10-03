@@ -2,7 +2,8 @@ using Aaru.CommonTypes.Metadata;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
-[Area("Admin"), Authorize]
+[Area("Admin")]
+[Authorize]
 public sealed class TestedSequentialMediasController : Controller
 {
     readonly AaruServerContext _context;
@@ -18,16 +19,12 @@ public sealed class TestedSequentialMediasController : Controller
     public async Task<IActionResult> Edit(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         TestedSequentialMedia testedSequentialMedia = await _context.TestedSequentialMedia.FindAsync(id);
 
         if(testedSequentialMedia == null)
-        {
             return NotFound();
-        }
 
         return View(testedSequentialMedia);
     }
@@ -35,7 +32,8 @@ public sealed class TestedSequentialMediasController : Controller
     // POST: Admin/TestedSequentialMedias/Edit/5
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost, ValidateAntiForgeryToken]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(
         int id, [Bind("Id,Manufacturer,MediumTypeName,Model")] TestedSequentialMedia changedModel)
     {
@@ -71,23 +69,21 @@ public sealed class TestedSequentialMediasController : Controller
     public async Task<IActionResult> Delete(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         TestedSequentialMedia testedSequentialMedia =
             await _context.TestedSequentialMedia.FirstOrDefaultAsync(m => m.Id == id);
 
         if(testedSequentialMedia == null)
-        {
             return NotFound();
-        }
 
         return View(testedSequentialMedia);
     }
 
     // POST: Admin/TestedSequentialMedias/Delete/5
-    [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Delete")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         TestedSequentialMedia testedSequentialMedia = await _context.TestedSequentialMedia.FindAsync(id);

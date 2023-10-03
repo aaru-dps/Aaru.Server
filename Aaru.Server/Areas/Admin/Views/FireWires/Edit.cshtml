@@ -34,39 +34,39 @@
     // ****************************************************************************/
 }
 <h4>FireWire registers</h4>
-<hr />
+<hr/>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="Id" type="hidden" />
+            <input asp-for="Id" type="hidden"/>
             <div class="form-group">
                 <label asp-for="VendorID" class="control-label"></label>
-                <input asp-for="VendorID" class="form-control" />
+                <input asp-for="VendorID" class="form-control"/>
                 <span asp-validation-for="VendorID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ProductID" class="control-label"></label>
-                <input asp-for="ProductID" class="form-control" />
+                <input asp-for="ProductID" class="form-control"/>
                 <span asp-validation-for="ProductID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Manufacturer" class="control-label"></label>
-                <input asp-for="Manufacturer" class="form-control" />
+                <input asp-for="Manufacturer" class="form-control"/>
                 <span asp-validation-for="Manufacturer" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Product" class="control-label"></label>
-                <input asp-for="Product" class="form-control" />
+                <input asp-for="Product" class="form-control"/>
                 <span asp-validation-for="Product" class="text-danger"></span>
             </div>
             <div class="form-check form-group">
                 <label class="form-check-label">
-                    <input asp-for="RemovableMedia" class="form-check-input" /> @Html.DisplayNameFor(model => model.RemovableMedia)
+                    <input asp-for="RemovableMedia" class="form-check-input"/> @Html.DisplayNameFor(model => model.RemovableMedia)
                 </label>
             </div>
             <div class="form-group">
-                <input class="btn btn-primary" type="submit" value="Save" />
+                <input class="btn btn-primary" type="submit" value="Save"/>
                 <a asp-action="Index" class="btn btn-secondary">Back to List</a>
             </div>
         </form>

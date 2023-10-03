@@ -1,4 +1,5 @@
 @using System.Text
+@using Aaru.CommonTypes.Metadata
 @model IEnumerable<Aaru.CommonTypes.Metadata.Ata>
 
 @{
@@ -91,7 +92,7 @@ ATA IDENTIFY DEVICE responses with possible private data
     </tr>
     </thead>
     <tbody>
-    @foreach(var item in Model)
+    @foreach(Ata item in Model)
     {
         <tr>
             <td>

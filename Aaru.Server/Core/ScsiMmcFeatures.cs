@@ -252,10 +252,13 @@ public static class ScsiMmcFeatures
             mmcOneValue.Add($"{ftr.LogicalBlockSize} bytes per logical block");
 
         if(ftr.MultiRead)
+        {
             mmcOneValue.
                 Add("Drive claims capability to read all CD formats according to OSTA Multi-Read Specification");
+        }
 
         if(ftr.PhysicalInterfaceStandard.HasValue)
+        {
             switch(ftr.PhysicalInterfaceStandard)
             {
                 case PhysicalInterfaces.Unspecified:
@@ -303,6 +306,7 @@ public static class ScsiMmcFeatures
 
                     break;
             }
+        }
 
         if(ftr.PreventJumper)
             mmcOneValue.Add("Drive power ups locked");
@@ -452,6 +456,7 @@ public static class ScsiMmcFeatures
             mmcOneValue.Add("Drive supports Device Busy events");
 
         if(ftr.LoadingMechanismType.HasValue)
+        {
             switch(ftr.LoadingMechanismType)
             {
                 case 0:
@@ -479,6 +484,7 @@ public static class ScsiMmcFeatures
 
                     break;
             }
+        }
 
         if(ftr.SupportsHybridDiscs)
             mmcOneValue.Add("Drive is able to access Hybrid discs");

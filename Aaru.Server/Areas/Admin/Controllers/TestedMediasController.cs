@@ -15,7 +15,8 @@ using Spare = Aaru.Decoders.Bluray.Spare;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
-[Area("Admin"), Authorize]
+[Area("Admin")]
+[Authorize]
 public sealed class TestedMediasController : Controller
 {
     readonly AaruServerContext _context;
@@ -34,16 +35,12 @@ public sealed class TestedMediasController : Controller
     public async Task<IActionResult> Details(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         TestedMedia testedMedia = await _context.TestedMedia.FirstOrDefaultAsync(m => m.Id == id);
 
         if(testedMedia == null)
-        {
             return NotFound();
-        }
 
         return View(testedMedia);
     }
@@ -52,16 +49,12 @@ public sealed class TestedMediasController : Controller
     public async Task<IActionResult> Edit(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         TestedMedia testedMedia = await _context.TestedMedia.FindAsync(id);
 
         if(testedMedia == null)
-        {
             return NotFound();
-        }
 
         return View(testedMedia);
     }
@@ -69,7 +62,8 @@ public sealed class TestedMediasController : Controller
     // POST: Admin/TestedMedias/Edit/5
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost, ValidateAntiForgeryToken]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(
         int id, [Bind("Id,Blocks,BlockSize,LongBlockSize,Manufacturer,MediumTypeName,Model")] TestedMedia changedModel)
     {
@@ -108,22 +102,20 @@ public sealed class TestedMediasController : Controller
     public async Task<IActionResult> Delete(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         TestedMedia testedMedia = await _context.TestedMedia.FirstOrDefaultAsync(m => m.Id == id);
 
         if(testedMedia == null)
-        {
             return NotFound();
-        }
 
         return View(testedMedia);
     }
 
     // POST: Admin/TestedMedias/Delete/5
-    [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Delete")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         TestedMedia testedMedia = await _context.TestedMedia.FindAsync(id);
@@ -141,9 +133,7 @@ public sealed class TestedMediasController : Controller
         TestedMedia testedMedia = _context.TestedMedia.FirstOrDefault(m => m.Id == id);
 
         if(testedMedia == null)
-        {
             return NotFound();
-        }
 
         var model = new TestedMediaDataModel
         {
@@ -152,11 +142,11 @@ public sealed class TestedMediasController : Controller
         };
 
         byte[] buffer;
-        byte[] sector    = new byte[2352];
-        byte[] subq      = new byte[16];
-        byte[] fullsub   = new byte[96];
-        bool   c2Errors  = false;
-        bool   scrambled = false;
+        var    sector    = new byte[2352];
+        var    subq      = new byte[16];
+        var    fullsub   = new byte[96];
+        var    c2Errors  = false;
+        var    scrambled = false;
 
         switch(data)
         {
@@ -205,7 +195,7 @@ public sealed class TestedMediasController : Controller
 
                 model.Decoded = Sector.Prettify(sector);
 
-                for(int i = 2352; i < buffer.Length; i++)
+                for(var i = 2352; i < buffer.Length; i++)
                 {
                     if(buffer[i] == 0x00)
                         continue;
@@ -258,7 +248,7 @@ public sealed class TestedMediasController : Controller
                 if(buffer.Length < 2448)
                     break;
 
-                for(int i = 2352; i < 2616; i++)
+                for(var i = 2352; i < 2616; i++)
                 {
                     if(buffer[i] == 0x00)
                         continue;
@@ -428,7 +418,7 @@ public sealed class TestedMediasController : Controller
 
                 model.Decoded += "\n" + GetPrettySub(fullsub);
 
-                for(int i = 2352; i < 2646; i++)
+                for(var i = 2352; i < 2646; i++)
                 {
                     if(buffer[i] == 0x00)
                         continue;
@@ -582,7 +572,7 @@ public sealed class TestedMediasController : Controller
 
                 model.Decoded += "\n" + GetPrettySub(fullsub);
 
-                for(int i = 2448; i < buffer.Length; i++)
+                for(var i = 2448; i < buffer.Length; i++)
                 {
                     if(buffer[i] != 0x00)
                     {
@@ -639,7 +629,7 @@ public sealed class TestedMediasController : Controller
 
                 model.Decoded += "\n" + GetPrettySub(fullsub);
 
-                for(int i = 2468; i < 2762; i++)
+                for(var i = 2468; i < 2762; i++)
                 {
                     if(buffer[i] == 0x00)
                         continue;
@@ -681,7 +671,7 @@ public sealed class TestedMediasController : Controller
 
                 model.Decoded += "\n" + GetPrettySub(fullsub);
 
-                for(int i = 2468; i < 2762; i++)
+                for(var i = 2468; i < 2762; i++)
                 {
                     if(buffer[i] == 0x00)
                         continue;
@@ -694,7 +684,8 @@ public sealed class TestedMediasController : Controller
                 model.Decoded += "\n" + (c2Errors ? "C2 errors found." : "No C2 errors.");
 
                 break;
-            default: return NotFound();
+            default:
+                return NotFound();
         }
 
         model.RawDataAsHex = PrintHex.ByteArrayToHexArrayString(buffer);
@@ -712,10 +703,10 @@ public sealed class TestedMediasController : Controller
     {
         byte[] deint = Subchannel.Deinterleave(sub);
 
-        bool validP  = true;
-        bool validRw = true;
+        var validP  = true;
+        var validRw = true;
 
-        for(int i = 0; i < 12; i++)
+        for(var i = 0; i < 12; i++)
         {
             if(deint[i] == 0x00 ||
                deint[i] == 0xFF)
@@ -726,7 +717,7 @@ public sealed class TestedMediasController : Controller
             break;
         }
 
-        for(int i = 24; i < 96; i++)
+        for(var i = 24; i < 96; i++)
         {
             if(deint[i] == 0x00)
                 continue;
@@ -736,7 +727,7 @@ public sealed class TestedMediasController : Controller
             break;
         }
 
-        byte[] q = new byte[12];
+        var q = new byte[12];
         Array.Copy(deint, 12, q, 0, 12);
 
         return Subchannel.PrettifyQ(q, deint[21] > 0x10, 16, !validP, false, validRw);

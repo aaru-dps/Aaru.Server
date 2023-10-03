@@ -3,7 +3,8 @@ using Newtonsoft.Json;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
-[Area("Admin"), Authorize]
+[Area("Admin")]
+[Authorize]
 public sealed class UsbsController : Controller
 {
     readonly AaruServerContext _context;
@@ -19,16 +20,12 @@ public sealed class UsbsController : Controller
     public async Task<IActionResult> Details(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         Usb usb = await _context.Usb.FirstOrDefaultAsync(m => m.Id == id);
 
         if(usb == null)
-        {
             return NotFound();
-        }
 
         return View(usb);
     }
@@ -37,22 +34,20 @@ public sealed class UsbsController : Controller
     public async Task<IActionResult> Delete(int? id)
     {
         if(id == null)
-        {
             return NotFound();
-        }
 
         Usb usb = await _context.Usb.FirstOrDefaultAsync(m => m.Id == id);
 
         if(usb == null)
-        {
             return NotFound();
-        }
 
         return View(usb);
     }
 
     // POST: Admin/Usbs/Delete/5
-    [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Delete")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         Usb usb = await _context.Usb.FindAsync(id);
@@ -64,7 +59,7 @@ public sealed class UsbsController : Controller
 
     public IActionResult Consolidate()
     {
-        List<UsbModel> dups = _context.Usb.GroupBy(x => new
+        var dups = _context.Usb.GroupBy(x => new
         {
             x.Manufacturer,
             x.Product,
@@ -85,7 +80,9 @@ public sealed class UsbsController : Controller
         });
     }
 
-    [HttpPost, ActionName("Consolidate"), ValidateAntiForgeryToken]
+    [HttpPost]
+    [ActionName("Consolidate")]
+    [ValidateAntiForgeryToken]
     public IActionResult ConsolidateConfirmed(string models)
     {
         UsbModel[] duplicates;
@@ -125,14 +122,10 @@ public sealed class UsbsController : Controller
                 }
 
                 foreach(Device device in _context.Devices.Where(d => d.USB.Id == slave.Id))
-                {
                     device.USB = master;
-                }
 
                 foreach(UploadedReport report in _context.Reports.Where(d => d.USB.Id == slave.Id))
-                {
                     report.USB = master;
-                }
 
                 if(master.Descriptors is null &&
                    slave.Descriptors != null)

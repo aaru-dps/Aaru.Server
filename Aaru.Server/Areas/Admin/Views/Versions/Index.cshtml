@@ -1,3 +1,4 @@
+@using Version = Aaru.Server.Models.Version
 @model IEnumerable<Aaru.Server.Models.Version>
 
 @{
@@ -47,7 +48,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach(var item in Model)
+    @foreach(Version item in Model)
     {
         <tr>
             <td>

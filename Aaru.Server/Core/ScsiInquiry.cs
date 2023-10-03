@@ -34,7 +34,7 @@ using Aaru.CommonTypes.Structs.Devices.SCSI;
 
 namespace Aaru.Server.Core;
 
-internal static class ScsiInquiry
+static class ScsiInquiry
 {
     /// <summary>
     ///     Takes the SCSI INQUIRY part of a device report and prints it as a list of values to be sequenced by ASP.NET in
@@ -376,10 +376,12 @@ internal static class ScsiInquiry
             return scsiOneValue;
 
         foreach(ushort versionDescriptor in inquiry.VersionDescriptors)
+        {
             switch(versionDescriptor)
             {
                 case 0xFFFF:
-                case 0x0000: break;
+                case 0x0000:
+                    break;
                 case 0x0020:
                     scsiOneValue.Add("Device complies with SAM (no version claimed)");
 
@@ -2257,6 +2259,7 @@ internal static class ScsiInquiry
 
                     break;
             }
+        }
 
         return scsiOneValue;
     }

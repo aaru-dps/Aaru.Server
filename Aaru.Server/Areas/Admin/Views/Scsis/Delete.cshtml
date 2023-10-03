@@ -38,11 +38,11 @@
 <h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>SCSI INQUIRY - ID = @Model.Id</h4>
-    <hr />
+    <hr/>
     @Html.Raw(Html.EncodedMultiLineText(Inquiry.Prettify(Model.InquiryData)))
     <form asp-action="Delete">
-        <input asp-for="Id" type="hidden" />
+        <input asp-for="Id" type="hidden"/>
         <a asp-action="Index" class="btn btn-primary">Back to List</a>
-        <input class="btn btn-danger" type="submit" value="Delete" />
+        <input class="btn btn-danger" type="submit" value="Delete"/>
     </form>
 </div>

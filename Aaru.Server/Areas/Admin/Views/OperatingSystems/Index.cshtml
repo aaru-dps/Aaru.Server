@@ -1,3 +1,4 @@
+@using OperatingSystem = Aaru.Server.Models.OperatingSystem
 @model IEnumerable<Aaru.Server.Models.OperatingSystem>
 
 @{
@@ -49,7 +50,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach(var item in Model)
+    @foreach(OperatingSystem item in Model)
     {
         <tr>
             <td>
