@@ -12,44 +12,54 @@ public sealed class ReportsController : Controller
     public ReportsController(AaruServerContext context) => _context = context;
 
     // GET: Admin/Reports
-    public async Task<IActionResult> Index() => View(await _context.Reports.OrderBy(r => r.Manufacturer).
-                                                                    ThenBy(r => r.Model).ThenBy(r => r.Revision).
-                                                                    ThenBy(r => r.CompactFlash).ThenBy(r => r.Type).
-                                                                    ToListAsync());
+    public async Task<IActionResult> Index() => View(await _context.Reports.OrderBy(r => r.Manufacturer)
+                                                                   .ThenBy(r => r.Model)
+                                                                   .ThenBy(r => r.Revision)
+                                                                   .ThenBy(r => r.CompactFlash)
+                                                                   .ThenBy(r => r.Type)
+                                                                   .ToListAsync());
 
     // GET: Admin/Reports/Details/5
     public async Task<IActionResult> Details(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         var model = new UploadedReportDetails
         {
             Report = await _context.Reports.FirstOrDefaultAsync(m => m.Id == id)
         };
 
-        if(model.Report is null)
-            return NotFound();
+        if(model.Report is null) return NotFound();
 
-        model.ReportAll = _context.Devices.
-                                   Where(d => d.Manufacturer == model.Report.Manufacturer &&
-                                              d.Model == model.Report.Model && d.Revision == model.Report.Revision).
-                                   Select(d => d.Id).ToList();
+        model.ReportAll = _context.Devices
+                                  .Where(d => d.Manufacturer == model.Report.Manufacturer &&
+                                              d.Model        == model.Report.Model        &&
+                                              d.Revision     == model.Report.Revision)
+                                  .Select(d => d.Id)
+                                  .ToList();
 
-        model.ReportButManufacturer = _context.Devices.
-                                               Where(d => d.Model    == model.Report.Model &&
-                                                          d.Revision == model.Report.Revision).Select(d => d.Id).
-                                               Where(d => model.ReportAll.All(r => r != d)).ToList();
+        model.ReportButManufacturer = _context.Devices
+                                              .Where(d => d.Model    == model.Report.Model &&
+                                                          d.Revision == model.Report.Revision)
+                                              .Select(d => d.Id)
+                                              .Where(d => model.ReportAll.All(r => r != d))
+                                              .ToList();
 
-        model.SameAll = _context.Reports.
-                                 Where(d => d.Manufacturer == model.Report.Manufacturer &&
-                                            d.Model == model.Report.Model && d.Revision == model.Report.Revision &&
-                                            d.Id != id).Select(d => d.Id).ToList();
+        model.SameAll = _context.Reports
+                                .Where(d => d.Manufacturer == model.Report.Manufacturer &&
+                                            d.Model        == model.Report.Model        &&
+                                            d.Revision     == model.Report.Revision     &&
+                                            d.Id           != id)
+                                .Select(d => d.Id)
+                                .ToList();
 
-        model.SameButManufacturer = _context.Reports.
-                                             Where(d => d.Model    == model.Report.Model    &&
-                                                        d.Revision == model.Report.Revision && d.Id != id).
-                                             Select(d => d.Id).Where(d => model.SameAll.All(r => r != d)).ToList();
+        model.SameButManufacturer = _context.Reports
+                                            .Where(d => d.Model    == model.Report.Model    &&
+                                                        d.Revision == model.Report.Revision &&
+                                                        d.Id       != id)
+                                            .Select(d => d.Id)
+                                            .Where(d => model.SameAll.All(r => r != d))
+                                            .ToList();
 
         model.ReadCapabilitiesId =
             model.Report.ATA?.ReadCapabilities?.Id ?? model.Report.SCSI?.ReadCapabilities?.Id ?? 0;
@@ -61,14 +71,21 @@ public sealed class ReportsController : Controller
         int mmcId   = model.Report.SCSI?.MultiMediaDevice?.Id ?? 0;
         int sscId   = model.Report.SCSI?.SequentialDevice?.Id ?? 0;
 
-        model.TestedMedias = _context.TestedMedia.
-                                      Where(t => t.AtaId == ataId || t.AtaId == atapiId || t.ScsiId == scsiId ||
-                                                 t.MmcId == mmcId).OrderBy(t => t.Manufacturer).ThenBy(t => t.Model).
-                                      ThenBy(t => t.MediumTypeName).ToList();
+        model.TestedMedias = _context.TestedMedia
+                                     .Where(t => t.AtaId  == ataId   ||
+                                                 t.AtaId  == atapiId ||
+                                                 t.ScsiId == scsiId  ||
+                                                 t.MmcId  == mmcId)
+                                     .OrderBy(t => t.Manufacturer)
+                                     .ThenBy(t => t.Model)
+                                     .ThenBy(t => t.MediumTypeName)
+                                     .ToList();
 
-        model.TestedSequentialMedias = _context.TestedSequentialMedia.Where(t => t.SscId == sscId).
-                                                OrderBy(t => t.Manufacturer).ThenBy(t => t.Model).
-                                                ThenBy(t => t.MediumTypeName).ToList();
+        model.TestedSequentialMedias = _context.TestedSequentialMedia.Where(t => t.SscId == sscId)
+                                               .OrderBy(t => t.Manufacturer)
+                                               .ThenBy(t => t.Model)
+                                               .ThenBy(t => t.MediumTypeName)
+                                               .ToList();
 
         return View(model);
     }
@@ -76,13 +93,11 @@ public sealed class ReportsController : Controller
     // GET: Admin/Reports/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         UploadedReport uploadedReport = await _context.Reports.FindAsync(id);
 
-        if(uploadedReport == null)
-            return NotFound();
+        if(uploadedReport == null) return NotFound();
 
         return View(uploadedReport);
     }
@@ -95,16 +110,13 @@ public sealed class ReportsController : Controller
     public async Task<IActionResult> Edit(
         int id, [Bind("Id,CompactFlash,Manufacturer,Model,Revision,Type")] UploadedReport changedModel)
     {
-        if(id != changedModel.Id)
-            return NotFound();
+        if(id != changedModel.Id) return NotFound();
 
-        if(!ModelState.IsValid)
-            return View(changedModel);
+        if(!ModelState.IsValid) return View(changedModel);
 
         UploadedReport model = await _context.Reports.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(model is null)
-            return NotFound();
+        if(model is null) return NotFound();
 
         model.CompactFlash = changedModel.CompactFlash;
         model.Manufacturer = changedModel.Manufacturer;
@@ -128,13 +140,11 @@ public sealed class ReportsController : Controller
     // GET: Admin/Reports/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         UploadedReport uploadedReport = await _context.Reports.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(uploadedReport == null)
-            return NotFound();
+        if(uploadedReport == null) return NotFound();
 
         return View(uploadedReport);
     }
@@ -154,46 +164,50 @@ public sealed class ReportsController : Controller
 
     public IActionResult Promote(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         UploadedReport uploadedReport = _context.Reports.FirstOrDefault(m => m.Id == id);
 
-        if(uploadedReport == null)
-            return NotFound();
+        if(uploadedReport == null) return NotFound();
 
-        var device = new Device(uploadedReport.ATAId, uploadedReport.ATAPIId, uploadedReport.FireWireId,
-                                uploadedReport.MultiMediaCardId, uploadedReport.PCMCIAId,
-                                uploadedReport.SecureDigitalId, uploadedReport.SCSIId, uploadedReport.USBId,
-                                uploadedReport.UploadedWhen, uploadedReport.Manufacturer, uploadedReport.Model,
-                                uploadedReport.Revision, uploadedReport.CompactFlash, uploadedReport.Type,
+        var device = new Device(uploadedReport.ATAId,
+                                uploadedReport.ATAPIId,
+                                uploadedReport.FireWireId,
+                                uploadedReport.MultiMediaCardId,
+                                uploadedReport.PCMCIAId,
+                                uploadedReport.SecureDigitalId,
+                                uploadedReport.SCSIId,
+                                uploadedReport.USBId,
+                                uploadedReport.UploadedWhen,
+                                uploadedReport.Manufacturer,
+                                uploadedReport.Model,
+                                uploadedReport.Revision,
+                                uploadedReport.CompactFlash,
+                                uploadedReport.Type,
                                 uploadedReport.GdRomSwapDiscCapabilitiesId);
 
         EntityEntry<Device> res = _context.Devices.Add(device);
         _context.Reports.Remove(uploadedReport);
         _context.SaveChanges();
 
-        return RedirectToAction(nameof(DevicesController.Details), "Devices", new
-        {
-            id = res.Entity.Id
-        });
+        return RedirectToAction(nameof(DevicesController.Details),
+                                "Devices",
+                                new
+                                {
+                                    id = res.Entity.Id
+                                });
     }
 
     public IActionResult Merge(int? master, int? slave)
     {
-        if(master is null ||
-           slave is null)
-            return NotFound();
+        if(master is null || slave is null) return NotFound();
 
         UploadedReport masterReport = _context.Reports.FirstOrDefault(m => m.Id == master);
         UploadedReport slaveReport  = _context.Reports.FirstOrDefault(m => m.Id == slave);
 
-        if(masterReport is null ||
-           slaveReport is null)
-            return NotFound();
+        if(masterReport is null || slaveReport is null) return NotFound();
 
-        if(masterReport.ATAId != null &&
-           masterReport.ATAId != slaveReport.ATAId)
+        if(masterReport.ATAId != null && masterReport.ATAId != slaveReport.ATAId)
         {
             foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.AtaId == slaveReport.ATAId))
             {
@@ -201,15 +215,13 @@ public sealed class ReportsController : Controller
                 _context.Update(testedMedia);
             }
         }
-        else if(masterReport.ATAId == null &&
-                slaveReport.ATAId  != null)
+        else if(masterReport.ATAId == null && slaveReport.ATAId != null)
         {
             masterReport.ATAId = slaveReport.ATAId;
             _context.Update(masterReport);
         }
 
-        if(masterReport.ATAPIId != null &&
-           masterReport.ATAPIId != slaveReport.ATAPIId)
+        if(masterReport.ATAPIId != null && masterReport.ATAPIId != slaveReport.ATAPIId)
         {
             foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.AtaId == slaveReport.ATAPIId))
             {
@@ -217,15 +229,13 @@ public sealed class ReportsController : Controller
                 _context.Update(testedMedia);
             }
         }
-        else if(masterReport.ATAPIId == null &&
-                slaveReport.ATAPIId  != null)
+        else if(masterReport.ATAPIId == null && slaveReport.ATAPIId != null)
         {
             masterReport.ATAPIId = slaveReport.ATAPIId;
             _context.Update(masterReport);
         }
 
-        if(masterReport.SCSIId != null &&
-           masterReport.SCSIId != slaveReport.SCSIId)
+        if(masterReport.SCSIId != null && masterReport.SCSIId != slaveReport.SCSIId)
         {
             foreach(TestedMedia testedMedia in _context.TestedMedia.Where(d => d.ScsiId == slaveReport.SCSIId))
             {
@@ -233,8 +243,7 @@ public sealed class ReportsController : Controller
                 _context.Update(testedMedia);
             }
         }
-        else if(masterReport.SCSIId == null &&
-                slaveReport.SCSIId  != null)
+        else if(masterReport.SCSIId == null && slaveReport.SCSIId != null)
         {
             masterReport.SCSIId = slaveReport.SCSIId;
             _context.Update(masterReport);
@@ -258,14 +267,12 @@ public sealed class ReportsController : Controller
             _context.Update(masterReport);
         }
 
-        if(masterReport.GdRomSwapDiscCapabilitiesId == null &&
-           slaveReport.GdRomSwapDiscCapabilitiesId  != null)
+        if(masterReport.GdRomSwapDiscCapabilitiesId == null && slaveReport.GdRomSwapDiscCapabilitiesId != null)
         {
             masterReport.GdRomSwapDiscCapabilitiesId = slaveReport.GdRomSwapDiscCapabilitiesId;
             _context.Update(masterReport);
         }
-        else if(masterReport.GdRomSwapDiscCapabilitiesId != null &&
-                slaveReport.GdRomSwapDiscCapabilitiesId  != null)
+        else if(masterReport.GdRomSwapDiscCapabilitiesId != null && slaveReport.GdRomSwapDiscCapabilitiesId != null)
         {
             masterReport.GdRomSwapDiscCapabilitiesId = slaveReport.GdRomSwapDiscCapabilitiesId;
             _context.Update(masterReport);
@@ -274,9 +281,10 @@ public sealed class ReportsController : Controller
         _context.Remove(slaveReport);
         _context.SaveChanges();
 
-        return RedirectToAction(nameof(Details), new
-        {
-            Id = master
-        });
+        return RedirectToAction(nameof(Details),
+                                new
+                                {
+                                    Id = master
+                                });
     }
 }

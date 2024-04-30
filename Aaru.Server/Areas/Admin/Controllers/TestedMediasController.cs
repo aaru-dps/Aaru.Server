@@ -24,23 +24,23 @@ public sealed class TestedMediasController : Controller
     public TestedMediasController(AaruServerContext context) => _context = context;
 
     // GET: Admin/TestedMedias
-    public async Task<IActionResult> Index() => View(await _context.TestedMedia.OrderBy(m => m.Manufacturer).
-                                                                    ThenBy(m => m.Model).ThenBy(m => m.MediumTypeName).
-                                                                    ThenBy(m => m.MediaIsRecognized).
-                                                                    ThenBy(m => m.LongBlockSize).
-                                                                    ThenBy(m => m.BlockSize).ThenBy(m => m.Blocks).
-                                                                    ToListAsync());
+    public async Task<IActionResult> Index() => View(await _context.TestedMedia.OrderBy(m => m.Manufacturer)
+                                                                   .ThenBy(m => m.Model)
+                                                                   .ThenBy(m => m.MediumTypeName)
+                                                                   .ThenBy(m => m.MediaIsRecognized)
+                                                                   .ThenBy(m => m.LongBlockSize)
+                                                                   .ThenBy(m => m.BlockSize)
+                                                                   .ThenBy(m => m.Blocks)
+                                                                   .ToListAsync());
 
     // GET: Admin/TestedMedias/Details/5
     public async Task<IActionResult> Details(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         TestedMedia testedMedia = await _context.TestedMedia.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(testedMedia == null)
-            return NotFound();
+        if(testedMedia == null) return NotFound();
 
         return View(testedMedia);
     }
@@ -48,13 +48,11 @@ public sealed class TestedMediasController : Controller
     // GET: Admin/TestedMedias/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         TestedMedia testedMedia = await _context.TestedMedia.FindAsync(id);
 
-        if(testedMedia == null)
-            return NotFound();
+        if(testedMedia == null) return NotFound();
 
         return View(testedMedia);
     }
@@ -67,16 +65,13 @@ public sealed class TestedMediasController : Controller
     public async Task<IActionResult> Edit(
         int id, [Bind("Id,Blocks,BlockSize,LongBlockSize,Manufacturer,MediumTypeName,Model")] TestedMedia changedModel)
     {
-        if(id != changedModel.Id)
-            return NotFound();
+        if(id != changedModel.Id) return NotFound();
 
-        if(!ModelState.IsValid)
-            return View(changedModel);
+        if(!ModelState.IsValid) return View(changedModel);
 
         TestedMedia model = await _context.TestedMedia.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(model is null)
-            return NotFound();
+        if(model is null) return NotFound();
 
         model.Blocks         = changedModel.Blocks;
         model.BlockSize      = changedModel.BlockSize;
@@ -101,13 +96,11 @@ public sealed class TestedMediasController : Controller
     // GET: Admin/TestedMedias/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         TestedMedia testedMedia = await _context.TestedMedia.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(testedMedia == null)
-            return NotFound();
+        if(testedMedia == null) return NotFound();
 
         return View(testedMedia);
     }
@@ -127,18 +120,15 @@ public sealed class TestedMediasController : Controller
 
     public IActionResult ViewData(int id, string data)
     {
-        if(string.IsNullOrWhiteSpace(data))
-            return NotFound();
+        if(string.IsNullOrWhiteSpace(data)) return NotFound();
 
         TestedMedia testedMedia = _context.TestedMedia.FirstOrDefault(m => m.Id == id);
 
-        if(testedMedia == null)
-            return NotFound();
+        if(testedMedia == null) return NotFound();
 
         var model = new TestedMediaDataModel
         {
-            TestedMediaId = id,
-            DataName      = data
+            TestedMediaId = id, DataName = data
         };
 
         byte[] buffer;
@@ -186,10 +176,7 @@ public sealed class TestedMediasController : Controller
             case nameof(testedMedia.C2PointersData):
                 buffer = testedMedia.C2PointersData;
 
-                if(buffer is null       ||
-                   buffer.Length < 2352 ||
-                   buffer.All(c => c == 0))
-                    break;
+                if(buffer is null || buffer.Length < 2352 || buffer.All(c => c == 0)) break;
 
                 Array.Copy(buffer, 0, sector, 0, 2352);
 
@@ -197,8 +184,7 @@ public sealed class TestedMediasController : Controller
 
                 for(var i = 2352; i < buffer.Length; i++)
                 {
-                    if(buffer[i] == 0x00)
-                        continue;
+                    if(buffer[i] == 0x00) continue;
 
                     c2Errors = true;
 
@@ -216,17 +202,13 @@ public sealed class TestedMediasController : Controller
             case nameof(testedMedia.CorrectedSubchannelData):
                 buffer = testedMedia.CorrectedSubchannelData;
 
-                if(buffer is null       ||
-                   buffer.Length < 2352 ||
-                   buffer.All(c => c == 0))
-                    break;
+                if(buffer is null || buffer.Length < 2352 || buffer.All(c => c == 0)) break;
 
                 Array.Copy(buffer, 0, sector, 0, 2352);
 
                 model.Decoded = Sector.Prettify(sector);
 
-                if(buffer.Length < 2448)
-                    break;
+                if(buffer.Length < 2448) break;
 
                 Array.Copy(buffer, 2352, fullsub, 0, 96);
 
@@ -236,22 +218,17 @@ public sealed class TestedMediasController : Controller
             case nameof(testedMedia.CorrectedSubchannelWithC2Data):
                 buffer = testedMedia.CorrectedSubchannelWithC2Data;
 
-                if(buffer is null       ||
-                   buffer.Length < 2352 ||
-                   buffer.All(c => c == 0))
-                    break;
+                if(buffer is null || buffer.Length < 2352 || buffer.All(c => c == 0)) break;
 
                 Array.Copy(buffer, 0, sector, 0, 2352);
 
                 model.Decoded = Sector.Prettify(sector);
 
-                if(buffer.Length < 2448)
-                    break;
+                if(buffer.Length < 2448) break;
 
                 for(var i = 2352; i < 2616; i++)
                 {
-                    if(buffer[i] == 0x00)
-                        continue;
+                    if(buffer[i] == 0x00) continue;
 
                     c2Errors = true;
 
@@ -269,9 +246,8 @@ public sealed class TestedMediasController : Controller
                 buffer = testedMedia.DmiData;
 
                 if(DMI.IsXbox(buffer))
-                    model.Decoded = DMI.PrettifyXbox(buffer);
-                else if(DMI.IsXbox360(buffer))
-                    model.Decoded = DMI.PrettifyXbox360(buffer);
+                    model.Decoded                            = DMI.PrettifyXbox(buffer);
+                else if(DMI.IsXbox360(buffer)) model.Decoded = DMI.PrettifyXbox360(buffer);
 
                 break;
             case nameof(testedMedia.DvdAacsData):
@@ -380,17 +356,13 @@ public sealed class TestedMediasController : Controller
             case nameof(testedMedia.PQSubchannelData):
                 buffer = testedMedia.PQSubchannelData;
 
-                if(buffer is null       ||
-                   buffer.Length < 2352 ||
-                   buffer.All(c => c == 0))
-                    break;
+                if(buffer is null || buffer.Length < 2352 || buffer.All(c => c == 0)) break;
 
                 Array.Copy(buffer, 0, sector, 0, 2352);
 
                 model.Decoded = Sector.Prettify(sector);
 
-                if(buffer.Length < 2368)
-                    break;
+                if(buffer.Length < 2368) break;
 
                 Array.Copy(buffer, 2352, subq, 0, 16);
                 fullsub = Subchannel.ConvertQToRaw(subq);
@@ -401,17 +373,13 @@ public sealed class TestedMediasController : Controller
             case nameof(testedMedia.PQSubchannelWithC2Data):
                 buffer = testedMedia.PQSubchannelWithC2Data;
 
-                if(buffer is null       ||
-                   buffer.Length < 2352 ||
-                   buffer.All(c => c == 0))
-                    break;
+                if(buffer is null || buffer.Length < 2352 || buffer.All(c => c == 0)) break;
 
                 Array.Copy(buffer, 0, sector, 0, 2352);
 
                 model.Decoded = Sector.Prettify(sector);
 
-                if(buffer.Length < 2368)
-                    break;
+                if(buffer.Length < 2368) break;
 
                 Array.Copy(buffer, 2646, subq, 0, 16);
                 fullsub = Subchannel.ConvertQToRaw(subq);
@@ -420,8 +388,7 @@ public sealed class TestedMediasController : Controller
 
                 for(var i = 2352; i < 2646; i++)
                 {
-                    if(buffer[i] == 0x00)
-                        continue;
+                    if(buffer[i] == 0x00) continue;
 
                     c2Errors = true;
 
@@ -536,17 +503,13 @@ public sealed class TestedMediasController : Controller
             case nameof(testedMedia.RWSubchannelData):
                 buffer = testedMedia.RWSubchannelData;
 
-                if(buffer is null       ||
-                   buffer.Length < 2352 ||
-                   buffer.All(c => c == 0))
-                    break;
+                if(buffer is null || buffer.Length < 2352 || buffer.All(c => c == 0)) break;
 
                 Array.Copy(buffer, 0, sector, 0, 2352);
 
                 model.Decoded = Sector.Prettify(sector);
 
-                if(buffer.Length < 2448)
-                    break;
+                if(buffer.Length < 2448) break;
 
                 Array.Copy(buffer, 2352, fullsub, 0, 96);
 
@@ -556,17 +519,13 @@ public sealed class TestedMediasController : Controller
             case nameof(testedMedia.RWSubchannelWithC2Data):
                 buffer = testedMedia.RWSubchannelWithC2Data;
 
-                if(buffer is null       ||
-                   buffer.Length < 2352 ||
-                   buffer.All(c => c == 0))
-                    break;
+                if(buffer is null || buffer.Length < 2352 || buffer.All(c => c == 0)) break;
 
                 Array.Copy(buffer, 0, sector, 0, 2352);
 
                 model.Decoded = Sector.Prettify(sector);
 
-                if(buffer.Length < 2448)
-                    break;
+                if(buffer.Length < 2448) break;
 
                 Array.Copy(buffer, 2352, fullsub, 0, 96);
 
@@ -631,8 +590,7 @@ public sealed class TestedMediasController : Controller
 
                 for(var i = 2468; i < 2762; i++)
                 {
-                    if(buffer[i] == 0x00)
-                        continue;
+                    if(buffer[i] == 0x00) continue;
 
                     c2Errors = true;
 
@@ -673,8 +631,7 @@ public sealed class TestedMediasController : Controller
 
                 for(var i = 2468; i < 2762; i++)
                 {
-                    if(buffer[i] == 0x00)
-                        continue;
+                    if(buffer[i] == 0x00) continue;
 
                     c2Errors = true;
 
@@ -693,8 +650,7 @@ public sealed class TestedMediasController : Controller
         if(model.RawDataAsHex != null)
             model.RawDataAsHex = HttpUtility.HtmlEncode(model.RawDataAsHex).Replace("\n", "<br/>");
 
-        if(model.Decoded != null)
-            model.Decoded = HttpUtility.HtmlEncode(model.Decoded).Replace("\n", "<br/>");
+        if(model.Decoded != null) model.Decoded = HttpUtility.HtmlEncode(model.Decoded).Replace("\n", "<br/>");
 
         return View(model);
     }
@@ -708,9 +664,7 @@ public sealed class TestedMediasController : Controller
 
         for(var i = 0; i < 12; i++)
         {
-            if(deint[i] == 0x00 ||
-               deint[i] == 0xFF)
-                continue;
+            if(deint[i] == 0x00 || deint[i] == 0xFF) continue;
 
             validP = false;
 
@@ -719,8 +673,7 @@ public sealed class TestedMediasController : Controller
 
         for(var i = 24; i < 96; i++)
         {
-            if(deint[i] == 0x00)
-                continue;
+            if(deint[i] == 0x00) continue;
 
             validRw = false;
 

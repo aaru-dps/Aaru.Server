@@ -18,13 +18,11 @@ public sealed class FireWiresController : Controller
     // GET: Admin/FireWires/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         FireWire fireWire = await _context.FireWire.FindAsync(id);
 
-        if(fireWire == null)
-            return NotFound();
+        if(fireWire == null) return NotFound();
 
         return View(fireWire);
     }
@@ -37,16 +35,13 @@ public sealed class FireWiresController : Controller
     public async Task<IActionResult> Edit(
         int id, [Bind("Id,VendorID,ProductID,Manufacturer,Product,RemovableMedia")] FireWire changedModel)
     {
-        if(id != changedModel.Id)
-            return NotFound();
+        if(id != changedModel.Id) return NotFound();
 
-        if(!ModelState.IsValid)
-            return View(changedModel);
+        if(!ModelState.IsValid) return View(changedModel);
 
         FireWire model = await _context.FireWire.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(model is null)
-            return NotFound();
+        if(model is null) return NotFound();
 
         model.VendorID       = changedModel.VendorID;
         model.ProductID      = changedModel.ProductID;
@@ -70,13 +65,11 @@ public sealed class FireWiresController : Controller
     // GET: Admin/FireWires/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         FireWire fireWire = await _context.FireWire.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(fireWire == null)
-            return NotFound();
+        if(fireWire == null) return NotFound();
 
         return View(fireWire);
     }
@@ -99,25 +92,27 @@ public sealed class FireWiresController : Controller
     public IActionResult Consolidate()
     {
         var dups = _context.FireWire.GroupBy(x => new
-        {
-            x.VendorID,
-            x.ProductID,
-            x.Manufacturer,
-            x.Product,
-            x.RemovableMedia
-        }).Where(x => x.Count() > 1).Select(x => new FireWireModel
-        {
-            VendorID       = x.Key.VendorID,
-            ProductID      = x.Key.ProductID,
-            Manufacturer   = x.Key.Manufacturer,
-            Product        = x.Key.Product,
-            RemovableMedia = x.Key.RemovableMedia
-        }).ToList();
+                            {
+                                x.VendorID,
+                                x.ProductID,
+                                x.Manufacturer,
+                                x.Product,
+                                x.RemovableMedia
+                            })
+                           .Where(x => x.Count() > 1)
+                           .Select(x => new FireWireModel
+                            {
+                                VendorID       = x.Key.VendorID,
+                                ProductID      = x.Key.ProductID,
+                                Manufacturer   = x.Key.Manufacturer,
+                                Product        = x.Key.Product,
+                                RemovableMedia = x.Key.RemovableMedia
+                            })
+                           .ToList();
 
         return View(new FireWireModelForView
         {
-            List = dups,
-            Json = JsonConvert.SerializeObject(dups)
+            List = dups, Json = JsonConvert.SerializeObject(dups)
         });
     }
 
@@ -137,8 +132,7 @@ public sealed class FireWiresController : Controller
             return BadRequest();
         }
 
-        if(duplicates is null)
-            return BadRequest();
+        if(duplicates is null) return BadRequest();
 
         foreach(FireWireModel duplicate in duplicates)
         {
@@ -148,15 +142,15 @@ public sealed class FireWiresController : Controller
                                                                     m.Product        == duplicate.Product      &&
                                                                     m.RemovableMedia == duplicate.RemovableMedia);
 
-            if(master is null)
-                continue;
+            if(master is null) continue;
 
             foreach(FireWire firewire in _context.FireWire.Where(m => m.VendorID       == duplicate.VendorID     &&
                                                                       m.ProductID      == duplicate.ProductID    &&
                                                                       m.Manufacturer   == duplicate.Manufacturer &&
                                                                       m.Product        == duplicate.Product      &&
-                                                                      m.RemovableMedia == duplicate.RemovableMedia).
-                                                  Skip(1).ToArray())
+                                                                      m.RemovableMedia == duplicate.RemovableMedia)
+                                                 .Skip(1)
+                                                 .ToArray())
             {
                 foreach(Device device in _context.Devices.Where(d => d.FireWire.Id == firewire.Id))
                     device.FireWire = master;

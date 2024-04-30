@@ -9,20 +9,19 @@ public sealed class CompactDiscOffsetsController : Controller
     public CompactDiscOffsetsController(AaruServerContext context) => _context = context;
 
     // GET: Admin/CompactDiscOffsets
-    public async Task<IActionResult> Index() => View(await _context.CdOffsets.OrderBy(o => o.Manufacturer).
-                                                                    ThenBy(o => o.Model).ThenBy(o => o.Offset).
-                                                                    ToListAsync());
+    public async Task<IActionResult> Index() => View(await _context.CdOffsets.OrderBy(o => o.Manufacturer)
+                                                                   .ThenBy(o => o.Model)
+                                                                   .ThenBy(o => o.Offset)
+                                                                   .ToListAsync());
 
     // GET: Admin/CompactDiscOffsets/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         CompactDiscOffset compactDiscOffset = await _context.CdOffsets.FindAsync(id);
 
-        if(compactDiscOffset == null)
-            return NotFound();
+        if(compactDiscOffset == null) return NotFound();
 
         return View(compactDiscOffset);
     }
@@ -35,16 +34,13 @@ public sealed class CompactDiscOffsetsController : Controller
     public async Task<IActionResult> Edit(
         int id, [Bind("Id,Manufacturer,Model,Offset,Submissions,Agreement")] CompactDiscOffset changedModel)
     {
-        if(id != changedModel.Id)
-            return NotFound();
+        if(id != changedModel.Id) return NotFound();
 
-        if(!ModelState.IsValid)
-            return View(changedModel);
+        if(!ModelState.IsValid) return View(changedModel);
 
         CompactDiscOffset model = await _context.CdOffsets.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(model is null)
-            return NotFound();
+        if(model is null) return NotFound();
 
         model.Manufacturer = changedModel.Manufacturer;
         model.Model        = changedModel.Model;
@@ -69,13 +65,11 @@ public sealed class CompactDiscOffsetsController : Controller
     // GET: Admin/CompactDiscOffsets/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         CompactDiscOffset compactDiscOffset = await _context.CdOffsets.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(compactDiscOffset == null)
-            return NotFound();
+        if(compactDiscOffset == null) return NotFound();
 
         return View(compactDiscOffset);
     }

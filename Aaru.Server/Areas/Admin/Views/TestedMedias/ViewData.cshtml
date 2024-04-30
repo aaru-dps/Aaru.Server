@@ -2,11 +2,10 @@
 
 @{
     ViewBag.Title = $"{Model.DataName} data";
-    Layout = "_Layout";
+    Layout        = "_Layout";
 }
 <h2>Showing data from @Model.DataName for tested media id @Model.TestedMediaId</h2>
-@if(Model.Decoded is null &&
-    Model.RawDataAsHex is null)
+@if(Model.Decoded is null && Model.RawDataAsHex is null)
 {
     <div>No data found</div>
 }
@@ -18,7 +17,6 @@
         <code style="white-space: pre">@Html.Raw(Model.RawDataAsHex)</code>
     </div>
 }
-
 
 @if(Model.Decoded != null)
 {

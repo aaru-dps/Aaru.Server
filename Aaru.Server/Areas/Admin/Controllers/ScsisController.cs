@@ -17,26 +17,22 @@ public sealed class ScsisController : Controller
     public ScsisController(AaruServerContext context) => _context = context;
 
     // GET: Admin/Scsis
-    public IActionResult Index() => View(_context.Scsi.AsEnumerable().
-                                                  OrderBy(m =>
-                                                              StringHandlers.
-                                                                  CToString(m.Inquiry?.VendorIdentification)).
-                                                  ThenBy(m =>
-                                                             StringHandlers.
-                                                                 CToString(m.Inquiry?.ProductIdentification)).
-                                                  ThenBy(m => StringHandlers.CToString(m.Inquiry?.
-                                                                 ProductRevisionLevel)));
+    public IActionResult Index() => View(_context.Scsi.AsEnumerable()
+                                                 .OrderBy(m => StringHandlers
+                                                             .CToString(m.Inquiry?.VendorIdentification))
+                                                 .ThenBy(m => StringHandlers
+                                                            .CToString(m.Inquiry?.ProductIdentification))
+                                                 .ThenBy(m => StringHandlers
+                                                            .CToString(m.Inquiry?.ProductRevisionLevel)));
 
     // GET: Admin/Scsis/Details/5
     public async Task<IActionResult> Details(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         Scsi scsi = await _context.Scsi.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(scsi == null)
-            return NotFound();
+        if(scsi == null) return NotFound();
 
         return View(scsi);
     }
@@ -44,13 +40,11 @@ public sealed class ScsisController : Controller
     // GET: Admin/Scsis/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         Scsi scsi = await _context.Scsi.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(scsi == null)
-            return NotFound();
+        if(scsi == null) return NotFound();
 
         return View(scsi);
     }
@@ -70,11 +64,14 @@ public sealed class ScsisController : Controller
 
     public IActionResult Consolidate()
     {
-        var hashes = _context.Scsi.Where(m => m.InquiryData != null).
-                              Select(m => new IdHashModel(m.Id, Hash.Sha512(m.InquiryData))).ToList();
+        var hashes = _context.Scsi.Where(m => m.InquiryData != null)
+                             .Select(m => new IdHashModel(m.Id, Hash.Sha512(m.InquiryData)))
+                             .ToList();
 
-        var dups = hashes.GroupBy(x => x.Hash).Where(g => g.Count() > 1).
-                          Select(x => hashes.FirstOrDefault(y => y.Hash == x.Key)).ToList();
+        var dups = hashes.GroupBy(x => x.Hash)
+                         .Where(g => g.Count() > 1)
+                         .Select(x => hashes.FirstOrDefault(y => y.Hash == x.Key))
+                         .ToList();
 
         for(var i = 0; i < dups.Count; i++)
         {
@@ -88,8 +85,7 @@ public sealed class ScsisController : Controller
 
         return View(new IdHashModelForView
         {
-            List = dups,
-            Json = JsonConvert.SerializeObject(dups)
+            List = dups, Json = JsonConvert.SerializeObject(dups)
         });
     }
 
@@ -109,22 +105,19 @@ public sealed class ScsisController : Controller
             return BadRequest();
         }
 
-        if(duplicates is null)
-            return BadRequest();
+        if(duplicates is null) return BadRequest();
 
         foreach(IdHashModel duplicate in duplicates)
         {
             Scsi master = _context.Scsi.FirstOrDefault(m => m.Id == duplicate.Id);
 
-            if(master is null)
-                continue;
+            if(master is null) continue;
 
             foreach(int duplicateId in duplicate.Duplicates)
             {
                 Scsi slave = _context.Scsi.FirstOrDefault(m => m.Id == duplicateId);
 
-                if(slave is null)
-                    continue;
+                if(slave is null) continue;
 
                 foreach(Device scsiDevice in _context.Devices.Where(d => d.SCSI.Id == duplicateId))
                     scsiDevice.SCSI = master;
@@ -138,8 +131,7 @@ public sealed class ScsisController : Controller
                     _context.Update(testedMedia);
                 }
 
-                if(master.ReadCapabilities is null &&
-                   slave.ReadCapabilities != null)
+                if(master.ReadCapabilities is null && slave.ReadCapabilities != null)
                     master.ReadCapabilities = slave.ReadCapabilities;
 
                 _context.Scsi.Remove(slave);
@@ -155,8 +147,7 @@ public sealed class ScsisController : Controller
     {
         var model = new CompareModel
         {
-            LeftId  = id,
-            RightId = rightId
+            LeftId = id, RightId = rightId
         };
 
         Scsi left  = _context.Scsi.FirstOrDefault(l => l.Id == id);
@@ -184,16 +175,14 @@ public sealed class ScsisController : Controller
         model.LeftValues  = new List<string>();
         model.RightValues = new List<string>();
 
-        if(!leftNullable.HasValue &&
-           !rightNullable.HasValue)
+        if(!leftNullable.HasValue && !rightNullable.HasValue)
         {
             model.AreEqual = true;
 
             return View(model);
         }
 
-        if(leftNullable.HasValue &&
-           !rightNullable.HasValue)
+        if(leftNullable.HasValue && !rightNullable.HasValue)
         {
             model.ValueNames.Add("Decoded");
             model.LeftValues.Add("decoded");
@@ -250,8 +239,7 @@ public sealed class ScsisController : Controller
 
                 for(var i = 0; i < ll.Count; i++)
                 {
-                    if(ll[i].Equals(rl[i]))
-                        continue;
+                    if(ll[i].Equals(rl[i])) continue;
 
                     switch(fieldInfo.Name)
                     {
@@ -266,11 +254,9 @@ public sealed class ScsisController : Controller
                             var lb = new byte[ll.Count];
                             var rb = new byte[rl.Count];
 
-                            for(var j = 0; j < ll.Count; j++)
-                                lb[j] = (byte)ll[j];
+                            for(var j = 0; j < ll.Count; j++) lb[j] = (byte)ll[j];
 
-                            for(var j = 0; j < ll.Count; j++)
-                                rb[j] = (byte)rl[j];
+                            for(var j = 0; j < ll.Count; j++) rb[j] = (byte)rl[j];
 
                             model.ValueNames.Add(fieldInfo.Name);
                             model.LeftValues.Add($"{StringHandlers.CToString(lb)  ?? "<null>"}");
@@ -289,10 +275,8 @@ public sealed class ScsisController : Controller
                     break;
                 }
             }
-            else if(lv == null &&
-                    rv == null) {}
-            else if(lv != null &&
-                    rv == null)
+            else if(lv == null && rv == null) {}
+            else if(lv != null && rv == null)
             {
                 model.ValueNames.Add(fieldInfo.Name);
                 model.LeftValues.Add($"{lv}");
@@ -324,26 +308,25 @@ public sealed class ScsisController : Controller
 
         if(master is null)
         {
-            return RedirectToAction(nameof(Compare), new
-            {
-                id      = masterId,
-                rightId = slaveId
-            });
+            return RedirectToAction(nameof(Compare),
+                                    new
+                                    {
+                                        id = masterId, rightId = slaveId
+                                    });
         }
 
         Scsi slave = _context.Scsi.FirstOrDefault(m => m.Id == slaveId);
 
         if(slave is null)
         {
-            return RedirectToAction(nameof(Compare), new
-            {
-                id      = masterId,
-                rightId = slaveId
-            });
+            return RedirectToAction(nameof(Compare),
+                                    new
+                                    {
+                                        id = masterId, rightId = slaveId
+                                    });
         }
 
-        foreach(Device scsiDevice in _context.Devices.Where(d => d.SCSI.Id == slaveId))
-            scsiDevice.SCSI = master;
+        foreach(Device scsiDevice in _context.Devices.Where(d => d.SCSI.Id == slaveId)) scsiDevice.SCSI = master;
 
         foreach(UploadedReport scsiReport in _context.Reports.Where(d => d.SCSI.Id == slaveId))
             scsiReport.SCSI = master;
@@ -354,8 +337,7 @@ public sealed class ScsisController : Controller
             _context.Update(testedMedia);
         }
 
-        if(master.ReadCapabilities is null &&
-           slave.ReadCapabilities != null)
+        if(master.ReadCapabilities is null && slave.ReadCapabilities != null)
             master.ReadCapabilities = slave.ReadCapabilities;
 
         _context.Scsi.Remove(slave);

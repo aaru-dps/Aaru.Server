@@ -16,13 +16,11 @@ public sealed class ScsiModesController : Controller
     // GET: Admin/ScsiModes/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         ScsiMode scsiMode = await _context.ScsiMode.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(scsiMode == null)
-            return NotFound();
+        if(scsiMode == null) return NotFound();
 
         return View(scsiMode);
     }

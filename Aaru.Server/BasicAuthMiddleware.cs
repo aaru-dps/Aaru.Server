@@ -50,8 +50,7 @@ public sealed class BasicAuthMiddleware
         context.Response.Headers["WWW-Authenticate"] = "Basic";
 
         // Add realm if it is not null
-        if(!string.IsNullOrWhiteSpace(_realm))
-            context.Response.Headers["WWW-Authenticate"] += $" realm=\"{_realm}\"";
+        if(!string.IsNullOrWhiteSpace(_realm)) context.Response.Headers["WWW-Authenticate"] += $" realm=\"{_realm}\"";
 
         // Return unauthorized
         context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
@@ -66,7 +65,8 @@ public sealed class BasicAuthMiddleware
         string                validUser     = configuration.GetValue<string>("MetricsAuthentication:Username");
         string                validPassword = configuration.GetValue<string>("MetricsAuthentication:Password");
 
-        return !string.IsNullOrWhiteSpace(validUser) && !string.IsNullOrWhiteSpace(validPassword) &&
+        return !string.IsNullOrWhiteSpace(validUser)                                   &&
+               !string.IsNullOrWhiteSpace(validPassword)                               &&
                username.Equals(validUser, StringComparison.InvariantCultureIgnoreCase) &&
                password.Equals(validPassword);
     }

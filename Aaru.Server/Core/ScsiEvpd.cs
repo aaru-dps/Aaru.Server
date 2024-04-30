@@ -50,8 +50,7 @@ public static class ScsiEvpd
         {
             string decoded;
 
-            if(evpd.page >= 0x01 &&
-               evpd.page <= 0x7F)
+            if(evpd.page >= 0x01 && evpd.page <= 0x7F)
                 decoded = EVPD.DecodeASCIIPage(evpd.value);
             else if(evpd.page == 0x81)
                 decoded = EVPD.PrettifyPage_81(evpd.value);
@@ -73,37 +72,37 @@ public static class ScsiEvpd
                 decoded = $"TapeAlert Supported Flags Bitmap: 0x{EVPD.DecodePageB2(evpd.value):X16}<br/>";
             else if(evpd.page == 0xB4)
                 decoded = EVPD.DecodePageB4(evpd.value);
-            else if(evpd.page     == 0xC0 &&
-                    vendor.Trim() == "quantum")
+            else if(evpd.page == 0xC0 && vendor.Trim() == "quantum")
                 decoded = EVPD.PrettifyPage_C0_Quantum(evpd.value);
-            else if(evpd.page     == 0xC0 &&
-                    vendor.Trim() == "seagate")
+            else if(evpd.page == 0xC0 && vendor.Trim() == "seagate")
                 decoded = EVPD.PrettifyPage_C0_Seagate(evpd.value);
-            else if(evpd.page     == 0xC0 &&
-                    vendor.Trim() == "ibm")
+            else if(evpd.page == 0xC0 && vendor.Trim() == "ibm")
                 decoded = EVPD.PrettifyPage_C0_IBM(evpd.value);
-            else if(evpd.page     == 0xC1 &&
-                    vendor.Trim() == "ibm")
+            else if(evpd.page == 0xC1 && vendor.Trim() == "ibm")
                 decoded = EVPD.PrettifyPage_C1_IBM(evpd.value);
-            else if((evpd.page == 0xC0 || evpd.page == 0xC1) &&
-                    vendor.Trim() == "certance")
+            else if((evpd.page == 0xC0 || evpd.page == 0xC1) && vendor.Trim() == "certance")
                 decoded = EVPD.PrettifyPage_C0_C1_Certance(evpd.value);
-            else if((evpd.page == 0xC2 || evpd.page == 0xC3 || evpd.page == 0xC4 || evpd.page == 0xC5 ||
+            else if((evpd.page == 0xC2 ||
+                     evpd.page == 0xC3 ||
+                     evpd.page == 0xC4 ||
+                     evpd.page == 0xC5 ||
                      evpd.page == 0xC6) &&
                     vendor.Trim() == "certance")
                 decoded = EVPD.PrettifyPage_C2_C3_C4_C5_C6_Certance(evpd.value);
-            else if((evpd.page == 0xC0 || evpd.page == 0xC1 || evpd.page == 0xC2 || evpd.page == 0xC3 ||
-                     evpd.page == 0xC4 || evpd.page == 0xC5) &&
+            else if((evpd.page == 0xC0 ||
+                     evpd.page == 0xC1 ||
+                     evpd.page == 0xC2 ||
+                     evpd.page == 0xC3 ||
+                     evpd.page == 0xC4 ||
+                     evpd.page == 0xC5) &&
                     vendor.Trim() == "hp")
                 decoded = EVPD.PrettifyPage_C0_to_C5_HP(evpd.value);
-            else if(evpd.page     == 0xDF &&
-                    vendor.Trim() == "certance")
+            else if(evpd.page == 0xDF && vendor.Trim() == "certance")
                 decoded = EVPD.PrettifyPage_DF_Certance(evpd.value);
             else
                 decoded = "Undecoded";
 
-            if(!string.IsNullOrEmpty(decoded))
-                decoded = decoded.Replace("\n", "<br/>");
+            if(!string.IsNullOrEmpty(decoded)) decoded = decoded.Replace("\n", "<br/>");
 
             evpdPages.Add($"EVPD page {evpd.page:X2}h", decoded);
         }

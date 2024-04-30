@@ -46,8 +46,7 @@ static class ScsiInquiry
     {
         List<string> scsiOneValue = new();
 
-        if(!inquiryNullable.HasValue)
-            return scsiOneValue;
+        if(!inquiryNullable.HasValue) return scsiOneValue;
 
         Inquiry inquiry = inquiryNullable.Value;
 
@@ -206,8 +205,8 @@ static class ScsiInquiry
 
                 break;
             default:
-                scsiOneValue.
-                    Add($"Device claims to comply with unknown SCSI ANSI standard value 0x{inquiry.ANSIVersion:X2})");
+                scsiOneValue
+                   .Add($"Device claims to comply with unknown SCSI ANSI standard value 0x{inquiry.ANSIVersion:X2})");
 
                 break;
         }
@@ -223,8 +222,8 @@ static class ScsiInquiry
 
                 break;
             default:
-                scsiOneValue.
-                    Add($"Device claims to comply with unknown SCSI ECMA standard value 0x{inquiry.ECMAVersion:X2})");
+                scsiOneValue
+                   .Add($"Device claims to comply with unknown SCSI ECMA standard value 0x{inquiry.ECMAVersion:X2})");
 
                 break;
         }
@@ -240,89 +239,63 @@ static class ScsiInquiry
 
                 break;
             default:
-                scsiOneValue.
-                    Add($"Device claims to comply with unknown SCSI ISO/IEC standard value 0x{inquiry.ISOVersion:X2})");
+                scsiOneValue
+                   .Add($"Device claims to comply with unknown SCSI ISO/IEC standard value 0x{inquiry.ISOVersion:X2})");
 
                 break;
         }
 
-        if(inquiry.RMB)
-            scsiOneValue.Add("Device is removable");
+        if(inquiry.RMB) scsiOneValue.Add("Device is removable");
 
-        if(inquiry.AERC)
-            scsiOneValue.Add("Device supports Asynchronous Event Reporting Capability");
+        if(inquiry.AERC) scsiOneValue.Add("Device supports Asynchronous Event Reporting Capability");
 
-        if(inquiry.TrmTsk)
-            scsiOneValue.Add("Device supports TERMINATE TASK command");
+        if(inquiry.TrmTsk) scsiOneValue.Add("Device supports TERMINATE TASK command");
 
-        if(inquiry.NormACA)
-            scsiOneValue.Add("Device supports setting Normal ACA");
+        if(inquiry.NormACA) scsiOneValue.Add("Device supports setting Normal ACA");
 
-        if(inquiry.HiSup)
-            scsiOneValue.Add("Device supports LUN hierarchical addressing");
+        if(inquiry.HiSup) scsiOneValue.Add("Device supports LUN hierarchical addressing");
 
-        if(inquiry.SCCS)
-            scsiOneValue.Add("Device contains an embedded storage array controller");
+        if(inquiry.SCCS) scsiOneValue.Add("Device contains an embedded storage array controller");
 
-        if(inquiry.ACC)
-            scsiOneValue.Add("Device contains an Access Control Coordinator");
+        if(inquiry.ACC) scsiOneValue.Add("Device contains an Access Control Coordinator");
 
-        if(inquiry.ThreePC)
-            scsiOneValue.Add("Device supports third-party copy commands");
+        if(inquiry.ThreePC) scsiOneValue.Add("Device supports third-party copy commands");
 
-        if(inquiry.Protect)
-            scsiOneValue.Add("Device supports protection information");
+        if(inquiry.Protect) scsiOneValue.Add("Device supports protection information");
 
-        if(inquiry.BQue)
-            scsiOneValue.Add("Device supports basic queueing");
+        if(inquiry.BQue) scsiOneValue.Add("Device supports basic queueing");
 
-        if(inquiry.EncServ)
-            scsiOneValue.Add("Device contains an embedded enclosure services component");
+        if(inquiry.EncServ) scsiOneValue.Add("Device contains an embedded enclosure services component");
 
-        if(inquiry.MultiP)
-            scsiOneValue.Add("Multi-port device");
+        if(inquiry.MultiP) scsiOneValue.Add("Multi-port device");
 
-        if(inquiry.MChngr)
-            scsiOneValue.Add("Device contains or is attached to a medium changer");
+        if(inquiry.MChngr) scsiOneValue.Add("Device contains or is attached to a medium changer");
 
-        if(inquiry.ACKREQQ)
-            scsiOneValue.Add("Device supports request and acknowledge handshakes");
+        if(inquiry.ACKREQQ) scsiOneValue.Add("Device supports request and acknowledge handshakes");
 
-        if(inquiry.Addr32)
-            scsiOneValue.Add("Device supports 32-bit wide SCSI addresses");
+        if(inquiry.Addr32) scsiOneValue.Add("Device supports 32-bit wide SCSI addresses");
 
-        if(inquiry.Addr16)
-            scsiOneValue.Add("Device supports 16-bit wide SCSI addresses");
+        if(inquiry.Addr16) scsiOneValue.Add("Device supports 16-bit wide SCSI addresses");
 
-        if(inquiry.RelAddr)
-            scsiOneValue.Add("Device supports relative addressing");
+        if(inquiry.RelAddr) scsiOneValue.Add("Device supports relative addressing");
 
-        if(inquiry.WBus32)
-            scsiOneValue.Add("Device supports 32-bit wide data transfers");
+        if(inquiry.WBus32) scsiOneValue.Add("Device supports 32-bit wide data transfers");
 
-        if(inquiry.WBus16)
-            scsiOneValue.Add("Device supports 16-bit wide data transfers");
+        if(inquiry.WBus16) scsiOneValue.Add("Device supports 16-bit wide data transfers");
 
-        if(inquiry.Sync)
-            scsiOneValue.Add("Device supports synchronous data transfer");
+        if(inquiry.Sync) scsiOneValue.Add("Device supports synchronous data transfer");
 
-        if(inquiry.Linked)
-            scsiOneValue.Add("Device supports linked commands");
+        if(inquiry.Linked) scsiOneValue.Add("Device supports linked commands");
 
-        if(inquiry.TranDis)
-            scsiOneValue.Add("Device supports CONTINUE TASK and TARGET TRANSFER DISABLE commands");
+        if(inquiry.TranDis) scsiOneValue.Add("Device supports CONTINUE TASK and TARGET TRANSFER DISABLE commands");
 
-        if(inquiry.QAS)
-            scsiOneValue.Add("Device supports Quick Arbitration and Selection");
+        if(inquiry.QAS) scsiOneValue.Add("Device supports Quick Arbitration and Selection");
 
-        if(inquiry.CmdQue)
-            scsiOneValue.Add("Device supports TCQ queue");
+        if(inquiry.CmdQue) scsiOneValue.Add("Device supports TCQ queue");
 
-        if(inquiry.IUS)
-            scsiOneValue.Add("Device supports information unit transfers");
+        if(inquiry.IUS) scsiOneValue.Add("Device supports information unit transfers");
 
-        if(inquiry.SftRe)
-            scsiOneValue.Add("Device implements RESET as a soft reset");
+        if(inquiry.SftRe) scsiOneValue.Add("Device implements RESET as a soft reset");
 
         switch((TGPSValues)inquiry.TPGS)
         {
@@ -372,8 +345,7 @@ static class ScsiInquiry
                 break;
         }
 
-        if(inquiry.VersionDescriptors == null)
-            return scsiOneValue;
+        if(inquiry.VersionDescriptors == null) return scsiOneValue;
 
         foreach(ushort versionDescriptor in inquiry.VersionDescriptors)
         {
@@ -551,13 +523,13 @@ static class ScsiInquiry
 
                     break;
                 case 0x01DD:
-                    scsiOneValue.
-                        Add("Device complies with SES T10/1212 revision 08b w/ Amendment ANSI INCITS.305/AM1-2000");
+                    scsiOneValue
+                       .Add("Device complies with SES T10/1212 revision 08b w/ Amendment ANSI INCITS.305/AM1-2000");
 
                     break;
                 case 0x01DE:
-                    scsiOneValue.
-                        Add("Device complies with SES ANSI INCITS 305-1998 w/ Amendment ANSI INCITS.305/AM1-2000");
+                    scsiOneValue
+                       .Add("Device complies with SES ANSI INCITS 305-1998 w/ Amendment ANSI INCITS.305/AM1-2000");
 
                     break;
                 case 0x01E0:
@@ -1005,8 +977,8 @@ static class ScsiInquiry
 
                     break;
                 case 0x04E7:
-                    scsiOneValue.
-                        Add("Device complies with MMC-6 ANSI INCITS 468-2010 + MMC-6/AM1 ANSI INCITS 468-2010/AM 1");
+                    scsiOneValue
+                       .Add("Device complies with MMC-6 ANSI INCITS 468-2010 + MMC-6/AM1 ANSI INCITS 468-2010/AM 1");
 
                     break;
                 case 0x0500:
@@ -1380,8 +1352,8 @@ static class ScsiInquiry
 
                     break;
                 case 0x0ABC:
-                    scsiOneValue.
-                        Add("Device complies with SPI ANSI INCITS 253-1995 with SPI Amnd ANSI INCITS 253/AM1-1998");
+                    scsiOneValue
+                       .Add("Device complies with SPI ANSI INCITS 253-1995 with SPI Amnd ANSI INCITS 253/AM1-1998");
 
                     break;
                 case 0x0AC0:
@@ -1569,8 +1541,8 @@ static class ScsiInquiry
 
                     break;
                 case 0x0C4F:
-                    scsiOneValue.
-                        Add("Device complies with SAS-2.1 ANSI INCITS 478-2011 w/ Amnd 1 ANSI INCITS 478/AM1-2014");
+                    scsiOneValue
+                       .Add("Device complies with SAS-2.1 ANSI INCITS 478-2011 w/ Amnd 1 ANSI INCITS 478/AM1-2014");
 
                     break;
                 case 0x0C52:
@@ -1606,8 +1578,8 @@ static class ScsiInquiry
 
                     break;
                 case 0x0D3C:
-                    scsiOneValue.
-                        Add("Device complies with FC-PH ANSI INCITS 230-1994 with Amnd 1 ANSI INCITS 230/AM1-1996");
+                    scsiOneValue
+                       .Add("Device complies with FC-PH ANSI INCITS 230-1994 with Amnd 1 ANSI INCITS 230/AM1-1996");
 
                     break;
                 case 0x0D40:
@@ -1703,8 +1675,8 @@ static class ScsiInquiry
 
                     break;
                 case 0x0E03:
-                    scsiOneValue.
-                        Add("Device complies with FC-FS-2 ANSI INCITS 242-2007 with AM1 ANSI INCITS 242/AM1-2007");
+                    scsiOneValue
+                       .Add("Device complies with FC-FS-2 ANSI INCITS 242-2007 with AM1 ANSI INCITS 242/AM1-2007");
 
                     break;
                 case 0x0E20:
@@ -1780,8 +1752,8 @@ static class ScsiInquiry
 
                     break;
                 case 0x0EA6:
-                    scsiOneValue.
-                        Add("Device complies with FC 10GFC ANSI INCITS 364-2003 with AM1 ANSI INCITS 364/AM1-2007");
+                    scsiOneValue
+                       .Add("Device complies with FC 10GFC ANSI INCITS 364-2003 with AM1 ANSI INCITS 364/AM1-2007");
 
                     break;
                 case 0x0EC0:
@@ -2021,8 +1993,8 @@ static class ScsiInquiry
 
                     break;
                 case 0x1621:
-                    scsiOneValue.
-                        Add("Device complies with ATA/ATAPI-8 ATA8-APT Parallel Transport (no version claimed)");
+                    scsiOneValue
+                       .Add("Device complies with ATA/ATAPI-8 ATA8-APT Parallel Transport (no version claimed)");
 
                     break;
                 case 0x1622:
@@ -2030,8 +2002,8 @@ static class ScsiInquiry
 
                     break;
                 case 0x1623:
-                    scsiOneValue.
-                        Add("Device complies with ATA/ATAPI-8 ATA8-ACS ATA/ATAPI Command Set (no version claimed)");
+                    scsiOneValue
+                       .Add("Device complies with ATA/ATAPI-8 ATA8-ACS ATA/ATAPI Command Set (no version claimed)");
 
                     break;
                 case 0x1628:

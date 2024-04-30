@@ -9,20 +9,19 @@ public sealed class DeviceStatsController : Controller
     public DeviceStatsController(AaruServerContext context) => _context = context;
 
     // GET: Admin/DeviceStats
-    public async Task<IActionResult> Index() => View(await _context.DeviceStats.OrderBy(d => d.Manufacturer).
-                                                                    ThenBy(d => d.Model).ThenBy(d => d.Bus).
-                                                                    ToListAsync());
+    public async Task<IActionResult> Index() => View(await _context.DeviceStats.OrderBy(d => d.Manufacturer)
+                                                                   .ThenBy(d => d.Model)
+                                                                   .ThenBy(d => d.Bus)
+                                                                   .ToListAsync());
 
     // GET: Admin/DeviceStats/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         DeviceStat deviceStat = await _context.DeviceStats.FindAsync(id);
 
-        if(deviceStat == null)
-            return NotFound();
+        if(deviceStat == null) return NotFound();
 
         return View(deviceStat);
     }
@@ -34,16 +33,13 @@ public sealed class DeviceStatsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, [Bind("Id,Manufacturer,Model,Revision,Bus")] DeviceStat changedModel)
     {
-        if(id != changedModel.Id)
-            return NotFound();
+        if(id != changedModel.Id) return NotFound();
 
-        if(!ModelState.IsValid)
-            return View(changedModel);
+        if(!ModelState.IsValid) return View(changedModel);
 
         DeviceStat model = await _context.DeviceStats.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(model is null)
-            return NotFound();
+        if(model is null) return NotFound();
 
         model.Manufacturer = changedModel.Manufacturer;
         model.Model        = changedModel.Model;
@@ -66,13 +62,11 @@ public sealed class DeviceStatsController : Controller
     // GET: Admin/DeviceStats/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         DeviceStat deviceStat = await _context.DeviceStats.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(deviceStat == null)
-            return NotFound();
+        if(deviceStat == null) return NotFound();
 
         return View(deviceStat);
     }

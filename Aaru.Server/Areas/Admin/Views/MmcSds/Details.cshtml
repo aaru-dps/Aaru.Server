@@ -1,9 +1,9 @@
-@using Aaru.Server.Core
 @using Aaru.Decoders.SecureDigital
+@using Aaru.Server.Core
 @model Aaru.CommonTypes.Metadata.MmcSd
 
 @{
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    Layout        = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Aaru Server";
 }
 @{
@@ -50,6 +50,7 @@
                     @Html.Raw(Html.EncodedMultiLineText(Decoders.PrettifyCID(Model.CID)))
                 </dd>
             }
+
             if(Model.CSD != null)
             {
                 <dt class="col-sm-2">
@@ -59,6 +60,7 @@
                     @Html.Raw(Html.EncodedMultiLineText(Decoders.PrettifyCSD(Model.CSD)))
                 </dd>
             }
+
             if(Model.OCR != null)
             {
                 <dt class="col-sm-2">
@@ -87,6 +89,7 @@
                     @Html.Raw(Html.EncodedMultiLineText(Aaru.Decoders.MMC.Decoders.PrettifyCID(Model.CID)))
                 </dd>
             }
+
             if(Model.CSD != null)
             {
                 <dt class="col-sm-2">
@@ -96,6 +99,7 @@
                     @Html.Raw(Html.EncodedMultiLineText(Aaru.Decoders.MMC.Decoders.PrettifyCSD(Model.CSD)))
                 </dd>
             }
+
             if(Model.OCR != null)
             {
                 <dt class="col-sm-2">

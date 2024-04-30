@@ -50,8 +50,7 @@ public class Media : BaseModel<int>
     {
         get
         {
-            if(_mediaType != default((string type, string subType)))
-                return _mediaType;
+            if(_mediaType != default((string type, string subType))) return _mediaType;
 
             try
             {

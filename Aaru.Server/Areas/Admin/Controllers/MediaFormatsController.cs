@@ -14,13 +14,11 @@ public sealed class MediaFormatsController : Controller
     // GET: Admin/MediaFormats/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         MediaFormat mediaFormat = await _context.MediaFormats.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(mediaFormat == null)
-            return NotFound();
+        if(mediaFormat == null) return NotFound();
 
         return View(mediaFormat);
     }

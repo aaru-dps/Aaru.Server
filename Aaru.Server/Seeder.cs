@@ -12,13 +12,11 @@ public static class Seeder
         UserManager<IdentityUser> userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
         var                       rnd         = new Random();
 
-        for(var i = 0; i < randChars.Length; i++)
-            randChars[i] = (char)rnd.Next(32, 126);
+        for(var i = 0; i < randChars.Length; i++) randChars[i] = (char)rnd.Next(32, 126);
 
         string password = new(randChars);
 
-        if(userManager.FindByEmailAsync(email).Result != null)
-            return;
+        if(userManager.FindByEmailAsync(email).Result != null) return;
 
         var user = new IdentityUser
         {
@@ -31,7 +29,6 @@ public static class Seeder
 
         IdentityResult result = userManager.CreateAsync(user, password).Result;
 
-        if(result.Succeeded)
-            System.Console.WriteLine("Password is {0}, save it!", password);
+        if(result.Succeeded) System.Console.WriteLine("Password is {0}, save it!", password);
     }
 }

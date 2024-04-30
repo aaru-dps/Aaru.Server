@@ -16,13 +16,11 @@ public sealed class PcmciasController : Controller
     // GET: Admin/Pcmcias/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         Pcmcia pcmcia = await _context.Pcmcia.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(pcmcia == null)
-            return NotFound();
+        if(pcmcia == null) return NotFound();
 
         return View(pcmcia);
     }

@@ -1,7 +1,7 @@
 @model CompareModel
 
 @{
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    Layout        = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Aaru Server";
 }
 @{
@@ -37,12 +37,14 @@
 @if(Model.AreEqual)
 {
     <p>No differences found.</p>
+
     return;
 }
 
 @if(Model.HasError)
 {
     <p class="alert-info">@Model.ErrorMessage</p>
+
     return;
 }
 <table>

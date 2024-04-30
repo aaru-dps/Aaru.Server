@@ -50,33 +50,27 @@ public static class ScsiModeSense
     public static void Report(ScsiMode         modeSense,    string vendor, PeripheralDeviceTypes deviceType,
                               ref List<string> scsiOneValue, ref Dictionary<string, string> modePages)
     {
-        if(modeSense.MediumType.HasValue)
-            scsiOneValue.Add($"Medium type is {modeSense.MediumType:X2}h");
+        if(modeSense.MediumType.HasValue) scsiOneValue.Add($"Medium type is {modeSense.MediumType:X2}h");
 
-        if(modeSense.WriteProtected)
-            scsiOneValue.Add("Device is write protected.");
+        if(modeSense.WriteProtected) scsiOneValue.Add("Device is write protected.");
 
         if(modeSense.BlockDescriptors != null)
         {
             foreach(BlockDescriptor descriptor in modeSense.BlockDescriptors)
             {
-                if(descriptor.Blocks.HasValue &&
-                   descriptor.BlockLength.HasValue)
+                if(descriptor.Blocks.HasValue && descriptor.BlockLength.HasValue)
                 {
-                    scsiOneValue.
-                        Add(
-                            $"Density code {descriptor.Density:X2}h has {descriptor.Blocks} blocks of {descriptor.BlockLength} bytes each");
+                    scsiOneValue
+                       .Add($"Density code {descriptor.Density:X2}h has {descriptor.Blocks} blocks of {descriptor.BlockLength} bytes each");
                 }
                 else
                     scsiOneValue.Add($"Density code {descriptor.Density:X2}h");
             }
         }
 
-        if(modeSense.DPOandFUA)
-            scsiOneValue.Add("Drive supports DPO and FUA bits");
+        if(modeSense.DPOandFUA) scsiOneValue.Add("Drive supports DPO and FUA bits");
 
-        if(modeSense.BlankCheckEnabled)
-            scsiOneValue.Add("Blank checking during write is enabled");
+        if(modeSense.BlankCheckEnabled) scsiOneValue.Add("Blank checking during write is enabled");
 
         if(modeSense.BufferedMode.HasValue)
         {
@@ -101,8 +95,7 @@ public static class ScsiModeSense
             }
         }
 
-        if(modeSense.ModePages == null)
-            return;
+        if(modeSense.ModePages == null) return;
 
         foreach(ScsiPage page in modeSense.ModePages)
         {
@@ -110,17 +103,14 @@ public static class ScsiModeSense
             {
                 case 0x00:
                 {
-                    if(deviceType   == PeripheralDeviceTypes.MultiMediaDevice &&
-                       page.subpage == 0)
+                    if(deviceType == PeripheralDeviceTypes.MultiMediaDevice && page.subpage == 0)
                         modePages.Add($"MODE page {page.page:X2}h", Modes.PrettifyModePage_00_SFF(page.value));
                     else
                     {
-                        modePages.
-                            Add(
-                                page.subpage != 0
-                                    ? $"MODE page {page.page:X2}h subpage {page.subpage:X2}h"
-                                    : $"MODE page {page.page:X2}h",
-                                "Unknown vendor mode page");
+                        modePages.Add(page.subpage != 0
+                                          ? $"MODE page {page.page:X2}h subpage {page.subpage:X2}h"
+                                          : $"MODE page {page.page:X2}h",
+                                      "Unknown vendor mode page");
                     }
 
                     break;
@@ -438,11 +428,10 @@ public static class ScsiModeSense
                 }
                 default:
                 {
-                    modePages.Add(
-                        page.subpage != 0
-                            ? $"MODE page {page.page:X2}h subpage {page.subpage:X2}h"
-                            : $"MODE page {page.page:X2}h",
-                        "Unknown mode page");
+                    modePages.Add(page.subpage != 0
+                                      ? $"MODE page {page.page:X2}h subpage {page.subpage:X2}h"
+                                      : $"MODE page {page.page:X2}h",
+                                  "Unknown mode page");
                 }
 
                     break;

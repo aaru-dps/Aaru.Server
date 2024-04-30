@@ -16,13 +16,11 @@ public sealed class ScsiPagesController : Controller
     // GET: Admin/ScsiPages/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         ScsiPage scsiPage = await _context.ScsiPage.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(scsiPage == null)
-            return NotFound();
+        if(scsiPage == null) return NotFound();
 
         return View(scsiPage);
     }

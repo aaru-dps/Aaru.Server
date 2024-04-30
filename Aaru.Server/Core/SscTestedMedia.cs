@@ -47,8 +47,7 @@ public static class SscTestedMedia
             {
                 mediaOneValue.Add($"<i>Information for medium named \"{media.MediumTypeName}\"</i>");
 
-                if(media.MediumType.HasValue)
-                    mediaOneValue.Add($"Medium type code: {media.MediumType:X2}h");
+                if(media.MediumType.HasValue) mediaOneValue.Add($"Medium type code: {media.MediumType:X2}h");
             }
             else if(media.MediumType.HasValue)
                 mediaOneValue.Add($"<i>Information for medium type {media.MediumType:X2}h</i>");
@@ -58,17 +57,13 @@ public static class SscTestedMedia
             if(!string.IsNullOrWhiteSpace(media.Manufacturer))
                 mediaOneValue.Add($"Medium manufactured by: {media.Manufacturer}");
 
-            if(!string.IsNullOrWhiteSpace(media.Model))
-                mediaOneValue.Add($"Medium model: {media.Model}");
+            if(!string.IsNullOrWhiteSpace(media.Model)) mediaOneValue.Add($"Medium model: {media.Model}");
 
-            if(media.Density.HasValue)
-                mediaOneValue.Add($"Medium has density code {media.Density:X2}h");
+            if(media.Density.HasValue) mediaOneValue.Add($"Medium has density code {media.Density:X2}h");
 
-            if(media.CanReadMediaSerial == true)
-                mediaOneValue.Add("Drive can read medium serial number.");
+            if(media.CanReadMediaSerial == true) mediaOneValue.Add("Drive can read medium serial number.");
 
-            if(media.MediaIsRecognized)
-                mediaOneValue.Add("Drive recognizes this medium.");
+            if(media.MediaIsRecognized) mediaOneValue.Add("Drive recognizes this medium.");
 
             mediaOneValue.Add("");
         }

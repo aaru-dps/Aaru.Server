@@ -97,12 +97,9 @@ class Program
 
                 string line = sr.ReadLine();
 
-                if(line is null)
-                    break;
+                if(line is null) break;
 
-                if(line.Length == 0 ||
-                   line[0]     == '#')
-                    continue;
+                if(line.Length == 0 || line[0] == '#') continue;
 
                 ushort number;
                 string name;
@@ -118,13 +115,13 @@ class Program
                         continue;
                     }
 
-                    if(number == 0)
-                        continue;
+                    if(number == 0) continue;
 
                     name = line.Substring(7);
 
                     UsbProduct product =
-                        ctx.UsbProducts.FirstOrDefault(p => p.ProductId       == number && p.Vendor != null &&
+                        ctx.UsbProducts.FirstOrDefault(p => p.ProductId       == number &&
+                                                            p.Vendor          != null   &&
                                                             p.Vendor.VendorId == vendor.VendorId);
 
                     if(product is null)
@@ -133,19 +130,25 @@ class Program
                         ctx.UsbProducts.Add(product);
 
                         System.Console.WriteLine("{0}: Will add product {1} with ID {2:X4} and vendor {3} ({4:X4})",
-                                                 DateTime.UtcNow, product.Product, product.ProductId,
-                                                 product.Vendor?.Vendor ?? "null", product.Vendor?.VendorId ?? 0);
+                                                 DateTime.UtcNow,
+                                                 product.Product,
+                                                 product.ProductId,
+                                                 product.Vendor?.Vendor   ?? "null",
+                                                 product.Vendor?.VendorId ?? 0);
 
                         newProducts++;
                         counter++;
                     }
                     else if(name != product.Product)
                     {
-                        System.Console.
-                               WriteLine(
-                                   "{0}: Will modify product with ID {1:X4} and vendor {2} ({3:X4}) from \"{4}\" to \"{5}\"",
-                                   DateTime.UtcNow, product.ProductId, product.Vendor?.Vendor ?? "null",
-                                   product.Vendor?.VendorId ?? 0, product.Product, name);
+                        System.Console
+                              .WriteLine("{0}: Will modify product with ID {1:X4} and vendor {2} ({3:X4}) from \"{4}\" to \"{5}\"",
+                                         DateTime.UtcNow,
+                                         product.ProductId,
+                                         product.Vendor?.Vendor   ?? "null",
+                                         product.Vendor?.VendorId ?? 0,
+                                         product.Product,
+                                         name);
 
                         product.Product      = name;
                         product.ModifiedWhen = DateTime.UtcNow;
@@ -165,8 +168,7 @@ class Program
                     continue;
                 }
 
-                if(number == 0)
-                    continue;
+                if(number == 0) continue;
 
                 name = line.Substring(6);
 
@@ -177,7 +179,9 @@ class Program
                     vendor = new UsbVendor(number, name);
                     ctx.UsbVendors.Add(vendor);
 
-                    System.Console.WriteLine("{0}: Will add vendor {1} with ID {2:X4}", DateTime.UtcNow, vendor.Vendor,
+                    System.Console.WriteLine("{0}: Will add vendor {1} with ID {2:X4}",
+                                             DateTime.UtcNow,
+                                             vendor.Vendor,
                                              vendor.VendorId);
 
                     newVendors++;
@@ -186,7 +190,10 @@ class Program
                 else if(name != vendor.Vendor)
                 {
                     System.Console.WriteLine("{0}: Will modify vendor with ID {1:X4} from \"{2}\" to \"{3}\"",
-                                             DateTime.UtcNow, vendor.VendorId, vendor.Vendor, name);
+                                             DateTime.UtcNow,
+                                             vendor.VendorId,
+                                             vendor.Vendor,
+                                             name);
 
                     vendor.Vendor       = name;
                     vendor.ModifiedWhen = DateTime.UtcNow;
@@ -236,18 +243,16 @@ class Program
         }
         catch(Exception ex)
         {
-        #if DEBUG
-            if(Debugger.IsAttached)
-                throw;
-        #endif
+#if DEBUG
+            if(Debugger.IsAttached) throw;
+#endif
             System.Console.WriteLine("{0}: Exception {1} filling USB IDs...", DateTime.UtcNow, ex);
         }
 
         System.Console.WriteLine("{0}: Fixing all devices without modification time...", DateTime.UtcNow);
         start = DateTime.UtcNow;
 
-        foreach(Device device in ctx.Devices.Where(d => d.ModifiedWhen == null))
-            device.ModifiedWhen = device.AddedWhen;
+        foreach(Device device in ctx.Devices.Where(d => d.ModifiedWhen == null)) device.ModifiedWhen = device.AddedWhen;
 
         end = DateTime.UtcNow;
         System.Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
@@ -305,7 +310,8 @@ class Program
                 {
                     if(column0.ToLowerInvariant() != "cd drive")
                     {
-                        System.Console.WriteLine("{0}: Unexpected header \"{1}\" found...", DateTime.UtcNow,
+                        System.Console.WriteLine("{0}: Unexpected header \"{1}\" found...",
+                                                 DateTime.UtcNow,
                                                  columns[0].InnerText);
 
                         break;
@@ -313,7 +319,8 @@ class Program
 
                     if(column1.ToLowerInvariant() != "correction offset")
                     {
-                        System.Console.WriteLine("{0}: Unexpected header \"{1}\" found...", DateTime.UtcNow,
+                        System.Console.WriteLine("{0}: Unexpected header \"{1}\" found...",
+                                                 DateTime.UtcNow,
                                                  columns[1].InnerText);
 
                         break;
@@ -321,7 +328,8 @@ class Program
 
                     if(column2.ToLowerInvariant() != "submitted by")
                     {
-                        System.Console.WriteLine("{0}: Unexpected header \"{1}\" found...", DateTime.UtcNow,
+                        System.Console.WriteLine("{0}: Unexpected header \"{1}\" found...",
+                                                 DateTime.UtcNow,
                                                  columns[2].InnerText);
 
                         break;
@@ -329,7 +337,8 @@ class Program
 
                     if(column3.ToLowerInvariant() != "percentage agree")
                     {
-                        System.Console.WriteLine("{0}: Unexpected header \"{1}\" found...", DateTime.UtcNow,
+                        System.Console.WriteLine("{0}: Unexpected header \"{1}\" found...",
+                                                 DateTime.UtcNow,
                                                  columns[3].InnerText);
 
                         break;
@@ -343,8 +352,7 @@ class Program
                 string manufacturer;
                 string model;
 
-                if(column0[0] == '-' &&
-                   column0[1] == ' ')
+                if(column0[0] == '-' && column0[1] == ' ')
                 {
                     manufacturer = null;
                     model        = column0.Substring(2).Trim();
@@ -386,25 +394,20 @@ class Program
 
                 if(column1.ToLowerInvariant() == "[purged]")
                 {
-                    if(cdOffset != null)
-                        ctx.CdOffsets.Remove(cdOffset);
+                    if(cdOffset != null) ctx.CdOffsets.Remove(cdOffset);
 
                     continue;
                 }
 
-                if(!short.TryParse(column1, out short offset))
-                    continue;
+                if(!short.TryParse(column1, out short offset)) continue;
 
-                if(!int.TryParse(column2, out int submissions))
-                    continue;
+                if(!int.TryParse(column2, out int submissions)) continue;
 
-                if(column3[^1] != '%')
-                    continue;
+                if(column3[^1] != '%') continue;
 
                 column3 = column3.Substring(0, column3.Length - 1);
 
-                if(!float.TryParse(column3, out float percentage))
-                    continue;
+                if(!float.TryParse(column3, out float percentage)) continue;
 
                 percentage /= 100;
 
@@ -450,16 +453,16 @@ class Program
                         modifiedOffsets++;
                 }
 
-                foreach(Device device in ctx.Devices.
-                                             Where(d => d.Manufacturer == null && d.Model != null &&
-                                                        d.Model.Trim() == model).
-                                             Union(ctx.Devices.Where(d => d.Manufacturer != null &&
+                foreach(Device device in ctx.Devices
+                                            .Where(d => d.Manufacturer == null &&
+                                                        d.Model        != null &&
+                                                        d.Model.Trim() == model)
+                                            .Union(ctx.Devices.Where(d => d.Manufacturer        != null         &&
                                                                           d.Manufacturer.Trim() == manufacturer &&
-                                                                          d.Model != null && d.Model == model)))
+                                                                          d.Model               != null         &&
+                                                                          d.Model               == model)))
                 {
-                    if(device.CdOffset     == cdOffset &&
-                       device.ModifiedWhen == cdOffset.ModifiedWhen)
-                        continue;
+                    if(device.CdOffset == cdOffset && device.ModifiedWhen == cdOffset.ModifiedWhen) continue;
 
                     device.CdOffset     = cdOffset;
                     device.ModifiedWhen = cdOffset.ModifiedWhen;
@@ -492,8 +495,7 @@ class Program
                         }
                         else
                         {
-                            if(Math.Abs(cdOffset.Agreement - offset.Agreement) > 0 ||
-                               offset.Agreement                                < 0)
+                            if(Math.Abs(cdOffset.Agreement - offset.Agreement) > 0 || offset.Agreement < 0)
                             {
                                 cdOffset.Agreement    = offset.Agreement;
                                 cdOffset.ModifiedWhen = DateTime.UtcNow;
@@ -531,15 +533,13 @@ class Program
         }
         catch(Exception ex)
         {
-        #if DEBUG
-            if(Debugger.IsAttached)
-                throw;
-        #endif
+#if DEBUG
+            if(Debugger.IsAttached) throw;
+#endif
             System.Console.WriteLine("{0}: Exception {1} filling CompactDisc read offsets...", DateTime.UtcNow, ex);
         }
 
-        if(!Directory.Exists("nes"))
-            return;
+        if(!Directory.Exists("nes")) return;
 
         System.Console.WriteLine("{0}: Reading iNES/NES 2.0 headers...", DateTime.UtcNow);
         start = DateTime.UtcNow;
@@ -553,8 +553,7 @@ class Program
             {
                 var fs = new FileStream(file, FileMode.Open, FileAccess.Read);
 
-                if(fs.Length <= 16)
-                    continue;
+                if(fs.Length <= 16) continue;
 
                 var header = new byte[16];
                 var data   = new byte[fs.Length - 16];
@@ -568,8 +567,7 @@ class Program
                 ines  = header[0] == 'N' && header[1]          == 'E' && header[2] == 'S' && header[3] == 0x1A;
                 nes20 = ines             && (header[7] & 0x0C) == 0x08;
 
-                if(!ines)
-                    continue;
+                if(!ines) continue;
 
                 counter++;
 
@@ -701,18 +699,16 @@ class Program
                     modified                        = true;
                 }
 
-                if(!modified)
-                    continue;
+                if(!modified) continue;
 
                 existing.ModifiedWhen = DateTime.UtcNow;
                 updatedHeaders++;
             }
             catch(Exception ex)
             {
-            #if DEBUG
-                if(Debugger.IsAttached)
-                    throw;
-            #endif
+#if DEBUG
+                if(Debugger.IsAttached) throw;
+#endif
                 System.Console.WriteLine("{0}: Exception {1} with file {2}...", DateTime.UtcNow, ex, file);
             }
         }

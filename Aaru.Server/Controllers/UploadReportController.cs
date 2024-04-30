@@ -64,8 +64,7 @@ public sealed class UploadReportController : Controller
     {
         var response = new ContentResult
         {
-            StatusCode  = (int)HttpStatusCode.OK,
-            ContentType = "text/plain"
+            StatusCode = (int)HttpStatusCode.OK, ContentType = "text/plain"
         };
 
         try
@@ -88,7 +87,8 @@ public sealed class UploadReportController : Controller
             var reportV2 = new DeviceReportV2(newReport);
             var jsonSw   = new StringWriter();
 
-            await jsonSw.WriteAsync(JsonConvert.SerializeObject(reportV2, Formatting.Indented,
+            await jsonSw.WriteAsync(JsonConvert.SerializeObject(reportV2,
+                                                                Formatting.Indented,
                                                                 new JsonSerializerSettings
                                                                 {
                                                                     NullValueHandling = NullValueHandling.Ignore
@@ -120,29 +120,26 @@ public sealed class UploadReportController : Controller
                                                  c.Heads     == newUploadedReport.ATA.ReadCapabilities.CHS.Heads     &&
                                                  c.Sectors   == newUploadedReport.ATA.ReadCapabilities.CHS.Sectors);
 
-                if(existingChs != null)
-                    newUploadedReport.ATA.ReadCapabilities.CHS = existingChs;
+                if(existingChs != null) newUploadedReport.ATA.ReadCapabilities.CHS = existingChs;
             }
 
             if(newUploadedReport.ATA?.ReadCapabilities?.CurrentCHS != null)
             {
                 Chs existingChs =
                     _ctx.Chs.FirstOrDefault(c =>
-                                                c.Cylinders == newUploadedReport.ATA.ReadCapabilities.CurrentCHS.
-                                                    Cylinders                                                        &&
+                                                c.Cylinders ==
+                                                newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Cylinders          &&
                                                 c.Heads   == newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Heads &&
                                                 c.Sectors == newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Sectors);
 
-                if(existingChs != null)
-                    newUploadedReport.ATA.ReadCapabilities.CurrentCHS = existingChs;
+                if(existingChs != null) newUploadedReport.ATA.ReadCapabilities.CurrentCHS = existingChs;
             }
 
             if(newUploadedReport.ATA?.RemovableMedias != null)
             {
                 foreach(TestedMedia media in newUploadedReport.ATA.RemovableMedias)
                 {
-                    if(media.CHS        != null &&
-                       media.CurrentCHS != null)
+                    if(media.CHS != null && media.CurrentCHS != null)
                     {
                         if(media.CHS.Cylinders == media.CurrentCHS.Cylinders &&
                            media.CHS.Heads     == media.CurrentCHS.Heads     &&
@@ -154,10 +151,10 @@ public sealed class UploadReportController : Controller
                     {
                         Chs existingChs =
                             _ctx.Chs.FirstOrDefault(c => c.Cylinders == media.CHS.Cylinders &&
-                                                         c.Heads == media.CHS.Heads && c.Sectors == media.CHS.Sectors);
+                                                         c.Heads     == media.CHS.Heads     &&
+                                                         c.Sectors   == media.CHS.Sectors);
 
-                        if(existingChs != null)
-                            media.CHS = existingChs;
+                        if(existingChs != null) media.CHS = existingChs;
                     }
 
                     if(media.CHS != null)
@@ -167,8 +164,7 @@ public sealed class UploadReportController : Controller
                                                          c.Heads     == media.CurrentCHS.Heads     &&
                                                          c.Sectors   == media.CurrentCHS.Sectors);
 
-                        if(existingChs != null)
-                            media.CurrentCHS = existingChs;
+                        if(existingChs != null) media.CurrentCHS = existingChs;
                     }
                 }
             }
@@ -180,7 +176,8 @@ public sealed class UploadReportController : Controller
             var pgpOut = new MemoryStream();
             var pgp    = new ChoPGPEncryptDecrypt();
 
-            await pgp.EncryptAsync(pgpIn, pgpOut,
+            await pgp.EncryptAsync(pgpIn,
+                                   pgpOut,
                                    Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
                                                 "public.asc"));
 
@@ -214,10 +211,9 @@ public sealed class UploadReportController : Controller
         // ReSharper disable once RedundantCatchClause
         catch
         {
-        #if DEBUG
-            if(Debugger.IsAttached)
-                throw;
-        #endif
+#if DEBUG
+            if(Debugger.IsAttached) throw;
+#endif
             response.Content = "error";
 
             return response;
@@ -232,8 +228,7 @@ public sealed class UploadReportController : Controller
     {
         var response = new ContentResult
         {
-            StatusCode  = (int)HttpStatusCode.OK,
-            ContentType = "text/plain"
+            StatusCode = (int)HttpStatusCode.OK, ContentType = "text/plain"
         };
 
         try
@@ -274,29 +269,26 @@ public sealed class UploadReportController : Controller
                                                  c.Heads     == newUploadedReport.ATA.ReadCapabilities.CHS.Heads     &&
                                                  c.Sectors   == newUploadedReport.ATA.ReadCapabilities.CHS.Sectors);
 
-                if(existingChs != null)
-                    newUploadedReport.ATA.ReadCapabilities.CHS = existingChs;
+                if(existingChs != null) newUploadedReport.ATA.ReadCapabilities.CHS = existingChs;
             }
 
             if(newUploadedReport.ATA?.ReadCapabilities?.CurrentCHS != null)
             {
                 Chs existingChs =
                     _ctx.Chs.FirstOrDefault(c =>
-                                                c.Cylinders == newUploadedReport.ATA.ReadCapabilities.CurrentCHS.
-                                                    Cylinders                                                        &&
+                                                c.Cylinders ==
+                                                newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Cylinders          &&
                                                 c.Heads   == newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Heads &&
                                                 c.Sectors == newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Sectors);
 
-                if(existingChs != null)
-                    newUploadedReport.ATA.ReadCapabilities.CurrentCHS = existingChs;
+                if(existingChs != null) newUploadedReport.ATA.ReadCapabilities.CurrentCHS = existingChs;
             }
 
             if(newUploadedReport.ATA?.RemovableMedias != null)
             {
                 foreach(TestedMedia media in newUploadedReport.ATA.RemovableMedias)
                 {
-                    if(media.CHS        != null &&
-                       media.CurrentCHS != null)
+                    if(media.CHS != null && media.CurrentCHS != null)
                     {
                         if(media.CHS.Cylinders == media.CurrentCHS.Cylinders &&
                            media.CHS.Heads     == media.CurrentCHS.Heads     &&
@@ -308,10 +300,10 @@ public sealed class UploadReportController : Controller
                     {
                         Chs existingChs =
                             _ctx.Chs.FirstOrDefault(c => c.Cylinders == media.CHS.Cylinders &&
-                                                         c.Heads == media.CHS.Heads && c.Sectors == media.CHS.Sectors);
+                                                         c.Heads     == media.CHS.Heads     &&
+                                                         c.Sectors   == media.CHS.Sectors);
 
-                        if(existingChs != null)
-                            media.CHS = existingChs;
+                        if(existingChs != null) media.CHS = existingChs;
                     }
 
                     if(media.CHS != null)
@@ -321,8 +313,7 @@ public sealed class UploadReportController : Controller
                                                          c.Heads     == media.CurrentCHS.Heads     &&
                                                          c.Sectors   == media.CurrentCHS.Sectors);
 
-                        if(existingChs != null)
-                            media.CurrentCHS = existingChs;
+                        if(existingChs != null) media.CurrentCHS = existingChs;
                     }
                 }
             }
@@ -334,7 +325,8 @@ public sealed class UploadReportController : Controller
             var pgpOut = new MemoryStream();
             var pgp    = new ChoPGPEncryptDecrypt();
 
-            await pgp.EncryptAsync(pgpIn, pgpOut,
+            await pgp.EncryptAsync(pgpIn,
+                                   pgpOut,
                                    Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
                                                 "public.asc"));
 
@@ -368,10 +360,9 @@ public sealed class UploadReportController : Controller
         // ReSharper disable once RedundantCatchClause
         catch
         {
-        #if DEBUG
-            if(Debugger.IsAttached)
-                throw;
-        #endif
+#if DEBUG
+            if(Debugger.IsAttached) throw;
+#endif
             response.Content = "error";
 
             return response;

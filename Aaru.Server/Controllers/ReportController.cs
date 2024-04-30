@@ -49,23 +49,24 @@ public sealed class ReportController : Controller
 
     public ReportController(AaruServerContext context) => _ctx = context;
 
-    public ActionResult Index() => RedirectToAction("View", "Report", new RouteValueDictionary
-    {
-        { "id", 1 }
-    });
+    public ActionResult Index() => RedirectToAction("View",
+                                                    "Report",
+                                                    new RouteValueDictionary
+                                                    {
+                                                        {
+                                                            "id", 1
+                                                        }
+                                                    });
 
     public ActionResult View(int? id)
     {
-        if(id == null ||
-           id <= 0)
-            return Content("Incorrect device report request");
+        if(id == null || id <= 0) return Content("Incorrect device report request");
 
         try
         {
             Device report = _ctx.Devices.FirstOrDefault(d => d.Id == id);
 
-            if(report is null)
-                return Content("Cannot find requested report");
+            if(report is null) return Content("Cannot find requested report");
 
             ViewBag.lblManufacturer = report.Manufacturer;
             ViewBag.lblModel        = report.Model;
@@ -77,15 +78,15 @@ public sealed class ReportController : Controller
                 string usbProductDescription = null;
 
                 UsbProduct dbProduct =
-                    _ctx.UsbProducts.FirstOrDefault(p => p.ProductId == report.USB.ProductID && p.Vendor != null &&
+                    _ctx.UsbProducts.FirstOrDefault(p => p.ProductId       == report.USB.ProductID &&
+                                                         p.Vendor          != null                 &&
                                                          p.Vendor.VendorId == report.USB.VendorID);
 
                 if(dbProduct is null)
                 {
                     UsbVendor dbVendor = _ctx.UsbVendors.FirstOrDefault(v => v.VendorId == report.USB.VendorID);
 
-                    if(!(dbVendor is null))
-                        usbVendorDescription = dbVendor.Vendor;
+                    if(!(dbVendor is null)) usbVendorDescription = dbVendor.Vendor;
                 }
                 else
                 {
@@ -97,9 +98,10 @@ public sealed class ReportController : Controller
                 {
                     Manufacturer = report.USB.Manufacturer,
                     Product      = report.USB.Product,
-                    VendorDescription = usbVendorDescription != null
-                                            ? $"0x{report.USB.VendorID:x4} ({usbVendorDescription})"
-                                            : $"0x{report.USB.VendorID:x4}",
+                    VendorDescription =
+                        usbVendorDescription != null
+                            ? $"0x{report.USB.VendorID:x4} ({usbVendorDescription})"
+                            : $"0x{report.USB.VendorID:x4}",
                     ProductDescription = usbProductDescription != null
                                              ? $"0x{report.USB.ProductID:x4} ({usbProductDescription})"
                                              : $"0x{report.USB.ProductID:x4}"
@@ -213,8 +215,7 @@ public sealed class ReportController : Controller
                         }
                     }
 
-                    if(decodedTuples.Count > 0)
-                        ViewBag.repPcmciaTuples = decodedTuples;
+                    if(decodedTuples.Count > 0) ViewBag.repPcmciaTuples = decodedTuples;
                 }
             }
 
@@ -223,8 +224,7 @@ public sealed class ReportController : Controller
             var               atapi       = false;
             var               sscMedia    = false;
 
-            if(report.ATA   != null ||
-               report.ATAPI != null)
+            if(report.ATA != null || report.ATAPI != null)
             {
                 List<string>               ataOneValue = new();
                 Dictionary<string, string> ataTwoValue = new();
@@ -251,7 +251,12 @@ public sealed class ReportController : Controller
                 else
                     ViewBag.lblAtaDeviceType = "ATA device";
 
-                Core.Ata.Report(ataReport, cfa, atapi, ref removable, ref ataOneValue, ref ataTwoValue,
+                Core.Ata.Report(ataReport,
+                                cfa,
+                                atapi,
+                                ref removable,
+                                ref ataOneValue,
+                                ref ataTwoValue,
                                 ref testedMedia);
 
                 ViewBag.repAtaOne = ataOneValue;
@@ -280,14 +285,11 @@ public sealed class ReportController : Controller
 
                 scsiOneValue.AddRange(ScsiInquiry.Report(report.SCSI.Inquiry));
 
-                if(report.SCSI.SupportsModeSense6)
-                    scsiOneValue.Add("Device supports MODE SENSE (6)");
+                if(report.SCSI.SupportsModeSense6) scsiOneValue.Add("Device supports MODE SENSE (6)");
 
-                if(report.SCSI.SupportsModeSense10)
-                    scsiOneValue.Add("Device supports MODE SENSE (10)");
+                if(report.SCSI.SupportsModeSense10) scsiOneValue.Add("Device supports MODE SENSE (10)");
 
-                if(report.SCSI.SupportsModeSubpages)
-                    scsiOneValue.Add("Device supports MODE SENSE subpages");
+                if(report.SCSI.SupportsModeSubpages) scsiOneValue.Add("Device supports MODE SENSE subpages");
 
                 if(report.SCSI.ModeSense != null)
                 {
@@ -299,14 +301,11 @@ public sealed class ReportController : Controller
                     ScsiModeSense.Report(report.SCSI.ModeSense, vendorId, devType, ref scsiOneValue, ref modePages);
                 }
 
-                if(modePages.Count > 0)
-                    ViewBag.repModeSense = modePages;
+                if(modePages.Count > 0) ViewBag.repModeSense = modePages;
 
-                if(report.SCSI.EVPDPages != null)
-                    ScsiEvpd.Report(report.SCSI.EVPDPages, vendorId, ref evpdPages);
+                if(report.SCSI.EVPDPages != null) ScsiEvpd.Report(report.SCSI.EVPDPages, vendorId, ref evpdPages);
 
-                if(evpdPages.Count > 0)
-                    ViewBag.repEvpd = evpdPages;
+                if(evpdPages.Count > 0) ViewBag.repEvpd = evpdPages;
 
                 if(report.SCSI.MultiMediaDevice != null)
                 {
@@ -317,8 +316,7 @@ public sealed class ReportController : Controller
                         List<string> mmcModeOneValue = new();
                         ScsiMmcMode.Report(report.SCSI.MultiMediaDevice.ModeSense2A, ref mmcModeOneValue);
 
-                        if(mmcModeOneValue.Count > 0)
-                            ViewBag.repScsiMmcMode = mmcModeOneValue;
+                        if(mmcModeOneValue.Count > 0) ViewBag.repScsiMmcMode = mmcModeOneValue;
                     }
 
                     if(report.SCSI.MultiMediaDevice.Features != null)
@@ -326,8 +324,7 @@ public sealed class ReportController : Controller
                         List<string> mmcFeaturesOneValue = new();
                         ScsiMmcFeatures.Report(report.SCSI.MultiMediaDevice.Features, ref mmcFeaturesOneValue);
 
-                        if(mmcFeaturesOneValue.Count > 0)
-                            ViewBag.repScsiMmcFeatures = mmcFeaturesOneValue;
+                        if(mmcFeaturesOneValue.Count > 0) ViewBag.repScsiMmcFeatures = mmcFeaturesOneValue;
                     }
                 }
                 else if(report.SCSI.SequentialDevice != null)
@@ -366,32 +363,30 @@ public sealed class ReportController : Controller
                     removable = false;
                     scsiOneValue.Add("");
 
-                    if(report.SCSI.ReadCapabilities.Blocks.HasValue &&
-                       report.SCSI.ReadCapabilities.BlockSize.HasValue)
+                    if(report.SCSI.ReadCapabilities.Blocks.HasValue && report.SCSI.ReadCapabilities.BlockSize.HasValue)
                     {
-                        scsiOneValue.
-                            Add(
-                                $"Device has {report.SCSI.ReadCapabilities.Blocks} blocks of {report.SCSI.ReadCapabilities.BlockSize} bytes each");
+                        scsiOneValue
+                           .Add($"Device has {report.SCSI.ReadCapabilities.Blocks} blocks of {report.SCSI.ReadCapabilities.BlockSize} bytes each");
 
                         if(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize / 1024 / 1024 >
                            1000000)
                         {
-                            scsiOneValue.
-                                Add(
-                                    $"Device size: {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize} bytes, {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                            scsiOneValue
+                               .Add($"Device size: {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize} bytes, {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
                         }
-                        else if(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize / 1024 /
-                                1024 > 1000)
+                        else if(report.SCSI.ReadCapabilities.Blocks *
+                                report.SCSI.ReadCapabilities.BlockSize /
+                                1024                                   /
+                                1024 >
+                                1000)
                         {
-                            scsiOneValue.
-                                Add(
-                                    $"Device size: {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize} bytes, {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize / 1000 / 1000 / 1000} Gb, {(double)(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
+                            scsiOneValue
+                               .Add($"Device size: {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize} bytes, {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize / 1000 / 1000 / 1000} Gb, {(double)(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
                         }
                         else
                         {
-                            scsiOneValue.
-                                Add(
-                                    $"Device size: {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize} bytes, {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize / 1000 / 1000} Mb, {(double)(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize) / 1024 / 1024:F2} MiB");
+                            scsiOneValue
+                               .Add($"Device size: {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize} bytes, {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize / 1000 / 1000} Mb, {(double)(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize) / 1024 / 1024:F2} MiB");
                         }
                     }
 
@@ -442,32 +437,32 @@ public sealed class ReportController : Controller
 
                 if(report.MultiMediaCard.CID != null)
                 {
-                    mmcOneValue.Add(Decoders.MMC.Decoders.PrettifyCID(report.MultiMediaCard.CID).
-                                             Replace("\n", "<br/>"));
+                    mmcOneValue.Add(Decoders.MMC.Decoders.PrettifyCID(report.MultiMediaCard.CID)
+                                            .Replace("\n", "<br/>"));
 
                     mmcOneValue.Add("");
                 }
 
                 if(report.MultiMediaCard.CSD != null)
                 {
-                    mmcOneValue.Add(Decoders.MMC.Decoders.PrettifyCSD(report.MultiMediaCard.CSD).
-                                             Replace("\n", "<br/>"));
+                    mmcOneValue.Add(Decoders.MMC.Decoders.PrettifyCSD(report.MultiMediaCard.CSD)
+                                            .Replace("\n", "<br/>"));
 
                     mmcOneValue.Add("");
                 }
 
                 if(report.MultiMediaCard.ExtendedCSD != null)
                 {
-                    mmcOneValue.Add(Decoders.MMC.Decoders.PrettifyExtendedCSD(report.MultiMediaCard.ExtendedCSD).
-                                             Replace("\n", "<br/>"));
+                    mmcOneValue.Add(Decoders.MMC.Decoders.PrettifyExtendedCSD(report.MultiMediaCard.ExtendedCSD)
+                                            .Replace("\n", "<br/>"));
 
                     mmcOneValue.Add("");
                 }
 
                 if(report.MultiMediaCard.OCR != null)
                 {
-                    mmcOneValue.Add(Decoders.MMC.Decoders.PrettifyCSD(report.MultiMediaCard.OCR).
-                                             Replace("\n", "<br/>"));
+                    mmcOneValue.Add(Decoders.MMC.Decoders.PrettifyCSD(report.MultiMediaCard.OCR)
+                                            .Replace("\n", "<br/>"));
 
                     mmcOneValue.Add("");
                 }
@@ -481,32 +476,32 @@ public sealed class ReportController : Controller
 
                 if(report.SecureDigital.CID != null)
                 {
-                    sdOneValue.Add(Decoders.SecureDigital.Decoders.PrettifyCID(report.SecureDigital.CID).
-                                            Replace("\n", "<br/>"));
+                    sdOneValue.Add(Decoders.SecureDigital.Decoders.PrettifyCID(report.SecureDigital.CID)
+                                           .Replace("\n", "<br/>"));
 
                     sdOneValue.Add("");
                 }
 
                 if(report.SecureDigital.CSD != null)
                 {
-                    sdOneValue.Add(Decoders.SecureDigital.Decoders.PrettifyCSD(report.SecureDigital.CSD).
-                                            Replace("\n", "<br/>"));
+                    sdOneValue.Add(Decoders.SecureDigital.Decoders.PrettifyCSD(report.SecureDigital.CSD)
+                                           .Replace("\n", "<br/>"));
 
                     sdOneValue.Add("");
                 }
 
                 if(report.SecureDigital.SCR != null)
                 {
-                    sdOneValue.Add(Decoders.SecureDigital.Decoders.PrettifySCR(report.SecureDigital.SCR).
-                                            Replace("\n", "<br/>"));
+                    sdOneValue.Add(Decoders.SecureDigital.Decoders.PrettifySCR(report.SecureDigital.SCR)
+                                           .Replace("\n", "<br/>"));
 
                     sdOneValue.Add("");
                 }
 
                 if(report.SecureDigital.OCR != null)
                 {
-                    sdOneValue.Add(Decoders.SecureDigital.Decoders.PrettifyCSD(report.SecureDigital.OCR).
-                                            Replace("\n", "<br/>"));
+                    sdOneValue.Add(Decoders.SecureDigital.Decoders.PrettifyCSD(report.SecureDigital.OCR)
+                                           .Replace("\n", "<br/>"));
 
                     sdOneValue.Add("");
                 }
@@ -514,22 +509,19 @@ public sealed class ReportController : Controller
                 ViewBag.repSD = sdOneValue;
             }
 
-            if(removable &&
-               !sscMedia &&
-               testedMedia != null)
+            if(removable && !sscMedia && testedMedia != null)
             {
                 List<string> mediaOneValue = new();
                 Core.TestedMedia.Report(testedMedia, ref mediaOneValue);
 
-                if(mediaOneValue.Count > 0)
-                    ViewBag.repTestedMedia = mediaOneValue;
+                if(mediaOneValue.Count > 0) ViewBag.repTestedMedia = mediaOneValue;
             }
         }
         catch(Exception)
         {
-        #if DEBUG
+#if DEBUG
             throw;
-        #endif
+#endif
             return Content("Could not load device report");
         }
 

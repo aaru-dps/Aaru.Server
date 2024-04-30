@@ -34,7 +34,7 @@
 }
 @{
     ViewBag.Title = "Aaru Statistics";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout        = "~/Views/Shared/_Layout.cshtml";
 }
 <header>
     Welcome to
@@ -496,13 +496,17 @@
                             <td>
                                 @if(device.ReportId != 0)
                                 {
-                                    <text>@Html.ActionLink("Yes", "View", "Report", new
-                                          {
-                                              id = device.ReportId
-                                          }, new
-                                          {
-                                              target = "_blank"
-                                          })</text>
+                                    <text>@Html.ActionLink("Yes",
+                                                           "View",
+                                                           "Report",
+                                                           new
+                                                           {
+                                                               id = device.ReportId
+                                                           },
+                                                           new
+                                                           {
+                                                               target = "_blank"
+                                                           })</text>
                                 }
                                 else
                                 {

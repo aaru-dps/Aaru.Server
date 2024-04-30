@@ -1,7 +1,7 @@
 @model IEnumerable<DeviceStat>
 
 @{
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    Layout        = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Aaru Server";
 }
 @{
@@ -75,6 +75,7 @@
                 @if(item.Report is null)
                 {
                     @("No")
+
                     <a asp-action="Find" asp-controller="Devices" asp-route-bus="@item.Bus" asp-route-id="@item.Id" asp-route-manufacturer="@item.Manufacturer" asp-route-model="@item.Model" asp-route-revision="@item.Revision" target="_blank">(Find)</a>
                 }
                 else

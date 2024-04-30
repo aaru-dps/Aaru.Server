@@ -15,24 +15,24 @@ public sealed class UsbVendorsController : Controller
     // GET: Admin/UsbVendors/Details/5
     public async Task<IActionResult> Details(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         UsbVendor usbVendor = await _context.UsbVendors.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(usbVendor == null)
-            return NotFound();
+        if(usbVendor == null) return NotFound();
 
         return View(new UsbVendorModel
         {
             Vendor   = usbVendor.Vendor,
             VendorId = usbVendor.VendorId,
-            Products = _context.UsbProducts.Where(p => p.VendorId == usbVendor.Id).OrderBy(p => p.Product).
-                                ThenBy(p => p.ProductId).Select(p => new UsbProductModel
+            Products = _context.UsbProducts.Where(p => p.VendorId == usbVendor.Id)
+                               .OrderBy(p => p.Product)
+                               .ThenBy(p => p.ProductId)
+                               .Select(p => new UsbProductModel
                                 {
-                                    ProductId   = p.ProductId,
-                                    ProductName = p.Product
-                                }).ToList()
+                                    ProductId = p.ProductId, ProductName = p.Product
+                                })
+                               .ToList()
         });
     }
 }

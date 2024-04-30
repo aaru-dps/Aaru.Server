@@ -16,13 +16,11 @@ public sealed class MmcFeaturesController : Controller
     // GET: Admin/MmcFeatures/Details/5
     public async Task<IActionResult> Details(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         MmcFeatures mmcFeatures = await _context.MmcFeatures.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(mmcFeatures == null)
-            return NotFound();
+        if(mmcFeatures == null) return NotFound();
 
         return View(mmcFeatures);
     }

@@ -17,13 +17,11 @@ public sealed class GdRomSwapDiscCapabilitiesController : Controller
     // GET: Admin/GdRomSwapDiscCapabilities/Details/5
     public async Task<IActionResult> Details(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         GdRomSwapDiscCapabilities caps = await _context.GdRomSwapDiscCapabilities.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(caps == null)
-            return NotFound();
+        if(caps == null) return NotFound();
 
         return View(caps);
     }
@@ -31,13 +29,11 @@ public sealed class GdRomSwapDiscCapabilitiesController : Controller
     // GET: Admin/GdRomSwapDiscCapabilities/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         GdRomSwapDiscCapabilities caps = await _context.GdRomSwapDiscCapabilities.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(caps == null)
-            return NotFound();
+        if(caps == null) return NotFound();
 
         return View(caps);
     }
@@ -57,18 +53,15 @@ public sealed class GdRomSwapDiscCapabilitiesController : Controller
 
     public IActionResult ViewData(int id, string data)
     {
-        if(string.IsNullOrWhiteSpace(data))
-            return NotFound();
+        if(string.IsNullOrWhiteSpace(data)) return NotFound();
 
         GdRomSwapDiscCapabilities caps = _context.GdRomSwapDiscCapabilities.FirstOrDefault(m => m.Id == id);
 
-        if(caps == null)
-            return NotFound();
+        if(caps == null) return NotFound();
 
         var model = new TestedMediaDataModel
         {
-            TestedMediaId = id,
-            DataName      = data
+            TestedMediaId = id, DataName = data
         };
 
         byte[] buffer;
@@ -282,15 +275,9 @@ public sealed class GdRomSwapDiscCapabilitiesController : Controller
                 return NotFound();
         }
 
-        if(pq                           &&
-           buffer               != null &&
-           buffer.Length % 2368 != 0)
-            pq = false;
+        if(pq && buffer != null && buffer.Length % 2368 != 0) pq = false;
 
-        if(rw                           &&
-           buffer               != null &&
-           buffer.Length % 2448 != 0)
-            rw = false;
+        if(rw && buffer != null && buffer.Length % 2448 != 0) rw = false;
 
         int blockSize = pq
                             ? 2368
@@ -303,8 +290,7 @@ public sealed class GdRomSwapDiscCapabilitiesController : Controller
         if(model.RawDataAsHex != null)
             model.RawDataAsHex = HttpUtility.HtmlEncode(model.RawDataAsHex).Replace("\n", "<br/>");
 
-        if(buffer == null)
-            return View(model);
+        if(buffer == null) return View(model);
 
         for(var i = 0; i < buffer.Length; i += blockSize)
         {
@@ -348,9 +334,7 @@ public sealed class GdRomSwapDiscCapabilitiesController : Controller
 
         for(var i = 0; i < 12; i++)
         {
-            if(deint[i] == 0x00 ||
-               deint[i] == 0xFF)
-                continue;
+            if(deint[i] == 0x00 || deint[i] == 0xFF) continue;
 
             validP = false;
 
@@ -359,8 +343,7 @@ public sealed class GdRomSwapDiscCapabilitiesController : Controller
 
         for(var i = 24; i < 96; i++)
         {
-            if(deint[i] == 0x00)
-                continue;
+            if(deint[i] == 0x00) continue;
 
             validRw = false;
 

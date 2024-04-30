@@ -64,7 +64,8 @@ public sealed class StatsController : Controller
         try
         {
             if(System.IO.File.Exists(Path.Combine(_env.ContentRootPath ?? throw new InvalidOperationException(),
-                                                  "Statistics", "Statistics.xml")))
+                                                  "Statistics",
+                                                  "Statistics.xml")))
             {
                 try
                 {
@@ -73,10 +74,12 @@ public sealed class StatsController : Controller
                     var xs = new XmlSerializer(statistics.GetType());
 
                     FileStream fs =
-                        WaitForFile(
-                            Path.Combine(_env.ContentRootPath ?? throw new InvalidOperationException(), "Statistics",
-                                         "Statistics.xml"),
-                            FileMode.Open, FileAccess.Read, FileShare.Read);
+                        WaitForFile(Path.Combine(_env.ContentRootPath ?? throw new InvalidOperationException(),
+                                                 "Statistics",
+                                                 "Statistics.xml"),
+                                    FileMode.Open,
+                                    FileAccess.Read,
+                                    FileShare.Read);
 
                     statistics = (Stats)xs.Deserialize(fs);
                     fs.Close();
@@ -84,7 +87,8 @@ public sealed class StatsController : Controller
                     StatsConverter.Convert(statistics);
 
                     System.IO.File.Delete(Path.Combine(_env.ContentRootPath ?? throw new InvalidOperationException(),
-                                                       "Statistics", "Statistics.xml"));
+                                                       "Statistics",
+                                                       "Statistics.xml"));
                 }
                 catch(XmlException)
                 {
@@ -117,25 +121,21 @@ public sealed class StatsController : Controller
                 {
                     versions.Add(new NameValueStats
                     {
-                        name  = nvs.Name == "previous" ? "Previous than 3.4.99.0" : nvs.Name,
-                        Value = nvs.Count
+                        name = nvs.Name == "previous" ? "Previous than 3.4.99.0" : nvs.Name, Value = nvs.Count
                     });
                 }
 
                 ViewBag.repVersions = versions.OrderBy(ver => ver.name).ToList();
             }
 
-            if(_ctx.Commands.Any())
-                ViewBag.repCommands = _ctx.Commands.OrderBy(c => c.Name).ToList();
+            if(_ctx.Commands.Any()) ViewBag.repCommands = _ctx.Commands.OrderBy(c => c.Name).ToList();
 
-            if(_ctx.Filters.Any())
-                ViewBag.repFilters = _ctx.Filters.OrderBy(filter => filter.Name).ToList();
+            if(_ctx.Filters.Any()) ViewBag.repFilters = _ctx.Filters.OrderBy(filter => filter.Name).ToList();
 
             if(_ctx.MediaFormats.Any())
                 ViewBag.repMediaImages = _ctx.MediaFormats.OrderBy(filter => filter.Name).ToList();
 
-            if(_ctx.Partitions.Any())
-                ViewBag.repPartitions = _ctx.Partitions.OrderBy(filter => filter.Name).ToList();
+            if(_ctx.Partitions.Any()) ViewBag.repPartitions = _ctx.Partitions.OrderBy(filter => filter.Name).ToList();
 
             if(_ctx.Filesystems.Any())
                 ViewBag.repFilesystems = _ctx.Filesystems.OrderBy(filter => filter.Name).ToList();
@@ -157,18 +157,14 @@ public sealed class StatsController : Controller
                         {
                             realMedia.Add(new MediaItem
                             {
-                                Type    = mediaType.type,
-                                SubType = mediaType.subType,
-                                Count   = nvs.Count
+                                Type = mediaType.type, SubType = mediaType.subType, Count = nvs.Count
                             });
                         }
                         else
                         {
                             virtualMedia.Add(new MediaItem
                             {
-                                Type    = mediaType.type,
-                                SubType = mediaType.subType,
-                                Count   = nvs.Count
+                                Type = mediaType.type, SubType = mediaType.subType, Count = nvs.Count
                             });
                         }
                     }
@@ -178,18 +174,14 @@ public sealed class StatsController : Controller
                         {
                             realMedia.Add(new MediaItem
                             {
-                                Type    = nvs.Type,
-                                SubType = null,
-                                Count   = nvs.Count
+                                Type = nvs.Type, SubType = null, Count = nvs.Count
                             });
                         }
                         else
                         {
                             virtualMedia.Add(new MediaItem
                             {
-                                Type    = nvs.Type,
-                                SubType = null,
-                                Count   = nvs.Count
+                                Type = nvs.Type, SubType = null, Count = nvs.Count
                             });
                         }
                     }
@@ -197,14 +189,15 @@ public sealed class StatsController : Controller
 
                 if(realMedia.Count > 0)
                 {
-                    ViewBag.repRealMedia = realMedia.OrderBy(media => media.Type).ThenBy(media => media.SubType).
-                                                     ToList();
+                    ViewBag.repRealMedia =
+                        realMedia.OrderBy(media => media.Type).ThenBy(media => media.SubType).ToList();
                 }
 
                 if(virtualMedia.Count > 0)
                 {
-                    ViewBag.repVirtualMedia = virtualMedia.OrderBy(media => media.Type).ThenBy(media => media.SubType).
-                                                           ToList();
+                    ViewBag.repVirtualMedia = virtualMedia.OrderBy(media => media.Type)
+                                                          .ThenBy(media => media.SubType)
+                                                          .ToList();
                 }
             }
 
@@ -220,11 +213,9 @@ public sealed class StatsController : Controller
                        !string.IsNullOrWhiteSpace(device.Model)        &&
                        !string.IsNullOrWhiteSpace(device.Revision))
                         xmlFile = device.Manufacturer + "_" + device.Model + "_" + device.Revision + ".xml";
-                    else if(!string.IsNullOrWhiteSpace(device.Manufacturer) &&
-                            !string.IsNullOrWhiteSpace(device.Model))
+                    else if(!string.IsNullOrWhiteSpace(device.Manufacturer) && !string.IsNullOrWhiteSpace(device.Model))
                         xmlFile = device.Manufacturer + "_" + device.Model + ".xml";
-                    else if(!string.IsNullOrWhiteSpace(device.Model) &&
-                            !string.IsNullOrWhiteSpace(device.Revision))
+                    else if(!string.IsNullOrWhiteSpace(device.Model) && !string.IsNullOrWhiteSpace(device.Revision))
                         xmlFile = device.Model + "_" + device.Revision + ".xml";
                     else
                         xmlFile = device.Model + ".xml";
@@ -238,10 +229,12 @@ public sealed class StatsController : Controller
                         var xs = new XmlSerializer(deviceReport.GetType());
 
                         FileStream fs =
-                            WaitForFile(
-                                Path.Combine(_env.ContentRootPath ?? throw new InvalidOperationException(), "Reports",
-                                             xmlFile),
-                                FileMode.Open, FileAccess.Read, FileShare.Read);
+                            WaitForFile(Path.Combine(_env.ContentRootPath ?? throw new InvalidOperationException(),
+                                                     "Reports",
+                                                     xmlFile),
+                                        FileMode.Open,
+                                        FileAccess.Read,
+                                        FileShare.Read);
 
                         deviceReport = (DeviceReport)xs.Deserialize(fs);
                         fs.Close();
@@ -251,9 +244,10 @@ public sealed class StatsController : Controller
                         device.Report = _ctx.Devices.Add(new Device(deviceReportV2)).Entity;
                         _ctx.SaveChanges();
 
-                        System.IO.File.
-                               Delete(Path.Combine(_env.ContentRootPath ?? throw new InvalidOperationException(),
-                                                   "Reports", xmlFile));
+                        System.IO.File.Delete(Path.Combine(_env.ContentRootPath ??
+                                                           throw new InvalidOperationException(),
+                                                           "Reports",
+                                                           xmlFile));
                     }
 
                     devices.Add(new DeviceItem
@@ -266,15 +260,18 @@ public sealed class StatsController : Controller
                     });
                 }
 
-                ViewBag.repDevices = devices.OrderBy(device => device.Manufacturer).ThenBy(device => device.Model).
-                                             ThenBy(device => device.Revision).ThenBy(device => device.Bus).ToList();
+                ViewBag.repDevices = devices.OrderBy(device => device.Manufacturer)
+                                            .ThenBy(device => device.Model)
+                                            .ThenBy(device => device.Revision)
+                                            .ThenBy(device => device.Bus)
+                                            .ToList();
             }
         }
         catch(Exception)
         {
-        #if DEBUG
+#if DEBUG
             throw;
-        #endif
+#endif
             return Content("Could not read statistics");
         }
 
@@ -306,13 +303,14 @@ public sealed class StatsController : Controller
     public IActionResult GetOsData()
     {
         var query = _ctx.OperatingSystems.GroupBy(x => new
-        {
-            x.Name
-        }, x => x.Count).Select(g => new
-        {
-            g.Key.Name,
-            Count = g.Sum()
-        });
+                                                  {
+                                                      x.Name
+                                                  },
+                                                  x => x.Count)
+                        .Select(g => new
+                         {
+                             g.Key.Name, Count = g.Sum()
+                         });
 
         var result = new string[2][];
         result[0] = query.Select(x => x.Name).ToArray();
@@ -328,17 +326,20 @@ public sealed class StatsController : Controller
     {
         string[][] result =
         {
-            _ctx.OperatingSystems.Where(o => o.Name == PlatformID.Linux.ToString()).OrderByDescending(o => o.Count).
-                 Take(10).
-                 Select(x =>
-                            $"{DetectOS.GetPlatformName(PlatformID.Linux, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}").
-                 ToArray(),
-            _ctx.OperatingSystems.Where(o => o.Name == PlatformID.Linux.ToString()).OrderByDescending(o => o.Count).
-                 Take(10).Select(x => x.Count.ToString()).ToArray()
+            _ctx.OperatingSystems.Where(o => o.Name == PlatformID.Linux.ToString())
+                .OrderByDescending(o => o.Count)
+                .Take(10)
+                .Select(x =>
+                            $"{DetectOS.GetPlatformName(PlatformID.Linux, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}")
+                .ToArray(),
+            _ctx.OperatingSystems.Where(o => o.Name == PlatformID.Linux.ToString())
+                .OrderByDescending(o => o.Count)
+                .Take(10)
+                .Select(x => x.Count.ToString())
+                .ToArray()
         };
 
-        if(result[0].Length < 10)
-            return Json(result);
+        if(result[0].Length < 10) return Json(result);
 
         result[0][9] = "Other";
 
@@ -352,17 +353,20 @@ public sealed class StatsController : Controller
     {
         string[][] result =
         {
-            _ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()).OrderByDescending(o => o.Count).
-                 Take(10).
-                 Select(x =>
-                            $"{DetectOS.GetPlatformName(PlatformID.MacOSX, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}").
-                 ToArray(),
-            _ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString()).OrderByDescending(o => o.Count).
-                 Take(10).Select(x => x.Count.ToString()).ToArray()
+            _ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString())
+                .OrderByDescending(o => o.Count)
+                .Take(10)
+                .Select(x =>
+                            $"{DetectOS.GetPlatformName(PlatformID.MacOSX, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}")
+                .ToArray(),
+            _ctx.OperatingSystems.Where(o => o.Name == PlatformID.MacOSX.ToString())
+                .OrderByDescending(o => o.Count)
+                .Take(10)
+                .Select(x => x.Count.ToString())
+                .ToArray()
         };
 
-        if(result[0].Length < 10)
-            return Json(result);
+        if(result[0].Length < 10) return Json(result);
 
         result[0][9] = "Other";
 
@@ -376,17 +380,20 @@ public sealed class StatsController : Controller
     {
         string[][] result =
         {
-            _ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).OrderByDescending(o => o.Count).
-                 Take(10).
-                 Select(x =>
-                            $"{DetectOS.GetPlatformName(PlatformID.Win32NT, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}").
-                 ToArray(),
-            _ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString()).OrderByDescending(o => o.Count).
-                 Take(10).Select(x => x.Count.ToString()).ToArray()
+            _ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString())
+                .OrderByDescending(o => o.Count)
+                .Take(10)
+                .Select(x =>
+                            $"{DetectOS.GetPlatformName(PlatformID.Win32NT, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}")
+                .ToArray(),
+            _ctx.OperatingSystems.Where(o => o.Name == PlatformID.Win32NT.ToString())
+                .OrderByDescending(o => o.Count)
+                .Take(10)
+                .Select(x => x.Count.ToString())
+                .ToArray()
         };
 
-        if(result[0].Length < 10)
-            return Json(result);
+        if(result[0].Length < 10) return Json(result);
 
         result[0][9] = "Other";
 
@@ -400,13 +407,14 @@ public sealed class StatsController : Controller
     {
         string[][] result =
         {
-            _ctx.Versions.OrderByDescending(o => o.Count).Take(10).
-                 Select(v => v.Name == "previous" ? "Previous than 3.4.99.0" : v.Name).ToArray(),
+            _ctx.Versions.OrderByDescending(o => o.Count)
+                .Take(10)
+                .Select(v => v.Name == "previous" ? "Previous than 3.4.99.0" : v.Name)
+                .ToArray(),
             _ctx.Versions.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
         };
 
-        if(result[0].Length < 10)
-            return Json(result);
+        if(result[0].Length < 10) return Json(result);
 
         result[0][9] = "Other";
 
@@ -423,8 +431,7 @@ public sealed class StatsController : Controller
             _ctx.Commands.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
         };
 
-        if(result[0].Length < 10)
-            return Json(result);
+        if(result[0].Length < 10) return Json(result);
 
         result[0][9] = "Other";
 
@@ -441,8 +448,7 @@ public sealed class StatsController : Controller
             _ctx.Filters.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
         };
 
-        if(result[0].Length < 10)
-            return Json(result);
+        if(result[0].Length < 10) return Json(result);
 
         result[0][9] = "Other";
 
@@ -459,8 +465,7 @@ public sealed class StatsController : Controller
             _ctx.MediaFormats.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
         };
 
-        if(result[0].Length < 10)
-            return Json(result);
+        if(result[0].Length < 10) return Json(result);
 
         result[0][9] = "Other";
 
@@ -477,8 +482,7 @@ public sealed class StatsController : Controller
             _ctx.Partitions.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
         };
 
-        if(result[0].Length < 10)
-            return Json(result);
+        if(result[0].Length < 10) return Json(result);
 
         result[0][9] = "Other";
 
@@ -495,8 +499,7 @@ public sealed class StatsController : Controller
             _ctx.Filesystems.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
         };
 
-        if(result[0].Length < 10)
-            return Json(result);
+        if(result[0].Length < 10) return Json(result);
 
         result[0][9] = "Other";
 
@@ -530,8 +533,7 @@ public sealed class StatsController : Controller
             virtualMedias.Select(v => v.Type).ToArray(), virtualMedias.Select(x => x.Count.ToString()).ToArray()
         };
 
-        if(result[0].Length < 10)
-            return Json(result);
+        if(result[0].Length < 10) return Json(result);
 
         result[0][9] = "Other";
 
@@ -566,28 +568,29 @@ public sealed class StatsController : Controller
             realMedias.Select(v => v.Type).ToArray(), realMedias.Select(x => x.Count.ToString()).ToArray()
         };
 
-        if(result[0].Length < 10)
-            return Json(result);
+        if(result[0].Length < 10) return Json(result);
 
         result[0][9] = "Other";
 
-        result[1][9] = (_ctx.Medias.Where(o => o.Real).Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse)).
-            ToString();
+        result[1][9] = (_ctx.Medias.Where(o => o.Real).Sum(o => o.Count) - result[1].Take(9).Sum(long.Parse))
+           .ToString();
 
         return Json(result);
     }
 
     public IActionResult GetDevicesByBusData()
     {
-        var data = _ctx.DeviceStats.Select(d => d.Bus).Distinct().Select(deviceBus => new
-        {
-            deviceBus,
-            deviceBusCount = _ctx.DeviceStats.Count(d => d.Bus == deviceBus)
-        }).Select(t => new
-        {
-            Name  = t.deviceBus,
-            Count = t.deviceBusCount
-        }).ToList();
+        var data = _ctx.DeviceStats.Select(d => d.Bus)
+                       .Distinct()
+                       .Select(deviceBus => new
+                        {
+                            deviceBus, deviceBusCount = _ctx.DeviceStats.Count(d => d.Bus == deviceBus)
+                        })
+                       .Select(t => new
+                        {
+                            Name = t.deviceBus, Count = t.deviceBusCount
+                        })
+                       .ToList();
 
         string[][] result =
         {
@@ -595,8 +598,7 @@ public sealed class StatsController : Controller
             data.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
         };
 
-        if(result[0].Length < 10)
-            return Json(result);
+        if(result[0].Length < 10) return Json(result);
 
         result[0][9] = "Other";
 
@@ -609,15 +611,19 @@ public sealed class StatsController : Controller
     {
         var devices = _ctx.Devices.Where(d => d.Manufacturer != null && d.Manufacturer != "").ToList();
 
-        var data = devices.Select(d => d.Manufacturer.ToLowerInvariant()).Distinct().Select(manufacturer => new
-        {
-            manufacturer,
-            manufacturerCount = devices.Count(d => d.Manufacturer?.ToLowerInvariant() == manufacturer)
-        }).Select(t => new
-        {
-            Name  = t.manufacturer,
-            Count = t.manufacturerCount
-        }).ToList();
+        var data = devices.Select(d => d.Manufacturer.ToLowerInvariant())
+                          .Distinct()
+                          .Select(manufacturer => new
+                           {
+                               manufacturer,
+                               manufacturerCount =
+                                   devices.Count(d => d.Manufacturer?.ToLowerInvariant() == manufacturer)
+                           })
+                          .Select(t => new
+                           {
+                               Name = t.manufacturer, Count = t.manufacturerCount
+                           })
+                          .ToList();
 
         string[][] result =
         {
@@ -625,8 +631,7 @@ public sealed class StatsController : Controller
             data.OrderByDescending(o => o.Count).Take(10).Select(x => x.Count.ToString()).ToArray()
         };
 
-        if(result[0].Length < 10)
-            return Json(result);
+        if(result[0].Length < 10) return Json(result);
 
         result[0][9] = "other";
 

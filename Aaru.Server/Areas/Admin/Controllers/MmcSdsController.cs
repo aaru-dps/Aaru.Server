@@ -16,13 +16,11 @@ public sealed class MmcSdsController : Controller
     // GET: Admin/MmcSds/Details/5
     public async Task<IActionResult> Details(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         MmcSd mmcSd = await _context.MmcSd.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(mmcSd == null)
-            return NotFound();
+        if(mmcSd == null) return NotFound();
 
         return View(mmcSd);
     }
@@ -30,13 +28,11 @@ public sealed class MmcSdsController : Controller
     // GET: Admin/MmcSds/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
-        if(id == null)
-            return NotFound();
+        if(id == null) return NotFound();
 
         MmcSd mmcSd = await _context.MmcSd.FirstOrDefaultAsync(m => m.Id == id);
 
-        if(mmcSd == null)
-            return NotFound();
+        if(mmcSd == null) return NotFound();
 
         return View(mmcSd);
     }
