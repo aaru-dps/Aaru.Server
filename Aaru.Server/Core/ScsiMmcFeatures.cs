@@ -189,9 +189,7 @@ public static class ScsiMmcFeatures
         if(ftr.LogicalBlockSize > 0) mmcOneValue.Add($"{ftr.LogicalBlockSize} bytes per logical block");
 
         if(ftr.MultiRead)
-        {
             mmcOneValue.Add("Drive claims capability to read all CD formats according to OSTA Multi-Read Specification");
-        }
 
         if(ftr.PhysicalInterfaceStandard.HasValue)
         {

@@ -21,18 +21,23 @@ public sealed class ChsController : Controller
     {
         var dups = _context.Chs.GroupBy(x => new
                             {
-                                x.Cylinders, x.Heads, x.Sectors
+                                x.Cylinders,
+                                x.Heads,
+                                x.Sectors
                             })
                            .Where(x => x.Count() > 1)
                            .Select(x => new ChsModel
                             {
-                                Cylinders = x.Key.Cylinders, Heads = x.Key.Heads, Sectors = x.Key.Sectors
+                                Cylinders = x.Key.Cylinders,
+                                Heads     = x.Key.Heads,
+                                Sectors   = x.Key.Sectors
                             })
                            .ToList();
 
         return View(new ChsModelForView
         {
-            List = dups, Json = JsonConvert.SerializeObject(dups)
+            List = dups,
+            Json = JsonConvert.SerializeObject(dups)
         });
     }
 

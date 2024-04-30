@@ -121,7 +121,8 @@ public sealed class StatsController : Controller
                 {
                     versions.Add(new NameValueStats
                     {
-                        name = nvs.Name == "previous" ? "Previous than 3.4.99.0" : nvs.Name, Value = nvs.Count
+                        name  = nvs.Name == "previous" ? "Previous than 3.4.99.0" : nvs.Name,
+                        Value = nvs.Count
                     });
                 }
 
@@ -157,14 +158,18 @@ public sealed class StatsController : Controller
                         {
                             realMedia.Add(new MediaItem
                             {
-                                Type = mediaType.type, SubType = mediaType.subType, Count = nvs.Count
+                                Type    = mediaType.type,
+                                SubType = mediaType.subType,
+                                Count   = nvs.Count
                             });
                         }
                         else
                         {
                             virtualMedia.Add(new MediaItem
                             {
-                                Type = mediaType.type, SubType = mediaType.subType, Count = nvs.Count
+                                Type    = mediaType.type,
+                                SubType = mediaType.subType,
+                                Count   = nvs.Count
                             });
                         }
                     }
@@ -174,14 +179,18 @@ public sealed class StatsController : Controller
                         {
                             realMedia.Add(new MediaItem
                             {
-                                Type = nvs.Type, SubType = null, Count = nvs.Count
+                                Type    = nvs.Type,
+                                SubType = null,
+                                Count   = nvs.Count
                             });
                         }
                         else
                         {
                             virtualMedia.Add(new MediaItem
                             {
-                                Type = nvs.Type, SubType = null, Count = nvs.Count
+                                Type    = nvs.Type,
+                                SubType = null,
+                                Count   = nvs.Count
                             });
                         }
                     }
@@ -309,7 +318,8 @@ public sealed class StatsController : Controller
                                                   x => x.Count)
                         .Select(g => new
                          {
-                             g.Key.Name, Count = g.Sum()
+                             g.Key.Name,
+                             Count = g.Sum()
                          });
 
         var result = new string[2][];
@@ -584,11 +594,13 @@ public sealed class StatsController : Controller
                        .Distinct()
                        .Select(deviceBus => new
                         {
-                            deviceBus, deviceBusCount = _ctx.DeviceStats.Count(d => d.Bus == deviceBus)
+                            deviceBus,
+                            deviceBusCount = _ctx.DeviceStats.Count(d => d.Bus == deviceBus)
                         })
                        .Select(t => new
                         {
-                            Name = t.deviceBus, Count = t.deviceBusCount
+                            Name  = t.deviceBus,
+                            Count = t.deviceBusCount
                         })
                        .ToList();
 
@@ -621,7 +633,8 @@ public sealed class StatsController : Controller
                            })
                           .Select(t => new
                            {
-                               Name = t.manufacturer, Count = t.manufacturerCount
+                               Name  = t.manufacturer,
+                               Count = t.manufacturerCount
                            })
                           .ToList();
 

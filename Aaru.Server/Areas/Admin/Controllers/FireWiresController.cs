@@ -112,7 +112,8 @@ public sealed class FireWiresController : Controller
 
         return View(new FireWireModelForView
         {
-            List = dups, Json = JsonConvert.SerializeObject(dups)
+            List = dups,
+            Json = JsonConvert.SerializeObject(dups)
         });
     }
 

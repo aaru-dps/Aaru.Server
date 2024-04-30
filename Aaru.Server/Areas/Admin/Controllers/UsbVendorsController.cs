@@ -30,7 +30,8 @@ public sealed class UsbVendorsController : Controller
                                .ThenBy(p => p.ProductId)
                                .Select(p => new UsbProductModel
                                 {
-                                    ProductId = p.ProductId, ProductName = p.Product
+                                    ProductId   = p.ProductId,
+                                    ProductName = p.Product
                                 })
                                .ToList()
         });

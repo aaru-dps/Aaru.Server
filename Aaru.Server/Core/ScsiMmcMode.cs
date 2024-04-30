@@ -153,13 +153,9 @@ public static class ScsiMmcMode
         if(mode.CurrentWriteSpeedSelected > 0)
         {
             if(mode.RotationControlSelected == 0)
-            {
                 mmcOneValue.Add($"Drive's current writing speed is {mode.CurrentWriteSpeedSelected} Kbyte/sec. in CLV mode");
-            }
             else if(mode.RotationControlSelected == 1)
-            {
                 mmcOneValue.Add($"Drive's current writing speed is {mode.CurrentWriteSpeedSelected} Kbyte/sec. in pure CAV mode");
-            }
         }
         else
         {

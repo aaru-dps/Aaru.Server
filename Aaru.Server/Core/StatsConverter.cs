@@ -50,7 +50,8 @@ public static class StatsConverter
             {
                 ctx.Commands.Add(new Command
                 {
-                    Count = newStats.Commands.Analyze, Name = "fs-info"
+                    Count = newStats.Commands.Analyze,
+                    Name  = "fs-info"
                 });
             }
             else
@@ -65,7 +66,8 @@ public static class StatsConverter
             {
                 ctx.Commands.Add(new Command
                 {
-                    Count = newStats.Commands.Benchmark, Name = "benchmark"
+                    Count = newStats.Commands.Benchmark,
+                    Name  = "benchmark"
                 });
             }
             else
@@ -80,7 +82,8 @@ public static class StatsConverter
             {
                 ctx.Commands.Add(new Command
                 {
-                    Count = newStats.Commands.Checksum, Name = "checksum"
+                    Count = newStats.Commands.Checksum,
+                    Name  = "checksum"
                 });
             }
             else
@@ -95,7 +98,8 @@ public static class StatsConverter
             {
                 ctx.Commands.Add(new Command
                 {
-                    Count = newStats.Commands.Compare, Name = "compare"
+                    Count = newStats.Commands.Compare,
+                    Name  = "compare"
                 });
             }
             else
@@ -110,7 +114,8 @@ public static class StatsConverter
             {
                 ctx.Commands.Add(new Command
                 {
-                    Count = newStats.Commands.CreateSidecar, Name = "create-sidecar"
+                    Count = newStats.Commands.CreateSidecar,
+                    Name  = "create-sidecar"
                 });
             }
             else
@@ -125,7 +130,8 @@ public static class StatsConverter
             {
                 ctx.Commands.Add(new Command
                 {
-                    Count = newStats.Commands.Decode, Name = "decode"
+                    Count = newStats.Commands.Decode,
+                    Name  = "decode"
                 });
             }
             else
@@ -140,7 +146,8 @@ public static class StatsConverter
             {
                 ctx.Commands.Add(new Command
                 {
-                    Count = newStats.Commands.DeviceInfo, Name = "device-info"
+                    Count = newStats.Commands.DeviceInfo,
+                    Name  = "device-info"
                 });
             }
             else
@@ -155,7 +162,8 @@ public static class StatsConverter
             {
                 ctx.Commands.Add(new Command
                 {
-                    Count = newStats.Commands.DeviceReport, Name = "device-report"
+                    Count = newStats.Commands.DeviceReport,
+                    Name  = "device-report"
                 });
             }
             else
@@ -170,7 +178,8 @@ public static class StatsConverter
             {
                 ctx.Commands.Add(new Command
                 {
-                    Count = newStats.Commands.DumpMedia, Name = "dump-media"
+                    Count = newStats.Commands.DumpMedia,
+                    Name  = "dump-media"
                 });
             }
             else
@@ -185,7 +194,8 @@ public static class StatsConverter
             {
                 ctx.Commands.Add(new Command
                 {
-                    Count = newStats.Commands.Entropy, Name = "entropy"
+                    Count = newStats.Commands.Entropy,
+                    Name  = "entropy"
                 });
             }
             else
@@ -200,7 +210,8 @@ public static class StatsConverter
             {
                 ctx.Commands.Add(new Command
                 {
-                    Count = newStats.Commands.Formats, Name = "formats"
+                    Count = newStats.Commands.Formats,
+                    Name  = "formats"
                 });
             }
             else
@@ -215,7 +226,8 @@ public static class StatsConverter
             {
                 ctx.Commands.Add(new Command
                 {
-                    Count = newStats.Commands.MediaInfo, Name = "media-info"
+                    Count = newStats.Commands.MediaInfo,
+                    Name  = "media-info"
                 });
             }
             else
@@ -230,7 +242,8 @@ public static class StatsConverter
             {
                 ctx.Commands.Add(new Command
                 {
-                    Count = newStats.Commands.MediaScan, Name = "media-scan"
+                    Count = newStats.Commands.MediaScan,
+                    Name  = "media-scan"
                 });
             }
             else
@@ -245,7 +258,8 @@ public static class StatsConverter
             {
                 ctx.Commands.Add(new Command
                 {
-                    Count = newStats.Commands.PrintHex, Name = "printhex"
+                    Count = newStats.Commands.PrintHex,
+                    Name  = "printhex"
                 });
             }
             else
@@ -260,7 +274,8 @@ public static class StatsConverter
             {
                 ctx.Commands.Add(new Command
                 {
-                    Count = newStats.Commands.Verify, Name = "verify"
+                    Count = newStats.Commands.Verify,
+                    Name  = "verify"
                 });
             }
             else
@@ -275,7 +290,8 @@ public static class StatsConverter
             {
                 ctx.Commands.Add(new Command
                 {
-                    Count = newStats.Commands.Ls, Name = "ls"
+                    Count = newStats.Commands.Ls,
+                    Name  = "ls"
                 });
             }
             else
@@ -290,7 +306,8 @@ public static class StatsConverter
             {
                 ctx.Commands.Add(new Command
                 {
-                    Count = newStats.Commands.ExtractFiles, Name = "extract-files"
+                    Count = newStats.Commands.ExtractFiles,
+                    Name  = "extract-files"
                 });
             }
             else
@@ -305,7 +322,8 @@ public static class StatsConverter
             {
                 ctx.Commands.Add(new Command
                 {
-                    Count = newStats.Commands.ListDevices, Name = "list-devices"
+                    Count = newStats.Commands.ListDevices,
+                    Name  = "list-devices"
                 });
             }
             else
@@ -320,7 +338,8 @@ public static class StatsConverter
             {
                 ctx.Commands.Add(new Command
                 {
-                    Count = newStats.Commands.ListEncodings, Name = "list-encodings"
+                    Count = newStats.Commands.ListEncodings,
+                    Name  = "list-encodings"
                 });
             }
             else
@@ -335,7 +354,8 @@ public static class StatsConverter
             {
                 ctx.Commands.Add(new Command
                 {
-                    Count = newStats.Commands.ConvertImage, Name = "convert-image"
+                    Count = newStats.Commands.ConvertImage,
+                    Name  = "convert-image"
                 });
             }
             else
@@ -350,7 +370,8 @@ public static class StatsConverter
             {
                 ctx.Commands.Add(new Command
                 {
-                    Count = newStats.Commands.ImageInfo, Name = "image-info"
+                    Count = newStats.Commands.ImageInfo,
+                    Name  = "image-info"
                 });
             }
             else
@@ -373,7 +394,9 @@ public static class StatsConverter
                 {
                     ctx.OperatingSystems.Add(new OperatingSystem
                     {
-                        Count = operatingSystem.Value, Name = operatingSystem.name, Version = operatingSystem.version
+                        Count   = operatingSystem.Value,
+                        Name    = operatingSystem.name,
+                        Version = operatingSystem.version
                     });
                 }
                 else
@@ -388,7 +411,8 @@ public static class StatsConverter
             {
                 ctx.OperatingSystems.Add(new OperatingSystem
                 {
-                    Count = 1, Name = "Linux"
+                    Count = 1,
+                    Name  = "Linux"
                 });
             }
             else
@@ -407,7 +431,8 @@ public static class StatsConverter
                 {
                     ctx.Versions.Add(new Version
                     {
-                        Count = nvs.Value, Name = nvs.name
+                        Count = nvs.Value,
+                        Name  = nvs.name
                     });
                 }
                 else
@@ -422,7 +447,8 @@ public static class StatsConverter
             {
                 ctx.Versions.Add(new Version
                 {
-                    Count = 1, Name = "previous"
+                    Count = 1,
+                    Name  = "previous"
                 });
             }
             else
@@ -441,7 +467,8 @@ public static class StatsConverter
                 {
                     ctx.Filesystems.Add(new Filesystem
                     {
-                        Count = nvs.Value, Name = nvs.name
+                        Count = nvs.Value,
+                        Name  = nvs.name
                     });
                 }
                 else
@@ -461,7 +488,8 @@ public static class StatsConverter
                 {
                     ctx.Partitions.Add(new Partition
                     {
-                        Count = nvs.Value, Name = nvs.name
+                        Count = nvs.Value,
+                        Name  = nvs.name
                     });
                 }
                 else
@@ -481,7 +509,8 @@ public static class StatsConverter
                 {
                     ctx.MediaFormats.Add(new MediaFormat
                     {
-                        Count = nvs.Value, Name = nvs.name
+                        Count = nvs.Value,
+                        Name  = nvs.name
                     });
                 }
                 else
@@ -501,7 +530,8 @@ public static class StatsConverter
                 {
                     ctx.Filters.Add(new Filter
                     {
-                        Count = nvs.Value, Name = nvs.name
+                        Count = nvs.Value,
+                        Name  = nvs.name
                     });
                 }
                 else
@@ -539,7 +569,9 @@ public static class StatsConverter
                 {
                     ctx.Medias.Add(new Media
                     {
-                        Count = media.Value, Real = media.real, Type = media.type
+                        Count = media.Value,
+                        Real  = media.real,
+                        Type  = media.type
                     });
                 }
                 else

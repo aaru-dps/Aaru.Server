@@ -57,7 +57,8 @@ public sealed class UploadStatsController : Controller
     {
         var response = new ContentResult
         {
-            StatusCode = (int)HttpStatusCode.OK, ContentType = "text/plain"
+            StatusCode  = (int)HttpStatusCode.OK,
+            ContentType = "text/plain"
         };
 
         try
@@ -101,7 +102,8 @@ public sealed class UploadStatsController : Controller
     {
         var response = new ContentResult
         {
-            StatusCode = (int)HttpStatusCode.OK, ContentType = "text/plain"
+            StatusCode  = (int)HttpStatusCode.OK,
+            ContentType = "text/plain"
         };
 
         try
@@ -131,7 +133,8 @@ public sealed class UploadStatsController : Controller
                     {
                         await _ctx.Commands.AddAsync(new Command
                         {
-                            Name = nvs.name, Count = nvs.Value
+                            Name  = nvs.name,
+                            Count = nvs.Value
                         });
                     }
                     else
@@ -149,7 +152,8 @@ public sealed class UploadStatsController : Controller
                     {
                         await _ctx.Versions.AddAsync(new Version
                         {
-                            Name = nvs.name, Count = nvs.Value
+                            Name  = nvs.name,
+                            Count = nvs.Value
                         });
                     }
                     else
@@ -167,7 +171,8 @@ public sealed class UploadStatsController : Controller
                     {
                         await _ctx.Filesystems.AddAsync(new Filesystem
                         {
-                            Name = nvs.name, Count = nvs.Value
+                            Name  = nvs.name,
+                            Count = nvs.Value
                         });
                     }
                     else
@@ -185,7 +190,8 @@ public sealed class UploadStatsController : Controller
                     {
                         await _ctx.Partitions.AddAsync(new Partition
                         {
-                            Name = nvs.name, Count = nvs.Value
+                            Name  = nvs.name,
+                            Count = nvs.Value
                         });
                     }
                     else
@@ -203,7 +209,8 @@ public sealed class UploadStatsController : Controller
                     {
                         await _ctx.MediaFormats.AddAsync(new MediaFormat
                         {
-                            Name = nvs.name, Count = nvs.Value
+                            Name  = nvs.name,
+                            Count = nvs.Value
                         });
                     }
                     else
@@ -221,7 +228,8 @@ public sealed class UploadStatsController : Controller
                     {
                         await _ctx.Filters.AddAsync(new Filter
                         {
-                            Name = nvs.name, Count = nvs.Value
+                            Name  = nvs.name,
+                            Count = nvs.Value
                         });
                     }
                     else
@@ -261,7 +269,9 @@ public sealed class UploadStatsController : Controller
                     {
                         await _ctx.Medias.AddAsync(new Media
                         {
-                            Type = media.type, Real = media.real, Count = media.Value
+                            Type  = media.type,
+                            Real  = media.real,
+                            Count = media.Value
                         });
                     }
                     else
@@ -302,7 +312,9 @@ public sealed class UploadStatsController : Controller
                     {
                         await _ctx.RemoteApplications.AddAsync(new RemoteApplication
                         {
-                            Name = application.name, Version = application.version, Count = application.Value
+                            Name    = application.name,
+                            Version = application.version,
+                            Count   = application.Value
                         });
                     }
                     else
@@ -320,7 +332,8 @@ public sealed class UploadStatsController : Controller
                     {
                         await _ctx.RemoteArchitectures.AddAsync(new RemoteArchitecture
                         {
-                            Name = nvs.name, Count = nvs.Value
+                            Name  = nvs.name,
+                            Count = nvs.Value
                         });
                     }
                     else

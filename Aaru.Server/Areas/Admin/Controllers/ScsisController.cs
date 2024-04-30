@@ -85,7 +85,8 @@ public sealed class ScsisController : Controller
 
         return View(new IdHashModelForView
         {
-            List = dups, Json = JsonConvert.SerializeObject(dups)
+            List = dups,
+            Json = JsonConvert.SerializeObject(dups)
         });
     }
 
@@ -147,7 +148,8 @@ public sealed class ScsisController : Controller
     {
         var model = new CompareModel
         {
-            LeftId = id, RightId = rightId
+            LeftId  = id,
+            RightId = rightId
         };
 
         Scsi left  = _context.Scsi.FirstOrDefault(l => l.Id == id);
@@ -311,7 +313,8 @@ public sealed class ScsisController : Controller
             return RedirectToAction(nameof(Compare),
                                     new
                                     {
-                                        id = masterId, rightId = slaveId
+                                        id      = masterId,
+                                        rightId = slaveId
                                     });
         }
 
@@ -322,7 +325,8 @@ public sealed class ScsisController : Controller
             return RedirectToAction(nameof(Compare),
                                     new
                                     {
-                                        id = masterId, rightId = slaveId
+                                        id      = masterId,
+                                        rightId = slaveId
                                     });
         }
 

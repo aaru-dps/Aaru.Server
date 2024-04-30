@@ -46,7 +46,9 @@ public sealed class SscsController : Controller
     {
         var dups = _context.Ssc.GroupBy(x => new
                             {
-                                x.BlockSizeGranularity, x.MaxBlockLength, x.MinBlockLength
+                                x.BlockSizeGranularity,
+                                x.MaxBlockLength,
+                                x.MinBlockLength
                             })
                            .Where(x => x.Count() > 1)
                            .Select(x => new SscModel
@@ -59,7 +61,8 @@ public sealed class SscsController : Controller
 
         return View(new SscModelForView
         {
-            List = dups, Json = JsonConvert.SerializeObject(dups)
+            List = dups,
+            Json = JsonConvert.SerializeObject(dups)
         });
     }
 

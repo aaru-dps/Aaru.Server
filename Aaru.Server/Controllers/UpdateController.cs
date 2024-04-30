@@ -60,7 +60,8 @@ public sealed class UpdateController : Controller
         {
             sync.UsbVendors.Add(new UsbVendorDto
             {
-                VendorId = vendor.VendorId, Vendor = vendor.Vendor
+                VendorId = vendor.VendorId,
+                Vendor   = vendor.Vendor
             });
         }
 
@@ -128,7 +129,9 @@ public sealed class UpdateController : Controller
 
         return new ContentResult
         {
-            StatusCode = (int)HttpStatusCode.OK, Content = sw.ToString(), ContentType = "application/json"
+            StatusCode  = (int)HttpStatusCode.OK,
+            Content     = sw.ToString(),
+            ContentType = "application/json"
         };
     }
 }

@@ -64,7 +64,8 @@ public sealed class UploadReportController : Controller
     {
         var response = new ContentResult
         {
-            StatusCode = (int)HttpStatusCode.OK, ContentType = "text/plain"
+            StatusCode  = (int)HttpStatusCode.OK,
+            ContentType = "text/plain"
         };
 
         try
@@ -228,7 +229,8 @@ public sealed class UploadReportController : Controller
     {
         var response = new ContentResult
         {
-            StatusCode = (int)HttpStatusCode.OK, ContentType = "text/plain"
+            StatusCode  = (int)HttpStatusCode.OK,
+            ContentType = "text/plain"
         };
 
         try

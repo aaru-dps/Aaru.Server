@@ -59,7 +59,10 @@ public sealed class UsbsController : Controller
     {
         var dups = _context.Usb.GroupBy(x => new
                             {
-                                x.Manufacturer, x.Product, x.VendorID, x.ProductID
+                                x.Manufacturer,
+                                x.Product,
+                                x.VendorID,
+                                x.ProductID
                             })
                            .Where(x => x.Count() > 1)
                            .Select(x => new UsbModel
@@ -73,7 +76,8 @@ public sealed class UsbsController : Controller
 
         return View(new UsbModelForView
         {
-            List = dups, Json = JsonConvert.SerializeObject(dups)
+            List = dups,
+            Json = JsonConvert.SerializeObject(dups)
         });
     }
 
@@ -112,9 +116,8 @@ public sealed class UsbsController : Controller
                                          .ToArray())
             {
                 if(slave.Descriptors != null && master.Descriptors != null)
-                {
-                    if(!master.Descriptors.SequenceEqual(slave.Descriptors)) continue;
-                }
+                    if(!master.Descriptors.SequenceEqual(slave.Descriptors))
+                        continue;
 
                 foreach(Device device in _context.Devices.Where(d => d.USB.Id == slave.Id)) device.USB = master;
 

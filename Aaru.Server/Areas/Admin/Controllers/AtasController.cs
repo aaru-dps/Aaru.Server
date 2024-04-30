@@ -76,7 +76,8 @@ public sealed class AtasController : Controller
 
         return View(new IdHashModelForView
         {
-            List = dups, Json = JsonConvert.SerializeObject(dups)
+            List = dups,
+            Json = JsonConvert.SerializeObject(dups)
         });
     }
 
@@ -149,7 +150,8 @@ public sealed class AtasController : Controller
             return RedirectToAction(nameof(Compare),
                                     new
                                     {
-                                        id = masterId, rightId = slaveId
+                                        id      = masterId,
+                                        rightId = slaveId
                                     });
         }
 
@@ -160,7 +162,8 @@ public sealed class AtasController : Controller
             return RedirectToAction(nameof(Compare),
                                     new
                                     {
-                                        id = masterId, rightId = slaveId
+                                        id      = masterId,
+                                        rightId = slaveId
                                     });
         }
 
@@ -193,7 +196,8 @@ public sealed class AtasController : Controller
     {
         var model = new CompareModel
         {
-            LeftId = id, RightId = rightId
+            LeftId  = id,
+            RightId = rightId
         };
 
         Ata left  = _context.Ata.FirstOrDefault(l => l.Id == id);

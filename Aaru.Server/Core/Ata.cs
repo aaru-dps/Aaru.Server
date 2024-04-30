@@ -1065,9 +1065,7 @@ public static class Ata
         }
 
         if(ataIdentify.InterseekDelay != 0x0000 && ataIdentify.InterseekDelay != 0xFFFF)
-        {
             ataOneValue.Add($"{ataIdentify.InterseekDelay} microseconds of interseek delay for ISO-7779 acoustic testing");
-        }
 
         if((ushort)ataIdentify.DeviceFormFactor != 0x0000 && (ushort)ataIdentify.DeviceFormFactor != 0xFFFF)
         {
@@ -1669,9 +1667,7 @@ public static class Ata
         if(ataIdentify.DataSetMgmt.HasFlag(Identify.DataSetMgmtBit.Trim)) ataOneValue.Add("TRIM is supported");
 
         if(ataIdentify.DataSetMgmtSize > 0)
-        {
             ataOneValue.Add($"DATA SET MANAGEMENT can receive a maximum of {ataIdentify.DataSetMgmtSize} blocks of 512 bytes");
-        }
 
         if(ataIdentify.SecurityStatus.HasFlag(Identify.SecurityStatusBit.Supported))
         {
@@ -1706,9 +1702,7 @@ public static class Ata
             ataOneValue.Add($"{ataIdentify.SecurityEraseTime * 2} minutes to complete secure erase");
 
             if(ataIdentify.SecurityStatus.HasFlag(Identify.SecurityStatusBit.Enhanced))
-            {
                 ataOneValue.Add($"{ataIdentify.EnhancedSecurityEraseTime * 2} minutes to complete enhanced secure erase");
-            }
 
             ataOneValue.Add($"Master password revision code: {ataIdentify.MasterPasswordRevisionCode}");
         }

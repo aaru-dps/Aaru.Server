@@ -61,7 +61,8 @@ public sealed class GdRomSwapDiscCapabilitiesController : Controller
 
         var model = new TestedMediaDataModel
         {
-            TestedMediaId = id, DataName = data
+            TestedMediaId = id,
+            DataName      = data
         };
 
         byte[] buffer;
