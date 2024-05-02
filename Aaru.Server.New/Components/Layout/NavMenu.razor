@@ -1,0 +1,92 @@
+﻿@implements IDisposable
+
+@inject NavigationManager NavigationManager
+
+<div class="navbar navbar-dark ps-3 top-row">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">Aaru.Server.New</a>
+    </div>
+</div>
+
+<input class="navbar-toggler" title="Navigation menu" type="checkbox"/>
+
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span aria-hidden="true" class="bi bi-house-door-fill-nav-menu"></span> Home
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="counter">
+                <span aria-hidden="true" class="bi bi-plus-square-fill-nav-menu"></span> Counter
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="weather">
+                <span aria-hidden="true" class="bi bi-list-nested-nav-menu"></span> Weather
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="auth">
+                <span aria-hidden="true" class="bi bi-lock-nav-menu"></span> Auth Required
+            </NavLink>
+        </div>
+
+        <AuthorizeView>
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="Account/Manage">
+                        <span aria-hidden="true" class="bi bi-person-fill-nav-menu"></span> @context.User.Identity?.Name
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <form action="Account/Logout" method="post">
+                        <AntiforgeryToken/>
+                        <input name="ReturnUrl" type="hidden" value="@currentUrl"/>
+                        <button class="nav-link" type="submit">
+                            <span aria-hidden="true" class="bi bi-arrow-bar-left-nav-menu"></span> Logout
+                        </button>
+                    </form>
+                </div>
+            </Authorized>
+            <NotAuthorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="Account/Register">
+                        <span aria-hidden="true" class="bi bi-person-nav-menu"></span> Register
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="Account/Login">
+                        <span aria-hidden="true" class="bi bi-person-badge-nav-menu"></span> Login
+                    </NavLink>
+                </div>
+            </NotAuthorized>
+        </AuthorizeView>
+    </nav>
+</div>
+
+@code {
+    private string? currentUrl;
+
+    protected override void OnInitialized()
+    {
+        currentUrl                        =  NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+
+}
