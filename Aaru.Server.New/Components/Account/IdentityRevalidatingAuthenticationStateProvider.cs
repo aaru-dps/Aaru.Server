@@ -1,5 +1,4 @@
 using System.Security.Claims;
-using Aaru.Server.New.Data;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Identity;
@@ -21,15 +20,14 @@ sealed class IdentityRevalidatingAuthenticationStateProvider
         // Get the user manager from a new scope to ensure it fetches fresh data
         await using AsyncServiceScope scope = scopeFactory.CreateAsyncScope();
 
-        UserManager<ApplicationUser> userManager =
-            scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        UserManager<IdentityUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
         return await ValidateSecurityStampAsync(userManager, authenticationState.User);
     }
 
-    async Task<bool> ValidateSecurityStampAsync(UserManager<ApplicationUser> userManager, ClaimsPrincipal principal)
+    async Task<bool> ValidateSecurityStampAsync(UserManager<IdentityUser> userManager, ClaimsPrincipal principal)
     {
-        ApplicationUser? user = await userManager.GetUserAsync(principal);
+        IdentityUser? user = await userManager.GetUserAsync(principal);
 
         if(user is null) return false;
 

@@ -1,6 +1,5 @@
 using Aaru.Server.New.Components;
 using Aaru.Server.New.Components.Account;
-using Aaru.Server.New.Data;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -25,15 +24,23 @@ builder.Services.AddAuthentication(options =>
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
                           throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));
+builder.Services.AddDbContext<DbContext>(options => options
+                                                   .UseMySql(connectionString,
+                                                             new MariaDbServerVersion(new Version(10, 4, 0)))
+                                                   .UseLazyLoadingProxies());
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-       .AddEntityFrameworkStores<ApplicationDbContext>()
+builder.Services.AddIdentityCore<IdentityUser>(options =>
+        {
+            options.SignIn.RequireConfirmedAccount = true;
+            options.User.RequireUniqueEmail        = true;
+        })
+       .AddEntityFrameworkStores<DbContext>()
        .AddSignInManager()
        .AddDefaultTokenProviders();
 
-builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+builder.Services.AddSingleton<IEmailSender<IdentityUser>, IdentityNoOpEmailSender>();
 
 WebApplication app = builder.Build();
 

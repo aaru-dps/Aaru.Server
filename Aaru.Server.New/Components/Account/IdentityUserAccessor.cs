@@ -1,13 +1,12 @@
-using Aaru.Server.New.Data;
 using Microsoft.AspNetCore.Identity;
 
 namespace Aaru.Server.New.Components.Account;
 
-sealed class IdentityUserAccessor(UserManager<ApplicationUser> userManager, IdentityRedirectManager redirectManager)
+sealed class IdentityUserAccessor(UserManager<IdentityUser> userManager, IdentityRedirectManager redirectManager)
 {
-    public async Task<ApplicationUser> GetRequiredUserAsync(HttpContext context)
+    public async Task<IdentityUser> GetRequiredUserAsync(HttpContext context)
     {
-        ApplicationUser? user = await userManager.GetUserAsync(context.User);
+        IdentityUser? user = await userManager.GetUserAsync(context.User);
 
         if(user is null)
         {

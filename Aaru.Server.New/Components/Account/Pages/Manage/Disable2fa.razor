@@ -1,11 +1,10 @@
 ﻿@page "/Account/Manage/Disable2fa"
-@using Aaru.Server.New.Data
 @using Microsoft.AspNetCore.Identity
 
-@inject UserManager<ApplicationUser> UserManager
-@inject IdentityUserAccessor         UserAccessor
-@inject IdentityRedirectManager      RedirectManager
-@inject ILogger<Disable2fa>          Logger
+@inject UserManager<IdentityUser> UserManager
+@inject IdentityUserAccessor      UserAccessor
+@inject IdentityRedirectManager   RedirectManager
+@inject ILogger<Disable2fa>       Logger
 
 <PageTitle>Disable two-factor authentication (2FA)</PageTitle>
 
@@ -30,7 +29,7 @@
 </div>
 
 @code {
-    private ApplicationUser user = default!;
+    private IdentityUser user = default!;
 
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;

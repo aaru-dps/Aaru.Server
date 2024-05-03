@@ -1,13 +1,12 @@
 ﻿@page "/Account/RegisterConfirmation"
 @using System.Text
-@using Aaru.Server.New.Data
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
 
-@inject UserManager<ApplicationUser>  UserManager
-@inject IEmailSender<ApplicationUser> EmailSender
-@inject NavigationManager             NavigationManager
-@inject IdentityRedirectManager       RedirectManager
+@inject UserManager<IdentityUser>  UserManager
+@inject IEmailSender<IdentityUser> EmailSender
+@inject NavigationManager          NavigationManager
+@inject IdentityRedirectManager    RedirectManager
 
 <PageTitle>Register confirmation</PageTitle>
 
@@ -47,7 +46,7 @@ else
             RedirectManager.RedirectTo("");
         }
 
-        ApplicationUser? user = await UserManager.FindByEmailAsync(Email);
+        IdentityUser? user = await UserManager.FindByEmailAsync(Email);
 
         if(user is null)
         {

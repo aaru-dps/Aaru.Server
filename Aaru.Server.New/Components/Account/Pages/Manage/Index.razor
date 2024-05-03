@@ -1,12 +1,11 @@
 ﻿@page "/Account/Manage"
 @using System.ComponentModel.DataAnnotations
-@using Aaru.Server.New.Data
 @using Microsoft.AspNetCore.Identity
 
-@inject UserManager<ApplicationUser>   UserManager
-@inject SignInManager<ApplicationUser> SignInManager
-@inject IdentityUserAccessor           UserAccessor
-@inject IdentityRedirectManager        RedirectManager
+@inject UserManager<IdentityUser>   UserManager
+@inject SignInManager<IdentityUser> SignInManager
+@inject IdentityUserAccessor        UserAccessor
+@inject IdentityRedirectManager     RedirectManager
 
 <PageTitle>Profile</PageTitle>
 
@@ -33,9 +32,9 @@
 </div>
 
 @code {
-    private ApplicationUser user = default!;
-    private string?         username;
-    private string?         phoneNumber;
+    private IdentityUser user = default!;
+    private string?      username;
+    private string?      phoneNumber;
 
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;

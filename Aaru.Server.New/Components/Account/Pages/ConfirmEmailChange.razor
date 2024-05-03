@@ -1,12 +1,11 @@
 ﻿@page "/Account/ConfirmEmailChange"
 @using System.Text
-@using Aaru.Server.New.Data
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
 
-@inject UserManager<ApplicationUser>   UserManager
-@inject SignInManager<ApplicationUser> SignInManager
-@inject IdentityRedirectManager        RedirectManager
+@inject UserManager<IdentityUser>   UserManager
+@inject SignInManager<IdentityUser> SignInManager
+@inject IdentityRedirectManager     RedirectManager
 
 <PageTitle>Confirm email change</PageTitle>
 
@@ -36,7 +35,7 @@
             RedirectManager.RedirectToWithStatus("Account/Login", "Error: Invalid email change confirmation link.", HttpContext);
         }
 
-        ApplicationUser? user = await UserManager.FindByIdAsync(UserId);
+        IdentityUser? user = await UserManager.FindByIdAsync(UserId);
 
         if(user is null)
         {

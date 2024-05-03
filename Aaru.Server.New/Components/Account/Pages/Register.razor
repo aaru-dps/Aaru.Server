@@ -2,17 +2,16 @@
 @using System.ComponentModel.DataAnnotations
 @using System.Text
 @using System.Text.Encodings.Web
-@using Aaru.Server.New.Data
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
 
-@inject UserManager<ApplicationUser>   UserManager
-@inject IUserStore<ApplicationUser>    UserStore
-@inject SignInManager<ApplicationUser> SignInManager
-@inject IEmailSender<ApplicationUser>  EmailSender
-@inject ILogger<Register>              Logger
-@inject NavigationManager              NavigationManager
-@inject IdentityRedirectManager        RedirectManager
+@inject UserManager<IdentityUser>   UserManager
+@inject IUserStore<IdentityUser>    UserStore
+@inject SignInManager<IdentityUser> SignInManager
+@inject IEmailSender<IdentityUser>  EmailSender
+@inject ILogger<Register>           Logger
+@inject NavigationManager           NavigationManager
+@inject IdentityRedirectManager     RedirectManager
 
 <PageTitle>Register</PageTitle>
 
@@ -66,10 +65,10 @@
 
     public async Task RegisterUser(EditContext editContext)
     {
-        ApplicationUser user = CreateUser();
+        IdentityUser user = CreateUser();
 
         await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-        IUserEmailStore<ApplicationUser> emailStore = GetEmailStore();
+        IUserEmailStore<IdentityUser> emailStore = GetEmailStore();
         await emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
         IdentityResult result = await UserManager.CreateAsync(user, Input.Password);
 
@@ -110,26 +109,26 @@
         RedirectManager.RedirectTo(ReturnUrl);
     }
 
-    private ApplicationUser CreateUser()
+    private IdentityUser CreateUser()
     {
         try
         {
-            return Activator.CreateInstance<ApplicationUser>();
+            return Activator.CreateInstance<IdentityUser>();
         }
         catch
         {
-            throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " + $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor.");
+            throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " + $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor.");
         }
     }
 
-    private IUserEmailStore<ApplicationUser> GetEmailStore()
+    private IUserEmailStore<IdentityUser> GetEmailStore()
     {
         if(!UserManager.SupportsUserEmail)
         {
             throw new NotSupportedException("The default UI requires a user store with email support.");
         }
 
-        return (IUserEmailStore<ApplicationUser>)UserStore;
+        return (IUserEmailStore<IdentityUser>)UserStore;
     }
 
     private sealed class InputModel

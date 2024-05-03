@@ -3,7 +3,6 @@ using System.Security.Claims;
 using System.Text.Json;
 using Aaru.Server.New.Components.Account.Pages;
 using Aaru.Server.New.Components.Account.Pages.Manage;
-using Aaru.Server.New.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -23,8 +22,8 @@ static class IdentityComponentsEndpointRouteBuilderExtensions
         RouteGroupBuilder accountGroup = endpoints.MapGroup("/Account");
 
         accountGroup.MapPost("/PerformExternalLogin",
-                             (HttpContext       context,  [FromServices] SignInManager<ApplicationUser> signInManager,
-                              [FromForm] string provider, [FromForm]     string                         returnUrl) =>
+                             (HttpContext       context,  [FromServices] SignInManager<IdentityUser> signInManager,
+                              [FromForm] string provider, [FromForm]     string                      returnUrl) =>
                              {
                                  IEnumerable<KeyValuePair<string, StringValues>> query =
                                  [
@@ -44,7 +43,7 @@ static class IdentityComponentsEndpointRouteBuilderExtensions
                              });
 
         accountGroup.MapPost("/Logout",
-                             async (ClaimsPrincipal   user, SignInManager<ApplicationUser> signInManager,
+                             async (ClaimsPrincipal   user, SignInManager<IdentityUser> signInManager,
                                     [FromForm] string returnUrl) =>
                              {
                                  await signInManager.SignOutAsync();
@@ -55,7 +54,7 @@ static class IdentityComponentsEndpointRouteBuilderExtensions
         RouteGroupBuilder manageGroup = accountGroup.MapGroup("/Manage").RequireAuthorization();
 
         manageGroup.MapPost("/LinkExternalLogin",
-                            async (HttpContext context, [FromServices] SignInManager<ApplicationUser> signInManager,
+                            async (HttpContext       context, [FromServices] SignInManager<IdentityUser> signInManager,
                                    [FromForm] string provider) =>
                             {
                                 // Clear the existing external cookie to ensure a clean login process
@@ -79,10 +78,10 @@ static class IdentityComponentsEndpointRouteBuilderExtensions
         ILogger        downloadLogger = loggerFactory.CreateLogger("DownloadPersonalData");
 
         manageGroup.MapPost("/DownloadPersonalData",
-                            async (HttpContext context, [FromServices] UserManager<ApplicationUser> userManager,
+                            async (HttpContext context, [FromServices] UserManager<IdentityUser> userManager,
                                    [FromServices] AuthenticationStateProvider authenticationStateProvider) =>
                             {
-                                ApplicationUser? user = await userManager.GetUserAsync(context.User);
+                                IdentityUser? user = await userManager.GetUserAsync(context.User);
 
                                 if(user is null)
                                 {
@@ -99,7 +98,7 @@ static class IdentityComponentsEndpointRouteBuilderExtensions
                                 // Only include personal data for download
                                 var personalData = new Dictionary<string, string>();
 
-                                IEnumerable<PropertyInfo> personalDataProps = typeof(ApplicationUser).GetProperties()
+                                IEnumerable<PropertyInfo> personalDataProps = typeof(IdentityUser).GetProperties()
                                    .Where(prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));
 
                                 foreach(PropertyInfo p in personalDataProps)
