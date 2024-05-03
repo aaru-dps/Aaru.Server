@@ -35,8 +35,10 @@ using Aaru.Decoders.PCMCIA;
 using Aaru.Decoders.SCSI;
 using Aaru.Helpers;
 using Aaru.Server.Core;
+using Aaru.Server.Database.Models;
 using Microsoft.AspNetCore.Routing;
 using Ata = Aaru.CommonTypes.Metadata.Ata;
+using DbContext = Aaru.Server.Database.DbContext;
 using Inquiry = Aaru.CommonTypes.Structs.Devices.SCSI.Inquiry;
 using TestedMedia = Aaru.CommonTypes.Metadata.TestedMedia;
 using Tuple = Aaru.Decoders.PCMCIA.Tuple;
@@ -45,9 +47,9 @@ namespace Aaru.Server.Controllers;
 
 public sealed class ReportController : Controller
 {
-    readonly AaruServerContext _ctx;
+    readonly DbContext _ctx;
 
-    public ReportController(AaruServerContext context) => _ctx = context;
+    public ReportController(DbContext context) => _ctx = context;
 
     public ActionResult Index() => RedirectToAction("View",
                                                     "Report",

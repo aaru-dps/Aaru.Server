@@ -36,18 +36,20 @@ using System.Net;
 using System.Xml.Serialization;
 using Aaru.CommonTypes.Metadata;
 using Aaru.Server.Core;
+using Aaru.Server.Database.Models;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using OperatingSystem = Aaru.Server.Models.OperatingSystem;
-using Version = Aaru.Server.Models.Version;
+using DbContext = Aaru.Server.Database.DbContext;
+using OperatingSystem = Aaru.Server.Database.Models.OperatingSystem;
+using Version = Aaru.Server.Database.Models.Version;
 
 namespace Aaru.Server.Controllers;
 
 public sealed class UploadStatsController : Controller
 {
-    readonly AaruServerContext _ctx;
+    readonly DbContext _ctx;
 
-    public UploadStatsController(AaruServerContext ctx) => _ctx = ctx;
+    public UploadStatsController(DbContext ctx) => _ctx = ctx;
 
     /// <summary>Receives statistics from Aaru.Core, processes them and adds them to a server-side global statistics XML</summary>
     /// <returns>HTTP response</returns>

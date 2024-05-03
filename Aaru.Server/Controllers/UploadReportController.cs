@@ -36,21 +36,23 @@ using System.Net;
 using System.Text;
 using System.Xml.Serialization;
 using Aaru.CommonTypes.Metadata;
+using Aaru.Server.Database.Models;
 using Cinchoo.PGP;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using MimeKit;
 using Newtonsoft.Json;
+using DbContext = Aaru.Server.Database.DbContext;
 
 namespace Aaru.Server.Controllers;
 
 public sealed class UploadReportController : Controller
 {
-    readonly AaruServerContext   _ctx;
+    readonly DbContext           _ctx;
     readonly IWebHostEnvironment _environment;
 
-    public UploadReportController(IWebHostEnvironment environment, AaruServerContext ctx)
+    public UploadReportController(IWebHostEnvironment environment, DbContext ctx)
     {
         _environment = environment;
         _ctx         = ctx;

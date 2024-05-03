@@ -1,5 +1,7 @@
 using Aaru.CommonTypes.Metadata;
+using Aaru.Server.Database.Models;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using DbContext = Aaru.Server.Database.DbContext;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
@@ -7,9 +9,9 @@ namespace Aaru.Server.Areas.Admin.Controllers;
 [Authorize]
 public sealed class ReportsController : Controller
 {
-    readonly AaruServerContext _context;
+    readonly DbContext _context;
 
-    public ReportsController(AaruServerContext context) => _context = context;
+    public ReportsController(DbContext context) => _context = context;
 
     // GET: Admin/Reports
     public async Task<IActionResult> Index() => View(await _context.Reports.OrderBy(r => r.Manufacturer)

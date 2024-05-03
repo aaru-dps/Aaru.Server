@@ -3,6 +3,8 @@ using System.Web;
 using Aaru.CommonTypes.Metadata;
 using Aaru.Decoders.CD;
 using Aaru.Helpers;
+using Aaru.Server.Database.Models;
+using DbContext = Aaru.Server.Database.DbContext;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
@@ -10,9 +12,9 @@ namespace Aaru.Server.Areas.Admin.Controllers;
 [Authorize]
 public sealed class GdRomSwapDiscCapabilitiesController : Controller
 {
-    readonly AaruServerContext _context;
+    readonly DbContext _context;
 
-    public GdRomSwapDiscCapabilitiesController(AaruServerContext context) => _context = context;
+    public GdRomSwapDiscCapabilitiesController(DbContext context) => _context = context;
 
     // GET: Admin/GdRomSwapDiscCapabilities/Details/5
     public async Task<IActionResult> Details(int? id)

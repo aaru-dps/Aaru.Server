@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Prometheus;
+using DbContext = Aaru.Server.Database.DbContext;
 using Version = Aaru.CommonTypes.Interop.Version;
 
 namespace Aaru.Server;
@@ -85,20 +86,20 @@ public sealed class Program
 
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddDbContext<AaruServerContext>(options => options
-                                                                   .UseMySql(builder.Configuration
-                                                                                .GetConnectionString("DefaultConnection"),
-                                                                             new
-                                                                                 MariaDbServerVersion(new System.
-                                                                                     Version(10, 4, 0)))
-                                                                   .UseLazyLoadingProxies());
+        builder.Services.AddDbContext<DbContext>(options => options
+                                                           .UseMySql(builder.Configuration
+                                                                            .GetConnectionString("DefaultConnection"),
+                                                                     new MariaDbServerVersion(new System.Version(10,
+                                                                         4,
+                                                                         0)))
+                                                           .UseLazyLoadingProxies());
 
         builder.Services.AddDefaultIdentity<IdentityUser>(options =>
                 {
                     options.SignIn.RequireConfirmedAccount = true;
                     options.User.RequireUniqueEmail        = true;
                 })
-               .AddEntityFrameworkStores<AaruServerContext>();
+               .AddEntityFrameworkStores<DbContext>();
 
         builder.Services.AddApplicationInsightsTelemetry();
 
@@ -158,7 +159,7 @@ public sealed class Program
             {
                 start = DateTime.Now;
                 System.Console.WriteLine("\u001b[31;1mUpdating database with Entity Framework...\u001b[0m");
-                AaruServerContext context = services.GetRequiredService<AaruServerContext>();
+                DbContext context = services.GetRequiredService<DbContext>();
                 context.Database.Migrate();
                 end = DateTime.Now;
 

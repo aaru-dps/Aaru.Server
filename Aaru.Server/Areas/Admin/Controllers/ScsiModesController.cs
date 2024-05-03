@@ -1,4 +1,5 @@
 using Aaru.CommonTypes.Metadata;
+using DbContext = Aaru.Server.Database.DbContext;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
@@ -6,9 +7,9 @@ namespace Aaru.Server.Areas.Admin.Controllers;
 [Authorize]
 public sealed class ScsiModesController : Controller
 {
-    readonly AaruServerContext _context;
+    readonly DbContext _context;
 
-    public ScsiModesController(AaruServerContext context) => _context = context;
+    public ScsiModesController(DbContext context) => _context = context;
 
     // GET: Admin/ScsiModes
     public async Task<IActionResult> Index() => View(await _context.ScsiMode.ToListAsync());

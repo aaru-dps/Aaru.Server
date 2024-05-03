@@ -1,4 +1,6 @@
 using Aaru.CommonTypes.Metadata;
+using Aaru.Server.Database.Models;
+using DbContext = Aaru.Server.Database.DbContext;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
@@ -6,9 +8,9 @@ namespace Aaru.Server.Areas.Admin.Controllers;
 [Authorize]
 public sealed class DevicesController : Controller
 {
-    readonly AaruServerContext _context;
+    readonly DbContext _context;
 
-    public DevicesController(AaruServerContext context) => _context = context;
+    public DevicesController(DbContext context) => _context = context;
 
     // GET: Admin/Devices
     public async Task<IActionResult> Index() => View(await _context.Devices.OrderBy(d => d.Manufacturer)

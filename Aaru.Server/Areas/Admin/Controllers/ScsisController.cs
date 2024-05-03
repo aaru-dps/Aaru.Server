@@ -3,7 +3,9 @@ using Aaru.CommonTypes.Metadata;
 using Aaru.CommonTypes.Structs.Devices.SCSI;
 using Aaru.Helpers;
 using Aaru.Server.Core;
+using Aaru.Server.Database.Models;
 using Newtonsoft.Json;
+using DbContext = Aaru.Server.Database.DbContext;
 using TestedMedia = Aaru.CommonTypes.Metadata.TestedMedia;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
@@ -12,9 +14,9 @@ namespace Aaru.Server.Areas.Admin.Controllers;
 [Authorize]
 public sealed class ScsisController : Controller
 {
-    readonly AaruServerContext _context;
+    readonly DbContext _context;
 
-    public ScsisController(AaruServerContext context) => _context = context;
+    public ScsisController(DbContext context) => _context = context;
 
     // GET: Admin/Scsis
     public IActionResult Index() => View(_context.Scsi.AsEnumerable()

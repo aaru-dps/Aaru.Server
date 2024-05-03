@@ -31,8 +31,10 @@
 // ****************************************************************************/
 
 using Aaru.CommonTypes.Metadata;
-using OperatingSystem = Aaru.Server.Models.OperatingSystem;
-using Version = Aaru.Server.Models.Version;
+using Aaru.Server.Database.Models;
+using DbContext = Aaru.Server.Database.DbContext;
+using OperatingSystem = Aaru.Server.Database.Models.OperatingSystem;
+using Version = Aaru.Server.Database.Models.Version;
 
 namespace Aaru.Server.Core;
 
@@ -40,7 +42,7 @@ public static class StatsConverter
 {
     public static void Convert(Stats newStats)
     {
-        var ctx = new AaruServerContext();
+        var ctx = new DbContext();
 
         if(newStats.Commands?.Analyze > 0)
         {

@@ -35,15 +35,17 @@ using System.Net;
 using Aaru.CommonTypes.Metadata;
 using Aaru.Dto;
 using Aaru.Helpers;
+using Aaru.Server.Database.Models;
 using Newtonsoft.Json;
+using DbContext = Aaru.Server.Database.DbContext;
 
 namespace Aaru.Server.Controllers;
 
 public sealed class UpdateController : Controller
 {
-    readonly AaruServerContext _ctx;
+    readonly DbContext _ctx;
 
-    public UpdateController(AaruServerContext ctx) => _ctx = ctx;
+    public UpdateController(DbContext ctx) => _ctx = ctx;
 
     /// <summary>Receives a report from Aaru.Core, verifies it's in the correct format and stores it on the server</summary>
     /// <returns>HTTP response</returns>

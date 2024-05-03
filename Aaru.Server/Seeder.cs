@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using DbContext = Aaru.Server.Database.DbContext;
 
 namespace Aaru.Server;
 
 public static class Seeder
 {
-    public static void Seed(AaruServerContext ctx, IServiceProvider serviceProvider)
+    public static void Seed(DbContext ctx, IServiceProvider serviceProvider)
     {
         var                       email       = "claunia@claunia.com";
         var                       randChars   = new char[16];

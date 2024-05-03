@@ -1,4 +1,6 @@
 using Aaru.CommonTypes.Metadata;
+using Aaru.Server.Database.Models;
+using DbContext = Aaru.Server.Database.DbContext;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
@@ -6,9 +8,9 @@ namespace Aaru.Server.Areas.Admin.Controllers;
 [Authorize]
 public sealed class MmcController : Controller
 {
-    readonly AaruServerContext _context;
+    readonly DbContext _context;
 
-    public MmcController(AaruServerContext context) => _context = context;
+    public MmcController(DbContext context) => _context = context;
 
     // GET: Admin/Mmc
     public IActionResult Index() => View(_context.Mmc.Where(m => m.ModeSense2AData != null)

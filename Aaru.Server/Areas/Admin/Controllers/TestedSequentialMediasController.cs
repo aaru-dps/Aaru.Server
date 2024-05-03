@@ -1,4 +1,5 @@
 using Aaru.CommonTypes.Metadata;
+using DbContext = Aaru.Server.Database.DbContext;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
@@ -6,9 +7,9 @@ namespace Aaru.Server.Areas.Admin.Controllers;
 [Authorize]
 public sealed class TestedSequentialMediasController : Controller
 {
-    readonly AaruServerContext _context;
+    readonly DbContext _context;
 
-    public TestedSequentialMediasController(AaruServerContext context) => _context = context;
+    public TestedSequentialMediasController(DbContext context) => _context = context;
 
     // GET: Admin/TestedSequentialMedias
     public async Task<IActionResult> Index() => View(await _context.TestedSequentialMedia.OrderBy(m => m.Manufacturer)

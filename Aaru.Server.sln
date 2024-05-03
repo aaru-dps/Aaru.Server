@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aaru.Server.Api", "Aaru.Ser
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aaru.Server.New", "Aaru.Server.New\Aaru.Server.New.csproj", "{032D24BA-EC3B-4BD1-ADD6-9463E2DC5D7E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aaru.Server.Database", "Aaru.Server.Database\Aaru.Server.Database.csproj", "{FA830C89-B3C4-4139-B756-B6C0F35C0BB4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{032D24BA-EC3B-4BD1-ADD6-9463E2DC5D7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{032D24BA-EC3B-4BD1-ADD6-9463E2DC5D7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{032D24BA-EC3B-4BD1-ADD6-9463E2DC5D7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA830C89-B3C4-4139-B756-B6C0F35C0BB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA830C89-B3C4-4139-B756-B6C0F35C0BB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA830C89-B3C4-4139-B756-B6C0F35C0BB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA830C89-B3C4-4139-B756-B6C0F35C0BB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

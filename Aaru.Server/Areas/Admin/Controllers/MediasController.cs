@@ -1,12 +1,15 @@
+using Aaru.Server.Database.Models;
+using DbContext = Aaru.Server.Database.DbContext;
+
 namespace Aaru.Server.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Authorize]
 public sealed class MediasController : Controller
 {
-    readonly AaruServerContext _context;
+    readonly DbContext _context;
 
-    public MediasController(AaruServerContext context) => _context = context;
+    public MediasController(DbContext context) => _context = context;
 
     // GET: Admin/Medias
     public IActionResult Index(bool? real)

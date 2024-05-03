@@ -1,5 +1,7 @@
 using Aaru.CommonTypes.Metadata;
+using Aaru.Server.Database.Models;
 using Newtonsoft.Json;
+using DbContext = Aaru.Server.Database.DbContext;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
@@ -7,9 +9,9 @@ namespace Aaru.Server.Areas.Admin.Controllers;
 [Authorize]
 public sealed class FireWiresController : Controller
 {
-    readonly AaruServerContext _context;
+    readonly DbContext _context;
 
-    public FireWiresController(AaruServerContext context) => _context = context;
+    public FireWiresController(DbContext context) => _context = context;
 
     // GET: Admin/FireWires
     public async Task<IActionResult> Index() =>

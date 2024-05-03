@@ -1,8 +1,10 @@
 using System.Reflection;
 using Aaru.CommonTypes.Structs.Devices.ATA;
 using Aaru.Server.Core;
+using Aaru.Server.Database.Models;
 using Newtonsoft.Json;
 using Ata = Aaru.CommonTypes.Metadata.Ata;
+using DbContext = Aaru.Server.Database.DbContext;
 using TestedMedia = Aaru.CommonTypes.Metadata.TestedMedia;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
@@ -11,9 +13,9 @@ namespace Aaru.Server.Areas.Admin.Controllers;
 [Authorize]
 public sealed class AtasController : Controller
 {
-    readonly AaruServerContext _context;
+    readonly DbContext _context;
 
-    public AtasController(AaruServerContext context) => _context = context;
+    public AtasController(DbContext context) => _context = context;
 
     // GET: Admin/Atas
     public IActionResult Index() => View(_context.Ata.AsEnumerable()

@@ -7,7 +7,9 @@ using Aaru.Decoders.CD;
 using Aaru.Decoders.DVD;
 using Aaru.Decoders.SCSI;
 using Aaru.Helpers;
+using Aaru.Server.Database.Models;
 using Cartridge = Aaru.Decoders.Bluray.Cartridge;
+using DbContext = Aaru.Server.Database.DbContext;
 using DDS = Aaru.Decoders.Bluray.DDS;
 using DMI = Aaru.Decoders.Xbox.DMI;
 using MediaType = Aaru.CommonTypes.MediaType;
@@ -19,9 +21,9 @@ namespace Aaru.Server.Areas.Admin.Controllers;
 [Authorize]
 public sealed class TestedMediasController : Controller
 {
-    readonly AaruServerContext _context;
+    readonly DbContext _context;
 
-    public TestedMediasController(AaruServerContext context) => _context = context;
+    public TestedMediasController(DbContext context) => _context = context;
 
     // GET: Admin/TestedMedias
     public async Task<IActionResult> Index() => View(await _context.TestedMedia.OrderBy(m => m.Manufacturer)

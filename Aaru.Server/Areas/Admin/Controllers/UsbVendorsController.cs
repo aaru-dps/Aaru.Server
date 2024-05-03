@@ -1,12 +1,15 @@
+using Aaru.Server.Database.Models;
+using DbContext = Aaru.Server.Database.DbContext;
+
 namespace Aaru.Server.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Authorize]
 public sealed class UsbVendorsController : Controller
 {
-    readonly AaruServerContext _context;
+    readonly DbContext _context;
 
-    public UsbVendorsController(AaruServerContext context) => _context = context;
+    public UsbVendorsController(DbContext context) => _context = context;
 
     // GET: Admin/UsbVendors
     public async Task<IActionResult> Index() =>

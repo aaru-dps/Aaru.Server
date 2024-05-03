@@ -38,20 +38,22 @@ using System.Xml.Serialization;
 using Aaru.CommonTypes.Interop;
 using Aaru.CommonTypes.Metadata;
 using Aaru.Server.Core;
+using Aaru.Server.Database.Models;
 using Microsoft.AspNetCore.Hosting;
-using OperatingSystem = Aaru.Server.Models.OperatingSystem;
+using DbContext = Aaru.Server.Database.DbContext;
+using OperatingSystem = Aaru.Server.Database.Models.OperatingSystem;
 using PlatformID = Aaru.CommonTypes.Interop.PlatformID;
-using Version = Aaru.Server.Models.Version;
+using Version = Aaru.Server.Database.Models.Version;
 
 namespace Aaru.Server.Controllers;
 
 /// <summary>Renders a page with statistics, list of media type, devices, etc</summary>
 public sealed class StatsController : Controller
 {
-    readonly AaruServerContext   _ctx;
+    readonly DbContext           _ctx;
     readonly IWebHostEnvironment _env;
 
-    public StatsController(IWebHostEnvironment environment, AaruServerContext context)
+    public StatsController(IWebHostEnvironment environment, DbContext context)
     {
         _env = environment;
         _ctx = context;

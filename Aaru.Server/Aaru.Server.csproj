@@ -32,15 +32,9 @@
     <PackageReference Include="MailKit" Version="2.15.0"/>
     <PackageReference Include="Markdig" Version="0.26.0"/>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.19.0"/>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.0"/>
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.0"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.0"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0"/>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.0"/>
     <PackageReference Include="MimeKit" Version="2.15.1"/>
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.0"/>
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design" Version="1.1.2"/>
     <PackageReference Include="prometheus-net.AspNetCore" Version="5.0.2"/>
     <PackageReference Include="Unclassified.NetRevisionTask" Version="0.4.2" PrivateAssets="all"/>
     <PackageReference Include="AsyncFixer" Version="1.6.0">
@@ -182,6 +176,10 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Aaru.Server.Database\Aaru.Server.Database.csproj"/>
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,7 @@
 using Aaru.CommonTypes.Metadata;
+using Aaru.Server.Database.Models;
 using Newtonsoft.Json;
+using DbContext = Aaru.Server.Database.DbContext;
 
 namespace Aaru.Server.Areas.Admin.Controllers;
 
@@ -7,9 +9,9 @@ namespace Aaru.Server.Areas.Admin.Controllers;
 [Authorize]
 public sealed class UsbsController : Controller
 {
-    readonly AaruServerContext _context;
+    readonly DbContext _context;
 
-    public UsbsController(AaruServerContext context) => _context = context;
+    public UsbsController(DbContext context) => _context = context;
 
     // GET: Admin/Usbs
     public async Task<IActionResult> Index() => View(await _context.Usb.OrderBy(u => u.Manufacturer)

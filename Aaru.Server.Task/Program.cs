@@ -38,9 +38,10 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text.Json;
 using Aaru.CommonTypes.Enums;
-using Aaru.Server.Models;
+using Aaru.Server.Database.Models;
 using HtmlAgilityPack;
 using Microsoft.EntityFrameworkCore;
+using DbContext = Aaru.Server.Database.DbContext;
 
 namespace Aaru.Server.Task;
 
@@ -53,7 +54,7 @@ class Program
 
         start = DateTime.UtcNow;
         System.Console.WriteLine("{0}: Connecting to database...", DateTime.UtcNow);
-        var ctx = new AaruServerContext();
+        var ctx = new DbContext();
         end = DateTime.UtcNow;
         System.Console.WriteLine("{0}: Took {1:F2} seconds", end, (end - start).TotalSeconds);
 
