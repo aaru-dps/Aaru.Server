@@ -1,12 +1,11 @@
 ﻿@page "/Account/ExternalLogin"
-
 @using System.ComponentModel.DataAnnotations
 @using System.Security.Claims
 @using System.Text
 @using System.Text.Encodings.Web
+@using Aaru.Server.New.Data
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
-@using Aaru.Server.New.Data
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser>   UserManager
@@ -74,7 +73,7 @@
             RedirectManager.RedirectToWithStatus("Account/Login", $"Error from external provider: {RemoteError}", HttpContext);
         }
 
-        var info = await SignInManager.GetExternalLoginInfoAsync();
+        ExternalLoginInfo? info = await SignInManager.GetExternalLoginInfoAsync();
 
         if(info is null)
         {
@@ -101,7 +100,7 @@
     private async Task OnLoginCallbackAsync()
     {
         // Sign in the user with this external login provider if the user already has a login.
-        var result = await SignInManager.ExternalLoginSignInAsync(externalLoginInfo.LoginProvider, externalLoginInfo.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+        SignInResult result = await SignInManager.ExternalLoginSignInAsync(externalLoginInfo.LoginProvider, externalLoginInfo.ProviderKey, false, true);
 
         if(result.Succeeded)
         {
@@ -122,13 +121,13 @@
 
     private async Task OnValidSubmitAsync()
     {
-        var emailStore = GetEmailStore();
-        var user       = CreateUser();
+        IUserEmailStore<ApplicationUser> emailStore = GetEmailStore();
+        ApplicationUser                  user       = CreateUser();
 
         await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
         await emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
-        var result = await UserManager.CreateAsync(user);
+        IdentityResult result = await UserManager.CreateAsync(user);
 
         if(result.Succeeded)
         {
@@ -138,16 +137,16 @@
             {
                 Logger.LogInformation("User created an account using {Name} provider.", externalLoginInfo.LoginProvider);
 
-                var userId = await UserManager.GetUserIdAsync(user);
-                var code   = await UserManager.GenerateEmailConfirmationTokenAsync(user);
+                string userId = await UserManager.GetUserIdAsync(user);
+                string code   = await UserManager.GenerateEmailConfirmationTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
-                var callbackUrl = NavigationManager.GetUriWithQueryParameters(NavigationManager.ToAbsoluteUri("Account/ConfirmEmail").AbsoluteUri,
-                                                                              new Dictionary<string, object?>
-                                                                              {
-                                                                                  ["userId"] = userId,
-                                                                                  ["code"]   = code
-                                                                              });
+                string callbackUrl = NavigationManager.GetUriWithQueryParameters(NavigationManager.ToAbsoluteUri("Account/ConfirmEmail").AbsoluteUri,
+                                                                                 new Dictionary<string, object?>
+                                                                                 {
+                                                                                     ["userId"] = userId,
+                                                                                     ["code"]   = code
+                                                                                 });
 
                 await EmailSender.SendConfirmationLinkAsync(user, Input.Email, HtmlEncoder.Default.Encode(callbackUrl));
 
@@ -155,13 +154,13 @@
                 if(UserManager.Options.SignIn.RequireConfirmedAccount)
                 {
                     RedirectManager.RedirectTo("Account/RegisterConfirmation",
-                                               new()
+                                               new Dictionary<string, object?>
                                                {
                                                    ["email"] = Input.Email
                                                });
                 }
 
-                await SignInManager.SignInAsync(user, isPersistent: false, externalLoginInfo.LoginProvider);
+                await SignInManager.SignInAsync(user, false, externalLoginInfo.LoginProvider);
                 RedirectManager.RedirectTo(ReturnUrl);
             }
         }

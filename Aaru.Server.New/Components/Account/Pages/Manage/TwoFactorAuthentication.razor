@@ -1,8 +1,7 @@
 ﻿@page "/Account/Manage/TwoFactorAuthentication"
-
+@using Aaru.Server.New.Data
 @using Microsoft.AspNetCore.Http.Features
 @using Microsoft.AspNetCore.Identity
-@using Aaru.Server.New.Data
 
 @inject UserManager<ApplicationUser>   UserManager
 @inject SignInManager<ApplicationUser> SignInManager
@@ -83,7 +82,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+        ApplicationUser user = await UserAccessor.GetRequiredUserAsync(HttpContext);
         canTrack            = HttpContext.Features.Get<ITrackingConsentFeature>()?.CanTrack ?? true;
         hasAuthenticator    = await UserManager.GetAuthenticatorKeyAsync(user) is not null;
         is2faEnabled        = await UserManager.GetTwoFactorEnabledAsync(user);

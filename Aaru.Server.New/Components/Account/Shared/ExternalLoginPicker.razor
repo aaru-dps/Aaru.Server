@@ -1,7 +1,6 @@
-﻿@using Microsoft.AspNetCore.Authentication
+﻿@using Aaru.Server.New.Data
+@using Microsoft.AspNetCore.Authentication
 @using Microsoft.AspNetCore.Identity
-@using Aaru.Server.New.Data
-
 @inject SignInManager<ApplicationUser> SignInManager
 @inject IdentityRedirectManager        RedirectManager
 
@@ -24,7 +23,7 @@ else
             <AntiforgeryToken/>
             <input name="ReturnUrl" type="hidden" value="@ReturnUrl"/>
             <p>
-                @foreach(var provider in externalLogins)
+                @foreach(AuthenticationScheme provider in externalLogins)
                 {
                     <button class="btn btn-primary" name="provider" title="Log in using your @provider.DisplayName account" type="submit" value="@provider.Name">@provider.DisplayName</button>
                 }

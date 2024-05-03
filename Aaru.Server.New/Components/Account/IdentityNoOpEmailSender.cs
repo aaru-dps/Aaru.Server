@@ -1,13 +1,13 @@
+using Aaru.Server.New.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Aaru.Server.New.Data;
 
 namespace Aaru.Server.New.Components.Account;
 
 // Remove the "else if (EmailSender is IdentityNoOpEmailSender)" block from RegisterConfirmation.razor after updating with a real implementation.
-internal sealed class IdentityNoOpEmailSender : IEmailSender<ApplicationUser>
+sealed class IdentityNoOpEmailSender : IEmailSender<ApplicationUser>
 {
-    private readonly IEmailSender emailSender = new NoOpEmailSender();
+    readonly IEmailSender emailSender = new NoOpEmailSender();
 
     public Task SendConfirmationLinkAsync(ApplicationUser user, string email, string confirmationLink) =>
         emailSender.SendEmailAsync(email,

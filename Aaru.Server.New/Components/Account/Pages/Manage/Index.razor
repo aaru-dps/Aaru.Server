@@ -1,8 +1,7 @@
 ﻿@page "/Account/Manage"
-
 @using System.ComponentModel.DataAnnotations
-@using Microsoft.AspNetCore.Identity
 @using Aaru.Server.New.Data
+@using Microsoft.AspNetCore.Identity
 
 @inject UserManager<ApplicationUser>   UserManager
 @inject SignInManager<ApplicationUser> SignInManager
@@ -57,7 +56,7 @@
     {
         if(Input.PhoneNumber != phoneNumber)
         {
-            var setPhoneResult = await UserManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
+            IdentityResult setPhoneResult = await UserManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
 
             if(!setPhoneResult.Succeeded)
             {

@@ -1,9 +1,8 @@
 ﻿@page "/Account/ConfirmEmail"
-
 @using System.Text
+@using Aaru.Server.New.Data
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
-@using Aaru.Server.New.Data
 
 @inject UserManager<ApplicationUser> UserManager
 @inject IdentityRedirectManager      RedirectManager
@@ -32,7 +31,7 @@
             RedirectManager.RedirectTo("");
         }
 
-        var user = await UserManager.FindByIdAsync(UserId);
+        ApplicationUser? user = await UserManager.FindByIdAsync(UserId);
 
         if(user is null)
         {
@@ -41,8 +40,8 @@
         }
         else
         {
-            var code   = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(Code));
-            var result = await UserManager.ConfirmEmailAsync(user, code);
+            string         code   = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(Code));
+            IdentityResult result = await UserManager.ConfirmEmailAsync(user, code);
             statusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
         }
     }

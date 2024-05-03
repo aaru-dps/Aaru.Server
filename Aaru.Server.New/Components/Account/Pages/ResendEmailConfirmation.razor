@@ -1,11 +1,10 @@
 ﻿@page "/Account/ResendEmailConfirmation"
-
 @using System.ComponentModel.DataAnnotations
 @using System.Text
 @using System.Text.Encodings.Web
+@using Aaru.Server.New.Data
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
-@using Aaru.Server.New.Data
 
 @inject UserManager<ApplicationUser>  UserManager
 @inject IEmailSender<ApplicationUser> EmailSender
@@ -41,7 +40,7 @@
 
     private async Task OnValidSubmitAsync()
     {
-        var user = await UserManager.FindByEmailAsync(Input.Email!);
+        ApplicationUser? user = await UserManager.FindByEmailAsync(Input.Email!);
 
         if(user is null)
         {
@@ -50,16 +49,16 @@
             return;
         }
 
-        var userId = await UserManager.GetUserIdAsync(user);
-        var code   = await UserManager.GenerateEmailConfirmationTokenAsync(user);
+        string userId = await UserManager.GetUserIdAsync(user);
+        string code   = await UserManager.GenerateEmailConfirmationTokenAsync(user);
         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
-        var callbackUrl = NavigationManager.GetUriWithQueryParameters(NavigationManager.ToAbsoluteUri("Account/ConfirmEmail").AbsoluteUri,
-                                                                      new Dictionary<string, object?>
-                                                                      {
-                                                                          ["userId"] = userId,
-                                                                          ["code"]   = code
-                                                                      });
+        string callbackUrl = NavigationManager.GetUriWithQueryParameters(NavigationManager.ToAbsoluteUri("Account/ConfirmEmail").AbsoluteUri,
+                                                                         new Dictionary<string, object?>
+                                                                         {
+                                                                             ["userId"] = userId,
+                                                                             ["code"]   = code
+                                                                         });
 
         await EmailSender.SendConfirmationLinkAsync(user, Input.Email, HtmlEncoder.Default.Encode(callbackUrl));
 

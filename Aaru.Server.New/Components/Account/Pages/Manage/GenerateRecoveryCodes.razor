@@ -1,7 +1,6 @@
 ﻿@page "/Account/Manage/GenerateRecoveryCodes"
-
-@using Microsoft.AspNetCore.Identity
 @using Aaru.Server.New.Data
+@using Microsoft.AspNetCore.Identity
 
 @inject UserManager<ApplicationUser>   UserManager
 @inject IdentityUserAccessor           UserAccessor
@@ -50,7 +49,7 @@ else
     {
         user = await UserAccessor.GetRequiredUserAsync(HttpContext);
 
-        var isTwoFactorEnabled = await UserManager.GetTwoFactorEnabledAsync(user);
+        bool isTwoFactorEnabled = await UserManager.GetTwoFactorEnabledAsync(user);
 
         if(!isTwoFactorEnabled)
         {
@@ -60,7 +59,7 @@ else
 
     private async Task OnSubmitAsync()
     {
-        var userId = await UserManager.GetUserIdAsync(user);
+        string userId = await UserManager.GetUserIdAsync(user);
         recoveryCodes = await UserManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
         message       = "You have generated new recovery codes.";
 

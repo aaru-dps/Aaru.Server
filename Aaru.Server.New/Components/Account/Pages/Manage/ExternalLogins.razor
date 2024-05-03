@@ -1,8 +1,7 @@
 ﻿@page "/Account/Manage/ExternalLogins"
-
+@using Aaru.Server.New.Data
 @using Microsoft.AspNetCore.Authentication
 @using Microsoft.AspNetCore.Identity
-@using Aaru.Server.New.Data
 
 @inject UserManager<ApplicationUser>   UserManager
 @inject SignInManager<ApplicationUser> SignInManager
@@ -18,7 +17,7 @@
     <h3>Registered Logins</h3>
     <table class="table">
         <tbody>
-        @foreach(var login in currentLogins)
+        @foreach(UserLoginInfo login in currentLogins)
         {
             <tr>
                 <td>@login.ProviderDisplayName</td>
@@ -52,7 +51,7 @@
         <AntiforgeryToken/>
         <div>
             <p>
-                @foreach(var provider in otherLogins)
+                @foreach(AuthenticationScheme provider in otherLogins)
                 {
                     <button class="btn btn-primary" name="Provider" title="Log in using your @provider.DisplayName account" type="submit" value="@provider.Name">
                         @provider.DisplayName
@@ -106,7 +105,7 @@
 
     private async Task OnSubmitAsync()
     {
-        var result = await UserManager.RemoveLoginAsync(user, LoginProvider!, ProviderKey!);
+        IdentityResult result = await UserManager.RemoveLoginAsync(user, LoginProvider!, ProviderKey!);
 
         if(!result.Succeeded)
         {
@@ -119,15 +118,15 @@
 
     private async Task OnGetLinkLoginCallbackAsync()
     {
-        var userId = await UserManager.GetUserIdAsync(user);
-        var info   = await SignInManager.GetExternalLoginInfoAsync(userId);
+        string             userId = await UserManager.GetUserIdAsync(user);
+        ExternalLoginInfo? info   = await SignInManager.GetExternalLoginInfoAsync(userId);
 
         if(info is null)
         {
             RedirectManager.RedirectToCurrentPageWithStatus("Error: Could not load external login info.", HttpContext);
         }
 
-        var result = await UserManager.AddLoginAsync(user, info);
+        IdentityResult result = await UserManager.AddLoginAsync(user, info);
 
         if(!result.Succeeded)
         {

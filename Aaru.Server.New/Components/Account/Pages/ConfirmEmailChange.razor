@@ -1,9 +1,8 @@
 ﻿@page "/Account/ConfirmEmailChange"
-
 @using System.Text
+@using Aaru.Server.New.Data
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
-@using Aaru.Server.New.Data
 
 @inject UserManager<ApplicationUser>   UserManager
 @inject SignInManager<ApplicationUser> SignInManager
@@ -37,7 +36,7 @@
             RedirectManager.RedirectToWithStatus("Account/Login", "Error: Invalid email change confirmation link.", HttpContext);
         }
 
-        var user = await UserManager.FindByIdAsync(UserId);
+        ApplicationUser? user = await UserManager.FindByIdAsync(UserId);
 
         if(user is null)
         {
@@ -46,8 +45,8 @@
             return;
         }
 
-        var code   = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(Code));
-        var result = await UserManager.ChangeEmailAsync(user, Email, code);
+        string         code   = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(Code));
+        IdentityResult result = await UserManager.ChangeEmailAsync(user, Email, code);
 
         if(!result.Succeeded)
         {
@@ -58,7 +57,7 @@
 
         // In our UI email and user name are one and the same, so when we update the email
         // we need to update the user name.
-        var setUserNameResult = await UserManager.SetUserNameAsync(user, Email);
+        IdentityResult setUserNameResult = await UserManager.SetUserNameAsync(user, Email);
 
         if(!setUserNameResult.Succeeded)
         {
