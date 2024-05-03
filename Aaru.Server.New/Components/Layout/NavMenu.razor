@@ -1,6 +1,8 @@
 ﻿@implements IDisposable
 
-@inject NavigationManager NavigationManager
+@inject NavigationManager   NavigationManager
+@inject IWebHostEnvironment HostEnvironment
+@inject IConfiguration      Configuration
 
 <div class="navbar navbar-dark ps-3 top-row">
     <div class="container-fluid">
@@ -18,17 +20,7 @@
             </NavLink>
         </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span aria-hidden="true" class="bi bi-plus-square-fill-nav-menu"></span> Counter
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span aria-hidden="true" class="bi bi-list-nested-nav-menu"></span> Weather
-            </NavLink>
-        </div>
+        @((MarkupString)_sidebarMarkup)
 
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="auth">
@@ -46,7 +38,7 @@
                 <div class="nav-item px-3">
                     <form action="Account/Logout" method="post">
                         <AntiforgeryToken/>
-                        <input name="ReturnUrl" type="hidden" value="@currentUrl"/>
+                        <input name="ReturnUrl" type="hidden" value="@_currentUrl"/>
                         <button class="nav-link" type="submit">
                             <span aria-hidden="true" class="bi bi-arrow-bar-left-nav-menu"></span> Logout
                         </button>
@@ -68,25 +60,3 @@
         </AuthorizeView>
     </nav>
 </div>
-
-@code {
-    private string? currentUrl;
-
-    protected override void OnInitialized()
-    {
-        currentUrl                        =  NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
-        NavigationManager.LocationChanged += OnLocationChanged;
-    }
-
-    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
-    {
-        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
-        StateHasChanged();
-    }
-
-    public void Dispose()
-    {
-        NavigationManager.LocationChanged -= OnLocationChanged;
-    }
-
-}
