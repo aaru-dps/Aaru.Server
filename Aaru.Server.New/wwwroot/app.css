@@ -168,3 +168,129 @@ body {
   font-size: 16px;
   font-weight: 600;
 }
+
+section.cover {
+  -ms-flex-align: center;
+  align-items: center;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  display: none;
+  background: linear-gradient(
+      to bottom,
+      #E18FDC 0%,
+      #222222 100%
+  ) !important;
+}
+
+article {
+  padding: 0rem !important;
+}
+
+section.cover.show {
+  display: -ms-flexbox;
+  display: flex;
+}
+
+section.cover.has-mask .mask {
+  background-color: #FFFFFF;
+  opacity: 0.8;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+
+section.cover .cover-main {
+  -ms-flex: 1;
+  flex: 1;
+  margin: -20px 16px 0;
+  text-align: center;
+  z-index: 1;
+}
+
+section.cover a {
+  color: inherit;
+}
+
+section.cover a,
+section.cover a:hover {
+  text-decoration: none;
+}
+
+section.cover p {
+  line-height: 1.5rem;
+  margin: 1em 0;
+}
+
+section.cover h1 {
+  color: inherit;
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin: 0.625rem 0 2.5rem;
+  position: relative;
+  text-align: center;
+}
+
+section.cover h1 a {
+  display: block;
+}
+
+section.cover h1 small {
+  bottom: -0.4375rem;
+  font-size: 1rem;
+  position: absolute;
+}
+
+section.cover blockquote {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+section.cover ul {
+  line-height: 1.8;
+  list-style-type: none;
+  margin: 1em auto;
+  max-width: 500px;
+  padding: 0;
+}
+
+section.cover .cover-main > p:last-child a {
+  border: 1px solid var(--theme-color, #847A84);
+  border-radius: 2rem;
+  box-sizing: border-box;
+  color: var(--theme-color, #FFFFFF);
+  display: inline-block;
+  font-size: 1.05rem;
+  letter-spacing: 0.1rem;
+  margin: 0.5rem 1rem;
+  padding: 0.75em 2rem;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  font-weight: bold;
+}
+
+section.cover .cover-main > p:last-child a:last-child {
+  background-color: var(--theme-color, #847A84);
+  color: #E5E5E5;
+}
+
+section.cover .cover-main > p:last-child a:last-child:hover {
+  color: inherit;
+  opacity: 0.8;
+  color: #E5E5E5;
+}
+
+section.cover .cover-main > p:last-child a:hover {
+  color: inherit;
+}
+
+section.cover blockquote > p > a {
+  border-bottom: 2px solid var(--theme-color, #E18FDC);
+  transition: color 0.3s;
+}
+
+section.cover blockquote > p > a:hover {
+  color: var(--theme-color, #E18FDC);
+}

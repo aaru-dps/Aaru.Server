@@ -19,4 +19,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\"/>
+  </ItemGroup>
+
 </Project>
