@@ -17,6 +17,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.4"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.4"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4"/>
+    <PackageReference Include="WebStoating.Markdig.PrismWithPlugins" Version="1.0.0"/>
   </ItemGroup>
 
   <ItemGroup>

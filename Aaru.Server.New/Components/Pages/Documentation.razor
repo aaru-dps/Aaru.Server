@@ -1,0 +1,19 @@
+﻿@page "/{documentCategory}/{documentName}.md"
+@page "/{documentName}.md"
+
+@inject NavigationManager   NavigationManager
+@inject IWebHostEnvironment HostEnvironment
+@inject IConfiguration      Configuration
+
+<PageTitle>Aaru: Documentation</PageTitle>
+
+@if(_notFound)
+{
+    <h1 style="color: red; align-content: center; padding: 2rem">The requested document has not been found.</h1>
+
+    return;
+}
+
+<article class="markdown-section">
+    @((MarkupString)_documentMarkup)
+</article>
