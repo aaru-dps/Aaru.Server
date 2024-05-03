@@ -6,7 +6,7 @@
 
 <div class="navbar navbar-dark ps-3 top-row">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">Aaru.Server.New</a>
+        <a class="navbar-brand" href="">Aaru</a>
     </div>
 </div>
 
@@ -20,7 +20,9 @@
             </NavLink>
         </div>
 
-        @((MarkupString)_sidebarMarkup)
+        <div class="nav-item px-3 sidebar-nav">
+            @((MarkupString)_sidebarMarkup)
+        </div>
 
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="auth">

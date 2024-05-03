@@ -49,3 +49,122 @@ h1:focus {
 .darker-border-checkbox.form-check-input {
   border-color: #929292;
 }
+
+.sidebar {
+  border-right: 1px solid rgba(0, 0, 0, 0.4);
+  overflow-y: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  transition: transform 0.25s ease-out;
+  width: 300px;
+  z-index: 3;
+}
+
+.sidebar > h1 {
+  margin: 0 auto 1rem;
+  font-size: 1.5rem;
+  font-weight: 300;
+  text-align: center;
+}
+
+.navbar-brand {
+  text-decoration: none;
+  font-weight: 600;
+  color: #E18FDC !important;
+}
+
+.sidebar > h1 .app-nav {
+  display: block;
+  position: static;
+}
+
+.sidebar .sidebar-nav {
+  line-height: 2em;
+  padding-bottom: 40px;
+  text-wrap: pretty;
+}
+
+.sidebar li.collapse .app-sub-sidebar {
+  display: none;
+}
+
+.sidebar ul {
+  margin: 0 0 0 15px;
+  padding: 0;
+}
+
+.sidebar li > p {
+  font-weight: 700;
+  margin: 0;
+  color: #C32727;
+}
+
+.sidebar ul,
+.sidebar ul li {
+  list-style: none;
+}
+
+.sidebar ul li a {
+  border-bottom: none;
+  display: block;
+}
+
+.sidebar ul li ul {
+  padding-left: 20px;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+}
+
+.sidebar:hover::-webkit-scrollbar-thumb {
+  background: hsla(0, 0%, 53%, 0.4);
+}
+
+.sidebar:hover::-webkit-scrollbar-track {
+  background: hsla(0, 0%, 53%, 0.1);
+}
+
+.sidebar,
+body {
+  background-color: #222222;
+}
+
+.sidebar {
+  color: #364149;
+}
+
+.sidebar li {
+  margin: 6px 0;
+}
+
+.sidebar ul li a {
+  color: #E18FDC;
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  text-decoration: none;
+  text-overflow: ellipsis;
+}
+
+.sidebar ul li a:hover {
+  text-decoration: underline;
+}
+
+.sidebar ul li ul {
+  padding: 0;
+}
+
+.sidebar ul li.active > a {
+  border-right: 2px solid;
+  color: var(--theme-color, #E18FDC);
+  font-size: 16px;
+  font-weight: 600;
+}
