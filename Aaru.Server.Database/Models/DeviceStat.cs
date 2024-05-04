@@ -34,9 +34,9 @@ namespace Aaru.Server.Database.Models;
 
 public class DeviceStat : BaseModel<int>
 {
-    public         string Manufacturer { get; set; }
-    public         string Model        { get; set; }
-    public         string Revision     { get; set; }
-    public         string Bus          { get; set; }
-    public virtual Device Report       { get; set; }
+    public         string? Manufacturer { get; set; }
+    public         string? Model        { get; set; }
+    public         string? Revision     { get; set; }
+    public         string  Bus          { get; set; }
+    public virtual Device? Report       { get; set; }
 }

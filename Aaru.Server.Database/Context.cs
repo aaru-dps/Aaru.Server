@@ -226,7 +226,7 @@ public sealed class DbContext : IdentityDbContext<IdentityUser>
                                   .HasForeignKey("SscId")
                                   .OnDelete(DeleteBehavior.SetNull));
 
-        modelBuilder.Entity("Aaru.Server.Models.Device",
+        modelBuilder.Entity("Aaru.Server.Database.Models.Device",
                             b =>
                             {
                                 b.HasOne("Aaru.CommonTypes.Metadata.Ata", "ATA")
@@ -239,7 +239,7 @@ public sealed class DbContext : IdentityDbContext<IdentityUser>
                                  .HasForeignKey("ATAPIId")
                                  .OnDelete(DeleteBehavior.SetNull);
 
-                                b.HasOne("Aaru.Server.Models.CompactDiscOffset", "CdOffset")
+                                b.HasOne("Aaru.Server.Database.Models.CompactDiscOffset", "CdOffset")
                                  .WithMany("Devices")
                                  .HasForeignKey("CdOffsetId")
                                  .OnDelete(DeleteBehavior.SetNull);
@@ -275,13 +275,13 @@ public sealed class DbContext : IdentityDbContext<IdentityUser>
                                  .OnDelete(DeleteBehavior.SetNull);
                             });
 
-        modelBuilder.Entity("Aaru.Server.Models.DeviceStat",
-                            b => b.HasOne("Aaru.Server.Models.Device", "Report")
+        modelBuilder.Entity("Aaru.Server.Database.Models.DeviceStat",
+                            b => b.HasOne("Aaru.Server.Database.Models.Device", "Report")
                                   .WithMany()
                                   .HasForeignKey("ReportId")
                                   .OnDelete(DeleteBehavior.SetNull));
 
-        modelBuilder.Entity("Aaru.Server.Models.UploadedReport",
+        modelBuilder.Entity("Aaru.Server.Database.Models.UploadedReport",
                             b =>
                             {
                                 b.HasOne("Aaru.CommonTypes.Metadata.Ata", "ATA")
