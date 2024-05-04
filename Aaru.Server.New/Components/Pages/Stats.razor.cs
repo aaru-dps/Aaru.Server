@@ -38,7 +38,6 @@ public partial class Stats
     PieChart<long>?       _formatsChart;
     List<long>            _formatsCounts = [];
     string[]              _formatsLabels = [];
-    bool                  _isAlreadyInitialised;
     PieChart<long>?       _linuxChart;
     List<long>            _linuxCounts = [];
     string[]              _linuxLabels = [];
@@ -495,13 +494,8 @@ public partial class Stats
 
         _devicesByManufacturerLabels[9] = "Other";
         _devicesByManufacturerCounts[9] = data.Sum(static o => o.Count) - _devicesByManufacturerCounts.Take(9).Sum();
-    }
 
 #pragma warning disable CS8604 // Possible null reference argument.
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if(_isAlreadyInitialised) return;
-        _isAlreadyInitialised = true;
 
         await
             Task.WhenAll(HandleRedraw(_operatingSystemsChart, _operatingSystemLabels, GetOperatingSystemsChartDataset),
