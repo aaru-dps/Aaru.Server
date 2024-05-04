@@ -2,7 +2,9 @@
 @using Aaru.CommonTypes.Metadata
 @using Aaru.Server.Database
 @using Aaru.Server.Database.Models
+@using Blazorise.Charts
 @using Blazorise.DataGrid
+@rendermode InteractiveServer
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
 
@@ -17,6 +19,10 @@
     <h1>
         <p class="text-center" style="color: deeppink;">All operating systems Aaru has run on...</p>
     </h1>
+    <PieChart @ref="_operatingSystemsChart" style="padding: 40px" TItem="long"/>
+    <PieChart @ref="_linuxChart" style="padding: 40px" TItem="long"/>
+    <PieChart @ref="_macosChart" style="padding: 40px" TItem="long"/>
+    <PieChart @ref="_windowsChart" style="padding: 40px" TItem="long"/>
     <DataGrid Data="@OperatingSystems" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="NameValueStats">
         <DataGridColumn Caption="Name" Field="@nameof(NameValueStats.name)"/>
         <DataGridNumericColumn Caption="Times" Field="@nameof(NameValueStats.Value)"/>
@@ -27,6 +33,7 @@
     <h1>
         <p class="text-center" style="color: deeppink;">All Aaru versions...</p>
     </h1>
+    <PieChart @ref="_versionsChart" style="padding: 40px" TItem="long"/>
     <DataGrid Data="@Versions" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="NameValueStats">
         <DataGridColumn Caption="Version" Field="@nameof(NameValueStats.name)"/>
         <DataGridNumericColumn Caption="Times run" Field="@nameof(NameValueStats.Value)"/>
@@ -37,6 +44,7 @@
     <h1>
         <p class="text-center" style="color: deeppink;">All Aaru commands...</p>
     </h1>
+    <PieChart @ref="_commandsChart" style="padding: 40px" TItem="long"/>
     <DataGrid Data="@Commands" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="Command">
         <DataGridColumn Caption="Command" Field="@nameof(Command.Name)"/>
         <DataGridNumericColumn Caption="Times run" Field="@nameof(Command.Count)"/>
@@ -47,6 +55,7 @@
     <h1>
         <p class="text-center" style="color: deeppink;">All filters found...</p>
     </h1>
+    <PieChart @ref="_filtersChart" style="padding: 40px" TItem="long"/>
     <DataGrid Data="@Filters" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="Filter">
         <DataGridColumn Caption="Filter" Field="@nameof(Filter.Name)"/>
         <DataGridNumericColumn Caption="Times found" Field="@nameof(Filter.Count)"/>
@@ -57,6 +66,7 @@
     <h1>
         <p class="text-center" style="color: deeppink;">All media image formats found...</p>
     </h1>
+    <PieChart @ref="_formatsChart" style="padding: 40px" TItem="long"/>
     <DataGrid Data="@MediaImages" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="MediaFormat">
         <DataGridColumn Caption="Media image format" Field="@nameof(MediaFormat.Name)"/>
         <DataGridNumericColumn Caption="Times found" Field="@nameof(MediaFormat.Count)"/>
@@ -67,6 +77,7 @@
     <h1>
         <p class="text-center" style="color: deeppink;">All partitioning schemes found...</p>
     </h1>
+    <PieChart @ref="_partitionsChart" style="padding: 40px" TItem="long"/>
     <DataGrid Data="@Partitions" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="Partition">
         <DataGridColumn Caption="Partitioning scheme" Field="@nameof(Partition.Name)"/>
         <DataGridNumericColumn Caption="Times found" Field="@nameof(Partition.Count)"/>
@@ -77,6 +88,7 @@
     <h1>
         <p class="text-center" style="color: deeppink;">All filesystems found...</p>
     </h1>
+    <PieChart @ref="_filesystemsChart" style="padding: 40px" TItem="long"/>
     <DataGrid Data="@Filesystems" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="Filesystem">
         <DataGridColumn Caption="Filesystem name" Field="@nameof(Filesystem.Name)"/>
         <DataGridNumericColumn Caption="Times found" Field="@nameof(Filesystem.Count)"/>
@@ -87,6 +99,7 @@
     <h1>
         <p class="text-center" style="color: deeppink;">All media types found in images...</p>
     </h1>
+    <PieChart @ref="_virtualMediaChart" style="padding: 40px" TItem="long"/>
     <DataGrid Data="@VirtualMedia" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="MediaItem">
         <DataGridColumn Caption="Physical type" Field="@nameof(MediaItem.Type)"/>
         <DataGridColumn Caption="Logical type" Field="@nameof(MediaItem.SubType)"/>
@@ -98,6 +111,7 @@
     <h1>
         <p class="text-center" style="color: deeppink;">All media types found in devices...</p>
     </h1>
+    <PieChart @ref="_realMediaChart" style="padding: 40px" TItem="long"/>
     <DataGrid Data="@RealMedia" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="MediaItem">
         <DataGridColumn Caption="Physical type" Field="@nameof(MediaItem.Type)"/>
         <DataGridColumn Caption="Logical type" Field="@nameof(MediaItem.SubType)"/>
@@ -109,6 +123,8 @@
     <h1>
         <p class="text-center" style="color: deeppink;">All devices found...</p>
     </h1>
+    <PieChart @ref="_devicesByBusChart" style="padding: 40px" TItem="long"/>
+    <PieChart @ref="_devicesByManufacturerChart" style="padding: 40px" TItem="long"/>
     <DataGrid Data="@Devices" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="DeviceItem">
         <DataGridColumn Caption="Manufacturer" Field="@nameof(DeviceItem.Manufacturer)"/>
         <DataGridColumn Caption="Model" Field="@nameof(DeviceItem.Model)"/>
