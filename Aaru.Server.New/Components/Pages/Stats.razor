@@ -2,6 +2,7 @@
 @using Aaru.CommonTypes.Metadata
 @using Aaru.Server.Database
 @using Aaru.Server.Database.Models
+@using Blazorise
 @using Blazorise.Charts
 @using Blazorise.DataGrid
 @rendermode InteractiveServer
@@ -19,10 +20,20 @@
     <h1>
         <p class="text-center" style="color: deeppink;">All operating systems Aaru has run on...</p>
     </h1>
-    <PieChart @ref="_operatingSystemsChart" style="padding: 40px" TItem="long"/>
-    <PieChart @ref="_linuxChart" style="padding: 40px" TItem="long"/>
-    <PieChart @ref="_macosChart" style="padding: 40px" TItem="long"/>
-    <PieChart @ref="_windowsChart" style="padding: 40px" TItem="long"/>
+    <Carousel @ref="_operatingSystemsCarousel">
+        <CarouselSlide Name="1">
+            <PieChart @ref="_operatingSystemsChart" style="padding: 40px" TItem="long"/>
+        </CarouselSlide>
+        <CarouselSlide Name="2">
+            <PieChart @ref="_linuxChart" style="padding: 40px" TItem="long"/>
+        </CarouselSlide>
+        <CarouselSlide Name="3">
+            <PieChart @ref="_macosChart" style="padding: 40px" TItem="long"/>
+        </CarouselSlide>
+        <CarouselSlide Name="4">
+            <PieChart @ref="_windowsChart" style="padding: 40px" TItem="long"/>
+        </CarouselSlide>
+    </Carousel>
     <DataGrid Data="@OperatingSystems" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="NameValueStats">
         <DataGridColumn Caption="Name" Field="@nameof(NameValueStats.name)"/>
         <DataGridNumericColumn Caption="Times" Field="@nameof(NameValueStats.Value)"/>
@@ -123,8 +134,14 @@
     <h1>
         <p class="text-center" style="color: deeppink;">All devices found...</p>
     </h1>
-    <PieChart @ref="_devicesByBusChart" style="padding: 40px" TItem="long"/>
-    <PieChart @ref="_devicesByManufacturerChart" style="padding: 40px" TItem="long"/>
+    <Carousel @ref="_devicesCarousel">
+        <CarouselSlide Name="1">
+            <PieChart @ref="_devicesByBusChart" style="padding: 40px" TItem="long"/>
+        </CarouselSlide>
+        <CarouselSlide Name="2">
+            <PieChart @ref="_devicesByManufacturerChart" style="padding: 40px" TItem="long"/>
+        </CarouselSlide>
+    </Carousel>
     <DataGrid Data="@Devices" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="DeviceItem">
         <DataGridColumn Caption="Manufacturer" Field="@nameof(DeviceItem.Manufacturer)"/>
         <DataGridColumn Caption="Model" Field="@nameof(DeviceItem.Model)"/>

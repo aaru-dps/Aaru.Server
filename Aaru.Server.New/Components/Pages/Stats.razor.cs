@@ -1,9 +1,11 @@
 ﻿using Aaru.CommonTypes.Interop;
 using Aaru.CommonTypes.Metadata;
 using Aaru.Server.Database.Models;
+using Blazorise;
 using Blazorise.Charts;
 using Microsoft.EntityFrameworkCore;
 using DbContext = Aaru.Server.Database.DbContext;
+using Media = Aaru.Server.Database.Models.Media;
 using PlatformID = Aaru.CommonTypes.Interop.PlatformID;
 
 namespace Aaru.Server.New.Components.Pages;
@@ -29,6 +31,7 @@ public partial class Stats
     PieChart<long>?       _devicesByManufacturerChart;
     List<long>            _devicesByManufacturerCounts = [];
     string[]              _devicesByManufacturerLabels = [];
+    Carousel?             _devicesCarousel;
     PieChart<long>?       _filesystemsChart;
     List<long>            _filesystemsCounts = [];
     string[]              _filesystemsLabels = [];
@@ -42,11 +45,12 @@ public partial class Stats
     List<long>            _linuxCounts = [];
     string[]              _linuxLabels = [];
     PieChart<long>?       _macosChart;
-    List<long>            _macosCounts           = [];
-    string[]              _macosLabels           = [];
-    List<long>            _operatingSystemCounts = [];
-    string[]              _operatingSystemLabels = [];
+    List<long>            _macosCounts = [];
+    string[]              _macosLabels = [];
+    Carousel?             _operatingSystemsCarousel;
     PieChart<long>?       _operatingSystemsChart;
+    List<long>            _operatingSystemsCounts = [];
+    string[]              _operatingSystemsLabels = [];
     PieChart<long>?       _partitionsChart;
     List<long>            _partitionsCounts = [];
     string[]              _partitionsLabels = [];
@@ -103,13 +107,13 @@ public partial class Stats
                                Count = g.Sum()
                            });
 
-        _operatingSystemLabels = await osQuery.Select(static x => x.Name).ToArrayAsync();
-        _operatingSystemCounts = await osQuery.Select(static x => x.Count).ToListAsync();
+        _operatingSystemsLabels = await osQuery.Select(static x => x.Name).ToArrayAsync();
+        _operatingSystemsCounts = await osQuery.Select(static x => x.Count).ToListAsync();
 
-        for(var i = 0; i < _operatingSystemLabels.Length; i++)
+        for(var i = 0; i < _operatingSystemsLabels.Length; i++)
         {
-            _operatingSystemLabels[i] =
-                DetectOS.GetPlatformName((PlatformID)Enum.Parse(typeof(PlatformID), _operatingSystemLabels[i]));
+            _operatingSystemsLabels[i] =
+                DetectOS.GetPlatformName((PlatformID)Enum.Parse(typeof(PlatformID), _operatingSystemsLabels[i]));
         }
 
         _linuxLabels = await _ctx.OperatingSystems.Where(static o => o.Name == PlatformID.Linux.ToString())
@@ -498,24 +502,28 @@ public partial class Stats
 #pragma warning disable CS8604 // Possible null reference argument.
 
         await
-            Task.WhenAll(HandleRedraw(_operatingSystemsChart, _operatingSystemLabels, GetOperatingSystemsChartDataset),
-                         HandleRedraw(_linuxChart,            _linuxLabels,           GetLinuxChartDataset),
-                         HandleRedraw(_macosChart,            _macosLabels,           GetMacosChartDataset),
-                         HandleRedraw(_windowsChart,          _windowsLabels,         GetWindowsChartDataset),
-                         HandleRedraw(_versionsChart,         _versionsLabels,        GetVersionsChartDataset),
-                         HandleRedraw(_commandsChart,         _commandsLabels,        GetCommandsChartDataset),
-                         HandleRedraw(_filtersChart,          _filtersLabels,         GetFiltersChartDataset),
-                         HandleRedraw(_formatsChart,          _formatsLabels,         GetFormatsChartDataset),
-                         HandleRedraw(_partitionsChart,       _partitionsLabels,      GetPartitionsChartDataset),
-                         HandleRedraw(_filesystemsChart,      _filesystemsLabels,     GetFilesystemsChartDataset),
-                         HandleRedraw(_virtualMediaChart,     _virtualMediaLabels,    GetVirtualMediaChartDataset),
-                         HandleRedraw(_realMediaChart,        _realMediaLabels,       GetRealMediaChartDataset),
-                         HandleRedraw(_devicesByBusChart,     _devicesByBusLabels,    GetDevicesByBusChartDataset),
+            Task.WhenAll(HandleRedraw(_operatingSystemsChart, _operatingSystemsLabels, GetOperatingSystemsChartDataset),
+                         HandleRedraw(_linuxChart,            _linuxLabels,            GetLinuxChartDataset),
+                         HandleRedraw(_macosChart,            _macosLabels,            GetMacosChartDataset),
+                         HandleRedraw(_windowsChart,          _windowsLabels,          GetWindowsChartDataset),
+                         HandleRedraw(_versionsChart,         _versionsLabels,         GetVersionsChartDataset),
+                         HandleRedraw(_commandsChart,         _commandsLabels,         GetCommandsChartDataset),
+                         HandleRedraw(_filtersChart,          _filtersLabels,          GetFiltersChartDataset),
+                         HandleRedraw(_formatsChart,          _formatsLabels,          GetFormatsChartDataset),
+                         HandleRedraw(_partitionsChart,       _partitionsLabels,       GetPartitionsChartDataset),
+                         HandleRedraw(_filesystemsChart,      _filesystemsLabels,      GetFilesystemsChartDataset),
+                         HandleRedraw(_virtualMediaChart,     _virtualMediaLabels,     GetVirtualMediaChartDataset),
+                         HandleRedraw(_realMediaChart,        _realMediaLabels,        GetRealMediaChartDataset),
+                         HandleRedraw(_devicesByBusChart,     _devicesByBusLabels,     GetDevicesByBusChartDataset),
                          HandleRedraw(_devicesByManufacturerChart,
                                       _devicesByManufacturerLabels,
                                       GetDevicesByManufacturerChartDataset));
-    }
 #pragma warning restore CS8604 // Possible null reference argument.
+
+        // Upstream: https://github.com/Megabit/Blazorise/issues/5491
+        _operatingSystemsCarousel.Interval = 5000;
+        _devicesCarousel.Interval          = 5000;
+    }
 
     static async Task HandleRedraw<TDataSet, TItem, TOptions, TModel>(
         BaseChart<TDataSet, TItem, TOptions, TModel> chart, string[] labels, Func<TDataSet> getDataSet)
@@ -529,7 +537,7 @@ public partial class Stats
     PieChartDataset<long> GetOperatingSystemsChartDataset() => new()
     {
         Label           = "Operating systems",
-        Data            = _operatingSystemCounts,
+        Data            = _operatingSystemsCounts,
         BackgroundColor = _backgroundColors,
         BorderColor     = _borderColors,
         BorderWidth     = 1
