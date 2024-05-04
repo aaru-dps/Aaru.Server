@@ -3,6 +3,7 @@ using Aaru.Server.New.Components.Account;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using DbContext = Aaru.Server.Database.DbContext;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -24,10 +25,10 @@ builder.Services.AddAuthentication(options =>
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
                           throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-builder.Services.AddDbContext<DbContext>(options => options
-                                                   .UseMySql(connectionString,
-                                                             new MariaDbServerVersion(new Version(10, 4, 0)))
-                                                   .UseLazyLoadingProxies());
+builder.Services.AddDbContextFactory<DbContext>(options => options
+                                                          .UseMySql(connectionString,
+                                                                    new MariaDbServerVersion(new Version(10, 4, 0)))
+                                                          .UseLazyLoadingProxies());
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

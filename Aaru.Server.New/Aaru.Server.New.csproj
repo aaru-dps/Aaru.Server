@@ -23,4 +23,8 @@
     <Folder Include="wwwroot\assets\"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Aaru.Server.Database\Aaru.Server.Database.csproj"/>
+  </ItemGroup>
+
 </Project>
