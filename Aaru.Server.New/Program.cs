@@ -1,5 +1,8 @@
 using Aaru.Server.New.Components;
 using Aaru.Server.New.Components.Account;
+using Blazorise;
+using Blazorise.Bootstrap;
+using Blazorise.Icons.FontAwesome;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +45,8 @@ builder.Services.AddIdentityCore<IdentityUser>(options =>
        .AddDefaultTokenProviders();
 
 builder.Services.AddSingleton<IEmailSender<IdentityUser>, IdentityNoOpEmailSender>();
+
+builder.Services.AddBlazorise(options => { options.Immediate = true; }).AddBootstrapProviders().AddFontAwesomeIcons();
 
 WebApplication app = builder.Build();
 

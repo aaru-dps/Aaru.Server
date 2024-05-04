@@ -1,6 +1,134 @@
 ﻿@page "/Stats"
+@using Aaru.CommonTypes.Metadata
 @using Aaru.Server.Database
+@using Aaru.Server.Database.Models
+@using Blazorise.DataGrid
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
 
 <PageTitle>Aaru: Statistics</PageTitle>
+
+@*
+    TODO: Group by datagrid
+    TODO: Sortable datagrid
+*@
+
+<div class="stats-section">
+    <h1>
+        <p class="text-center" style="color: deeppink;">All operating systems Aaru has run on...</p>
+    </h1>
+    <DataGrid Data="@OperatingSystems" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="NameValueStats">
+        <DataGridColumn Caption="Name" Field="@nameof(NameValueStats.name)"/>
+        <DataGridNumericColumn Caption="Times" Field="@nameof(NameValueStats.Value)"/>
+    </DataGrid>
+</div>
+
+<div class="stats-section">
+    <h1>
+        <p class="text-center" style="color: deeppink;">All Aaru versions...</p>
+    </h1>
+    <DataGrid Data="@Versions" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="NameValueStats">
+        <DataGridColumn Caption="Version" Field="@nameof(NameValueStats.name)"/>
+        <DataGridNumericColumn Caption="Times run" Field="@nameof(NameValueStats.Value)"/>
+    </DataGrid>
+</div>
+
+<div class="stats-section">
+    <h1>
+        <p class="text-center" style="color: deeppink;">All Aaru commands...</p>
+    </h1>
+    <DataGrid Data="@Commands" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="Command">
+        <DataGridColumn Caption="Command" Field="@nameof(Command.Name)"/>
+        <DataGridNumericColumn Caption="Times run" Field="@nameof(Command.Count)"/>
+    </DataGrid>
+</div>
+
+<div class="stats-section">
+    <h1>
+        <p class="text-center" style="color: deeppink;">All filters found...</p>
+    </h1>
+    <DataGrid Data="@Filters" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="Filter">
+        <DataGridColumn Caption="Filter" Field="@nameof(Filter.Name)"/>
+        <DataGridNumericColumn Caption="Times found" Field="@nameof(Filter.Count)"/>
+    </DataGrid>
+</div>
+
+<div class="stats-section">
+    <h1>
+        <p class="text-center" style="color: deeppink;">All media image formats found...</p>
+    </h1>
+    <DataGrid Data="@MediaImages" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="MediaFormat">
+        <DataGridColumn Caption="Media image format" Field="@nameof(MediaFormat.Name)"/>
+        <DataGridNumericColumn Caption="Times found" Field="@nameof(MediaFormat.Count)"/>
+    </DataGrid>
+</div>
+
+<div class="stats-section">
+    <h1>
+        <p class="text-center" style="color: deeppink;">All partitioning schemes found...</p>
+    </h1>
+    <DataGrid Data="@Partitions" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="Partition">
+        <DataGridColumn Caption="Partitioning scheme" Field="@nameof(Partition.Name)"/>
+        <DataGridNumericColumn Caption="Times found" Field="@nameof(Partition.Count)"/>
+    </DataGrid>
+</div>
+
+<div class="stats-section">
+    <h1>
+        <p class="text-center" style="color: deeppink;">All filesystems found...</p>
+    </h1>
+    <DataGrid Data="@Filesystems" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="Filesystem">
+        <DataGridColumn Caption="Filesystem name" Field="@nameof(Filesystem.Name)"/>
+        <DataGridNumericColumn Caption="Times found" Field="@nameof(Filesystem.Count)"/>
+    </DataGrid>
+</div>
+
+<div class="stats-section">
+    <h1>
+        <p class="text-center" style="color: deeppink;">All media types found in images...</p>
+    </h1>
+    <DataGrid Data="@VirtualMedia" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="MediaItem">
+        <DataGridColumn Caption="Physical type" Field="@nameof(MediaItem.Type)"/>
+        <DataGridColumn Caption="Logical type" Field="@nameof(MediaItem.SubType)"/>
+        <DataGridNumericColumn Caption="Times found" Field="@nameof(MediaItem.Count)"/>
+    </DataGrid>
+</div>
+
+<div class="stats-section">
+    <h1>
+        <p class="text-center" style="color: deeppink;">All media types found in devices...</p>
+    </h1>
+    <DataGrid Data="@RealMedia" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="MediaItem">
+        <DataGridColumn Caption="Physical type" Field="@nameof(MediaItem.Type)"/>
+        <DataGridColumn Caption="Logical type" Field="@nameof(MediaItem.SubType)"/>
+        <DataGridNumericColumn Caption="Times found" Field="@nameof(MediaItem.Count)"/>
+    </DataGrid>
+</div>
+
+<div class="stats-section">
+    <h1>
+        <p class="text-center" style="color: deeppink;">All devices found...</p>
+    </h1>
+    <DataGrid Data="@Devices" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="DeviceItem">
+        <DataGridColumn Caption="Manufacturer" Field="@nameof(DeviceItem.Manufacturer)"/>
+        <DataGridColumn Caption="Model" Field="@nameof(DeviceItem.Model)"/>
+        <DataGridColumn Caption="Revision" Field="@nameof(DeviceItem.Revision)"/>
+        <DataGridColumn Caption="Bus" Field="@nameof(DeviceItem.Bus)"/>
+        <DataGridColumn Caption="Report" Field="@nameof(DeviceItem.ReportId)">
+            <DisplayTemplate>
+                @{
+                    int? reportId = context?.ReportId;
+
+                    if(reportId > 0)
+                    {
+                        <a href="/report/@reportId.Value" target="_blank">Yes</a>
+                    }
+                    else
+                    {
+                        <span>No</span>
+                    }
+                }
+            </DisplayTemplate>
+        </DataGridColumn>
+    </DataGrid>
+</div>

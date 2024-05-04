@@ -697,3 +697,22 @@ kbd {
   padding: 3px 5px;
   vertical-align: middle;
 }
+
+.table {
+  color: #DEDEDE;
+}
+
+.stats-section {
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 30px 15px 40px !important;
+  position: relative;
+}
+
+.table-fixed-header .table thead:not(.table-thead-theme) th {
+  background-color: #333333;
+}
+
+.table-fixed-header {
+  scrollbar-color: #888888 #333333;
+}
