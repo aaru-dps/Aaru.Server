@@ -13,7 +13,7 @@ html, body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-a, .btn-link {
+.nav-link {
   color: #006bb7;
 }
 
@@ -709,7 +709,7 @@ kbd {
   position: relative;
 }
 
-.table-fixed-header .table thead:not(.table-thead-theme) th {
+.table-fixed-header > .table > thead:not(.table-thead-theme) > tr > th {
   background-color: #333333;
 }
 
