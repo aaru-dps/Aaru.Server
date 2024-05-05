@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Aaru.CommonTypes.Interop;
+using Aaru.Server.New;
 using Aaru.Server.New.Components;
 using Aaru.Server.New.Components.Account;
 using Blazorise;
@@ -156,6 +157,15 @@ using(IServiceScope scope = app.Services.CreateScope())
         Console.WriteLine("\u001b[31;1mUpdating database with Entity Framework...\u001b[0m");
         DbContext context = services.GetRequiredService<DbContext>();
         await context.Database.MigrateAsync();
+        stopwatch.Stop();
+
+        Console.WriteLine("\u001b[31;1mTook \u001b[32;1m{0} seconds\u001b[31;1m...\u001b[0m",
+                          stopwatch.Elapsed.TotalSeconds);
+
+        stopwatch.Restart();
+        Console.WriteLine("\u001b[31;1mSeeding Identity...\u001b[0m");
+        await Seeder.SeedAsync(context, services);
+        context.Database.Migrate();
         stopwatch.Stop();
 
         Console.WriteLine("\u001b[31;1mTook \u001b[32;1m{0} seconds\u001b[31;1m...\u001b[0m",
