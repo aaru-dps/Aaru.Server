@@ -1,5 +1,7 @@
 @page "/Report/View/{Id:int}"
 @using Aaru.Server.Database
+@using Blazorise
+@rendermode InteractiveServer
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
 
@@ -22,5 +24,40 @@
 }
 
 <div class="stats-section">
-    <h1 style="align-content: center; padding: 2rem">@_pageTitle</h1>
+    <h1 style="color: #e18fdc; align-content: center; padding: 2rem">@_pageTitle</h1>
 </div>
+
+<Accordion class="stats-section">
+    @if(UsbItem is not null)
+    {
+        <AccordionItem @bind-Visible="@accordionItem1Visible">
+            <AccordionHeader>
+                <Heading Size="HeadingSize.Is5">
+                    <AccordionToggle>USB characteristics</AccordionToggle>
+                </Heading>
+            </AccordionHeader>
+            <AccordionBody>
+                <Table FullWidth>
+                    <TableBody>
+                        <TableRow>
+                            <TableRowHeader class="text-end">Manufacturer</TableRowHeader>
+                            <TableRowCell>@UsbItem.Manufacturer</TableRowCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableRowHeader class="text-end">Product</TableRowHeader>
+                            <TableRowCell>@UsbItem.Product</TableRowCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableRowHeader class="text-end">Vendor ID</TableRowHeader>
+                            <TableRowCell>@UsbItem.VendorDescription</TableRowCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableRowHeader class="text-end">Product ID</TableRowHeader>
+                            <TableRowCell>@UsbItem.ProductDescription</TableRowCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </AccordionBody>
+        </AccordionItem>
+    }
+</Accordion>
