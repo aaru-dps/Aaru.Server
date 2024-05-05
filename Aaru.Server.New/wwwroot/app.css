@@ -716,3 +716,31 @@ kbd {
 .table-fixed-header {
   scrollbar-color: #888888 #333333;
 }
+
+.nav-pills {
+
+  .nav-item {
+    -ms-flex-preferred-size: initial;
+    flex-basis: auto;
+    -ms-flex-positive: initial;
+    flex-grow: 1;
+    text-align: center;
+    margin: 2px;
+  }
+
+  .nav-link {
+    background: linear-gradient(0deg, black, transparent);
+    color: darkcyan;
+  }
+
+  .nav-link:hover {
+    color: cyan;
+  }
+
+
+  .nav-link.active,
+  .show > .nav-link {
+    background: linear-gradient(0deg, black, darkmagenta);
+    color: deepskyblue;
+  }
+}
