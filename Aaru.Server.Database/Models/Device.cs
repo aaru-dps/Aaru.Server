@@ -88,7 +88,7 @@ public class Device : DeviceReportV2
     [DisplayName("Modified when")]
     public DateTime? ModifiedWhen { get; set; }
 
-    public virtual CompactDiscOffset CdOffset { get; set; }
+    public virtual CompactDiscOffset? CdOffset { get; set; }
 
     [DefaultValue(0)]
     [DisplayName("Optimal no. of sectors to be read at once")]

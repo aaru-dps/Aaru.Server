@@ -1,0 +1,26 @@
+@page "/Report/View/{Id:int}"
+@using Aaru.Server.Database
+
+@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
+
+<PageTitle>@_pageTitle</PageTitle>
+@if(_notFound)
+{
+    <div class="stats-section">
+        <h1 style="color: red; align-content: center; padding: 2rem">The requested device report has not been found...</h1>
+    </div>
+
+    return;
+}
+@if(!_initialized)
+{
+    <div class="stats-section">
+        <h1 style="color: red; align-content: center; padding: 2rem">Loading...</h1>
+    </div>
+
+    return;
+}
+
+<div class="stats-section">
+    <h1 style="align-content: center; padding: 2rem">@_pageTitle</h1>
+</div>
