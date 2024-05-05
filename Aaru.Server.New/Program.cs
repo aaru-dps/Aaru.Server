@@ -144,4 +144,33 @@ app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
 
+using(IServiceScope scope = app.Services.CreateScope())
+{
+    IServiceProvider services = scope.ServiceProvider;
+
+    try
+    {
+        Stopwatch stopwatch = new();
+
+        stopwatch.Start();
+        Console.WriteLine("\u001b[31;1mUpdating database with Entity Framework...\u001b[0m");
+        DbContext context = services.GetRequiredService<DbContext>();
+        await context.Database.MigrateAsync();
+        stopwatch.Stop();
+
+        Console.WriteLine("\u001b[31;1mTook \u001b[32;1m{0} seconds\u001b[31;1m...\u001b[0m",
+                          stopwatch.Elapsed.TotalSeconds);
+    }
+    catch(Exception ex)
+    {
+        Console.WriteLine("\u001b[31;1mCould not open database...\u001b[0m");
+#if DEBUG
+        Console.WriteLine("\u001b[31;1mException: {0}\u001b[0m", ex.Message);
+#endif
+        return;
+    }
+}
+
+Console.WriteLine("\u001b[31;1mStarting web server...\u001b[0m");
+
 app.Run();
