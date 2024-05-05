@@ -1,167 +1,70 @@
 ﻿@page "/Stats"
-@using Aaru.CommonTypes.Metadata
-@using Aaru.Server.Database
-@using Aaru.Server.Database.Models
+@using Aaru.Server.New.Components.Pages.Statistics
 @using Blazorise
-@using Blazorise.Charts
-@using Blazorise.DataGrid
 @rendermode InteractiveServer
-
-@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
 
 <PageTitle>Aaru: Statistics</PageTitle>
 
-@*
-    TODO: Group by datagrid
-    TODO: Sortable datagrid
-*@
-
 <div class="stats-section">
-    <h1>
-        <p class="text-center" style="color: deeppink;">All operating systems Aaru has run on...</p>
-    </h1>
-    <Carousel @ref="_operatingSystemsCarousel">
-        <CarouselSlide Name="1">
-            <PieChart @ref="_operatingSystemsChart" style="padding: 40px" TItem="long"/>
-        </CarouselSlide>
-        <CarouselSlide Name="2">
-            <PieChart @ref="_linuxChart" style="padding: 40px" TItem="long"/>
-        </CarouselSlide>
-        <CarouselSlide Name="3">
-            <PieChart @ref="_macosChart" style="padding: 40px" TItem="long"/>
-        </CarouselSlide>
-        <CarouselSlide Name="4">
-            <PieChart @ref="_windowsChart" style="padding: 40px" TItem="long"/>
-        </CarouselSlide>
-    </Carousel>
-    <DataGrid Data="@OperatingSystems" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="NameValueStats">
-        <DataGridColumn Caption="Name" Field="@nameof(NameValueStats.name)"/>
-        <DataGridNumericColumn Caption="Times" Field="@nameof(NameValueStats.Value)"/>
-    </DataGrid>
+    <Tabs FullWidth Justified Pills @ref="_tabs" RenderMode="TabsRenderMode.LazyLoad">
+        <Items>
+            <Tab Name="oses">Operating systems</Tab>
+            <Tab Name="versions">Versions</Tab>
+            <Tab Name="commands">Commands</Tab>
+            <Tab Name="filters">Filters</Tab>
+            <Tab Name="formats">Media image formats</Tab>
+            <Tab Name="partitions">Partitioning schemes</Tab>
+            <Tab Name="filesystems">Filesystems</Tab>
+            <Tab Name="virtualMedias">Media types (images)</Tab>
+            <Tab Name="realMedias">Media types (devices)</Tab>
+            <Tab Name="devices">Devices</Tab>
+        </Items>
+        <Content>
+            <TabPanel Name="oses">
+                <OperatingSystems/>
+            </TabPanel>
+            <TabPanel Name="versions">
+                <Versions/>
+            </TabPanel>
+            <TabPanel Name="commands">
+                <Commands/>
+            </TabPanel>
+            <TabPanel Name="filters">
+                <Filters/>
+            </TabPanel>
+            <TabPanel Name="formats">
+                <Formats/>
+            </TabPanel>
+            <TabPanel Name="partitions">
+                <Partitions/>
+            </TabPanel>
+            <TabPanel Name="filesystems">
+                <Filesystems/>
+            </TabPanel>
+            <TabPanel Name="virtualMedias">
+                <VirtualMedias/>
+            </TabPanel>
+            <TabPanel Name="realMedias">
+                <RealMedias/>
+            </TabPanel>
+            <TabPanel Name="devices">
+                <Devices/>
+            </TabPanel>
+        </Content>
+    </Tabs>
 </div>
 
-<div class="stats-section">
-    <h1>
-        <p class="text-center" style="color: deeppink;">All Aaru versions...</p>
-    </h1>
-    <PieChart @ref="_versionsChart" style="padding: 40px" TItem="long"/>
-    <DataGrid Data="@Versions" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="NameValueStats">
-        <DataGridColumn Caption="Version" Field="@nameof(NameValueStats.name)"/>
-        <DataGridNumericColumn Caption="Times run" Field="@nameof(NameValueStats.Value)"/>
-    </DataGrid>
-</div>
+@code
+{
+    Tabs _tabs;
 
-<div class="stats-section">
-    <h1>
-        <p class="text-center" style="color: deeppink;">All Aaru commands...</p>
-    </h1>
-    <PieChart @ref="_commandsChart" style="padding: 40px" TItem="long"/>
-    <DataGrid Data="@Commands" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="Command">
-        <DataGridColumn Caption="Command" Field="@nameof(Command.Name)"/>
-        <DataGridNumericColumn Caption="Times run" Field="@nameof(Command.Count)"/>
-    </DataGrid>
-</div>
+    /// <inheritdoc />
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
 
-<div class="stats-section">
-    <h1>
-        <p class="text-center" style="color: deeppink;">All filters found...</p>
-    </h1>
-    <PieChart @ref="_filtersChart" style="padding: 40px" TItem="long"/>
-    <DataGrid Data="@Filters" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="Filter">
-        <DataGridColumn Caption="Filter" Field="@nameof(Filter.Name)"/>
-        <DataGridNumericColumn Caption="Times found" Field="@nameof(Filter.Count)"/>
-    </DataGrid>
-</div>
+        if(!firstRender) return;
 
-<div class="stats-section">
-    <h1>
-        <p class="text-center" style="color: deeppink;">All media image formats found...</p>
-    </h1>
-    <PieChart @ref="_formatsChart" style="padding: 40px" TItem="long"/>
-    <DataGrid Data="@MediaImages" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="MediaFormat">
-        <DataGridColumn Caption="Media image format" Field="@nameof(MediaFormat.Name)"/>
-        <DataGridNumericColumn Caption="Times found" Field="@nameof(MediaFormat.Count)"/>
-    </DataGrid>
-</div>
-
-<div class="stats-section">
-    <h1>
-        <p class="text-center" style="color: deeppink;">All partitioning schemes found...</p>
-    </h1>
-    <PieChart @ref="_partitionsChart" style="padding: 40px" TItem="long"/>
-    <DataGrid Data="@Partitions" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="Partition">
-        <DataGridColumn Caption="Partitioning scheme" Field="@nameof(Partition.Name)"/>
-        <DataGridNumericColumn Caption="Times found" Field="@nameof(Partition.Count)"/>
-    </DataGrid>
-</div>
-
-<div class="stats-section">
-    <h1>
-        <p class="text-center" style="color: deeppink;">All filesystems found...</p>
-    </h1>
-    <PieChart @ref="_filesystemsChart" style="padding: 40px" TItem="long"/>
-    <DataGrid Data="@Filesystems" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="Filesystem">
-        <DataGridColumn Caption="Filesystem name" Field="@nameof(Filesystem.Name)"/>
-        <DataGridNumericColumn Caption="Times found" Field="@nameof(Filesystem.Count)"/>
-    </DataGrid>
-</div>
-
-<div class="stats-section">
-    <h1>
-        <p class="text-center" style="color: deeppink;">All media types found in images...</p>
-    </h1>
-    <PieChart @ref="_virtualMediaChart" style="padding: 40px" TItem="long"/>
-    <DataGrid Data="@VirtualMedia" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="MediaItem">
-        <DataGridColumn Caption="Physical type" Field="@nameof(MediaItem.Type)"/>
-        <DataGridColumn Caption="Logical type" Field="@nameof(MediaItem.SubType)"/>
-        <DataGridNumericColumn Caption="Times found" Field="@nameof(MediaItem.Count)"/>
-    </DataGrid>
-</div>
-
-<div class="stats-section">
-    <h1>
-        <p class="text-center" style="color: deeppink;">All media types found in devices...</p>
-    </h1>
-    <PieChart @ref="_realMediaChart" style="padding: 40px" TItem="long"/>
-    <DataGrid Data="@RealMedia" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="MediaItem">
-        <DataGridColumn Caption="Physical type" Field="@nameof(MediaItem.Type)"/>
-        <DataGridColumn Caption="Logical type" Field="@nameof(MediaItem.SubType)"/>
-        <DataGridNumericColumn Caption="Times found" Field="@nameof(MediaItem.Count)"/>
-    </DataGrid>
-</div>
-
-<div class="stats-section">
-    <h1>
-        <p class="text-center" style="color: deeppink;">All devices found...</p>
-    </h1>
-    <Carousel @ref="_devicesCarousel">
-        <CarouselSlide Name="1">
-            <PieChart @ref="_devicesByBusChart" style="padding: 40px" TItem="long"/>
-        </CarouselSlide>
-        <CarouselSlide Name="2">
-            <PieChart @ref="_devicesByManufacturerChart" style="padding: 40px" TItem="long"/>
-        </CarouselSlide>
-    </Carousel>
-    <DataGrid Data="@Devices" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="DeviceItem">
-        <DataGridColumn Caption="Manufacturer" Field="@nameof(DeviceItem.Manufacturer)"/>
-        <DataGridColumn Caption="Model" Field="@nameof(DeviceItem.Model)"/>
-        <DataGridColumn Caption="Revision" Field="@nameof(DeviceItem.Revision)"/>
-        <DataGridColumn Caption="Bus" Field="@nameof(DeviceItem.Bus)"/>
-        <DataGridColumn Caption="Report" Field="@nameof(DeviceItem.ReportId)">
-            <DisplayTemplate>
-                @{
-                    int? reportId = context?.ReportId;
-
-                    if(reportId > 0)
-                    {
-                        <a href="/report/@reportId.Value" target="_blank">Yes</a>
-                    }
-                    else
-                    {
-                        <span>No</span>
-                    }
-                }
-            </DisplayTemplate>
-        </DataGridColumn>
-    </DataGrid>
-</div>
+        await _tabs.SelectTab("oses");
+    }
+}

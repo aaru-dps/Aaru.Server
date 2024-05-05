@@ -1,0 +1,22 @@
+﻿@using Aaru.Server.Database
+@using Aaru.Server.Database.Models
+@using Blazorise.Charts
+@using Blazorise.DataGrid
+@rendermode InteractiveServer
+
+@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
+
+<PageTitle>Aaru: Statistics</PageTitle>
+
+@*
+    TODO: Group by datagrid
+*@
+
+<h1>
+    <p class="text-center" style="color: deeppink;">All media image formats found...</p>
+</h1>
+<PieChart @ref="_formatsChart" style="padding: 40px" TItem="long"/>
+<DataGrid Data="@MediaImages" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="MediaFormat">
+    <DataGridColumn Caption="Media image format" Field="@nameof(MediaFormat.Name)"/>
+    <DataGridNumericColumn Caption="Times found" Field="@nameof(MediaFormat.Count)"/>
+</DataGrid>

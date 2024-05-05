@@ -1,0 +1,46 @@
+﻿@using Aaru.Server.Database
+@using Aaru.Server.Database.Models
+@using Blazorise
+@using Blazorise.Charts
+@using Blazorise.DataGrid
+@rendermode InteractiveServer
+
+@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
+
+@*
+    TODO: Group by datagrid
+*@
+
+<h1>
+    <p class="text-center" style="color: deeppink;">All devices found...</p>
+</h1>
+<Carousel @ref="_devicesCarousel">
+    <CarouselSlide Name="1">
+        <PieChart @ref="_devicesByBusChart" style="padding: 40px" TItem="long"/>
+    </CarouselSlide>
+    <CarouselSlide Name="2">
+        <PieChart @ref="_devicesByManufacturerChart" style="padding: 40px" TItem="long"/>
+    </CarouselSlide>
+</Carousel>
+<DataGrid Data="@DevicesList" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="DeviceItem">
+    <DataGridColumn Caption="Manufacturer" Field="@nameof(DeviceItem.Manufacturer)"/>
+    <DataGridColumn Caption="Model" Field="@nameof(DeviceItem.Model)"/>
+    <DataGridColumn Caption="Revision" Field="@nameof(DeviceItem.Revision)"/>
+    <DataGridColumn Caption="Bus" Field="@nameof(DeviceItem.Bus)"/>
+    <DataGridColumn Caption="Report" Field="@nameof(DeviceItem.ReportId)">
+        <DisplayTemplate>
+            @{
+                int? reportId = context?.ReportId;
+
+                if(reportId > 0)
+                {
+                    <a href="/report/@reportId.Value" target="_blank">Yes</a>
+                }
+                else
+                {
+                    <span>No</span>
+                }
+            }
+        </DisplayTemplate>
+    </DataGridColumn>
+</DataGrid>

@@ -1,0 +1,16 @@
+﻿@using Aaru.CommonTypes.Metadata
+@using Aaru.Server.Database
+@using Blazorise.Charts
+@using Blazorise.DataGrid
+@rendermode InteractiveServer
+
+@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
+
+<h1>
+    <p class="text-center" style="color: deeppink;">All Aaru versions...</p>
+</h1>
+<PieChart @ref="_versionsChart" style="padding: 40px" TItem="long"/>
+<DataGrid Data="@VersionsList" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="NameValueStats">
+    <DataGridColumn Caption="Version" Field="@nameof(NameValueStats.name)"/>
+    <DataGridNumericColumn Caption="Times run" Field="@nameof(NameValueStats.Value)"/>
+</DataGrid>

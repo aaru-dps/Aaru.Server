@@ -1,0 +1,16 @@
+﻿@using Aaru.Server.Database
+@using Aaru.Server.Database.Models
+@using Blazorise.Charts
+@using Blazorise.DataGrid
+@rendermode InteractiveServer
+
+@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
+
+<h1>
+    <p class="text-center" style="color: deeppink;">All partitioning schemes found...</p>
+</h1>
+<PieChart @ref="_partitionsChart" style="padding: 40px" TItem="long"/>
+<DataGrid Data="@PartitionsList" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="Partition">
+    <DataGridColumn Caption="Partitioning scheme" Field="@nameof(Partition.Name)"/>
+    <DataGridNumericColumn Caption="Times found" Field="@nameof(Partition.Count)"/>
+</DataGrid>
