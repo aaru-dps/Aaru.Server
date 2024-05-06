@@ -92,4 +92,50 @@
             </AccordionBody>
         </AccordionItem>
     }
+    @if(PcmciaItem != null)
+    {
+        <AccordionItem>
+            <AccordionHeader>
+                <Heading Size="HeadingSize.Is5">
+                    <AccordionToggle>PCMCIA characteristics</AccordionToggle>
+                </Heading>
+            </AccordionHeader>
+            <AccordionBody>
+                <Table FullWidth>
+                    <TableBody>
+                        <TableRow>
+                            <TableRowHeader class="text-end">Manufacturer</TableRowHeader>
+                            <TableRowCell>@PcmciaItem.Manufacturer</TableRowCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableRowHeader class="text-end">Product</TableRowHeader>
+                            <TableRowCell>@PcmciaItem.Product</TableRowCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableRowHeader class="text-end">Manufacturer code</TableRowHeader>
+                            <TableRowCell>@PcmciaItem.VendorDescription</TableRowCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableRowHeader class="text-end">Card code</TableRowHeader>
+                            <TableRowCell>@PcmciaItem.ProductDescription</TableRowCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableRowHeader class="text-end">Compliance</TableRowHeader>
+                            <TableRowCell>@PcmciaItem.Compliance</TableRowCell>
+                        </TableRow>
+                        @if(PcmciaTuples != null)
+                        {
+                            foreach(KeyValuePair<string, string> kvp in PcmciaTuples)
+                            {
+                                <TableRow>
+                                    <TableRowHeader class="text-end">@kvp.Key</TableRowHeader>
+                                    <TableRowCell>@kvp.Value</TableRowCell>
+                                </TableRow>
+                            }
+                        }
+                    </TableBody>
+                </Table>
+            </AccordionBody>
+        </AccordionItem>
+    }
 </Accordion>

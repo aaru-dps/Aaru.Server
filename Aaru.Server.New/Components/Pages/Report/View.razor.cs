@@ -1,7 +1,9 @@
+using Aaru.Decoders.PCMCIA;
 using Aaru.Server.Database.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using DbContext = Aaru.Server.Database.DbContext;
+using Tuple = Aaru.Decoders.PCMCIA.Tuple;
 
 namespace Aaru.Server.New.Components.Pages.Report;
 
@@ -18,6 +20,10 @@ public partial class View
     public Item? UsbItem { get; set; }
 
     public Item? FireWireItem { get; set; }
+
+    public Dictionary<string, string>? PcmciaTuples { get; set; }
+
+    public PcmciaItem? PcmciaItem { get; set; }
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
@@ -37,7 +43,8 @@ public partial class View
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
         Device? report = await ctx.Devices.Include(static deviceReportV2 => deviceReportV2.USB)
-                                  .Include(deviceReportV2 => deviceReportV2.FireWire)
+                                  .Include(static deviceReportV2 => deviceReportV2.FireWire)
+                                  .Include(static deviceReportV2 => deviceReportV2.PCMCIA)
                                   .FirstOrDefaultAsync(d => d.Id == Id);
 
         if(report is null)
@@ -96,6 +103,105 @@ public partial class View
             };
         }
 
+        if(report.PCMCIA != null)
+        {
+            PcmciaItem = new PcmciaItem
+            {
+                Manufacturer       = report.PCMCIA.Manufacturer,
+                Product            = report.PCMCIA.ProductName,
+                VendorDescription  = $"0x{report.PCMCIA.ManufacturerCode:x4}",
+                ProductDescription = $"0x{report.PCMCIA.CardCode:x4}",
+                Compliance         = report.PCMCIA.Compliance
+            };
+
+            Tuple[]? tuples = CIS.GetTuples(report.PCMCIA.CIS);
+
+            if(tuples != null)
+            {
+                Dictionary<string, string> decodedTuples = new();
+
+                foreach(Tuple tuple in tuples)
+                {
+                    switch(tuple.Code)
+                    {
+                        case TupleCodes.CISTPL_NULL:
+                        case TupleCodes.CISTPL_END:
+                        case TupleCodes.CISTPL_MANFID:
+                        case TupleCodes.CISTPL_VERS_1:
+                            break;
+                        case TupleCodes.CISTPL_DEVICEGEO:
+                        case TupleCodes.CISTPL_DEVICEGEO_A:
+                            DeviceGeometryTuple geom = CIS.DecodeDeviceGeometryTuple(tuple.Data);
+
+                            if(geom?.Geometries != null)
+                            {
+                                foreach(DeviceGeometry geometry in geom.Geometries)
+                                {
+                                    decodedTuples.Add("Device width", $"{(1 << geometry.CardInterface - 1) * 8} bits");
+
+                                    decodedTuples.Add("Erase block",
+                                                      $"{(1 << geometry.EraseBlockSize - 1) * (1 << geometry.Interleaving - 1)} bytes");
+
+                                    decodedTuples.Add("Read block",
+                                                      $"{(1 << geometry.ReadBlockSize - 1) * (1 << geometry.Interleaving - 1)} bytes");
+
+                                    decodedTuples.Add("Write block",
+                                                      $"{(1 << geometry.WriteBlockSize - 1) * (1 << geometry.Interleaving - 1)} bytes");
+
+                                    decodedTuples.Add("Partition alignment",
+                                                      $"{(1 << geometry.EraseBlockSize - 1) * (1 << geometry.Interleaving - 1) * (1 << geometry.Partitions - 1)} bytes");
+                                }
+                            }
+
+                            break;
+                        case TupleCodes.CISTPL_ALTSTR:
+                        case TupleCodes.CISTPL_BAR:
+                        case TupleCodes.CISTPL_BATTERY:
+                        case TupleCodes.CISTPL_BYTEORDER:
+                        case TupleCodes.CISTPL_CFTABLE_ENTRY:
+                        case TupleCodes.CISTPL_CFTABLE_ENTRY_CB:
+                        case TupleCodes.CISTPL_CHECKSUM:
+                        case TupleCodes.CISTPL_CONFIG:
+                        case TupleCodes.CISTPL_CONFIG_CB:
+                        case TupleCodes.CISTPL_DATE:
+                        case TupleCodes.CISTPL_DEVICE:
+                        case TupleCodes.CISTPL_DEVICE_A:
+                        case TupleCodes.CISTPL_DEVICE_OA:
+                        case TupleCodes.CISTPL_DEVICE_OC:
+                        case TupleCodes.CISTPL_EXTDEVIC:
+                        case TupleCodes.CISTPL_FORMAT:
+                        case TupleCodes.CISTPL_FORMAT_A:
+                        case TupleCodes.CISTPL_FUNCE:
+                        case TupleCodes.CISTPL_FUNCID:
+                        case TupleCodes.CISTPL_GEOMETRY:
+                        case TupleCodes.CISTPL_INDIRECT:
+                        case TupleCodes.CISTPL_JEDEC_A:
+                        case TupleCodes.CISTPL_JEDEC_C:
+                        case TupleCodes.CISTPL_LINKTARGET:
+                        case TupleCodes.CISTPL_LONGLINK_A:
+                        case TupleCodes.CISTPL_LONGLINK_C:
+                        case TupleCodes.CISTPL_LONGLINK_CB:
+                        case TupleCodes.CISTPL_LONGLINK_MFC:
+                        case TupleCodes.CISTPL_NO_LINK:
+                        case TupleCodes.CISTPL_ORG:
+                        case TupleCodes.CISTPL_PWR_MGMNT:
+                        case TupleCodes.CISTPL_SPCL:
+                        case TupleCodes.CISTPL_SWIL:
+                        case TupleCodes.CISTPL_VERS_2:
+                            decodedTuples.Add("Undecoded tuple ID", tuple.Code.ToString());
+
+                            break;
+                        default:
+                            decodedTuples.Add("Unknown tuple ID", $"0x{(byte)tuple.Code:X2}");
+
+                            break;
+                    }
+                }
+
+                if(decodedTuples.Count > 0) PcmciaTuples = decodedTuples;
+            }
+        }
+
         _initialized = true;
 
         StateHasChanged();
@@ -104,8 +210,13 @@ public partial class View
 
 public class Item
 {
-    public string Manufacturer;
-    public string Product;
-    public string ProductDescription;
-    public string VendorDescription;
+    public string? Manufacturer;
+    public string? Product;
+    public string? ProductDescription;
+    public string? VendorDescription;
+}
+
+public sealed class PcmciaItem : Item
+{
+    public string? Compliance;
 }
