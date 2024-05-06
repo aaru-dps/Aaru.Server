@@ -138,4 +138,33 @@
             </AccordionBody>
         </AccordionItem>
     }
+    @if(AtaItem != null)
+    {
+        <AccordionItem>
+            <AccordionHeader>
+                <Heading Size="HeadingSize.Is5">
+                    <AccordionToggle>@AtaItem characteristics</AccordionToggle>
+                </Heading>
+            </AccordionHeader>
+            <AccordionBody>
+                <span>
+                    @lblAtaDeviceType<br/>
+                </span>
+                @foreach(KeyValuePair<string, string> kvp in AtaTwo!)
+                {
+                    <span>
+                        <i>@kvp.Key</i>: @kvp.Value
+                        <br/>
+                    </span>
+                }
+                <br/>
+                @foreach(string item in AtaOne!)
+                {
+                    <span>
+                        @item<br/>
+                    </span>
+                }
+            </AccordionBody>
+        </AccordionItem>
+    }
 </Accordion>

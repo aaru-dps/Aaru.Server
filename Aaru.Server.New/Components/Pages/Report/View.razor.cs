@@ -1,3 +1,4 @@
+using Aaru.CommonTypes.Metadata;
 using Aaru.Decoders.PCMCIA;
 using Aaru.Server.Database.Models;
 using Microsoft.AspNetCore.Components;
@@ -25,6 +26,14 @@ public partial class View
 
     public PcmciaItem? PcmciaItem { get; set; }
 
+    public Dictionary<string, string>? AtaTwo { get; set; }
+
+    public List<string>? AtaOne { get; set; }
+
+    public string? lblAtaDeviceType { get; set; }
+
+    public string? AtaItem { get; set; }
+
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
     {
@@ -45,6 +54,8 @@ public partial class View
         Device? report = await ctx.Devices.Include(static deviceReportV2 => deviceReportV2.USB)
                                   .Include(static deviceReportV2 => deviceReportV2.FireWire)
                                   .Include(static deviceReportV2 => deviceReportV2.PCMCIA)
+                                  .Include(static deviceReportV2 => deviceReportV2.ATAPI)
+                                  .Include(static deviceReportV2 => deviceReportV2.ATA)
                                   .FirstOrDefaultAsync(d => d.Id == Id);
 
         if(report is null)
@@ -201,6 +212,44 @@ public partial class View
                 if(decodedTuples.Count > 0) PcmciaTuples = decodedTuples;
             }
         }
+
+        var                removable = true;
+        List<TestedMedia>? testedMedia;
+        var                atapi = false;
+
+        if(report.ATA != null || report.ATAPI != null)
+        {
+            List<string>               ataOneValue = [];
+            Dictionary<string, string> ataTwoValue = new();
+            Ata?                       ataReport;
+
+            if(report.ATAPI != null)
+            {
+                AtaItem   = "ATAPI";
+                ataReport = report.ATAPI;
+                atapi     = true;
+            }
+            else
+            {
+                AtaItem   = "ATA";
+                ataReport = report.ATA;
+            }
+
+            bool cfa = report.CompactFlash;
+
+            lblAtaDeviceType = atapi switch
+                               {
+                                   true when !cfa => "ATAPI device",
+                                   false when cfa => "CompactFlash device",
+                                   _              => "ATA device"
+                               };
+
+            Core.Ata.Report(ataReport!, cfa, atapi, ref removable, ataOneValue, ataTwoValue, out testedMedia);
+
+            AtaOne = ataOneValue;
+            AtaTwo = ataTwoValue;
+        }
+
 
         _initialized = true;
 
