@@ -17,6 +17,8 @@ public partial class View
     public int Id { get;        set; }
     public Item? UsbItem { get; set; }
 
+    public Item? FireWireItem { get; set; }
+
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
     {
@@ -35,6 +37,7 @@ public partial class View
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
         Device? report = await ctx.Devices.Include(static deviceReportV2 => deviceReportV2.USB)
+                                  .Include(deviceReportV2 => deviceReportV2.FireWire)
                                   .FirstOrDefaultAsync(d => d.Id == Id);
 
         if(report is null)
@@ -79,6 +82,17 @@ public partial class View
                 ProductDescription = usbProductDescription != null
                                          ? $"0x{report.USB.ProductID:x4} ({usbProductDescription})"
                                          : $"0x{report.USB.ProductID:x4}"
+            };
+        }
+
+        if(report.FireWire != null)
+        {
+            FireWireItem = new Item
+            {
+                Manufacturer       = report.FireWire.Manufacturer,
+                Product            = report.FireWire.Product,
+                VendorDescription  = $"0x{report.FireWire.VendorID:x8}",
+                ProductDescription = $"0x{report.FireWire.ProductID:x8}"
             };
         }
 
