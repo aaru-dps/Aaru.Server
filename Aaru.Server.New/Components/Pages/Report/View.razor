@@ -451,6 +451,59 @@
         </AccordionBody>
     </AccordionItem>
 }
+@if(Cid != null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>Card Identification Register</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            @((MarkupString)Cid)
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(Csd != null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>Card Specific Data Register</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            @((MarkupString)Csd)
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(ExtendedCsd != null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>Extended Device Specific Data Register</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            @((MarkupString)ExtendedCsd)
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(Ocr != null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>Operation Conditions Register</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            @((MarkupString)Ocr)
+        </AccordionBody>
+    </AccordionItem>
+}
+
 @if(ReadCapabilitiesDictionary is not null && ReadCapabilitiesList is not null)
 {
     <AccordionItem>

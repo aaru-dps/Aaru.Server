@@ -43,6 +43,10 @@ public partial class View
     public List<string>?               Security                   { get; set; }
     public Dictionary<string, string>? ReadCapabilitiesDictionary { get; set; }
     public List<string>?               ReadCapabilitiesList       { get; set; }
+    public string?                     Ocr                        { get; set; }
+    public string?                     ExtendedCsd                { get; set; }
+    public string?                     Csd                        { get; set; }
+    public string?                     Cid                        { get; set; }
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
@@ -66,6 +70,7 @@ public partial class View
                                   .Include(static deviceReportV2 => deviceReportV2.PCMCIA)
                                   .Include(static deviceReportV2 => deviceReportV2.ATAPI)
                                   .Include(static deviceReportV2 => deviceReportV2.ATA)
+                                  .Include(static deviceReportV2 => deviceReportV2.MultiMediaCard)
                                   .FirstOrDefaultAsync(d => d.Id == Id);
 
         if(report is null)
@@ -296,6 +301,26 @@ public partial class View
             NvCache               = nvCache;
             if(readCapabilitiesDictionary.Count > 0) ReadCapabilitiesDictionary = readCapabilitiesDictionary;
             if(readCapabilitiesList.Count       > 0) ReadCapabilitiesList       = readCapabilitiesList;
+        }
+
+        if(report.MultiMediaCard != null)
+        {
+            lblDeviceType = "MultiMediaCard";
+
+            if(report.MultiMediaCard.CID != null)
+                Cid = Decoders.MMC.Decoders.PrettifyCID(report.MultiMediaCard.CID).Replace("\n", "<br/>");
+
+            if(report.MultiMediaCard.CSD != null)
+                Csd = Decoders.MMC.Decoders.PrettifyCSD(report.MultiMediaCard.CSD).Replace("\n", "<br/>");
+
+            if(report.MultiMediaCard.ExtendedCSD != null)
+            {
+                ExtendedCsd = Decoders.MMC.Decoders.PrettifyExtendedCSD(report.MultiMediaCard.ExtendedCSD)
+                                      .Replace("\n", "<br/>");
+            }
+
+            if(report.MultiMediaCard.OCR != null)
+                Ocr = Decoders.MMC.Decoders.PrettifyCSD(report.MultiMediaCard.OCR).Replace("\n", "<br/>");
         }
 
         _initialized = true;
