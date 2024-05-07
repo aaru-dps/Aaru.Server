@@ -490,6 +490,19 @@
         </AccordionBody>
     </AccordionItem>
 }
+@if(Scr != null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>Card configuration register</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            @((MarkupString)Scr)
+        </AccordionBody>
+    </AccordionItem>
+}
 @if(Ocr != null)
 {
     <AccordionItem>

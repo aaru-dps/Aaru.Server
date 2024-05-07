@@ -47,6 +47,7 @@ public partial class View
     public string?                     ExtendedCsd                { get; set; }
     public string?                     Csd                        { get; set; }
     public string?                     Cid                        { get; set; }
+    public string?                     Scr                        { get; set; }
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
@@ -71,6 +72,7 @@ public partial class View
                                   .Include(static deviceReportV2 => deviceReportV2.ATAPI)
                                   .Include(static deviceReportV2 => deviceReportV2.ATA)
                                   .Include(static deviceReportV2 => deviceReportV2.MultiMediaCard)
+                                  .Include(static deviceReportV2 => deviceReportV2.SecureDigital)
                                   .FirstOrDefaultAsync(d => d.Id == Id);
 
         if(report is null)
@@ -322,6 +324,32 @@ public partial class View
             if(report.MultiMediaCard.OCR != null)
                 Ocr = Decoders.MMC.Decoders.PrettifyCSD(report.MultiMediaCard.OCR).Replace("\n", "<br/>");
         }
+
+        if(report.SecureDigital != null)
+        {
+            lblDeviceType = "SecureDigital";
+
+            if(report.SecureDigital.CID != null)
+            {
+                Cid = Decoders.SecureDigital.Decoders.PrettifyCID(report.SecureDigital.CID).Replace("\n", "<br/>");
+            }
+
+            if(report.SecureDigital.CSD != null)
+            {
+                Csd = Decoders.SecureDigital.Decoders.PrettifyCSD(report.SecureDigital.CSD).Replace("\n", "<br/>");
+            }
+
+            if(report.SecureDigital.SCR != null)
+            {
+                Scr = Decoders.SecureDigital.Decoders.PrettifySCR(report.SecureDigital.SCR).Replace("\n", "<br/>");
+            }
+
+            if(report.SecureDigital.OCR != null)
+            {
+                Ocr = Decoders.SecureDigital.Decoders.PrettifyCSD(report.SecureDigital.OCR).Replace("\n", "<br/>");
+            }
+        }
+
 
         _initialized = true;
 
