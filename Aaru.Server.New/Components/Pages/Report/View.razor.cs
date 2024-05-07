@@ -17,22 +17,32 @@ public partial class View
     [CascadingParameter]
     HttpContext HttpContext { get; set; } = default!;
     [Parameter]
-    public int Id { get;        set; }
-    public Item? UsbItem { get; set; }
-
-    public Item? FireWireItem { get; set; }
-
-    public Dictionary<string, string>? PcmciaTuples { get; set; }
-
-    public PcmciaItem? PcmciaItem { get; set; }
-
-    public Dictionary<string, string>? AtaTwo { get; set; }
-
-    public List<string>? AtaOne { get; set; }
-
-    public string? lblAtaDeviceType { get; set; }
-
-    public string? AtaItem { get; set; }
+    public int Id { get;                                                 set; }
+    public Item?                       UsbItem                    { get; set; }
+    public Item?                       FireWireItem               { get; set; }
+    public Dictionary<string, string>? PcmciaTuples               { get; set; }
+    public PcmciaItem?                 PcmciaItem                 { get; set; }
+    public string?                     lblDeviceType              { get; set; }
+    public string?                     AtaItem                    { get; set; }
+    public string?                     MaximumAtaRevision         { get; set; }
+    public List<string>?               SupportedAtaVersions       { get; set; }
+    public Dictionary<string, string>? DeviceIdentification       { get; set; }
+    public string?                     AtaTransport               { get; set; }
+    public List<string>?               AtaTransportVersions       { get; set; }
+    public List<string>?               GeneralConfiguration       { get; set; }
+    public List<string>?               SpecificConfiguration      { get; set; }
+    public List<string>?               DeviceCapabilities         { get; set; }
+    public List<string>?               CommandSetAndFeatures      { get; set; }
+    public List<string>?               PioTransferModes           { get; set; }
+    public List<string>?               DmaTransferModes           { get; set; }
+    public List<string>?               MDmaTransferModes          { get; set; }
+    public List<string>?               UltraDmaTransferModes      { get; set; }
+    public List<string>?               NvCache                    { get; set; }
+    public List<string>?               SmartCommandTransport      { get; set; }
+    public List<string>?               Streaming                  { get; set; }
+    public List<string>?               Security                   { get; set; }
+    public Dictionary<string, string>? ReadCapabilitiesDictionary { get; set; }
+    public List<string>?               ReadCapabilitiesList       { get; set; }
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
@@ -219,9 +229,7 @@ public partial class View
 
         if(report.ATA != null || report.ATAPI != null)
         {
-            List<string>               ataOneValue = [];
-            Dictionary<string, string> ataTwoValue = new();
-            Ata?                       ataReport;
+            Ata? ataReport;
 
             if(report.ATAPI != null)
             {
@@ -237,19 +245,58 @@ public partial class View
 
             bool cfa = report.CompactFlash;
 
-            lblAtaDeviceType = atapi switch
-                               {
-                                   true when !cfa => "ATAPI device",
-                                   false when cfa => "CompactFlash device",
-                                   _              => "ATA device"
-                               };
+            lblDeviceType = atapi switch
+                            {
+                                true when !cfa => "ATAPI device",
+                                false when cfa => "CompactFlash device",
+                                _              => "ATA device"
+                            };
 
-            Core.Ata.Report(ataReport!, cfa, atapi, ref removable, ataOneValue, ataTwoValue, out testedMedia);
+            Core.Ata.Report(ataReport!,
+                            cfa,
+                            atapi,
+                            ref removable,
+                            out testedMedia,
+                            out Dictionary<string, string>? ataDeviceIdentification,
+                            out List<string> supportedAtaVersions,
+                            out string? maximumAtaRevision,
+                            out string? transport,
+                            out List<string>? transportVersions,
+                            out List<string>? generalConfiguration,
+                            out List<string>? specificConfiguration,
+                            out List<string> deviceCapabilities,
+                            out List<string> pioTransferModes,
+                            out List<string> dmaTransferModes,
+                            out List<string> mdmaTransferModes,
+                            out List<string> ultraDmaTransferModes,
+                            out List<string> commandSetAndFeatures,
+                            out List<string>? security,
+                            out List<string>? streaming,
+                            out List<string>? smartCommandTransport,
+                            out List<string>? nvCache,
+                            out Dictionary<string, string> readCapabilitiesDictionary,
+                            out List<string> readCapabilitiesList);
 
-            AtaOne = ataOneValue;
-            AtaTwo = ataTwoValue;
+            DeviceIdentification  = ataDeviceIdentification;
+            SupportedAtaVersions  = supportedAtaVersions;
+            MaximumAtaRevision    = maximumAtaRevision;
+            AtaTransport          = transport;
+            AtaTransportVersions  = transportVersions;
+            GeneralConfiguration  = generalConfiguration;
+            SpecificConfiguration = specificConfiguration;
+            if(deviceCapabilities.Count    > 0) DeviceCapabilities    = deviceCapabilities;
+            if(pioTransferModes.Count      > 0) PioTransferModes      = pioTransferModes;
+            if(dmaTransferModes.Count      > 0) DmaTransferModes      = dmaTransferModes;
+            if(mdmaTransferModes.Count     > 0) MDmaTransferModes     = mdmaTransferModes;
+            if(ultraDmaTransferModes.Count > 0) UltraDmaTransferModes = ultraDmaTransferModes;
+            if(commandSetAndFeatures.Count > 0) CommandSetAndFeatures = commandSetAndFeatures;
+            Security              = security;
+            Streaming             = streaming;
+            SmartCommandTransport = smartCommandTransport;
+            NvCache               = nvCache;
+            if(readCapabilitiesDictionary.Count > 0) ReadCapabilitiesDictionary = readCapabilitiesDictionary;
+            if(readCapabilitiesList.Count       > 0) ReadCapabilitiesList       = readCapabilitiesList;
         }
-
 
         _initialized = true;
 

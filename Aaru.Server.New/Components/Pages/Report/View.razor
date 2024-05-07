@@ -6,6 +6,11 @@
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
 
 <PageTitle>@_pageTitle</PageTitle>
+<style>
+    .list-group-item {
+        background-color: #212529; color: white; border-color: #373b3e;
+    }
+</style>
 @if(_notFound)
 {
     <div class="stats-section">
@@ -27,144 +32,446 @@
     <h1 style="color: #e18fdc; align-content: center; padding: 2rem">@_pageTitle</h1>
 </div>
 
-<Accordion class="stats-section">
-    @if(UsbItem is not null)
-    {
-        <AccordionItem>
-            <AccordionHeader>
-                <Heading Size="HeadingSize.Is5">
-                    <AccordionToggle>USB characteristics</AccordionToggle>
-                </Heading>
-            </AccordionHeader>
-            <AccordionBody>
-                <Table FullWidth>
-                    <TableBody>
-                        <TableRow>
-                            <TableRowHeader class="text-end">Manufacturer</TableRowHeader>
-                            <TableRowCell>@UsbItem.Manufacturer</TableRowCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableRowHeader class="text-end">Product</TableRowHeader>
-                            <TableRowCell>@UsbItem.Product</TableRowCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableRowHeader class="text-end">Vendor ID</TableRowHeader>
-                            <TableRowCell>@UsbItem.VendorDescription</TableRowCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableRowHeader class="text-end">Product ID</TableRowHeader>
-                            <TableRowCell>@UsbItem.ProductDescription</TableRowCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            </AccordionBody>
-        </AccordionItem>
-    }
-    @if(FireWireItem is not null)
-    {
-        <AccordionItem>
-            <AccordionHeader>
-                <Heading Size="HeadingSize.Is5">
-                    <AccordionToggle>FireWire characteristics</AccordionToggle>
-                </Heading>
-            </AccordionHeader>
-            <AccordionBody>
-                <Table FullWidth>
-                    <TableBody>
-                        <TableRow>
-                            <TableRowHeader class="text-end">Manufacturer</TableRowHeader>
-                            <TableRowCell>@FireWireItem.Manufacturer</TableRowCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableRowHeader class="text-end">Product</TableRowHeader>
-                            <TableRowCell>@FireWireItem.Product</TableRowCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableRowHeader class="text-end">Vendor ID</TableRowHeader>
-                            <TableRowCell>@FireWireItem.VendorDescription</TableRowCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableRowHeader class="text-end">Product ID</TableRowHeader>
-                            <TableRowCell>@FireWireItem.ProductDescription</TableRowCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            </AccordionBody>
-        </AccordionItem>
-    }
-    @if(PcmciaItem != null)
-    {
-        <AccordionItem>
-            <AccordionHeader>
-                <Heading Size="HeadingSize.Is5">
-                    <AccordionToggle>PCMCIA characteristics</AccordionToggle>
-                </Heading>
-            </AccordionHeader>
-            <AccordionBody>
-                <Table FullWidth>
-                    <TableBody>
-                        <TableRow>
-                            <TableRowHeader class="text-end">Manufacturer</TableRowHeader>
-                            <TableRowCell>@PcmciaItem.Manufacturer</TableRowCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableRowHeader class="text-end">Product</TableRowHeader>
-                            <TableRowCell>@PcmciaItem.Product</TableRowCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableRowHeader class="text-end">Manufacturer code</TableRowHeader>
-                            <TableRowCell>@PcmciaItem.VendorDescription</TableRowCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableRowHeader class="text-end">Card code</TableRowHeader>
-                            <TableRowCell>@PcmciaItem.ProductDescription</TableRowCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableRowHeader class="text-end">Compliance</TableRowHeader>
-                            <TableRowCell>@PcmciaItem.Compliance</TableRowCell>
-                        </TableRow>
-                        @if(PcmciaTuples != null)
+<div class="stats-section">
+<h3 style="font-weight: bold;">
+    @lblDeviceType<br/>
+</h3>
+<Accordion>
+@if(UsbItem is not null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>USB characteristics</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            <Table FullWidth>
+                <TableBody>
+                    <TableRow>
+                        <TableRowHeader class="text-end">Manufacturer</TableRowHeader>
+                        <TableRowCell>@UsbItem.Manufacturer</TableRowCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableRowHeader class="text-end">Product</TableRowHeader>
+                        <TableRowCell>@UsbItem.Product</TableRowCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableRowHeader class="text-end">Vendor ID</TableRowHeader>
+                        <TableRowCell>@UsbItem.VendorDescription</TableRowCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableRowHeader class="text-end">Product ID</TableRowHeader>
+                        <TableRowCell>@UsbItem.ProductDescription</TableRowCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(FireWireItem is not null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>FireWire characteristics</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            <Table FullWidth>
+                <TableBody>
+                    <TableRow>
+                        <TableRowHeader class="text-end">Manufacturer</TableRowHeader>
+                        <TableRowCell>@FireWireItem.Manufacturer</TableRowCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableRowHeader class="text-end">Product</TableRowHeader>
+                        <TableRowCell>@FireWireItem.Product</TableRowCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableRowHeader class="text-end">Vendor ID</TableRowHeader>
+                        <TableRowCell>@FireWireItem.VendorDescription</TableRowCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableRowHeader class="text-end">Product ID</TableRowHeader>
+                        <TableRowCell>@FireWireItem.ProductDescription</TableRowCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(PcmciaItem != null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>PCMCIA characteristics</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            <Table FullWidth>
+                <TableBody>
+                    <TableRow>
+                        <TableRowHeader class="text-end">Manufacturer</TableRowHeader>
+                        <TableRowCell>@PcmciaItem.Manufacturer</TableRowCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableRowHeader class="text-end">Product</TableRowHeader>
+                        <TableRowCell>@PcmciaItem.Product</TableRowCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableRowHeader class="text-end">Manufacturer code</TableRowHeader>
+                        <TableRowCell>@PcmciaItem.VendorDescription</TableRowCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableRowHeader class="text-end">Card code</TableRowHeader>
+                        <TableRowCell>@PcmciaItem.ProductDescription</TableRowCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableRowHeader class="text-end">Compliance</TableRowHeader>
+                        <TableRowCell>@PcmciaItem.Compliance</TableRowCell>
+                    </TableRow>
+                    @if(PcmciaTuples != null)
+                    {
+                        foreach(KeyValuePair<string, string> kvp in PcmciaTuples)
                         {
-                            foreach(KeyValuePair<string, string> kvp in PcmciaTuples)
-                            {
-                                <TableRow>
-                                    <TableRowHeader class="text-end">@kvp.Key</TableRowHeader>
-                                    <TableRowCell>@kvp.Value</TableRowCell>
-                                </TableRow>
-                            }
+                            <TableRow>
+                                <TableRowHeader class="text-end">@kvp.Key</TableRowHeader>
+                                <TableRowCell>@kvp.Value</TableRowCell>
+                            </TableRow>
                         }
-                    </TableBody>
-                </Table>
-            </AccordionBody>
-        </AccordionItem>
-    }
-    @if(AtaItem != null)
-    {
-        <AccordionItem>
-            <AccordionHeader>
-                <Heading Size="HeadingSize.Is5">
-                    <AccordionToggle>@AtaItem characteristics</AccordionToggle>
-                </Heading>
-            </AccordionHeader>
+                    }
+                </TableBody>
+            </Table>
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(DeviceIdentification != null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>Device identification</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            <Table class="table-borderless table-dark" FullWidth>
+                <TableBody>
+                    @foreach(KeyValuePair<string, string> kvp in DeviceIdentification)
+                    {
+                        <TableRow>
+                            <TableRowHeader>@kvp.Key</TableRowHeader>
+                            <TableRowCell>@kvp.Value</TableRowCell>
+                        </TableRow>
+                    }
+                </TableBody>
+            </Table>
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(SupportedAtaVersions != null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>Supported ATA versions</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            <ListGroup>
+                @foreach(string version in SupportedAtaVersions)
+                {
+                    <ListGroupItem>@version</ListGroupItem>
+                }
+            </ListGroup>
+            @if(MaximumAtaRevision is not null)
+            {
+                <span style="font-style: italic">Maximum ATA revision supported:</span>
+                <span> @MaximumAtaRevision</span>
+            }
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(AtaTransport != null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>@AtaTransport</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        @if(AtaTransportVersions is not null)
+        {
             <AccordionBody>
-                <span>
-                    @lblAtaDeviceType<br/>
-                </span>
-                @foreach(KeyValuePair<string, string> kvp in AtaTwo!)
-                {
-                    <span>
-                        <i>@kvp.Key</i>: @kvp.Value
-                        <br/>
-                    </span>
-                }
-                <br/>
-                @foreach(string item in AtaOne!)
-                {
-                    <span>
-                        @item<br/>
-                    </span>
-                }
+                <ListGroup>
+                    @foreach(string version in AtaTransportVersions)
+                    {
+                        <ListGroupItem>@version</ListGroupItem>
+                    }
+                </ListGroup>
             </AccordionBody>
-        </AccordionItem>
-    }
+        }
+    </AccordionItem>
+}
+@if(GeneralConfiguration != null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>General configuration</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            <ListGroup>
+                @foreach(string cfg in GeneralConfiguration)
+                {
+                    <ListGroupItem>@cfg</ListGroupItem>
+                }
+            </ListGroup>
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(SpecificConfiguration != null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>Specific configuration</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            <ListGroup>
+                @foreach(string cfg in SpecificConfiguration)
+                {
+                    <ListGroupItem>@cfg</ListGroupItem>
+                }
+            </ListGroup>
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(DeviceCapabilities != null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>Device capabilities</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            <ListGroup>
+                @foreach(string cap in DeviceCapabilities)
+                {
+                    <ListGroupItem>@cap</ListGroupItem>
+                }
+            </ListGroup>
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(PioTransferModes != null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>Programmed I/O (PIO) transfer modes</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            <ListGroup>
+                @foreach(string cap in PioTransferModes)
+                {
+                    <ListGroupItem>@cap</ListGroupItem>
+                }
+            </ListGroup>
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(DmaTransferModes != null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>Single-word DMA (DMA) transfer modes</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            <ListGroup>
+                @foreach(string cap in DmaTransferModes)
+                {
+                    if(cap.Contains("active"))
+                    {
+                        <ListGroupItem class="active">@cap</ListGroupItem>
+                    }
+                    else
+                    {
+                        <ListGroupItem>@cap</ListGroupItem>
+                    }
+                }
+            </ListGroup>
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(MDmaTransferModes != null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>Multi-word DMA (MDMA) transfer modes</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            <ListGroup>
+                @foreach(string cap in MDmaTransferModes)
+                {
+                    if(cap.Contains("active"))
+                    {
+                        <ListGroupItem class="active">@cap</ListGroupItem>
+                    }
+                    else
+                    {
+                        <ListGroupItem>@cap</ListGroupItem>
+                    }
+                }
+            </ListGroup>
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(UltraDmaTransferModes != null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>Ultra DMA transfer modes</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            <ListGroup>
+                @foreach(string cap in UltraDmaTransferModes)
+                {
+                    if(cap.Contains("active"))
+                    {
+                        <ListGroupItem class="active">@cap</ListGroupItem>
+                    }
+                    else
+                    {
+                        <ListGroupItem>@cap</ListGroupItem>
+                    }
+                }
+            </ListGroup>
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(CommandSetAndFeatures != null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>Command set and features</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            <ListGroup>
+                @foreach(string feature in CommandSetAndFeatures)
+                {
+                    <ListGroupItem>@feature</ListGroupItem>
+                }
+            </ListGroup>
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(Security != null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>Security</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            <ListGroup>
+                @foreach(string feature in Security)
+                {
+                    <ListGroupItem>@feature</ListGroupItem>
+                }
+            </ListGroup>
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(Streaming != null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>Streaming</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            <ListGroup>
+                @foreach(string feature in Streaming)
+                {
+                    <ListGroupItem>@feature</ListGroupItem>
+                }
+            </ListGroup>
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(SmartCommandTransport != null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>S.M.A.R.T. Command Transport (SCT)</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            <ListGroup>
+                @foreach(string feature in SmartCommandTransport)
+                {
+                    <ListGroupItem>@feature</ListGroupItem>
+                }
+            </ListGroup>
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(NvCache != null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>Non-Volatile Cache</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            <ListGroup>
+                @foreach(string feature in NvCache)
+                {
+                    <ListGroupItem>@feature</ListGroupItem>
+                }
+            </ListGroup>
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(ReadCapabilitiesDictionary is not null && ReadCapabilitiesList is not null)
+{
+    <AccordionItem>
+        <Table class="table-borderless table-dark" FullWidth>
+            <TableBody>
+                @foreach(KeyValuePair<string, string> kvp in ReadCapabilitiesDictionary)
+                {
+                    <TableRow>
+                        <TableRowHeader>@kvp.Key</TableRowHeader>
+                        <TableRowCell>@kvp.Value</TableRowCell>
+                    </TableRow>
+                }
+            </TableBody>
+        </Table>
+        <ListGroup>
+            @foreach(string cap in ReadCapabilitiesList)
+            {
+                <ListGroupItem>@cap</ListGroupItem>
+            }
+        </ListGroup>
+    </AccordionItem>
+}
 </Accordion>
+</div>
