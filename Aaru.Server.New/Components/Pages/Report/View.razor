@@ -1,4 +1,5 @@
 @page "/Report/View/{Id:int}"
+@using Aaru.CommonTypes.Metadata
 @using Aaru.Server.Database
 @using Blazorise
 @rendermode InteractiveServer
@@ -520,23 +521,317 @@
 @if(ReadCapabilitiesDictionary is not null && ReadCapabilitiesList is not null)
 {
     <AccordionItem>
-        <Table class="table-borderless table-dark" FullWidth>
-            <TableBody>
-                @foreach(KeyValuePair<string, string> kvp in ReadCapabilitiesDictionary)
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>Read capabilities</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            <Table class="table-borderless table-dark" FullWidth>
+                <TableBody>
+                    @foreach(KeyValuePair<string, string> kvp in ReadCapabilitiesDictionary)
+                    {
+                        <TableRow>
+                            <TableRowHeader>@kvp.Key</TableRowHeader>
+                            <TableRowCell>@kvp.Value</TableRowCell>
+                        </TableRow>
+                    }
+                </TableBody>
+            </Table>
+            <ListGroup>
+                @foreach(string cap in ReadCapabilitiesList)
                 {
-                    <TableRow>
-                        <TableRowHeader>@kvp.Key</TableRowHeader>
-                        <TableRowCell>@kvp.Value</TableRowCell>
-                    </TableRow>
+                    <ListGroupItem>@cap</ListGroupItem>
                 }
-            </TableBody>
-        </Table>
-        <ListGroup>
-            @foreach(string cap in ReadCapabilitiesList)
+            </ListGroup>
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(DeviceInquiry is not null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>Device inquiry</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            <Table class="table-borderless table-dark" FullWidth>
+                <TableBody>
+                    @foreach(KeyValuePair<string, string> kvp in DeviceInquiry)
+                    {
+                        <TableRow>
+                            <TableRowHeader>@kvp.Key</TableRowHeader>
+                            <TableRowCell>@kvp.Value</TableRowCell>
+                        </TableRow>
+                    }
+                </TableBody>
+            </Table>
+            @if(InquiryCapabilities is not null)
             {
-                <ListGroupItem>@cap</ListGroupItem>
+                <ListGroup>
+                    @foreach(string cap in InquiryCapabilities)
+                    {
+                        <ListGroupItem>@cap</ListGroupItem>
+                    }
+                </ListGroup>
             }
-        </ListGroup>
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(ModeSenseCapabilities is not null || ModeSensePages is not null)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>MODE SENSE pages</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            @if(ModeSenseCapabilities is not null)
+            {
+                <ListGroup>
+                    @foreach(string cap in ModeSenseCapabilities)
+                    {
+                        <ListGroupItem>@cap</ListGroupItem>
+                    }
+                </ListGroup>
+            }
+            @if(BlockDescriptors is not null)
+            {
+                <Accordion>
+                    <AccordionItem>
+
+                        <AccordionHeader>
+                            <Heading Size="HeadingSize.Is6">
+                                <AccordionToggle>Block descriptors</AccordionToggle>
+                            </Heading>
+                        </AccordionHeader>
+                        <AccordionBody>
+                            <ListGroup>
+                                @foreach(string descriptor in BlockDescriptors)
+                                {
+                                    <ListGroupItem>@descriptor</ListGroupItem>
+                                }
+                            </ListGroup>
+                        </AccordionBody>
+                    </AccordionItem>
+                </Accordion>
+            }
+            @if(ModeSensePages is not null)
+            {
+                foreach(KeyValuePair<string, List<string>> kvp in ModeSensePages)
+                {
+                    <Accordion>
+                        <AccordionItem>
+                            <AccordionHeader>
+                                <Heading Size="HeadingSize.Is6">
+                                    <AccordionToggle>@kvp.Key</AccordionToggle>
+                                </Heading>
+                            </AccordionHeader>
+                            @if(kvp.Value.Count > 0)
+                            {
+                                <AccordionBody>
+                                    <ListGroup>
+                                        @foreach(string cap in kvp.Value)
+                                        {
+                                            <ListGroupItem>@cap</ListGroupItem>
+                                        }
+                                    </ListGroup>
+                                </AccordionBody>
+                            }
+                        </AccordionItem>
+                    </Accordion>
+                }
+            }
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(EvpdPages?.Count > 0)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>Extended Vital Product Data pages</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            @foreach(KeyValuePair<string, List<string>> kvp in EvpdPages)
+            {
+                <Accordion>
+                    <AccordionItem>
+                        <AccordionHeader>
+                            <Heading Size="HeadingSize.Is6">
+                                <AccordionToggle>@kvp.Key</AccordionToggle>
+                            </Heading>
+                        </AccordionHeader>
+                        @if(kvp.Value.Count > 0)
+                        {
+                            <AccordionBody>
+                                <ListGroup>
+                                    @foreach(string cap in kvp.Value)
+                                    {
+                                        <ListGroupItem>@cap</ListGroupItem>
+                                    }
+                                </ListGroup>
+                            </AccordionBody>
+                        }
+                    </AccordionItem>
+                </Accordion>
+            }
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(MmcModeList?.Count > 0)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>CD-ROM capabilities</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            <ListGroup>
+                @foreach(string cap in MmcModeList)
+                {
+                    <ListGroupItem>@cap</ListGroupItem>
+                }
+            </ListGroup>
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(MmcFeaturesList?.Count > 0)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>MMC features</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            <ListGroup>
+                @foreach(string feature in MmcFeaturesList)
+                {
+                    <ListGroupItem>@feature</ListGroupItem>
+                }
+            </ListGroup>
+        </AccordionBody>
+    </AccordionItem>
+}
+@if(ScsiSscVisible)
+{
+    <AccordionItem>
+        <AccordionHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle>SCSI Streaming device capabilities:</AccordionToggle>
+            </Heading>
+        </AccordionHeader>
+        <AccordionBody>
+            <Table class="table-borderless table-dark" FullWidth>
+                <TableBody>
+                    <TableRow>
+                        <TableRowHeader>Block size granularity</TableRowHeader>
+                        <TableRowCell>@ScsiSscGranularity</TableRowCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableRowHeader>Maximum block length</TableRowHeader>
+                        <TableRowCell>@ScsiSscMaxBlock bytes</TableRowCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableRowHeader>Minimum block length</TableRowHeader>
+                        <TableRowCell>@ScsiSscMinBlock bytes</TableRowCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+            @if(ScsiSscDensities?.Count > 0)
+            {
+                foreach(SupportedDensity density in ScsiSscDensities)
+                {
+                    <Accordion>
+                        <AccordionItem>
+                            <AccordionHeader>
+                                <Heading Size="HeadingSize.Is6">
+                                    <AccordionToggle>Information for supported density with primary code @($"{density.PrimaryCode:X2}h") and secondary code @($"{density.SecondaryCode:X2}h")</AccordionToggle>
+                                </Heading>
+                            </AccordionHeader>
+                            <AccordionBody>
+                                <Table class="table-borderless table-dark" FullWidth>
+                                    <TableBody>
+                                        <TableRow>
+                                            <TableRowHeader>Drive can write this density</TableRowHeader>
+                                            <TableRowCell>@density.Writable</TableRowCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableRowHeader>Duplicate density</TableRowHeader>
+                                            <TableRowCell>@density.Duplicate</TableRowCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableRowHeader>Default density</TableRowHeader>
+                                            <TableRowCell>@density.DefaultDensity</TableRowCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableRowHeader>Name</TableRowHeader>
+                                            <TableRowCell>@density.Name</TableRowCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableRowHeader>Organization</TableRowHeader>
+                                            <TableRowCell>@density.Organization</TableRowCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableRowHeader>Description</TableRowHeader>
+                                            <TableRowCell>@density.Description</TableRowCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableRowHeader>Maximum capacity</TableRowHeader>
+                                            <TableRowCell>@density.Capacity megabytes</TableRowCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableRowCell ColumnSpan="2">Density has @density.BitsPerMm bits per mm, with @density.Tracks tracks in a @density.Width mm width tape</TableRowCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
+                            </AccordionBody>
+                        </AccordionItem>
+                    </Accordion>
+                }
+            }
+            @if(ScsiSscMedias?.Count > 0)
+            {
+                foreach(SscSupportedMedia media in ScsiSscMedias)
+                {
+                    <Accordion>
+                        <AccordionItem>
+                            <AccordionHeader>
+                                <Heading Size="HeadingSize.Is6">
+                                    <AccordionToggle>Information for supported media with type code @($"{media.MediumType:X2}h")</AccordionToggle>
+                                </Heading>
+                            </AccordionHeader>
+                            <AccordionBody>
+                                <Table class="table-borderless table-dark" FullWidth>
+                                    <TableBody>
+                                        <TableRow>
+                                            <TableRowCell ColumnSpan="2">Media is @media.Length m long in a @media.Width mm width tape</TableRowCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableRowHeader>Name</TableRowHeader>
+                                            <TableRowCell>@media.Name</TableRowCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableRowHeader>Organization</TableRowHeader>
+                                            <TableRowCell>@media.Organization</TableRowCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableRowHeader>Description</TableRowHeader>
+                                            <TableRowCell>@media.Description</TableRowCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
+                            </AccordionBody>
+                        </AccordionItem>
+                    </Accordion>
+                }
+            }
+        </AccordionBody>
     </AccordionItem>
 }
 </Accordion>

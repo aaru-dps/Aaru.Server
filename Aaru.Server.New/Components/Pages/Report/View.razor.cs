@@ -1,9 +1,15 @@
 using Aaru.CommonTypes.Metadata;
+using Aaru.CommonTypes.Structs.Devices.SCSI;
 using Aaru.Decoders.PCMCIA;
+using Aaru.Decoders.SCSI;
+using Aaru.Helpers;
 using Aaru.Server.Database.Models;
+using Aaru.Server.New.Core;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using Ata = Aaru.CommonTypes.Metadata.Ata;
 using DbContext = Aaru.Server.Database.DbContext;
+using Inquiry = Aaru.CommonTypes.Structs.Devices.SCSI.Inquiry;
 using Tuple = Aaru.Decoders.PCMCIA.Tuple;
 
 namespace Aaru.Server.New.Components.Pages.Report;
@@ -17,37 +23,51 @@ public partial class View
     [CascadingParameter]
     HttpContext HttpContext { get; set; } = default!;
     [Parameter]
-    public int Id { get;                                                 set; }
-    public Item?                       UsbItem                    { get; set; }
-    public Item?                       FireWireItem               { get; set; }
-    public Dictionary<string, string>? PcmciaTuples               { get; set; }
-    public PcmciaItem?                 PcmciaItem                 { get; set; }
-    public string?                     lblDeviceType              { get; set; }
-    public string?                     AtaItem                    { get; set; }
-    public string?                     MaximumAtaRevision         { get; set; }
-    public List<string>?               SupportedAtaVersions       { get; set; }
-    public Dictionary<string, string>? DeviceIdentification       { get; set; }
-    public string?                     AtaTransport               { get; set; }
-    public List<string>?               AtaTransportVersions       { get; set; }
-    public List<string>?               GeneralConfiguration       { get; set; }
-    public List<string>?               SpecificConfiguration      { get; set; }
-    public List<string>?               DeviceCapabilities         { get; set; }
-    public List<string>?               CommandSetAndFeatures      { get; set; }
-    public List<string>?               PioTransferModes           { get; set; }
-    public List<string>?               DmaTransferModes           { get; set; }
-    public List<string>?               MDmaTransferModes          { get; set; }
-    public List<string>?               UltraDmaTransferModes      { get; set; }
-    public List<string>?               NvCache                    { get; set; }
-    public List<string>?               SmartCommandTransport      { get; set; }
-    public List<string>?               Streaming                  { get; set; }
-    public List<string>?               Security                   { get; set; }
-    public Dictionary<string, string>? ReadCapabilitiesDictionary { get; set; }
-    public List<string>?               ReadCapabilitiesList       { get; set; }
-    public string?                     Ocr                        { get; set; }
-    public string?                     ExtendedCsd                { get; set; }
-    public string?                     Csd                        { get; set; }
-    public string?                     Cid                        { get; set; }
-    public string?                     Scr                        { get; set; }
+    public int Id { get;                                                       set; }
+    public Item?                             UsbItem                    { get; set; }
+    public Item?                             FireWireItem               { get; set; }
+    public Dictionary<string, string>?       PcmciaTuples               { get; set; }
+    public PcmciaItem?                       PcmciaItem                 { get; set; }
+    public string?                           lblDeviceType              { get; set; }
+    public string?                           AtaItem                    { get; set; }
+    public string?                           MaximumAtaRevision         { get; set; }
+    public List<string>?                     SupportedAtaVersions       { get; set; }
+    public Dictionary<string, string>?       DeviceIdentification       { get; set; }
+    public Dictionary<string, string>?       DeviceInquiry              { get; set; }
+    public string?                           AtaTransport               { get; set; }
+    public List<string>?                     AtaTransportVersions       { get; set; }
+    public List<string>?                     GeneralConfiguration       { get; set; }
+    public List<string>?                     SpecificConfiguration      { get; set; }
+    public List<string>?                     DeviceCapabilities         { get; set; }
+    public List<string>?                     CommandSetAndFeatures      { get; set; }
+    public List<string>?                     PioTransferModes           { get; set; }
+    public List<string>?                     DmaTransferModes           { get; set; }
+    public List<string>?                     MDmaTransferModes          { get; set; }
+    public List<string>?                     UltraDmaTransferModes      { get; set; }
+    public List<string>?                     NvCache                    { get; set; }
+    public List<string>?                     SmartCommandTransport      { get; set; }
+    public List<string>?                     Streaming                  { get; set; }
+    public List<string>?                     Security                   { get; set; }
+    public Dictionary<string, string>?       ReadCapabilitiesDictionary { get; set; }
+    public List<string>?                     ReadCapabilitiesList       { get; set; }
+    public string?                           Ocr                        { get; set; }
+    public string?                           ExtendedCsd                { get; set; }
+    public string?                           Csd                        { get; set; }
+    public string?                           Cid                        { get; set; }
+    public string?                           Scr                        { get; set; }
+    public List<string>?                     InquiryCapabilities        { get; set; }
+    public List<string>?                     ModeSenseCapabilities      { get; set; }
+    public Dictionary<string, List<string>>? ModeSensePages             { get; set; }
+    public List<string>? BlockDescriptors { get; set; }
+    public List<SscSupportedMedia>? ScsiSscMedias { get; set; }
+    public List<SupportedDensity>? ScsiSscDensities { get; set; }
+    public string? ScsiSscMinBlock { get; set; }
+    public string? ScsiSscMaxBlock { get; set; }
+    public string? ScsiSscGranularity { get; set; }
+    public bool ScsiSscVisible { get; set; }
+    public List<string>? MmcFeaturesList { get; set; }
+    public List<string>? MmcModeList { get; set; }
+    public Dictionary<string, List<string>>? EvpdPages { get; set; }
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
@@ -73,6 +93,25 @@ public partial class View
                                   .Include(static deviceReportV2 => deviceReportV2.ATA)
                                   .Include(static deviceReportV2 => deviceReportV2.MultiMediaCard)
                                   .Include(static deviceReportV2 => deviceReportV2.SecureDigital)
+                                  .Include(static deviceReportV2 => deviceReportV2.SCSI)
+                                  .ThenInclude(static scsi => scsi.ModeSense)
+                                  .ThenInclude(static scsiMode => scsiMode.BlockDescriptors)
+                                  .Include(static deviceReportV2 => deviceReportV2.SCSI)
+                                  .ThenInclude(static scsi => scsi.ModeSense)
+                                  .ThenInclude(static scsiMode => scsiMode.ModePages)
+                                  .Include(static deviceReportV2 => deviceReportV2.SCSI)
+                                  .ThenInclude(static scsi => scsi.EVPDPages)
+                                  .Include(static deviceReportV2 => deviceReportV2.SCSI)
+                                  .ThenInclude(static scsi => scsi.MultiMediaDevice)
+                                  .ThenInclude(static mmc => mmc.Features)
+                                  .Include(static deviceReportV2 => deviceReportV2.SCSI)
+                                  .ThenInclude(static scsi => scsi.SequentialDevice)
+                                  .ThenInclude(static ssc => ssc.SupportedDensities)
+                                  .Include(static deviceReportV2 => deviceReportV2.SCSI)
+                                  .ThenInclude(static scsi => scsi.SequentialDevice)
+                                  .ThenInclude(static ssc => ssc.SupportedMediaTypes)
+                                  .Include(static deviceReportV2 => deviceReportV2.SCSI)
+                                  .ThenInclude(static scsi => scsi.ReadCapabilities)
                                   .FirstOrDefaultAsync(d => d.Id == Id);
 
         if(report is null)
@@ -330,26 +369,210 @@ public partial class View
             lblDeviceType = "SecureDigital";
 
             if(report.SecureDigital.CID != null)
-            {
                 Cid = Decoders.SecureDigital.Decoders.PrettifyCID(report.SecureDigital.CID).Replace("\n", "<br/>");
-            }
 
             if(report.SecureDigital.CSD != null)
-            {
                 Csd = Decoders.SecureDigital.Decoders.PrettifyCSD(report.SecureDigital.CSD).Replace("\n", "<br/>");
-            }
 
             if(report.SecureDigital.SCR != null)
-            {
                 Scr = Decoders.SecureDigital.Decoders.PrettifySCR(report.SecureDigital.SCR).Replace("\n", "<br/>");
-            }
 
             if(report.SecureDigital.OCR != null)
-            {
                 Ocr = Decoders.SecureDigital.Decoders.PrettifyCSD(report.SecureDigital.OCR).Replace("\n", "<br/>");
-            }
         }
 
+        if(report.SCSI != null)
+        {
+            var vendorId = "";
+
+            if(report.SCSI.Inquiry != null)
+            {
+                Inquiry inq = report.SCSI.Inquiry.Value;
+                vendorId      = StringHandlers.CToString(report.SCSI.Inquiry?.VendorIdentification);
+                DeviceInquiry = new Dictionary<string, string>();
+
+                DeviceInquiry.Add("Vendor:",
+                                  VendorString.Prettify(vendorId) != vendorId
+                                      ? $"{vendorId} ({VendorString.Prettify(vendorId)})"
+                                      : vendorId);
+
+                DeviceInquiry.Add("Product:",  StringHandlers.CToString(inq.ProductIdentification));
+                DeviceInquiry.Add("Revision:", StringHandlers.CToString(inq.ProductRevisionLevel));
+            }
+
+            List<string> inquiryCapabilities                      = ScsiInquiry.Report(report.SCSI.Inquiry);
+            if(inquiryCapabilities.Count > 0) InquiryCapabilities = inquiryCapabilities;
+
+            if(report.SCSI.SupportsModeSense6)
+            {
+                ModeSenseCapabilities ??= [];
+                ModeSenseCapabilities.Add("Device supports MODE SENSE (6)");
+            }
+
+            if(report.SCSI.SupportsModeSense10)
+            {
+                ModeSenseCapabilities ??= [];
+                ModeSenseCapabilities.Add("Device supports MODE SENSE (10)");
+            }
+
+            if(report.SCSI.SupportsModeSubpages)
+            {
+                ModeSenseCapabilities ??= [];
+                ModeSenseCapabilities.Add("Device supports MODE SENSE subpages");
+            }
+
+            if(report.SCSI.ModeSense != null)
+            {
+                PeripheralDeviceTypes devType = PeripheralDeviceTypes.DirectAccess;
+
+                if(report.SCSI.Inquiry != null)
+                    devType = (PeripheralDeviceTypes)report.SCSI.Inquiry.Value.PeripheralDeviceType;
+
+                ScsiModeSense.Report(report.SCSI.ModeSense,
+                                     vendorId,
+                                     devType,
+                                     out List<string>? modeSenseCapabilities,
+                                     out List<string>? blockDescriptors,
+                                     out Dictionary<string, List<string>> modePages);
+
+                if(modePages.Count > 0) ModeSensePages = modePages;
+
+                if(modeSenseCapabilities is not null)
+                {
+                    ModeSenseCapabilities ??= new List<string>();
+                    ModeSenseCapabilities.AddRange(modeSenseCapabilities);
+                }
+
+                if(blockDescriptors is not null) BlockDescriptors = blockDescriptors;
+            }
+
+            if(report.SCSI.EVPDPages != null)
+            {
+                ScsiEvpd.Report(report.SCSI.EVPDPages, vendorId, out Dictionary<string, List<string>> evpdPages);
+
+                if(evpdPages.Count > 0) EvpdPages = evpdPages;
+            }
+
+            if(report.SCSI.MultiMediaDevice is not null)
+            {
+                //   testedMedia = report.SCSI.MultiMediaDevice.TestedMedia;
+
+                if(report.SCSI.MultiMediaDevice.ModeSense2A != null)
+                {
+                    ScsiMmcMode.Report(report.SCSI.MultiMediaDevice.ModeSense2A, out List<string> mmcModeList);
+
+                    if(mmcModeList.Count > 0) MmcModeList = mmcModeList;
+                }
+
+                if(report.SCSI.MultiMediaDevice.Features != null)
+                {
+                    ScsiMmcFeatures.Report(report.SCSI.MultiMediaDevice.Features, out List<string> mmcFeaturesList);
+
+                    if(mmcFeaturesList.Count > 0) MmcFeaturesList = mmcFeaturesList;
+                }
+            }
+            else if(report.SCSI.SequentialDevice != null)
+            {
+                ScsiSscVisible = true;
+
+                ScsiSscGranularity = report.SCSI.SequentialDevice.BlockSizeGranularity?.ToString() ?? "Unspecified";
+
+                ScsiSscMaxBlock = report.SCSI.SequentialDevice.MaxBlockLength?.ToString() ?? "Unspecified";
+
+                ScsiSscMinBlock = report.SCSI.SequentialDevice.MinBlockLength?.ToString() ?? "Unspecified";
+
+                if(report.SCSI.SequentialDevice.SupportedDensities != null)
+                    ScsiSscDensities = report.SCSI.SequentialDevice.SupportedDensities;
+
+                if(report.SCSI.SequentialDevice.SupportedMediaTypes != null)
+                    ScsiSscMedias = report.SCSI.SequentialDevice.SupportedMediaTypes;
+
+/*                    if(report.SCSI.SequentialDevice.TestedMedia != null)
+                    {
+                        List<string> mediaOneValue = new();
+                        SscTestedMedia.Report(report.SCSI.SequentialDevice.TestedMedia, ref mediaOneValue);
+
+                        if(mediaOneValue.Count > 0)
+                        {
+                            sscMedia               = true;
+                            ViewBag.repTestedMedia = mediaOneValue;
+                        }
+                    }*/
+            }
+            else if(report.SCSI.ReadCapabilities != null)
+            {
+                List<string> readCapabilitiesList       = [];
+                var          readCapabilitiesDictionary = new Dictionary<string, string>();
+
+                if(report.SCSI.ReadCapabilities.Blocks.HasValue && report.SCSI.ReadCapabilities.BlockSize.HasValue)
+                {
+                    readCapabilitiesDictionary.Add("Device has",
+                                                   $"{report.SCSI.ReadCapabilities.Blocks} blocks of {report.SCSI.ReadCapabilities.BlockSize} bytes each");
+
+                    switch(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize / 1024 / 1024)
+                    {
+                        case > 1000000:
+                            readCapabilitiesDictionary.Add("Device size",
+                                                           $"{report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize} bytes, {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+
+                            break;
+                        case > 1000:
+                            readCapabilitiesDictionary.Add("Device size",
+                                                           $"{report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize} bytes, {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize / 1000 / 1000 / 1000} Gb, {(double)(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
+
+                            break;
+                        default:
+                            readCapabilitiesDictionary.Add("Device size",
+                                                           $"{report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize} bytes, {report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize / 1000 / 1000} Mb, {(double)(report.SCSI.ReadCapabilities.Blocks * report.SCSI.ReadCapabilities.BlockSize) / 1024 / 1024:F2} MiB");
+
+                            break;
+                    }
+                }
+
+                if(report.SCSI.ReadCapabilities.MediumType.HasValue)
+                    readCapabilitiesDictionary.Add("Medium type code",
+                                                   $"{report.SCSI.ReadCapabilities.MediumType:X2}h");
+
+                if(report.SCSI.ReadCapabilities.Density.HasValue)
+                    readCapabilitiesDictionary.Add("Density code", $"{report.SCSI.ReadCapabilities.Density:X2}h");
+
+                if((report.SCSI.ReadCapabilities.SupportsReadLong   == true ||
+                    report.SCSI.ReadCapabilities.SupportsReadLong16 == true) &&
+                   report.SCSI.ReadCapabilities.LongBlockSize.HasValue)
+                    readCapabilitiesDictionary.Add("Long block size",
+                                                   $"{report.SCSI.ReadCapabilities.LongBlockSize} bytes");
+
+                if(report.SCSI.ReadCapabilities.SupportsReadCapacity == true)
+                    readCapabilitiesList.Add("Device supports READ CAPACITY (10) command.");
+
+                if(report.SCSI.ReadCapabilities.SupportsReadCapacity16 == true)
+                    readCapabilitiesList.Add("Device supports READ CAPACITY (16) command.");
+
+                if(report.SCSI.ReadCapabilities.SupportsRead6 == true)
+                    readCapabilitiesList.Add("Device supports READ (6) command.");
+
+                if(report.SCSI.ReadCapabilities.SupportsRead10 == true)
+                    readCapabilitiesList.Add("Device supports READ (10) command.");
+
+                if(report.SCSI.ReadCapabilities.SupportsRead12 == true)
+                    readCapabilitiesList.Add("Device supports READ (12) command.");
+
+                if(report.SCSI.ReadCapabilities.SupportsRead16 == true)
+                    readCapabilitiesList.Add("Device supports READ (16) command.");
+
+                if(report.SCSI.ReadCapabilities.SupportsReadLong == true)
+                    readCapabilitiesList.Add("Device supports READ LONG (10) command.");
+
+                if(report.SCSI.ReadCapabilities.SupportsReadLong16 == true)
+                    readCapabilitiesList.Add("Device supports READ LONG (16) command.");
+
+                if(readCapabilitiesList.Count       > 0) ReadCapabilitiesList       = readCapabilitiesList;
+                if(readCapabilitiesDictionary.Count > 0) ReadCapabilitiesDictionary = readCapabilitiesDictionary;
+            }
+            /*    else
+                    testedMedia = report.SCSI.RemovableMedias;
+                    */
+        }
 
         _initialized = true;
 
