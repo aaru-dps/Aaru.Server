@@ -30,7 +30,6 @@
 // Copyright © 2011-2024 Natalia Portillo
 // ****************************************************************************/
 
-using Aaru.CommonTypes.Metadata;
 using Aaru.CommonTypes.Structs.Devices.ATA;
 using Aaru.CommonTypes.Structs.Devices.SCSI;
 
@@ -68,7 +67,8 @@ public static class Ata
     /// <param name="readCapabilitiesDictionary">Dictionary of read capabilities for non-removable media</param>
     /// <param name="readCapabilitiesList">List of read capabilities for non-removable media</param>
     public static void Report(CommonTypes.Metadata.Ata ataReport, bool cfa, bool atapi, ref bool removable,
-                              out List<TestedMedia>? testedMedia, out Dictionary<string, string>? deviceIdentification,
+                              out List<CommonTypes.Metadata.TestedMedia>? testedMedia,
+                              out Dictionary<string, string>? deviceIdentification,
                               out List<string> supportedAtaVersions, out string? maximumAtaRevision,
                               out string? transport, out List<string>? transportVersions,
                               out List<string> generalConfiguration, out List<string>? specificConfiguration,
@@ -1672,12 +1672,14 @@ public static class Ata
            !ataIdentify.CommandSet3.HasFlag(Identify.CommandSetBit3.MustBeClear) &&
            ataIdentify.CommandSet3.HasFlag(Identify.CommandSetBit3.Streaming))
         {
-            streaming = [];
-            streaming.Add($"Minimum request size is {ataIdentify.StreamMinReqSize}");
-            streaming.Add($"Streaming transfer time in PIO is {ataIdentify.StreamTransferTimePIO}");
-            streaming.Add($"Streaming transfer time in DMA is {ataIdentify.StreamTransferTimeDMA}");
-            streaming.Add($"Streaming access latency is {ataIdentify.StreamAccessLatency}");
-            streaming.Add($"Streaming performance granularity is {ataIdentify.StreamPerformanceGranularity}");
+            streaming =
+            [
+                $"Minimum request size is {ataIdentify.StreamMinReqSize}",
+                $"Streaming transfer time in PIO is {ataIdentify.StreamTransferTimePIO}",
+                $"Streaming transfer time in DMA is {ataIdentify.StreamTransferTimeDMA}",
+                $"Streaming access latency is {ataIdentify.StreamAccessLatency}",
+                $"Streaming performance granularity is {ataIdentify.StreamPerformanceGranularity}"
+            ];
         }
 
         if(ataIdentify.SCTCommandTransport.HasFlag(Identify.SCTCommandTransportBit.Supported))
@@ -1702,8 +1704,7 @@ public static class Ata
 
         if((ataIdentify.NVCacheCaps & 0x0010) == 0x0010)
         {
-            nvCache = [];
-            nvCache.Add($"Version {(ataIdentify.NVCacheCaps & 0xF000) >> 12}");
+            nvCache = [$"Version {(ataIdentify.NVCacheCaps & 0xF000) >> 12}"];
 
             if((ataIdentify.NVCacheCaps & 0x0001) == 0x0001)
             {
@@ -1741,12 +1742,16 @@ public static class Ata
                 }
 
                 if(ataReport.ReadCapabilities.PhysicalBlockSize != null)
+                {
                     readCapabilitiesDictionary.Add("Physical sector size",
                                                    $"{ataReport.ReadCapabilities.PhysicalBlockSize} bytes");
+                }
 
                 if(ataReport.ReadCapabilities.LongBlockSize != null)
+                {
                     readCapabilitiesDictionary.Add("READ LONG sector size",
                                                    $"{ataReport.ReadCapabilities.LongBlockSize} bytes");
+                }
 
                 if(ataReport.ReadCapabilities.BlockSize != null &&
                    ataReport.ReadCapabilities.PhysicalBlockSize != null &&
@@ -1847,12 +1852,16 @@ public static class Ata
                 if(ata1 || cfa)
                 {
                     if(ataReport.ReadCapabilities.UnformattedBPT > 0)
+                    {
                         readCapabilitiesDictionary.Add("Bytes per unformatted track",
                                                        $"{ataReport.ReadCapabilities.UnformattedBPT}");
+                    }
 
                     if(ataReport.ReadCapabilities.UnformattedBPS > 0)
+                    {
                         readCapabilitiesDictionary.Add("Bytes per unformatted sector",
                                                        $"{ataReport.ReadCapabilities.UnformattedBPS}");
+                    }
                 }
             }
 

@@ -44,7 +44,7 @@ static class ScsiInquiry
     /// <returns>List of values</returns>
     internal static List<string> Report(Inquiry? inquiryNullable)
     {
-        List<string> scsiOneValue = new();
+        List<string> scsiOneValue = [];
 
         if(!inquiryNullable.HasValue) return scsiOneValue;
 

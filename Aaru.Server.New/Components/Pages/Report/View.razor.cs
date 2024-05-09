@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Ata = Aaru.CommonTypes.Metadata.Ata;
 using DbContext = Aaru.Server.Database.DbContext;
 using Inquiry = Aaru.CommonTypes.Structs.Devices.SCSI.Inquiry;
+using TestedMedia = Aaru.CommonTypes.Metadata.TestedMedia;
 using Tuple = Aaru.Decoders.PCMCIA.Tuple;
 
 namespace Aaru.Server.New.Components.Pages.Report;
@@ -18,7 +19,6 @@ public partial class View
 {
     bool   _initialized;
     bool   _notFound;
-    bool   accordionItem1Visible;
     string _pageTitle { get; set; } = "Aaru Device Report";
     [CascadingParameter]
     HttpContext HttpContext { get; set; } = default!;
@@ -28,7 +28,7 @@ public partial class View
     public Item?                             FireWireItem               { get; set; }
     public Dictionary<string, string>?       PcmciaTuples               { get; set; }
     public PcmciaItem?                       PcmciaItem                 { get; set; }
-    public string?                           lblDeviceType              { get; set; }
+    public string?                           DeviceType                 { get; set; }
     public string?                           AtaItem                    { get; set; }
     public string?                           MaximumAtaRevision         { get; set; }
     public List<string>?                     SupportedAtaVersions       { get; set; }
@@ -58,16 +58,18 @@ public partial class View
     public List<string>?                     InquiryCapabilities        { get; set; }
     public List<string>?                     ModeSenseCapabilities      { get; set; }
     public Dictionary<string, List<string>>? ModeSensePages             { get; set; }
-    public List<string>? BlockDescriptors { get; set; }
-    public List<SscSupportedMedia>? ScsiSscMedias { get; set; }
-    public List<SupportedDensity>? ScsiSscDensities { get; set; }
-    public string? ScsiSscMinBlock { get; set; }
-    public string? ScsiSscMaxBlock { get; set; }
-    public string? ScsiSscGranularity { get; set; }
-    public bool ScsiSscVisible { get; set; }
-    public List<string>? MmcFeaturesList { get; set; }
-    public List<string>? MmcModeList { get; set; }
-    public Dictionary<string, List<string>>? EvpdPages { get; set; }
+    public List<string>?                     BlockDescriptors           { get; set; }
+    public List<SscSupportedMedia>?          ScsiSscMedias              { get; set; }
+    public List<SupportedDensity>?           ScsiSscDensities           { get; set; }
+    public string?                           ScsiSscMinBlock            { get; set; }
+    public string?                           ScsiSscMaxBlock            { get; set; }
+    public string?                           ScsiSscGranularity         { get; set; }
+    public bool                              ScsiSscVisible             { get; set; }
+    public List<string>?                     MmcFeaturesList            { get; set; }
+    public List<string>?                     MmcModeList                { get; set; }
+    public Dictionary<string, List<string>>? EvpdPages                  { get; set; }
+
+    public Dictionary<string, (Dictionary<string, string> Table, List<string> List)>? MediaInformation { get; set; }
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
@@ -112,6 +114,14 @@ public partial class View
                                   .ThenInclude(static ssc => ssc.SupportedMediaTypes)
                                   .Include(static deviceReportV2 => deviceReportV2.SCSI)
                                   .ThenInclude(static scsi => scsi.ReadCapabilities)
+                                  .Include(static deviceReportV2 => deviceReportV2.SCSI)
+                                  .ThenInclude(static scsi => scsi.SequentialDevice)
+                                  .ThenInclude(static ssc => ssc.TestedMedia)
+                                  .Include(static deviceReportV2 => deviceReportV2.SCSI)
+                                  .ThenInclude(static scsi => scsi.RemovableMedias)
+                                  .Include(static deviceReportV2 => deviceReportV2.SCSI)
+                                  .ThenInclude(static scsi => scsi.MultiMediaDevice)
+                                  .ThenInclude(static mmc => mmc.TestedMedia)
                                   .FirstOrDefaultAsync(d => d.Id == Id);
 
         if(report is null)
@@ -269,9 +279,10 @@ public partial class View
             }
         }
 
-        var                removable = true;
-        List<TestedMedia>? testedMedia;
-        var                atapi = false;
+        var                removable   = true;
+        List<TestedMedia>? testedMedia = null;
+        var                atapi       = false;
+        var                sscMedia    = false;
 
         if(report.ATA != null || report.ATAPI != null)
         {
@@ -291,12 +302,12 @@ public partial class View
 
             bool cfa = report.CompactFlash;
 
-            lblDeviceType = atapi switch
-                            {
-                                true when !cfa => "ATAPI device",
-                                false when cfa => "CompactFlash device",
-                                _              => "ATA device"
-                            };
+            DeviceType = atapi switch
+                         {
+                             true when !cfa => "ATAPI device",
+                             false when cfa => "CompactFlash device",
+                             _              => "ATA device"
+                         };
 
             Core.Ata.Report(ataReport!,
                             cfa,
@@ -346,7 +357,7 @@ public partial class View
 
         if(report.MultiMediaCard != null)
         {
-            lblDeviceType = "MultiMediaCard";
+            DeviceType = "MultiMediaCard";
 
             if(report.MultiMediaCard.CID != null)
                 Cid = Decoders.MMC.Decoders.PrettifyCID(report.MultiMediaCard.CID).Replace("\n", "<br/>");
@@ -366,7 +377,7 @@ public partial class View
 
         if(report.SecureDigital != null)
         {
-            lblDeviceType = "SecureDigital";
+            DeviceType = "SecureDigital";
 
             if(report.SecureDigital.CID != null)
                 Cid = Decoders.SecureDigital.Decoders.PrettifyCID(report.SecureDigital.CID).Replace("\n", "<br/>");
@@ -381,6 +392,7 @@ public partial class View
                 Ocr = Decoders.SecureDigital.Decoders.PrettifyCSD(report.SecureDigital.OCR).Replace("\n", "<br/>");
         }
 
+
         if(report.SCSI != null)
         {
             var vendorId = "";
@@ -388,16 +400,23 @@ public partial class View
             if(report.SCSI.Inquiry != null)
             {
                 Inquiry inq = report.SCSI.Inquiry.Value;
-                vendorId      = StringHandlers.CToString(report.SCSI.Inquiry?.VendorIdentification);
-                DeviceInquiry = new Dictionary<string, string>();
+                vendorId = StringHandlers.CToString(report.SCSI.Inquiry?.VendorIdentification);
 
-                DeviceInquiry.Add("Vendor:",
-                                  VendorString.Prettify(vendorId) != vendorId
-                                      ? $"{vendorId} ({VendorString.Prettify(vendorId)})"
-                                      : vendorId);
-
-                DeviceInquiry.Add("Product:",  StringHandlers.CToString(inq.ProductIdentification));
-                DeviceInquiry.Add("Revision:", StringHandlers.CToString(inq.ProductRevisionLevel));
+                DeviceInquiry = new Dictionary<string, string>
+                {
+                    {
+                        "Vendor:",
+                        VendorString.Prettify(vendorId) != vendorId
+                            ? $"{vendorId} ({VendorString.Prettify(vendorId)})"
+                            : vendorId
+                    },
+                    {
+                        "Product:", StringHandlers.CToString(inq.ProductIdentification)
+                    },
+                    {
+                        "Revision:", StringHandlers.CToString(inq.ProductRevisionLevel)
+                    }
+                };
             }
 
             List<string> inquiryCapabilities                      = ScsiInquiry.Report(report.SCSI.Inquiry);
@@ -439,7 +458,7 @@ public partial class View
 
                 if(modeSenseCapabilities is not null)
                 {
-                    ModeSenseCapabilities ??= new List<string>();
+                    ModeSenseCapabilities ??= [];
                     ModeSenseCapabilities.AddRange(modeSenseCapabilities);
                 }
 
@@ -455,7 +474,7 @@ public partial class View
 
             if(report.SCSI.MultiMediaDevice is not null)
             {
-                //   testedMedia = report.SCSI.MultiMediaDevice.TestedMedia;
+                testedMedia = report.SCSI.MultiMediaDevice.TestedMedia;
 
                 if(report.SCSI.MultiMediaDevice.ModeSense2A != null)
                 {
@@ -487,20 +506,20 @@ public partial class View
                 if(report.SCSI.SequentialDevice.SupportedMediaTypes != null)
                     ScsiSscMedias = report.SCSI.SequentialDevice.SupportedMediaTypes;
 
-/*                    if(report.SCSI.SequentialDevice.TestedMedia != null)
-                    {
-                        List<string> mediaOneValue = new();
-                        SscTestedMedia.Report(report.SCSI.SequentialDevice.TestedMedia, ref mediaOneValue);
+                if(report.SCSI.SequentialDevice.TestedMedia != null)
+                {
+                    sscMedia = true;
 
-                        if(mediaOneValue.Count > 0)
-                        {
-                            sscMedia               = true;
-                            ViewBag.repTestedMedia = mediaOneValue;
-                        }
-                    }*/
+                    SscTestedMedia.Report(report.SCSI.SequentialDevice.TestedMedia,
+                                          out Dictionary<string, (Dictionary<string, string> Table, List<string> List)>
+                                                  mediaInformation);
+
+                    if(mediaInformation.Count > 0) MediaInformation = mediaInformation;
+                }
             }
             else if(report.SCSI.ReadCapabilities != null)
             {
+                removable = false;
                 List<string> readCapabilitiesList       = [];
                 var          readCapabilitiesDictionary = new Dictionary<string, string>();
 
@@ -530,8 +549,10 @@ public partial class View
                 }
 
                 if(report.SCSI.ReadCapabilities.MediumType.HasValue)
+                {
                     readCapabilitiesDictionary.Add("Medium type code",
                                                    $"{report.SCSI.ReadCapabilities.MediumType:X2}h");
+                }
 
                 if(report.SCSI.ReadCapabilities.Density.HasValue)
                     readCapabilitiesDictionary.Add("Density code", $"{report.SCSI.ReadCapabilities.Density:X2}h");
@@ -539,8 +560,10 @@ public partial class View
                 if((report.SCSI.ReadCapabilities.SupportsReadLong   == true ||
                     report.SCSI.ReadCapabilities.SupportsReadLong16 == true) &&
                    report.SCSI.ReadCapabilities.LongBlockSize.HasValue)
+                {
                     readCapabilitiesDictionary.Add("Long block size",
                                                    $"{report.SCSI.ReadCapabilities.LongBlockSize} bytes");
+                }
 
                 if(report.SCSI.ReadCapabilities.SupportsReadCapacity == true)
                     readCapabilitiesList.Add("Device supports READ CAPACITY (10) command.");
@@ -569,9 +592,17 @@ public partial class View
                 if(readCapabilitiesList.Count       > 0) ReadCapabilitiesList       = readCapabilitiesList;
                 if(readCapabilitiesDictionary.Count > 0) ReadCapabilitiesDictionary = readCapabilitiesDictionary;
             }
-            /*    else
-                    testedMedia = report.SCSI.RemovableMedias;
-                    */
+            else
+                testedMedia = report.SCSI.RemovableMedias;
+        }
+
+        if(removable && !sscMedia && testedMedia != null)
+        {
+            Core.TestedMedia.Report(testedMedia,
+                                    out Dictionary<string, (Dictionary<string, string> Table, List<string> List)>
+                                            mediaInformation);
+
+            if(mediaInformation.Count > 0) MediaInformation = mediaInformation;
         }
 
         _initialized = true;

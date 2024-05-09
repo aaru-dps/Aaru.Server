@@ -1,0 +1,390 @@
+﻿// /***************************************************************************
+// Aaru Data Preservation Suite
+// ----------------------------------------------------------------------------
+//
+// Filename       : TestedMedia.cs
+// Author(s)      : Natalia Portillo <claunia@claunia.com>
+//
+// Component      : Aaru Server.
+//
+// --[ Description ] ----------------------------------------------------------
+//
+//     Decodes media tests from reports.
+//
+// --[ License ] --------------------------------------------------------------
+//
+//     This library is free software; you can redistribute it and/or modify
+//     it under the terms of the GNU Lesser General Public License as
+//     published by the Free Software Foundation; either version 2.1 of the
+//     License, or (at your option) any later version.
+//
+//     This library is distributed in the hope that it will be useful, but
+//     WITHOUT ANY WARRANTY; without even the implied warranty of
+//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+//     Lesser General Public License for more details.
+//
+//     You should have received a copy of the GNU Lesser General Public
+//     License along with this library; if not, see <http://www.gnu.org/licenses/>.
+//
+// ----------------------------------------------------------------------------
+// Copyright © 2011-2024 Natalia Portillo
+// ****************************************************************************/
+
+namespace Aaru.Server.New.Core;
+
+public static class TestedMedia
+{
+    /// <summary>Takes the tested media from a device report and prints it as a list of values</summary>
+    /// <param name="list">List to put values on</param>
+    /// <param name="testedMedias">List of tested media</param>
+    public static void Report(List<CommonTypes.Metadata.TestedMedia>                             testedMedias,
+                              out Dictionary<string, (Dictionary<string, string>, List<string>)> mediaInformation)
+    {
+        mediaInformation = new Dictionary<string, (Dictionary<string, string>, List<string>)>();
+
+        foreach(CommonTypes.Metadata.TestedMedia testedMedia in testedMedias)
+        {
+            Dictionary<string, string> table = new();
+            List<string>               list  = [];
+            string                     header;
+
+            if(!string.IsNullOrWhiteSpace(testedMedia.MediumTypeName))
+            {
+                header = $"Information for medium named \"{testedMedia.MediumTypeName}\"";
+
+                if(testedMedia.MediumType != null) table.Add("Medium type code", $"{testedMedia.MediumType:X2}h");
+            }
+            else if(testedMedia.MediumType != null)
+                header = $"Information for medium type {testedMedia.MediumType:X2}h";
+            else
+                header = "Information for unknown medium type";
+
+            list.Add(testedMedia.MediaIsRecognized
+                         ? "Drive recognizes this medium."
+                         : "Drive does not recognize this medium.");
+
+            if(!string.IsNullOrWhiteSpace(testedMedia.Manufacturer))
+                table.Add("Medium manufacturer", $"{testedMedia.Manufacturer}");
+
+            if(!string.IsNullOrWhiteSpace(testedMedia.Model)) table.Add("Medium model", $"{testedMedia.Model}");
+
+            if(testedMedia.Density != null) table.Add("Density code", $"{testedMedia.Density:X2}h");
+
+            if(testedMedia.BlockSize != null) table.Add("Logical sector size", $"{testedMedia.BlockSize} bytes");
+
+            if(testedMedia.PhysicalBlockSize != null)
+                table.Add("Physical sector size", $"{testedMedia.PhysicalBlockSize} bytes");
+
+            if(testedMedia.LongBlockSize != null)
+                table.Add("READ LONG sector size", $"{testedMedia.LongBlockSize} bytes");
+
+            if(testedMedia is { Blocks: not null, BlockSize: not null })
+            {
+                table.Add("Blocks",     $"{testedMedia.Blocks}");
+                table.Add("Block size", $"{testedMedia.BlockSize} bytes per block");
+
+                if(testedMedia.Blocks * testedMedia.BlockSize / 1024 / 1024 > 1000000)
+                {
+                    table.Add("Medium size",
+                              $"{testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                }
+                else if(testedMedia.Blocks * testedMedia.BlockSize / 1024 / 1024 > 1000)
+                {
+                    table.Add("Medium size",
+                              $"{testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
+                }
+                else
+                {
+                    table.Add("Medium size",
+                              $"{testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+                }
+            }
+
+            if(testedMedia is { CHS: not null, CurrentCHS: not null })
+            {
+                int currentSectors = testedMedia.CurrentCHS.Cylinders *
+                                     testedMedia.CurrentCHS.Heads     *
+                                     testedMedia.CurrentCHS.Sectors;
+
+                table.Add("Cylinders", $"{testedMedia.CHS.Cylinders} max., {testedMedia.CurrentCHS.Cylinders} current");
+
+                table.Add("Heads", $"{testedMedia.CHS.Heads} max., {testedMedia.CurrentCHS.Heads} current");
+
+                table.Add("Sectors per track",
+                          $"{testedMedia.CHS.Sectors} max., {testedMedia.CurrentCHS.Sectors} current");
+
+                table.Add("Sectors addressable in CHS mode",
+                          $"{testedMedia.CHS.Cylinders * testedMedia.CHS.Heads * testedMedia.CHS.Sectors} max., {currentSectors} current");
+
+                table.Add("Medium size in CHS mode",
+                          $"{(ulong)currentSectors * testedMedia.BlockSize} bytes, {(ulong)currentSectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)((ulong)currentSectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+            }
+            else if(testedMedia.CHS != null)
+            {
+                int currentSectors = testedMedia.CHS.Cylinders * testedMedia.CHS.Heads * testedMedia.CHS.Sectors;
+                table.Add("Cylinders",                       $"{testedMedia.CHS.Cylinders}");
+                table.Add("Heads",                           $"{testedMedia.CHS.Heads}");
+                table.Add("Sectors per track",               $"{testedMedia.CHS.Sectors}");
+                table.Add("Sectors addressable in CHS mode", $"{currentSectors}");
+
+                table.Add("Medium size in CHS mode",
+                          $"{(ulong)currentSectors * testedMedia.BlockSize} bytes, {(ulong)currentSectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)((ulong)currentSectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+            }
+
+            if(testedMedia.LBASectors != null)
+            {
+                table.Add("Sectors addressable in sectors in 28-bit LBA mode", $"{testedMedia.LBASectors}");
+
+                if((ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1024 / 1024 > 1000000)
+                {
+                    table.Add("Medium size in 28-bit LBA mode",
+                              $"{(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                }
+                else if((ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1024 / 1024 > 1000)
+                {
+                    table.Add("Medium size in 28-bit LBA mode",
+                              $"{(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
+                }
+                else
+                {
+                    table.Add("Medium size in 28-bit LBA mode",
+                              $"{(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+                }
+            }
+
+            if(testedMedia.LBA48Sectors != null)
+            {
+                table.Add("Sectors addressable in sectors in 48-bit LBA mode", $"{testedMedia.LBA48Sectors}");
+
+                if(testedMedia.LBA48Sectors * testedMedia.BlockSize / 1024 / 1024 > 1000000)
+                {
+                    table.Add("Medium size in 48-bit LBA mode",
+                              $"{testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+                }
+                else if(testedMedia.LBA48Sectors * testedMedia.BlockSize / 1024 / 1024 > 1000)
+                {
+                    table.Add("Medium size in 48-bit LBA mode",
+                              $"{testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
+                }
+                else
+                {
+                    table.Add("Medium size in 48-bit LBA mode",
+                              $"{testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+                }
+            }
+
+            if(testedMedia.NominalRotationRate != null   &&
+               testedMedia.NominalRotationRate != 0x0000 &&
+               testedMedia.NominalRotationRate != 0xFFFF)
+            {
+                list.Add(testedMedia.NominalRotationRate == 0x0001
+                             ? "Medium does not rotate."
+                             : $"Medium rotates at {testedMedia.NominalRotationRate} rpm");
+            }
+
+            if(testedMedia.BlockSize                   != null                                &&
+               testedMedia.PhysicalBlockSize           != null                                &&
+               testedMedia.BlockSize.Value             != testedMedia.PhysicalBlockSize.Value &&
+               (testedMedia.LogicalAlignment & 0x8000) == 0x0000                              &&
+               (testedMedia.LogicalAlignment & 0x4000) == 0x4000)
+                list.Add($"Logical sector starts at offset {testedMedia.LogicalAlignment & 0x3FFF} from physical sector");
+
+            if(testedMedia.SupportsReadSectors == true)
+                list.Add("Device can use the READ SECTOR(S) command in CHS mode with this medium");
+
+            if(testedMedia.SupportsReadRetry == true)
+                list.Add("Device can use the READ SECTOR(S) RETRY command in CHS mode with this medium");
+
+            if(testedMedia.SupportsReadDma == true)
+                list.Add("Device can use the READ DMA command in CHS mode with this medium");
+
+            if(testedMedia.SupportsReadDmaRetry == true)
+                list.Add("Device can use the READ DMA RETRY command in CHS mode with this medium");
+
+            if(testedMedia.SupportsReadLong == true)
+                list.Add("Device can use the READ LONG command in CHS mode with this medium");
+
+            if(testedMedia.SupportsReadLongRetry == true)
+                list.Add("Device can use the READ LONG RETRY command in CHS mode with this medium");
+
+            if(testedMedia.SupportsReadLba == true)
+                list.Add("Device can use the READ SECTOR(S) command in 28-bit LBA mode with this medium");
+
+            if(testedMedia.SupportsReadRetryLba == true)
+                list.Add("Device can use the READ SECTOR(S) RETRY command in 28-bit LBA mode with this medium");
+
+            if(testedMedia.SupportsReadDmaLba == true)
+                list.Add("Device can use the READ DMA command in 28-bit LBA mode with this medium");
+
+            if(testedMedia.SupportsReadDmaRetryLba == true)
+                list.Add("Device can use the READ DMA RETRY command in 28-bit LBA mode with this medium");
+
+            if(testedMedia.SupportsReadLongLba == true)
+                list.Add("Device can use the READ LONG command in 28-bit LBA mode with this medium");
+
+            if(testedMedia.SupportsReadLongRetryLba == true)
+                list.Add("Device can use the READ LONG RETRY command in 28-bit LBA mode with this medium");
+
+            if(testedMedia.SupportsReadLba48 == true)
+                list.Add("Device can use the READ SECTOR(S) command in 48-bit LBA mode with this medium");
+
+            if(testedMedia.SupportsReadDmaLba48 == true)
+                list.Add("Device can use the READ DMA command in 48-bit LBA mode with this medium");
+
+            if(testedMedia.SupportsSeek == true)
+                list.Add("Device can use the SEEK command in CHS mode with this medium");
+
+            if(testedMedia.SupportsSeekLba == true)
+                list.Add("Device can use the SEEK command in 28-bit LBA mode with this medium");
+
+            if(testedMedia.SupportsReadCapacity == true)
+                list.Add("Device can use the READ CAPACITY (10) command with this medium");
+
+            if(testedMedia.SupportsReadCapacity16 == true)
+                list.Add("Device can use the READ CAPACITY (16) command with this medium");
+
+            if(testedMedia.SupportsRead6 == true) list.Add("Device can use the READ (6) command with this medium");
+
+            if(testedMedia.SupportsRead10 == true) list.Add("Device can use the READ (10) command with this medium");
+
+            if(testedMedia.SupportsRead12 == true) list.Add("Device can use the READ (12) command with this medium");
+
+            if(testedMedia.SupportsRead16 == true) list.Add("Device can use the READ (16) command with this medium");
+
+            if(testedMedia.SupportsReadLong == true)
+                list.Add("Device can use the READ LONG (10) command with this medium");
+
+            if(testedMedia.SupportsReadLong16 == true)
+                list.Add("Device can use the READ LONG (16) command with this medium");
+
+            if(testedMedia.SupportsReadCd == true)
+                list.Add("Device can use the READ CD command with LBA addressing with this medium");
+
+            if(testedMedia.SupportsReadCdMsf == true)
+                list.Add("Device can use the READ CD command with MM:SS:FF addressing with this medium");
+
+            if(testedMedia.SupportsReadCdRaw == true)
+                list.Add("Device can use the READ CD command with LBA addressing with this medium to read raw sector");
+
+            if(testedMedia.SupportsReadCdMsfRaw == true)
+                list.Add("Device can use the READ CD command with MM:SS:FF addressing with this medium read raw sector");
+
+            if(testedMedia.SupportsHLDTSTReadRawDVD == true)
+                list.Add("Device can use the HL-DT-ST vendor READ DVD (RAW) command with this medium");
+
+            if(testedMedia.SupportsNECReadCDDA == true)
+                list.Add("Device can use the NEC vendor READ CD-DA command with this medium");
+
+            if(testedMedia.SupportsPioneerReadCDDA == true)
+                list.Add("Device can use the PIONEER vendor READ CD-DA command with this medium");
+
+            if(testedMedia.SupportsPioneerReadCDDAMSF == true)
+                list.Add("Device can use the PIONEER vendor READ CD-DA MSF command with this medium");
+
+            if(testedMedia.SupportsPlextorReadCDDA == true)
+                list.Add("Device can use the PLEXTOR vendor READ CD-DA command with this medium");
+
+            if(testedMedia.SupportsPlextorReadRawDVD == true)
+                list.Add("Device can use the PLEXTOR vendor READ DVD (RAW) command with this medium");
+
+            if(testedMedia.CanReadAACS == true)
+                list.Add("Device can read the Advanced Access Content System from this medium");
+
+            if(testedMedia.CanReadADIP == true)
+                list.Add("Device can read the DVD ADress-In-Pregroove from this medium");
+
+            if(testedMedia.CanReadATIP == true)
+                list.Add("Device can read the CD Absolute-Time-In-Pregroove from this medium");
+
+            if(testedMedia.CanReadBCA == true) list.Add("Device can read the Burst Cutting Area from this medium");
+
+            if(testedMedia.CanReadC2Pointers == true)
+                list.Add("Device can report the C2 pointers when reading from this medium");
+
+            if(testedMedia.CanReadCMI == true)
+                list.Add("Device can read the Copyright Management Information from this medium");
+
+            if(testedMedia.CanReadCorrectedSubchannel == true)
+                list.Add("Device can correct subchannels when reading from this medium");
+
+            if(testedMedia.CanReadCorrectedSubchannelWithC2 == true)
+                list.Add("Device can correct subchannels and report the C2 pointers when reading from this medium");
+
+            if(testedMedia.CanReadDCB == true) list.Add("Device can read the Disc Control Blocks from this medium");
+
+            if(testedMedia.CanReadDDS == true)
+                list.Add("Device can read the Disc Definition Structure from this medium");
+
+            if(testedMedia.CanReadDMI == true)
+                list.Add("Device can read the Disc Manufacturer Information from this medium");
+
+            if(testedMedia.CanReadDiscInformation == true)
+                list.Add("Device can read the Disc Information from this medium");
+
+            if(testedMedia.CanReadFullTOC == true)
+                list.Add("Device can read the Table of Contents from this medium, without processing it");
+
+            if(testedMedia.CanReadHDCMI == true)
+                list.Add("Device can read the HD DVD Copyright Management Information from this medium");
+
+            if(testedMedia.CanReadLayerCapacity == true)
+                list.Add("Device can read the layer capacity from this medium");
+
+            if(testedMedia.CanReadFirstTrackPreGap == true) list.Add("Device can read the first track's pregap data");
+
+            if(testedMedia.CanReadLeadIn == true) list.Add("Device can read the Lead-In from this medium");
+
+            if(testedMedia.CanReadLeadOut == true) list.Add("Device can read the Lead-Out from this medium");
+
+            if(testedMedia.CanReadMediaID == true) list.Add("Device can read the Media ID from this medium");
+
+            if(testedMedia.CanReadMediaSerial == true)
+                list.Add("Device can read the Media Serial Number from this medium");
+
+            if(testedMedia.CanReadPAC == true) list.Add("Device can read the PAC from this medium");
+
+            if(testedMedia.CanReadPFI == true)
+                list.Add("Device can read the Physical Format Information from this medium");
+
+            if(testedMedia.CanReadPMA == true) list.Add("Device can read the Power Management Area from this medium");
+
+            if(testedMedia.CanReadPQSubchannel == true)
+                list.Add("Device can read the P to Q subchannels from this medium");
+
+            if(testedMedia.CanReadPQSubchannelWithC2 == true)
+                list.Add("Device can read the P to Q subchannels from this medium reporting the C2 pointers");
+
+            if(testedMedia.CanReadPRI == true)
+                list.Add("Device can read the Pre-Recorded Information from this medium");
+
+            if(testedMedia.CanReadRWSubchannel == true)
+                list.Add("Device can read the R to W subchannels from this medium");
+
+            if(testedMedia.CanReadRWSubchannelWithC2 == true)
+                list.Add("Device can read the R to W subchannels from this medium reporting the C2 pointers");
+
+            if(testedMedia.CanReadRecordablePFI == true)
+                list.Add("Device can read the Physical Format Information from Lead-In from this medium");
+
+            if(testedMedia.CanReadSpareAreaInformation == true)
+                list.Add("Device can read the Spare Area Information from this medium");
+
+            if(testedMedia.CanReadTOC == true) list.Add("Device can read the Table of Contents from this medium");
+
+            if(testedMedia.CanReadingIntersessionLeadIn == true) list.Add("Device can read Lead-In between sessions");
+
+            if(testedMedia.CanReadingIntersessionLeadOut == true) list.Add("Device can read Lead-Out between sessions");
+
+            if(testedMedia.CanReadCdScrambled == true)
+                list.Add("Device can read scrambled sectors using standard READ CD command");
+
+            if(testedMedia.CanReadF1_06 == true)
+                list.Add("Device can read from cache using F1h command with subcommand 06h");
+
+            if(testedMedia.CanReadF1_06LeadOut == true)
+                list.Add("Device can read Lead-Out from cache using F1h command with subcommand 06h");
+
+            mediaInformation.Add(header, (table, list));
+        }
+    }
+}

@@ -35,7 +35,7 @@
 
 <div class="stats-section">
 <h3 style="font-weight: bold;">
-    @lblDeviceType<br/>
+    @DeviceType<br/>
 </h3>
 <Accordion>
 @if(UsbItem is not null)
@@ -836,3 +836,44 @@
 }
 </Accordion>
 </div>
+
+@if(MediaInformation?.Count > 0)
+{
+    <div class="stats-section">
+        <h3 style="font-weight: bold;">
+            Tested media information<br/>
+        </h3>
+
+        <Accordion>
+            @foreach(KeyValuePair<string, (Dictionary<string, string> Table, List<string> List)> mediaInfo in MediaInformation)
+            {
+                <AccordionItem>
+                    <AccordionHeader>
+                        <Heading Size="HeadingSize.Is5">
+                            <AccordionToggle>@mediaInfo.Key</AccordionToggle>
+                        </Heading>
+                    </AccordionHeader>
+                    <AccordionBody>
+                        <Table class="table-borderless table-dark" FullWidth>
+                            <TableBody>
+                                @foreach(KeyValuePair<string, string> kvp in mediaInfo.Value.Table)
+                                {
+                                    <TableRow>
+                                        <TableRowHeader>@kvp.Key</TableRowHeader>
+                                        <TableRowCell>@kvp.Value</TableRowCell>
+                                    </TableRow>
+                                }
+                            </TableBody>
+                        </Table>
+                        <ListGroup>
+                            @foreach(string cap in mediaInfo.Value.List)
+                            {
+                                <ListGroupItem>@cap</ListGroupItem>
+                            }
+                        </ListGroup>
+                    </AccordionBody>
+                </AccordionItem>
+            }
+        </Accordion>
+    </div>
+}
