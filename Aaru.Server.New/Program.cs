@@ -122,6 +122,9 @@ builder.Services.AddBlazorise(static options => { options.Immediate = true; })
        .AddBootstrap5Providers()
        .AddFontAwesomeIcons();
 
+// Add services to the container.
+builder.Services.AddControllers();
+
 WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -137,6 +140,7 @@ else
 
 app.UseHttpsRedirection();
 
+app.UseAuthorization();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
@@ -144,6 +148,7 @@ app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
+app.MapControllers();
 
 using(IServiceScope scope = app.Services.CreateScope())
 {

@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Aaru.CommonTypes" Version="6.0.0-alpha8"/>
     <PackageReference Include="Aaru.Decoders" Version="6.0.0-alpha8"/>
+    <PackageReference Include="Aaru.Dto" Version="6.0.0-alpha8"/>
     <PackageReference Include="Blazorise.Bootstrap5" Version="1.5.2"/>
     <PackageReference Include="Blazorise.Charts" Version="1.5.2"/>
     <PackageReference Include="Blazorise.DataGrid" Version="1.5.2"/>
