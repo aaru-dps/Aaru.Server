@@ -99,116 +99,7 @@ public sealed class UploadReportController : ControllerBase
             var reportV2String = jsonSw.ToString();
             jsonSw.Close();
 
-            var newUploadedReport = new UploadedReport(reportV2);
-
-            // Ensure CHS and CurrentCHS are not duplicates
-            if(newUploadedReport.ATA?.ReadCapabilities is { CHS: not null, CurrentCHS: not null } &&
-               newUploadedReport.ATA.ReadCapabilities.CHS.Cylinders ==
-               newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Cylinders &&
-               newUploadedReport.ATA.ReadCapabilities.CHS.Heads ==
-               newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Heads &&
-               newUploadedReport.ATA.ReadCapabilities.CHS.Sectors ==
-               newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Sectors)
-                newUploadedReport.ATA.ReadCapabilities.CHS = newUploadedReport.ATA.ReadCapabilities.CurrentCHS;
-
-            // Check if the CHS or CurrentCHS of this report already exist in the database
-            if(newUploadedReport.ATA?.ReadCapabilities?.CHS != null)
-            {
-                Chs? existingChs =
-                    await _ctx.Chs.FirstOrDefaultAsync(c =>
-                                                           c.Cylinders ==
-                                                           newUploadedReport.ATA.ReadCapabilities.CHS.Cylinders &&
-                                                           c.Heads ==
-                                                           newUploadedReport.ATA.ReadCapabilities.CHS.Heads &&
-                                                           c.Sectors ==
-                                                           newUploadedReport.ATA.ReadCapabilities.CHS.Sectors);
-
-                if(existingChs != null) newUploadedReport.ATA.ReadCapabilities.CHS = existingChs;
-            }
-
-            if(newUploadedReport.ATA?.ReadCapabilities?.CurrentCHS != null)
-            {
-                Chs? existingChs =
-                    await _ctx.Chs.FirstOrDefaultAsync(c =>
-                                                           c.Cylinders ==
-                                                           newUploadedReport.ATA.ReadCapabilities.CurrentCHS
-                                                                            .Cylinders &&
-                                                           c.Heads ==
-                                                           newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Heads &&
-                                                           c.Sectors ==
-                                                           newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Sectors);
-
-                if(existingChs != null) newUploadedReport.ATA.ReadCapabilities.CurrentCHS = existingChs;
-            }
-
-            if(newUploadedReport.ATA?.RemovableMedias != null)
-            {
-                foreach(TestedMedia media in newUploadedReport.ATA.RemovableMedias)
-                {
-                    Chs? existingChs;
-
-                    if(media.CHS           != null                       &&
-                       media.CurrentCHS    != null                       &&
-                       media.CHS.Cylinders == media.CurrentCHS.Cylinders &&
-                       media.CHS.Heads     == media.CurrentCHS.Heads     &&
-                       media.CHS.Sectors   == media.CurrentCHS.Sectors)
-                        media.CHS = media.CurrentCHS;
-
-                    if(media.CHS != null)
-                    {
-                        existingChs =
-                            await _ctx.Chs.FirstOrDefaultAsync(c => c.Cylinders == media.CHS.Cylinders &&
-                                                                    c.Heads     == media.CHS.Heads     &&
-                                                                    c.Sectors   == media.CHS.Sectors);
-
-                        if(existingChs != null) media.CHS = existingChs;
-                    }
-
-                    if(media.CHS == null) continue;
-
-                    existingChs =
-                        await _ctx.Chs.FirstOrDefaultAsync(c => media.CurrentCHS != null                       &&
-                                                                c.Cylinders      == media.CurrentCHS.Cylinders &&
-                                                                c.Heads          == media.CurrentCHS.Heads     &&
-                                                                c.Sectors        == media.CurrentCHS.Sectors);
-
-                    if(existingChs != null) media.CurrentCHS = existingChs;
-                }
-            }
-
-            _ctx.Reports.Add(newUploadedReport);
-            await _ctx.SaveChangesAsync();
-
-            var pgpIn  = new MemoryStream(Encoding.UTF8.GetBytes(reportV2String));
-            var pgpOut = new MemoryStream();
-            var pgp    = new ChoPGPEncryptDecrypt();
-
-            await pgp.EncryptAsync(pgpIn,
-                                   pgpOut,
-                                   Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
-                                                "public.asc"));
-
-            pgpOut.Position = 0;
-            reportV2String  = Encoding.UTF8.GetString(pgpOut.ToArray());
-
-            var message = new MimeMessage
-            {
-                Subject = "New device report (old version)",
-                Body = new TextPart("plain")
-                {
-                    Text = reportV2String
-                }
-            };
-
-            message.From.Add(new MailboxAddress("Aaru Server",    "aaru@claunia.com"));
-            message.To.Add(new MailboxAddress("Natalia Portillo", "claunia@claunia.com"));
-
-            using(var client = new SmtpClient())
-            {
-                await client.ConnectAsync("mail.claunia.com", 25, false);
-                await client.SendAsync(message);
-                await client.DisconnectAsync(true);
-            }
+            await SaveReport(reportV2, reportV2String);
 
             response.Content = "ok";
 
@@ -254,117 +145,7 @@ public sealed class UploadReportController : ControllerBase
                 return response;
             }
 
-            var newUploadedReport = new UploadedReport(newReport);
-
-            // Ensure CHS and CurrentCHS are not duplicates
-            if(newUploadedReport.ATA?.ReadCapabilities is { CHS: not null, CurrentCHS: not null } &&
-               newUploadedReport.ATA.ReadCapabilities.CHS.Cylinders ==
-               newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Cylinders &&
-               newUploadedReport.ATA.ReadCapabilities.CHS.Heads ==
-               newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Heads &&
-               newUploadedReport.ATA.ReadCapabilities.CHS.Sectors ==
-               newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Sectors)
-                newUploadedReport.ATA.ReadCapabilities.CHS = newUploadedReport.ATA.ReadCapabilities.CurrentCHS;
-
-            Chs? existingChs;
-
-            // Check if the CHS or CurrentCHS of this report already exist in the database
-            if(newUploadedReport.ATA?.ReadCapabilities?.CHS != null)
-            {
-                existingChs =
-                    await _ctx.Chs.FirstOrDefaultAsync(c =>
-                                                           c.Cylinders ==
-                                                           newUploadedReport.ATA.ReadCapabilities.CHS.Cylinders &&
-                                                           c.Heads ==
-                                                           newUploadedReport.ATA.ReadCapabilities.CHS.Heads &&
-                                                           c.Sectors ==
-                                                           newUploadedReport.ATA.ReadCapabilities.CHS.Sectors);
-
-                if(existingChs != null) newUploadedReport.ATA.ReadCapabilities.CHS = existingChs;
-            }
-
-            if(newUploadedReport.ATA?.ReadCapabilities?.CurrentCHS != null)
-            {
-                existingChs =
-                    await _ctx.Chs.FirstOrDefaultAsync(c =>
-                                                           c.Cylinders ==
-                                                           newUploadedReport.ATA.ReadCapabilities.CurrentCHS
-                                                                            .Cylinders &&
-                                                           c.Heads ==
-                                                           newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Heads &&
-                                                           c.Sectors ==
-                                                           newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Sectors);
-
-                if(existingChs != null) newUploadedReport.ATA.ReadCapabilities.CurrentCHS = existingChs;
-            }
-
-            if(newUploadedReport.ATA?.RemovableMedias != null)
-            {
-                foreach(TestedMedia media in newUploadedReport.ATA.RemovableMedias)
-                {
-                    if(media.CHS           != null                       &&
-                       media.CurrentCHS    != null                       &&
-                       media.CHS.Cylinders == media.CurrentCHS.Cylinders &&
-                       media.CHS.Heads     == media.CurrentCHS.Heads     &&
-                       media.CHS.Sectors   == media.CurrentCHS.Sectors)
-                        media.CHS = media.CurrentCHS;
-
-                    if(media.CHS != null)
-                    {
-                        existingChs =
-                            await _ctx.Chs.FirstOrDefaultAsync(c => c.Cylinders == media.CHS.Cylinders &&
-                                                                    c.Heads     == media.CHS.Heads     &&
-                                                                    c.Sectors   == media.CHS.Sectors);
-
-                        if(existingChs != null) media.CHS = existingChs;
-                    }
-
-                    if(media.CHS == null) continue;
-
-
-                    existingChs =
-                        await _ctx.Chs.FirstOrDefaultAsync(c => media.CurrentCHS != null                       &&
-                                                                c.Cylinders      == media.CurrentCHS.Cylinders &&
-                                                                c.Heads          == media.CurrentCHS.Heads     &&
-                                                                c.Sectors        == media.CurrentCHS.Sectors);
-
-                    if(existingChs != null) media.CurrentCHS = existingChs;
-                }
-            }
-
-            _ctx.Reports.Add(newUploadedReport);
-            await _ctx.SaveChangesAsync();
-
-            var pgpIn  = new MemoryStream(Encoding.UTF8.GetBytes(reportJson));
-            var pgpOut = new MemoryStream();
-            var pgp    = new ChoPGPEncryptDecrypt();
-
-            await pgp.EncryptAsync(pgpIn,
-                                   pgpOut,
-                                   Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
-                                                "public.asc"));
-
-            pgpOut.Position = 0;
-            reportJson      = Encoding.UTF8.GetString(pgpOut.ToArray());
-
-            var message = new MimeMessage
-            {
-                Subject = "New device report",
-                Body = new TextPart("plain")
-                {
-                    Text = reportJson
-                }
-            };
-
-            message.From.Add(new MailboxAddress("Aaru Server",    "aaru@claunia.com"));
-            message.To.Add(new MailboxAddress("Natalia Portillo", "claunia@claunia.com"));
-
-            using(var client = new SmtpClient())
-            {
-                await client.ConnectAsync("mail.claunia.com", 25, false);
-                await client.SendAsync(message);
-                await client.DisconnectAsync(true);
-            }
+            await SaveReport(newReport, reportJson);
 
             response.Content = "ok";
 
@@ -381,5 +162,116 @@ public sealed class UploadReportController : ControllerBase
 
             return response;
         }
+    }
+
+    async Task SaveReport(DeviceReportV2 newReport, string reportJson)
+    {
+        var newUploadedReport = new UploadedReport(newReport);
+
+        // Ensure CHS and CurrentCHS are not duplicates
+        if(newUploadedReport.ATA?.ReadCapabilities is { CHS: not null, CurrentCHS: not null } &&
+           newUploadedReport.ATA.ReadCapabilities.CHS.Cylinders ==
+           newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Cylinders &&
+           newUploadedReport.ATA.ReadCapabilities.CHS.Heads ==
+           newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Heads &&
+           newUploadedReport.ATA.ReadCapabilities.CHS.Sectors ==
+           newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Sectors)
+            newUploadedReport.ATA.ReadCapabilities.CHS = newUploadedReport.ATA.ReadCapabilities.CurrentCHS;
+
+        Chs? existingChs;
+
+        // Check if the CHS or CurrentCHS of this report already exist in the database
+        if(newUploadedReport.ATA?.ReadCapabilities?.CHS != null)
+        {
+            existingChs =
+                await _ctx.Chs.FirstOrDefaultAsync(c =>
+                                                       c.Cylinders ==
+                                                       newUploadedReport.ATA.ReadCapabilities.CHS.Cylinders          &&
+                                                       c.Heads   == newUploadedReport.ATA.ReadCapabilities.CHS.Heads &&
+                                                       c.Sectors == newUploadedReport.ATA.ReadCapabilities.CHS.Sectors);
+
+            if(existingChs != null) newUploadedReport.ATA.ReadCapabilities.CHS = existingChs;
+        }
+
+        if(newUploadedReport.ATA?.ReadCapabilities?.CurrentCHS != null)
+        {
+            existingChs =
+                await _ctx.Chs.FirstOrDefaultAsync(c =>
+                                                       c.Cylinders ==
+                                                       newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Cylinders &&
+                                                       c.Heads ==
+                                                       newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Heads &&
+                                                       c.Sectors ==
+                                                       newUploadedReport.ATA.ReadCapabilities.CurrentCHS.Sectors);
+
+            if(existingChs != null) newUploadedReport.ATA.ReadCapabilities.CurrentCHS = existingChs;
+        }
+
+        if(newUploadedReport.ATA?.RemovableMedias != null)
+        {
+            foreach(TestedMedia media in newUploadedReport.ATA.RemovableMedias)
+            {
+                if(media.CHS           != null                       &&
+                   media.CurrentCHS    != null                       &&
+                   media.CHS.Cylinders == media.CurrentCHS.Cylinders &&
+                   media.CHS.Heads     == media.CurrentCHS.Heads     &&
+                   media.CHS.Sectors   == media.CurrentCHS.Sectors)
+                    media.CHS = media.CurrentCHS;
+
+                if(media.CHS != null)
+                {
+                    existingChs =
+                        await _ctx.Chs.FirstOrDefaultAsync(c => c.Cylinders == media.CHS.Cylinders &&
+                                                                c.Heads     == media.CHS.Heads     &&
+                                                                c.Sectors   == media.CHS.Sectors);
+
+                    if(existingChs != null) media.CHS = existingChs;
+                }
+
+                if(media.CHS == null) continue;
+
+
+                existingChs =
+                    await _ctx.Chs.FirstOrDefaultAsync(c => media.CurrentCHS != null                       &&
+                                                            c.Cylinders      == media.CurrentCHS.Cylinders &&
+                                                            c.Heads          == media.CurrentCHS.Heads     &&
+                                                            c.Sectors        == media.CurrentCHS.Sectors);
+
+                if(existingChs != null) media.CurrentCHS = existingChs;
+            }
+        }
+
+        _ctx.Reports.Add(newUploadedReport);
+        await _ctx.SaveChangesAsync();
+
+        var pgpIn  = new MemoryStream(Encoding.UTF8.GetBytes(reportJson));
+        var pgpOut = new MemoryStream();
+        var pgp    = new ChoPGPEncryptDecrypt();
+
+        await pgp.EncryptAsync(pgpIn,
+                               pgpOut,
+                               Path.Combine(_environment.ContentRootPath ?? throw new InvalidOperationException(),
+                                            "public.asc"));
+
+        pgpOut.Position = 0;
+        reportJson      = Encoding.UTF8.GetString(pgpOut.ToArray());
+
+        var message = new MimeMessage
+        {
+            Subject = "New device report",
+            Body = new TextPart("plain")
+            {
+                Text = reportJson
+            }
+        };
+
+        message.From.Add(new MailboxAddress("Aaru Server",    "aaru@claunia.com"));
+        message.To.Add(new MailboxAddress("Natalia Portillo", "claunia@claunia.com"));
+
+        using var client = new SmtpClient();
+
+        await client.ConnectAsync("mail.claunia.com", 25, false);
+        await client.SendAsync(message);
+        await client.DisconnectAsync(true);
     }
 }
