@@ -8,6 +8,6 @@
   "license":      "LGPL",
   "repository":   "github:aaru-dps/Aaru.Server",
   "dependencies": {
-    "bootstrap": "^4.3.1"
+    "bootstrap": "^5.0.0"
   }
 }
