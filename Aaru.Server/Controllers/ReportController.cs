@@ -426,6 +426,12 @@ public sealed class ReportController : Controller
 
                     if(report.SCSI.ReadCapabilities.SupportsReadLong16 == true)
                         scsiOneValue.Add("Device supports READ LONG (16) command.");
+
+                    if(report.SCSI.ReadCapabilities.SupportsHLDTSTReadRawDVD == true)
+                        scsiOneValue.Add("Device supports reading RAW DVD data using HL-DT-ST vendor command");
+
+                    if(report.SCSI.ReadCapabilities.SupportsLiteOnReadRawDVD == true)
+                        scsiOneValue.Add("Device supports reading RAW DVD data using Lite-On READ BUFFER command");
                 }
                 else
                     testedMedia = report.SCSI.RemovableMedias;

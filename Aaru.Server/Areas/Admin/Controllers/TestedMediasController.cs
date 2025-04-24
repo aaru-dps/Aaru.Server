@@ -293,6 +293,10 @@ public sealed class TestedMediasController : Controller
                 buffer = testedMedia.HLDTSTReadRawDVDData;
 
                 break;
+            case nameof(testedMedia.LiteOnReadRawDVDData):
+                buffer = testedMedia.LiteOnReadRawDVDData;
+
+                break;
             case nameof(testedMedia.IdentifyData):
                 buffer        = testedMedia.IdentifyData;
                 model.Decoded = Identify.Prettify(buffer);
