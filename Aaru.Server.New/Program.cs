@@ -141,7 +141,7 @@ else
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-app.UseStaticFiles();
+app.MapStaticAssets();
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>().AddInteractiveServerRenderMode();

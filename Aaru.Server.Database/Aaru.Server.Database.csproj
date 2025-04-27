@@ -1,19 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Aaru.CommonTypes" Version="6.0.0-alpha8"/>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.0"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.0"/>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0"/>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0"/>
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.0"/>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.0"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="9.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0"/>
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0-preview.3.efcore.9.0.0"/>
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design" Version="1.1.2"/>
   </ItemGroup>
 </Project>
