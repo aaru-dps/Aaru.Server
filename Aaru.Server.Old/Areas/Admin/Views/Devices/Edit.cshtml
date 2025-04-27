@@ -1,0 +1,85 @@
+@using Aaru.CommonTypes.Enums
+@model Aaru.Server.Database.Models.Device
+
+@{
+    Layout        = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Aaru Server";
+}
+@{
+    // /***************************************************************************
+    // Aaru Data Preservation Suite
+    // ----------------------------------------------------------------------------
+    //
+    // Filename       : Edit.cshtml
+    // Author(s)      : Natalia Portillo <claunia@claunia.com>
+    //
+    // Component      : Aaru Server.
+    //
+    // --[ License ] --------------------------------------------------------------
+    //
+    //     This library is free software; you can redistribute it and/or modify
+    //     it under the terms of the GNU Lesser General Public License as
+    //     published by the Free Software Foundation; either version 2.1 of the
+    //     License, or (at your option) any later version.
+    //
+    //     This library is distributed in the hope that it will be useful, but
+    //     WITHOUT ANY WARRANTY; without even the implied warranty of
+    //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    //     Lesser General Public License for more details.
+    //
+    //     You should have received a copy of the GNU Lesser General Public
+    //     License along with this library; if not, see <http://www.gnu.org/licenses/>.
+    //
+    // ----------------------------------------------------------------------------
+    // Copyright © 2011-2024 Natalia Portillo
+    // ****************************************************************************/
+}
+<h4>Device report</h4>
+<hr/>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" type="hidden"/>
+            <div class="form-group">
+                <label asp-for="Manufacturer" class="control-label"></label>
+                <input asp-for="Manufacturer" class="form-control"/>
+                <span asp-validation-for="Manufacturer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Model" class="control-label"></label>
+                <input asp-for="Model" class="form-control"/>
+                <span asp-validation-for="Model" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Revision" class="control-label"></label>
+                <input asp-for="Revision" class="form-control"/>
+                <span asp-validation-for="Revision" class="text-danger"></span>
+            </div>
+            <div class="form-check form-group">
+                <label class="form-check-label">
+                    <input asp-for="CompactFlash" class="form-check-input"/> @Html.DisplayNameFor(model => model.CompactFlash)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="OptimalMultipleSectorsRead" class="control-label"></label>
+                <input asp-for="OptimalMultipleSectorsRead" class="form-control"/>
+                <span asp-validation-for="OptimalMultipleSectorsRead" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CanReadGdRomUsingSwapDisc" class="control-label"></label>
+                <input asp-for="CanReadGdRomUsingSwapDisc" class="form-control"/>
+                <span asp-validation-for="CanReadGdRomUsingSwapDisc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Type" class="control-label"></label>
+                <select asp-for="Type" asp-items="Html.GetEnumSelectList<DeviceType>()" class="form-control"></select>
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input class="btn btn-primary" type="submit" value="Save"/>
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>

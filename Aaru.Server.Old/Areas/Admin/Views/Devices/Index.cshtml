@@ -1,0 +1,98 @@
+@using Aaru.Server.Old.Database.Models
+@model IEnumerable<Aaru.Server.Database.Models.Device>
+
+@{
+    Layout        = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Aaru Server";
+}
+@{
+    // /***************************************************************************
+    // Aaru Data Preservation Suite
+    // ----------------------------------------------------------------------------
+    //
+    // Filename       : Index.cshtml
+    // Author(s)      : Natalia Portillo <claunia@claunia.com>
+    //
+    // Component      : Aaru Server.
+    //
+    // --[ License ] --------------------------------------------------------------
+    //
+    //     This library is free software; you can redistribute it and/or modify
+    //     it under the terms of the GNU Lesser General Public License as
+    //     published by the Free Software Foundation; either version 2.1 of the
+    //     License, or (at your option) any later version.
+    //
+    //     This library is distributed in the hope that it will be useful, but
+    //     WITHOUT ANY WARRANTY; without even the implied warranty of
+    //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    //     Lesser General Public License for more details.
+    //
+    //     You should have received a copy of the GNU Lesser General Public
+    //     License along with this library; if not, see <http://www.gnu.org/licenses/>.
+    //
+    // ----------------------------------------------------------------------------
+    // Copyright © 2011-2024 Natalia Portillo
+    // ****************************************************************************/
+}
+<h4>Device reports</h4>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Manufacturer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Revision)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompactFlash)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OptimalMultipleSectorsRead)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CanReadGdRomUsingSwapDisc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Type)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach(Device item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Manufacturer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Revision)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompactFlash)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OptimalMultipleSectorsRead)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CanReadGdRomUsingSwapDisc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">Edit</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

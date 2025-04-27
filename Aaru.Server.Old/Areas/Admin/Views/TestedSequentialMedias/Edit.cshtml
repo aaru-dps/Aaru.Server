@@ -1,0 +1,64 @@
+@model Aaru.CommonTypes.Metadata.TestedSequentialMedia
+
+@{
+    Layout        = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Aaru Server";
+}
+@{
+    // /***************************************************************************
+    // Aaru Data Preservation Suite
+    // ----------------------------------------------------------------------------
+    //
+    // Filename       : Edit.cshtml
+    // Author(s)      : Natalia Portillo <claunia@claunia.com>
+    //
+    // Component      : Aaru Server.
+    //
+    // --[ License ] --------------------------------------------------------------
+    //
+    //     This library is free software; you can redistribute it and/or modify
+    //     it under the terms of the GNU Lesser General Public License as
+    //     published by the Free Software Foundation; either version 2.1 of the
+    //     License, or (at your option) any later version.
+    //
+    //     This library is distributed in the hope that it will be useful, but
+    //     WITHOUT ANY WARRANTY; without even the implied warranty of
+    //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    //     Lesser General Public License for more details.
+    //
+    //     You should have received a copy of the GNU Lesser General Public
+    //     License along with this library; if not, see <http://www.gnu.org/licenses/>.
+    //
+    // ----------------------------------------------------------------------------
+    // Copyright © 2011-2024 Natalia Portillo
+    // ****************************************************************************/
+}
+<h4>Tested sequential media</h4>
+<hr/>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" type="hidden"/>
+            <div class="form-group">
+                <label asp-for="Manufacturer" class="control-label"></label>
+                <input asp-for="Manufacturer" class="form-control"/>
+                <span asp-validation-for="Manufacturer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Model" class="control-label"></label>
+                <input asp-for="Model" class="form-control"/>
+                <span asp-validation-for="Model" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MediumTypeName" class="control-label"></label>
+                <input asp-for="MediumTypeName" class="form-control"/>
+                <span asp-validation-for="MediumTypeName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input class="btn btn-primary" type="submit" value="Save"/>
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>

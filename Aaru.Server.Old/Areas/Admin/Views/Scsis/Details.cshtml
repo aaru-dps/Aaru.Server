@@ -1,0 +1,51 @@
+@using Aaru.Decoders.SCSI
+@using Aaru.Server.Old.Core
+@model Aaru.CommonTypes.Metadata.Scsi
+
+@{
+    Layout        = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Aaru Server";
+}
+@{
+    // /***************************************************************************
+    // Aaru Data Preservation Suite
+    // ----------------------------------------------------------------------------
+    //
+    // Filename       : Details.cshtml
+    // Author(s)      : Natalia Portillo <claunia@claunia.com>
+    //
+    // Component      : Aaru Server.
+    //
+    // --[ License ] --------------------------------------------------------------
+    //
+    //     This library is free software; you can redistribute it and/or modify
+    //     it under the terms of the GNU Lesser General Public License as
+    //     published by the Free Software Foundation; either version 2.1 of the
+    //     License, or (at your option) any later version.
+    //
+    //     This library is distributed in the hope that it will be useful, but
+    //     WITHOUT ANY WARRANTY; without even the implied warranty of
+    //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    //     Lesser General Public License for more details.
+    //
+    //     You should have received a copy of the GNU Lesser General Public
+    //     License along with this library; if not, see <http://www.gnu.org/licenses/>.
+    //
+    // ----------------------------------------------------------------------------
+    // Copyright © 2011-2024 Natalia Portillo
+    // ****************************************************************************/
+}
+<div>
+    <h4>SCSI INQUIRY - ID = @Model.Id</h4>
+    <hr/>
+    @Html.Raw(Html.EncodedMultiLineText(Inquiry.Prettify(Model.InquiryData)))
+</div>
+<div>
+    <form asp-action="Compare">
+        <input asp-for="Id" type="hidden"/>
+        Compare to:
+        <input name="RightId" type="number"/>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        <input class="btn btn-primary" type="submit" value="Compare"/>
+    </form>
+</div>

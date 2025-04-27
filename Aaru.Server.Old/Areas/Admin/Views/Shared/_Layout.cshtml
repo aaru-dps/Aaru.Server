@@ -1,0 +1,140 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser>     SignInManager
+@inject UserManager<IdentityUser>       UserManager
+@{
+    // /***************************************************************************
+    // Aaru Data Preservation Suite
+    // ----------------------------------------------------------------------------
+    //
+    // Filename       : _Layout.cshtml
+    // Author(s)      : Natalia Portillo <claunia@claunia.com>
+    //
+    // Component      : Aaru Server.
+    //
+    // --[ Description ] ----------------------------------------------------------
+    //
+    //     Contains layout.
+    //
+    // --[ License ] --------------------------------------------------------------
+    //
+    //     This library is free software; you can redistribute it and/or modify
+    //     it under the terms of the GNU Lesser General Public License as
+    //     published by the Free Software Foundation; either version 2.1 of the
+    //     License, or (at your option) any later version.
+    //
+    //     This library is distributed in the hope that it will be useful, but
+    //     WITHOUT ANY WARRANTY; without even the implied warranty of
+    //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    //     Lesser General Public License for more details.
+    //
+    //     You should have received a copy of the GNU Lesser General Public
+    //     License along with this library; if not, see <http://www.gnu.org/licenses/>.
+    //
+    // ----------------------------------------------------------------------------
+    // Copyright © 2011-2024 Natalia Portillo
+    // ****************************************************************************/
+}
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head>
+    @switch(DateTime.UtcNow.DayOfYear)
+    {
+        // 24th January, Macintosh launch
+        case 24:
+            <link href="~/css/mac/aaruserver.css" rel="stylesheet" type="text/css"/>
+            <script src="~/js/colors/mac.js"></script>
+
+            break;
+
+        // 23rd July, Amiga launch
+        case 204:
+            <link href="~/css/amiga/aaruserver.css" rel="stylesheet" type="text/css"/>
+            <script src="~/js/colors/amiga.js"></script>
+
+            break;
+        default:
+            <link href="~/css/dos/aaruserver.css" rel="stylesheet" type="text/css"/>
+            <script src="~/js/colors/dos.js"></script>
+
+            break;
+    }
+    <meta charset="utf-8"/>
+    <title>@ViewBag.Title</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111466173-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'UA-111466173-1');
+    </script>
+    @Html.Raw(JavaScriptSnippet.FullScript)
+</head>
+<body>
+<header>
+    Welcome to
+    <i>
+        <a href="http://github.com/aaru-dps/aaru" target="_blank">
+            Aaru
+        </a>
+    </i> Server Administrative Area
+    @if(SignInManager.IsSignedIn(User))
+    {
+        <div>
+            <a asp-area="Identity" asp-page="/Account/Manage/Index" class="text-dark" id="manage" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" class="form-inline" id="logoutForm">
+                <button class="btn btn-link text-dark" id="logout" type="submit">Logout</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <div>
+            <a asp-area="Identity" asp-page="/Account/Login" class="text-dark" id="login">Login</a>
+        </div>
+    }
+</header>
+@RenderBody()
+<footer class="container-fluid">
+    © 2021-2019
+    <a href="http://www.claunia.com" target="_blank">
+        Claunia.com
+    </a>
+    <br/>
+    @switch(DateTime.UtcNow.DayOfYear)
+    {
+        // 24th January, Macintosh launch
+        case 24:
+            @Html.Raw("Fonts are © 2014 <a href=\"http://christtrekker.users.sourceforge.net/fnt/chicago.shtml\" target=\"_blank\">Robin Casady</a>")
+
+            break;
+
+        // 23rd July, Amiga launch
+        case 204:
+            @Html.Raw("Fonts are © 2013 <a href=\"https://github.com/rewtnull/amigafonts\" target=\"_blank\">TrueSchool Ascii</a>")
+
+            break;
+        default:
+            @Html.Raw("Fonts are © 2015 - 2016 <a href=\"http://int10h.org\" target=\"_blank\">VileR</a>")
+
+            break;
+    }
+    <br/>
+    CSS © 2018-2019
+    <a href="https://getbootstrap.com/" target="_blank">
+        Bootstrap
+    </a> and
+    <a href="http://www.claunia.com" target="_blank">
+        Claunia.com
+    </a>
+</footer>
+<script crossorigin="anonymous" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+@RenderSection("Scripts", false)
+</body>
+</html>

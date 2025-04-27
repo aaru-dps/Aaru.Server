@@ -1,0 +1,490 @@
+@using Aaru.CommonTypes.Metadata
+@using Aaru.Server.Old.Database.Models
+@model Aaru.Server.Database.Models.DeviceDetails
+
+@{
+    Layout        = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Aaru Server";
+}
+@{
+    // /***************************************************************************
+    // Aaru Data Preservation Suite
+    // ----------------------------------------------------------------------------
+    //
+    // Filename       : Details.cshtml
+    // Author(s)      : Natalia Portillo <claunia@claunia.com>
+    //
+    // Component      : Aaru Server.
+    //
+    // --[ License ] --------------------------------------------------------------
+    //
+    //     This library is free software; you can redistribute it and/or modify
+    //     it under the terms of the GNU Lesser General Public License as
+    //     published by the Free Software Foundation; either version 2.1 of the
+    //     License, or (at your option) any later version.
+    //
+    //     This library is distributed in the hope that it will be useful, but
+    //     WITHOUT ANY WARRANTY; without even the implied warranty of
+    //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    //     Lesser General Public License for more details.
+    //
+    //     You should have received a copy of the GNU Lesser General Public
+    //     License along with this library; if not, see <http://www.gnu.org/licenses/>.
+    //
+    // ----------------------------------------------------------------------------
+    // Copyright © 2011-2024 Natalia Portillo
+    // ****************************************************************************/
+}
+<div>
+    <h4>Device report</h4>
+    <hr/>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Report.AddedWhen)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Report.AddedWhen)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Report.ModifiedWhen)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Report.ModifiedWhen)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Report.Manufacturer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Report.Manufacturer)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Report.Model)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Report.Model)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Report.Revision)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Report.Revision)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Report.CompactFlash)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Report.CompactFlash)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Report.OptimalMultipleSectorsRead)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Report.OptimalMultipleSectorsRead)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Report.CanReadGdRomUsingSwapDisc)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Report.CanReadGdRomUsingSwapDisc)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Report.Type)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Report.Type)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Report.Id" class="btn btn-primary">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
+@if(Model.ReadCapabilitiesId != 0)
+{
+    <div>
+        <a asp-action="Details" asp-controller="TestedMedias" asp-route-id="@Model.ReadCapabilitiesId" target="_blank">Read capabilities</a>
+    </div>
+}
+@if(Model.Report.ATA != null)
+{
+    <div>
+        <a asp-action="Details" asp-controller="Atas" asp-route-id="@Model.Report.ATA.Id" target="_blank">ATA report</a>
+    </div>
+}
+@if(Model.Report.ATAPI != null)
+{
+    <div>
+        <a asp-action="Details" asp-controller="Atas" asp-route-id="@Model.Report.ATAPI.Id" target="_blank">ATAPI report</a>
+    </div>
+}
+@if(Model.Report.SCSI != null)
+{
+    <div>
+        <a asp-action="Details" asp-controller="Scsis" asp-route-id="@Model.Report.SCSI.Id" target="_blank">SCSI report</a>
+    </div>
+}
+@if(Model.Report.MultiMediaCard != null)
+{
+    <div>
+        <a asp-action="Details" asp-controller="MmcSds" asp-route-id="@Model.Report.MultiMediaCard.Id" target="_blank">MultiMediaCard report</a>
+    </div>
+}
+@if(Model.Report.SecureDigital != null)
+{
+    <div>
+        <a asp-action="Details" asp-controller="MmcSds" asp-route-id="@Model.Report.SecureDigital.Id" target="_blank">SecureDigital report</a>
+    </div>
+}
+@if(Model.Report.USB != null)
+{
+    <div>
+        <a asp-action="Details" asp-controller="Usbs" asp-route-id="@Model.Report.USB.Id" target="_blank">USB report</a>
+    </div>
+}
+@if(Model.Report.GdRomSwapDiscCapabilitiesId != null)
+{
+    <div>
+        <a asp-action="Details" asp-controller="GdRomSwapDiscCapabilities" asp-route-id="@Model.Report.GdRomSwapDiscCapabilitiesId" target="_blank">GD-ROM swap-trick capabilities report</a>
+    </div>
+}
+@if(Model.Report.FireWire != null)
+{
+    <div>
+        Has a FireWire report.
+    </div>
+}
+@if(Model.Report.PCMCIA != null)
+{
+    <div>
+        Has a PCMCIA report.
+    </div>
+}
+@if(Model.SameAll.Count > 0)
+{
+    <div>
+        <h4>Other device reports with same manufacturer, model and revision:</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach(int item in Model.SameAll)
+            {
+                <tr>
+                    <td>
+                        @item
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item" class="btn btn-primary" target="_blank">Details</a>
+                        <a asp-action="Merge" asp-route-master="@Model.Report.Id" asp-route-slave="@item" class="btn btn-secondary">Merge</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+@if(Model.SameButManufacturer.Count > 0)
+{
+    <div>
+        <h4>Other device reports with same model and revision:</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach(int item in Model.SameButManufacturer)
+            {
+                <tr>
+                    <td>
+                        @item
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item" class="btn btn-primary" target="_blank">Details</a>
+                        <a asp-action="Merge" asp-route-master="@Model.Report.Id" asp-route-slave="@item" class="btn btn-secondary">Merge</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+@if(Model.ReportAll.Count > 0)
+{
+    <div>
+        <h4>Uploaded reports with same manufacturer, model and revision:</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach(int item in Model.ReportAll)
+            {
+                <tr>
+                    <td>
+                        @item
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-controller="Reports" asp-route-id="@item" class="btn btn-primary" target="_blank">Details</a>
+                        <a asp-action="MergeReports" asp-route-deviceId="@Model.Report.Id" asp-route-reportId="@item" class="btn btn-secondary">Merge</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+@if(Model.ReportButManufacturer.Count > 0)
+{
+    <div>
+        <h4>Device reports with same model and revision:</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach(int item in Model.ReportButManufacturer)
+            {
+                <tr>
+                    <td>
+                        @item
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-controller="Reports" asp-route-id="@item" class="btn btn-primary" target="_blank">Details</a>
+                        <a asp-action="MergeReports" asp-route-deviceId="@Model.Report.Id" asp-route-reportId="@item" class="btn btn-secondary">Merge</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+@if(Model.StatsAll.Count > 0)
+{
+    <div>
+        <h4>Device statistics with same manufacturer, model and revision:</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatsAll[0].Manufacturer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatsAll[0].Model)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatsAll[0].Revision)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatsAll[0].Bus)
+                </th>
+                <th>
+                    Has a linked report?
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach(DeviceStat item in Model.StatsAll)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Manufacturer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Revision)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Bus)
+                    </td>
+                    <td>
+                        @if(item.Report is null)
+                        {
+                            @("No")
+                        }
+                        else
+                        {
+                            @if(item.Report.Id == Model.Report.Id)
+                            {
+                                @("Us")
+                            }
+                            else
+                            {
+                                @("Yes")
+                            }
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="LinkReports" asp-route-deviceId="@Model.Report.Id" asp-route-statsId="@item.Id" class="btn btn-secondary">Link</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+@if(Model.StatsButManufacturer.Count > 0)
+{
+    <div>
+        <h4>Device statistics with same model and revision:</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatsButManufacturer[0].Manufacturer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatsButManufacturer[0].Model)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatsButManufacturer[0].Revision)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatsButManufacturer[0].Bus)
+                </th>
+                <th>
+                    Has a linked report?
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach(DeviceStat item in Model.StatsButManufacturer)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Manufacturer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Revision)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Bus)
+                    </td>
+                    <td>
+                        @if(item.Report is null)
+                        {
+                            @("No")
+                        }
+                        else
+                        {
+                            <a asp-action="Details" asp-route-id="@item.Report.Id" target="_blank">Yes</a>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="LinkReports" asp-route-deviceId="@Model.Report.Id" asp-route-statsId="@item.Id" class="btn btn-secondary">Link</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+@if(Model.TestedMedias.Count > 0)
+{
+    <div>
+        <h4>Tested media:</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TestedMedias[0].Manufacturer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TestedMedias[0].Model)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TestedMedias[0].MediumTypeName)
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach(TestedMedia item in Model.TestedMedias)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Manufacturer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MediumTypeName)
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-controller="TestedMedias" asp-route-id="@item.Id" class="btn btn-secondary" target="_blank">Details</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+@if(Model.TestedSequentialMedias.Count > 0)
+{
+    <div>
+        <h4>Tested media:</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TestedSequentialMedias[0].Manufacturer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TestedSequentialMedias[0].Model)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TestedSequentialMedias[0].MediumTypeName)
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach(TestedSequentialMedia item in Model.TestedSequentialMedias)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Manufacturer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MediumTypeName)
+                    </td>
+                    <td>
+                        <a asp-action="Delete" asp-controller="TestedSequentialMedias" asp-route-id="@item.Id" class="btn btn-danger" target="_blank">Delete</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
