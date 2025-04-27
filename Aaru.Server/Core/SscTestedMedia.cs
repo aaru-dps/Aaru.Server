@@ -32,7 +32,7 @@
 
 using Aaru.CommonTypes.Metadata;
 
-namespace Aaru.Server.New.Core;
+namespace Aaru.Server.Core;
 
 public static class SscTestedMedia
 {

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using DbContext = Aaru.Server.Database.DbContext;
 using Media = Aaru.Server.Database.Models.Media;
 
-namespace Aaru.Server.New.Components.Pages.Statistics;
+namespace Aaru.Server.Components.Pages.Statistics;
 
 public partial class RealMedias
 {

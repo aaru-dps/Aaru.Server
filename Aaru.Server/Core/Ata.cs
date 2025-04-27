@@ -33,7 +33,7 @@
 using Aaru.CommonTypes.Structs.Devices.ATA;
 using Aaru.CommonTypes.Structs.Devices.SCSI;
 
-namespace Aaru.Server.New.Core;
+namespace Aaru.Server.Core;
 
 // TODO: Use Humanizer
 // TODO: Better use HTML and CSS

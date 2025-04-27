@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using DbContext = Aaru.Server.Database.DbContext;
 using PlatformID = Aaru.CommonTypes.Interop.PlatformID;
 
-namespace Aaru.Server.New.Components.Pages.Statistics;
+namespace Aaru.Server.Components.Pages.Statistics;
 
 public partial class OperatingSystems
 {

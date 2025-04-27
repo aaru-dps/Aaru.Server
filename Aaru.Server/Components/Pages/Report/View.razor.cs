@@ -4,7 +4,7 @@ using Aaru.Decoders.PCMCIA;
 using Aaru.Decoders.SCSI;
 using Aaru.Helpers;
 using Aaru.Server.Database.Models;
-using Aaru.Server.New.Core;
+using Aaru.Server.Core;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using Ata = Aaru.CommonTypes.Metadata.Ata;
@@ -13,7 +13,7 @@ using Inquiry = Aaru.CommonTypes.Structs.Devices.SCSI.Inquiry;
 using TestedMedia = Aaru.CommonTypes.Metadata.TestedMedia;
 using Tuple = Aaru.Decoders.PCMCIA.Tuple;
 
-namespace Aaru.Server.New.Components.Pages.Report;
+namespace Aaru.Server.Components.Pages.Report;
 
 public partial class View
 {

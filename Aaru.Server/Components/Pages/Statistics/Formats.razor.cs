@@ -3,7 +3,7 @@ using Blazorise.Charts;
 using Microsoft.EntityFrameworkCore;
 using DbContext = Aaru.Server.Database.DbContext;
 
-namespace Aaru.Server.New.Components.Pages.Statistics;
+namespace Aaru.Server.Components.Pages.Statistics;
 
 public partial class Formats
 {

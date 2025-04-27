@@ -43,7 +43,7 @@ using Newtonsoft.Json;
 using DbContext = Aaru.Server.Database.DbContext;
 using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 
-namespace Aaru.Server.New.Controllers;
+namespace Aaru.Server.Controllers;
 
 public sealed class UploadReportController : ControllerBase
 {

@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using Aaru.CommonTypes.Interop;
-using Aaru.Server.New;
-using Aaru.Server.New.Components;
-using Aaru.Server.New.Components.Account;
+using Aaru.Server;
+using Aaru.Server.Components;
+using Aaru.Server.Components.Account;
 using Blazorise;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;

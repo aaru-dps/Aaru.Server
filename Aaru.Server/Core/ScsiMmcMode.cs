@@ -32,7 +32,7 @@
 
 using Aaru.CommonTypes.Structs.Devices.SCSI.Modes;
 
-namespace Aaru.Server.New.Core;
+namespace Aaru.Server.Core;
 
 public static class ScsiMmcMode
 {

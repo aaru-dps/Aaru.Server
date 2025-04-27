@@ -1,6 +1,6 @@
 using Blazorise.Charts;
 
-namespace Aaru.Server.New.Components.Pages.Statistics;
+namespace Aaru.Server.Components.Pages.Statistics;
 
 public static class Common
 {

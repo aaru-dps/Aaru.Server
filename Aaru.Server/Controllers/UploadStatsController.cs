@@ -35,7 +35,7 @@ using System.Net;
 using System.Xml.Serialization;
 using Aaru.CommonTypes.Metadata;
 using Aaru.Server.Database.Models;
-using Aaru.Server.New.Core;
+using Aaru.Server.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -43,7 +43,7 @@ using DbContext = Aaru.Server.Database.DbContext;
 using OperatingSystem = Aaru.Server.Database.Models.OperatingSystem;
 using Version = Aaru.Server.Database.Models.Version;
 
-namespace Aaru.Server.New.Controllers;
+namespace Aaru.Server.Controllers;
 
 public sealed class UploadStatsController : ControllerBase
 {

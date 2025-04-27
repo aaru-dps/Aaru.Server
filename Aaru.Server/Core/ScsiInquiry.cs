@@ -32,7 +32,7 @@
 
 using Aaru.CommonTypes.Structs.Devices.SCSI;
 
-namespace Aaru.Server.New.Core;
+namespace Aaru.Server.Core;
 
 static class ScsiInquiry
 {

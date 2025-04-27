@@ -33,7 +33,7 @@
 using Aaru.CommonTypes.Metadata;
 using Aaru.Decoders.SCSI;
 
-namespace Aaru.Server.New.Core;
+namespace Aaru.Server.Core;
 
 public static class ScsiEvpd
 {

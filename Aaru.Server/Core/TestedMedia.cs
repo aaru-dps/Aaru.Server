@@ -30,7 +30,7 @@
 // Copyright © 2011-2024 Natalia Portillo
 // ****************************************************************************/
 
-namespace Aaru.Server.New.Core;
+namespace Aaru.Server.Core;
 
 public static class TestedMedia
 {

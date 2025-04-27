@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
 
-namespace Aaru.Server.New.Components.Account;
+namespace Aaru.Server.Components.Account;
 
 sealed class IdentityRedirectManager(NavigationManager navigationManager)
 {

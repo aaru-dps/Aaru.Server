@@ -1,7 +1,7 @@
 ﻿using Markdig;
 using Microsoft.AspNetCore.Components.Routing;
 
-namespace Aaru.Server.New.Components.Layout;
+namespace Aaru.Server.Components.Layout;
 
 public partial class NavMenu
 {

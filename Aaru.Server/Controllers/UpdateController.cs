@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using DbContext = Aaru.Server.Database.DbContext;
 
-namespace Aaru.Server.New.Controllers;
+namespace Aaru.Server.Controllers;
 
 [Controller]
 public sealed class UpdateController(DbContext ctx) : ControllerBase

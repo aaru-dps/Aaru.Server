@@ -2,7 +2,7 @@
 using Markdig.Prism;
 using Microsoft.AspNetCore.Components;
 
-namespace Aaru.Server.New.Components.Pages;
+namespace Aaru.Server.Components.Pages;
 
 public partial class Documentation
 {

@@ -37,7 +37,7 @@ using DbContext = Aaru.Server.Database.DbContext;
 using OperatingSystem = Aaru.Server.Database.Models.OperatingSystem;
 using Version = Aaru.Server.Database.Models.Version;
 
-namespace Aaru.Server.New.Core;
+namespace Aaru.Server.Core;
 
 public static class StatsConverter
 {

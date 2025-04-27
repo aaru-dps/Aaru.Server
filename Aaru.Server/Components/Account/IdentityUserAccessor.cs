@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace Aaru.Server.New.Components.Account;
+namespace Aaru.Server.Components.Account;
 
 sealed class IdentityUserAccessor(UserManager<IdentityUser> userManager, IdentityRedirectManager redirectManager)
 {

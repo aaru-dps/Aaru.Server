@@ -1,8 +1,8 @@
 using System.Reflection;
 using System.Security.Claims;
 using System.Text.Json;
-using Aaru.Server.New.Components.Account.Pages;
-using Aaru.Server.New.Components.Account.Pages.Manage;
+using Aaru.Server.Components.Account.Pages;
+using Aaru.Server.Components.Account.Pages.Manage;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;

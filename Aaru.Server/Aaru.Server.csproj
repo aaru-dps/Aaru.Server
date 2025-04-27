@@ -4,7 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-Aaru.Server.New-79282495-4F67-4766-871D-448D1338E8BC</UserSecretsId>
+    <UserSecretsId>aspnet-Aaru.Server-79282495-4F67-4766-871D-448D1338E8BC</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
