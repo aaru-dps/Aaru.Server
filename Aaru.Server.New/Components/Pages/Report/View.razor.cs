@@ -589,6 +589,12 @@ public partial class View
                 if(report.SCSI.ReadCapabilities.SupportsReadLong16 == true)
                     readCapabilitiesList.Add("Device supports READ LONG (16) command.");
 
+                if(report.SCSI.ReadCapabilities.SupportsHLDTSTReadRawDVD == true)
+                    readCapabilitiesList.Add("Device supports reading RAW DVD data using HL-DT-ST vendor command");
+
+                if(report.SCSI.ReadCapabilities.SupportsLiteOnReadRawDVD == true)
+                    readCapabilitiesList.Add("Device supports reading RAW DVD data using Lite-On READ BUFFER command");
+
                 if(readCapabilitiesList.Count       > 0) ReadCapabilitiesList       = readCapabilitiesList;
                 if(readCapabilitiesDictionary.Count > 0) ReadCapabilitiesDictionary = readCapabilitiesDictionary;
             }

@@ -272,6 +272,9 @@ public static class TestedMedia
             if(testedMedia.SupportsHLDTSTReadRawDVD == true)
                 list.Add("Device can use the HL-DT-ST vendor READ DVD (RAW) command with this medium");
 
+            if(testedMedia.SupportsLiteOnReadRawDVD == true)
+                list.Add("Device can use the Lite-On READ BUFFER (RAW) command with this medium");
+
             if(testedMedia.SupportsNECReadCDDA == true)
                 list.Add("Device can use the NEC vendor READ CD-DA command with this medium");
 
