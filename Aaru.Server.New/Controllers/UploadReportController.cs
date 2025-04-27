@@ -33,7 +33,6 @@
 using System.Diagnostics;
 using System.Net;
 using System.Text;
-using System.Xml.Serialization;
 using Aaru.CommonTypes.Metadata;
 using Aaru.Server.Database.Models;
 using Cinchoo.PGP;
@@ -65,57 +64,12 @@ public sealed class UploadReportController : ControllerBase
     {
         var response = new ContentResult
         {
-            StatusCode  = (int)HttpStatusCode.OK,
-            ContentType = "text/plain"
+            StatusCode  = (int)HttpStatusCode.InternalServerError,
+            ContentType = "text/plain",
+            Content     = "error"
         };
 
-        try
-        {
-            var         newReport = new DeviceReport();
-            HttpRequest request   = HttpContext.Request;
-
-            var xs = new XmlSerializer(newReport.GetType());
-
-            newReport =
-                (DeviceReport)xs.Deserialize(new StringReader(await new StreamReader(request.Body).ReadToEndAsync()));
-
-            if(newReport == null)
-            {
-                response.Content = "notstats";
-
-                return response;
-            }
-
-            var reportV2 = new DeviceReportV2(newReport);
-            var jsonSw   = new StringWriter();
-
-            await jsonSw.WriteAsync(JsonConvert.SerializeObject(reportV2,
-                                                                Formatting.Indented,
-                                                                new JsonSerializerSettings
-                                                                {
-                                                                    NullValueHandling = NullValueHandling.Ignore
-                                                                }));
-
-            var reportV2String = jsonSw.ToString();
-            jsonSw.Close();
-
-            await SaveReport(reportV2, reportV2String);
-
-            response.Content = "ok";
-
-            return response;
-        }
-
-        // ReSharper disable once RedundantCatchClause
-        catch
-        {
-#if DEBUG
-            if(Debugger.IsAttached) throw;
-#endif
-            response.Content = "error";
-
-            return response;
-        }
+        return response;
     }
 
     /// <summary>Receives a report from Aaru.Core, verifies it's in the correct format and stores it on the server</summary>
@@ -134,9 +88,9 @@ public sealed class UploadReportController : ControllerBase
         {
             HttpRequest request = HttpContext.Request;
 
-            var            sr         = new StreamReader(request.Body);
-            string         reportJson = await sr.ReadToEndAsync();
-            DeviceReportV2 newReport  = JsonConvert.DeserializeObject<DeviceReportV2>(reportJson);
+            var          sr         = new StreamReader(request.Body);
+            string       reportJson = await sr.ReadToEndAsync();
+            DeviceReport newReport  = JsonConvert.DeserializeObject<DeviceReport>(reportJson);
 
             if(newReport == null)
             {
@@ -164,7 +118,7 @@ public sealed class UploadReportController : ControllerBase
         }
     }
 
-    async Task SaveReport(DeviceReportV2 newReport, string reportJson)
+    async Task SaveReport(DeviceReport newReport, string reportJson)
     {
         var newUploadedReport = new UploadedReport(newReport);
 

@@ -36,11 +36,11 @@ using Aaru.CommonTypes.Metadata;
 
 namespace Aaru.Server.Database.Models;
 
-public class Device : DeviceReportV2
+public class Device : DeviceReport
 {
     public Device() => AddedWhen = DateTime.UtcNow;
 
-    public Device(DeviceReportV2 report)
+    public Device(DeviceReport report)
     {
         ATA                       = report.ATA;
         ATAPI                     = report.ATAPI;

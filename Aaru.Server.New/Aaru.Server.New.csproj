@@ -8,9 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aaru.CommonTypes" Version="6.0.0-alpha8"/>
-    <PackageReference Include="Aaru.Decoders" Version="6.0.0-alpha8"/>
-    <PackageReference Include="Aaru.Dto" Version="6.0.0-alpha8"/>
+    <PackageReference Include="Aaru.CommonTypes" Version="6.0.0-alpha10"/>
+    <PackageReference Include="Aaru.Decoders" Version="6.0.0-alpha10"/>
+    <PackageReference Include="Aaru.Dto" Version="6.0.0-alpha10"/>
     <PackageReference Include="Blazorise.Bootstrap5" Version="1.5.2"/>
     <PackageReference Include="Blazorise.Charts" Version="1.5.2"/>
     <PackageReference Include="Blazorise.DataGrid" Version="1.5.2"/>
@@ -35,6 +35,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Aaru.Server.Database\Aaru.Server.Database.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\.nuget\packages\newtonsoft.json\13.0.1\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

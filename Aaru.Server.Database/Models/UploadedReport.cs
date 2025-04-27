@@ -35,11 +35,11 @@ using Aaru.CommonTypes.Metadata;
 
 namespace Aaru.Server.Database.Models;
 
-public class UploadedReport : DeviceReportV2
+public class UploadedReport : DeviceReport
 {
     public UploadedReport() => UploadedWhen = DateTime.UtcNow;
 
-    public UploadedReport(DeviceReportV2 report)
+    public UploadedReport(DeviceReport report)
     {
         ATA                       = report.ATA;
         ATAPI                     = report.ATAPI;

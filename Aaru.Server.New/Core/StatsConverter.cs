@@ -566,10 +566,10 @@ public static class StatsConverter
         {
             foreach(MediaStats media in newStats.Medias)
             {
-                if(string.IsNullOrWhiteSpace(media.type)) continue;
+                if(string.IsNullOrWhiteSpace(media.MediaType)) continue;
 
                 Media? existing =
-                    await ctx.Medias.FirstOrDefaultAsync(c => c.Type == media.type && c.Real == media.real);
+                    await ctx.Medias.FirstOrDefaultAsync(c => c.Type == media.MediaType && c.Real == media.real);
 
                 if(existing == null)
                 {
@@ -577,7 +577,7 @@ public static class StatsConverter
                     {
                         Count = media.Value,
                         Real  = media.real,
-                        Type  = media.type
+                        Type  = media.MediaType
                     });
                 }
                 else

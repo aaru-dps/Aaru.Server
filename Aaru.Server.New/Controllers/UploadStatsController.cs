@@ -266,13 +266,13 @@ public sealed class UploadStatsController : ControllerBase
                 foreach(MediaStats media in newstats.Medias)
                 {
                     Media? existing =
-                        await _ctx.Medias.FirstOrDefaultAsync(c => c.Type == media.type && c.Real == media.real);
+                        await _ctx.Medias.FirstOrDefaultAsync(c => c.Type == media.MediaType && c.Real == media.real);
 
                     if(existing == null)
                     {
                         _ctx.Medias.Add(new Media
                         {
-                            Type  = media.type,
+                            Type  = media.MediaType,
                             Real  = media.real,
                             Count = media.Value
                         });
