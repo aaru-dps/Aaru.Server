@@ -18,9 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution files", "Solution 
 		LICENSE.MIT = LICENSE.MIT
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aaru.Server.Api", "Aaru.Server.Api\Aaru.Server.Api.csproj", "{D26BB31E-B6A2-4413-B66B-E68AC425BA7D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aaru.Server.New", "Aaru.Server.New\Aaru.Server.New.csproj", "{032D24BA-EC3B-4BD1-ADD6-9463E2DC5D7E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aaru.Server", "Aaru.Server\Aaru.Server.csproj", "{032D24BA-EC3B-4BD1-ADD6-9463E2DC5D7E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aaru.Server.Database", "Aaru.Server.Database\Aaru.Server.Database.csproj", "{FA830C89-B3C4-4139-B756-B6C0F35C0BB4}"
 EndProject
@@ -38,10 +36,6 @@ Global
 		{79D6A54E-47B6-4D0A-ABEB-4FA7B5ADF4B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79D6A54E-47B6-4D0A-ABEB-4FA7B5ADF4B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79D6A54E-47B6-4D0A-ABEB-4FA7B5ADF4B2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D26BB31E-B6A2-4413-B66B-E68AC425BA7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D26BB31E-B6A2-4413-B66B-E68AC425BA7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D26BB31E-B6A2-4413-B66B-E68AC425BA7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D26BB31E-B6A2-4413-B66B-E68AC425BA7D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{032D24BA-EC3B-4BD1-ADD6-9463E2DC5D7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{032D24BA-EC3B-4BD1-ADD6-9463E2DC5D7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{032D24BA-EC3B-4BD1-ADD6-9463E2DC5D7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
