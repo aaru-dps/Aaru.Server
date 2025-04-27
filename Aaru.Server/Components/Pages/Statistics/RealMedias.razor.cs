@@ -12,7 +12,7 @@ public partial class RealMedias
     PieChart<long>? _realMediaChart;
     List<long>      _realMediaCounts = [];
     string[]        _realMediaLabels = [];
-    List<MediaItem> RealMedia { get; set; } = [];
+    List<MediaItem> RealMedia { get; } = [];
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()

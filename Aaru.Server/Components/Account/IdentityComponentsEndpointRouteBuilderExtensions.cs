@@ -27,9 +27,7 @@ static class IdentityComponentsEndpointRouteBuilderExtensions
                              {
                                  IEnumerable<KeyValuePair<string, StringValues>> query =
                                  [
-                                     new KeyValuePair<string, StringValues>("ReturnUrl", returnUrl),
-                                     new KeyValuePair<string, StringValues>("Action",
-                                                                            ExternalLogin.LoginCallbackAction)
+                                     new("ReturnUrl", returnUrl), new("Action", ExternalLogin.LoginCallbackAction)
                                  ];
 
                                  string redirectUrl = UriHelper.BuildRelative(context.Request.PathBase,

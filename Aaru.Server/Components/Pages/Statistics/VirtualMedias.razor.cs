@@ -12,7 +12,7 @@ public partial class VirtualMedias
     PieChart<long>? _virtualMediaChart;
     List<long>      _virtualMediaCounts = [];
     string[]        _virtualMediaLabels = [];
-    List<MediaItem> VirtualMedia { get; set; } = [];
+    List<MediaItem> VirtualMedia { get; } = [];
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
