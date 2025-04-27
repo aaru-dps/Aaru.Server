@@ -1454,6 +1454,8 @@ indent_size  = 4
 tab_width    = 4
 
 [*.{cs,vb}]
+# Many identifiers use names that cannot have real meanings
+dotnet_diagnostic.ca1704.severity = none
 dotnet_diagnostic.ph2006.severity = none
 dotnet_diagnostic.ph2021.severity = none
 dotnet_diagnostic.ph2026.severity = none
