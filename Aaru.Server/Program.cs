@@ -170,7 +170,7 @@ using(IServiceScope scope = app.Services.CreateScope())
         stopwatch.Restart();
         Console.WriteLine("\u001b[31;1mSeeding Identity...\u001b[0m");
         await Seeder.SeedAsync(context, services);
-        context.Database.Migrate();
+        await context.Database.MigrateAsync();
         stopwatch.Stop();
 
         Console.WriteLine("\u001b[31;1mTook \u001b[32;1m{0} seconds\u001b[31;1m...\u001b[0m",
