@@ -1,10 +1,6 @@
 [submodule "CICMMetadata"]
 	path = CICMMetadata
 	url = https://github.com/claunia/CICMMetadata.git
-[submodule "Aaru.Server.New/Aaru.Documentation"]
-	path = Aaru.Server.New/Aaru.Documentation
-	url = https://github.com/aaru-dps/Aaru.Documentation
-	branch = 5.3
 [submodule "Aaru.Server.Old/wwwroot"]
 	path = Aaru.Server.Old/wwwroot
 	url = https://github.com/aaru-dps/Aaru.Documentation
