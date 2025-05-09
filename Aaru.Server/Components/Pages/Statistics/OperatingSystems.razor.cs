@@ -76,14 +76,14 @@ public partial class OperatingSystems
                 DetectOS.GetPlatformName((PlatformID)Enum.Parse(typeof(PlatformID), _operatingSystemsLabels[i]));
         }
 
-        _linuxLabels = await ctx.OperatingSystems.Where(static o => o.Name == PlatformID.Linux.ToString())
+        _linuxLabels = await ctx.OperatingSystems.Where(static o => o.Name == nameof(PlatformID.Linux))
                                 .OrderByDescending(static o => o.Count)
                                 .Take(10)
                                 .Select(static x =>
                                             $"{DetectOS.GetPlatformName(PlatformID.Linux, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}")
                                 .ToArrayAsync();
 
-        _linuxCounts = await ctx.OperatingSystems.Where(static o => o.Name == PlatformID.Linux.ToString())
+        _linuxCounts = await ctx.OperatingSystems.Where(static o => o.Name == nameof(PlatformID.Linux))
                                 .OrderByDescending(static o => o.Count)
                                 .Take(10)
                                 .Select(static x => x.Count)
@@ -95,18 +95,18 @@ public partial class OperatingSystems
             _linuxLabels[9] = "Other";
 
             _linuxCounts[9] =
-                ctx.OperatingSystems.Where(static o => o.Name == PlatformID.Linux.ToString()).Sum(static o => o.Count) -
+                ctx.OperatingSystems.Where(static o => o.Name == nameof(PlatformID.Linux)).Sum(static o => o.Count) -
                 _linuxCounts.Take(9).Sum();
         }
 
-        _macosLabels = await ctx.OperatingSystems.Where(static o => o.Name == PlatformID.MacOSX.ToString())
+        _macosLabels = await ctx.OperatingSystems.Where(static o => o.Name == nameof(PlatformID.MacOSX))
                                 .OrderByDescending(static o => o.Count)
                                 .Take(10)
                                 .Select(static x =>
                                             $"{DetectOS.GetPlatformName(PlatformID.MacOSX, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}")
                                 .ToArrayAsync();
 
-        _macosCounts = await ctx.OperatingSystems.Where(static o => o.Name == PlatformID.MacOSX.ToString())
+        _macosCounts = await ctx.OperatingSystems.Where(static o => o.Name == nameof(PlatformID.MacOSX))
                                 .OrderByDescending(static o => o.Count)
                                 .Take(10)
                                 .Select(static x => x.Count)
@@ -118,19 +118,18 @@ public partial class OperatingSystems
             _macosLabels[9] = "Other";
 
             _macosCounts[9] =
-                ctx.OperatingSystems.Where(static o => o.Name == PlatformID.MacOSX.ToString())
-                   .Sum(static o => o.Count) -
+                ctx.OperatingSystems.Where(static o => o.Name == nameof(PlatformID.MacOSX)).Sum(static o => o.Count) -
                 _macosCounts.Take(9).Sum();
         }
 
-        _windowsLabels = await ctx.OperatingSystems.Where(static o => o.Name == PlatformID.Win32NT.ToString())
+        _windowsLabels = await ctx.OperatingSystems.Where(static o => o.Name == nameof(PlatformID.Win32NT))
                                   .OrderByDescending(static o => o.Count)
                                   .Take(10)
                                   .Select(static x =>
                                               $"{DetectOS.GetPlatformName(PlatformID.Win32NT, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}")
                                   .ToArrayAsync();
 
-        _windowsCounts = await ctx.OperatingSystems.Where(static o => o.Name == PlatformID.Win32NT.ToString())
+        _windowsCounts = await ctx.OperatingSystems.Where(static o => o.Name == nameof(PlatformID.Win32NT))
                                   .OrderByDescending(static o => o.Count)
                                   .Take(10)
                                   .Select(static x => x.Count)
@@ -142,8 +141,7 @@ public partial class OperatingSystems
             _windowsLabels[9] = "Other";
 
             _windowsCounts[9] =
-                ctx.OperatingSystems.Where(static o => o.Name == PlatformID.Win32NT.ToString())
-                   .Sum(static o => o.Count) -
+                ctx.OperatingSystems.Where(static o => o.Name == nameof(PlatformID.Win32NT)).Sum(static o => o.Count) -
                 _windowsCounts.Take(9).Sum();
         }
 
