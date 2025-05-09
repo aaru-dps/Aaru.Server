@@ -15,6 +15,7 @@ public partial class Devices
     List<long>       _devicesByManufacturerCounts = [];
     string[]         _devicesByManufacturerLabels = [];
     Carousel?        _devicesCarousel;
+    bool             _isAlreadyInitialized;
     List<DeviceItem> DevicesList { get; set; } = [];
 
     /// <inheritdoc />
@@ -29,6 +30,15 @@ public partial class Devices
                                  .ThenBy(static device => device.Revision)
                                  .ThenBy(static device => device.Bus)
                                  .ToList();
+    }
+
+    /// <inheritdoc />
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(_isAlreadyInitialized) return;
+
+        _isAlreadyInitialized = true;
+        await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
         var data = await ctx.DeviceStats.Select(static d => d.Bus)
                             .Distinct()

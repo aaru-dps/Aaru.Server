@@ -10,6 +10,7 @@ public partial class Filters
     PieChart<long>? _filtersChart;
     List<long>      _filtersCounts = [];
     string[]        _filtersLabels = [];
+    bool            _isAlreadyInitialized;
     List<Filter>    FiltersList { get; set; } = [];
 
     /// <inheritdoc />
@@ -20,6 +21,15 @@ public partial class Filters
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
         FiltersList = await ctx.Filters.OrderBy(static filter => filter.Name).ToListAsync();
+    }
+
+    /// <inheritdoc />
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(_isAlreadyInitialized) return;
+
+        _isAlreadyInitialized = true;
+        await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
         _filtersLabels = await ctx.Filters.OrderByDescending(static o => o.Count)
                                   .Take(10)

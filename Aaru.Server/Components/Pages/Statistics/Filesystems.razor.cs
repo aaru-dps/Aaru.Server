@@ -10,6 +10,7 @@ public partial class Filesystems
     PieChart<long>?  _filesystemsChart;
     List<long>       _filesystemsCounts = [];
     string[]         _filesystemsLabels = [];
+    bool             _isAlreadyInitialized;
     List<Filesystem> FilesystemsList { get; set; } = [];
 
     /// <inheritdoc />
@@ -20,6 +21,15 @@ public partial class Filesystems
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
         FilesystemsList = await ctx.Filesystems.OrderBy(static filesystem => filesystem.Name).ToListAsync();
+    }
+
+    /// <inheritdoc />
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(_isAlreadyInitialized) return;
+
+        _isAlreadyInitialized = true;
+        await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
         _filesystemsLabels = await ctx.Filesystems.OrderByDescending(static o => o.Count)
                                       .Take(10)

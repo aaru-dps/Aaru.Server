@@ -10,6 +10,7 @@ public partial class Formats
     PieChart<long>?   _formatsChart;
     List<long>        _formatsCounts = [];
     string[]          _formatsLabels = [];
+    bool              _isAlreadyInitialized;
     List<MediaFormat> MediaImages { get; set; } = [];
 
     /// <inheritdoc />
@@ -18,7 +19,15 @@ public partial class Formats
         await base.OnInitializedAsync();
 
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
+    }
 
+    /// <inheritdoc />
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(_isAlreadyInitialized) return;
+
+        _isAlreadyInitialized = true;
+        await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
         MediaImages = await ctx.MediaFormats.OrderBy(static format => format.Name).ToListAsync();
 

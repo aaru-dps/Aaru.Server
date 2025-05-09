@@ -9,6 +9,7 @@ namespace Aaru.Server.Components.Pages.Statistics;
 
 public partial class VirtualMedias
 {
+    bool            _isAlreadyInitialized;
     PieChart<long>? _virtualMediaChart;
     List<long>      _virtualMediaCounts = [];
     string[]        _virtualMediaLabels = [];
@@ -19,6 +20,15 @@ public partial class VirtualMedias
     {
         await base.OnInitializedAsync();
 
+        await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
+    }
+
+    /// <inheritdoc />
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(_isAlreadyInitialized) return;
+
+        _isAlreadyInitialized = true;
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
         Media[] virtualMedias = await ctx.Medias.Where(static o => !o.Real)

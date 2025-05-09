@@ -7,6 +7,7 @@ namespace Aaru.Server.Components.Pages.Statistics;
 
 public partial class Versions
 {
+    bool                 _isAlreadyInitialized;
     PieChart<long>?      _versionsChart;
     List<long>           _versionsCounts = [];
     string[]             _versionsLabels = [];
@@ -26,6 +27,15 @@ public partial class Versions
                                   })
                                  .ToListAsync()).OrderBy(static version => version.name)
                                                 .ToList();
+    }
+
+    /// <inheritdoc />
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(_isAlreadyInitialized) return;
+
+        _isAlreadyInitialized = true;
+        await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
         _versionsLabels = await ctx.Versions.OrderByDescending(static o => o.Count)
                                    .Take(10)

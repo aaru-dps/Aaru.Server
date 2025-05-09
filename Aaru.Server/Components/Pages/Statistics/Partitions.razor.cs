@@ -7,6 +7,7 @@ namespace Aaru.Server.Components.Pages.Statistics;
 
 public partial class Partitions
 {
+    bool            _isAlreadyInitialized;
     PieChart<long>? _partitionsChart;
     List<long>      _partitionsCounts = [];
     string[]        _partitionsLabels = [];
@@ -17,6 +18,15 @@ public partial class Partitions
     {
         await base.OnInitializedAsync();
 
+        await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
+    }
+
+    /// <inheritdoc />
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(_isAlreadyInitialized) return;
+
+        _isAlreadyInitialized = true;
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
         PartitionsList = await ctx.Partitions.OrderBy(static partition => partition.Name).ToListAsync();

@@ -10,6 +10,7 @@ namespace Aaru.Server.Components.Pages.Statistics;
 
 public partial class OperatingSystems
 {
+    bool                 _isAlreadyInitialized;
     PieChart<long>?      _linuxChart;
     List<long>           _linuxCounts = [];
     string[]             _linuxLabels = [];
@@ -43,6 +44,17 @@ public partial class OperatingSystems
                                           })
                                          .ToListAsync()).OrderBy(static os => os.name)
                                                         .ToList();
+    }
+
+    /// <inheritdoc />
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(_isAlreadyInitialized) return;
+
+        _isAlreadyInitialized = true;
+
+        // TODO: Cache real OS name in database, lookups would be much faster
+        await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
         var osQuery = ctx.OperatingSystems.GroupBy(static x => new
                                                    {
