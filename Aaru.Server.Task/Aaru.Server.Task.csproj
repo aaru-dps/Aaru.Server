@@ -31,10 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Aaru.Server\Aaru.Server.csproj"/>
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="drive_offsets.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
