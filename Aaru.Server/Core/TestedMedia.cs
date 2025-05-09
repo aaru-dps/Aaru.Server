@@ -35,7 +35,7 @@ namespace Aaru.Server.Core;
 public static class TestedMedia
 {
     /// <summary>Takes the tested media from a device report and prints it as a list of values</summary>
-    /// <param name="list">List to put values on</param>
+    /// <param name="mediaInformation">List to put values on</param>
     /// <param name="testedMedias">List of tested media</param>
     public static void Report(List<CommonTypes.Metadata.TestedMedia>                             testedMedias,
                               out Dictionary<string, (Dictionary<string, string>, List<string>)> mediaInformation)
@@ -83,20 +83,23 @@ public static class TestedMedia
                 table.Add("Blocks",     $"{testedMedia.Blocks}");
                 table.Add("Block size", $"{testedMedia.BlockSize} bytes per block");
 
-                if(testedMedia.Blocks * testedMedia.BlockSize / 1024 / 1024 > 1000000)
+                switch(testedMedia.Blocks * testedMedia.BlockSize / 1024 / 1024)
                 {
-                    table.Add("Medium size",
-                              $"{testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
-                }
-                else if(testedMedia.Blocks * testedMedia.BlockSize / 1024 / 1024 > 1000)
-                {
-                    table.Add("Medium size",
-                              $"{testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
-                }
-                else
-                {
-                    table.Add("Medium size",
-                              $"{testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+                    case > 1000000:
+                        table.Add("Medium size",
+                                  $"{testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+
+                        break;
+                    case > 1000:
+                        table.Add("Medium size",
+                                  $"{testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
+
+                        break;
+                    default:
+                        table.Add("Medium size",
+                                  $"{testedMedia.Blocks * testedMedia.BlockSize} bytes, {testedMedia.Blocks * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)(testedMedia.Blocks * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+
+                        break;
                 }
             }
 
@@ -135,20 +138,23 @@ public static class TestedMedia
             {
                 table.Add("Sectors addressable in sectors in 28-bit LBA mode", $"{testedMedia.LBASectors}");
 
-                if((ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1024 / 1024 > 1000000)
+                switch((ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1024 / 1024)
                 {
-                    table.Add("Medium size in 28-bit LBA mode",
-                              $"{(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
-                }
-                else if((ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1024 / 1024 > 1000)
-                {
-                    table.Add("Medium size in 28-bit LBA mode",
-                              $"{(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
-                }
-                else
-                {
-                    table.Add("Medium size in 28-bit LBA mode",
-                              $"{(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+                    case > 1000000:
+                        table.Add("Medium size in 28-bit LBA mode",
+                                  $"{(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+
+                        break;
+                    case > 1000:
+                        table.Add("Medium size in 28-bit LBA mode",
+                                  $"{(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
+
+                        break;
+                    default:
+                        table.Add("Medium size in 28-bit LBA mode",
+                                  $"{(ulong)testedMedia.LBASectors * testedMedia.BlockSize} bytes, {(ulong)testedMedia.LBASectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)((ulong)testedMedia.LBASectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+
+                        break;
                 }
             }
 
@@ -156,20 +162,23 @@ public static class TestedMedia
             {
                 table.Add("Sectors addressable in sectors in 48-bit LBA mode", $"{testedMedia.LBA48Sectors}");
 
-                if(testedMedia.LBA48Sectors * testedMedia.BlockSize / 1024 / 1024 > 1000000)
+                switch(testedMedia.LBA48Sectors * testedMedia.BlockSize / 1024 / 1024)
                 {
-                    table.Add("Medium size in 48-bit LBA mode",
-                              $"{testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
-                }
-                else if(testedMedia.LBA48Sectors * testedMedia.BlockSize / 1024 / 1024 > 1000)
-                {
-                    table.Add("Medium size in 48-bit LBA mode",
-                              $"{testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
-                }
-                else
-                {
-                    table.Add("Medium size in 48-bit LBA mode",
-                              $"{testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+                    case > 1000000:
+                        table.Add("Medium size in 48-bit LBA mode",
+                                  $"{testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000 / 1000 / 1000} Tb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024 / 1024 / 1024:F2} TiB");
+
+                        break;
+                    case > 1000:
+                        table.Add("Medium size in 48-bit LBA mode",
+                                  $"{testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000 / 1000} Gb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024 / 1024:F2} GiB");
+
+                        break;
+                    default:
+                        table.Add("Medium size in 48-bit LBA mode",
+                                  $"{testedMedia.LBA48Sectors * testedMedia.BlockSize} bytes, {testedMedia.LBA48Sectors * testedMedia.BlockSize / 1000 / 1000} Mb, {(double)(testedMedia.LBA48Sectors * testedMedia.BlockSize) / 1024 / 1024:F2} MiB");
+
+                        break;
                 }
             }
 

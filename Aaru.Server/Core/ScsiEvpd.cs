@@ -134,8 +134,6 @@ public static class ScsiEvpd
                                   .Skip(1)
                                   .ToList() ?? [];
 
-                    ;
-
                     break;
                 case 0x85:
                     decoded = EVPD.PrettifyPage_85(evpd.value)
@@ -144,8 +142,6 @@ public static class ScsiEvpd
                                          StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
                                   .Skip(1)
                                   .ToList() ?? [];
-
-                    ;
 
                     break;
                 case 0x86:
@@ -156,8 +152,6 @@ public static class ScsiEvpd
                                   .Skip(1)
                                   .ToList() ?? [];
 
-                    ;
-
                     break;
                 case 0x89:
                     decoded = EVPD.PrettifyPage_89(evpd.value)
@@ -167,8 +161,6 @@ public static class ScsiEvpd
                                   .Skip(1)
                                   .ToList() ?? [];
 
-                    ;
-
                     break;
                 case 0xB0:
                     decoded = EVPD.PrettifyPage_B0(evpd.value)
@@ -177,8 +169,6 @@ public static class ScsiEvpd
                                          StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
                                   .Skip(1)
                                   .ToList() ?? [];
-
-                    ;
 
                     break;
                 case 0xB2:
@@ -202,8 +192,6 @@ public static class ScsiEvpd
                                   .Skip(1)
                                   .ToList() ?? [];
 
-                    ;
-
                     break;
                 case 0xC0 when vendor == "seagate":
                     decoded = EVPD.PrettifyPage_C0_Seagate(evpd.value)
@@ -212,8 +200,6 @@ public static class ScsiEvpd
                                          StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
                                   .Skip(1)
                                   .ToList() ?? [];
-
-                    ;
 
                     break;
                 case 0xC0 when vendor == "ibm":
@@ -224,8 +210,6 @@ public static class ScsiEvpd
                                   .Skip(1)
                                   .ToList() ?? [];
 
-                    ;
-
                     break;
                 case 0xC1 when vendor == "ibm":
                     decoded = EVPD.PrettifyPage_C1_IBM(evpd.value)
@@ -234,8 +218,6 @@ public static class ScsiEvpd
                                          StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
                                   .Skip(1)
                                   .ToList() ?? [];
-
-                    ;
 
                     break;
                 case 0xC0 or 0xC1 when vendor == "certance":
@@ -246,8 +228,6 @@ public static class ScsiEvpd
                                   .Skip(1)
                                   .ToList() ?? [];
 
-                    ;
-
                     break;
                 case 0xC2 or 0xC3 or 0xC4 or 0xC5 or 0xC6 when vendor == "certance":
                     decoded = EVPD.PrettifyPage_C2_C3_C4_C5_C6_Certance(evpd.value)
@@ -256,8 +236,6 @@ public static class ScsiEvpd
                                          StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
                                   .Skip(1)
                                   .ToList() ?? [];
-
-                    ;
 
                     break;
                 case 0xC0 or 0xC1 or 0xC2 or 0xC3 or 0xC4 or 0xC5 when vendor == "hp":
@@ -268,8 +246,6 @@ public static class ScsiEvpd
                                   .Skip(1)
                                   .ToList() ?? [];
 
-                    ;
-
                     break;
                 case 0xDF when vendor == "certance":
                     decoded = EVPD.PrettifyPage_DF_Certance(evpd.value)
@@ -278,8 +254,6 @@ public static class ScsiEvpd
                                          StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
                                   .Skip(1)
                                   .ToList() ?? [];
-
-                    ;
 
                     break;
                 default:

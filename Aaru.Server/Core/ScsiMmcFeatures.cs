@@ -298,12 +298,21 @@ public static class ScsiMmcFeatures
 
         if(ftr.CanWriteCDRWCAV) mmcOneValue.Add("Drive can write High-Speed CD-RW");
 
-        if(ftr.CanWriteCDSAO && !ftr.CanWriteRaw)
-            mmcOneValue.Add("Drive can write CDs in Session at Once Mode:");
-        else if(!ftr.CanWriteCDSAO && ftr.CanWriteRaw)
-            mmcOneValue.Add("Drive can write CDs in raw Mode:");
-        else if(ftr.CanWriteCDSAO && ftr.CanWriteRaw)
-            mmcOneValue.Add("Drive can write CDs in Session at Once and in Raw Modes:");
+        switch(ftr)
+        {
+            case { CanWriteCDSAO: true, CanWriteRaw: false }:
+                mmcOneValue.Add("Drive can write CDs in Session at Once Mode:");
+
+                break;
+            case { CanWriteCDSAO: false, CanWriteRaw: true }:
+                mmcOneValue.Add("Drive can write CDs in raw Mode:");
+
+                break;
+            case { CanWriteCDSAO: true, CanWriteRaw: true }:
+                mmcOneValue.Add("Drive can write CDs in Session at Once and in Raw Modes:");
+
+                break;
+        }
 
         if(ftr.CanWriteCDTAO) mmcOneValue.Add("Drive can write CDs in Track at Once Mode:");
 
@@ -317,15 +326,29 @@ public static class ScsiMmcFeatures
             mmcOneValue.Add("Drive can read and write DVD+RW DL");
         else if(ftr.CanReadDVDPlusRWDL) mmcOneValue.Add("Drive can read DVD+RW DL");
 
-        if(ftr.CanWriteDVDR && ftr.CanWriteDVDRW && ftr.CanWriteDVDRDL)
-            mmcOneValue.Add("Drive supports writing DVD-R, DVD-RW and DVD-R DL");
-        else if(ftr.CanWriteDVDR && ftr.CanWriteDVDRDL)
-            mmcOneValue.Add("Drive supports writing DVD-R and DVD-R DL");
-        else if(ftr.CanWriteDVDR && ftr.CanWriteDVDRW)
-            mmcOneValue.Add("Drive supports writing DVD-R and DVD-RW");
-        else if(ftr.CanWriteDVDR) mmcOneValue.Add("Drive supports writing DVD-R");
+        switch(ftr)
+        {
+            case { CanWriteDVDR: true, CanWriteDVDRW: true, CanWriteDVDRDL: true }:
+                mmcOneValue.Add("Drive supports writing DVD-R, DVD-RW and DVD-R DL");
 
-        if(ftr.CanWriteHDDVDR && ftr.CanWriteHDDVDRAM)
+                break;
+            case { CanWriteDVDR: true, CanWriteDVDRDL: true }:
+                mmcOneValue.Add("Drive supports writing DVD-R and DVD-R DL");
+
+                break;
+            case { CanWriteDVDR: true, CanWriteDVDRW: true }:
+                mmcOneValue.Add("Drive supports writing DVD-R and DVD-RW");
+
+                break;
+            default:
+            {
+                if(ftr.CanWriteDVDR) mmcOneValue.Add("Drive supports writing DVD-R");
+
+                break;
+            }
+        }
+
+        if(ftr is { CanWriteHDDVDR: true, CanWriteHDDVDRAM: true })
             mmcOneValue.Add("Drive can write HD DVD-RW, HD DVD-R and HD DVD-RAM");
         else if(ftr.CanWriteHDDVDR)
             mmcOneValue.Add("Drive can write HD DVD-RW and HD DVD-R");
@@ -354,7 +377,7 @@ public static class ScsiMmcFeatures
         if(ftr.CanWriteRWSubchannelInSAO)
             mmcOneValue.Add("Drive can write user provided data in the R-W subchannels in Session at Once Mode");
 
-        if(ftr.CanWriteRaw && ftr.CanWriteRawMultiSession)
+        if(ftr is { CanWriteRaw: true, CanWriteRawMultiSession: true })
             mmcOneValue.Add("Drive can write multi-session CDs in raw mode");
 
         if(ftr.EmbeddedChanger)
@@ -369,11 +392,11 @@ public static class ScsiMmcFeatures
             mmcOneValue.Add($"Drive has {ftr.ChangerSlots + 1} slots");
         }
 
-        if(ftr.SupportsCSS && ftr.CSSVersion.HasValue)
+        if(ftr is { SupportsCSS: true, CSSVersion: not null })
             mmcOneValue.Add($"Drive supports DVD CSS/CPPM version {ftr.CSSVersion}");
         else if(ftr.SupportsCSS) mmcOneValue.Add("Drive supports DVD CSS/CPRM");
 
-        if(ftr.SupportsCPRM && ftr.CPRMVersion.HasValue)
+        if(ftr is { SupportsCPRM: true, CPRMVersion: not null })
             mmcOneValue.Add($"Drive supports DVD CPRM version {ftr.CPRMVersion}");
         else if(ftr.SupportsCPRM) mmcOneValue.Add("Drive supports DVD CPRM");
 
