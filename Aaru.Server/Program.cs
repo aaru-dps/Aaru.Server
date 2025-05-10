@@ -172,4 +172,4 @@ using(IServiceScope scope = app.Services.CreateScope())
 
 Console.WriteLine("\e[31;1mStarting web server...\e[0m");
 
-app.Run();
+await app.RunAsync();
