@@ -24,16 +24,20 @@ public partial class RealMedias
 
         foreach(Media media in ctx.Medias.Where(static o => o.Real).OrderByDescending(static o => o.Count))
         {
-            (string type, string subType) mediaType =
-                MediaType.MediaTypeToString((CommonTypes.MediaType)Enum.Parse(typeof(CommonTypes.MediaType),
-                                                                              media.Type));
-
-            RealMedia.Add(new MediaItem
+            try
             {
-                Type    = mediaType.type,
-                SubType = mediaType.subType,
-                Count   = media.Count
-            });
+                (string type, string subType) mediaType =
+                    MediaType.MediaTypeToString((CommonTypes.MediaType)Enum.Parse(typeof(CommonTypes.MediaType),
+                                                    media.Type));
+
+                RealMedia.Add(new MediaItem
+                {
+                    Type    = mediaType.type,
+                    SubType = mediaType.subType,
+                    Count   = media.Count
+                });
+            }
+            catch {}
         }
 
         await base.OnInitializedAsync();
