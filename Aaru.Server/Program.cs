@@ -14,38 +14,42 @@ using Version = System.Version;
 
 Console.Clear();
 
-Console.Write("\u001b[32m                             .                ,,\n" +
-              "\u001b[32m                          ;,.                  '0d.\n" +
-              "\u001b[32m                        oc                       oWd                      \u001b[31m" + @"  ▄▄▄      ▄▄▄       ██▀███   █    ██  " + "\n\u001b[0m" +
-              "\u001b[32m                      ;X.                         'WN'                    \u001b[31m" + @" ▒████▄   ▒████▄    ▓██ ▒ ██▒ ██  ▓██▒ " + "\n\u001b[0m" +
-              "\u001b[32m                     oMo                           cMM:                   \u001b[31m" + @" ▒██  ▀█▄ ▒██  ▀█▄  ▓██ ░▄█ ▒▓██  ▒██░ " + "\n\u001b[0m" +
-              "\u001b[32m                    ;MM.                           .MMM;                  \u001b[31m" + @" ░██▄▄▄▄██░██▄▄▄▄██ ▒██▀▀█▄  ▓▓█  ░██░ " + "\n\u001b[0m" +
-              "\u001b[32m                    NMM                             WMMW                  \u001b[31m" + @"  ▓█   ▓██▒▓█   ▓██▒░██▓ ▒██▒▒▒█████▓  " + "\n\u001b[0m" +
-              "\u001b[32m                   'MMM                             MMMM;                 \u001b[31m" + @"  ▒▒   ▓▒█░▒▒   ▓▒█░░ ▒▓ ░▒▓░░▒▓▒ ▒ ▒  " + "\n\u001b[0m" +
-              "\u001b[32m                   ,MMM:                           dMMMM:                 \u001b[31m" + @"   ▒   ▒▒ ░ ▒   ▒▒ ░  ░▒ ░ ▒░░░▒░ ░ ░  " + "\n\u001b[0m" +
-              "\u001b[32m                   .MMMW.                         :MMMMM.                 \u001b[31m" + @"   ░   ▒    ░   ▒     ░░   ░  ░░░ ░ ░  " + "\n\u001b[0m" +
-              "\u001b[32m                    XMMMW:    .:xKNMMMMMMN0d,    lMMMMMd                  \u001b[31m" + @"       ░  ░     ░  ░   ░        ░      " + "\n\u001b[0m" +
-              "\u001b[32m                    :MMMMMK; cWMNkl:;;;:lxKMXc .0MMMMMO\u001b[0m\n" +
-              "\u001b[32m                   ..KMMMMMMNo,.             ,OMMMMMMW:,.                 \u001b[37;1m          Aaru Website\u001b[0m\n" +
-              "\u001b[32m            .;d0NMMMMMMMMMMMMMMW0d:'    .;lOWMMMMMMMMMMMMMXkl.            \u001b[37;1m          Version \u001b[0m\u001b[33m{0}\u001b[37;1m-\u001b[0m\u001b[31m{1}\u001b[0m\n" +
-              "\u001b[32m          :KMMMMMMMMMMMMMMMMMMMMMMMMc  WMMMMMMMMMMMMMMMMMMMMMMWk'\u001b[0m\n" +
-              "\u001b[32m        ;NMMMMWX0kkkkO0XMMMMMMMMMMM0'  dNMMMMMMMMMMW0xl:;,;:oOWMMX;       \u001b[37;1m          Running under \u001b[35;1m{2}\u001b[37;1m, \u001b[35m{3}-bit\u001b[37;1m in \u001b[35m{4}-bit\u001b[37;1m mode.\u001b[0m\n" +
-              "\u001b[32m       xMMWk:.           .c0MMMMMW'      OMMMMMM0c'..          .oNMO      \u001b[37;1m          Using \u001b[33;1m{5}\u001b[37;1m version \u001b[31;1m{6}\u001b[0m\n" +
-              "\u001b[32m      OMNc            .MNc   oWMMk       'WMMNl. .MMK             ;KX.\u001b[0m\n" +
-              "\u001b[32m     xMO               WMN     ;  .,    ,  ':    ,MMx               lK\u001b[0m\n" +
-              "\u001b[32m    ,Md                cMMl     .XMMMWWMMMO      XMW.                :\u001b[0m\n" +
-              "\u001b[32m    Ok                  xMMl     XMMMMMMMMc     0MW,\u001b[0m\n" +
-              "\u001b[32m    0                    oMM0'   lMMMMMMMM.   :NMN'\u001b[0m\n" +
-              "\u001b[32m    .                     .0MMKl ;MMMMMMMM  oNMWd\u001b[0m\n" +
-              "\u001b[32m                            .dNW cMMMMMMMM, XKl\u001b[0m\n" +
-              "\u001b[32m                                 0MMMMMMMMK\u001b[0m\n" +
-              "\u001b[32m                                ;MMMMMMMMMMO                              \u001b[37;1m          Proudly presented to you by:\u001b[0m\n" +
-              "\u001b[32m                               'WMMMMKxMMMMM0                             \u001b[34;1m          Natalia Portillo\u001b[0m\n" +
-              "\u001b[32m                              oMMMMNc  :WMMMMN:\u001b[0m\n" +
-              "\u001b[32m                           .dWMMM0;      dWMMMMXl.                        \u001b[37;1m          Thanks to all contributors, collaborators, translators, donators and friends.\u001b[0m\n" +
-              "\u001b[32m               .......,cd0WMMNk:           c0MMMMMWKkolc:clodc'\u001b[0m\n" +
-              "\u001b[32m                 .';loddol:'.                 ':oxkkOkkxoc,.\u001b[0m\n" +
-              "\u001b[0m\n",
+// ReSharper disable once StringLiteralTypo
+Console.Write("""
+              [32m                             .                ,,
+              [32m                          ;,.                  '0d.
+              [32m                        oc                       oWd                      [31m  ▄▄▄      ▄▄▄       ██▀███   █    ██
+              [0m[32m                      ;X.                         'WN'                    [31m ▒████▄   ▒████▄    ▓██ ▒ ██▒ ██  ▓██▒
+              [0m[32m                     oMo                           cMM:                   [31m ▒██  ▀█▄ ▒██  ▀█▄  ▓██ ░▄█ ▒▓██  ▒██░
+              [0m[32m                    ;MM.                           .MMM;                  [31m ░██▄▄▄▄██░██▄▄▄▄██ ▒██▀▀█▄  ▓▓█  ░██░
+              [0m[32m                    NMM                             WMMW                  [31m  ▓█   ▓██▒▓█   ▓██▒░██▓ ▒██▒▒▒█████▓
+              [0m[32m                   'MMM                             MMMM;                 [31m  ▒▒   ▓▒█░▒▒   ▓▒█░░ ▒▓ ░▒▓░░▒▓▒ ▒ ▒
+              [0m[32m                   ,MMM:                           dMMMM:                 [31m   ▒   ▒▒ ░ ▒   ▒▒ ░  ░▒ ░ ▒░░░▒░ ░ ░
+              [0m[32m                   .MMMW.                         :MMMMM.                 [31m   ░   ▒    ░   ▒     ░░   ░  ░░░ ░ ░
+              [0m[32m                    XMMMW:    .:xKNMMMMMMN0d,    lMMMMMd                  [31m       ░  ░     ░  ░   ░        ░
+              [0m[32m                    :MMMMMK; cWMNkl:;;;:lxKMXc .0MMMMMO[0m
+              [32m                   ..KMMMMMMNo,.             ,OMMMMMMW:,.                 [37;1m          Aaru Website[0m
+              [32m            .;d0NMMMMMMMMMMMMMMW0d:'    .;lOWMMMMMMMMMMMMMXkl.            [37;1m          Version [0m[33m{0}[37;1m-[0m[31m{1}[0m
+              [32m          :KMMMMMMMMMMMMMMMMMMMMMMMMc  WMMMMMMMMMMMMMMMMMMMMMMWk'[0m
+              [32m        ;NMMMMWX0kkkkO0XMMMMMMMMMMM0'  dNMMMMMMMMMMW0xl:;,;:oOWMMX;       [37;1m          Running under [35;1m{2}[37;1m, [35m{3}-bit[37;1m in [35m{4}-bit[37;1m mode.[0m
+              [32m       xMMWk:.           .c0MMMMMW'      OMMMMMM0c'..          .oNMO      [37;1m          Using [33;1m{5}[37;1m version [31;1m{6}[0m
+              [32m      OMNc            .MNc   oWMMk       'WMMNl. .MMK             ;KX.[0m
+              [32m     xMO               WMN     ;  .,    ,  ':    ,MMx               lK[0m
+              [32m    ,Md                cMMl     .XMMMWWMMMO      XMW.                :[0m
+              [32m    Ok                  xMMl     XMMMMMMMMc     0MW,[0m
+              [32m    0                    oMM0'   lMMMMMMMM.   :NMN'[0m
+              [32m    .                     .0MMKl ;MMMMMMMM  oNMWd[0m
+              [32m                            .dNW cMMMMMMMM, XKl[0m
+              [32m                                 0MMMMMMMMK[0m
+              [32m                                ;MMMMMMMMMMO                              [37;1m          Proudly presented to you by:[0m
+              [32m                               'WMMMMKxMMMMM0                             [34;1m          Natalia Portillo[0m
+              [32m                              oMMMMNc  :WMMMMN:[0m
+              [32m                           .dWMMM0;      dWMMMMXl.                        [37;1m          Thanks to all contributors, collaborators, translators, donators and friends.[0m
+              [32m               .......,cd0WMMNk:           c0MMMMMWKkolc:clodc'[0m
+              [32m                 .';loddol:'.                 ':oxkkOkkxoc,.[0m
+              [0m
+
+              """,
               Aaru.CommonTypes.Interop.Version.GetVersion(),
 #if DEBUG
               "DEBUG",
@@ -60,7 +64,7 @@ Console.Write("\u001b[32m                             .                ,,\n" +
                   ? Aaru.CommonTypes.Interop.Version.GetMonoVersion()
                   : Aaru.CommonTypes.Interop.Version.GetNetCoreVersion());
 
-Console.WriteLine("\u001b[31;1mBuilding web application...\u001b[0m");
+Console.WriteLine("\e[31;1mBuilding web application...\e[0m");
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -141,33 +145,31 @@ using(IServiceScope scope = app.Services.CreateScope())
         Stopwatch stopwatch = new();
 
         stopwatch.Start();
-        Console.WriteLine("\u001b[31;1mUpdating database with Entity Framework...\u001b[0m");
+        Console.WriteLine("\e[31;1mUpdating database with Entity Framework...\e[0m");
         DbContext context = services.GetRequiredService<DbContext>();
         await context.Database.MigrateAsync();
         stopwatch.Stop();
 
-        Console.WriteLine("\u001b[31;1mTook \u001b[32;1m{0} seconds\u001b[31;1m...\u001b[0m",
-                          stopwatch.Elapsed.TotalSeconds);
+        Console.WriteLine("\e[31;1mTook \e[32;1m{0} seconds\e[31;1m...\e[0m", stopwatch.Elapsed.TotalSeconds);
 
         stopwatch.Restart();
-        Console.WriteLine("\u001b[31;1mSeeding Identity...\u001b[0m");
+        Console.WriteLine("\e[31;1mSeeding Identity...\e[0m");
         await Seeder.SeedAsync(context, services);
         await context.Database.MigrateAsync();
         stopwatch.Stop();
 
-        Console.WriteLine("\u001b[31;1mTook \u001b[32;1m{0} seconds\u001b[31;1m...\u001b[0m",
-                          stopwatch.Elapsed.TotalSeconds);
+        Console.WriteLine("\e[31;1mTook \e[32;1m{0} seconds\e[31;1m...\e[0m", stopwatch.Elapsed.TotalSeconds);
     }
     catch(Exception ex)
     {
-        Console.WriteLine("\u001b[31;1mCould not open database...\u001b[0m");
+        Console.WriteLine("\e[31;1mCould not open database...\e[0m");
 #if DEBUG
-        Console.WriteLine("\u001b[31;1mException: {0}\u001b[0m", ex.Message);
+        Console.WriteLine("\e[31;1mException: {0}\e[0m", ex.Message);
 #endif
         return;
     }
 }
 
-Console.WriteLine("\u001b[31;1mStarting web server...\u001b[0m");
+Console.WriteLine("\e[31;1mStarting web server...\e[0m");
 
 app.Run();
