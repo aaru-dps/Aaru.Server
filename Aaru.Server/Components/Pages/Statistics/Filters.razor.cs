@@ -49,7 +49,7 @@ public partial class Filters
         }
 
 #pragma warning disable CS8604 // Possible null reference argument.
-        await Common.HandleRedraw(_filtersChart, _filtersLabels, GetFiltersChartDataset);
+        await Common.HandleRedrawAsync(_filtersChart, _filtersLabels, GetFiltersChartDataset);
 #pragma warning restore CS8604 // Possible null reference argument.
     }
 
@@ -58,8 +58,8 @@ public partial class Filters
     {
         Label           = $"Top {_filtersLabels.Length} filters found",
         Data            = _filtersCounts,
-        BackgroundColor = Common._backgroundColors,
-        BorderColor     = Common._borderColors,
+        BackgroundColor = Common.BackgroundColors,
+        BorderColor     = Common.BorderColors,
         BorderWidth     = 1
     };
 }

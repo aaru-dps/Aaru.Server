@@ -53,7 +53,7 @@ public static class ScsiModeSense
     {
         modeSenseCapabilities = null;
         blockDescriptors      = null;
-        modePages             = new Dictionary<string, List<string>>();
+        modePages             = [];
 
         if(modeSense.MediumType.HasValue)
         {

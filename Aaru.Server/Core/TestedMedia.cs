@@ -38,13 +38,13 @@ public static class TestedMedia
     /// <param name="mediaInformation">List to put values on</param>
     /// <param name="testedMedias">List of tested media</param>
     public static void Report(List<CommonTypes.Metadata.TestedMedia>                             testedMedias,
-                              out Dictionary<string, (Dictionary<string, string>, List<string>)> mediaInformation)
+                              out Dictionary<string, (Dictionary<string, string> Table, List<string> List)> mediaInformation)
     {
-        mediaInformation = new Dictionary<string, (Dictionary<string, string>, List<string>)>();
+        mediaInformation = [];
 
         foreach(CommonTypes.Metadata.TestedMedia testedMedia in testedMedias)
         {
-            Dictionary<string, string> table = new();
+            Dictionary<string, string> table = [];
             List<string>               list  = [];
             string                     header;
 
@@ -64,9 +64,9 @@ public static class TestedMedia
                          : "Drive does not recognize this medium.");
 
             if(!string.IsNullOrWhiteSpace(testedMedia.Manufacturer))
-                table.Add("Medium manufacturer", $"{testedMedia.Manufacturer}");
+                table.Add("Medium manufacturer", testedMedia.Manufacturer);
 
-            if(!string.IsNullOrWhiteSpace(testedMedia.Model)) table.Add("Medium model", $"{testedMedia.Model}");
+            if(!string.IsNullOrWhiteSpace(testedMedia.Model)) table.Add("Medium model", testedMedia.Model);
 
             if(testedMedia.Density != null) table.Add("Density code", $"{testedMedia.Density:X2}h");
 
@@ -191,8 +191,7 @@ public static class TestedMedia
                              : $"Medium rotates at {testedMedia.NominalRotationRate} rpm");
             }
 
-            if(testedMedia.BlockSize                   != null                                &&
-               testedMedia.PhysicalBlockSize           != null                                &&
+            if(testedMedia is { BlockSize: not null, PhysicalBlockSize: not null }            &&
                testedMedia.BlockSize.Value             != testedMedia.PhysicalBlockSize.Value &&
                (testedMedia.LogicalAlignment & 0x8000) == 0x0000                              &&
                (testedMedia.LogicalAlignment & 0x4000) == 0x4000)

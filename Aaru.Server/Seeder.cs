@@ -7,7 +7,7 @@ public static class Seeder
 {
     public static async Task SeedAsync(DbContext ctx, IServiceProvider serviceProvider)
     {
-        var                       email       = "claunia@claunia.com";
+        const string              email       = "claunia@claunia.com";
         var                       randChars   = new char[16];
         UserManager<IdentityUser> userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
         var                       rnd         = new Random();

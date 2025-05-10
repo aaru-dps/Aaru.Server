@@ -55,7 +55,7 @@ public partial class Versions
         }
 
 #pragma warning disable CS8604 // Possible null reference argument.
-        await Common.HandleRedraw(_versionsChart, _versionsLabels, GetVersionsChartDataset);
+        await Common.HandleRedrawAsync(_versionsChart, _versionsLabels, GetVersionsChartDataset);
 #pragma warning restore CS8604 // Possible null reference argument.
     }
 
@@ -63,8 +63,8 @@ public partial class Versions
     {
         Label           = $"Top {_versionsLabels.Length} Aaru versions",
         Data            = _versionsCounts,
-        BackgroundColor = Common._backgroundColors,
-        BorderColor     = Common._borderColors,
+        BackgroundColor = Common.BackgroundColors,
+        BorderColor     = Common.BorderColors,
         BorderWidth     = 1
     };
 }

@@ -49,7 +49,7 @@ public partial class Partitions
         }
 
 #pragma warning disable CS8604 // Possible null reference argument.
-        await Common.HandleRedraw(_partitionsChart, _partitionsLabels, GetPartitionsChartDataset);
+        await Common.HandleRedrawAsync(_partitionsChart, _partitionsLabels, GetPartitionsChartDataset);
 #pragma warning restore CS8604 // Possible null reference argument.
     }
 
@@ -57,8 +57,8 @@ public partial class Partitions
     {
         Label           = $"Top {_partitionsLabels.Length} partitioning schemes found",
         Data            = _partitionsCounts,
-        BackgroundColor = Common._backgroundColors,
-        BorderColor     = Common._borderColors,
+        BackgroundColor = Common.BackgroundColors,
+        BorderColor     = Common.BorderColors,
         BorderWidth     = 1
     };
 }

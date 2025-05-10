@@ -50,7 +50,7 @@ public partial class Formats
 
 
 #pragma warning disable CS8604 // Possible null reference argument.
-        await Common.HandleRedraw(_formatsChart, _formatsLabels, GetFormatsChartDataset);
+        await Common.HandleRedrawAsync(_formatsChart, _formatsLabels, GetFormatsChartDataset);
 
 #pragma warning restore CS8604 // Possible null reference argument.
     }
@@ -59,8 +59,8 @@ public partial class Formats
     {
         Label           = $"Top {_formatsLabels.Length} media image formats found",
         Data            = _formatsCounts,
-        BackgroundColor = Common._backgroundColors,
-        BorderColor     = Common._borderColors,
+        BackgroundColor = Common.BackgroundColors,
+        BorderColor     = Common.BorderColors,
         BorderWidth     = 1
     };
 }

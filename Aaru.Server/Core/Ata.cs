@@ -99,7 +99,7 @@ public static class Ata
         streaming                  = null;
         smartCommandTransport      = null;
         nvCache                    = null;
-        readCapabilitiesDictionary = new Dictionary<string, string>();
+        readCapabilitiesDictionary = [];
         readCapabilitiesList       = [];
 
         Identify.IdentifyDevice? ataIdentifyNullable = Identify.Decode(ataReport.Identify);
@@ -110,19 +110,19 @@ public static class Ata
 
         if(!string.IsNullOrEmpty(ataIdentify.Model))
         {
-            deviceIdentification          ??= new Dictionary<string, string>();
+            deviceIdentification          ??= [];
             deviceIdentification["Model"] =   ataIdentify.Model;
         }
 
         if(!string.IsNullOrEmpty(ataIdentify.FirmwareRevision))
         {
-            deviceIdentification                      ??= new Dictionary<string, string>();
+            deviceIdentification                      ??= [];
             deviceIdentification["Firmware revision"] =   ataIdentify.FirmwareRevision;
         }
 
         if(!string.IsNullOrEmpty(ataIdentify.AdditionalPID))
         {
-            deviceIdentification                          ??= new Dictionary<string, string>();
+            deviceIdentification                          ??= [];
             deviceIdentification["Additional product ID"] =   ataIdentify.AdditionalPID;
         }
 

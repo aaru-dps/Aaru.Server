@@ -147,12 +147,12 @@ public partial class OperatingSystems
 
 #pragma warning disable CS8604 // Possible null reference argument.
 
-        await Task.WhenAll(Common.HandleRedraw(_operatingSystemsChart,
-                                               _operatingSystemsLabels,
-                                               GetOperatingSystemsChartDataset),
-                           Common.HandleRedraw(_linuxChart,   _linuxLabels,   GetLinuxChartDataset),
-                           Common.HandleRedraw(_macosChart,   _macosLabels,   GetMacosChartDataset),
-                           Common.HandleRedraw(_windowsChart, _windowsLabels, GetWindowsChartDataset));
+        await Task.WhenAll(Common.HandleRedrawAsync(_operatingSystemsChart,
+                                                    _operatingSystemsLabels,
+                                                    GetOperatingSystemsChartDataset),
+                           Common.HandleRedrawAsync(_linuxChart,   _linuxLabels,   GetLinuxChartDataset),
+                           Common.HandleRedrawAsync(_macosChart,   _macosLabels,   GetMacosChartDataset),
+                           Common.HandleRedrawAsync(_windowsChart, _windowsLabels, GetWindowsChartDataset));
 #pragma warning restore CS8604 // Possible null reference argument.
 
         // Upstream: https://github.com/Megabit/Blazorise/issues/5491
@@ -163,8 +163,8 @@ public partial class OperatingSystems
     {
         Label           = "Operating systems",
         Data            = _operatingSystemsCounts,
-        BackgroundColor = Common._backgroundColors,
-        BorderColor     = Common._borderColors,
+        BackgroundColor = Common.BackgroundColors,
+        BorderColor     = Common.BorderColors,
         BorderWidth     = 1
     };
 
@@ -172,8 +172,8 @@ public partial class OperatingSystems
     {
         Label           = $"Top {_linuxLabels.Length} Linux versions",
         Data            = _linuxCounts,
-        BackgroundColor = Common._backgroundColors,
-        BorderColor     = Common._borderColors,
+        BackgroundColor = Common.BackgroundColors,
+        BorderColor     = Common.BorderColors,
         BorderWidth     = 1
     };
 
@@ -181,8 +181,8 @@ public partial class OperatingSystems
     {
         Label           = $"Top {_macosLabels.Length} macOS versions",
         Data            = _macosCounts,
-        BackgroundColor = Common._backgroundColors,
-        BorderColor     = Common._borderColors,
+        BackgroundColor = Common.BackgroundColors,
+        BorderColor     = Common.BorderColors,
         BorderWidth     = 1
     };
 
@@ -190,11 +190,10 @@ public partial class OperatingSystems
     {
         Label           = $"Top {_windowsLabels.Length} Windows versions",
         Data            = _windowsCounts,
-        BackgroundColor = Common._backgroundColors,
-        BorderColor     = Common._borderColors,
+        BackgroundColor = Common.BackgroundColors,
+        BorderColor     = Common.BorderColors,
         BorderWidth     = 1
     };
 
-    static string GetPlatformName(string name, string version) =>
-        DetectOS.GetPlatformName((PlatformID)Enum.Parse(typeof(PlatformID), name), version);
+    static string GetPlatformName(string name, string version) => DetectOS.GetPlatformName((PlatformID)Enum.Parse(typeof(PlatformID), name), version);
 }

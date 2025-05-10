@@ -19,7 +19,7 @@ public partial class View
 {
     bool   _initialized;
     bool   _notFound;
-    string _pageTitle { get; set; } = "Aaru Device Report";
+    string PageTitle { get; set; } = "Aaru Device Report";
     [CascadingParameter]
     HttpContext HttpContext { get; set; } = default!;
     [Parameter]
@@ -132,7 +132,7 @@ public partial class View
             return;
         }
 
-        _pageTitle = $"Aaru Device Report for {report.Manufacturer} {report.Model} {report.Revision}";
+        PageTitle = $"Aaru Device Report for {report.Manufacturer} {report.Model} {report.Revision}";
 
         if(report.USB != null)
         {
@@ -195,7 +195,7 @@ public partial class View
 
             if(tuples != null)
             {
-                Dictionary<string, string> decodedTuples = new();
+                Dictionary<string, string> decodedTuples = [];
 
                 foreach(Tuple tuple in tuples)
                 {
@@ -319,7 +319,7 @@ public partial class View
                             out string? maximumAtaRevision,
                             out string? transport,
                             out List<string>? transportVersions,
-                            out List<string>? generalConfiguration,
+                            out List<string> generalConfiguration,
                             out List<string>? specificConfiguration,
                             out List<string> deviceCapabilities,
                             out List<string> pioTransferModes,
@@ -405,10 +405,9 @@ public partial class View
                 DeviceInquiry = new Dictionary<string, string>
                 {
                     {
-                        "Vendor:",
-                        VendorString.Prettify(vendorId) != vendorId
-                            ? $"{vendorId} ({VendorString.Prettify(vendorId)})"
-                            : vendorId
+                        "Vendor:", VendorString.Prettify(vendorId) != vendorId
+                                       ? $"{vendorId} ({VendorString.Prettify(vendorId)})"
+                                       : vendorId
                     },
                     {
                         "Product:", StringHandlers.CToString(inq.ProductIdentification)

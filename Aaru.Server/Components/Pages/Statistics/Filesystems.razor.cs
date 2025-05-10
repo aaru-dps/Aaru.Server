@@ -49,7 +49,7 @@ public partial class Filesystems
         }
 
 #pragma warning disable CS8604 // Possible null reference argument.
-        await Common.HandleRedraw(_filesystemsChart, _filesystemsLabels, GetFilesystemsChartDataset);
+        await Common.HandleRedrawAsync(_filesystemsChart, _filesystemsLabels, GetFilesystemsChartDataset);
 #pragma warning restore CS8604 // Possible null reference argument.
     }
 
@@ -57,8 +57,8 @@ public partial class Filesystems
     {
         Label           = $"Top {_filesystemsLabels.Length} filesystems found",
         Data            = _filesystemsCounts,
-        BackgroundColor = Common._backgroundColors,
-        BorderColor     = Common._borderColors,
+        BackgroundColor = Common.BackgroundColors,
+        BorderColor     = Common.BorderColors,
         BorderWidth     = 1
     };
 }

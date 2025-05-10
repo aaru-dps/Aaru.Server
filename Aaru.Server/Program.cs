@@ -76,7 +76,7 @@ builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 
-builder.Services.AddAuthentication(options =>
+builder.Services.AddAuthentication(static options =>
         {
             options.DefaultScheme       = IdentityConstants.ApplicationScheme;
             options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
@@ -164,7 +164,7 @@ using(IServiceScope scope = app.Services.CreateScope())
     {
         Console.WriteLine("\e[31;1mCould not open database...\e[0m");
 #if DEBUG
-        Console.WriteLine("\e[31;1mException: {0}\e[0m", ex.Message);
+        Console.WriteLine("\e[31;1mException: {0}\e[0m", ex);
 #endif
         return;
     }

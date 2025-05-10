@@ -43,11 +43,11 @@ public static class SscTestedMedia
                               out Dictionary<string, (Dictionary<string, string> Table, List<string> List)>
                                   mediaInformation)
     {
-        mediaInformation = new Dictionary<string, (Dictionary<string, string>, List<string>)>();
+        mediaInformation = [];
 
         foreach(TestedSequentialMedia media in testedMedia)
         {
-            Dictionary<string, string> table = new();
+            Dictionary<string, string> table = [];
             List<string>               list  = [];
             string                     header;
 
@@ -63,9 +63,9 @@ public static class SscTestedMedia
                 header = "Information for unknown medium type";
 
             if(!string.IsNullOrWhiteSpace(media.Manufacturer))
-                table.Add("Medium manufacturer", $"{media.Manufacturer}");
+                table.Add("Medium manufacturer", media.Manufacturer);
 
-            if(!string.IsNullOrWhiteSpace(media.Model)) table.Add("Medium model", $"{media.Model}");
+            if(!string.IsNullOrWhiteSpace(media.Model)) table.Add("Medium model", media.Model);
 
             if(media.Density.HasValue) list.Add($"Medium has density code {media.Density:X2}h");
 

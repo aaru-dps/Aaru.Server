@@ -39,7 +39,7 @@ public partial class Commands
         }
 
 #pragma warning disable CS8604 // Possible null reference argument.
-        await Common.HandleRedraw(_commandsChart, _commandsLabels, GetCommandsChartDataset);
+        await Common.HandleRedrawAsync(_commandsChart, _commandsLabels, GetCommandsChartDataset);
 #pragma warning restore CS8604 // Possible null reference argument.
     }
 
@@ -47,8 +47,8 @@ public partial class Commands
     {
         Label           = $"Top {_commandsLabels.Length} used commands",
         Data            = _commandsCounts,
-        BackgroundColor = Common._backgroundColors,
-        BorderColor     = Common._borderColors,
+        BackgroundColor = Common.BackgroundColors,
+        BorderColor     = Common.BorderColors,
         BorderWidth     = 1
     };
 }

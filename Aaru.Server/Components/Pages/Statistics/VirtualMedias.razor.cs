@@ -64,7 +64,7 @@ public partial class VirtualMedias
         }
 
 #pragma warning disable CS8604 // Possible null reference argument.
-        await Common.HandleRedraw(_virtualMediaChart, _virtualMediaLabels, GetVirtualMediaChartDataset);
+        await Common.HandleRedrawAsync(_virtualMediaChart, _virtualMediaLabels, GetVirtualMediaChartDataset);
 #pragma warning restore CS8604 // Possible null reference argument.
     }
 
@@ -72,8 +72,8 @@ public partial class VirtualMedias
     {
         Label           = $"Top {_virtualMediaLabels.Length} media types found in images",
         Data            = _virtualMediaCounts,
-        BackgroundColor = Common._backgroundColors,
-        BorderColor     = Common._borderColors,
+        BackgroundColor = Common.BackgroundColors,
+        BorderColor     = Common.BorderColors,
         BorderWidth     = 1
     };
 }

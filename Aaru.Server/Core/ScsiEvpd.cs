@@ -47,7 +47,7 @@ public static class ScsiEvpd
     public static void Report(IEnumerable<ScsiPage>                pages, string vendor,
                               out Dictionary<string, List<string>> evpdPages)
     {
-        evpdPages = new Dictionary<string, List<string>>();
+        evpdPages = [];
         vendor    = vendor.ToLowerInvariant();
 
         foreach(ScsiPage evpd in pages)

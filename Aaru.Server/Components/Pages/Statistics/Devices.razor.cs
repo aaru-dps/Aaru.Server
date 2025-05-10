@@ -95,11 +95,11 @@ public partial class Devices
         _devicesByManufacturerCounts[9] = data.Sum(static o => o.Count) - _devicesByManufacturerCounts.Take(9).Sum();
 
 #pragma warning disable CS8604 // Possible null reference argument.
-        await Common.HandleRedraw(_devicesByBusChart, _devicesByBusLabels, GetDevicesByBusChartDataset);
+        await Common.HandleRedrawAsync(_devicesByBusChart, _devicesByBusLabels, GetDevicesByBusChartDataset);
 
-        await Common.HandleRedraw(_devicesByManufacturerChart,
-                                  _devicesByManufacturerLabels,
-                                  GetDevicesByManufacturerChartDataset);
+        await Common.HandleRedrawAsync(_devicesByManufacturerChart,
+                                       _devicesByManufacturerLabels,
+                                       GetDevicesByManufacturerChartDataset);
 #pragma warning restore CS8604 // Possible null reference argument.
 
         // Upstream: https://github.com/Megabit/Blazorise/issues/5491
@@ -110,8 +110,8 @@ public partial class Devices
     {
         Label           = $"Top {_devicesByBusLabels.Length} devices by bus",
         Data            = _devicesByBusCounts,
-        BackgroundColor = Common._backgroundColors,
-        BorderColor     = Common._borderColors,
+        BackgroundColor = Common.BackgroundColors,
+        BorderColor     = Common.BorderColors,
         BorderWidth     = 1
     };
 
@@ -119,8 +119,8 @@ public partial class Devices
     {
         Label           = $"Top {_devicesByManufacturerLabels.Length} devices by manufacturers",
         Data            = _devicesByManufacturerCounts,
-        BackgroundColor = Common._backgroundColors,
-        BorderColor     = Common._borderColors,
+        BackgroundColor = Common.BackgroundColors,
+        BorderColor     = Common.BorderColors,
         BorderWidth     = 1
     };
 }

@@ -65,7 +65,7 @@ public partial class RealMedias
 
 
 #pragma warning disable CS8604 // Possible null reference argument.
-        await Common.HandleRedraw(_realMediaChart, _realMediaLabels, GetRealMediaChartDataset);
+        await Common.HandleRedrawAsync(_realMediaChart, _realMediaLabels, GetRealMediaChartDataset);
 #pragma warning restore CS8604 // Possible null reference argument.
     }
 
@@ -73,8 +73,8 @@ public partial class RealMedias
     {
         Label           = $"Top {_realMediaLabels.Length} media types found in devices",
         Data            = _realMediaCounts,
-        BackgroundColor = Common._backgroundColors,
-        BorderColor     = Common._borderColors,
+        BackgroundColor = Common.BackgroundColors,
+        BorderColor     = Common.BorderColors,
         BorderWidth     = 1
     };
 }
