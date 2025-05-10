@@ -13,14 +13,30 @@ public partial class VirtualMedias
     PieChart<long>? _virtualMediaChart;
     List<long>      _virtualMediaCounts = [];
     string[]        _virtualMediaLabels = [];
-    List<MediaItem> VirtualMedia { get; } = [];
+    List<MediaItem> VirtualMedia { get; set; } = [];
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
-
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
+
+        VirtualMedia = [];
+
+        foreach(Media media in ctx.Medias.Where(static o => !o.Real).OrderByDescending(static o => o.Count))
+        {
+            (string type, string subType) mediaType =
+                MediaType.MediaTypeToString((CommonTypes.MediaType)Enum.Parse(typeof(CommonTypes.MediaType),
+                                                                              media.Type));
+
+            VirtualMedia.Add(new MediaItem
+            {
+                Type    = mediaType.type,
+                SubType = mediaType.subType,
+                Count   = media.Count
+            });
+        }
+
+        await base.OnInitializedAsync();
     }
 
     /// <inheritdoc />

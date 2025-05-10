@@ -16,8 +16,6 @@ public partial class Versions
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
-
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
         VersionsList = (await ctx.Versions.Select(static nvs => new NameValueStats
@@ -27,6 +25,8 @@ public partial class Versions
                                   })
                                  .ToListAsync()).OrderBy(static version => version.name)
                                                 .ToList();
+
+        await base.OnInitializedAsync();
     }
 
     /// <inheritdoc />

@@ -13,14 +13,30 @@ public partial class RealMedias
     PieChart<long>? _realMediaChart;
     List<long>      _realMediaCounts = [];
     string[]        _realMediaLabels = [];
-    List<MediaItem> RealMedia { get; } = [];
+    List<MediaItem> RealMedia { get; set; } = [];
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
-
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
+
+        RealMedia = [];
+
+        foreach(Media media in ctx.Medias.Where(static o => o.Real).OrderByDescending(static o => o.Count))
+        {
+            (string type, string subType) mediaType =
+                MediaType.MediaTypeToString((CommonTypes.MediaType)Enum.Parse(typeof(CommonTypes.MediaType),
+                                                                              media.Type));
+
+            RealMedia.Add(new MediaItem
+            {
+                Type    = mediaType.type,
+                SubType = mediaType.subType,
+                Count   = media.Count
+            });
+        }
+
+        await base.OnInitializedAsync();
     }
 
     /// <inheritdoc />

@@ -29,8 +29,6 @@ public partial class OperatingSystems
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
-
         // TODO: Cache real OS name in database, lookups would be much faster
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
@@ -44,6 +42,8 @@ public partial class OperatingSystems
                                           })
                                          .ToListAsync()).OrderBy(static os => os.name)
                                                         .ToList();
+
+        await base.OnInitializedAsync();
     }
 
     /// <inheritdoc />
@@ -195,5 +195,6 @@ public partial class OperatingSystems
         BorderWidth     = 1
     };
 
-    static string GetPlatformName(string name, string version) => DetectOS.GetPlatformName((PlatformID)Enum.Parse(typeof(PlatformID), name), version);
+    static string GetPlatformName(string name, string version) =>
+        DetectOS.GetPlatformName((PlatformID)Enum.Parse(typeof(PlatformID), name), version);
 }

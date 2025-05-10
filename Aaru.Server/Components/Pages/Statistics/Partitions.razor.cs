@@ -16,9 +16,11 @@ public partial class Partitions
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
-
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
+
+        PartitionsList = await ctx.Partitions.OrderBy(static partition => partition.Name).ToListAsync();
+
+        await base.OnInitializedAsync();
     }
 
     /// <inheritdoc />
@@ -28,8 +30,6 @@ public partial class Partitions
 
         _isAlreadyInitialized = true;
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
-
-        PartitionsList = await ctx.Partitions.OrderBy(static partition => partition.Name).ToListAsync();
 
         _partitionsLabels = await ctx.Partitions.OrderByDescending(static o => o.Count)
                                      .Take(10)

@@ -16,11 +16,11 @@ public partial class Filesystems
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
-
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
         FilesystemsList = await ctx.Filesystems.OrderBy(static filesystem => filesystem.Name).ToListAsync();
+
+        await base.OnInitializedAsync();
     }
 
     /// <inheritdoc />

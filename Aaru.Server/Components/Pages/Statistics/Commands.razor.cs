@@ -10,16 +10,27 @@ public partial class Commands
     PieChart<long>? _commandsChart;
     List<long>      _commandsCounts = [];
     string[]        _commandsLabels = [];
+    bool            _isAlreadyInitialized;
     List<Command>   CommandsList { get; set; } = [];
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
-
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
         CommandsList = await ctx.Commands.OrderBy(static c => c.Name).ToListAsync();
+
+        await base.OnInitializedAsync();
+    }
+
+    /// <inheritdoc />
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(_isAlreadyInitialized) return;
+
+        _isAlreadyInitialized = true;
+        await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
+
 
         _commandsLabels = await ctx.Commands.OrderByDescending(static o => o.Count)
                                    .Take(10)

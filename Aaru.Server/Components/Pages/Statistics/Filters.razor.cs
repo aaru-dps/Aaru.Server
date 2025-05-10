@@ -16,11 +16,11 @@ public partial class Filters
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
-
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
         FiltersList = await ctx.Filters.OrderBy(static filter => filter.Name).ToListAsync();
+
+        await base.OnInitializedAsync();
     }
 
     /// <inheritdoc />

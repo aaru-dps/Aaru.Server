@@ -16,20 +16,26 @@ public partial class Devices
     string[]         _devicesByManufacturerLabels = [];
     Carousel?        _devicesCarousel;
     bool             _isAlreadyInitialized;
-    List<DeviceItem> DevicesList { get; set; } = [];
+    List<DeviceItem> DevicesList { get; } = [];
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
-
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
-        DevicesList = DevicesList.OrderBy(static device => device.Manufacturer)
-                                 .ThenBy(static device => device.Model)
-                                 .ThenBy(static device => device.Revision)
-                                 .ThenBy(static device => device.Bus)
-                                 .ToList();
+        DevicesList.AddRange(ctx.Devices.OrderBy(static device => device.Manufacturer)
+                                .ThenBy(static device => device.Model)
+                                .ThenBy(static device => device.Revision)
+                                .ThenBy(static device => device.Type)
+                                .Select(static dev => new DeviceItem
+                                 {
+                                     Manufacturer = dev.Manufacturer,
+                                     Model        = dev.Model,
+                                     Revision     = dev.Revision,
+                                     Bus          = dev.Type.ToString()
+                                 }));
+
+        await base.OnInitializedAsync();
     }
 
     /// <inheritdoc />

@@ -16,9 +16,11 @@ public partial class Formats
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
-
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
+
+        MediaImages = await ctx.MediaFormats.OrderBy(static format => format.Name).ToListAsync();
+
+        await base.OnInitializedAsync();
     }
 
     /// <inheritdoc />
@@ -28,8 +30,6 @@ public partial class Formats
 
         _isAlreadyInitialized = true;
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
-
-        MediaImages = await ctx.MediaFormats.OrderBy(static format => format.Name).ToListAsync();
 
         _formatsLabels = await ctx.MediaFormats.OrderByDescending(static o => o.Count)
                                   .Take(10)
