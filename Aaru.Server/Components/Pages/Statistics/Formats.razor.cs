@@ -1,5 +1,5 @@
 ﻿using Aaru.Server.Database.Models;
-using Blazorise.Charts;
+using BlazorBootstrap;
 using Microsoft.EntityFrameworkCore;
 using DbContext = Aaru.Server.Database.DbContext;
 
@@ -7,9 +7,9 @@ namespace Aaru.Server.Components.Pages.Statistics;
 
 public partial class Formats
 {
-    PieChart<long>?   _formatsChart;
-    List<long>        _formatsCounts = [];
-    string[]          _formatsLabels = [];
+    PieChart          _formatsChart;
+    List<double?>     _formatsCounts = [];
+    List<string>      _formatsLabels = [];
     bool              _isAlreadyInitialized;
     List<MediaFormat> MediaImages { get; set; } = [];
 
@@ -34,33 +34,40 @@ public partial class Formats
         _formatsLabels = await ctx.MediaFormats.OrderByDescending(static o => o.Count)
                                   .Take(10)
                                   .Select(static v => v.Name)
-                                  .ToArrayAsync();
+                                  .ToListAsync();
 
         _formatsCounts = await ctx.MediaFormats.OrderByDescending(static o => o.Count)
                                   .Take(10)
-                                  .Select(static x => x.Count)
+                                  .Select(static x => (double?)x.Count)
                                   .ToListAsync();
 
-        if(_formatsLabels.Length >= 10)
+        if(_formatsLabels.Count >= 10)
         {
             _formatsLabels[9] = "Other";
 
             _formatsCounts[9] = ctx.MediaFormats.Sum(static o => o.Count) - _formatsCounts.Take(9).Sum();
         }
 
+        PieChartOptions pieChartOptions = new()
+        {
+            Responsive = true
+        };
 
-#pragma warning disable CS8604 // Possible null reference argument.
-        await Common.HandleRedrawAsync(_formatsChart, _formatsLabels, GetFormatsChartDataset);
+        pieChartOptions.Plugins.Title.Text    = $"Top {_formatsLabels.Count} media image formats found";
+        pieChartOptions.Plugins.Title.Display = true;
 
-#pragma warning restore CS8604 // Possible null reference argument.
+        var chartData = new ChartData
+        {
+            Labels = _formatsLabels,
+            Datasets =
+            [
+                new PieChartDataset
+                {
+                    Data = _formatsCounts
+                }
+            ]
+        };
+
+        await _formatsChart.InitializeAsync(chartData, pieChartOptions);
     }
-
-    PieChartDataset<long> GetFormatsChartDataset() => new()
-    {
-        Label           = $"Top {_formatsLabels.Length} media image formats found",
-        Data            = _formatsCounts,
-        BackgroundColor = Common.BackgroundColors,
-        BorderColor     = Common.BorderColors,
-        BorderWidth     = 1
-    };
 }
