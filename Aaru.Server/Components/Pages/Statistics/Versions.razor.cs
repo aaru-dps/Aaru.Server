@@ -69,7 +69,10 @@ public partial class Versions
             [
                 new PieChartDataset
                 {
-                    Data = _versionsCounts
+                    Data            = _versionsCounts,
+                    BackgroundColor = Common.BackgroundColors,
+                    BorderColor     = Common.BorderColors,
+                    BorderWidth     = [1]
                 }
             ]
         };

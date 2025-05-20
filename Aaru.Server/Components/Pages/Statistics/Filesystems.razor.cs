@@ -63,7 +63,10 @@ public partial class Filesystems
             [
                 new PieChartDataset
                 {
-                    Data = _filesystemsCounts
+                    Data            = _filesystemsCounts,
+                    BackgroundColor = Common.BackgroundColors,
+                    BorderColor     = Common.BorderColors,
+                    BorderWidth     = [1]
                 }
             ]
         };

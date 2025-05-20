@@ -63,7 +63,10 @@ public partial class Partitions
             [
                 new PieChartDataset
                 {
-                    Data = _partitionsCounts
+                    Data            = _partitionsCounts,
+                    BackgroundColor = Common.BackgroundColors,
+                    BorderColor     = Common.BorderColors,
+                    BorderWidth     = [1]
                 }
             ]
         };

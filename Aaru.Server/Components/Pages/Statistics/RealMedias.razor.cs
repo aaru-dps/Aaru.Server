@@ -98,7 +98,10 @@ public partial class RealMedias
             [
                 new PieChartDataset
                 {
-                    Data = _realMediaCounts
+                    Data            = _realMediaCounts,
+                    BackgroundColor = Common.BackgroundColors,
+                    BorderColor     = Common.BorderColors,
+                    BorderWidth     = [1]
                 }
             ]
         };

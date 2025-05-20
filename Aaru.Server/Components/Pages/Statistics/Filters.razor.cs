@@ -63,7 +63,10 @@ public partial class Filters
             [
                 new PieChartDataset
                 {
-                    Data = _filtersCounts
+                    Data            = _filtersCounts,
+                    BackgroundColor = Common.BackgroundColors,
+                    BorderColor     = Common.BorderColors,
+                    BorderWidth     = [1]
                 }
             ]
         };

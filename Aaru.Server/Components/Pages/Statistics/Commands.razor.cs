@@ -64,7 +64,10 @@ public partial class Commands
             [
                 new PieChartDataset
                 {
-                    Data = _commandsCounts
+                    Data            = _commandsCounts,
+                    BackgroundColor = Common.BackgroundColors,
+                    BorderColor     = Common.BorderColors,
+                    BorderWidth     = [1]
                 }
             ]
         };

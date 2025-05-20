@@ -98,7 +98,10 @@ public partial class VirtualMedias
             [
                 new PieChartDataset
                 {
-                    Data = _virtualMediaCounts
+                    Data            = _virtualMediaCounts,
+                    BackgroundColor = Common.BackgroundColors,
+                    BorderColor     = Common.BorderColors,
+                    BorderWidth     = [1]
                 }
             ]
         };

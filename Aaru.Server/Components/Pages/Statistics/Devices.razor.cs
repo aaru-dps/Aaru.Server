@@ -121,7 +121,10 @@ public partial class Devices
             [
                 new PieChartDataset
                 {
-                    Data = _devicesByBusCounts
+                    Data            = _devicesByBusCounts,
+                    BackgroundColor = Common.BackgroundColors,
+                    BorderColor     = Common.BorderColors,
+                    BorderWidth     = [1]
                 }
             ]
         };
@@ -145,7 +148,10 @@ public partial class Devices
             [
                 new PieChartDataset
                 {
-                    Data = _devicesByManufacturerCounts
+                    Data            = _devicesByManufacturerCounts,
+                    BackgroundColor = Common.BackgroundColors,
+                    BorderColor     = Common.BorderColors,
+                    BorderWidth     = [1]
                 }
             ]
         };

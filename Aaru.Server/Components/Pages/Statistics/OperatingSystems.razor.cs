@@ -158,7 +158,10 @@ public partial class OperatingSystems
             [
                 new PieChartDataset
                 {
-                    Data = _operatingSystemsCounts
+                    Data            = _operatingSystemsCounts,
+                    BackgroundColor = Common.BackgroundColors,
+                    BorderColor     = Common.BorderColors,
+                    BorderWidth     = [1]
                 }
             ]
         };
@@ -180,7 +183,10 @@ public partial class OperatingSystems
             [
                 new PieChartDataset
                 {
-                    Data = _linuxCounts
+                    Data            = _linuxCounts,
+                    BackgroundColor = Common.BackgroundColors,
+                    BorderColor     = Common.BorderColors,
+                    BorderWidth     = [1]
                 }
             ]
         };
@@ -202,7 +208,10 @@ public partial class OperatingSystems
             [
                 new PieChartDataset
                 {
-                    Data = _macosCounts
+                    Data            = _macosCounts,
+                    BackgroundColor = Common.BackgroundColors,
+                    BorderColor     = Common.BorderColors,
+                    BorderWidth     = [1]
                 }
             ]
         };
@@ -224,7 +233,10 @@ public partial class OperatingSystems
             [
                 new PieChartDataset
                 {
-                    Data = _windowsCounts
+                    Data            = _windowsCounts,
+                    BackgroundColor = Common.BackgroundColors,
+                    BorderColor     = Common.BorderColors,
+                    BorderWidth     = [1]
                 }
             ]
         };

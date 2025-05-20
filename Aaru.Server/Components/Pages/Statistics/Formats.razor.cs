@@ -63,7 +63,10 @@ public partial class Formats
             [
                 new PieChartDataset
                 {
-                    Data = _formatsCounts
+                    Data            = _formatsCounts,
+                    BackgroundColor = Common.BackgroundColors,
+                    BorderColor     = Common.BorderColors,
+                    BorderWidth     = [1]
                 }
             ]
         };
