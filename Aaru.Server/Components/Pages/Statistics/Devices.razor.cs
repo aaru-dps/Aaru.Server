@@ -1,6 +1,5 @@
 ﻿using Aaru.Server.Database.Models;
-using Blazorise;
-using Blazorise.Charts;
+using BlazorBootstrap;
 using Microsoft.EntityFrameworkCore;
 using DbContext = Aaru.Server.Database.DbContext;
 
@@ -8,13 +7,14 @@ namespace Aaru.Server.Components.Pages.Statistics;
 
 public partial class Devices
 {
-    PieChart<long>?  _devicesByBusChart;
-    List<long>       _devicesByBusCounts = [];
-    string[]         _devicesByBusLabels = [];
-    PieChart<long>?  _devicesByManufacturerChart;
-    List<long>       _devicesByManufacturerCounts = [];
-    string[]         _devicesByManufacturerLabels = [];
-    Carousel?        _devicesCarousel;
+    PieChart      _devicesByBusChart;
+    List<double?> _devicesByBusCounts = [];
+    List<string>  _devicesByBusLabels = [];
+    PieChart      _devicesByManufacturerChart;
+    List<double?> _devicesByManufacturerCounts = [];
+    List<string>  _devicesByManufacturerLabels = [];
+
+    //Carousel?        _devicesCarousel;
     bool             _isAlreadyInitialized;
     List<DeviceItem> DevicesList { get; } = [];
 
@@ -60,10 +60,14 @@ public partial class Devices
                              })
                             .ToListAsync();
 
-        _devicesByBusLabels = data.OrderByDescending(static o => o.Count).Take(10).Select(static v => v.Name).ToArray();
-        _devicesByBusCounts = data.OrderByDescending(static o => o.Count).Take(10).Select(static x => x.Count).ToList();
+        _devicesByBusLabels = data.OrderByDescending(static o => o.Count).Take(10).Select(static v => v.Name).ToList();
 
-        if(_devicesByBusLabels.Length >= 10)
+        _devicesByBusCounts = data.OrderByDescending(static o => o.Count)
+                                  .Take(10)
+                                  .Select(static x => (double?)x.Count)
+                                  .ToList();
+
+        if(_devicesByBusLabels.Count >= 10)
         {
             _devicesByBusLabels[9] = "Other";
 
@@ -90,43 +94,66 @@ public partial class Devices
                       .ToList();
 
         _devicesByManufacturerLabels =
-            data.OrderByDescending(static o => o.Count).Take(10).Select(static v => v.Name).ToArray();
+            data.OrderByDescending(static o => o.Count).Take(10).Select(static v => v.Name).ToList();
 
-        _devicesByManufacturerCounts =
-            data.OrderByDescending(static o => o.Count).Take(10).Select(static x => x.Count).ToList();
+        _devicesByManufacturerCounts = data.OrderByDescending(static o => o.Count)
+                                           .Take(10)
+                                           .Select(static x => (double?)x.Count)
+                                           .ToList();
 
-        if(_devicesByManufacturerLabels.Length < 10) return;
+        if(_devicesByManufacturerLabels.Count < 10) return;
 
         _devicesByManufacturerLabels[9] = "Other";
         _devicesByManufacturerCounts[9] = data.Sum(static o => o.Count) - _devicesByManufacturerCounts.Take(9).Sum();
 
-#pragma warning disable CS8604 // Possible null reference argument.
-        await Common.HandleRedrawAsync(_devicesByBusChart, _devicesByBusLabels, GetDevicesByBusChartDataset);
+        PieChartOptions devicesByBusChartOptions = new()
+        {
+            Responsive = true
+        };
 
-        await Common.HandleRedrawAsync(_devicesByManufacturerChart,
-                                       _devicesByManufacturerLabels,
-                                       GetDevicesByManufacturerChartDataset);
-#pragma warning restore CS8604 // Possible null reference argument.
+        devicesByBusChartOptions.Plugins.Title.Text    = $"Top {_devicesByBusLabels.Count} devices by bus";
+        devicesByBusChartOptions.Plugins.Title.Display = true;
+
+        var devicesByBusChartData = new ChartData
+        {
+            Labels = _devicesByBusLabels,
+            Datasets =
+            [
+                new PieChartDataset
+                {
+                    Data = _devicesByBusCounts
+                }
+            ]
+        };
+
+        await _devicesByBusChart.InitializeAsync(devicesByBusChartData, devicesByBusChartOptions);
+
+        PieChartOptions devicesByManufacturerChartOptions = new()
+        {
+            Responsive = true
+        };
+
+        devicesByManufacturerChartOptions.Plugins.Title.Text =
+            $"Top {_devicesByManufacturerLabels.Count} devices by manufacturers";
+
+        devicesByManufacturerChartOptions.Plugins.Title.Display = true;
+
+        var devicesByManufacturerChartData = new ChartData
+        {
+            Labels = _devicesByManufacturerLabels,
+            Datasets =
+            [
+                new PieChartDataset
+                {
+                    Data = _devicesByManufacturerCounts
+                }
+            ]
+        };
+
+        await _devicesByManufacturerChart.InitializeAsync(devicesByManufacturerChartData,
+                                                          devicesByManufacturerChartOptions);
 
         // Upstream: https://github.com/Megabit/Blazorise/issues/5491
-        _devicesCarousel.Interval = 5000;
+//        _devicesCarousel.Interval = 5000;
     }
-
-    PieChartDataset<long> GetDevicesByBusChartDataset() => new()
-    {
-        Label           = $"Top {_devicesByBusLabels.Length} devices by bus",
-        Data            = _devicesByBusCounts,
-        BackgroundColor = Common.BackgroundColors,
-        BorderColor     = Common.BorderColors,
-        BorderWidth     = 1
-    };
-
-    PieChartDataset<long> GetDevicesByManufacturerChartDataset() => new()
-    {
-        Label           = $"Top {_devicesByManufacturerLabels.Length} devices by manufacturers",
-        Data            = _devicesByManufacturerCounts,
-        BackgroundColor = Common.BackgroundColors,
-        BorderColor     = Common.BorderColors,
-        BorderWidth     = 1
-    };
 }

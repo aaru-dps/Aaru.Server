@@ -1,7 +1,6 @@
 ﻿@using Aaru.Server.Database
 @using Aaru.Server.Database.Models
-@using Blazorise
-@using Blazorise.Charts
+@using BlazorBootstrap
 @using Blazorise.DataGrid
 @rendermode InteractiveServer
 
@@ -14,15 +13,16 @@
 <h1>
     <p class="text-center" style="color: deeppink;">All devices found...</p>
 </h1>
-<Carousel @ref="_devicesCarousel">
-    <CarouselSlide Name="1">
-        <PieChart @ref="_devicesByBusChart" style="padding: 40px" TItem="long"/>
-    </CarouselSlide>
-    <CarouselSlide Name="2">
-        <PieChart @ref="_devicesByManufacturerChart" style="padding: 40px" TItem="long"/>
-    </CarouselSlide>
-</Carousel>
-<DataGrid Data="@DevicesList" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="DeviceItem">
+<!--<Carousel @ref="_devicesCarousel">
+    <CarouselSlide Name="1">-->
+<PieChart @ref="_devicesByBusChart" style="padding: 40px" TItem="long"/>
+<!--    </CarouselSlide>
+    <CarouselSlide Name="2">-->
+<PieChart @ref="_devicesByManufacturerChart" style="padding: 40px" TItem="long"/>
+<!--    </CarouselSlide>
+</Carousel>-->
+<DataGrid Data="@DevicesList" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue"
+          TItem="DeviceItem">
     <DataGridColumn Caption="Manufacturer" Field="@nameof(DeviceItem.Manufacturer)"/>
     <DataGridColumn Caption="Model" Field="@nameof(DeviceItem.Model)"/>
     <DataGridColumn Caption="Revision" Field="@nameof(DeviceItem.Revision)"/>
