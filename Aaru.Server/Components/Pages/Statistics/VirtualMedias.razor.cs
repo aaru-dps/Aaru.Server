@@ -1,6 +1,6 @@
 ﻿using Aaru.CommonTypes.Metadata;
 using Aaru.Server.Database.Models;
-using Blazorise.Charts;
+using BlazorBootstrap;
 using Microsoft.EntityFrameworkCore;
 using DbContext = Aaru.Server.Database.DbContext;
 using Media = Aaru.Server.Database.Models.Media;
@@ -10,9 +10,9 @@ namespace Aaru.Server.Components.Pages.Statistics;
 public partial class VirtualMedias
 {
     bool            _isAlreadyInitialized;
-    PieChart<long>? _virtualMediaChart;
-    List<long>      _virtualMediaCounts = [];
-    string[]        _virtualMediaLabels = [];
+    PieChart        _virtualMediaChart;
+    List<double?>   _virtualMediaCounts = [];
+    List<string>    _virtualMediaLabels = [];
     List<MediaItem> VirtualMedia { get; set; } = [];
 
     /// <inheritdoc />
@@ -72,10 +72,10 @@ public partial class VirtualMedias
             }
         }
 
-        _virtualMediaLabels = virtualMedias.Select(static v => v.Type).ToArray();
-        _virtualMediaCounts = virtualMedias.Select(static x => x.Count).ToList();
+        _virtualMediaLabels = virtualMedias.Select(static v => v.Type).ToList();
+        _virtualMediaCounts = virtualMedias.Select(static x => (double?)x.Count).ToList();
 
-        if(_virtualMediaLabels.Length >= 10)
+        if(_virtualMediaLabels.Count >= 10)
         {
             _virtualMediaLabels[9] = "Other";
 
@@ -83,17 +83,26 @@ public partial class VirtualMedias
                                      _virtualMediaCounts.Take(9).Sum();
         }
 
-#pragma warning disable CS8604 // Possible null reference argument.
-        await Common.HandleRedrawAsync(_virtualMediaChart, _virtualMediaLabels, GetVirtualMediaChartDataset);
-#pragma warning restore CS8604 // Possible null reference argument.
-    }
+        PieChartOptions pieChartOptions = new()
+        {
+            Responsive = true
+        };
 
-    PieChartDataset<long> GetVirtualMediaChartDataset() => new()
-    {
-        Label           = $"Top {_virtualMediaLabels.Length} media types found in images",
-        Data            = _virtualMediaCounts,
-        BackgroundColor = Common.BackgroundColors,
-        BorderColor     = Common.BorderColors,
-        BorderWidth     = 1
-    };
+        pieChartOptions.Plugins.Title.Text    = $"Top {_virtualMediaLabels.Count} media types found in images";
+        pieChartOptions.Plugins.Title.Display = true;
+
+        var chartData = new ChartData
+        {
+            Labels = _virtualMediaLabels,
+            Datasets =
+            [
+                new PieChartDataset
+                {
+                    Data = _virtualMediaCounts
+                }
+            ]
+        };
+
+        await _virtualMediaChart.InitializeAsync(chartData, pieChartOptions);
+    }
 }

@@ -108,6 +108,8 @@ builder.Services.AddBlazorise(static options => { options.Immediate = true; })
        .AddBootstrap5Providers()
        .AddFontAwesomeIcons();
 
+builder.Services.AddBlazorBootstrap();
+
 // Add services to the container.
 builder.Services.AddControllers();
 
