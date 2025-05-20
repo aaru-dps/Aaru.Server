@@ -1,6 +1,6 @@
 ﻿@using Aaru.Server.Database
 @using Aaru.Server.Database.Models
-@using Blazorise.Charts
+@using BlazorBootstrap
 @using Blazorise.DataGrid
 @rendermode InteractiveServer
 
@@ -10,7 +10,8 @@
     <p class="text-center" style="color: deeppink;">All filesystems found...</p>
 </h1>
 <PieChart @ref="_filesystemsChart" style="padding: 40px" TItem="long"/>
-<DataGrid Data="@FilesystemsList" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="Filesystem">
+<DataGrid Data="@FilesystemsList" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue"
+          TItem="Filesystem">
     <DataGridColumn Caption="Filesystem name" Field="@nameof(Filesystem.Name)"/>
     <DataGridNumericColumn Caption="Times found" Field="@nameof(Filesystem.Count)"/>
 </DataGrid>
