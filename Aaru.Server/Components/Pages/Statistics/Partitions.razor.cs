@@ -1,5 +1,5 @@
 ﻿using Aaru.Server.Database.Models;
-using Blazorise.Charts;
+using BlazorBootstrap;
 using Microsoft.EntityFrameworkCore;
 using DbContext = Aaru.Server.Database.DbContext;
 
@@ -8,9 +8,9 @@ namespace Aaru.Server.Components.Pages.Statistics;
 public partial class Partitions
 {
     bool            _isAlreadyInitialized;
-    PieChart<long>? _partitionsChart;
-    List<long>      _partitionsCounts = [];
-    string[]        _partitionsLabels = [];
+    PieChart        _partitionsChart;
+    List<double?>   _partitionsCounts = [];
+    List<string>    _partitionsLabels = [];
     List<Partition> PartitionsList { get; set; } = [];
 
     /// <inheritdoc />
@@ -34,31 +34,40 @@ public partial class Partitions
         _partitionsLabels = await ctx.Partitions.OrderByDescending(static o => o.Count)
                                      .Take(10)
                                      .Select(static v => v.Name)
-                                     .ToArrayAsync();
+                                     .ToListAsync();
 
         _partitionsCounts = await ctx.Partitions.OrderByDescending(static o => o.Count)
                                      .Take(10)
-                                     .Select(static x => x.Count)
+                                     .Select(static x => (double?)x.Count)
                                      .ToListAsync();
 
-        if(_partitionsLabels.Length >= 10)
+        if(_partitionsLabels.Count >= 10)
         {
             _partitionsLabels[9] = "Other";
 
             _partitionsCounts[9] = ctx.Partitions.Sum(static o => o.Count) - _partitionsCounts.Take(9).Sum();
         }
 
-#pragma warning disable CS8604 // Possible null reference argument.
-        await Common.HandleRedrawAsync(_partitionsChart, _partitionsLabels, GetPartitionsChartDataset);
-#pragma warning restore CS8604 // Possible null reference argument.
-    }
+        PieChartOptions pieChartOptions = new()
+        {
+            Responsive = true
+        };
 
-    PieChartDataset<long> GetPartitionsChartDataset() => new()
-    {
-        Label           = $"Top {_partitionsLabels.Length} partitioning schemes found",
-        Data            = _partitionsCounts,
-        BackgroundColor = Common.BackgroundColors,
-        BorderColor     = Common.BorderColors,
-        BorderWidth     = 1
-    };
+        pieChartOptions.Plugins.Title.Text    = $"Top {_partitionsLabels.Count} partitioning schemes found";
+        pieChartOptions.Plugins.Title.Display = true;
+
+        var chartData = new ChartData
+        {
+            Labels = _partitionsLabels,
+            Datasets =
+            [
+                new PieChartDataset
+                {
+                    Data = _partitionsCounts
+                }
+            ]
+        };
+
+        await _partitionsChart.InitializeAsync(chartData, pieChartOptions);
+    }
 }

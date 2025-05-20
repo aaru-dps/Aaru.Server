@@ -1,6 +1,6 @@
 ﻿@using Aaru.Server.Database
 @using Aaru.Server.Database.Models
-@using Blazorise.Charts
+@using BlazorBootstrap
 @using Blazorise.DataGrid
 @rendermode InteractiveServer
 
@@ -10,7 +10,8 @@
     <p class="text-center" style="color: deeppink;">All partitioning schemes found...</p>
 </h1>
 <PieChart @ref="_partitionsChart" style="padding: 40px" TItem="long"/>
-<DataGrid Data="@PartitionsList" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="Partition">
+<DataGrid Data="@PartitionsList" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue"
+          TItem="Partition">
     <DataGridColumn Caption="Partitioning scheme" Field="@nameof(Partition.Name)"/>
     <DataGridNumericColumn Caption="Times found" Field="@nameof(Partition.Count)"/>
 </DataGrid>
