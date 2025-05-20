@@ -13,14 +13,14 @@
 <h1>
     <p class="text-center" style="color: deeppink;">All devices found...</p>
 </h1>
-<!--<Carousel @ref="_devicesCarousel">
-    <CarouselSlide Name="1">-->
-<PieChart @ref="_devicesByBusChart" style="padding: 40px" TItem="long"/>
-<!--    </CarouselSlide>
-    <CarouselSlide Name="2">-->
-<PieChart @ref="_devicesByManufacturerChart" style="padding: 40px" TItem="long"/>
-<!--    </CarouselSlide>
-</Carousel>-->
+<Carousel Crossfade="true" ShowIndicators="true" Autoplay="CarouselAutoPlay.StartOnPageLoad">
+    <CarouselItem Active="true">
+        <PieChart @ref="_devicesByBusChart" style="padding: 40px" TItem="long"/>
+    </CarouselItem>
+    <CarouselItem>
+        <PieChart @ref="_devicesByManufacturerChart" style="padding: 40px" TItem="long"/>
+    </CarouselItem>
+</Carousel>
 <DataGrid Data="@DevicesList" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue"
           TItem="DeviceItem">
     <DataGridColumn Caption="Manufacturer" Field="@nameof(DeviceItem.Manufacturer)"/>

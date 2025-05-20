@@ -16,7 +16,6 @@ public partial class OperatingSystems
     PieChart             _macosChart;
     List<double?>        _macosCounts = [];
     List<string>         _macosLabels = [];
-    Carousel?            _operatingSystemsCarousel;
     PieChart             _operatingSystemsChart;
     List<double?>        _operatingSystemsCounts = [];
     List<string>         _operatingSystemsLabels = [];
@@ -242,8 +241,6 @@ public partial class OperatingSystems
         };
 
         await _windowsChart.InitializeAsync(windowsChartData, windowsChartOptions);
-
-//        _operatingSystemsCarousel.Interval = 5000;
     }
 
     static string GetPlatformName(string name, string version) =>
