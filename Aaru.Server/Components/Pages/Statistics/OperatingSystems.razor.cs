@@ -1,7 +1,6 @@
 ﻿using Aaru.CommonTypes.Interop;
 using Aaru.CommonTypes.Metadata;
-using Blazorise;
-using Blazorise.Charts;
+using BlazorBootstrap;
 using Microsoft.EntityFrameworkCore;
 using DbContext = Aaru.Server.Database.DbContext;
 using PlatformID = Aaru.CommonTypes.Interop.PlatformID;
@@ -11,19 +10,19 @@ namespace Aaru.Server.Components.Pages.Statistics;
 public partial class OperatingSystems
 {
     bool                 _isAlreadyInitialized;
-    PieChart<long>?      _linuxChart;
-    List<long>           _linuxCounts = [];
-    string[]             _linuxLabels = [];
-    PieChart<long>?      _macosChart;
-    List<long>           _macosCounts = [];
-    string[]             _macosLabels = [];
+    PieChart             _linuxChart;
+    List<double?>        _linuxCounts = [];
+    List<string>         _linuxLabels = [];
+    PieChart             _macosChart;
+    List<double?>        _macosCounts = [];
+    List<string>         _macosLabels = [];
     Carousel?            _operatingSystemsCarousel;
-    PieChart<long>?      _operatingSystemsChart;
-    List<long>           _operatingSystemsCounts = [];
-    string[]             _operatingSystemsLabels = [];
-    PieChart<long>?      _windowsChart;
-    List<long>           _windowsCounts = [];
-    string[]             _windowsLabels = [];
+    PieChart             _operatingSystemsChart;
+    List<double?>        _operatingSystemsCounts = [];
+    List<string>         _operatingSystemsLabels = [];
+    PieChart             _windowsChart;
+    List<double?>        _windowsCounts = [];
+    List<string>         _windowsLabels = [];
     List<NameValueStats> OperatingSystemsList { get; set; } = [];
 
     /// <inheritdoc />
@@ -67,10 +66,10 @@ public partial class OperatingSystems
                               Count = g.Sum()
                           });
 
-        _operatingSystemsLabels = await osQuery.Select(static x => x.Name).ToArrayAsync();
-        _operatingSystemsCounts = await osQuery.Select(static x => x.Count).ToListAsync();
+        _operatingSystemsLabels = await osQuery.Select(static x => x.Name).ToListAsync();
+        _operatingSystemsCounts = await osQuery.Select(static x => (double?)x.Count).ToListAsync();
 
-        for(var i = 0; i < _operatingSystemsLabels.Length; i++)
+        for(var i = 0; i < _operatingSystemsLabels.Count; i++)
         {
             _operatingSystemsLabels[i] =
                 DetectOS.GetPlatformName((PlatformID)Enum.Parse(typeof(PlatformID), _operatingSystemsLabels[i]));
@@ -81,16 +80,15 @@ public partial class OperatingSystems
                                 .Take(10)
                                 .Select(static x =>
                                             $"{DetectOS.GetPlatformName(PlatformID.Linux, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}")
-                                .ToArrayAsync();
+                                .ToListAsync();
 
         _linuxCounts = await ctx.OperatingSystems.Where(static o => o.Name == nameof(PlatformID.Linux))
                                 .OrderByDescending(static o => o.Count)
                                 .Take(10)
-                                .Select(static x => x.Count)
+                                .Select(static x => (double?)x.Count)
                                 .ToListAsync();
 
-
-        if(_linuxLabels.Length >= 10)
+        if(_linuxLabels.Count >= 10)
         {
             _linuxLabels[9] = "Other";
 
@@ -104,16 +102,16 @@ public partial class OperatingSystems
                                 .Take(10)
                                 .Select(static x =>
                                             $"{DetectOS.GetPlatformName(PlatformID.MacOSX, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}")
-                                .ToArrayAsync();
+                                .ToListAsync();
 
         _macosCounts = await ctx.OperatingSystems.Where(static o => o.Name == nameof(PlatformID.MacOSX))
                                 .OrderByDescending(static o => o.Count)
                                 .Take(10)
-                                .Select(static x => x.Count)
+                                .Select(static x => (double?)x.Count)
                                 .ToListAsync();
 
 
-        if(_macosLabels.Length >= 10)
+        if(_macosLabels.Count >= 10)
         {
             _macosLabels[9] = "Other";
 
@@ -127,16 +125,16 @@ public partial class OperatingSystems
                                   .Take(10)
                                   .Select(static x =>
                                               $"{DetectOS.GetPlatformName(PlatformID.Win32NT, x.Version)}{(string.IsNullOrEmpty(x.Version) ? "" : " ")}{x.Version}")
-                                  .ToArrayAsync();
+                                  .ToListAsync();
 
         _windowsCounts = await ctx.OperatingSystems.Where(static o => o.Name == nameof(PlatformID.Win32NT))
                                   .OrderByDescending(static o => o.Count)
                                   .Take(10)
-                                  .Select(static x => x.Count)
+                                  .Select(static x => (double?)x.Count)
                                   .ToListAsync();
 
 
-        if(_windowsLabels.Length >= 10)
+        if(_windowsLabels.Count >= 10)
         {
             _windowsLabels[9] = "Other";
 
@@ -145,55 +143,96 @@ public partial class OperatingSystems
                 _windowsCounts.Take(9).Sum();
         }
 
-#pragma warning disable CS8604 // Possible null reference argument.
+        PieChartOptions osesChartOptions = new()
+        {
+            Responsive = true
+        };
 
-        await Task.WhenAll(Common.HandleRedrawAsync(_operatingSystemsChart,
-                                                    _operatingSystemsLabels,
-                                                    GetOperatingSystemsChartDataset),
-                           Common.HandleRedrawAsync(_linuxChart,   _linuxLabels,   GetLinuxChartDataset),
-                           Common.HandleRedrawAsync(_macosChart,   _macosLabels,   GetMacosChartDataset),
-                           Common.HandleRedrawAsync(_windowsChart, _windowsLabels, GetWindowsChartDataset));
-#pragma warning restore CS8604 // Possible null reference argument.
+        osesChartOptions.Plugins.Title.Text    = "Operating systems";
+        osesChartOptions.Plugins.Title.Display = true;
 
-        // Upstream: https://github.com/Megabit/Blazorise/issues/5491
-        _operatingSystemsCarousel.Interval = 5000;
+        var osesChartData = new ChartData
+        {
+            Labels = _operatingSystemsLabels,
+            Datasets =
+            [
+                new PieChartDataset
+                {
+                    Data = _operatingSystemsCounts
+                }
+            ]
+        };
+
+        await _operatingSystemsChart.InitializeAsync(osesChartData, osesChartOptions);
+
+        PieChartOptions linuxChartOptions = new()
+        {
+            Responsive = true
+        };
+
+        linuxChartOptions.Plugins.Title.Text    = $"Top {_linuxLabels.Count} Linux versions";
+        linuxChartOptions.Plugins.Title.Display = true;
+
+        var linuxChartData = new ChartData
+        {
+            Labels = _linuxLabels,
+            Datasets =
+            [
+                new PieChartDataset
+                {
+                    Data = _linuxCounts
+                }
+            ]
+        };
+
+        await _linuxChart.InitializeAsync(linuxChartData, linuxChartOptions);
+
+        PieChartOptions macosChartOptions = new()
+        {
+            Responsive = true
+        };
+
+        macosChartOptions.Plugins.Title.Text    = $"Top {_macosLabels.Count} macOS versions";
+        macosChartOptions.Plugins.Title.Display = true;
+
+        var macosChartData = new ChartData
+        {
+            Labels = _macosLabels,
+            Datasets =
+            [
+                new PieChartDataset
+                {
+                    Data = _macosCounts
+                }
+            ]
+        };
+
+        await _macosChart.InitializeAsync(macosChartData, macosChartOptions);
+
+        PieChartOptions windowsChartOptions = new()
+        {
+            Responsive = true
+        };
+
+        windowsChartOptions.Plugins.Title.Text    = $"Top {_windowsLabels.Count} Windows versions";
+        windowsChartOptions.Plugins.Title.Display = true;
+
+        var windowsChartData = new ChartData
+        {
+            Labels = _windowsLabels,
+            Datasets =
+            [
+                new PieChartDataset
+                {
+                    Data = _windowsCounts
+                }
+            ]
+        };
+
+        await _windowsChart.InitializeAsync(windowsChartData, windowsChartOptions);
+
+//        _operatingSystemsCarousel.Interval = 5000;
     }
-
-    PieChartDataset<long> GetOperatingSystemsChartDataset() => new()
-    {
-        Label           = "Operating systems",
-        Data            = _operatingSystemsCounts,
-        BackgroundColor = Common.BackgroundColors,
-        BorderColor     = Common.BorderColors,
-        BorderWidth     = 1
-    };
-
-    PieChartDataset<long> GetLinuxChartDataset() => new()
-    {
-        Label           = $"Top {_linuxLabels.Length} Linux versions",
-        Data            = _linuxCounts,
-        BackgroundColor = Common.BackgroundColors,
-        BorderColor     = Common.BorderColors,
-        BorderWidth     = 1
-    };
-
-    PieChartDataset<long> GetMacosChartDataset() => new()
-    {
-        Label           = $"Top {_macosLabels.Length} macOS versions",
-        Data            = _macosCounts,
-        BackgroundColor = Common.BackgroundColors,
-        BorderColor     = Common.BorderColors,
-        BorderWidth     = 1
-    };
-
-    PieChartDataset<long> GetWindowsChartDataset() => new()
-    {
-        Label           = $"Top {_windowsLabels.Length} Windows versions",
-        Data            = _windowsCounts,
-        BackgroundColor = Common.BackgroundColors,
-        BorderColor     = Common.BorderColors,
-        BorderWidth     = 1
-    };
 
     static string GetPlatformName(string name, string version) =>
         DetectOS.GetPlatformName((PlatformID)Enum.Parse(typeof(PlatformID), name), version);

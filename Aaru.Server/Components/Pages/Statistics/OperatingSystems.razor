@@ -1,7 +1,6 @@
 ﻿@using Aaru.CommonTypes.Metadata
 @using Aaru.Server.Database
-@using Blazorise
-@using Blazorise.Charts
+@using BlazorBootstrap
 @using Blazorise.DataGrid
 @rendermode InteractiveServer
 
@@ -14,21 +13,24 @@
 <h1>
     <p class="text-center" style="color: deeppink;">All operating systems Aaru has run on...</p>
 </h1>
+<!--
 <Carousel @ref="_operatingSystemsCarousel">
     <CarouselSlide Name="1">
-        <PieChart @ref="_operatingSystemsChart" style="padding: 40px" TItem="long"/>
-    </CarouselSlide>
-    <CarouselSlide Name="2">
-        <PieChart @ref="_linuxChart" style="padding: 40px" TItem="long"/>
-    </CarouselSlide>
-    <CarouselSlide Name="3">
-        <PieChart @ref="_macosChart" style="padding: 40px" TItem="long"/>
-    </CarouselSlide>
-    <CarouselSlide Name="4">
-        <PieChart @ref="_windowsChart" style="padding: 40px" TItem="long"/>
-    </CarouselSlide>
-</Carousel>
-<DataGrid Data="@OperatingSystemsList" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="NameValueStats">
+-->
+<PieChart @ref="_operatingSystemsChart" style="padding: 40px" TItem="long"/>
+<!--    </CarouselSlide>
+    <CarouselSlide Name="2">-->
+<PieChart @ref="_linuxChart" style="padding: 40px" TItem="long"/>
+<!--    </CarouselSlide>
+    <CarouselSlide Name="3">-->
+<PieChart @ref="_macosChart" style="padding: 40px" TItem="long"/>
+<!--    </CarouselSlide>
+    <CarouselSlide Name="4">-->
+<PieChart @ref="_windowsChart" style="padding: 40px" TItem="long"/>
+<!--    </CarouselSlide>
+</Carousel>-->
+<DataGrid Data="@OperatingSystemsList" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue"
+          TItem="NameValueStats">
     <DataGridColumn Caption="Name" Field="@nameof(NameValueStats.name)"/>
     <DataGridNumericColumn Caption="Times" Field="@nameof(NameValueStats.Value)"/>
 </DataGrid>
