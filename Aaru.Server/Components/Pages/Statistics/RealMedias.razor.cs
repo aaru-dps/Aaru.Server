@@ -1,6 +1,6 @@
 ﻿using Aaru.CommonTypes.Metadata;
 using Aaru.Server.Database.Models;
-using Blazorise.Charts;
+using BlazorBootstrap;
 using Microsoft.EntityFrameworkCore;
 using DbContext = Aaru.Server.Database.DbContext;
 using Media = Aaru.Server.Database.Models.Media;
@@ -10,9 +10,9 @@ namespace Aaru.Server.Components.Pages.Statistics;
 public partial class RealMedias
 {
     bool            _isAlreadyInitialized;
-    PieChart<long>? _realMediaChart;
-    List<long>      _realMediaCounts = [];
-    string[]        _realMediaLabels = [];
+    PieChart        _realMediaChart;
+    List<double?>   _realMediaCounts = [];
+    List<string>    _realMediaLabels = [];
     List<MediaItem> RealMedia { get; set; } = [];
 
     /// <inheritdoc />
@@ -72,10 +72,10 @@ public partial class RealMedias
             }
         }
 
-        _realMediaLabels = realMedias.Select(static v => v.Type).ToArray();
-        _realMediaCounts = realMedias.Select(static x => x.Count).ToList();
+        _realMediaLabels = realMedias.Select(static v => v.Type).ToList();
+        _realMediaCounts = realMedias.Select(static x => (double?)x.Count).ToList();
 
-        if(_realMediaLabels.Length >= 10)
+        if(_realMediaLabels.Count >= 10)
         {
             _realMediaLabels[9] = "Other";
 
@@ -83,18 +83,26 @@ public partial class RealMedias
                                   _realMediaCounts.Take(9).Sum();
         }
 
+        PieChartOptions pieChartOptions = new()
+        {
+            Responsive = true
+        };
 
-#pragma warning disable CS8604 // Possible null reference argument.
-        await Common.HandleRedrawAsync(_realMediaChart, _realMediaLabels, GetRealMediaChartDataset);
-#pragma warning restore CS8604 // Possible null reference argument.
+        pieChartOptions.Plugins.Title.Text    = $"Top {_realMediaLabels.Count} media types found in devices";
+        pieChartOptions.Plugins.Title.Display = true;
+
+        var chartData = new ChartData
+        {
+            Labels = _realMediaLabels,
+            Datasets =
+            [
+                new PieChartDataset
+                {
+                    Data = _realMediaCounts
+                }
+            ]
+        };
+
+        await _realMediaChart.InitializeAsync(chartData, pieChartOptions);
     }
-
-    PieChartDataset<long> GetRealMediaChartDataset() => new()
-    {
-        Label           = $"Top {_realMediaLabels.Length} media types found in devices",
-        Data            = _realMediaCounts,
-        BackgroundColor = Common.BackgroundColors,
-        BorderColor     = Common.BorderColors,
-        BorderWidth     = 1
-    };
 }
