@@ -1,7 +1,6 @@
 ﻿@using Aaru.Server.Database
 @using Aaru.Server.Database.Models
 @using BlazorBootstrap
-@using Blazorise.DataGrid
 @rendermode InteractiveServer
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
@@ -10,8 +9,14 @@
     <p class="text-center" style="color: deeppink;">All filesystems found...</p>
 </h1>
 <PieChart @ref="_filesystemsChart" style="padding: 40px" TItem="long"/>
-<DataGrid Data="@FilesystemsList" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue"
-          TItem="Filesystem">
-    <DataGridColumn Caption="Filesystem name" Field="@nameof(Filesystem.Name)"/>
-    <DataGridNumericColumn Caption="Times found" Field="@nameof(Filesystem.Count)"/>
-</DataGrid>
+<Grid Data="@FilesystemsList" FixedHeader="true" PageSize="int.MaxValue" TItem="Filesystem" Responsive="true"
+      AllowSorting="true">
+    <GridColumns>
+        <GridColumn TItem="Filesystem" HeaderText="Filesystem name" PropertyName="@nameof(Filesystem.Name)">
+            @context.Name
+        </GridColumn>
+        <GridColumn TItem="Filesystem" HeaderText="Times found" PropertyName="@nameof(Filesystem.Count)">
+            @context.Count
+        </GridColumn>
+    </GridColumns>
+</Grid>

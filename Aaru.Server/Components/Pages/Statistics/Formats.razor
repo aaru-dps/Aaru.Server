@@ -1,7 +1,6 @@
 ﻿@using Aaru.Server.Database
 @using Aaru.Server.Database.Models
 @using BlazorBootstrap
-@using Blazorise.DataGrid
 @rendermode InteractiveServer
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
@@ -16,8 +15,14 @@
     <p class="text-center" style="color: deeppink;">All media image formats found...</p>
 </h1>
 <PieChart @ref="_formatsChart" style="padding: 40px" TItem="long"/>
-<DataGrid Data="@MediaImages" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue"
-          TItem="MediaFormat">
-    <DataGridColumn Caption="Media image format" Field="@nameof(MediaFormat.Name)"/>
-    <DataGridNumericColumn Caption="Times found" Field="@nameof(MediaFormat.Count)"/>
-</DataGrid>
+<Grid Data="@MediaImages" FixedHeader="true" PageSize="int.MaxValue" TItem="MediaFormat" Responsive="true"
+      AllowSorting="true">
+    <GridColumns>
+        <GridColumn TItem="MediaFormat" HeaderText="Filter" PropertyName="@nameof(MediaFormat.Name)">
+            @context.Name
+        </GridColumn>
+        <GridColumn TItem="MediaFormat" HeaderText="Times found" PropertyName="@nameof(MediaFormat.Count)">
+            @context.Count
+        </GridColumn>
+    </GridColumns>
+</Grid>

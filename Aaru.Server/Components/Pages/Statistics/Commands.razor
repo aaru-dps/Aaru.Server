@@ -1,7 +1,6 @@
 ﻿@using Aaru.Server.Database
 @using Aaru.Server.Database.Models
 @using BlazorBootstrap
-@using Blazorise.DataGrid
 @rendermode InteractiveServer
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
@@ -10,7 +9,14 @@
     <p class="text-center" style="color: deeppink;">All Aaru commands...</p>
 </h1>
 <PieChart @ref="_commandsChart" style="padding: 40px" TItem="long"/>
-<DataGrid Data="@CommandsList" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="Command">
-    <DataGridColumn Caption="Command" Field="@nameof(Command.Name)"/>
-    <DataGridNumericColumn Caption="Times run" Field="@nameof(Command.Count)"/>
-</DataGrid>
+<Grid Data="@CommandsList" FixedHeader="true" PageSize="int.MaxValue" TItem="Command" Responsive="true"
+      AllowSorting="true">
+    <GridColumns>
+        <GridColumn TItem="Command" HeaderText="Name" PropertyName="@nameof(Command.Name)">
+            @context.Name
+        </GridColumn>
+        <GridColumn TItem="Command" HeaderText="Times" PropertyName="@nameof(Command.Count)">
+            @context.Count
+        </GridColumn>
+    </GridColumns>
+</Grid>

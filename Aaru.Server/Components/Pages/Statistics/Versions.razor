@@ -1,7 +1,6 @@
 ﻿@using Aaru.CommonTypes.Metadata
 @using Aaru.Server.Database
 @using BlazorBootstrap
-@using Blazorise.DataGrid
 @rendermode InteractiveServer
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
@@ -10,8 +9,14 @@
     <p class="text-center" style="color: deeppink;">All Aaru versions...</p>
 </h1>
 <PieChart @ref="_versionsChart" style="padding: 40px" TItem="long"/>
-<DataGrid Data="@VersionsList" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue"
-          TItem="NameValueStats">
-    <DataGridColumn Caption="Version" Field="@nameof(NameValueStats.name)"/>
-    <DataGridNumericColumn Caption="Times run" Field="@nameof(NameValueStats.Value)"/>
-</DataGrid>
+<Grid Data="@VersionsList" FixedHeader="true" PageSize="int.MaxValue" TItem="NameValueStats" Responsive="true"
+      AllowSorting="true">
+    <GridColumns>
+        <GridColumn TItem="NameValueStats" HeaderText="Filter" PropertyName="@nameof(NameValueStats.name)">
+            @context.name
+        </GridColumn>
+        <GridColumn TItem="NameValueStats" HeaderText="Times found" PropertyName="@nameof(NameValueStats.Value)">
+            @context.Value
+        </GridColumn>
+    </GridColumns>
+</Grid>

@@ -1,7 +1,6 @@
 ﻿@using Aaru.Server.Database
 @using Aaru.Server.Database.Models
 @using BlazorBootstrap
-@using Blazorise.DataGrid
 @rendermode InteractiveServer
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
@@ -14,8 +13,17 @@
     <p class="text-center" style="color: deeppink;">All media types found in devices...</p>
 </h1>
 <PieChart @ref="_realMediaChart" style="padding: 40px" TItem="long"/>
-<DataGrid Data="@RealMedia" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue" TItem="MediaItem">
-    <DataGridColumn Caption="Physical type" Field="@nameof(MediaItem.Type)"/>
-    <DataGridColumn Caption="Logical type" Field="@nameof(MediaItem.SubType)"/>
-    <DataGridNumericColumn Caption="Times found" Field="@nameof(MediaItem.Count)"/>
-</DataGrid>
+<Grid Data="@RealMedia" FixedHeader="true" PageSize="int.MaxValue" TItem="MediaItem" Responsive="true"
+      AllowSorting="true">
+    <GridColumns>
+        <GridColumn TItem="MediaItem" HeaderText="Physical type" PropertyName="@nameof(MediaItem.Type)">
+            @context.Type
+        </GridColumn>
+        <GridColumn TItem="MediaItem" HeaderText="Logical type" PropertyName="@nameof(MediaItem.SubType)">
+            @context.SubType
+        </GridColumn>
+        <GridColumn TItem="MediaItem" HeaderText="Times found" PropertyName="@nameof(MediaItem.Count)">
+            @context.Count
+        </GridColumn>
+    </GridColumns>
+</Grid>

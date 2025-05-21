@@ -158,8 +158,5 @@ public partial class Devices
 
         await _devicesByManufacturerChart.InitializeAsync(devicesByManufacturerChartData,
                                                           devicesByManufacturerChartOptions);
-
-        // Upstream: https://github.com/Megabit/Blazorise/issues/5491
-//        _devicesCarousel.Interval = 5000;
     }
 }

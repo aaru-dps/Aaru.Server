@@ -1,7 +1,6 @@
 ﻿@using Aaru.Server.Database
 @using Aaru.Server.Database.Models
 @using BlazorBootstrap
-@using Blazorise.DataGrid
 @rendermode InteractiveServer
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
@@ -21,16 +20,24 @@
         <PieChart @ref="_devicesByManufacturerChart" style="padding: 40px" TItem="long"/>
     </CarouselItem>
 </Carousel>
-<DataGrid Data="@DevicesList" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue"
-          TItem="DeviceItem">
-    <DataGridColumn Caption="Manufacturer" Field="@nameof(DeviceItem.Manufacturer)"/>
-    <DataGridColumn Caption="Model" Field="@nameof(DeviceItem.Model)"/>
-    <DataGridColumn Caption="Revision" Field="@nameof(DeviceItem.Revision)"/>
-    <DataGridColumn Caption="Bus" Field="@nameof(DeviceItem.Bus)"/>
-    <DataGridColumn Caption="Report" Field="@nameof(DeviceItem.ReportId)">
-        <DisplayTemplate>
+<Grid Data="@DevicesList" FixedHeader="true" PageSize="int.MaxValue" TItem="DeviceItem" Responsive="true"
+      AllowSorting="true">
+    <GridColumns>
+        <GridColumn TItem="DeviceItem" HeaderText="Manufacturer" PropertyName="@nameof(DeviceItem.Manufacturer)">
+            @context.Manufacturer
+        </GridColumn>
+        <GridColumn TItem="DeviceItem" HeaderText="Model" PropertyName="@nameof(DeviceItem.Model)">
+            @context.Model
+        </GridColumn>
+        <GridColumn TItem="DeviceItem" HeaderText="Revision" PropertyName="@nameof(DeviceItem.Revision)">
+            @context.Revision
+        </GridColumn>
+        <GridColumn TItem="DeviceItem" HeaderText="Bus" PropertyName="@nameof(DeviceItem.Bus)">
+            @context.Bus
+        </GridColumn>
+        <GridColumn TItem="DeviceItem" HeaderText="Report" PropertyName="@nameof(DeviceItem.ReportId)">
             @{
-                int? reportId = context?.ReportId;
+                int? reportId = context.ReportId;
 
                 if(reportId > 0)
                 {
@@ -41,6 +48,6 @@
                     <span>No</span>
                 }
             }
-        </DisplayTemplate>
-    </DataGridColumn>
-</DataGrid>
+        </GridColumn>
+    </GridColumns>
+</Grid>

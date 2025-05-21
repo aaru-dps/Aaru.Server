@@ -26,8 +26,14 @@
         <PieChart @ref="_windowsChart" style="padding: 40px" TItem="long"/>
     </CarouselItem>
 </Carousel>
-<DataGrid Data="@OperatingSystemsList" FixedHeader FixedHeaderDataGridMaxHeight="300px" PageSize="int.MaxValue"
-          TItem="NameValueStats">
-    <DataGridColumn Caption="Name" Field="@nameof(NameValueStats.name)"/>
-    <DataGridNumericColumn Caption="Times" Field="@nameof(NameValueStats.Value)"/>
-</DataGrid>
+<Grid Data="@OperatingSystemsList" FixedHeader="true" PageSize="int.MaxValue" TItem="NameValueStats" Responsive="true"
+      AllowSorting="true">
+    <GridColumns>
+        <GridColumn TItem="NameValueStats" HeaderText="Name" PropertyName="@nameof(NameValueStats.name)">
+            @context.name
+        </GridColumn>
+        <GridColumn TItem="NameValueStats" HeaderText="Times" PropertyName="@nameof(NameValueStats.Value)">
+            @context.Value
+        </GridColumn>
+    </GridColumns>
+</Grid>
