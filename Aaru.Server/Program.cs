@@ -3,9 +3,6 @@ using Aaru.CommonTypes.Interop;
 using Aaru.Server;
 using Aaru.Server.Components;
 using Aaru.Server.Components.Account;
-using Blazorise;
-using Blazorise.Bootstrap5;
-using Blazorise.Icons.FontAwesome;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -103,10 +100,6 @@ builder.Services.AddIdentityCore<IdentityUser>(static options =>
        .AddDefaultTokenProviders();
 
 builder.Services.AddSingleton<IEmailSender<IdentityUser>, IdentityNoOpEmailSender>();
-
-builder.Services.AddBlazorise(static options => { options.Immediate = true; })
-       .AddBootstrap5Providers()
-       .AddFontAwesomeIcons();
 
 builder.Services.AddBlazorBootstrap();
 

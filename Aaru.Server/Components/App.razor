@@ -1,5 +1,4 @@
-﻿@using Blazorise
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -10,9 +9,6 @@
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
     <link href="_content/Blazor.Bootstrap/blazor.bootstrap.css" rel="stylesheet"/>
-    <link href="_content/Blazorise.Icons.FontAwesome/v6/css/all.min.css" rel="stylesheet">
-    <link href="_content/Blazorise/blazorise.css" rel="stylesheet"/>
-    <link href="_content/Blazorise.Bootstrap5/blazorise.bootstrap5.css" rel="stylesheet"/>
     <link href="css/prism.css" rel="stylesheet"/>
     <link href="app.css" rel="stylesheet"/>
     <link href="Aaru.Server.styles.css" rel="stylesheet"/>
@@ -21,9 +17,7 @@
 </head>
 
 <body>
-<Blazorise.ThemeProvider Theme="@theme">
-    <Routes/>
-</Blazorise.ThemeProvider>
+<Routes/>
 <script src="_framework/blazor.web.js"></script>
 <script crossorigin="anonymous" integrity="sha384-BGLRNHV+fVBIoJGJvZCAqmyS1xUWEcC5ZIuPTtlX3bYJgKB9imIyIACNkZIaY/AR"
         src="scripts/prism.js"></script>
@@ -41,14 +35,3 @@
 </body>
 
 </html>
-
-@code{
-    private readonly Theme theme = new()
-    {
-        ColorOptions = new ThemeColorOptions
-        {
-            Dark  = ThemeColors.Gray.Shades["100"].Value,
-            Light = ThemeColors.Gray.Shades["800"].Value
-        }
-    };
-}
