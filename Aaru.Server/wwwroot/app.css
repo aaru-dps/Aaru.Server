@@ -698,7 +698,7 @@ kbd {
   vertical-align: middle;
 }
 
-.table {
+.table:not(th) {
   color: #DEDEDE;
 }
 
@@ -777,4 +777,13 @@ kbd {
 
 canvas {
   height: 800px !important;
+}
+
+.table-dark th {
+  color: white !important;
+  background-color: #333333 !important;
+}
+
+.table-responsive {
+  scrollbar-color: #888888 #333333;
 }
