@@ -18,7 +18,7 @@
     </CarouselItem>
 </Carousel>
 <Grid Data="@DevicesList" FixedHeader="true" PageSize="int.MaxValue" TItem="DeviceItem" Responsive="true"
-      AllowSorting="true">
+      AllowSorting="true" Class="table table-hover table-bordered table-striped table-dark" style="width: 100%;">
     <GridColumns>
         <GridColumn TItem="DeviceItem" HeaderText="Manufacturer" PropertyName="@nameof(DeviceItem.Manufacturer)">
             @context.Manufacturer

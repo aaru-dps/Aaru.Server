@@ -7,7 +7,7 @@
 </h1>
 <PieChart @ref="_filtersChart" style="padding: 40px" TItem="long"/>
 <Grid Data="@FiltersList" FixedHeader="true" PageSize="int.MaxValue" TItem="Filter" Responsive="true"
-      AllowSorting="true">
+      AllowSorting="true" Class="table table-hover table-bordered table-striped table-dark" style="width: 100%;">
     <GridColumns>
         <GridColumn TItem="Filter" HeaderText="Filter" PropertyName="@nameof(Filter.Name)">
             @context.Name

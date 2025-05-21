@@ -11,7 +11,7 @@
 </h1>
 <PieChart @ref="_realMediaChart" style="padding: 40px" TItem="long"/>
 <Grid Data="@RealMedia" FixedHeader="true" PageSize="int.MaxValue" TItem="MediaItem" Responsive="true"
-      AllowSorting="true">
+      AllowSorting="true" Class="table table-hover table-bordered table-striped table-dark" style="width: 100%;">
     <GridColumns>
         <GridColumn TItem="MediaItem" HeaderText="Physical type" PropertyName="@nameof(MediaItem.Type)">
             @context.Type

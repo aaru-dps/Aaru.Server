@@ -13,7 +13,7 @@
 </h1>
 <PieChart @ref="_formatsChart" style="padding: 40px" TItem="long"/>
 <Grid Data="@MediaImages" FixedHeader="true" PageSize="int.MaxValue" TItem="MediaFormat" Responsive="true"
-      AllowSorting="true">
+      AllowSorting="true" Class="table table-hover table-bordered table-striped table-dark" style="width: 100%;">
     <GridColumns>
         <GridColumn TItem="MediaFormat" HeaderText="Filter" PropertyName="@nameof(MediaFormat.Name)">
             @context.Name

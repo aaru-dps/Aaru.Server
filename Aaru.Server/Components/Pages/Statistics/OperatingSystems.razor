@@ -24,7 +24,7 @@
     </CarouselItem>
 </Carousel>
 <Grid Data="@OperatingSystemsList" FixedHeader="true" PageSize="int.MaxValue" TItem="NameValueStats" Responsive="true"
-      AllowSorting="true">
+      AllowSorting="true" Class="table table-hover table-bordered table-striped table-dark" style="width: 100%;">
     <GridColumns>
         <GridColumn TItem="NameValueStats" HeaderText="Name" PropertyName="@nameof(NameValueStats.name)">
             @context.name

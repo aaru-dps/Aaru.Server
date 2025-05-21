@@ -7,7 +7,7 @@
 </h1>
 <PieChart @ref="_commandsChart" style="padding: 40px" TItem="long"/>
 <Grid Data="@CommandsList" FixedHeader="true" PageSize="int.MaxValue" TItem="Command" Responsive="true"
-      AllowSorting="true">
+      AllowSorting="true" Class="table table-hover table-bordered table-striped table-dark" style="width: 100%;">
     <GridColumns>
         <GridColumn TItem="Command" HeaderText="Name" PropertyName="@nameof(Command.Name)">
             @context.Name

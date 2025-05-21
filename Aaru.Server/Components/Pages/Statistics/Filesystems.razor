@@ -7,7 +7,7 @@
 </h1>
 <PieChart @ref="_filesystemsChart" style="padding: 40px" TItem="long"/>
 <Grid Data="@FilesystemsList" FixedHeader="true" PageSize="int.MaxValue" TItem="Filesystem" Responsive="true"
-      AllowSorting="true">
+      AllowSorting="true" Class="table table-hover table-bordered table-striped table-dark" style="width: 100%;">
     <GridColumns>
         <GridColumn TItem="Filesystem" HeaderText="Filesystem name" PropertyName="@nameof(Filesystem.Name)">
             @context.Name
