@@ -3,9 +3,10 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text.Json;
 using Aaru.CommonTypes.Enums;
-using Aaru.Server.Database;
 using Aaru.Server.Database.Models;
 using HtmlAgilityPack;
+using Microsoft.EntityFrameworkCore;
+using DbContext = Aaru.Server.Database.DbContext;
 
 namespace Aaru.Server.Services;
 
@@ -115,11 +116,11 @@ public class UpdateTask : IHostedService, IDisposable
 
                         if(number == 0) continue;
 
-                        name = line.Substring(7);
+                        name = line[7..];
 
-                        UsbProduct product =
-                            ctx.UsbProducts.FirstOrDefault(p => p.ProductId       == number &&
-                                                                p.Vendor.VendorId == vendor.VendorId);
+                        UsbProduct product = ctx.UsbProducts.Include(p => p.Vendor)
+                                                .FirstOrDefault(p => p.ProductId       == number &&
+                                                                     p.Vendor.VendorId == vendor.VendorId);
 
                         if(product is null)
                         {
@@ -157,7 +158,7 @@ public class UpdateTask : IHostedService, IDisposable
 
                     try
                     {
-                        number = Convert.ToUInt16(line.Substring(0, 4), 16);
+                        number = Convert.ToUInt16(line[..4], 16);
                     }
                     catch(FormatException)
                     {
@@ -166,7 +167,7 @@ public class UpdateTask : IHostedService, IDisposable
 
                     if(number == 0) continue;
 
-                    name = line.Substring(6);
+                    name = line[6..];
 
                     vendor = ctx.UsbVendors.FirstOrDefault(v => v.VendorId == number);
 
@@ -218,7 +219,7 @@ public class UpdateTask : IHostedService, IDisposable
                 if(vendor is null)
                     _logger.LogError("Error, could not find vendor");
                 else
-                    _logger.LogInformation("Found {Vendor}.", vendor.Vendor);
+                    _logger.LogInformation("Found {Vendor}", vendor.Vendor);
 
                 stopwatch.Stop();
                 _logger.LogDebug("Took {TotalSeconds:F2} seconds", stopwatch.Elapsed.TotalSeconds);
@@ -232,7 +233,7 @@ public class UpdateTask : IHostedService, IDisposable
                 if(prd is null)
                     _logger.LogError("Error, could not find product");
                 else
-                    _logger.LogInformation("Found {Product}.", prd.Product);
+                    _logger.LogInformation("Found {Product}", prd.Product);
 
                 stopwatch.Stop();
                 _logger.LogDebug("Took {TotalSeconds:F2} seconds", stopwatch.Elapsed.TotalSeconds);
@@ -273,7 +274,7 @@ public class UpdateTask : IHostedService, IDisposable
 
                 // The HTML is too malformed to process easily, so find start of table
                 html = "<html><body><table><tr>" +
-                       html.Substring(html.IndexOf("<td bgcolor=\"#000000\">", StringComparison.Ordinal));
+                       html[html.IndexOf("<td bgcolor=\"#000000\">", StringComparison.Ordinal)..];
 
                 var doc = new HtmlDocument();
                 doc.LoadHtml(html);
@@ -287,10 +288,9 @@ public class UpdateTask : IHostedService, IDisposable
                 _logger.LogInformation("Processing offsets...");
                 stopwatch.Restart();
 
-                foreach(HtmlNode row in firstTable.Descendants("tr"))
+                foreach(HtmlNode[] columns in firstTable.Descendants("tr")
+                                                        .Select(row => row.Descendants("td").ToArray()))
                 {
-                    HtmlNode[] columns = row.Descendants("td").ToArray();
-
                     if(columns.Length != 4)
                     {
                         _logger.LogError("Row does not have correct number of columns...");
@@ -305,28 +305,28 @@ public class UpdateTask : IHostedService, IDisposable
 
                     if(firstRow)
                     {
-                        if(column0.ToLowerInvariant() != "cd drive")
+                        if(!string.Equals(column0, "cd drive", StringComparison.InvariantCultureIgnoreCase))
                         {
                             _logger.LogError("Unexpected header \"{InnerText}\" found...", columns[0].InnerText);
 
                             break;
                         }
 
-                        if(column1.ToLowerInvariant() != "correction offset")
+                        if(!string.Equals(column1, "correction offset", StringComparison.InvariantCultureIgnoreCase))
                         {
                             _logger.LogError("Unexpected header \"{InnerText}\" found...", columns[1].InnerText);
 
                             break;
                         }
 
-                        if(column2.ToLowerInvariant() != "submitted by")
+                        if(!string.Equals(column2, "submitted by", StringComparison.InvariantCultureIgnoreCase))
                         {
                             _logger.LogError("Unexpected header \"{InnerText}\" found...", columns[2].InnerText);
 
                             break;
                         }
 
-                        if(column3.ToLowerInvariant() != "percentage agree")
+                        if(!string.Equals(column3, "percentage agree", StringComparison.InvariantCultureIgnoreCase))
                         {
                             _logger.LogError("Unexpected header \"{InnerText}\" found...", columns[3].InnerText);
 
@@ -344,7 +344,7 @@ public class UpdateTask : IHostedService, IDisposable
                     if(column0[0] == '-' && column0[1] == ' ')
                     {
                         manufacturer = null;
-                        model        = column0.Substring(2).Trim();
+                        model        = column0[2..].Trim();
                     }
                     else
                     {
@@ -357,8 +357,8 @@ public class UpdateTask : IHostedService, IDisposable
                         }
                         else
                         {
-                            manufacturer = column0.Substring(0, cutOffset).Trim();
-                            model        = column0.Substring(cutOffset + 3).Trim();
+                            manufacturer = column0[..cutOffset].Trim();
+                            model        = column0[(cutOffset + 3)..].Trim();
                         }
                     }
 
@@ -381,7 +381,7 @@ public class UpdateTask : IHostedService, IDisposable
                     CompactDiscOffset cdOffset =
                         ctx.CdOffsets.FirstOrDefault(o => o.Manufacturer == manufacturer && o.Model == model);
 
-                    if(column1.ToLowerInvariant() == "[purged]")
+                    if(string.Equals(column1, "[purged]", StringComparison.InvariantCultureIgnoreCase))
                     {
                         if(cdOffset != null) ctx.CdOffsets.Remove(cdOffset);
 
@@ -394,7 +394,7 @@ public class UpdateTask : IHostedService, IDisposable
 
                     if(column3[^1] != '%') continue;
 
-                    column3 = column3.Substring(0, column3.Length - 1);
+                    column3 = column3[..^1];
 
                     if(!float.TryParse(column3, out float percentage)) continue;
 
@@ -463,7 +463,7 @@ public class UpdateTask : IHostedService, IDisposable
 
                 if(File.Exists("drive_offsets.json"))
                 {
-                    var sr = new StreamReader("drive_offsets.json");
+                    using var sr = new StreamReader("drive_offsets.json");
 
                     CompactDiscOffset[] offsets = JsonSerializer.Deserialize<CompactDiscOffset[]>(sr.ReadToEnd());
 
@@ -540,15 +540,15 @@ public class UpdateTask : IHostedService, IDisposable
             {
                 try
                 {
-                    var fs = new FileStream(file, FileMode.Open, FileAccess.Read);
+                    using var fs = new FileStream(file, FileMode.Open, FileAccess.Read);
 
                     if(fs.Length <= 16) continue;
 
                     var header = new byte[16];
                     var data   = new byte[fs.Length - 16];
 
-                    fs.Read(header, 0, 16);
-                    fs.Read(data,   0, data.Length);
+                    fs.ReadExactly(header, 0, 16);
+                    fs.ReadExactly(data,   0, data.Length);
 
                     bool ines;
                     bool nes20;
