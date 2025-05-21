@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using DbContext = Aaru.Server.Database.DbContext;
 
-namespace Aaru.Server;
+namespace Aaru.Server.Services;
 
 public static class Seeder
 {

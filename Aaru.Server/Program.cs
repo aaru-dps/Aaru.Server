@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using Aaru.CommonTypes.Interop;
-using Aaru.Server;
 using Aaru.Server.Components;
 using Aaru.Server.Components.Account;
+using Aaru.Server.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -65,6 +65,8 @@ Console.WriteLine("\e[31;1mBuilding web application...\e[0m");
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.AddConsole();
+
 // Add services to the container.
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
@@ -105,6 +107,8 @@ builder.Services.AddBlazorBootstrap();
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+builder.Services.AddHostedService<UpdateTask>();
 
 WebApplication app = builder.Build();
 

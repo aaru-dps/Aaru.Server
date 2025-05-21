@@ -1466,6 +1466,7 @@ dotnet_diagnostic.ph2045.severity = none
 dotnet_diagnostic.ph2067.severity = none
 dotnet_diagnostic.ph2068.severity = none
 dotnet_diagnostic.ph2069.severity = warning
+dotnet_diagnostic.ph2073.severity = none
 dotnet_diagnostic.ph2075.severity = none
 dotnet_diagnostic.ph2079.severity = none
 dotnet_diagnostic.ph2081.severity = none

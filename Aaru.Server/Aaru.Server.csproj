@@ -12,6 +12,7 @@
     <PackageReference Include="Aaru.Decoders" Version="6.0.0-alpha10"/>
     <PackageReference Include="Aaru.Dto" Version="6.0.0-alpha10"/>
     <PackageReference Include="Blazor.Bootstrap" Version="3.3.1"/>
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.39"/>
     <PackageReference Include="ChoPGP" Version="1.0.1.5"/>
     <PackageReference Include="MailKit" Version="4.11.0"/>
     <PackageReference Include="Markdig" Version="0.41.0"/>
@@ -83,4 +84,9 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="drive_offsets.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
