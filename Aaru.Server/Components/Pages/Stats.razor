@@ -1,70 +1,61 @@
 ﻿@page "/Stats"
 @using Aaru.Server.Components.Pages.Statistics
-@using Blazorise
+@using BlazorBootstrap
 @rendermode InteractiveServer
 
 <PageTitle>Aaru: Statistics</PageTitle>
 
 <div class="stats-section">
-    <Tabs FullWidth Justified Pills @ref="_tabs" RenderMode="TabsRenderMode.LazyLoad">
-        <Items>
-            <Tab Name="oses">Operating systems</Tab>
-            <Tab Name="versions">Versions</Tab>
-            <Tab Name="commands">Commands</Tab>
-            <Tab Name="filters">Filters</Tab>
-            <Tab Name="formats">Media image formats</Tab>
-            <Tab Name="partitions">Partitioning schemes</Tab>
-            <Tab Name="filesystems">Filesystems</Tab>
-            <Tab Name="virtualMedias">Media types (images)</Tab>
-            <Tab Name="realMedias">Media types (devices)</Tab>
-            <Tab Name="devices">Devices</Tab>
-        </Items>
-        <Content>
-            <TabPanel Name="oses">
+    <Tabs EnableFadeEffect="true" NavStyle="NavStyle.Pills">
+        <Tab Title="Operating systems" Active="true">
+            <Content>
                 <OperatingSystems/>
-            </TabPanel>
-            <TabPanel Name="versions">
+            </Content>
+        </Tab>
+        <Tab Title="Versions">
+            <Content>
                 <Versions/>
-            </TabPanel>
-            <TabPanel Name="commands">
+            </Content>
+        </Tab>
+        <Tab Title="Commands">
+            <Content>
                 <Commands/>
-            </TabPanel>
-            <TabPanel Name="filters">
+            </Content>
+        </Tab>
+        <Tab Title="Filters">
+            <Content>
                 <Filters/>
-            </TabPanel>
-            <TabPanel Name="formats">
+            </Content>
+        </Tab>
+        <Tab Title="Media image formats">
+            <Content>
                 <Formats/>
-            </TabPanel>
-            <TabPanel Name="partitions">
+            </Content>
+        </Tab>
+        <Tab Title="Partitioning schemes">
+            <Content>
                 <Partitions/>
-            </TabPanel>
-            <TabPanel Name="filesystems">
+            </Content>
+        </Tab>
+        <Tab Title="Filesystems">
+            <Content>
                 <Filesystems/>
-            </TabPanel>
-            <TabPanel Name="virtualMedias">
+            </Content>
+        </Tab>
+        <Tab Title="Media types (images)">
+            <Content>
                 <VirtualMedias/>
-            </TabPanel>
-            <TabPanel Name="realMedias">
+            </Content>
+        </Tab>
+        <Tab Title="Media types (devices)">
+            <Content>
                 <RealMedias/>
-            </TabPanel>
-            <TabPanel Name="devices">
+            </Content>
+        </Tab>
+        <Tab Title="Devices" Name="devices">
+            <Content>
                 <Devices/>
-            </TabPanel>
-        </Content>
+            </Content>
+        </Tab>
     </Tabs>
 </div>
-
-@code
-{
-    Tabs _tabs;
-
-    /// <inheritdoc />
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await base.OnAfterRenderAsync(firstRender);
-
-        if(!firstRender) return;
-
-        await _tabs.SelectTab("oses");
-    }
-}
