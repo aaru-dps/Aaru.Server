@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
+using Sentry.OpenTelemetry;
 using Serilog;
 using Serilog.Events;
 using DbContext = Aaru.Server.Database.DbContext;
@@ -79,13 +80,27 @@ builder.Logging.AddSerilog(new LoggerConfiguration().WriteTo
                                                                  restrictedToMinimumLevel: LogEventLevel.Information)
                                                     .CreateLogger());
 
+builder.Logging.AddSerilog(new LoggerConfiguration().WriteTo
+                                                    .Sentry("https://0bdaf61514c94d74c3c8c7d1cbba999f@sentry.claunia.com/2",
+                                                            LogEventLevel.Debug,
+                                                            LogEventLevel.Warning)
+                                                    .CreateLogger());
+
 builder.Services.AddOpenTelemetry()
        .WithTracing(tracerProviderBuilder => tracerProviderBuilder
                                             .AddAspNetCoreInstrumentation() // <-- Adds ASP.NET Core telemetry sources
                                             .AddHttpClientInstrumentation() // <-- Adds HttpClient telemetry sources
+                                            .AddSentry() // <-- Configure OpenTelemetry to send trace information to Sentry
                    )
        .WithMetrics(metricsProviderBuilder =>
                         metricsProviderBuilder.AddAspNetCoreInstrumentation().AddHttpClientInstrumentation());
+
+builder.WebHost.UseSentry(o =>
+{
+    o.Dsn = "https://0bdaf61514c94d74c3c8c7d1cbba999f@sentry.claunia.com/2";
+    o.UseOpenTelemetry();
+    o.TracesSampleRate = 1.0;
+});
 
 // Add services to the container.
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
