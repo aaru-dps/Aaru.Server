@@ -1,3 +1,4 @@
+#pragma warning disable VSTHRD200
 using System.Diagnostics;
 using Aaru.CommonTypes.Interop;
 using Aaru.Server.Components;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Serilog.Events;
 using DbContext = Aaru.Server.Database.DbContext;
 using Version = System.Version;
 
@@ -69,6 +71,11 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 #if DEBUG
 builder.Logging.AddSerilog(new LoggerConfiguration().WriteTo.Console().CreateLogger());
 #endif
+
+builder.Logging.AddSerilog(new LoggerConfiguration().WriteTo
+                                                    .LocalSyslog("aaru-server",
+                                                                 restrictedToMinimumLevel: LogEventLevel.Information)
+                                                    .CreateLogger());
 
 // Add services to the container.
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
@@ -175,3 +182,4 @@ using(IServiceScope scope = app.Services.CreateScope())
 Console.WriteLine("\e[31;1mStarting web server...\e[0m");
 
 await app.RunAsync();
+#pragma warning restore VSTHRD200

@@ -21,6 +21,7 @@
     <PackageReference Include="Serilog"/>
     <PackageReference Include="Serilog.Extensions.Logging"/>
     <PackageReference Include="Serilog.Sinks.Console"/>
+    <PackageReference Include="Serilog.Sinks.SyslogMessages"/>
     <PackageReference Include="WebStoating.Markdig.PrismWithPlugins"/>
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql"/>
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design"/>

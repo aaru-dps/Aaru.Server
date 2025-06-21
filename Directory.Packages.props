@@ -30,6 +30,7 @@
     <PackageVersion Include="Serilog" Version="4.3.0"/>
     <PackageVersion Include="Serilog.Extensions.Logging" Version="9.0.2"/>
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0"/>
+    <PackageVersion Include="Serilog.Sinks.SyslogMessages" Version="4.0.0"/>
     <PackageVersion Include="SmartAnalyzers.MultithreadingAnalyzer" Version="1.1.31"/>
     <PackageVersion Include="Text.Analyzers" Version="4.14.0"/>
     <PackageVersion Include="WebStoating.Markdig.PrismWithPlugins" Version="1.0.0"/>
