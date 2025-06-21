@@ -7,6 +7,8 @@ using Aaru.Server.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
 using Serilog;
 using Serilog.Events;
 using DbContext = Aaru.Server.Database.DbContext;
@@ -76,6 +78,14 @@ builder.Logging.AddSerilog(new LoggerConfiguration().WriteTo
                                                     .LocalSyslog("aaru-server",
                                                                  restrictedToMinimumLevel: LogEventLevel.Information)
                                                     .CreateLogger());
+
+builder.Services.AddOpenTelemetry()
+       .WithTracing(tracerProviderBuilder => tracerProviderBuilder
+                                            .AddAspNetCoreInstrumentation() // <-- Adds ASP.NET Core telemetry sources
+                                            .AddHttpClientInstrumentation() // <-- Adds HttpClient telemetry sources
+                   )
+       .WithMetrics(metricsProviderBuilder =>
+                        metricsProviderBuilder.AddAspNetCoreInstrumentation().AddHttpClientInstrumentation());
 
 // Add services to the container.
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
