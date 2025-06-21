@@ -1,0 +1,34 @@
+<Project ToolsVersion="15.0">
+  <ItemGroup>
+    <PackageVersion Include="Aaru.CommonTypes" Version="6.0.0-alpha10"/>
+    <PackageVersion Include="Aaru.Decoders" Version="6.0.0-alpha10"/>
+    <PackageVersion Include="Aaru.Dto" Version="6.0.0-alpha10"/>
+    <PackageVersion Include="AsyncFixer" Version="1.6.0"/>
+    <PackageVersion Include="Blazor.Bootstrap" Version="3.3.1"/>
+    <PackageVersion Include="ChoPGP" Version="1.0.1.5"/>
+    <PackageVersion Include="ErrorProne.NET.CoreAnalyzers" Version="0.1.2"/>
+    <PackageVersion Include="ErrorProne.NET.Structs" Version="0.1.2"/>
+    <PackageVersion Include="HtmlAgilityPack" Version="1.11.39"/>
+    <PackageVersion Include="MailKit" Version="4.11.0"/>
+    <PackageVersion Include="Markdig" Version="0.41.0"/>
+    <PackageVersion Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.4"/>
+    <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.4"/>
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.6"/>
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Proxies" Version="9.0.4"/>
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.4"/>
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.4"/>
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="9.0.4"/>
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.10.48"/>
+    <PackageVersion Include="MimeKit" Version="4.11.0"/>
+    <PackageVersion Include="Philips.CodeAnalysis.MaintainabilityAnalyzers" Version="1.5.0"/>
+    <PackageVersion Include="Pomelo.EntityFrameworkCore.MySql.Design" Version="1.1.2"/>
+    <PackageVersion Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0-preview.3.efcore.9.0.0"/>
+    <PackageVersion Include="Roslynator.Analyzers" Version="4.12.2"/>
+    <PackageVersion Include="Roslynator.CodeAnalysis.Analyzers" Version="4.12.2"/>
+    <PackageVersion Include="Roslynator.Formatting.Analyzers" Version="4.12.2"/>
+    <PackageVersion Include="SmartAnalyzers.MultithreadingAnalyzer" Version="1.1.31"/>
+    <PackageVersion Include="Text.Analyzers" Version="3.3.4"/>
+    <PackageVersion Include="WebStoating.Markdig.PrismWithPlugins" Version="1.0.0"/>
+  </ItemGroup>
+</Project>

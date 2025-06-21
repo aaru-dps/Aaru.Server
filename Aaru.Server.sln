@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution files", "Solution 
 		LICENSE = LICENSE
 		LICENSE.LGPL = LICENSE.LGPL
 		LICENSE.MIT = LICENSE.MIT
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aaru.Server", "Aaru.Server\Aaru.Server.csproj", "{032D24BA-EC3B-4BD1-ADD6-9463E2DC5D7E}"

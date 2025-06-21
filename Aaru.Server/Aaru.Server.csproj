@@ -1,67 +1,37 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-Aaru.Server-79282495-4F67-4766-871D-448D1338E8BC</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aaru.CommonTypes" Version="6.0.0-alpha10"/>
-    <PackageReference Include="Aaru.Decoders" Version="6.0.0-alpha10"/>
-    <PackageReference Include="Aaru.Dto" Version="6.0.0-alpha10"/>
-    <PackageReference Include="Blazor.Bootstrap" Version="3.3.1"/>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.39"/>
-    <PackageReference Include="ChoPGP" Version="1.0.1.5"/>
-    <PackageReference Include="MailKit" Version="4.11.0"/>
-    <PackageReference Include="Markdig" Version="0.41.0"/>
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.4"/>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.4"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.4"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.4"/>
-    <PackageReference Include="MimeKit" Version="4.11.0"/>
-    <PackageReference Include="WebStoating.Markdig.PrismWithPlugins" Version="1.0.0"/>
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0-preview.3.efcore.9.0.0"/>
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design" Version="1.1.2"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="9.0.4"/>
-    <PackageReference Include="AsyncFixer" Version="1.6.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="ErrorProne.NET.CoreAnalyzers" Version="0.1.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="ErrorProne.NET.Structs" Version="0.1.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.10.48">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Philips.CodeAnalysis.MaintainabilityAnalyzers" Version="1.5.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Roslynator.Analyzers" Version="4.12.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Roslynator.CodeAnalysis.Analyzers" Version="4.12.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Roslynator.Formatting.Analyzers" Version="4.12.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="SmartAnalyzers.MultithreadingAnalyzer" Version="1.1.31"/>
-    <PackageReference Include="Text.Analyzers" Version="3.3.4">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="Aaru.CommonTypes"/>
+    <PackageReference Include="Aaru.Decoders"/>
+    <PackageReference Include="Aaru.Dto"/>
+    <PackageReference Include="Blazor.Bootstrap"/>
+    <PackageReference Include="HtmlAgilityPack"/>
+    <PackageReference Include="ChoPGP"/>
+    <PackageReference Include="MailKit"/>
+    <PackageReference Include="Markdig"/>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore"/>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools"/>
+    <PackageReference Include="MimeKit"/>
+    <PackageReference Include="WebStoating.Markdig.PrismWithPlugins"/>
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql"/>
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies"/>
+    <PackageReference Include="AsyncFixer"/>
+    <PackageReference Include="ErrorProne.NET.CoreAnalyzers"/>
+    <PackageReference Include="ErrorProne.NET.Structs"/>
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers"/>
+    <PackageReference Include="Philips.CodeAnalysis.MaintainabilityAnalyzers"/>
+    <PackageReference Include="Roslynator.Analyzers"/>
+    <PackageReference Include="Roslynator.CodeAnalysis.Analyzers"/>
+    <PackageReference Include="Roslynator.Formatting.Analyzers"/>
+    <PackageReference Include="SmartAnalyzers.MultithreadingAnalyzer"/>
+    <PackageReference Include="Text.Analyzers"/>
   </ItemGroup>
 
   <ItemGroup>
