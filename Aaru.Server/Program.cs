@@ -80,7 +80,7 @@ builder.Logging.AddSerilog(new LoggerConfiguration().WriteTo
                                                                  restrictedToMinimumLevel: LogEventLevel.Information)
                                                     .CreateLogger());
 
-IConfigurationSection logFileSection = builder.Configuration.GetSection("Serilog:File");
+IConfigurationSection logFileSection = builder.Configuration.GetSection("Logging:LogFile");
 
 builder.Logging.AddSerilog(new LoggerConfiguration().WriteTo.File(logFileSection["Path"] ?? "logs/log.txt",
                                                                   fileSizeLimitBytes:
