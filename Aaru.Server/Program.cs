@@ -80,6 +80,27 @@ builder.Logging.AddSerilog(new LoggerConfiguration().WriteTo
                                                                  restrictedToMinimumLevel: LogEventLevel.Information)
                                                     .CreateLogger());
 
+IConfigurationSection logFileSection = builder.Configuration.GetSection("Serilog:File");
+
+builder.Logging.AddSerilog(new LoggerConfiguration().WriteTo.File(logFileSection["Path"] ?? "logs/log.txt",
+                                                                  fileSizeLimitBytes:
+                                                                  long.TryParse(logFileSection["FileSizeLimitBytes"],
+                                                                                    out long sizeLimit)
+                                                                      ? sizeLimit
+                                                                      : 10 * 1024 * 1024,
+                                                                  rollingInterval:
+                                                                  Enum.TryParse(logFileSection["RollingInterval"],
+                                                                                    out RollingInterval interval)
+                                                                      ? interval
+                                                                      : RollingInterval.Day,
+                                                                  rollOnFileSizeLimit: true,
+                                                                  retainedFileCountLimit:
+                                                                  int.TryParse(logFileSection["MaxRetainedFiles"],
+                                                                               out int maxFiles)
+                                                                      ? maxFiles
+                                                                      : 31)
+                                                    .CreateLogger());
+
 builder.Logging.AddSerilog(new LoggerConfiguration().WriteTo
                                                     .Sentry("https://0bdaf61514c94d74c3c8c7d1cbba999f@sentry.claunia.com/2",
                                                             LogEventLevel.Debug,
