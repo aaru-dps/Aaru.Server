@@ -6,6 +6,7 @@ using Aaru.Server.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using DbContext = Aaru.Server.Database.DbContext;
 using Version = System.Version;
 
@@ -65,7 +66,9 @@ Console.WriteLine("\e[31;1mBuilding web application...\e[0m");
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-builder.Logging.AddConsole();
+#if DEBUG
+builder.Logging.AddSerilog(new LoggerConfiguration().WriteTo.Console().CreateLogger());
+#endif
 
 // Add services to the container.
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
