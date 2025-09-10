@@ -197,7 +197,6 @@ fabric.properties
 *.sln.docstates
 
 # User-specific files (MonoDevelop/Xamarin Studio)
-*.userprefs
 
 # Mono auto generated files
 mono_crash.*
@@ -274,7 +273,6 @@ StyleCopReport.xml
 *.vspscc
 *.vssscc
 .builds
-*.pidb
 *.svclog
 *.scc
 
@@ -410,7 +408,6 @@ _pkginfo.txt
 # Others
 ClientBin/
 ~$*
-*~
 *.dbmdl
 *.dbproj.schemaview
 *.jfm
@@ -539,3 +536,10 @@ MigrationBackup/
 
 public.asc
 appsettings.Production.json
+
+# AWS User-specific
+.idea/**/aws.xml
+
+# SonarLint plugin
+.idea/sonarlint/
+.idea/**/sonarlint/
