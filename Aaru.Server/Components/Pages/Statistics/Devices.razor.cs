@@ -23,16 +23,17 @@ public partial class Devices
     {
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
-        DevicesList.AddRange(ctx.Devices.OrderBy(static device => device.Manufacturer)
+        DevicesList.AddRange(ctx.DeviceStats.OrderBy(static device => device.Manufacturer)
                                 .ThenBy(static device => device.Model)
                                 .ThenBy(static device => device.Revision)
-                                .ThenBy(static device => device.Type)
+                                .ThenBy(static device => device.Bus)
                                 .Select(static dev => new DeviceItem
                                  {
                                      Manufacturer = dev.Manufacturer,
                                      Model        = dev.Model,
                                      Revision     = dev.Revision,
-                                     Bus          = dev.Type.ToString()
+                                     Bus          = dev.Bus,
+                                     ReportId     = dev.Report != null && dev.Report.Id != 0 ? dev.Report.Id : 0
                                  }));
 
         await base.OnInitializedAsync();
