@@ -5,51 +5,55 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aaru.CommonTypes"/>
-    <PackageReference Include="Aaru.Decoders"/>
-    <PackageReference Include="Aaru.Dto"/>
-    <PackageReference Include="Blazor.Bootstrap"/>
-    <PackageReference Include="HtmlAgilityPack"/>
-    <PackageReference Include="ChoPGP"/>
-    <PackageReference Include="MailKit"/>
-    <PackageReference Include="Markdig"/>
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore"/>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools"/>
-    <PackageReference Include="MimeKit"/>
-    <PackageReference Include="OpenTelemetry"/>
-    <PackageReference Include="OpenTelemetry.Extensions.Hosting"/>
-    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore"/>
-    <PackageReference Include="OpenTelemetry.Instrumentation.Http"/>
-    <PackageReference Include="Sentry"/>
-    <PackageReference Include="Sentry.AspNetCore"/>
-    <PackageReference Include="Sentry.Extensions.Logging"/>
-    <PackageReference Include="Sentry.OpenTelemetry"/>
-    <PackageReference Include="Sentry.Serilog"/>
-    <PackageReference Include="Serilog"/>
-    <PackageReference Include="Serilog.Extensions.Logging"/>
-    <PackageReference Include="Serilog.Sinks.Console"/>
-    <PackageReference Include="Serilog.Sinks.File"/>
-    <PackageReference Include="Serilog.Sinks.SyslogMessages"/>
-    <PackageReference Include="WebStoating.Markdig.PrismWithPlugins"/>
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql"/>
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies"/>
-    <PackageReference Include="AsyncFixer"/>
-    <PackageReference Include="ErrorProne.NET.CoreAnalyzers"/>
-    <PackageReference Include="ErrorProne.NET.Structs"/>
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers"/>
-    <PackageReference Include="Philips.CodeAnalysis.MaintainabilityAnalyzers"/>
-    <PackageReference Include="Roslynator.Analyzers"/>
-    <PackageReference Include="Roslynator.CodeAnalysis.Analyzers"/>
-    <PackageReference Include="Roslynator.Formatting.Analyzers"/>
-    <PackageReference Include="SmartAnalyzers.MultithreadingAnalyzer"/>
-    <PackageReference Include="Text.Analyzers"/>
+    <PackageReference Include="Aaru.CommonTypes" />
+    <PackageReference Include="Aaru.Decoders" />
+    <PackageReference Include="Aaru.Dto" />
+    <PackageReference Include="Blazor.Bootstrap" />
+    <PackageReference Include="HtmlAgilityPack" />
+    <PackageReference Include="ChoPGP" />
+    <PackageReference Include="MailKit" />
+    <PackageReference Include="Markdig" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" />
+    <PackageReference Include="MimeKit" />
+    <PackageReference Include="OpenTelemetry" />
+    <PackageReference Include="OpenTelemetry.Exporter.Prometheus.AspNetCore" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.EventCounters" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Process" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" />
+    <PackageReference Include="Sentry" />
+    <PackageReference Include="Sentry.AspNetCore" />
+    <PackageReference Include="Sentry.Extensions.Logging" />
+    <PackageReference Include="Sentry.OpenTelemetry" />
+    <PackageReference Include="Sentry.Serilog" />
+    <PackageReference Include="Serilog" />
+    <PackageReference Include="Serilog.Extensions.Logging" />
+    <PackageReference Include="Serilog.Sinks.Console" />
+    <PackageReference Include="Serilog.Sinks.File" />
+    <PackageReference Include="Serilog.Sinks.SyslogMessages" />
+    <PackageReference Include="WebStoating.Markdig.PrismWithPlugins" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" />
+    <PackageReference Include="AsyncFixer" />
+    <PackageReference Include="ErrorProne.NET.CoreAnalyzers" />
+    <PackageReference Include="ErrorProne.NET.Structs" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" />
+    <PackageReference Include="Philips.CodeAnalysis.MaintainabilityAnalyzers" />
+    <PackageReference Include="Roslynator.Analyzers" />
+    <PackageReference Include="Roslynator.CodeAnalysis.Analyzers" />
+    <PackageReference Include="Roslynator.Formatting.Analyzers" />
+    <PackageReference Include="SmartAnalyzers.MultithreadingAnalyzer" />
+    <PackageReference Include="Text.Analyzers" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\assets\"/>
+    <Folder Include="wwwroot\assets\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -59,7 +63,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Aaru.Server.Database\Aaru.Server.Database.csproj"/>
+    <ProjectReference Include="..\Aaru.Server.Database\Aaru.Server.Database.csproj" />
   </ItemGroup>
 
   <ItemGroup>

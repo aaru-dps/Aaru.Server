@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
+using OpenTelemetry.Resources;
 using Sentry.OpenTelemetry;
 using Serilog;
 using Serilog.Events;
@@ -114,7 +115,23 @@ builder.Services.AddOpenTelemetry()
                                             .AddSentry() // <-- Configure OpenTelemetry to send trace information to Sentry
                    )
        .WithMetrics(metricsProviderBuilder =>
-                        metricsProviderBuilder.AddAspNetCoreInstrumentation().AddHttpClientInstrumentation());
+            metricsProviderBuilder
+                .SetResourceBuilder(ResourceBuilder.CreateDefault()
+                    .AddService(
+                        serviceName: "Aaru.Server",
+                        serviceVersion: typeof(Program).Assembly.GetName().Version?.ToString() ?? "unknown"))
+                .AddAspNetCoreInstrumentation()
+                .AddHttpClientInstrumentation()
+                .AddRuntimeInstrumentation()
+                .AddProcessInstrumentation()
+                .AddEventCountersInstrumentation(options =>
+                {
+                    options.AddEventSources(
+                        "System.Runtime",
+                        "Microsoft.AspNetCore.Hosting",
+                        "Microsoft-AspNetCore-Server-Kestrel");
+                })
+                .AddPrometheusExporter());
 
 builder.WebHost.UseSentry(o =>
 {
@@ -190,6 +207,8 @@ app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
 app.MapControllers();
+
+app.UseOpenTelemetryPrometheusScrapingEndpoint();
 
 using(IServiceScope scope = app.Services.CreateScope())
 {
