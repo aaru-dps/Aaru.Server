@@ -124,13 +124,6 @@ builder.Services.AddOpenTelemetry()
                 .AddHttpClientInstrumentation()
                 .AddRuntimeInstrumentation()
                 .AddProcessInstrumentation()
-                .AddEventCountersInstrumentation(options =>
-                {
-                    options.AddEventSources(
-                        "System.Runtime",
-                        "Microsoft.AspNetCore.Hosting",
-                        "Microsoft-AspNetCore-Server-Kestrel");
-                })
                 .AddPrometheusExporter());
 
 builder.WebHost.UseSentry(o =>
