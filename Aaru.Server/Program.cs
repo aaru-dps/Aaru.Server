@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OpenTelemetry.Metrics;
-using OpenTelemetry.Trace;
 using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using Sentry.OpenTelemetry;
 using Serilog;
 using Serilog.Events;
@@ -114,17 +114,18 @@ builder.Services.AddOpenTelemetry()
                                             .AddHttpClientInstrumentation() // <-- Adds HttpClient telemetry sources
                                             .AddSentry() // <-- Configure OpenTelemetry to send trace information to Sentry
                    )
-       .WithMetrics(metricsProviderBuilder =>
-            metricsProviderBuilder
-                .SetResourceBuilder(ResourceBuilder.CreateDefault()
-                    .AddService(
-                        serviceName: "Aaru.Server",
-                        serviceVersion: typeof(Program).Assembly.GetName().Version?.ToString() ?? "unknown"))
-                .AddAspNetCoreInstrumentation()
-                .AddHttpClientInstrumentation()
-                .AddRuntimeInstrumentation()
-                .AddProcessInstrumentation()
-                .AddPrometheusExporter());
+       .WithMetrics(metricsProviderBuilder => metricsProviderBuilder
+                                             .SetResourceBuilder(ResourceBuilder.CreateDefault()
+                                                                    .AddService("Aaru.Server",
+                                                                                    serviceVersion:
+                                                                                    typeof(Program).Assembly.GetName()
+                                                                                       .Version?.ToString() ??
+                                                                                    "unknown"))
+                                             .AddAspNetCoreInstrumentation()
+                                             .AddHttpClientInstrumentation()
+                                             .AddRuntimeInstrumentation()
+                                             .AddProcessInstrumentation()
+                                             .AddPrometheusExporter());
 
 builder.WebHost.UseSentry(o =>
 {
@@ -176,7 +177,21 @@ builder.Services.AddControllers();
 
 builder.Services.AddHostedService<UpdateTask>();
 
+
 WebApplication app = builder.Build();
+
+// Block registration route and redirect
+app.Use(async (context, next) =>
+{
+    if(context.Request.Path.StartsWithSegments("/Account/Register", StringComparison.OrdinalIgnoreCase))
+    {
+        context.Response.Redirect("/Account/Login");
+
+        return;
+    }
+
+    await next();
+});
 
 // Configure the HTTP request pipeline.
 if(app.Environment.IsDevelopment())
