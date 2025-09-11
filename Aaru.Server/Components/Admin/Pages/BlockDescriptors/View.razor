@@ -1,0 +1,48 @@
+﻿@page "/admin/block-descriptors"
+@attribute [Authorize]
+@layout AdminLayout
+
+@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
+
+<PageTitle>Block descriptors</PageTitle>
+
+@if(!_initialized)
+{
+    <div class="stats-section">
+        <h1 style="color: red; align-content: center; padding: 2rem">Loading...</h1>
+    </div>
+
+    return;
+}
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @DisplayNameHelper.GetDisplayName(typeof(BlockDescriptor), nameof(BlockDescriptor.Density))
+        </th>
+        <th>
+            @DisplayNameHelper.GetDisplayName(typeof(BlockDescriptor), nameof(BlockDescriptor.Blocks))
+        </th>
+        <th>
+            @DisplayNameHelper.GetDisplayName(typeof(BlockDescriptor), nameof(BlockDescriptor.BlockLength))
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach(BlockDescriptor item in _items)
+    {
+        <tr>
+            <td>
+                @item.Density
+            </td>
+            <td>
+                @item.Blocks
+            </td>
+            <td>
+                @item.BlockLength
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
