@@ -1,0 +1,17 @@
+@attribute [Authorize]
+@inherits LayoutComponentBase
+
+
+<div class="page">
+    <input id="admin-navbar-toggler" class="navbar-toggler" title="Navigation menu" type="checkbox" />
+    <label for="admin-navbar-toggler" class="navbar-toggler-label" aria-label="Toggle navigation"></label>
+    <div class="sidebar" id="admin-sidebar-container">
+        <AdminNavMenu />
+    </div>
+
+    <main>
+        <article class="content">
+            @Body
+        </article>
+    </main>
+</div>
