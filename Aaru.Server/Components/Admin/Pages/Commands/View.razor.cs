@@ -1,13 +1,13 @@
-using Aaru.CommonTypes.Metadata;
+using Aaru.Server.Database.Models;
 using Microsoft.EntityFrameworkCore;
 using DbContext = Aaru.Server.Database.DbContext;
 
-namespace Aaru.Server.Components.Admin.Pages.BlockDescriptors;
+namespace Aaru.Server.Components.Admin.Pages.Commands;
 
 public partial class View
 {
-    bool                  _initialized;
-    List<BlockDescriptor> _items;
+    bool          _initialized;
+    List<Command> _items;
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
@@ -18,10 +18,7 @@ public partial class View
 
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
-        _items = await ctx.BlockDescriptor.OrderBy(static b => b.BlockLength)
-                          .ThenBy(static b => b.Blocks)
-                          .ThenBy(static b => b.Density)
-                          .ToListAsync();
+        _items = await ctx.Commands.OrderBy(static c => c.Name).ToListAsync();
 
         _initialized = true;
 

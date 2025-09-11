@@ -1,10 +1,10 @@
-﻿@page "/admin/block-descriptors"
+@page "/admin/commands"
 @attribute [Authorize]
 @layout AdminLayout
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
 
-<PageTitle>Block descriptors</PageTitle>
+<PageTitle>Commands</PageTitle>
 
 @if(!_initialized)
 {
@@ -20,28 +20,22 @@
         <thead class="thead-dark">
         <tr>
             <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(BlockDescriptor), nameof(BlockDescriptor.Density))
+                @DisplayNameHelper.GetDisplayName(typeof(Command), nameof(Command.Name))
             </th>
             <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(BlockDescriptor), nameof(BlockDescriptor.Blocks))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(BlockDescriptor), nameof(BlockDescriptor.BlockLength))
+                @DisplayNameHelper.GetDisplayName(typeof(Command), nameof(Command.Count))
             </th>
         </tr>
         </thead>
         <tbody>
-        @foreach(BlockDescriptor item in _items)
+        @foreach(Command item in _items)
         {
             <tr>
                 <td>
-                    @item.Density
+                    @item.Name
                 </td>
                 <td>
-                    @item.Blocks
-                </td>
-                <td>
-                    @item.BlockLength
+                    @item.Count
                 </td>
             </tr>
         }
