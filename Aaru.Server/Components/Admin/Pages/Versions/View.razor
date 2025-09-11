@@ -2,6 +2,7 @@
 @using Version = Aaru.Server.Database.Models.Version
 @attribute [Authorize]
 @layout AdminLayout
+@rendermode InteractiveServer
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
 
@@ -26,6 +27,9 @@
             <th class="fw-bold bg-secondary text-light">
                 @DisplayNameHelper.GetDisplayName(typeof(Version), nameof(Version.Count))
             </th>
+            <th class="fw-bold bg-secondary text-light">
+                Actions
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -38,8 +42,23 @@
                 <td>
                     @item.Count
                 </td>
+                <td>
+                    <button class="btn btn-danger btn-sm" @onclick="async () => await ShowDeleteModal(item.Id)">
+                        <i class="bi bi-trash"></i> Delete
+                    </button>
+                </td>
             </tr>
         }
         </tbody>
     </table>
 </section>
+
+<BlazorBootstrap.Modal @ref="_deleteModal" Title="Delete Version" Size="ModalSize.Small">
+    <BodyTemplate>
+        <div class="text-danger">Are you sure you want to delete this version?</div>
+    </BodyTemplate>
+    <FooterTemplate>
+        <button class="btn btn-secondary" @onclick="HideDeleteModal">Cancel</button>
+        <button class="btn btn-danger" @onclick="ConfirmDelete">Delete</button>
+    </FooterTemplate>
+</BlazorBootstrap.Modal>
