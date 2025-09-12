@@ -1,4 +1,3 @@
-using Aaru.CommonTypes.Metadata;
 using Aaru.Server.Database.Models;
 using BlazorBootstrap;
 using Microsoft.EntityFrameworkCore;
@@ -70,9 +69,10 @@ public partial class View
                                                              .Skip(1)
                                                              .ToArrayAsync())
             {
-                foreach(TestedMedia media in ctx.TestedMedia.Where(d => d.CHS.Id == chs.Id)) media.CHS = master;
+                foreach(CommonTypes.Metadata.TestedMedia media in ctx.TestedMedia.Where(d => d.CHS.Id == chs.Id))
+                    media.CHS = master;
 
-                foreach(TestedMedia media in ctx.TestedMedia.Where(d => d.CurrentCHS.Id == chs.Id))
+                foreach(CommonTypes.Metadata.TestedMedia media in ctx.TestedMedia.Where(d => d.CurrentCHS.Id == chs.Id))
                     media.CurrentCHS = master;
 
                 ctx.Chs.Remove(chs);
