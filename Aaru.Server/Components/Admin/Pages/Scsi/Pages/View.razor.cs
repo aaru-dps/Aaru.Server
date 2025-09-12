@@ -3,14 +3,14 @@ using BlazorBootstrap;
 using Microsoft.EntityFrameworkCore;
 using DbContext = Aaru.Server.Database.DbContext;
 
-namespace Aaru.Server.Components.Admin.Pages.ScsiModes;
+namespace Aaru.Server.Components.Admin.Pages.Scsi.Pages;
 
 public partial class View
 {
     private int    _deleteId;
     private Modal? _deleteModal;
     bool           _initialized;
-    List<ScsiMode> _items;
+    List<ScsiPage> _items;
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
@@ -21,7 +21,7 @@ public partial class View
 
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
-        _items = await ctx.ScsiMode.ToListAsync();
+        _items = await ctx.ScsiPage.ToListAsync();
 
         _initialized = true;
 
@@ -49,11 +49,11 @@ public partial class View
     private async Task DeleteVersionAsync(int id)
     {
         await using DbContext ctx  = await DbContextFactory.CreateDbContextAsync();
-        ScsiMode?             mode = await ctx.ScsiMode.FindAsync(id);
+        ScsiPage?             page = await ctx.ScsiPage.FindAsync(id);
 
-        if(mode is not null)
+        if(page is not null)
         {
-            ctx.ScsiMode.Remove(mode);
+            ctx.ScsiPage.Remove(page);
             await ctx.SaveChangesAsync();
         }
     }
@@ -62,7 +62,7 @@ public partial class View
     {
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
-        _items = await ctx.ScsiMode.ToListAsync();
+        _items = await ctx.ScsiPage.ToListAsync();
 
         StateHasChanged();
     }
