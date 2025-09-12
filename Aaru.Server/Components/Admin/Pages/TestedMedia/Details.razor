@@ -1,0 +1,1495 @@
+@page "/admin/tested-media/{id:int}"
+@attribute [Authorize]
+@layout AdminLayout
+@rendermode InteractiveServer
+
+@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
+
+<PageTitle>Tested media</PageTitle>
+
+@if(!_initialized)
+{
+    <div class="stats-section">
+        <h1 style="color: red; align-content: center; padding: 2rem">Loading...</h1>
+    </div>
+
+    return;
+}
+
+<section class="stats-section">
+    <div>
+        <h4>Tested media</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.Manufacturer))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.Manufacturer
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.IdentifyData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.IdentifyData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=IdentifyData">@_model.IdentifyData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.Blocks))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.Blocks
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.BlockSize))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.BlockSize
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadAACS))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadAACS
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadADIP))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadADIP
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadATIP))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadATIP
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadBCA))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadBCA
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadC2Pointers))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadC2Pointers
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadCMI))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadCMI
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadCorrectedSubchannel))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadCorrectedSubchannel
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadCorrectedSubchannelWithC2))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadCorrectedSubchannelWithC2
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadDCB))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadDCB
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadDDS))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadDDS
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadDMI))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadDMI
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadDiscInformation))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadDiscInformation
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadFullTOC))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadFullTOC
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadHDCMI))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadHDCMI
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadLayerCapacity))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadLayerCapacity
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadFirstTrackPreGap))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadFirstTrackPreGap
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadLeadIn))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadLeadIn
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadLeadOut))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadLeadOut
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadMediaID))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadMediaID
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadMediaSerial))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadMediaSerial
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadPAC))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadPAC
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadPFI))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadPFI
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadPMA))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadPMA
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadPQSubchannel))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadPQSubchannel
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadPQSubchannelWithC2))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadPQSubchannelWithC2
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadPRI))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadPRI
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadRWSubchannel))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadRWSubchannel
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadRWSubchannelWithC2))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadRWSubchannelWithC2
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadRecordablePFI))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadRecordablePFI
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadSpareAreaInformation))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadSpareAreaInformation
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadTOC))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadTOC
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.Density))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.Density is null)
+                {
+                    @("<null>")
+                }
+                else
+                {
+                    @_model?.Density
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.LongBlockSize))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.LongBlockSize
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.Manufacturer))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.Manufacturer
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.MediaIsRecognized))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.MediaIsRecognized
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.MediumType))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.MediumType is null)
+                {
+                    @("<null>")
+                }
+                else
+                {
+                    @_model?.MediumType
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.MediumTypeName))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.MediumTypeName
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.Model))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.Model
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsHLDTSTReadRawDVD))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsHLDTSTReadRawDVD
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsLiteOnReadRawDVD))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsLiteOnReadRawDVD
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsNECReadCDDA))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsNECReadCDDA
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsPioneerReadCDDA))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsPioneerReadCDDA
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsPioneerReadCDDAMSF))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsPioneerReadCDDAMSF
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsPlextorReadCDDA))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsPlextorReadCDDA
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsPlextorReadRawDVD))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsPlextorReadRawDVD
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsRead10))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsRead10
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsRead12))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsRead12
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsRead16))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsRead16
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsRead6))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsRead6
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsReadCapacity16))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsReadCapacity16
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsReadCapacity))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsReadCapacity
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsReadCd))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsReadCd
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsReadCdMsf))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsReadCdMsf
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsReadCdRaw))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsReadCdRaw
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsReadCdMsfRaw))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsReadCdMsfRaw
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsReadLong16))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsReadLong16
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsReadLong))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsReadLong
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ModeSense6Data))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ModeSense6Data != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ModeSense6Data">@_model.ModeSense6Data.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ModeSense10Data))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ModeSense10Data != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ModeSense10Data">@_model.ModeSense10Data.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.LBASectors))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.LBASectors
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.LBA48Sectors))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.LBA48Sectors
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.LogicalAlignment))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.LogicalAlignment
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.NominalRotationRate))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.NominalRotationRate
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.PhysicalBlockSize))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.PhysicalBlockSize
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SolidStateDevice))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SolidStateDevice
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.UnformattedBPT))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.UnformattedBPT is null)
+                {
+                    @("<null>")
+                }
+                else
+                {
+                    @_model?.UnformattedBPT
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.UnformattedBPS))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.UnformattedBPS is null)
+                {
+                    @("<null>")
+                }
+                else
+                {
+                    @_model?.UnformattedBPS
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsReadDmaLba))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsReadDmaLba
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsReadDmaRetryLba))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsReadDmaRetryLba
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsReadLba))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsReadLba
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsReadRetryLba))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsReadRetryLba
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsReadLongLba))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsReadLongLba
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsReadLongRetryLba))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsReadLongRetryLba
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsSeekLba))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsSeekLba
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsReadDmaLba48))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsReadDmaLba48
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsReadLba48))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsReadLba48
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsReadDma))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsReadDma
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsReadDmaRetry))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsReadDmaRetry
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsReadRetry))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsReadRetry
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsReadSectors))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsReadSectors
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsReadLongRetry))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsReadLongRetry
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.SupportsSeek))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.SupportsSeek
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadingIntersessionLeadIn))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadingIntersessionLeadIn
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadingIntersessionLeadOut))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadingIntersessionLeadOut
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.IntersessionLeadInData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.IntersessionLeadInData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=IntersessionLeadInData">@_model.IntersessionLeadInData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.IntersessionLeadOutData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.IntersessionLeadOutData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=IntersessionLeadOutData">@_model.IntersessionLeadOutData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.Read6Data))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.Read6Data != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=Read6Data">@_model.Read6Data.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.Read10Data))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.Read10Data != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=Read10Data">@_model.Read10Data.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.Read12Data))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.Read12Data != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=Read12Data">@_model.Read12Data.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.Read16Data))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.Read16Data != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=Read16Data">@_model.Read16Data.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadLong10Data))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadLong10Data != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadLong10Data">@_model.ReadLong10Data.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadLong16Data))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadLong16Data != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadLong16Data">@_model.ReadLong16Data.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadSectorsData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadSectorsData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadSectorsData">@_model.ReadSectorsData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadSectorsRetryData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadSectorsRetryData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadSectorsRetryData">@_model.ReadSectorsRetryData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadDmaData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadDmaData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadDmaData">@_model.ReadDmaData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadDmaRetryData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadDmaRetryData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadDmaRetryData">@_model.ReadDmaRetryData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadLbaData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadLbaData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadLbaData">@_model.ReadLbaData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadRetryLbaData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadRetryLbaData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadRetryLbaData">@_model.ReadRetryLbaData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadDmaLbaData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadDmaLbaData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadDmaLbaData">@_model.ReadDmaLbaData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadDmaRetryLbaData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadDmaRetryLbaData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadDmaRetryLbaData">@_model.ReadDmaRetryLbaData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadLba48Data))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadLba48Data != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadLba48Data">@_model.ReadLba48Data.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadDmaLba48Data))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadDmaLba48Data != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadDmaLba48Data">@_model.ReadDmaLba48Data.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadLongData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadLongData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadLongData">@_model.ReadLongData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadLongRetryData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadLongRetryData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadLongRetryData">@_model.ReadLongRetryData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadLongLbaData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadLongLbaData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadLongLbaData">@_model.ReadLongLbaData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadLongRetryLbaData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadLongRetryLbaData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadLongRetryLbaData">@_model.ReadLongRetryLbaData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.TocData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.TocData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=TocData">@_model.TocData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.FullTocData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.FullTocData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=FullTocData">@_model.FullTocData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.AtipData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.AtipData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=AtipData">@_model.AtipData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.PmaData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.PmaData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=PmaData">@_model.PmaData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadCdData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadCdData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadCdData">@_model.ReadCdData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadCdMsfData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadCdMsfData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadCdMsfData">@_model.ReadCdMsfData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadCdFullData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadCdFullData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadCdFullData">@_model.ReadCdFullData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadCdMsfFullData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadCdMsfFullData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadCdMsfFullData">@_model.ReadCdMsfFullData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.Track1PregapData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.Track1PregapData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=Track1PregapData">@_model.Track1PregapData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.LeadInData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.LeadInData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=LeadInData">@_model.LeadInData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.LeadOutData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.LeadOutData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=LeadOutData">@_model.LeadOutData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.C2PointersData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.C2PointersData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=C2PointersData">@_model.C2PointersData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.PQSubchannelData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.PQSubchannelData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=PQSubchannelData">@_model.PQSubchannelData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.RWSubchannelData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.RWSubchannelData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=RWSubchannelData">@_model.RWSubchannelData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CorrectedSubchannelData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.CorrectedSubchannelData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=CorrectedSubchannelData">@_model.CorrectedSubchannelData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.PQSubchannelWithC2Data))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.PQSubchannelWithC2Data != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=PQSubchannelWithC2Data">@_model.PQSubchannelWithC2Data.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.RWSubchannelWithC2Data))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.RWSubchannelWithC2Data != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=RWSubchannelWithC2Data">@_model.RWSubchannelWithC2Data.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CorrectedSubchannelWithC2Data))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.CorrectedSubchannelWithC2Data != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=CorrectedSubchannelWithC2Data">@_model.CorrectedSubchannelWithC2Data.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.PfiData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.PfiData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=PfiData">@_model.PfiData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.DmiData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.DmiData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=DmiData">@_model.DmiData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CmiData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.CmiData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=CmiData">@_model.CmiData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.DvdBcaData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.DvdBcaData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=DvdBcaData">@_model.DvdBcaData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.DvdAacsData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.DvdAacsData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=DvdAacsData">@_model.DvdAacsData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.DvdDdsData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.DvdDdsData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=DvdDdsData">@_model.DvdDdsData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.DvdSaiData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.DvdSaiData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=DvdSaiData">@_model.DvdSaiData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.PriData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.PriData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=PriData">@_model.PriData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.EmbossedPfiData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.EmbossedPfiData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=EmbossedPfiData">@_model.EmbossedPfiData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.AdipData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.AdipData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=AdipData">@_model.AdipData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.DcbData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.DcbData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=DcbData">@_model.DcbData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.HdCmiData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.HdCmiData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=HdCmiData">@_model.HdCmiData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.DvdLayerData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.DvdLayerData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=DvdLayerData">@_model.DvdLayerData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.BluBcaData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.BluBcaData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=BluBcaData">@_model.BluBcaData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.BluDdsData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.BluDdsData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=BluDdsData">@_model.BluDdsData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.BluSaiData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.BluSaiData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=BluSaiData">@_model.BluSaiData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.BluDiData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.BluDiData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=BluDiData">@_model.BluDiData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.BluPacData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.PlextorReadCddaData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=PlextorReadCddaData">@_model.PlextorReadCddaData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.PlextorReadCddaData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.PlextorReadCddaData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=PlextorReadCddaData">@_model.PlextorReadCddaData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.PioneerReadCddaData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.PioneerReadCddaData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=PioneerReadCddaData">@_model.PioneerReadCddaData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.PioneerReadCddaMsfData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.PioneerReadCddaMsfData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=PioneerReadCddaMsfData">@_model.PioneerReadCddaMsfData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.NecReadCddaData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.NecReadCddaData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=NecReadCddaData">@_model.NecReadCddaData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.PlextorReadRawDVDData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.PlextorReadRawDVDData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=PlextorReadRawDVDData">@_model.PlextorReadRawDVDData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.HLDTSTReadRawDVDData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.HLDTSTReadRawDVDData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=HLDTSTReadRawDVDData">@_model.HLDTSTReadRawDVDData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadCdScrambled))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadCdScrambled
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadCdScrambledData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadCdScrambledData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadCdScrambledData">@_model.ReadCdScrambledData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadF1_06))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadF1_06
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadF1_06Data))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadF1_06Data != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadF1_06Data">@_model.ReadF1_06Data.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.CanReadF1_06LeadOut))
+            </dt>
+            <dd class="col-sm-6">
+                @_model?.CanReadF1_06LeadOut
+            </dd>
+            <dt class="col-sm-6">
+                @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.ReadF1_06LeadOutData))
+            </dt>
+            <dd class="col-sm-6">
+                @if(_model?.ReadF1_06LeadOutData != null)
+                {
+                    <a href="/admin/tested-media/data/@_model.Id?data=ReadF1_06LeadOutData">@_model.ReadF1_06LeadOutData.Length bytes</a>
+                }
+                else
+                {
+                    @("<null>")
+                }
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a href="/admin/usb/devices" class="btn btn-secondary">Back to List</a>
+    </div>
+</section>
