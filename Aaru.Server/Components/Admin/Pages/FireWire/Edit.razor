@@ -1,0 +1,44 @@
+@page "/admin/firewire/edit/{Id:int}"
+@attribute [Authorize]
+@layout AdminLayout
+@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
+
+<PageTitle>Edit FireWire Device</PageTitle>
+
+@if(!_isLoaded)
+{
+    <div>Loading...</div>
+}
+else
+{
+    <EditForm Model="_fireWire" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="mb-3">
+            <label class="form-label">Vendor ID</label>
+            <InputNumber class="form-control" @bind-Value="_fireWire.VendorID" />
+            <ValidationMessage For="@(() => _fireWire.VendorID)" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Product ID</label>
+            <InputNumber class="form-control" @bind-Value="_fireWire.ProductID" />
+            <ValidationMessage For="@(() => _fireWire.ProductID)" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Manufacturer</label>
+            <InputText class="form-control" @bind-Value="_fireWire.Manufacturer" />
+            <ValidationMessage For="@(() => _fireWire.Manufacturer)" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Product</label>
+            <InputText class="form-control" @bind-Value="_fireWire.Product" />
+            <ValidationMessage For="@(() => _fireWire.Product)" />
+        </div>
+        <div class="mb-3 form-check">
+            <InputCheckbox class="form-check-input" @bind-Value="_fireWire.RemovableMedia" />
+            <label class="form-check-label">Is media removable?</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-secondary ms-2" @onclick="GoBack">Cancel</button>
+    </EditForm>
+}
