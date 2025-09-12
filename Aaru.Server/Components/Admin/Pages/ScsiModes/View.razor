@@ -1,0 +1,88 @@
+@page "/admin/scsi/modes"
+@attribute [Authorize]
+@layout AdminLayout
+@rendermode InteractiveServer
+
+@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
+
+<PageTitle>SCSI MODE SENSE responses</PageTitle>
+
+@if(!_initialized)
+{
+    <div class="stats-section">
+        <h1 style="color: red; align-content: center; padding: 2rem">Loading...</h1>
+    </div>
+
+    return;
+}
+
+<section class="stats-section">
+    <h4>SCSI MODE SENSE responses</h4>
+    <table class="table table-dark table-striped table-bordered mt-4 mb-4">
+        <thead class="thead-dark">
+        <tr>
+            <th class="fw-bold bg-secondary text-light">
+                @DisplayNameHelper.GetDisplayName(typeof(ScsiMode), nameof(ScsiMode.MediumType))
+            </th>
+            <th class="fw-bold bg-secondary text-light">
+                @DisplayNameHelper.GetDisplayName(typeof(ScsiMode), nameof(ScsiMode.WriteProtected))
+            </th>
+            <th class="fw-bold bg-secondary text-light">
+                @DisplayNameHelper.GetDisplayName(typeof(ScsiMode), nameof(ScsiMode.Speed))
+            </th>
+            <th class="fw-bold bg-secondary text-light">
+                @DisplayNameHelper.GetDisplayName(typeof(ScsiMode), nameof(ScsiMode.BufferedMode))
+            </th>
+            <th class="fw-bold bg-secondary text-light">
+                @DisplayNameHelper.GetDisplayName(typeof(ScsiMode), nameof(ScsiMode.BlankCheckEnabled))
+            </th>
+            <th class="fw-bold bg-secondary text-light">
+                @DisplayNameHelper.GetDisplayName(typeof(ScsiMode), nameof(ScsiMode.DPOandFUA))
+            </th>
+            <th class="fw-bold bg-secondary text-light">
+                Actions
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach(ScsiMode item in _items)
+        {
+            <tr>
+                <td>
+                    @item.MediumType
+                </td>
+                <td>
+                    @item.WriteProtected
+                </td>
+                <td>
+                    @item.Speed
+                </td>
+                <td>
+                    @item.BufferedMode
+                </td>
+                <td>
+                    @item.BlankCheckEnabled
+                </td>
+                <td>
+                    @item.DPOandFUA
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-sm" @onclick="async () => await ShowDeleteModal(item.Id)">
+                        <i class="bi bi-trash"></i> Delete
+                    </button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</section>
+
+<BlazorBootstrap.Modal @ref="_deleteModal" Title="Delete Version" Size="ModalSize.Small">
+    <BodyTemplate>
+        <div class="text-danger">Are you sure you want to delete this SCSI MODE SENSE response?</div>
+    </BodyTemplate>
+    <FooterTemplate>
+        <button class="btn btn-secondary" @onclick="HideDeleteModal">Cancel</button>
+        <button class="btn btn-danger" @onclick="ConfirmDelete">Delete</button>
+    </FooterTemplate>
+</BlazorBootstrap.Modal>
