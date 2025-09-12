@@ -16,763 +16,765 @@
     return;
 }
 
-<section class="stats-section">
+<section>
     <h4>MMC FEATUREs</h4>
-    <table class="table table-dark table-striped table-bordered mt-4 mb-4">
-        <thead class="thead-dark">
-        <tr>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.AACSVersion))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.AGIDs))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.BindingNonceBlocks))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.BlocksPerReadableUnit))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.BufferUnderrunFreeInDVD))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.BufferUnderrunFreeInSAO))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.BufferUnderrunFreeInTAO))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanAudioScan))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanEject))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanEraseSector))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanExpandBDRESpareArea))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanFormat))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanFormatBDREWithoutSpare))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanFormatCert))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanFormatFRF))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanFormatQCert))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanFormatRRM))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanGenerateBindingNonce))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanLoad))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanMuteSeparateChannels))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanOverwriteSAOTrack))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanOverwriteTAOTrack))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanPlayCDAudio))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanPseudoOverwriteBDR))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadAllDualR))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadAllDualRW))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadBD))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadBDR))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadBDRE1))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadBDRE2))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadBDROM))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadBluBCA))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadCD))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadCDMRW))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadCPRM_MKB))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDDCD))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDVD))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDVDPlusMRW))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDVDPlusR))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDVDPlusRDL))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDVDPlusRW))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDVDPlusRWDL))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDriveAACSCertificate))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadHDDVD))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadHDDVDR))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadHDDVDRAM))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadLeadInCDText))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadOldBDR))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadOldBDRE))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadOldBDROM))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadSpareAreaInformation))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReportDriveSerial))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReportMediaSerial))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanTestWriteDDCDR))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanTestWriteDVD))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanTestWriteInSAO))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanTestWriteInTAO))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanUpgradeFirmware))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteBD))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteBDR))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteBDRE1))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteBDRE2))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteBusEncryptedBlocks))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteCDMRW))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteCDRW))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteCDRWCAV))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteCDSAO))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteCDTAO))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteCSSManagedDVD))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDDCDR))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDDCDRW))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDPlusMRW))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDPlusR))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDPlusRDL))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDPlusRW))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDPlusRWDL))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDR))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDRDL))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDRW))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteHDDVDR))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteHDDVDRAM))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteOldBDR))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteOldBDRE))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWritePackedSubchannelInTAO))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteRWSubchannelInSAO))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteRWSubchannelInTAO))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteRaw))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteRawMultiSession))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteRawSubchannelInTAO))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.ChangerIsSideChangeCapable))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.ChangerSlots))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.ChangerSupportsDiscPresent))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CPRMVersion))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CSSVersion))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.DBML))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.DVDMultiRead))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.EmbeddedChanger))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.ErrorRecoveryPage))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.FirmwareDate))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.LoadingMechanismType))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.Locked))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.LogicalBlockSize))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.MultiRead))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.PhysicalInterfaceStandardNumber))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.PreventJumper))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsAACS))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsBusEncryption))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsC2))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsCPRM))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsCSS))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsDAP))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsDeviceBusyEvent))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsHybridDiscs))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsModePage1Ch))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsOSSC))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsPWP))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsSWPP))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsSecurDisc))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsSeparateVolume))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsVCPS))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsWriteInhibitDCB))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsWriteProtectPAC))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.VolumeLevels))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                Actions
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach(MmcFeatures item in _items)
-        {
+    <div class="responsive-table-container">
+        <table class="table table-dark table-striped table-bordered mt-4 mb-4">
+            <thead class="thead-dark">
             <tr>
-                <td>
-                    @item.AACSVersion
-                </td>
-                <td>
-                    @item.AGIDs
-                </td>
-                <td>
-                    @item.BindingNonceBlocks
-                </td>
-                <td>
-                    @item.BlocksPerReadableUnit
-                </td>
-                <td>
-                    @item.BufferUnderrunFreeInDVD
-                </td>
-                <td>
-                    @item.BufferUnderrunFreeInSAO
-                </td>
-                <td>
-                    @item.BufferUnderrunFreeInTAO
-                </td>
-                <td>
-                    @item.CanAudioScan
-                </td>
-                <td>
-                    @item.CanEject
-                </td>
-                <td>
-                    @item.CanEraseSector
-                </td>
-                <td>
-                    @item.CanExpandBDRESpareArea
-                </td>
-                <td>
-                    @item.CanFormat
-                </td>
-                <td>
-                    @item.CanFormatBDREWithoutSpare
-                </td>
-                <td>
-                    @item.CanFormatCert
-                </td>
-                <td>
-                    @item.CanFormatFRF
-                </td>
-                <td>
-                    @item.CanFormatQCert
-                </td>
-                <td>
-                    @item.CanFormatRRM
-                </td>
-                <td>
-                    @item.CanGenerateBindingNonce
-                </td>
-                <td>
-                    @item.CanLoad
-                </td>
-                <td>
-                    @item.CanMuteSeparateChannels
-                </td>
-                <td>
-                    @item.CanOverwriteSAOTrack
-                </td>
-                <td>
-                    @item.CanOverwriteTAOTrack
-                </td>
-                <td>
-                    @item.CanPlayCDAudio
-                </td>
-                <td>
-                    @item.CanPseudoOverwriteBDR
-                </td>
-                <td>
-                    @item.CanReadAllDualR
-                </td>
-                <td>
-                    @item.CanReadAllDualRW
-                </td>
-                <td>
-                    @item.CanReadBD
-                </td>
-                <td>
-                    @item.CanReadBDR
-                </td>
-                <td>
-                    @item.CanReadBDRE1
-                </td>
-                <td>
-                    @item.CanReadBDRE2
-                </td>
-                <td>
-                    @item.CanReadBDROM
-                </td>
-                <td>
-                    @item.CanReadBluBCA
-                </td>
-                <td>
-                    @item.CanReadCD
-                </td>
-                <td>
-                    @item.CanReadCDMRW
-                </td>
-                <td>
-                    @item.CanReadCPRM_MKB
-                </td>
-                <td>
-                    @item.CanReadDDCD
-                </td>
-                <td>
-                    @item.CanReadDVD
-                </td>
-                <td>
-                    @item.CanReadDVDPlusMRW
-                </td>
-                <td>
-                    @item.CanReadDVDPlusR
-                </td>
-                <td>
-                    @item.CanReadDVDPlusRDL
-                </td>
-                <td>
-                    @item.CanReadDVDPlusRW
-                </td>
-                <td>
-                    @item.CanReadDVDPlusRWDL
-                </td>
-                <td>
-                    @item.CanReadDriveAACSCertificate
-                </td>
-                <td>
-                    @item.CanReadHDDVD
-                </td>
-                <td>
-                    @item.CanReadHDDVDR
-                </td>
-                <td>
-                    @item.CanReadHDDVDRAM
-                </td>
-                <td>
-                    @item.CanReadLeadInCDText
-                </td>
-                <td>
-                    @item.CanReadOldBDR
-                </td>
-                <td>
-                    @item.CanReadOldBDRE
-                </td>
-                <td>
-                    @item.CanReadOldBDROM
-                </td>
-                <td>
-                    @item.CanReadSpareAreaInformation
-                </td>
-                <td>
-                    @item.CanReportDriveSerial
-                </td>
-                <td>
-                    @item.CanReportMediaSerial
-                </td>
-                <td>
-                    @item.CanTestWriteDDCDR
-                </td>
-                <td>
-                    @item.CanTestWriteDVD
-                </td>
-                <td>
-                    @item.CanTestWriteInSAO
-                </td>
-                <td>
-                    @item.CanTestWriteInTAO
-                </td>
-                <td>
-                    @item.CanUpgradeFirmware
-                </td>
-                <td>
-                    @item.CanWriteBD
-                </td>
-                <td>
-                    @item.CanWriteBDR
-                </td>
-                <td>
-                    @item.CanWriteBDRE1
-                </td>
-                <td>
-                    @item.CanWriteBDRE2
-                </td>
-                <td>
-                    @item.CanWriteBusEncryptedBlocks
-                </td>
-                <td>
-                    @item.CanWriteCDMRW
-                </td>
-                <td>
-                    @item.CanWriteCDRW
-                </td>
-                <td>
-                    @item.CanWriteCDRWCAV
-                </td>
-                <td>
-                    @item.CanWriteCDSAO
-                </td>
-                <td>
-                    @item.CanWriteCDTAO
-                </td>
-                <td>
-                    @item.CanWriteCSSManagedDVD
-                </td>
-                <td>
-                    @item.CanWriteDDCDR
-                </td>
-                <td>
-                    @item.CanWriteDDCDRW
-                </td>
-                <td>
-                    @item.CanWriteDVDPlusMRW
-                </td>
-                <td>
-                    @item.CanWriteDVDPlusR
-                </td>
-                <td>
-                    @item.CanWriteDVDPlusRDL
-                </td>
-                <td>
-                    @item.CanWriteDVDPlusRW
-                </td>
-                <td>
-                    @item.CanWriteDVDPlusRWDL
-                </td>
-                <td>
-                    @item.CanWriteDVDR
-                </td>
-                <td>
-                    @item.CanWriteDVDRDL
-                </td>
-                <td>
-                    @item.CanWriteDVDRW
-                </td>
-                <td>
-                    @item.CanWriteHDDVDR
-                </td>
-                <td>
-                    @item.CanWriteHDDVDRAM
-                </td>
-                <td>
-                    @item.CanWriteOldBDR
-                </td>
-                <td>
-                    @item.CanWriteOldBDRE
-                </td>
-                <td>
-                    @item.CanWritePackedSubchannelInTAO
-                </td>
-                <td>
-                    @item.CanWriteRWSubchannelInSAO
-                </td>
-                <td>
-                    @item.CanWriteRWSubchannelInTAO
-                </td>
-                <td>
-                    @item.CanWriteRaw
-                </td>
-                <td>
-                    @item.CanWriteRawMultiSession
-                </td>
-                <td>
-                    @item.CanWriteRawSubchannelInTAO
-                </td>
-                <td>
-                    @item.ChangerIsSideChangeCapable
-                </td>
-                <td>
-                    @item.ChangerSlots
-                </td>
-                <td>
-                    @item.ChangerSupportsDiscPresent
-                </td>
-                <td>
-                    @item.CPRMVersion
-                </td>
-                <td>
-                    @item.CSSVersion
-                </td>
-                <td>
-                    @item.DBML
-                </td>
-                <td>
-                    @item.DVDMultiRead
-                </td>
-                <td>
-                    @item.EmbeddedChanger
-                </td>
-                <td>
-                    @item.ErrorRecoveryPage
-                </td>
-                <td>
-                    @item.FirmwareDate
-                </td>
-                <td>
-                    @item.LoadingMechanismType
-                </td>
-                <td>
-                    @item.Locked
-                </td>
-                <td>
-                    @item.LogicalBlockSize
-                </td>
-                <td>
-                    @item.MultiRead
-                </td>
-                <td>
-                    @item.PhysicalInterfaceStandardNumber
-                </td>
-                <td>
-                    @item.PreventJumper
-                </td>
-                <td>
-                    @item.SupportsAACS
-                </td>
-                <td>
-                    @item.SupportsBusEncryption
-                </td>
-                <td>
-                    @item.SupportsC2
-                </td>
-                <td>
-                    @item.SupportsCPRM
-                </td>
-                <td>
-                    @item.SupportsCSS
-                </td>
-                <td>
-                    @item.SupportsDAP
-                </td>
-                <td>
-                    @item.SupportsDeviceBusyEvent
-                </td>
-                <td>
-                    @item.SupportsHybridDiscs
-                </td>
-                <td>
-                    @item.SupportsModePage1Ch
-                </td>
-                <td>
-                    @item.SupportsOSSC
-                </td>
-                <td>
-                    @item.SupportsPWP
-                </td>
-                <td>
-                    @item.SupportsSWPP
-                </td>
-                <td>
-                    @item.SupportsSecurDisc
-                </td>
-                <td>
-                    @item.SupportsSeparateVolume
-                </td>
-                <td>
-                    @item.SupportsVCPS
-                </td>
-                <td>
-                    @item.SupportsWriteInhibitDCB
-                </td>
-                <td>
-                    @item.SupportsWriteProtectPAC
-                </td>
-                <td>
-                    @item.VolumeLevels
-                </td>
-                <td>
-                    <a href="/admin/mmc/features/@item.Id" class="btn btn-primary btn-sm">Details</a>
-                </td>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.AACSVersion))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.AGIDs))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.BindingNonceBlocks))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.BlocksPerReadableUnit))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.BufferUnderrunFreeInDVD))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.BufferUnderrunFreeInSAO))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.BufferUnderrunFreeInTAO))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanAudioScan))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanEject))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanEraseSector))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanExpandBDRESpareArea))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanFormat))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanFormatBDREWithoutSpare))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanFormatCert))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanFormatFRF))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanFormatQCert))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanFormatRRM))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanGenerateBindingNonce))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanLoad))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanMuteSeparateChannels))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanOverwriteSAOTrack))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanOverwriteTAOTrack))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanPlayCDAudio))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanPseudoOverwriteBDR))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadAllDualR))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadAllDualRW))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadBD))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadBDR))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadBDRE1))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadBDRE2))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadBDROM))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadBluBCA))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadCD))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadCDMRW))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadCPRM_MKB))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDDCD))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDVD))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDVDPlusMRW))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDVDPlusR))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDVDPlusRDL))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDVDPlusRW))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDVDPlusRWDL))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDriveAACSCertificate))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadHDDVD))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadHDDVDR))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadHDDVDRAM))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadLeadInCDText))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadOldBDR))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadOldBDRE))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadOldBDROM))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadSpareAreaInformation))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReportDriveSerial))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReportMediaSerial))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanTestWriteDDCDR))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanTestWriteDVD))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanTestWriteInSAO))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanTestWriteInTAO))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanUpgradeFirmware))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteBD))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteBDR))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteBDRE1))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteBDRE2))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteBusEncryptedBlocks))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteCDMRW))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteCDRW))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteCDRWCAV))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteCDSAO))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteCDTAO))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteCSSManagedDVD))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDDCDR))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDDCDRW))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDPlusMRW))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDPlusR))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDPlusRDL))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDPlusRW))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDPlusRWDL))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDR))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDRDL))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDRW))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteHDDVDR))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteHDDVDRAM))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteOldBDR))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteOldBDRE))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWritePackedSubchannelInTAO))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteRWSubchannelInSAO))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteRWSubchannelInTAO))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteRaw))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteRawMultiSession))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteRawSubchannelInTAO))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.ChangerIsSideChangeCapable))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.ChangerSlots))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.ChangerSupportsDiscPresent))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CPRMVersion))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CSSVersion))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.DBML))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.DVDMultiRead))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.EmbeddedChanger))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.ErrorRecoveryPage))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.FirmwareDate))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.LoadingMechanismType))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.Locked))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.LogicalBlockSize))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.MultiRead))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.PhysicalInterfaceStandardNumber))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.PreventJumper))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsAACS))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsBusEncryption))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsC2))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsCPRM))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsCSS))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsDAP))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsDeviceBusyEvent))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsHybridDiscs))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsModePage1Ch))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsOSSC))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsPWP))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsSWPP))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsSecurDisc))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsSeparateVolume))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsVCPS))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsWriteInhibitDCB))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsWriteProtectPAC))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.VolumeLevels))
+                </th>
+                <th class="fw-bold bg-secondary text-light">
+                    Actions
+                </th>
             </tr>
-        }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            @foreach(MmcFeatures item in _items)
+            {
+                <tr>
+                    <td>
+                        @item.AACSVersion
+                    </td>
+                    <td>
+                        @item.AGIDs
+                    </td>
+                    <td>
+                        @item.BindingNonceBlocks
+                    </td>
+                    <td>
+                        @item.BlocksPerReadableUnit
+                    </td>
+                    <td>
+                        @item.BufferUnderrunFreeInDVD
+                    </td>
+                    <td>
+                        @item.BufferUnderrunFreeInSAO
+                    </td>
+                    <td>
+                        @item.BufferUnderrunFreeInTAO
+                    </td>
+                    <td>
+                        @item.CanAudioScan
+                    </td>
+                    <td>
+                        @item.CanEject
+                    </td>
+                    <td>
+                        @item.CanEraseSector
+                    </td>
+                    <td>
+                        @item.CanExpandBDRESpareArea
+                    </td>
+                    <td>
+                        @item.CanFormat
+                    </td>
+                    <td>
+                        @item.CanFormatBDREWithoutSpare
+                    </td>
+                    <td>
+                        @item.CanFormatCert
+                    </td>
+                    <td>
+                        @item.CanFormatFRF
+                    </td>
+                    <td>
+                        @item.CanFormatQCert
+                    </td>
+                    <td>
+                        @item.CanFormatRRM
+                    </td>
+                    <td>
+                        @item.CanGenerateBindingNonce
+                    </td>
+                    <td>
+                        @item.CanLoad
+                    </td>
+                    <td>
+                        @item.CanMuteSeparateChannels
+                    </td>
+                    <td>
+                        @item.CanOverwriteSAOTrack
+                    </td>
+                    <td>
+                        @item.CanOverwriteTAOTrack
+                    </td>
+                    <td>
+                        @item.CanPlayCDAudio
+                    </td>
+                    <td>
+                        @item.CanPseudoOverwriteBDR
+                    </td>
+                    <td>
+                        @item.CanReadAllDualR
+                    </td>
+                    <td>
+                        @item.CanReadAllDualRW
+                    </td>
+                    <td>
+                        @item.CanReadBD
+                    </td>
+                    <td>
+                        @item.CanReadBDR
+                    </td>
+                    <td>
+                        @item.CanReadBDRE1
+                    </td>
+                    <td>
+                        @item.CanReadBDRE2
+                    </td>
+                    <td>
+                        @item.CanReadBDROM
+                    </td>
+                    <td>
+                        @item.CanReadBluBCA
+                    </td>
+                    <td>
+                        @item.CanReadCD
+                    </td>
+                    <td>
+                        @item.CanReadCDMRW
+                    </td>
+                    <td>
+                        @item.CanReadCPRM_MKB
+                    </td>
+                    <td>
+                        @item.CanReadDDCD
+                    </td>
+                    <td>
+                        @item.CanReadDVD
+                    </td>
+                    <td>
+                        @item.CanReadDVDPlusMRW
+                    </td>
+                    <td>
+                        @item.CanReadDVDPlusR
+                    </td>
+                    <td>
+                        @item.CanReadDVDPlusRDL
+                    </td>
+                    <td>
+                        @item.CanReadDVDPlusRW
+                    </td>
+                    <td>
+                        @item.CanReadDVDPlusRWDL
+                    </td>
+                    <td>
+                        @item.CanReadDriveAACSCertificate
+                    </td>
+                    <td>
+                        @item.CanReadHDDVD
+                    </td>
+                    <td>
+                        @item.CanReadHDDVDR
+                    </td>
+                    <td>
+                        @item.CanReadHDDVDRAM
+                    </td>
+                    <td>
+                        @item.CanReadLeadInCDText
+                    </td>
+                    <td>
+                        @item.CanReadOldBDR
+                    </td>
+                    <td>
+                        @item.CanReadOldBDRE
+                    </td>
+                    <td>
+                        @item.CanReadOldBDROM
+                    </td>
+                    <td>
+                        @item.CanReadSpareAreaInformation
+                    </td>
+                    <td>
+                        @item.CanReportDriveSerial
+                    </td>
+                    <td>
+                        @item.CanReportMediaSerial
+                    </td>
+                    <td>
+                        @item.CanTestWriteDDCDR
+                    </td>
+                    <td>
+                        @item.CanTestWriteDVD
+                    </td>
+                    <td>
+                        @item.CanTestWriteInSAO
+                    </td>
+                    <td>
+                        @item.CanTestWriteInTAO
+                    </td>
+                    <td>
+                        @item.CanUpgradeFirmware
+                    </td>
+                    <td>
+                        @item.CanWriteBD
+                    </td>
+                    <td>
+                        @item.CanWriteBDR
+                    </td>
+                    <td>
+                        @item.CanWriteBDRE1
+                    </td>
+                    <td>
+                        @item.CanWriteBDRE2
+                    </td>
+                    <td>
+                        @item.CanWriteBusEncryptedBlocks
+                    </td>
+                    <td>
+                        @item.CanWriteCDMRW
+                    </td>
+                    <td>
+                        @item.CanWriteCDRW
+                    </td>
+                    <td>
+                        @item.CanWriteCDRWCAV
+                    </td>
+                    <td>
+                        @item.CanWriteCDSAO
+                    </td>
+                    <td>
+                        @item.CanWriteCDTAO
+                    </td>
+                    <td>
+                        @item.CanWriteCSSManagedDVD
+                    </td>
+                    <td>
+                        @item.CanWriteDDCDR
+                    </td>
+                    <td>
+                        @item.CanWriteDDCDRW
+                    </td>
+                    <td>
+                        @item.CanWriteDVDPlusMRW
+                    </td>
+                    <td>
+                        @item.CanWriteDVDPlusR
+                    </td>
+                    <td>
+                        @item.CanWriteDVDPlusRDL
+                    </td>
+                    <td>
+                        @item.CanWriteDVDPlusRW
+                    </td>
+                    <td>
+                        @item.CanWriteDVDPlusRWDL
+                    </td>
+                    <td>
+                        @item.CanWriteDVDR
+                    </td>
+                    <td>
+                        @item.CanWriteDVDRDL
+                    </td>
+                    <td>
+                        @item.CanWriteDVDRW
+                    </td>
+                    <td>
+                        @item.CanWriteHDDVDR
+                    </td>
+                    <td>
+                        @item.CanWriteHDDVDRAM
+                    </td>
+                    <td>
+                        @item.CanWriteOldBDR
+                    </td>
+                    <td>
+                        @item.CanWriteOldBDRE
+                    </td>
+                    <td>
+                        @item.CanWritePackedSubchannelInTAO
+                    </td>
+                    <td>
+                        @item.CanWriteRWSubchannelInSAO
+                    </td>
+                    <td>
+                        @item.CanWriteRWSubchannelInTAO
+                    </td>
+                    <td>
+                        @item.CanWriteRaw
+                    </td>
+                    <td>
+                        @item.CanWriteRawMultiSession
+                    </td>
+                    <td>
+                        @item.CanWriteRawSubchannelInTAO
+                    </td>
+                    <td>
+                        @item.ChangerIsSideChangeCapable
+                    </td>
+                    <td>
+                        @item.ChangerSlots
+                    </td>
+                    <td>
+                        @item.ChangerSupportsDiscPresent
+                    </td>
+                    <td>
+                        @item.CPRMVersion
+                    </td>
+                    <td>
+                        @item.CSSVersion
+                    </td>
+                    <td>
+                        @item.DBML
+                    </td>
+                    <td>
+                        @item.DVDMultiRead
+                    </td>
+                    <td>
+                        @item.EmbeddedChanger
+                    </td>
+                    <td>
+                        @item.ErrorRecoveryPage
+                    </td>
+                    <td>
+                        @item.FirmwareDate
+                    </td>
+                    <td>
+                        @item.LoadingMechanismType
+                    </td>
+                    <td>
+                        @item.Locked
+                    </td>
+                    <td>
+                        @item.LogicalBlockSize
+                    </td>
+                    <td>
+                        @item.MultiRead
+                    </td>
+                    <td>
+                        @item.PhysicalInterfaceStandardNumber
+                    </td>
+                    <td>
+                        @item.PreventJumper
+                    </td>
+                    <td>
+                        @item.SupportsAACS
+                    </td>
+                    <td>
+                        @item.SupportsBusEncryption
+                    </td>
+                    <td>
+                        @item.SupportsC2
+                    </td>
+                    <td>
+                        @item.SupportsCPRM
+                    </td>
+                    <td>
+                        @item.SupportsCSS
+                    </td>
+                    <td>
+                        @item.SupportsDAP
+                    </td>
+                    <td>
+                        @item.SupportsDeviceBusyEvent
+                    </td>
+                    <td>
+                        @item.SupportsHybridDiscs
+                    </td>
+                    <td>
+                        @item.SupportsModePage1Ch
+                    </td>
+                    <td>
+                        @item.SupportsOSSC
+                    </td>
+                    <td>
+                        @item.SupportsPWP
+                    </td>
+                    <td>
+                        @item.SupportsSWPP
+                    </td>
+                    <td>
+                        @item.SupportsSecurDisc
+                    </td>
+                    <td>
+                        @item.SupportsSeparateVolume
+                    </td>
+                    <td>
+                        @item.SupportsVCPS
+                    </td>
+                    <td>
+                        @item.SupportsWriteInhibitDCB
+                    </td>
+                    <td>
+                        @item.SupportsWriteProtectPAC
+                    </td>
+                    <td>
+                        @item.VolumeLevels
+                    </td>
+                    <td>
+                        <a href="/admin/mmc/features/@item.Id" class="btn btn-primary btn-sm">Details</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
 </section>
