@@ -40,12 +40,12 @@ public partial class View
 
     private async Task ConfirmDelete()
     {
-        await DeleteVersionAsync(_deleteId);
+        await DeleteAsync(_deleteId);
         await HideDeleteModal();
         await RefreshItemsAsync();
     }
 
-    private async Task DeleteVersionAsync(int id)
+    private async Task DeleteAsync(int id)
     {
         await using DbContext        ctx    = await DbContextFactory.CreateDbContextAsync();
         CommonTypes.Metadata.Pcmcia? pcmcia = await ctx.Pcmcia.FindAsync(id);
