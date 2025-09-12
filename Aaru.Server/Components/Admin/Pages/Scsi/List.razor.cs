@@ -126,12 +126,12 @@ public partial class List
 
     private async Task DeleteAsync(int id)
     {
-        await using DbContext     ctx = await DbContextFactory.CreateDbContextAsync();
-        CommonTypes.Metadata.Ssc? ssc = await ctx.Ssc.FindAsync(id);
+        await using DbContext      ctx  = await DbContextFactory.CreateDbContextAsync();
+        CommonTypes.Metadata.Scsi? scsi = await ctx.Scsi.FindAsync(id);
 
-        if(ssc is not null)
+        if(scsi is not null)
         {
-            ctx.Ssc.Remove(ssc);
+            ctx.Scsi.Remove(scsi);
             await ctx.SaveChangesAsync();
         }
     }
