@@ -1,0 +1,29 @@
+@page "/admin/scsi/cdrom/{id:int}"
+@using Aaru.Decoders.SCSI
+@attribute [Authorize]
+@layout AdminLayout
+@rendermode InteractiveServer
+
+@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
+
+<PageTitle>SCSI CD-ROM Capabilities</PageTitle>
+
+@if(!_initialized)
+{
+    <div class="stats-section">
+        <h1 style="color: red; align-content: center; padding: 2rem">Loading...</h1>
+    </div>
+
+    return;
+}
+
+<section class="stats-section">
+    <div>
+        <h4>SCSI CD-ROM Capabilities</h4>
+        <hr />
+        @((MarkupString)Modes.PrettifyModePage_2A(_model?.ModeSense2AData)?.Replace("\n", "<br />"))
+    </div>
+    <div>
+        <a href="/admin/scsi/cdrom" class="btn btn-secondary">Back to List</a>
+    </div>
+</section>
