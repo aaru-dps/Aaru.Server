@@ -1,0 +1,40 @@
+@page "/admin/tested-media/data/{Id:int}/{data}"
+@attribute [Authorize]
+@layout AdminLayout
+@rendermode InteractiveServer
+
+@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
+
+<PageTitle>View data</PageTitle>
+
+@if(!_initialized)
+{
+    <div class="stats-section">
+        <h1 style="color: red; align-content: center; padding: 2rem">Loading...</h1>
+    </div>
+
+    return;
+}
+
+@if(_notFound)
+{
+    <div class="stats-section">
+        <h1 style="color: red; align-content: center; padding: 2rem">Data not found</h1>
+    </div>
+
+    return;
+}
+
+<div class="stats-section">
+    <h2>Showing data from @_model.DataName for tested media id @_model.TestedMediaId</h2>
+
+    <h4>Hex dump:</h4>
+    <div>
+        <code style="white-space: pre">@(new MarkupString(_model.RawDataAsHex))</code>
+    </div>
+
+    <h4>Decoded information:</h4>
+    <div>
+        @(new MarkupString(_model.Decoded))
+    </div>
+</div>

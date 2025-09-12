@@ -9,11 +9,11 @@
 
 @if(!_initialized)
 {
-    <div class="stats-section">
-        <h1 style="color: red; align-content: center; padding: 2rem">Loading...</h1>
-    </div>
+<div class="stats-section">
+    <h1 style="color: red; align-content: center; padding: 2rem">Loading...</h1>
+</div>
 
-    return;
+return;
 }
 
 <section class="stats-section">
@@ -33,11 +33,11 @@
             <dd class="col-sm-6">
                 @if(_model?.IdentifyData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=IdentifyData">@_model.IdentifyData.Length bytes</a>
+                <a href="/admin/tested-media/data/@_model.Id/IdentifyData">@_model.IdentifyData.Length bytes</a>
                 }
                 else
                 {
-                    @("<null>")
+                @("<null>")
                 }
             </dd>
             <dt class="col-sm-6">
@@ -414,7 +414,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ModeSense6Data != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ModeSense6Data">@_model.ModeSense6Data.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ModeSense6Data">@_model.ModeSense6Data.Length bytes</a>
                 }
                 else
                 {
@@ -427,7 +427,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ModeSense10Data != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ModeSense10Data">@_model.ModeSense10Data.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ModeSense10Data">@_model.ModeSense10Data.Length bytes</a>
                 }
                 else
                 {
@@ -604,7 +604,7 @@
             <dd class="col-sm-6">
                 @if(_model?.IntersessionLeadInData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=IntersessionLeadInData">@_model.IntersessionLeadInData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/IntersessionLeadInData">@_model.IntersessionLeadInData.Length bytes</a>
                 }
                 else
                 {
@@ -617,7 +617,7 @@
             <dd class="col-sm-6">
                 @if(_model?.IntersessionLeadOutData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=IntersessionLeadOutData">@_model.IntersessionLeadOutData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/IntersessionLeadOutData">@_model.IntersessionLeadOutData.Length bytes</a>
                 }
                 else
                 {
@@ -630,7 +630,7 @@
             <dd class="col-sm-6">
                 @if(_model?.Read6Data != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=Read6Data">@_model.Read6Data.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/Read6Data">@_model.Read6Data.Length bytes</a>
                 }
                 else
                 {
@@ -643,7 +643,7 @@
             <dd class="col-sm-6">
                 @if(_model?.Read10Data != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=Read10Data">@_model.Read10Data.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/Read10Data">@_model.Read10Data.Length bytes</a>
                 }
                 else
                 {
@@ -656,7 +656,7 @@
             <dd class="col-sm-6">
                 @if(_model?.Read12Data != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=Read12Data">@_model.Read12Data.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/Read12Data">@_model.Read12Data.Length bytes</a>
                 }
                 else
                 {
@@ -669,7 +669,7 @@
             <dd class="col-sm-6">
                 @if(_model?.Read16Data != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=Read16Data">@_model.Read16Data.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/Read16Data">@_model.Read16Data.Length bytes</a>
                 }
                 else
                 {
@@ -682,7 +682,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadLong10Data != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadLong10Data">@_model.ReadLong10Data.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadLong10Data">@_model.ReadLong10Data.Length bytes</a>
                 }
                 else
                 {
@@ -695,7 +695,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadLong16Data != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadLong16Data">@_model.ReadLong16Data.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadLong16Data">@_model.ReadLong16Data.Length bytes</a>
                 }
                 else
                 {
@@ -708,7 +708,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadSectorsData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadSectorsData">@_model.ReadSectorsData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadSectorsData">@_model.ReadSectorsData.Length bytes</a>
                 }
                 else
                 {
@@ -721,7 +721,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadSectorsRetryData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadSectorsRetryData">@_model.ReadSectorsRetryData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadSectorsRetryData">@_model.ReadSectorsRetryData.Length bytes</a>
                 }
                 else
                 {
@@ -734,7 +734,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadDmaData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadDmaData">@_model.ReadDmaData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadDmaData">@_model.ReadDmaData.Length bytes</a>
                 }
                 else
                 {
@@ -747,7 +747,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadDmaRetryData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadDmaRetryData">@_model.ReadDmaRetryData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadDmaRetryData">@_model.ReadDmaRetryData.Length bytes</a>
                 }
                 else
                 {
@@ -760,7 +760,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadLbaData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadLbaData">@_model.ReadLbaData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadLbaData">@_model.ReadLbaData.Length bytes</a>
                 }
                 else
                 {
@@ -773,7 +773,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadRetryLbaData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadRetryLbaData">@_model.ReadRetryLbaData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadRetryLbaData">@_model.ReadRetryLbaData.Length bytes</a>
                 }
                 else
                 {
@@ -786,7 +786,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadDmaLbaData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadDmaLbaData">@_model.ReadDmaLbaData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadDmaLbaData">@_model.ReadDmaLbaData.Length bytes</a>
                 }
                 else
                 {
@@ -799,7 +799,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadDmaRetryLbaData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadDmaRetryLbaData">@_model.ReadDmaRetryLbaData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadDmaRetryLbaData">@_model.ReadDmaRetryLbaData.Length bytes</a>
                 }
                 else
                 {
@@ -812,7 +812,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadLba48Data != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadLba48Data">@_model.ReadLba48Data.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadLba48Data">@_model.ReadLba48Data.Length bytes</a>
                 }
                 else
                 {
@@ -825,7 +825,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadDmaLba48Data != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadDmaLba48Data">@_model.ReadDmaLba48Data.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadDmaLba48Data">@_model.ReadDmaLba48Data.Length bytes</a>
                 }
                 else
                 {
@@ -838,7 +838,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadLongData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadLongData">@_model.ReadLongData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadLongData">@_model.ReadLongData.Length bytes</a>
                 }
                 else
                 {
@@ -851,7 +851,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadLongRetryData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadLongRetryData">@_model.ReadLongRetryData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadLongRetryData">@_model.ReadLongRetryData.Length bytes</a>
                 }
                 else
                 {
@@ -864,7 +864,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadLongLbaData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadLongLbaData">@_model.ReadLongLbaData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadLongLbaData">@_model.ReadLongLbaData.Length bytes</a>
                 }
                 else
                 {
@@ -877,7 +877,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadLongRetryLbaData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadLongRetryLbaData">@_model.ReadLongRetryLbaData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadLongRetryLbaData">@_model.ReadLongRetryLbaData.Length bytes</a>
                 }
                 else
                 {
@@ -890,7 +890,7 @@
             <dd class="col-sm-6">
                 @if(_model?.TocData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=TocData">@_model.TocData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/TocData">@_model.TocData.Length bytes</a>
                 }
                 else
                 {
@@ -903,7 +903,7 @@
             <dd class="col-sm-6">
                 @if(_model?.FullTocData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=FullTocData">@_model.FullTocData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/FullTocData">@_model.FullTocData.Length bytes</a>
                 }
                 else
                 {
@@ -916,7 +916,7 @@
             <dd class="col-sm-6">
                 @if(_model?.AtipData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=AtipData">@_model.AtipData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/AtipData">@_model.AtipData.Length bytes</a>
                 }
                 else
                 {
@@ -929,7 +929,7 @@
             <dd class="col-sm-6">
                 @if(_model?.PmaData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=PmaData">@_model.PmaData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/PmaData">@_model.PmaData.Length bytes</a>
                 }
                 else
                 {
@@ -942,7 +942,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadCdData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadCdData">@_model.ReadCdData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadCdData">@_model.ReadCdData.Length bytes</a>
                 }
                 else
                 {
@@ -955,7 +955,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadCdMsfData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadCdMsfData">@_model.ReadCdMsfData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadCdMsfData">@_model.ReadCdMsfData.Length bytes</a>
                 }
                 else
                 {
@@ -968,7 +968,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadCdFullData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadCdFullData">@_model.ReadCdFullData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadCdFullData">@_model.ReadCdFullData.Length bytes</a>
                 }
                 else
                 {
@@ -981,7 +981,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadCdMsfFullData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadCdMsfFullData">@_model.ReadCdMsfFullData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadCdMsfFullData">@_model.ReadCdMsfFullData.Length bytes</a>
                 }
                 else
                 {
@@ -994,7 +994,7 @@
             <dd class="col-sm-6">
                 @if(_model?.Track1PregapData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=Track1PregapData">@_model.Track1PregapData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/Track1PregapData">@_model.Track1PregapData.Length bytes</a>
                 }
                 else
                 {
@@ -1007,7 +1007,7 @@
             <dd class="col-sm-6">
                 @if(_model?.LeadInData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=LeadInData">@_model.LeadInData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/LeadInData">@_model.LeadInData.Length bytes</a>
                 }
                 else
                 {
@@ -1020,7 +1020,7 @@
             <dd class="col-sm-6">
                 @if(_model?.LeadOutData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=LeadOutData">@_model.LeadOutData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/LeadOutData">@_model.LeadOutData.Length bytes</a>
                 }
                 else
                 {
@@ -1033,7 +1033,7 @@
             <dd class="col-sm-6">
                 @if(_model?.C2PointersData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=C2PointersData">@_model.C2PointersData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/C2PointersData">@_model.C2PointersData.Length bytes</a>
                 }
                 else
                 {
@@ -1046,7 +1046,7 @@
             <dd class="col-sm-6">
                 @if(_model?.PQSubchannelData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=PQSubchannelData">@_model.PQSubchannelData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/PQSubchannelData">@_model.PQSubchannelData.Length bytes</a>
                 }
                 else
                 {
@@ -1059,7 +1059,7 @@
             <dd class="col-sm-6">
                 @if(_model?.RWSubchannelData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=RWSubchannelData">@_model.RWSubchannelData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/RWSubchannelData">@_model.RWSubchannelData.Length bytes</a>
                 }
                 else
                 {
@@ -1072,7 +1072,7 @@
             <dd class="col-sm-6">
                 @if(_model?.CorrectedSubchannelData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=CorrectedSubchannelData">@_model.CorrectedSubchannelData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/CorrectedSubchannelData">@_model.CorrectedSubchannelData.Length bytes</a>
                 }
                 else
                 {
@@ -1085,7 +1085,7 @@
             <dd class="col-sm-6">
                 @if(_model?.PQSubchannelWithC2Data != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=PQSubchannelWithC2Data">@_model.PQSubchannelWithC2Data.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/PQSubchannelWithC2Data">@_model.PQSubchannelWithC2Data.Length bytes</a>
                 }
                 else
                 {
@@ -1098,7 +1098,7 @@
             <dd class="col-sm-6">
                 @if(_model?.RWSubchannelWithC2Data != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=RWSubchannelWithC2Data">@_model.RWSubchannelWithC2Data.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/RWSubchannelWithC2Data">@_model.RWSubchannelWithC2Data.Length bytes</a>
                 }
                 else
                 {
@@ -1111,7 +1111,7 @@
             <dd class="col-sm-6">
                 @if(_model?.CorrectedSubchannelWithC2Data != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=CorrectedSubchannelWithC2Data">@_model.CorrectedSubchannelWithC2Data.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/CorrectedSubchannelWithC2Data">@_model.CorrectedSubchannelWithC2Data.Length bytes</a>
                 }
                 else
                 {
@@ -1124,7 +1124,7 @@
             <dd class="col-sm-6">
                 @if(_model?.PfiData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=PfiData">@_model.PfiData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/PfiData">@_model.PfiData.Length bytes</a>
                 }
                 else
                 {
@@ -1137,7 +1137,7 @@
             <dd class="col-sm-6">
                 @if(_model?.DmiData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=DmiData">@_model.DmiData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/DmiData">@_model.DmiData.Length bytes</a>
                 }
                 else
                 {
@@ -1150,7 +1150,7 @@
             <dd class="col-sm-6">
                 @if(_model?.CmiData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=CmiData">@_model.CmiData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/CmiData">@_model.CmiData.Length bytes</a>
                 }
                 else
                 {
@@ -1163,7 +1163,7 @@
             <dd class="col-sm-6">
                 @if(_model?.DvdBcaData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=DvdBcaData">@_model.DvdBcaData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/DvdBcaData">@_model.DvdBcaData.Length bytes</a>
                 }
                 else
                 {
@@ -1176,7 +1176,7 @@
             <dd class="col-sm-6">
                 @if(_model?.DvdAacsData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=DvdAacsData">@_model.DvdAacsData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/DvdAacsData">@_model.DvdAacsData.Length bytes</a>
                 }
                 else
                 {
@@ -1189,7 +1189,7 @@
             <dd class="col-sm-6">
                 @if(_model?.DvdDdsData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=DvdDdsData">@_model.DvdDdsData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/DvdDdsData">@_model.DvdDdsData.Length bytes</a>
                 }
                 else
                 {
@@ -1202,7 +1202,7 @@
             <dd class="col-sm-6">
                 @if(_model?.DvdSaiData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=DvdSaiData">@_model.DvdSaiData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/DvdSaiData">@_model.DvdSaiData.Length bytes</a>
                 }
                 else
                 {
@@ -1215,7 +1215,7 @@
             <dd class="col-sm-6">
                 @if(_model?.PriData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=PriData">@_model.PriData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/PriData">@_model.PriData.Length bytes</a>
                 }
                 else
                 {
@@ -1228,7 +1228,7 @@
             <dd class="col-sm-6">
                 @if(_model?.EmbossedPfiData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=EmbossedPfiData">@_model.EmbossedPfiData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/EmbossedPfiData">@_model.EmbossedPfiData.Length bytes</a>
                 }
                 else
                 {
@@ -1241,7 +1241,7 @@
             <dd class="col-sm-6">
                 @if(_model?.AdipData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=AdipData">@_model.AdipData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/AdipData">@_model.AdipData.Length bytes</a>
                 }
                 else
                 {
@@ -1254,7 +1254,7 @@
             <dd class="col-sm-6">
                 @if(_model?.DcbData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=DcbData">@_model.DcbData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/DcbData">@_model.DcbData.Length bytes</a>
                 }
                 else
                 {
@@ -1267,7 +1267,7 @@
             <dd class="col-sm-6">
                 @if(_model?.HdCmiData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=HdCmiData">@_model.HdCmiData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/HdCmiData">@_model.HdCmiData.Length bytes</a>
                 }
                 else
                 {
@@ -1280,7 +1280,7 @@
             <dd class="col-sm-6">
                 @if(_model?.DvdLayerData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=DvdLayerData">@_model.DvdLayerData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/DvdLayerData">@_model.DvdLayerData.Length bytes</a>
                 }
                 else
                 {
@@ -1293,7 +1293,7 @@
             <dd class="col-sm-6">
                 @if(_model?.BluBcaData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=BluBcaData">@_model.BluBcaData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/BluBcaData">@_model.BluBcaData.Length bytes</a>
                 }
                 else
                 {
@@ -1306,7 +1306,7 @@
             <dd class="col-sm-6">
                 @if(_model?.BluDdsData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=BluDdsData">@_model.BluDdsData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/BluDdsData">@_model.BluDdsData.Length bytes</a>
                 }
                 else
                 {
@@ -1319,7 +1319,7 @@
             <dd class="col-sm-6">
                 @if(_model?.BluSaiData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=BluSaiData">@_model.BluSaiData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/BluSaiData">@_model.BluSaiData.Length bytes</a>
                 }
                 else
                 {
@@ -1332,7 +1332,7 @@
             <dd class="col-sm-6">
                 @if(_model?.BluDiData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=BluDiData">@_model.BluDiData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/BluDiData">@_model.BluDiData.Length bytes</a>
                 }
                 else
                 {
@@ -1345,7 +1345,7 @@
             <dd class="col-sm-6">
                 @if(_model?.PlextorReadCddaData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=PlextorReadCddaData">@_model.PlextorReadCddaData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/PlextorReadCddaData">@_model.PlextorReadCddaData.Length bytes</a>
                 }
                 else
                 {
@@ -1358,7 +1358,7 @@
             <dd class="col-sm-6">
                 @if(_model?.PlextorReadCddaData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=PlextorReadCddaData">@_model.PlextorReadCddaData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/PlextorReadCddaData">@_model.PlextorReadCddaData.Length bytes</a>
                 }
                 else
                 {
@@ -1371,7 +1371,7 @@
             <dd class="col-sm-6">
                 @if(_model?.PioneerReadCddaData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=PioneerReadCddaData">@_model.PioneerReadCddaData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/PioneerReadCddaData">@_model.PioneerReadCddaData.Length bytes</a>
                 }
                 else
                 {
@@ -1384,7 +1384,7 @@
             <dd class="col-sm-6">
                 @if(_model?.PioneerReadCddaMsfData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=PioneerReadCddaMsfData">@_model.PioneerReadCddaMsfData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/PioneerReadCddaMsfData">@_model.PioneerReadCddaMsfData.Length bytes</a>
                 }
                 else
                 {
@@ -1397,7 +1397,7 @@
             <dd class="col-sm-6">
                 @if(_model?.NecReadCddaData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=NecReadCddaData">@_model.NecReadCddaData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/NecReadCddaData">@_model.NecReadCddaData.Length bytes</a>
                 }
                 else
                 {
@@ -1410,7 +1410,7 @@
             <dd class="col-sm-6">
                 @if(_model?.PlextorReadRawDVDData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=PlextorReadRawDVDData">@_model.PlextorReadRawDVDData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/PlextorReadRawDVDData">@_model.PlextorReadRawDVDData.Length bytes</a>
                 }
                 else
                 {
@@ -1423,7 +1423,7 @@
             <dd class="col-sm-6">
                 @if(_model?.HLDTSTReadRawDVDData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=HLDTSTReadRawDVDData">@_model.HLDTSTReadRawDVDData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/HLDTSTReadRawDVDData">@_model.HLDTSTReadRawDVDData.Length bytes</a>
                 }
                 else
                 {
@@ -1442,7 +1442,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadCdScrambledData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadCdScrambledData">@_model.ReadCdScrambledData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadCdScrambledData">@_model.ReadCdScrambledData.Length bytes</a>
                 }
                 else
                 {
@@ -1461,7 +1461,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadF1_06Data != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadF1_06Data">@_model.ReadF1_06Data.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadF1_06Data">@_model.ReadF1_06Data.Length bytes</a>
                 }
                 else
                 {
@@ -1480,7 +1480,7 @@
             <dd class="col-sm-6">
                 @if(_model?.ReadF1_06LeadOutData != null)
                 {
-                    <a href="/admin/tested-media/data/@_model.Id?data=ReadF1_06LeadOutData">@_model.ReadF1_06LeadOutData.Length bytes</a>
+                    <a href="/admin/tested-media/data/@_model.Id/ReadF1_06LeadOutData">@_model.ReadF1_06LeadOutData.Length bytes</a>
                 }
                 else
                 {
@@ -1490,6 +1490,6 @@
         </dl>
     </div>
     <div>
-        <a href="/admin/usb/devices" class="btn btn-secondary">Back to List</a>
+        <a href="/admin/tested-media" class="btn btn-secondary">Back to List</a>
     </div>
 </section>
