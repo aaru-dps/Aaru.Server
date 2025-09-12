@@ -1,0 +1,59 @@
+@page "/admin/usb/devices/{id:int}"
+@attribute [Authorize]
+@layout AdminLayout
+@rendermode InteractiveServer
+
+@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
+
+<PageTitle>USB device</PageTitle>
+
+@if(!_initialized)
+{
+    <div class="stats-section">
+        <h1 style="color: red; align-content: center; padding: 2rem">Loading...</h1>
+    </div>
+
+    return;
+}
+
+<section class="stats-section">
+    <div>
+        <h4>USB device</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @DisplayNameHelper.GetDisplayName(typeof(Usb), nameof(Usb.Manufacturer))
+            </dt>
+            <dd class="col-sm-10">
+                @_model?.Manufacturer
+            </dd>
+            <dt class="col-sm-2">
+                @DisplayNameHelper.GetDisplayName(typeof(Usb), nameof(Usb.Product))
+            </dt>
+            <dd class="col-sm-10">
+                @_model?.Product
+            </dd>
+            <dt class="col-sm-2">
+                @DisplayNameHelper.GetDisplayName(typeof(Usb), nameof(Usb.VendorID))
+            </dt>
+            <dd class="col-sm-10">
+                @_model?.VendorID
+            </dd>
+            <dt class="col-sm-2">
+                @DisplayNameHelper.GetDisplayName(typeof(Usb), nameof(Usb.ProductID))
+            </dt>
+            <dd class="col-sm-10">
+                @_model?.ProductID
+            </dd>
+            <dt class="col-sm-2">
+                @DisplayNameHelper.GetDisplayName(typeof(Usb), nameof(Usb.RemovableMedia))
+            </dt>
+            <dd class="col-sm-10">
+                @_model?.RemovableMedia
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a href="/admin/usb/devices" class="btn btn-secondary">Back to List</a>
+    </div>
+</section>
