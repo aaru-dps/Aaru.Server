@@ -1,0 +1,80 @@
+@page "/admin/mmc-sd/{id:int}"
+@using Aaru.Decoders.SecureDigital
+@attribute [Authorize]
+@layout AdminLayout
+@rendermode InteractiveServer
+
+@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
+
+@if(!_initialized)
+{
+    <div class="stats-section">
+        <h1 style="color: red; align-content: center; padding: 2rem">Loading...</h1>
+    </div>
+
+    return;
+}
+
+<section class="stats-section">
+    <h4>MultiMediaCard / SecureDigital registers</h4>
+    <hr />
+    @if(_model == null)
+    {
+        <p class="text-danger">Not found.</p>
+    }
+    else
+    {
+        <dl class="row">
+            @if(_model.SCR != null)
+            {
+                @if(_model.CID != null)
+                {
+                    <dt class="col-sm-2">@DisplayNameHelper.GetDisplayName(typeof(MmcSd), nameof(MmcSd.CID))</dt>
+                    <dd class="col-sm-10">@((MarkupString)Decoders.PrettifyCID(_model.CID))</dd>
+                }
+
+                @if(_model.CSD != null)
+                {
+                    <dt class="col-sm-2">@DisplayNameHelper.GetDisplayName(typeof(MmcSd), nameof(MmcSd.CSD))</dt>
+                    <dd class="col-sm-10">@((MarkupString)Decoders.PrettifyCSD(_model.CSD))</dd>
+                }
+
+                @if(_model.OCR != null)
+                {
+                    <dt class="col-sm-2">@DisplayNameHelper.GetDisplayName(typeof(MmcSd), nameof(MmcSd.OCR))</dt>
+                    <dd class="col-sm-10">@((MarkupString)Decoders.PrettifyOCR(_model.OCR))</dd>
+                }
+
+                <dt class="col-sm-2">@DisplayNameHelper.GetDisplayName(typeof(MmcSd), nameof(MmcSd.SCR))</dt>
+                <dd class="col-sm-10">@((MarkupString)Decoders.PrettifySCR(_model.SCR))</dd>
+            }
+            else
+            {
+                @if(_model.CID != null)
+                {
+                    <dt class="col-sm-2">@DisplayNameHelper.GetDisplayName(typeof(MmcSd), nameof(MmcSd.CID))</dt>
+                    <dd class="col-sm-10">@((MarkupString)Aaru.Decoders.MMC.Decoders.PrettifyCID(_model.CID))</dd>
+                }
+
+                @if(_model.CSD != null)
+                {
+                    <dt class="col-sm-2">@DisplayNameHelper.GetDisplayName(typeof(MmcSd), nameof(MmcSd.CSD))</dt>
+                    <dd class="col-sm-10">@((MarkupString)Aaru.Decoders.MMC.Decoders.PrettifyCSD(_model.CSD))</dd>
+                }
+
+                @if(_model.OCR != null)
+                {
+                    <dt class="col-sm-2">@DisplayNameHelper.GetDisplayName(typeof(MmcSd), nameof(MmcSd.OCR))</dt>
+                    <dd class="col-sm-10">@((MarkupString)Aaru.Decoders.MMC.Decoders.PrettifyOCR(_model.OCR))</dd>
+                }
+
+                @if(_model.ExtendedCSD != null)
+                {
+                    <dt class="col-sm-2">@DisplayNameHelper.GetDisplayName(typeof(MmcSd), nameof(MmcSd.ExtendedCSD))</dt>
+                    <dd class="col-sm-10">@((MarkupString)Aaru.Decoders.MMC.Decoders.PrettifyExtendedCSD(_model.ExtendedCSD))</dd>
+                }
+            }
+        </dl>
+        <a class="btn btn-secondary" href="/admin/mmc-sd">Back to List</a>
+    }
+</section>
