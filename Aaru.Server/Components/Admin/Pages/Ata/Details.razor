@@ -1,0 +1,36 @@
+@page "/admin/ata/{id:int}"
+@using Aaru.Decoders.ATA
+@attribute [Authorize]
+@layout AdminLayout
+@rendermode InteractiveServer
+
+@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
+
+<PageTitle>ATA IDENTIFY DEVICE response</PageTitle>
+
+@if(!_initialized)
+{
+    <div class="stats-section">
+        <h1 style="color: red; align-content: center; padding: 2rem">Loading...</h1>
+    </div>
+
+    return;
+}
+
+<section class="stats-section">
+    <div>
+        <h4>ATA IDENTIFY DEVICE response</h4>
+        <hr />
+        @((MarkupString)Identify.Prettify(_model?.Identify)?.Replace("\n", "<br />")))
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="compareId" class="form-label">Compare with ID</label>
+        <input id="compareId" class="form-control d-inline-block w-auto me-2" type="number" @bind="_compareId" />
+        <button class="btn btn-primary" @onclick="GoToCompare">
+            <i class="bi bi-arrow-left-right"></i> Compare
+        </button>
+    </div>
+    <div>
+        <a href="/admin/ata" class="btn btn-secondary">Back to List</a>
+    </div>
+</section>
