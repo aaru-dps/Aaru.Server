@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 using System.Reflection;
 
 namespace Aaru.Server;
@@ -11,10 +11,10 @@ public static class DisplayNameHelper
 
         if(prop is null) return propertyName;
 
-        DisplayAttribute? displayAttr = prop.GetCustomAttributes(typeof(DisplayAttribute), true)
-                                            .OfType<DisplayAttribute>()
-                                            .FirstOrDefault();
+        DisplayNameAttribute? displayAttr = prop.GetCustomAttributes(typeof(DisplayNameAttribute), true)
+                                                .OfType<DisplayNameAttribute>()
+                                                .FirstOrDefault();
 
-        return displayAttr?.Name ?? propertyName;
+        return displayAttr?.DisplayName ?? propertyName;
     }
 }
