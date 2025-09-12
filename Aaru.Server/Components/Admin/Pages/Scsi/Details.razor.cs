@@ -6,10 +6,15 @@ namespace Aaru.Server.Components.Admin.Pages.Scsi;
 
 public partial class Details
 {
+    private int                _compareId;
     bool                       _initialized;
     CommonTypes.Metadata.Scsi? _model;
+
     [Parameter]
     public int Id { get; set; }
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -24,5 +29,14 @@ public partial class Details
         _initialized = true;
 
         StateHasChanged();
+    }
+
+    private void GoToCompare()
+    {
+        if(_compareId > 0 && _model?.Id > 0)
+        {
+            string url = $"/admin/scsi/{_model.Id}/compare/{_compareId}";
+            NavigationManager.NavigateTo(url);
+        }
     }
 }

@@ -1,0 +1,102 @@
+@page "/admin/scsi/{id:int}/compare/{compareId:int}"
+@attribute [Authorize]
+@layout AdminLayout
+@rendermode InteractiveServer
+
+@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
+
+<PageTitle>SCSI INQUIRY comparison</PageTitle>
+
+@if(!_initialized)
+{
+    <div class="stats-section">
+        <h1 style="color: red; align-content: center; padding: 2rem">Loading...</h1>
+    </div>
+
+    return;
+}
+
+@if(Model.AreEqual)
+{
+    <section class="stats-section">
+        <p>No differences found.</p>
+    </section>
+
+    return;
+}
+
+@if(Model.HasError)
+{
+    <section class="stats-section">
+        <p class="alert-info">@Model.ErrorMessage</p>
+    </section>
+
+    return;
+}
+
+<section class="stats-section">
+    <table class="table table-dark table-striped table-bordered mt-4 mb-4">
+        <thead>
+        <tr>
+            <th>
+                Value name
+            </th>
+            <th>
+                ID: @Model.LeftId
+            </th>
+            <th>
+                ID: @Model.RightId
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @for(var i = 0; i < Model.ValueNames.Count; i++)
+        {
+            <tr>
+                <td>
+                    @Model.ValueNames[i]
+                </td>
+                <td>
+                    @Model.LeftValues[i]
+                </td>
+                <td>
+                    @Model.RightValues[i]
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <button class="btn btn-danger btn-sm" @onclick="async () => await ShowDeleteModal(Id)">
+        <i class="bi bi-trash"></i> Delete ID @Id
+    </button>
+    <button class="btn btn-danger btn-sm" @onclick="async () => await ShowDeleteModal(CompareId)">
+        <i class="bi bi-trash"></i> Delete ID @CompareId
+    </button>
+    <button class="btn btn-secondary btn-sm" @onclick="() => ShowConsolidateModal(Id, CompareId)">
+        <i class="bi bi-arrow-left-right"></i> Replace all dependencies from ID @CompareId with ID @Id
+    </button>
+    <button class="btn btn-secondary btn-sm" @onclick="() => ShowConsolidateModal(CompareId, Id)">
+        <i class="bi bi-arrow-left-right"></i> Replace all dependencies from ID @Id with ID @CompareId
+    </button>
+</section>
+
+<BlazorBootstrap.Modal @ref="_deleteModal" Title="Delete INQUIRY" Size="ModalSize.Small">
+    <BodyTemplate>
+        <div class="text-danger">Are you sure you want to delete this INQUIRY?</div>
+    </BodyTemplate>
+    <FooterTemplate>
+        <button class="btn btn-secondary" @onclick="HideDeleteModal">Cancel</button>
+        <button class="btn btn-danger" @onclick="ConfirmDelete">Delete</button>
+    </FooterTemplate>
+</BlazorBootstrap.Modal>
+
+<BlazorBootstrap.Modal @ref="_consolidateModal" Title="Consolidate INQUIRY" Size="ModalSize.Small">
+    <BodyTemplate>
+        <div class="text-danger">Are you sure you want to consolidate the selected INQUIRY?</div>
+    </BodyTemplate>
+    <FooterTemplate>
+        <button class="btn btn-secondary" @onclick="HideConsolidateModal">Cancel</button>
+        <button class="btn btn-danger" @onclick="ConfirmConsolidate">Consolidate</button>
+    </FooterTemplate>
+</BlazorBootstrap.Modal>
