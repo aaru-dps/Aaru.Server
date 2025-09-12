@@ -53,6 +53,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Components\Admin\Pages\Usb\Vendors\" />
     <Folder Include="wwwroot\assets\" />
   </ItemGroup>
 
