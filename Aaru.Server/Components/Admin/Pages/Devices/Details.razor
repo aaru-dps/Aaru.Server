@@ -1,0 +1,483 @@
+@page "/admin/devices/{id:int}"
+@attribute [Authorize]
+@layout AdminLayout
+
+@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
+
+<PageTitle>Device reports</PageTitle>
+
+@if(!_initialized)
+{
+    <div class="stats-section">
+        <h1 style="color: red; align-content: center; padding: 2rem">Loading...</h1>
+    </div>
+
+    return;
+}
+
+@if(_notFound)
+{
+    <div class="stats-section">
+        <h1 style="color: red; align-content: center; padding: 2rem">Device report not found</h1>
+    </div>
+
+    return;
+}
+
+<section class="stats-section">
+    <div>
+        <h4>Device report</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.AddedWhen))
+            </dt>
+            <dd class="col-sm-10">
+                @model.Report?.AddedWhen
+            </dd>
+            <dt class="col-sm-2">
+                @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.ModifiedWhen))
+            </dt>
+            <dd class="col-sm-10">
+                @model.Report?.ModifiedWhen
+            </dd>
+            <dt class="col-sm-2">
+                @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.Manufacturer))
+            </dt>
+            <dd class="col-sm-10">
+                @model.Report?.Manufacturer
+            </dd>
+            <dt class="col-sm-2">
+                @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.Model))
+            </dt>
+            <dd class="col-sm-10">
+                @model.Report?.Model
+            </dd>
+            <dt class="col-sm-2">
+                @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.Revision))
+            </dt>
+            <dd class="col-sm-10">
+                @model.Report?.Revision
+            </dd>
+            <dt class="col-sm-2">
+                @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.CompactFlash))
+            </dt>
+            <dd class="col-sm-10">
+                @model.Report?.CompactFlash
+            </dd>
+            <dt class="col-sm-2">
+                @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.OptimalMultipleSectorsRead))
+            </dt>
+            <dd class="col-sm-10">
+                @model.Report?.OptimalMultipleSectorsRead
+            </dd>
+            <dt class="col-sm-2">
+                @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.CanReadGdRomUsingSwapDisc))
+            </dt>
+            <dd class="col-sm-10">
+                @model.Report?.CanReadGdRomUsingSwapDisc
+            </dd>
+            <dt class="col-sm-2">
+                @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.Type))
+            </dt>
+            <dd class="col-sm-10">
+                @model.Report?.Type
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a href="/admin/devices/edit/@model.Report?.Id" class="btn btn-primary">
+            <i class="bi bi-pencil"></i> Edit
+        </a>
+        <a href="/admin/devices" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Back to List
+        </a>
+    </div>
+    @if(model.ReadCapabilitiesId != 0)
+    {
+        <div>
+            <a href="/admin/tested-media/@model.ReadCapabilitiesId" target="_blank">Read capabilities</a>
+        </div>
+    }
+    @if(model.Report.ATA != null)
+    {
+        <div>
+            <a href="/admin/ata/@model.Report.ATA.Id" target="_blank">ATA report</a>
+        </div>
+    }
+    @if(model.Report.ATAPI != null)
+    {
+        <div>
+            <a href="/admin/ata/@model.Report.ATAPI.Id" target="_blank">ATAPI report</a>
+        </div>
+    }
+    @if(model.Report.SCSI != null)
+    {
+        <div>
+            <a href="/admin/scsi/@model.Report.SCSI.Id" target="_blank">SCSI report</a>
+        </div>
+    }
+    @if(model.Report.MultiMediaCard != null)
+    {
+        <div>
+            <a href="/admin/mmc-sd/@model.Report.MultiMediaCard.Id" target="_blank">MultiMediaCard report</a>
+        </div>
+    }
+    @if(model.Report.SecureDigital != null)
+    {
+        <div>
+            <a href="/admin/mmc-sd/@model.Report.SecureDigital.Id" target="_blank">SecureDigital report</a>
+        </div>
+    }
+    @if(model.Report.USB != null)
+    {
+        <div>
+            <a href="/admin/usb/devices/@model.Report.USB.Id" target="_blank">USB report</a>
+        </div>
+    }
+    @if(model.Report.GdRomSwapDiscCapabilitiesId != null)
+    {
+        <div>
+            <a href="/admin/gdrom/@model.Report.GdRomSwapDiscCapabilitiesId" target="_blank">GD-ROM swap-trick
+                                                                                             capabilities
+                                                                                             report</a>
+        </div>
+    }
+    @if(model.Report.FireWire != null)
+    {
+        <div>
+            Has a FireWire report.
+        </div>
+    }
+    @if(model.Report.PCMCIA != null)
+    {
+        <div>
+            Has a PCMCIA report.
+        </div>
+    }
+    @if(model.SameAll.Count > 0)
+    {
+        <div>
+            <h4>Other device reports with same manufacturer, model and revision:</h4>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach(int item in model.SameAll)
+                {
+                    <tr>
+                        <td>
+                            @item
+                        </td>
+                        <td>
+                            <a href="/admin/devices/@item" class="btn btn-primary" target="_blank">Details</a>
+                            <a @onclick="() => Merge(model.Report.Id, item)" class="btn btn-secondary">Merge</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+    @if(model.SameButManufacturer.Count > 0)
+    {
+        <div>
+            <h4>Other device reports with same model and revision:</h4>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach(int item in model.SameButManufacturer)
+                {
+                    <tr>
+                        <td>
+                            @item
+                        </td>
+                        <td>
+                            <a href="/admin/devices/@item" class="btn btn-primary" target="_blank">Details</a>
+                            <a @onclick="() => Merge(model.Report.Id, item)" class="btn btn-secondary">Merge</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+    @if(model.ReportAll.Count > 0)
+    {
+        <div>
+            <h4>Uploaded reports with same manufacturer, model and revision:</h4>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach(int item in model.ReportAll)
+                {
+                    <tr>
+                        <td>
+                            @item
+                        </td>
+                        <td>
+                            <a href="/admin/reports/@item" class="btn btn-primary" target="_blank">Details</a>
+                            <a @onclick="() => MergeReports(model.Report.Id, item)" class="btn btn-secondary">Merge</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+    @if(model.ReportButManufacturer.Count > 0)
+    {
+        <div>
+            <h4>Device reports with same model and revision:</h4>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach(int item in model.ReportButManufacturer)
+                {
+                    <tr>
+                        <td>
+                            @item
+                        </td>
+                        <td>
+                            <a href="/admin/reports/@item" class="btn btn-primary" target="_blank">Details</a>
+                            <a @onclick="() => MergeReports(model.Report.Id, item)" class="btn btn-secondary">Merge</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+    @if(model.StatsAll.Count > 0)
+    {
+        <div>
+            <h4>Device statistics with same manufacturer, model and revision:</h4>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        @DisplayNameHelper.GetDisplayName(typeof(DeviceStat), nameof(DeviceStat.Manufacturer))
+                    </th>
+                    <th>
+                        @DisplayNameHelper.GetDisplayName(typeof(DeviceStat), nameof(DeviceStat.Model))
+                    </th>
+                    <th>
+                        @DisplayNameHelper.GetDisplayName(typeof(DeviceStat), nameof(DeviceStat.Revision))
+                    </th>
+                    <th>
+                        @DisplayNameHelper.GetDisplayName(typeof(DeviceStat), nameof(DeviceStat.Bus))
+                    </th>
+                    <th>
+                        Has a linked report?
+                    </th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach(DeviceStat item in model.StatsAll)
+                {
+                    <tr>
+                        <td>
+                            @item.Manufacturer
+                        </td>
+                        <td>
+                            @item.Model
+                        </td>
+                        <td>
+                            @item.Revision
+                        </td>
+                        <td>
+                            @item.Bus
+                        </td>
+                        <td>
+                            @if(item.Report is null)
+                            {
+                                @("No")
+                            }
+                            else
+                            {
+                                @if(item.Report.Id == model.Report.Id)
+                                {
+                                    @("Us")
+                                }
+                                else
+                                {
+                                    @("Yes")
+                                }
+                            }
+                        </td>
+                        <td>
+                            <a @onclick="() => LinkReports(model.Report.Id, item.Id)" class="btn btn-secondary">Link</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+    @if(model.StatsButManufacturer.Count > 0)
+    {
+        <div>
+            <h4>Device statistics with same model and revision:</h4>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        @DisplayNameHelper.GetDisplayName(typeof(DeviceStat), nameof(DeviceStat.Manufacturer))
+                    </th>
+                    <th>
+                        @DisplayNameHelper.GetDisplayName(typeof(DeviceStat), nameof(DeviceStat.Model))
+                    </th>
+                    <th>
+                        @DisplayNameHelper.GetDisplayName(typeof(DeviceStat), nameof(DeviceStat.Revision))
+                    </th>
+                    <th>
+                        @DisplayNameHelper.GetDisplayName(typeof(DeviceStat), nameof(DeviceStat.Bus))
+                    </th>
+                    <th>
+                        Has a linked report?
+                    </th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach(DeviceStat item in model.StatsButManufacturer)
+                {
+                    <tr>
+                        <td>
+                            @item.Manufacturer
+                        </td>
+                        <td>
+                            @item.Model
+                        </td>
+                        <td>
+                            @item.Revision
+                        </td>
+                        <td>
+                            @item.Bus
+                        </td>
+                        <td>
+                            @if(item.Report is null)
+                            {
+                                @("No")
+                            }
+                            else
+                            {
+                                <a href="/admin/reports/@item.Report.Id" target="_blank">Yes</a>
+                            }
+                        </td>
+                        <td>
+                            <a @onclick="() => LinkReports(model.Report.Id, item.Id)" class="btn btn-secondary">Link</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+    @if(model.TestedMedias.Count > 0)
+    {
+        <div>
+            <h4>Tested media:</h4>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.Manufacturer))
+                    </th>
+                    <th>
+                        @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.Model))
+                    </th>
+                    <th>
+                        @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.MediumTypeName))
+                    </th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach(TestedMedia item in model.TestedMedias)
+                {
+                    <tr>
+                        <td>
+                            @item.Manufacturer
+                        </td>
+                        <td>
+                            @item.Model
+                        </td>
+                        <td>
+                            @item.MediumTypeName
+                        </td>
+                        <td>
+                            <a href="/admin/tested-media/@item.Id" class="btn btn-secondary" target="_blank">Details</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+    @if(model.TestedSequentialMedias.Count > 0)
+    {
+        <div>
+            <h4>Tested media:</h4>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        @DisplayNameHelper.GetDisplayName(typeof(TestedSequentialMedia), nameof(TestedSequentialMedia.Manufacturer))
+                    </th>
+                    <th>
+                        @DisplayNameHelper.GetDisplayName(typeof(TestedSequentialMedia), nameof(TestedSequentialMedia.Model))
+                    </th>
+                    <th>
+                        @DisplayNameHelper.GetDisplayName(typeof(TestedSequentialMedia), nameof(TestedSequentialMedia.MediumTypeName))
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach(TestedSequentialMedia item in model.TestedSequentialMedias)
+                {
+                    <tr>
+                        <td>
+                            @item.Manufacturer
+                        </td>
+                        <td>
+                            @item.Model
+                        </td>
+                        <td>
+                            @item.MediumTypeName
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</section>

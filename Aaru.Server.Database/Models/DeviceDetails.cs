@@ -4,7 +4,7 @@ namespace Aaru.Server.Database.Models;
 
 public class DeviceDetails
 {
-    public Device                      Report                 { get; set; }
+    public Device?                     Report                 { get; set; }
     public List<int>                   SameAll                { get; set; }
     public List<int>                   SameButManufacturer    { get; set; }
     public List<int>                   ReportAll              { get; set; }
