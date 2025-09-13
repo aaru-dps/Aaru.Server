@@ -1,0 +1,55 @@
+@page "/admin/reports/edit/{Id:int}"
+@using Aaru.CommonTypes.Enums
+@attribute [Authorize]
+@layout AdminLayout
+
+@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
+
+<PageTitle>Edit Uploaded Report</PageTitle>
+
+@if(!isLoaded)
+{
+    <div>Loading...</div>
+}
+else if(report == null)
+{
+    <div class="alert alert-danger">Uploaded report not found.</div>
+}
+else
+{
+    <EditForm Model="report" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="mb-3">
+            <label class="form-label">Manufacturer</label>
+            <InputText class="form-control" @bind-Value="report.Manufacturer" />
+            <ValidationMessage For="@(() => report.Manufacturer)" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Model</label>
+            <InputText class="form-control" @bind-Value="report.Model" />
+            <ValidationMessage For="@(() => report.Model)" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Revision</label>
+            <InputText class="form-control" @bind-Value="report.Revision" />
+            <ValidationMessage For="@(() => report.Revision)" />
+        </div>
+        <div class="mb-3 form-check">
+            <InputCheckbox class="form-check-input" @bind-Value="report.CompactFlash" />
+            <label class="form-check-label">Compact Flash</label>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Type</label>
+            <InputSelect class="form-control" @bind-Value="report.Type">
+                @foreach(object? type in Enum.GetValues(typeof(DeviceType)))
+                {
+                    <option value="@type">@type</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => report.Type)" />
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-secondary ms-2" @onclick="GoBack">Cancel</button>
+    </EditForm>
+}
