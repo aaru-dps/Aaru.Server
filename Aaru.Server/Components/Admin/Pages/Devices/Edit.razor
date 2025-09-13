@@ -1,0 +1,64 @@
+@page "/admin/devices/edit/{Id:int}"
+@using Aaru.CommonTypes.Enums
+@attribute [Authorize]
+@layout AdminLayout
+
+@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
+
+<PageTitle>Edit Device</PageTitle>
+
+@if(!isLoaded)
+{
+    <div>Loading...</div>
+}
+else if(device == null)
+{
+    <div class="alert alert-danger">Device not found.</div>
+}
+else
+{
+    <EditForm Model="device" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="mb-3">
+            <label class="form-label">Manufacturer</label>
+            <InputText class="form-control" @bind-Value="device.Manufacturer" />
+            <ValidationMessage For="@(() => device.Manufacturer)" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Model</label>
+            <InputText class="form-control" @bind-Value="device.Model" />
+            <ValidationMessage For="@(() => device.Model)" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Revision</label>
+            <InputText class="form-control" @bind-Value="device.Revision" />
+            <ValidationMessage For="@(() => device.Revision)" />
+        </div>
+        <div class="mb-3 form-check">
+            <InputCheckbox class="form-check-input" @bind-Value="device.CompactFlash" />
+            <label class="form-check-label">Compact Flash</label>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Optimal Multiple Sectors Read</label>
+            <InputNumber class="form-control" @bind-Value="device.OptimalMultipleSectorsRead" />
+            <ValidationMessage For="@(() => device.OptimalMultipleSectorsRead)" />
+        </div>
+        <div class="mb-3 form-check">
+            <InputCheckbox class="form-check-input" @bind-Value="device.CanReadGdRomUsingSwapDisc" />
+            <label class="form-check-label">Can Read GD-ROM Using Swap Disc</label>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Type</label>
+            <InputSelect class="form-control" @bind-Value="device.Type">
+                @foreach(object? type in Enum.GetValues(typeof(DeviceType)))
+                {
+                    <option value="@type">@type</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => device.Type)" />
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-secondary ms-2" @onclick="GoBack">Cancel</button>
+    </EditForm>
+}
