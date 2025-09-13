@@ -1,0 +1,46 @@
+@page "/admin/device-stats/edit/{Id:int}"
+@attribute [Authorize]
+@layout AdminLayout
+
+@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
+
+<PageTitle>Edit Device Statistic</PageTitle>
+
+@if(!isLoaded)
+{
+    <div>Loading...</div>
+}
+else if(deviceStat == null)
+{
+    <div class="alert alert-danger">Device statistic not found.</div>
+}
+else
+{
+    <EditForm Model="deviceStat" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="mb-3">
+            <label class="form-label">Manufacturer</label>
+            <InputText class="form-control" @bind-Value="deviceStat.Manufacturer" />
+            <ValidationMessage For="@(() => deviceStat.Manufacturer)" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Model</label>
+            <InputText class="form-control" @bind-Value="deviceStat.Model" />
+            <ValidationMessage For="@(() => deviceStat.Model)" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Revision</label>
+            <InputText class="form-control" @bind-Value="deviceStat.Revision" />
+            <ValidationMessage For="@(() => deviceStat.Revision)" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Bus</label>
+            <InputText class="form-control" @bind-Value="deviceStat.Bus" />
+            <ValidationMessage For="@(() => deviceStat.Bus)" />
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-secondary ms-2" @onclick="GoBack">Cancel</button>
+    </EditForm>
+}
+
