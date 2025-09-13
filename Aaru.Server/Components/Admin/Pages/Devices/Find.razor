@@ -1,0 +1,101 @@
+@page "/admin/devices/find/{id:int}"
+@attribute [Authorize]
+@layout AdminLayout
+
+@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
+
+<PageTitle>Find device reports</PageTitle>
+
+@if(!_initialized)
+{
+    <div class="stats-section">
+        <h1 style="color: red; align-content: center; padding: 2rem">Loading...</h1>
+    </div>
+
+    return;
+}
+
+<section class="stats-section">
+    <h4>Found device reports with similar data</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @DisplayNameHelper.GetDisplayName(typeof(DeviceStat), nameof(DeviceStat.Manufacturer))
+        </dt>
+        <dd class="col-sm-10">
+            @_found.Manufacturer
+        </dd>
+        <dt class="col-sm-2">
+            @DisplayNameHelper.GetDisplayName(typeof(DeviceStat), nameof(DeviceStat.Model))
+        </dt>
+        <dd class="col-sm-10">
+            @_found.Model
+        </dd>
+        <dt class="col-sm-2">
+            @DisplayNameHelper.GetDisplayName(typeof(DeviceStat), nameof(DeviceStat.Revision))
+        </dt>
+        <dd class="col-sm-10">
+            @_found.Revision
+        </dd>
+        <dt class="col-sm-2">
+            @DisplayNameHelper.GetDisplayName(typeof(DeviceStat), nameof(DeviceStat.Bus))
+        </dt>
+        <dd class="col-sm-10">
+            @_found.Bus
+        </dd>
+    </dl>
+    @if(_found.LikeDevices.Count == 0)
+    {
+        <div>No device report with similar information has been found!</div>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.Manufacturer))
+                </th>
+                <th>
+                    @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.Model))
+                </th>
+                <th>
+                    @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.Revision))
+                </th>
+                <th>
+                    @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.CompactFlash))
+                </th>
+                <th>
+                    @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.Type))
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach(Device item in _found.LikeDevices)
+            {
+                <tr>
+                    <td>
+                        @item.Manufacturer
+                    </td>
+                    <td>
+                        @item.Model
+                    </td>
+                    <td>
+                        @item.Revision
+                    </td>
+                    <td>
+                        @item.CompactFlash
+                    </td>
+                    <td>
+                        @item.Type
+                    </td>
+                    <td>
+                        <a @onclick="() => LinkReports(item.Id, _found.Id)" class="btn btn-secondary">Link</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+</section>
