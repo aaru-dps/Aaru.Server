@@ -18,6 +18,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools"/>
     <PackageReference Include="MimeKit"/>
+    <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="OpenTelemetry"/>
     <PackageReference Include="OpenTelemetry.Exporter.Prometheus.AspNetCore"/>
     <PackageReference Include="OpenTelemetry.Extensions.Hosting"/>
