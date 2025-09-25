@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/Solution files/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path=".gitmodules" />
+    <File Path="codealike.json" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="LICENSE" />
+    <File Path="LICENSE.LGPL" />
+    <File Path="LICENSE.MIT" />
+  </Folder>
+  <Project Path="Aaru.Server.Database/Aaru.Server.Database.csproj" />
+  <Project Path="Aaru.Server/Aaru.Server.csproj" />
+</Solution>
