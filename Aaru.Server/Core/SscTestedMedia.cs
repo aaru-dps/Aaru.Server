@@ -36,14 +36,15 @@ namespace Aaru.Server.Core;
 
 public static class SscTestedMedia
 {
-    /// <summary>Takes the tested media from SCSI Streaming devices of a device report and prints it as a list of values</summary>
-    /// <param name="mediaOneValue">List to put values on</param>
+    /// <summary>Takes the tested media from SCSI Streaming devices of a device report and prints it as a sorted set of values</summary>
     /// <param name="testedMedia">List of tested media</param>
     public static void Report(IEnumerable<TestedSequentialMedia> testedMedia,
-                              out Dictionary<string, (Dictionary<string, string> Table, List<string> List)>
+                              out SortedSet<(string Header, Dictionary<string, string> Table, List<string> List)>
                                   mediaInformation)
     {
-        mediaInformation = [];
+        mediaInformation =
+            new SortedSet<(string Header, Dictionary<string, string> Table, List<string> List
+                )>(new MediaInfoComparer());
 
         foreach(TestedSequentialMedia media in testedMedia)
         {
@@ -54,7 +55,6 @@ public static class SscTestedMedia
             if(!string.IsNullOrWhiteSpace(media.MediumTypeName))
             {
                 header = $"Information for medium named \"{media.MediumTypeName}\"";
-
                 if(media.MediumType.HasValue) table.Add("Medium type code", $"{media.MediumType:X2}h");
             }
             else if(media.MediumType.HasValue)
@@ -62,8 +62,7 @@ public static class SscTestedMedia
             else
                 header = "Information for unknown medium type";
 
-            if(!string.IsNullOrWhiteSpace(media.Manufacturer))
-                table.Add("Medium manufacturer", media.Manufacturer);
+            if(!string.IsNullOrWhiteSpace(media.Manufacturer)) table.Add("Medium manufacturer", media.Manufacturer);
 
             if(!string.IsNullOrWhiteSpace(media.Model)) table.Add("Medium model", media.Model);
 
@@ -73,7 +72,15 @@ public static class SscTestedMedia
 
             if(media.MediaIsRecognized) list.Add("Drive recognizes this medium.");
 
-            mediaInformation.Add(header, (table, list));
+            mediaInformation.Add((header, table, list));
         }
+    }
+
+    private sealed class
+        MediaInfoComparer : IComparer<(string Header, Dictionary<string, string> Table, List<string> List)>
+    {
+        public int Compare((string Header, Dictionary<string, string> Table, List<string> List) x,
+                           (string Header, Dictionary<string, string> Table, List<string> List) y) =>
+            string.Compare(x.Header, y.Header, StringComparison.Ordinal);
     }
 }

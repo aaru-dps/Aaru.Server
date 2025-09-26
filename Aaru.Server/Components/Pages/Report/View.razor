@@ -684,16 +684,16 @@
         </h3>
 
         <Accordion>
-            @foreach(KeyValuePair<string, (Dictionary<string, string> Table, List<string> List)> mediaInfo in MediaInformation)
+            @foreach((string Header, Dictionary<string, string> Table, List<string> List) mediaInfo in MediaInformation)
             {
                 <AccordionItem>
                     <TitleTemplate>
-                        @mediaInfo.Key
+                        @mediaInfo.Header
                     </TitleTemplate>
                     <Content>
                         <table class="table table-dark table-borderless w-100">
                             <tbody>
-                            @foreach(KeyValuePair<string, string> kvp in mediaInfo.Value.Table)
+                            @foreach(KeyValuePair<string, string> kvp in mediaInfo.Table)
                             {
                                 <tr>
                                     <th>@kvp.Key</th>
@@ -703,7 +703,7 @@
                             </tbody>
                         </table>
                         <ul class="list-group">
-                            @foreach(string cap in mediaInfo.Value.List)
+                            @foreach(string cap in mediaInfo.List)
                             {
                                 <li class="list-group-item">@cap</li>
                             }

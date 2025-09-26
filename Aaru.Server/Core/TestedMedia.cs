@@ -37,10 +37,13 @@ public static class TestedMedia
     /// <summary>Takes the tested media from a device report and prints it as a list of values</summary>
     /// <param name="mediaInformation">List to put values on</param>
     /// <param name="testedMedias">List of tested media</param>
-    public static void Report(List<CommonTypes.Metadata.TestedMedia>                             testedMedias,
-                              out Dictionary<string, (Dictionary<string, string> Table, List<string> List)> mediaInformation)
+    public static void Report(List<CommonTypes.Metadata.TestedMedia> testedMedias,
+                              out SortedSet<(string Header, Dictionary<string, string> Table, List<string> List)>
+                                  mediaInformation)
     {
-        mediaInformation = [];
+        mediaInformation =
+            new SortedSet<(string Header, Dictionary<string, string> Table, List<string> List
+                )>(new MediaInfoComparer());
 
         foreach(CommonTypes.Metadata.TestedMedia testedMedia in testedMedias)
         {
@@ -395,7 +398,15 @@ public static class TestedMedia
             if(testedMedia.CanReadF1_06LeadOut == true)
                 list.Add("Device can read Lead-Out from cache using F1h command with subcommand 06h");
 
-            mediaInformation.Add(header, (table, list));
+            mediaInformation.Add((header, table, list));
         }
+    }
+
+    private sealed class
+        MediaInfoComparer : IComparer<(string Header, Dictionary<string, string> Table, List<string> List)>
+    {
+        public int Compare((string Header, Dictionary<string, string> Table, List<string> List) x,
+                           (string Header, Dictionary<string, string> Table, List<string> List) y) =>
+            string.Compare(x.Header, y.Header, StringComparison.Ordinal);
     }
 }

@@ -3,8 +3,8 @@ using Aaru.CommonTypes.Structs.Devices.SCSI;
 using Aaru.Decoders.PCMCIA;
 using Aaru.Decoders.SCSI;
 using Aaru.Helpers;
-using Aaru.Server.Database.Models;
 using Aaru.Server.Core;
+using Aaru.Server.Database.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using Ata = Aaru.CommonTypes.Metadata.Ata;
@@ -69,7 +69,11 @@ public partial class View
     public List<string>?                     MmcModeList                { get; set; }
     public Dictionary<string, List<string>>? EvpdPages                  { get; set; }
 
-    public Dictionary<string, (Dictionary<string, string> Table, List<string> List)>? MediaInformation { get; set; }
+    public SortedSet<(string Header, Dictionary<string, string> Table, List<string> List)>? MediaInformation
+    {
+        get;
+        set;
+    }
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
@@ -280,10 +284,10 @@ public partial class View
             }
         }
 
-        var                removable   = true;
+        bool               removable   = true;
         List<TestedMedia>? testedMedia = null;
-        var                atapi       = false;
-        var                sscMedia    = false;
+        bool               atapi       = false;
+        bool               sscMedia    = false;
 
         if(report.ATA != null || report.ATAPI != null)
         {
@@ -396,7 +400,7 @@ public partial class View
 
         if(report.SCSI != null)
         {
-            var vendorId = "";
+            string? vendorId = "";
 
             if(report.SCSI.Inquiry != null)
             {
@@ -406,9 +410,10 @@ public partial class View
                 DeviceInquiry = new Dictionary<string, string>
                 {
                     {
-                        "Vendor:", VendorString.Prettify(vendorId) != vendorId
-                                       ? $"{vendorId} ({VendorString.Prettify(vendorId)})"
-                                       : vendorId
+                        "Vendor:",
+                        VendorString.Prettify(vendorId) != vendorId
+                            ? $"{vendorId} ({VendorString.Prettify(vendorId)})"
+                            : vendorId
                     },
                     {
                         "Product:", StringHandlers.CToString(inq.ProductIdentification)
@@ -511,8 +516,8 @@ public partial class View
                     sscMedia = true;
 
                     SscTestedMedia.Report(report.SCSI.SequentialDevice.TestedMedia,
-                                          out Dictionary<string, (Dictionary<string, string> Table, List<string> List)>
-                                                  mediaInformation);
+                                          out SortedSet<(string Header, Dictionary<string, string> Table, List<string>
+                                                  List)> mediaInformation);
 
                     if(mediaInformation.Count > 0) MediaInformation = mediaInformation;
                 }
@@ -605,7 +610,7 @@ public partial class View
         if(removable && !sscMedia && testedMedia != null)
         {
             Core.TestedMedia.Report(testedMedia,
-                                    out Dictionary<string, (Dictionary<string, string> Table, List<string> List)>
+                                    out SortedSet<(string Header, Dictionary<string, string> Table, List<string> List)>
                                             mediaInformation);
 
             if(mediaInformation.Count > 0) MediaInformation = mediaInformation;
