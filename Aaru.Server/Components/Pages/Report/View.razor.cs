@@ -122,6 +122,7 @@ public partial class View
                                   .Include(static deviceReportV2 => deviceReportV2.SCSI)
                                   .ThenInclude(static scsi => scsi.MultiMediaDevice)
                                   .ThenInclude(static mmc => mmc.TestedMedia)
+                                  .AsSplitQuery()
                                   .FirstOrDefaultAsync(d => d.Id == Id);
 
         if(report is null)
