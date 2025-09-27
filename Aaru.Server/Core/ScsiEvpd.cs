@@ -262,7 +262,7 @@ public static class ScsiEvpd
                     break;
             }
 
-            evpdPages.Add(header, decoded);
+            evpdPages[header] = decoded;
         }
     }
 }
