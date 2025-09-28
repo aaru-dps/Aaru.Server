@@ -48,6 +48,7 @@ public sealed class DbContext : IdentityDbContext<IdentityUser>
 
     public DbContext(DbContextOptions<DbContext> options) : base(options) {}
 
+    public DbSet<Archive>                   Archives                  { get; set; }
     public DbSet<Device>                    Devices                   { get; set; }
     public DbSet<UploadedReport>            Reports                   { get; set; }
     public DbSet<Command>                   Commands                  { get; set; }
