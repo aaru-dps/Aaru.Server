@@ -1,0 +1,25 @@
+﻿@rendermode InteractiveServer
+
+@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
+
+<PageTitle>Aaru: Statistics</PageTitle>
+
+@*
+    TODO: Group by datagrid
+*@
+
+<h1>
+    <p class="text-center" style="color: deeppink;">All archive formats found...</p>
+</h1>
+<PieChart @ref="_formatsChart" style="padding: 40px" TItem="long"/>
+<Grid Data="@ArchiveFormats" FixedHeader="true" PageSize="int.MaxValue" TItem="Archive" Responsive="true"
+      AllowSorting="true" Class="table table-hover table-bordered table-striped table-dark" style="width: 100%;">
+    <GridColumns>
+        <GridColumn TItem="Archive" HeaderText="Filter" PropertyName="@nameof(Archive.Name)">
+            @context.Name
+        </GridColumn>
+        <GridColumn TItem="Archive" HeaderText="Times found" PropertyName="@nameof(Archive.Count)">
+            @context.Count
+        </GridColumn>
+    </GridColumns>
+</Grid>
