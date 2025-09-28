@@ -220,6 +220,25 @@ public sealed class UploadStatsController : ControllerBase
                 }
             }
 
+            if(newstats.Archives != null)
+            {
+                foreach(NameValueStats nvs in newstats.Archives)
+                {
+                    Archive? existing = await _ctx.Archives.FirstOrDefaultAsync(c => c.Name == nvs.name);
+
+                    if(existing == null)
+                    {
+                        _ctx.Archives.Add(new Archive
+                        {
+                            Name  = nvs.name,
+                            Count = nvs.Value
+                        });
+                    }
+                    else
+                        existing.Count += nvs.Value;
+                }
+            }
+
             if(newstats.Filters != null)
             {
                 foreach(NameValueStats nvs in newstats.Filters)
