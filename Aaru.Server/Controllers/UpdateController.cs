@@ -32,7 +32,6 @@ using Aaru.Dto;
 using Aaru.Helpers;
 using Aaru.Server.Database.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using DbContext = Aaru.Server.Database.DbContext;
 
@@ -63,15 +62,14 @@ public sealed class UpdateController(DbContext ctx) : ControllerBase
 
         sync.UsbProducts = [];
 
-        foreach(UsbProduct product in ctx.UsbProducts.Include(static p => p.Vendor)
-                                         .Where(p => p.ModifiedWhen > lastSync))
+        foreach(UsbProduct product in ctx.UsbProducts.Where(p => p.ModifiedWhen > lastSync))
         {
             sync.UsbProducts.Add(new UsbProductDto
             {
                 Id        = product.Id,
                 Product   = product.Product,
                 ProductId = product.ProductId,
-                VendorId  = product.Vendor.VendorId
+                VendorId  = product.UsbVendorId
             });
         }
 

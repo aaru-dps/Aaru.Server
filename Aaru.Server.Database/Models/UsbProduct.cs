@@ -40,10 +40,11 @@ public class UsbProduct : BaseModel<int>
 
     public UsbProduct(UsbVendor vendor, ushort id, string product)
     {
-        ProductId = id;
-        Product   = product;
-        AddedWhen = ModifiedWhen = DateTime.UtcNow;
-        Vendor    = vendor;
+        ProductId   = id;
+        Product     = product;
+        AddedWhen   = ModifiedWhen = DateTime.UtcNow;
+        Vendor      = vendor;
+        UsbVendorId = vendor.VendorId;
     }
 
     public ushort   ProductId    { get; set; }
@@ -51,6 +52,7 @@ public class UsbProduct : BaseModel<int>
     public DateTime AddedWhen    { get; set; }
     public DateTime ModifiedWhen { get; set; }
     public int      VendorId     { get; set; }
+    public ushort   UsbVendorId  { get; set; }
 
     [JsonIgnore]
     public virtual UsbVendor Vendor { get; set; }
