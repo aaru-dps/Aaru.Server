@@ -35,10 +35,21 @@ namespace Aaru.Server.Components.Admin.Pages.MmcSds;
 
 public partial class View
 {
-    private int    _deleteId;
-    private Modal? _deleteModal;
-    bool           _initialized;
-    List<MmcSd>    _items;
+    private int         _deleteId;
+    private Modal?      _deleteModal;
+    private bool        _initialized;
+    private List<MmcSd> _items      = new();
+    private string      _searchTerm = string.Empty;
+
+    private IEnumerable<MmcSd> FilteredItems
+    {
+        get
+        {
+            if(string.IsNullOrWhiteSpace(_searchTerm)) return _items;
+
+            return _items.Where(item => item.Id.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+    }
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
