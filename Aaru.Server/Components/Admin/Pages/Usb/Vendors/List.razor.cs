@@ -34,9 +34,23 @@ namespace Aaru.Server.Components.Admin.Pages.Usb.Vendors;
 
 public partial class List
 {
-    bool _initialized;
+    private bool            _initialized;
+    private List<UsbVendor> _items      = new();
+    private string          _searchTerm = string.Empty;
 
-    List<UsbVendor> _items;
+    private IEnumerable<UsbVendor> FilteredItems
+    {
+        get
+        {
+            if(string.IsNullOrWhiteSpace(_searchTerm)) return _items;
+
+            return _items.Where(item =>
+                                    (item.Vendor?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                                    item.VendorId.ToString()
+                                        .Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                                    item.Id.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+    }
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
