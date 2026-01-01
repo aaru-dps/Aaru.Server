@@ -34,10 +34,34 @@ namespace Aaru.Server.Components.Admin.Pages.Pcmcia;
 
 public partial class View
 {
-    private int                       _deleteId;
-    private Modal?                    _deleteModal;
-    bool                              _initialized;
-    List<CommonTypes.Metadata.Pcmcia> _items;
+    private int                               _deleteId;
+    private Modal?                            _deleteModal;
+    private bool                              _initialized;
+    private List<CommonTypes.Metadata.Pcmcia> _items      = new();
+    private string                            _searchTerm = string.Empty;
+
+    private IEnumerable<CommonTypes.Metadata.Pcmcia> FilteredItems
+    {
+        get
+        {
+            if(string.IsNullOrWhiteSpace(_searchTerm)) return _items;
+
+            return _items.Where(item =>
+                                    (item.Manufacturer?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    (item.ProductName?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    (item.Compliance?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    (item.ManufacturerCode?.ToString()
+                                         .Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    (item.CardCode?.ToString()
+                                         .Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    item.Id.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+    }
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
