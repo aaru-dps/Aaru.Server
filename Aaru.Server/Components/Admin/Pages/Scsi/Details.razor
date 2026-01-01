@@ -50,7 +50,7 @@
     <div>
         <h4>SCSI INQUIRY response</h4>
         <hr />
-        @((MarkupString)Inquiry.Prettify(_model?.InquiryData)?.Replace("\n", "<br />")))
+        <SpectreMarkup Content="@Inquiry.Prettify(_model?.InquiryData)" />
     </div>
     <div class="mb-3 mt-3">
         <label for="compareId" class="form-label">Compare with ID</label>

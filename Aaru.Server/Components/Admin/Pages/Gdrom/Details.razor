@@ -1,3 +1,4 @@
+@using Aaru.Decoders.SCSI
 @{
 // /***************************************************************************
 // Aaru Data Preservation Suite
@@ -27,7 +28,6 @@
 // Copyright © 2011-2026 Natalia Portillo
 // ****************************************************************************/
 }
-@using Aaru.Decoders.SCSI
 @attribute [Authorize]
 @layout AdminLayout
 
@@ -47,1111 +47,1152 @@
 <section class="stats-section">
     <h2>GD-ROM swap-trick capabilities report</h2>
     <hr />
-@if(_model?.TestCrashed == true)
-{
-    <h4>Computer crashed while testing.</h4>
-}
-else if(_model?.RecognizedSwapDisc == true)
-{
-    <h4>Swap disc Lead-Out starts at @($"{_model?.SwapDiscLeadOutPMIN:X2}"):@($"{_model?.SwapDiscLeadOutPSEC:X2}"):@($"{_model?.SwapDiscLeadOutPFRAM:X2}") (@($"{_model?.SwapDiscLeadOutStart}") sectors).</h4>
-    <hr/>
-    <dl class="row">
-        <dt class="col-sm-4">Minimum readable sector in HD area:</dt>
-        <dd class="col-sm-8">@_model?.MinimumReadableSectorInHdArea</dd>
-        <dt class="col-sm-4">Maximum readable sector in HD area:</dt>
-        <dd class="col-sm-8">@_model?.MaximumReadableSectorInHdArea</dd>
-        @if(_model?.MaximumReadablePqInHdArea != null)
-        {
-            <dt class="col-sm-4">Contents of last readable sector in HD area (with PQ):</dt>
-            <dd class="col-sm-8">
-                <a href="/admin/gdrom/data/@_model?.Id/MaximumReadablePqInHdArea" target="_blank">@_model?.MaximumReadablePqInHdArea.Length bytes</a>
-            </dd>
-        }
-        @if(_model?.MaximumReadableRwInHdArea != null)
-        {
-            <dt class="col-sm-4">Contents of last readable sector in HD area (with RW):</dt>
-            <dd class="col-sm-8">
-                <a href="/admin/gdrom/data/@_model?.Id/MaximumReadableRwInHdArea" target="_blank">@_model?.MaximumReadableRwInHdArea.Length bytes</a>
-            </dd>
-        }
-    </dl>
-    <table class="table-bordered">
-    <tr>
-        <th>LBA</th>
-        <th>Read mode</th>
-        <th>Status</th>
-        <th>Data</th>
-        <th>Sense</th>
-    </tr>
-    <tr>
-        <td>0</td>
-        <td>Data</td>
-        @if(_model?.Lba0Readable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba0Data != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba0Data" target="_blank">@_model?.Lba0Data.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba0DecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>0</td>
-        <td>Audio (scrambled)</td>
-        @if(_model?.Lba0ScrambledReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba0ScrambledData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba0ScrambledData" target="_blank">@_model?.Lba0ScrambledData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba0ScrambledDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>44990</td>
-        <td>Data</td>
-        @if(_model?.Lba44990Readable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba44990Data != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba44990Data" target="_blank">@_model?.Lba44990Data.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba44990DecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>44990</td>
-        <td>Data (with PQ)</td>
-        @if(_model?.Lba44990PqReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba44990PqData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba44990PqData" target="_blank">@_model?.Lba44990PqData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba44990PqDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>44990</td>
-        <td>Data (with RW)</td>
-        @if(_model?.Lba44990RwReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba44990RwData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba44990RwData" target="_blank">@_model?.Lba44990RwData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba44990RwDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>44990</td>
-        <td>Audio</td>
-        @if(_model?.Lba44990AudioReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba44990AudioData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba44990AudioData" target="_blank">@_model?.Lba44990AudioData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba44990AudioDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>44990</td>
-        <td>Audio (with PQ)</td>
-        @if(_model?.Lba44990AudioPqReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba44990AudioRwData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba44990AudioRwData" target="_blank">@_model?.Lba44990AudioRwData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba44990AudioPqDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>44990</td>
-        <td>Audio (with RW)</td>
-        @if(_model?.Lba44990AudioRwReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba44990AudioRwData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba44990AudioRwData" target="_blank">@_model?.Lba44990AudioRwData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba44990AudioRwDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>45000</td>
-        <td>Data</td>
-        @if(_model?.Lba45000Readable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba45000Data != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba45000Data" target="_blank">@_model?.Lba45000Data.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba45000DecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>45000</td>
-        <td>Data (with PQ)</td>
-        @if(_model?.Lba45000PqReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba45000PqData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba45000PqData" target="_blank">@_model?.Lba45000PqData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba45000PqDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>45000</td>
-        <td>Data (with RW)</td>
-        @if(_model?.Lba45000RwReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba45000RwData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba45000RwData" target="_blank">@_model?.Lba45000RwData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba45000RwDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>45000</td>
-        <td>Audio</td>
-        @if(_model?.Lba45000AudioReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba45000AudioData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba45000AudioData" target="_blank">@_model?.Lba45000AudioData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba45000AudioDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>45000</td>
-        <td>Audio (with PQ)</td>
-        @if(_model?.Lba45000AudioPqReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba45000AudioRwData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba45000AudioRwData" target="_blank">@_model?.Lba45000AudioRwData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba45000AudioPqDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>45000</td>
-        <td>Audio (with RW)</td>
-        @if(_model?.Lba45000AudioRwReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba45000AudioRwData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba45000AudioRwData" target="_blank">@_model?.Lba45000AudioRwData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba45000AudioRwDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>50000</td>
-        <td>Data</td>
-        @if(_model?.Lba50000Readable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba50000Data != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba50000Data" target="_blank">@_model?.Lba50000Data.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba50000DecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>50000</td>
-        <td>Data (with PQ)</td>
-        @if(_model?.Lba50000PqReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba50000PqData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba50000PqData" target="_blank">@_model?.Lba50000PqData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba50000PqDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>50000</td>
-        <td>Data (with RW)</td>
-        @if(_model?.Lba50000RwReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba50000RwData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba50000RwData" target="_blank">@_model?.Lba50000RwData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba50000RwDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>50000</td>
-        <td>Audio</td>
-        @if(_model?.Lba50000AudioReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba50000AudioData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba50000AudioData" target="_blank">@_model?.Lba50000AudioData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba50000AudioDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>50000</td>
-        <td>Audio (with PQ)</td>
-        @if(_model?.Lba50000AudioPqReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba50000AudioRwData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba50000AudioRwData" target="_blank">@_model?.Lba50000AudioRwData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba50000AudioPqDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>50000</td>
-        <td>Audio (with RW)</td>
-        @if(_model?.Lba50000AudioRwReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba50000AudioRwData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba50000AudioRwData" target="_blank">@_model?.Lba50000AudioRwData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba50000AudioRwDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>100000</td>
-        <td>Data</td>
-        @if(_model?.Lba100000Readable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba100000Data != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba100000Data" target="_blank">@_model?.Lba100000Data.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba100000DecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>100000</td>
-        <td>Data (with PQ)</td>
-        @if(_model?.Lba100000PqReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba100000PqData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba100000PqData" target="_blank">@_model?.Lba100000PqData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba100000PqDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>100000</td>
-        <td>Data (with RW)</td>
-        @if(_model?.Lba100000RwReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba100000RwData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba100000RwData" target="_blank">@_model?.Lba100000RwData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba100000RwDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>100000</td>
-        <td>Audio</td>
-        @if(_model?.Lba100000AudioReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba100000AudioData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba100000AudioData" target="_blank">@_model?.Lba100000AudioData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba100000AudioDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>100000</td>
-        <td>Audio (with PQ)</td>
-        @if(_model?.Lba100000AudioPqReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba100000AudioRwData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba100000AudioRwData" target="_blank">@_model?.Lba100000AudioRwData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba100000AudioPqDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>100000</td>
-        <td>Audio (with RW)</td>
-        @if(_model?.Lba100000AudioRwReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba100000AudioRwData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba100000AudioRwData" target="_blank">@_model?.Lba100000AudioRwData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba100000AudioRwDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>400000</td>
-        <td>Data</td>
-        @if(_model?.Lba400000Readable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba400000Data != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba400000Data" target="_blank">@_model?.Lba400000Data.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba400000DecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>400000</td>
-        <td>Data (with PQ)</td>
-        @if(_model?.Lba400000PqReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba400000PqData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba400000PqData" target="_blank">@_model?.Lba400000PqData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba400000PqDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>400000</td>
-        <td>Data (with RW)</td>
-        @if(_model?.Lba400000RwReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba400000RwData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba400000RwData" target="_blank">@_model?.Lba400000RwData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba400000RwDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>400000</td>
-        <td>Audio</td>
-        @if(_model?.Lba400000AudioReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba400000AudioData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba400000AudioData" target="_blank">@_model?.Lba400000AudioData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba400000AudioDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>400000</td>
-        <td>Audio (with PQ)</td>
-        @if(_model?.Lba400000AudioPqReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba400000AudioRwData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba400000AudioRwData" target="_blank">@_model?.Lba400000AudioRwData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba400000AudioPqDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>400000</td>
-        <td>Audio (with RW)</td>
-        @if(_model?.Lba400000AudioRwReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba400000AudioRwData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba400000AudioRwData" target="_blank">@_model?.Lba400000AudioRwData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba400000AudioRwDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>450000</td>
-        <td>Data</td>
-        @if(_model?.Lba450000Readable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba450000Data != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba450000Data" target="_blank">@_model?.Lba450000Data.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba450000DecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>450000</td>
-        <td>Data (with PQ)</td>
-        @if(_model?.Lba450000PqReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba450000PqData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba450000PqData" target="_blank">@_model?.Lba450000PqData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba450000PqDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>450000</td>
-        <td>Data (with RW)</td>
-        @if(_model?.Lba450000RwReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba450000RwData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba450000RwData" target="_blank">@_model?.Lba450000RwData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba450000RwDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>450000</td>
-        <td>Audio</td>
-        @if(_model?.Lba450000AudioReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba450000AudioData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba450000AudioData" target="_blank">@_model?.Lba450000AudioData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba450000AudioDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>450000</td>
-        <td>Audio (with PQ)</td>
-        @if(_model?.Lba450000AudioPqReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba450000AudioRwData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba450000AudioRwData" target="_blank">@_model?.Lba450000AudioRwData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba450000AudioPqDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    <tr>
-        <td>450000</td>
-        <td>Audio (with RW)</td>
-        @if(_model?.Lba450000AudioRwReadable == true)
-        {
-            <td>
-                <span style="color: green;">✔️</span>
-            </td>
-        }
-        else
-        {
-            <td>
-                <span style="color: red;">❌️</span>
-            </td>
-        }
-        <td>
-            @if(_model?.Lba450000AudioRwData != null)
-            {
-                <a href="/admin/gdrom/data/@_model?.Id/Lba450000AudioRwData" target="_blank">@_model?.Lba450000AudioRwData.Length bytes</a>
-            }
-        </td>
-        <td>
-            @if(_model?.Lba450000AudioRwDecodedSense != null)
-            {
-                @((MarkupString)Sense.PrettifySense(_model?.Lba0Sense).Replace("\n", "<br />"))
-            }
-        </td>
-    </tr>
-    </table>
-}
-else
-{
-    <h4>Swap disc not recognized, or firmware reset after tray opened.</h4>
-}
+    @if(_model?.TestCrashed == true)
+    {
+        <h4>Computer crashed while testing.</h4>
+    }
+    else if(_model?.RecognizedSwapDisc == true)
+    {
+        <h4>Swap disc Lead-Out starts
+            at @($"{_model?.SwapDiscLeadOutPMIN:X2}"):@($"{_model?.SwapDiscLeadOutPSEC:X2}"):@($"{_model?.SwapDiscLeadOutPFRAM:X2}") (@($"{_model?.SwapDiscLeadOutStart}") sectors).</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-4">Minimum readable sector in HD area:</dt>
+            <dd class="col-sm-8">@_model?.MinimumReadableSectorInHdArea</dd>
+            <dt class="col-sm-4">Maximum readable sector in HD area:</dt>
+            <dd class="col-sm-8">@_model?.MaximumReadableSectorInHdArea</dd>
+            @if(_model?.MaximumReadablePqInHdArea != null)
+            {
+                <dt class="col-sm-4">Contents of last readable sector in HD area (with PQ):</dt>
+                <dd class="col-sm-8">
+                    <a href="/admin/gdrom/data/@_model?.Id/MaximumReadablePqInHdArea"
+                       target="_blank">@_model?.MaximumReadablePqInHdArea.Length bytes</a>
+                </dd>
+            }
+            @if(_model?.MaximumReadableRwInHdArea != null)
+            {
+                <dt class="col-sm-4">Contents of last readable sector in HD area (with RW):</dt>
+                <dd class="col-sm-8">
+                    <a href="/admin/gdrom/data/@_model?.Id/MaximumReadableRwInHdArea"
+                       target="_blank">@_model?.MaximumReadableRwInHdArea.Length bytes</a>
+                </dd>
+            }
+        </dl>
+        <table class="table-bordered">
+            <tr>
+                <th>LBA</th>
+                <th>Read mode</th>
+                <th>Status</th>
+                <th>Data</th>
+                <th>Sense</th>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>Data</td>
+                @if(_model?.Lba0Readable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba0Data != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba0Data"
+                           target="_blank">@_model?.Lba0Data.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba0DecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>Audio (scrambled)</td>
+                @if(_model?.Lba0ScrambledReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba0ScrambledData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba0ScrambledData"
+                           target="_blank">@_model?.Lba0ScrambledData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba0ScrambledDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>44990</td>
+                <td>Data</td>
+                @if(_model?.Lba44990Readable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba44990Data != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba44990Data"
+                           target="_blank">@_model?.Lba44990Data.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba44990DecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>44990</td>
+                <td>Data (with PQ)</td>
+                @if(_model?.Lba44990PqReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba44990PqData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba44990PqData"
+                           target="_blank">@_model?.Lba44990PqData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba44990PqDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>44990</td>
+                <td>Data (with RW)</td>
+                @if(_model?.Lba44990RwReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba44990RwData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba44990RwData"
+                           target="_blank">@_model?.Lba44990RwData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba44990RwDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>44990</td>
+                <td>Audio</td>
+                @if(_model?.Lba44990AudioReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba44990AudioData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba44990AudioData"
+                           target="_blank">@_model?.Lba44990AudioData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba44990AudioDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>44990</td>
+                <td>Audio (with PQ)</td>
+                @if(_model?.Lba44990AudioPqReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba44990AudioRwData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba44990AudioRwData"
+                           target="_blank">@_model?.Lba44990AudioRwData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba44990AudioPqDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>44990</td>
+                <td>Audio (with RW)</td>
+                @if(_model?.Lba44990AudioRwReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba44990AudioRwData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba44990AudioRwData"
+                           target="_blank">@_model?.Lba44990AudioRwData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba44990AudioRwDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>45000</td>
+                <td>Data</td>
+                @if(_model?.Lba45000Readable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba45000Data != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba45000Data"
+                           target="_blank">@_model?.Lba45000Data.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba45000DecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>45000</td>
+                <td>Data (with PQ)</td>
+                @if(_model?.Lba45000PqReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba45000PqData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba45000PqData"
+                           target="_blank">@_model?.Lba45000PqData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba45000PqDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>45000</td>
+                <td>Data (with RW)</td>
+                @if(_model?.Lba45000RwReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba45000RwData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba45000RwData"
+                           target="_blank">@_model?.Lba45000RwData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba45000RwDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>45000</td>
+                <td>Audio</td>
+                @if(_model?.Lba45000AudioReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba45000AudioData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba45000AudioData"
+                           target="_blank">@_model?.Lba45000AudioData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba45000AudioDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>45000</td>
+                <td>Audio (with PQ)</td>
+                @if(_model?.Lba45000AudioPqReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba45000AudioRwData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba45000AudioRwData"
+                           target="_blank">@_model?.Lba45000AudioRwData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba45000AudioPqDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>45000</td>
+                <td>Audio (with RW)</td>
+                @if(_model?.Lba45000AudioRwReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba45000AudioRwData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba45000AudioRwData"
+                           target="_blank">@_model?.Lba45000AudioRwData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba45000AudioRwDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>50000</td>
+                <td>Data</td>
+                @if(_model?.Lba50000Readable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba50000Data != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba50000Data"
+                           target="_blank">@_model?.Lba50000Data.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba50000DecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>50000</td>
+                <td>Data (with PQ)</td>
+                @if(_model?.Lba50000PqReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba50000PqData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba50000PqData"
+                           target="_blank">@_model?.Lba50000PqData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba50000PqDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>50000</td>
+                <td>Data (with RW)</td>
+                @if(_model?.Lba50000RwReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba50000RwData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba50000RwData"
+                           target="_blank">@_model?.Lba50000RwData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba50000RwDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>50000</td>
+                <td>Audio</td>
+                @if(_model?.Lba50000AudioReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba50000AudioData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba50000AudioData"
+                           target="_blank">@_model?.Lba50000AudioData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba50000AudioDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>50000</td>
+                <td>Audio (with PQ)</td>
+                @if(_model?.Lba50000AudioPqReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba50000AudioRwData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba50000AudioRwData"
+                           target="_blank">@_model?.Lba50000AudioRwData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba50000AudioPqDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>50000</td>
+                <td>Audio (with RW)</td>
+                @if(_model?.Lba50000AudioRwReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba50000AudioRwData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba50000AudioRwData"
+                           target="_blank">@_model?.Lba50000AudioRwData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba50000AudioRwDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>100000</td>
+                <td>Data</td>
+                @if(_model?.Lba100000Readable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba100000Data != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba100000Data"
+                           target="_blank">@_model?.Lba100000Data.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba100000DecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>100000</td>
+                <td>Data (with PQ)</td>
+                @if(_model?.Lba100000PqReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba100000PqData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba100000PqData"
+                           target="_blank">@_model?.Lba100000PqData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba100000PqDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>100000</td>
+                <td>Data (with RW)</td>
+                @if(_model?.Lba100000RwReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba100000RwData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba100000RwData"
+                           target="_blank">@_model?.Lba100000RwData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba100000RwDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>100000</td>
+                <td>Audio</td>
+                @if(_model?.Lba100000AudioReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba100000AudioData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba100000AudioData"
+                           target="_blank">@_model?.Lba100000AudioData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba100000AudioDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>100000</td>
+                <td>Audio (with PQ)</td>
+                @if(_model?.Lba100000AudioPqReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba100000AudioRwData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba100000AudioRwData"
+                           target="_blank">@_model?.Lba100000AudioRwData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba100000AudioPqDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>100000</td>
+                <td>Audio (with RW)</td>
+                @if(_model?.Lba100000AudioRwReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba100000AudioRwData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba100000AudioRwData"
+                           target="_blank">@_model?.Lba100000AudioRwData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba100000AudioRwDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>400000</td>
+                <td>Data</td>
+                @if(_model?.Lba400000Readable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba400000Data != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba400000Data"
+                           target="_blank">@_model?.Lba400000Data.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba400000DecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>400000</td>
+                <td>Data (with PQ)</td>
+                @if(_model?.Lba400000PqReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba400000PqData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba400000PqData"
+                           target="_blank">@_model?.Lba400000PqData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba400000PqDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>400000</td>
+                <td>Data (with RW)</td>
+                @if(_model?.Lba400000RwReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba400000RwData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba400000RwData"
+                           target="_blank">@_model?.Lba400000RwData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba400000RwDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>400000</td>
+                <td>Audio</td>
+                @if(_model?.Lba400000AudioReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba400000AudioData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba400000AudioData"
+                           target="_blank">@_model?.Lba400000AudioData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba400000AudioDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>400000</td>
+                <td>Audio (with PQ)</td>
+                @if(_model?.Lba400000AudioPqReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba400000AudioRwData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba400000AudioRwData"
+                           target="_blank">@_model?.Lba400000AudioRwData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba400000AudioPqDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>400000</td>
+                <td>Audio (with RW)</td>
+                @if(_model?.Lba400000AudioRwReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba400000AudioRwData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba400000AudioRwData"
+                           target="_blank">@_model?.Lba400000AudioRwData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba400000AudioRwDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>450000</td>
+                <td>Data</td>
+                @if(_model?.Lba450000Readable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba450000Data != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba450000Data"
+                           target="_blank">@_model?.Lba450000Data.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba450000DecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>450000</td>
+                <td>Data (with PQ)</td>
+                @if(_model?.Lba450000PqReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba450000PqData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba450000PqData"
+                           target="_blank">@_model?.Lba450000PqData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba450000PqDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>450000</td>
+                <td>Data (with RW)</td>
+                @if(_model?.Lba450000RwReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba450000RwData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba450000RwData"
+                           target="_blank">@_model?.Lba450000RwData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba450000RwDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>450000</td>
+                <td>Audio</td>
+                @if(_model?.Lba450000AudioReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba450000AudioData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba450000AudioData"
+                           target="_blank">@_model?.Lba450000AudioData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba450000AudioDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>450000</td>
+                <td>Audio (with PQ)</td>
+                @if(_model?.Lba450000AudioPqReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba450000AudioRwData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba450000AudioRwData"
+                           target="_blank">@_model?.Lba450000AudioRwData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba450000AudioPqDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>450000</td>
+                <td>Audio (with RW)</td>
+                @if(_model?.Lba450000AudioRwReadable == true)
+                {
+                    <td>
+                        <span style="color: green;">✔️</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span style="color: red;">❌️</span>
+                    </td>
+                }
+                <td>
+                    @if(_model?.Lba450000AudioRwData != null)
+                    {
+                        <a href="/admin/gdrom/data/@_model?.Id/Lba450000AudioRwData"
+                           target="_blank">@_model?.Lba450000AudioRwData.Length bytes</a>
+                    }
+                </td>
+                <td>
+                    @if(_model?.Lba450000AudioRwDecodedSense != null)
+                    {
+                        <SpectreMarkup Content="@Sense.PrettifySense(_model?.Lba0Sense)" />
+                    }
+                </td>
+            </tr>
+        </table>
+    }
+    else
+    {
+        <h4>Swap disc not recognized, or firmware reset after tray opened.</h4>
+    }
 
 </section>

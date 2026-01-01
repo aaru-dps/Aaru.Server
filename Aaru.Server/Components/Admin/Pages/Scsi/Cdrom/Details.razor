@@ -50,7 +50,7 @@
     <div>
         <h4>SCSI CD-ROM Capabilities</h4>
         <hr />
-        @((MarkupString)Modes.PrettifyModePage_2A(_model?.ModeSense2AData)?.Replace("\n", "<br />"))
+        <SpectreMarkup Content="@Modes.PrettifyModePage_2A(_model?.ModeSense2AData)" />
     </div>
     <div>
         <a href="/admin/scsi/cdrom" class="btn btn-secondary">Back to List</a>
