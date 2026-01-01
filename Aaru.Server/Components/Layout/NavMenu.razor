@@ -34,62 +34,105 @@
 @inject IConfiguration      Configuration
 
 <div class="navmenu-container">
-    <div class="navbar navbar-dark ps-3 top-row" style="display: flex; align-items: center; justify-content: flex-end;">
-        <a class="navbar-brand" href="">Aaru</a>
+    <!-- Header Section -->
+    <div class="navbar navbar-dark ps-3 top-row">
+        <a class="navbar-brand" href="">
+            <i class="bi bi-database-fill me-2"></i>Aaru Server
+        </a>
     </div>
-    <!-- Hamburger toggler moved to MainLayout.razor -->
+
+    <!-- Navigation Menu -->
     <div class="nav-scrollable">
         <nav class="flex-column">
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                    <span aria-hidden="true" class="bi bi-house-door-fill-nav-menu"></span> Home
-                </NavLink>
+            <!-- Main Navigation Items -->
+            <div class="nav-section mb-3">
+                <!-- Home -->
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link d-flex align-items-center" href="" Match="NavLinkMatch.All">
+                        <i class="bi bi-house-door-fill me-2"></i>
+                        <span>Home</span>
+                    </NavLink>
+                </div>
+
+                <!-- Statistics -->
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link d-flex align-items-center" href="Stats">
+                        <i class="bi bi-graph-up me-2"></i>
+                        <span>Statistics</span>
+                    </NavLink>
+                </div>
             </div>
 
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="Stats">
-                    <span aria-hidden="true" class="bi bi-graph-up-nav-menu"></span> Statistics
-                </NavLink>
+            <!-- Dynamic Sidebar Navigation -->
+            <div class="nav-section sidebar-nav mb-3">
+                @if(!string.IsNullOrEmpty(_sidebarMarkup))
+                {
+                    <div class="sidebar-header px-3 py-2 text-secondary small">
+                        <i class="bi bi-list-nested me-2"></i>Documentation
+                    </div>
+                    <div class="sidebar-content">
+                        @((MarkupString)_sidebarMarkup)
+                    </div>
+                }
             </div>
 
-            <div class="nav-item px-3 sidebar-nav">
-                @((MarkupString)_sidebarMarkup)
+            <!-- Protected Navigation Section -->
+            <div class="nav-section mb-3">
+                <!-- Auth Required -->
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link d-flex align-items-center" href="auth">
+                        <i class="bi bi-lock me-2"></i>
+                        <span>Auth Required</span>
+                    </NavLink>
+                </div>
             </div>
 
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="auth">
-                    <span aria-hidden="true" class="bi bi-lock-nav-menu"></span> Auth Required
-                </NavLink>
-            </div>
-
+            <!-- User Authorization Section -->
             <AuthorizeView>
                 <Authorized>
-                    <div class="nav-item px-3">
-                        <NavLink class="nav-link" href="admin">
-                            <span aria-hidden="true" class="bi bi-lock-nav-menu"></span> Admin
-                        </NavLink>
-                    </div>
-                    <div class="nav-item px-3">
-                        <NavLink class="nav-link" href="Account/Manage">
-                            <span aria-hidden="true"
-                                  class="bi bi-person-fill-nav-menu"></span> @context.User.Identity?.Name
-                        </NavLink>
-                    </div>
-                    <div class="nav-item px-3">
-                        <form action="Account/Logout" method="post">
-                            <AntiforgeryToken />
-                            <input name="ReturnUrl" type="hidden" value="@_currentUrl" />
-                            <button class="nav-link" type="submit">
-                                <span aria-hidden="true" class="bi bi-arrow-bar-left-nav-menu"></span> Logout
-                            </button>
-                        </form>
+                    <hr class="nav-divider my-2" />
+
+                    <div class="nav-section mb-3">
+                        <!-- Admin Dashboard -->
+                        <div class="nav-item px-3">
+                            <NavLink class="nav-link d-flex align-items-center" href="admin">
+                                <i class="bi bi-shield-lock me-2"></i>
+                                <span>Admin</span>
+                            </NavLink>
+                        </div>
+
+                        <!-- Account Settings -->
+                        <div class="nav-item px-3">
+                            <NavLink class="nav-link d-flex align-items-center" href="Account/Manage">
+                                <i class="bi bi-person-circle me-2"></i>
+                                <span>@context.User.Identity?.Name</span>
+                            </NavLink>
+                        </div>
+
+                        <!-- Logout -->
+                        <div class="nav-item px-3">
+                            <form action="Account/Logout" method="post" style="margin: 0;">
+                                <AntiforgeryToken />
+                                <input name="ReturnUrl" type="hidden" value="@_currentUrl" />
+                                <button class="nav-link d-flex align-items-center w-100" type="submit">
+                                    <i class="bi bi-arrow-bar-left me-2"></i>
+                                    <span>Logout</span>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </Authorized>
                 <NotAuthorized>
-                    <div class="nav-item px-3">
-                        <NavLink class="nav-link" href="Account/Login">
-                            <span aria-hidden="true" class="bi bi-person-badge-nav-menu"></span> Login
-                        </NavLink>
+                    <hr class="nav-divider my-2" />
+
+                    <div class="nav-section mb-3">
+                        <!-- Login -->
+                        <div class="nav-item px-3">
+                            <NavLink class="nav-link d-flex align-items-center" href="Account/Login">
+                                <i class="bi bi-person-badge me-2"></i>
+                                <span>Login</span>
+                            </NavLink>
+                        </div>
                     </div>
                 </NotAuthorized>
             </AuthorizeView>
