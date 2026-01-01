@@ -35,12 +35,32 @@ namespace Aaru.Server.Components.Admin.Pages.Usb.Devices;
 
 public partial class List
 {
-    private Modal?                 _consolidateModal;
-    private int                    _deleteId;
-    private Modal?                 _deleteModal;
-    List<UsbModel>                 _duplicates;
-    bool                           _initialized;
-    List<CommonTypes.Metadata.Usb> _items;
+    private Modal?                         _consolidateModal;
+    private int                            _deleteId;
+    private Modal?                         _deleteModal;
+    private List<UsbModel>                 _duplicates = new();
+    private bool                           _initialized;
+    private List<CommonTypes.Metadata.Usb> _items      = new();
+    private string                         _searchTerm = string.Empty;
+
+    private IEnumerable<CommonTypes.Metadata.Usb> FilteredItems
+    {
+        get
+        {
+            if(string.IsNullOrWhiteSpace(_searchTerm)) return _items;
+
+            return _items.Where(item =>
+                                    (item.Manufacturer?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    (item.Product?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    item.VendorID.ToString()
+                                        .Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                                    item.ProductID.ToString()
+                                        .Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                                    item.Id.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+    }
 
 
     /// <inheritdoc />
@@ -111,9 +131,8 @@ public partial class List
                                                                .ToArrayAsync())
             {
                 if(slave.Descriptors != null && master.Descriptors != null)
-                {
-                    if(!master.Descriptors.SequenceEqual(slave.Descriptors)) continue;
-                }
+                    if(!master.Descriptors.SequenceEqual(slave.Descriptors))
+                        continue;
 
                 foreach(Device device in ctx.Devices.Where(d => d.USB.Id == slave.Id)) device.USB = master;
 
