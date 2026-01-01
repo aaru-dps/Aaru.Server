@@ -35,10 +35,30 @@ namespace Aaru.Server.Components.Admin.Pages.Scsi.Modes;
 
 public partial class View
 {
-    private int    _deleteId;
-    private Modal? _deleteModal;
-    bool           _initialized;
-    List<ScsiMode> _items;
+    private int            _deleteId;
+    private Modal?         _deleteModal;
+    private bool           _initialized;
+    private List<ScsiMode> _items      = new();
+    private string         _searchTerm = string.Empty;
+
+    private IEnumerable<ScsiMode> FilteredItems
+    {
+        get
+        {
+            if(string.IsNullOrWhiteSpace(_searchTerm)) return _items;
+
+            return _items.Where(item =>
+                                    (item.MediumType?.ToString()
+                                         .Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    (item.Speed?.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    (item.BufferedMode?.ToString()
+                                         .Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    item.Id.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+    }
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
