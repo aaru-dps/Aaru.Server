@@ -610,8 +610,6 @@ public partial class ViewData
         if(_model.RawDataAsHex != null)
             _model.RawDataAsHex = HttpUtility.HtmlEncode(_model.RawDataAsHex).Replace("\n", "<br/>");
 
-        if(_model.Decoded != null) _model.Decoded = HttpUtility.HtmlEncode(_model.Decoded).Replace("\n", "<br/>");
-
         StateHasChanged();
     }
 
