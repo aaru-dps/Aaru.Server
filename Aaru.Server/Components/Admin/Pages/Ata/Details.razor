@@ -35,31 +35,89 @@
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
 
-<PageTitle>ATA IDENTIFY DEVICE response</PageTitle>
+<PageTitle>ATA IDENTIFY DEVICE Response</PageTitle>
 
 @if(!_initialized)
 {
-    <div class="stats-section">
-        <h1 style="color: red; align-content: center; padding: 2rem">Loading...</h1>
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+        <div class="text-center">
+            <div class="spinner-border text-info" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <h3 class="mt-3 text-light">Loading ATA response...</h3>
+        </div>
     </div>
 
     return;
 }
 
-<section class="stats-section">
-    <div>
-        <h4>ATA IDENTIFY DEVICE response</h4>
-        <hr />
-        <SpectreMarkup Content="@Identify.Prettify(_model?.Identify)" />
+<div class="container-fluid px-4 py-4">
+    <!-- Header Section -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h2 mb-1 text-light">
+                <i class="bi bi-hdd-rack text-info"></i> ATA IDENTIFY DEVICE Response
+            </h1>
+            <p class="text-secondary mb-0">
+                <span class="badge bg-info text-dark me-2" style="min-width: 60px; display: inline-block;">ID: @Id</span>
+                @if(_model?.IdentifyDevice?.Model != null)
+                {
+                    <span class="text-light">@_model.IdentifyDevice.Value.Model</span>
+                    @if(_model?.IdentifyDevice?.FirmwareRevision != null)
+                    {
+                        <span class="text-secondary ms-2">
+                            <i class="bi bi-code-square"></i> @_model.IdentifyDevice.Value.FirmwareRevision
+                        </span>
+                    }
+                }
+            </p>
+        </div>
+        <div>
+            <a href="/admin/ata" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle"></i> Back to List
+            </a>
+        </div>
     </div>
-    <div class="mb-3 mt-3">
-        <label for="compareId" class="form-label">Compare with ID</label>
-        <input id="compareId" class="form-control d-inline-block w-auto me-2" type="number" @bind="_compareId" />
-        <button class="btn btn-primary" @onclick="GoToCompare">
-            <i class="bi bi-arrow-left-right"></i> Compare
-        </button>
+
+    <!-- Compare Tool Card -->
+    <div class="card bg-dark shadow-sm mb-4 border-secondary">
+        <div class="card-header bg-secondary text-light">
+            <h5 class="mb-0">
+                <i class="bi bi-arrow-left-right"></i> Compare Tool
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="row align-items-end g-3">
+                <div class="col-auto">
+                    <label for="compareId" class="form-label text-light">
+                        <i class="bi bi-hash"></i> Compare with ATA Response ID
+                    </label>
+                    <input id="compareId"
+                           class="form-control bg-dark text-light border-secondary"
+                           type="number"
+                           placeholder="Enter ID..."
+                           @bind="_compareId" />
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-info" @onclick="GoToCompare">
+                        <i class="bi bi-arrow-left-right"></i> Compare Responses
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div>
-        <a href="/admin/ata" class="btn btn-secondary">Back to List</a>
+
+    <!-- ATA IDENTIFY Data Card -->
+    <div class="card bg-dark shadow-sm border-secondary">
+        <div class="card-header bg-info text-dark">
+            <h5 class="mb-0">
+                <i class="bi bi-file-earmark-code"></i> ATA IDENTIFY DEVICE Data
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="bg-black p-4 rounded border border-secondary" style="font-family: 'Courier New', monospace; font-size: 0.9rem; overflow-x: auto;">
+                <SpectreMarkup Content="@Identify.Prettify(_model?.Identify)" />
+            </div>
+        </div>
     </div>
-</section>
+</div>
