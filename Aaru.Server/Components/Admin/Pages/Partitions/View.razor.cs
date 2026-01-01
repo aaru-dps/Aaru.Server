@@ -34,8 +34,22 @@ namespace Aaru.Server.Components.Admin.Pages.Partitions;
 
 public partial class View
 {
-    bool            _initialized;
-    List<Partition> _items;
+    private bool            _initialized;
+    private List<Partition> _items      = new();
+    private string          _searchTerm = string.Empty;
+
+    private IEnumerable<Partition> FilteredItems
+    {
+        get
+        {
+            if(string.IsNullOrWhiteSpace(_searchTerm)) return _items;
+
+            return _items.Where(item =>
+                                    (item.Name?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                                    item.Count.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                                    item.Id.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+    }
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
