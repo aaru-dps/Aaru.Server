@@ -31,24 +31,40 @@
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
 
-<PageTitle>Aaru: Statistics</PageTitle>
+<!-- Header Section -->
+<div class="stats-header">
+    <h1 class="stats-title">Media Image Formats Statistics</h1>
+    <p class="stats-subtitle">Analysis of all media image formats found</p>
+</div>
 
-@*
-    TODO: Group by datagrid
-*@
+<!-- Charts Section -->
+<div class="stats-charts-container">
+    <div class="chart-header">
+        <h2 class="chart-section-title">Format Distribution</h2>
+        <p class="chart-section-subtitle">Interactive visualization of format usage</p>
+    </div>
 
-<h1>
-    <p class="text-center" style="color: deeppink;">All media image formats found...</p>
-</h1>
-<PieChart @ref="_formatsChart" style="padding: 40px" TItem="long"/>
-<Grid Data="@MediaImages" FixedHeader="true" PageSize="int.MaxValue" TItem="MediaFormat" Responsive="true"
-      AllowSorting="true" Class="table table-hover table-bordered table-striped table-dark" style="width: 100%;">
-    <GridColumns>
-        <GridColumn TItem="MediaFormat" HeaderText="Filter" PropertyName="@nameof(MediaFormat.Name)">
-            @context.Name
-        </GridColumn>
-        <GridColumn TItem="MediaFormat" HeaderText="Times found" PropertyName="@nameof(MediaFormat.Count)">
-            @context.Count
-        </GridColumn>
-    </GridColumns>
-</Grid>
+    <div class="carousel-wrapper">
+        <PieChart @ref="_formatsChart" style="padding: 40px" TItem="long" />
+    </div>
+</div>
+
+<!-- Table Section -->
+<div class="stats-table-container">
+    <div class="table-header-section">
+        <h2 class="table-title">Complete Formats List</h2>
+        <p class="table-subtitle">Detailed breakdown of all detected formats</p>
+    </div>
+
+    <Grid Data="@MediaImages" FixedHeader="true" PageSize="int.MaxValue" TItem="MediaFormat" Responsive="true"
+          AllowSorting="true" Class="stats-data-grid table table-hover table-dark" style="width: 100%;">
+        <GridColumns>
+            <GridColumn TItem="MediaFormat" HeaderText="Format" PropertyName="@nameof(MediaFormat.Name)">
+                <div class="format-name-cell">@context.Name</div>
+            </GridColumn>
+            <GridColumn TItem="MediaFormat" HeaderText="Occurrences" PropertyName="@nameof(MediaFormat.Count)">
+                <span class="count-badge">@context.Count</span>
+            </GridColumn>
+        </GridColumns>
+    </Grid>
+</div>

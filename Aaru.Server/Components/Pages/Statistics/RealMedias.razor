@@ -31,25 +31,43 @@
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
 
-@*
-    TODO: Group by datagrid
-*@
+<!-- Header Section -->
+<div class="stats-header">
+    <h1 class="stats-title">Physical Media Statistics</h1>
+    <p class="stats-subtitle">Analysis of all physical media types found in devices</p>
+</div>
 
-<h1>
-    <p class="text-center" style="color: deeppink;">All media types found in devices...</p>
-</h1>
-<PieChart @ref="_realMediaChart" style="padding: 40px" TItem="long"/>
-<Grid Data="@RealMedia" FixedHeader="true" PageSize="int.MaxValue" TItem="MediaItem" Responsive="true"
-      AllowSorting="true" Class="table table-hover table-bordered table-striped table-dark" style="width: 100%;">
-    <GridColumns>
-        <GridColumn TItem="MediaItem" HeaderText="Physical type" PropertyName="@nameof(MediaItem.Type)">
-            @context.Type
-        </GridColumn>
-        <GridColumn TItem="MediaItem" HeaderText="Logical type" PropertyName="@nameof(MediaItem.SubType)">
-            @context.SubType
-        </GridColumn>
-        <GridColumn TItem="MediaItem" HeaderText="Times found" PropertyName="@nameof(MediaItem.Count)">
-            @context.Count
-        </GridColumn>
-    </GridColumns>
-</Grid>
+<!-- Charts Section -->
+<div class="stats-charts-container">
+    <div class="chart-header">
+        <h2 class="chart-section-title">Media Type Distribution</h2>
+        <p class="chart-section-subtitle">Interactive visualization of physical media types</p>
+    </div>
+
+    <div class="carousel-wrapper">
+        <PieChart @ref="_realMediaChart" style="padding: 40px" TItem="long" />
+    </div>
+</div>
+
+<!-- Table Section -->
+<div class="stats-table-container">
+    <div class="table-header-section">
+        <h2 class="table-title">Complete Physical Media List</h2>
+        <p class="table-subtitle">Detailed breakdown of all detected physical media types</p>
+    </div>
+
+    <Grid Data="@RealMedia" FixedHeader="true" PageSize="int.MaxValue" TItem="MediaItem" Responsive="true"
+          AllowSorting="true" Class="stats-data-grid table table-hover table-dark" style="width: 100%;">
+        <GridColumns>
+            <GridColumn TItem="MediaItem" HeaderText="Physical Type" PropertyName="@nameof(MediaItem.Type)">
+                <div class="media-type-cell">@context.Type</div>
+            </GridColumn>
+            <GridColumn TItem="MediaItem" HeaderText="Subtype" PropertyName="@nameof(MediaItem.SubType)">
+                <div class="media-subtype-cell">@context.SubType</div>
+            </GridColumn>
+            <GridColumn TItem="MediaItem" HeaderText="Occurrences" PropertyName="@nameof(MediaItem.Count)">
+                <span class="count-badge">@context.Count</span>
+            </GridColumn>
+        </GridColumns>
+    </Grid>
+</div>

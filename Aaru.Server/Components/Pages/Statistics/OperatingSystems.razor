@@ -157,10 +157,33 @@
     .carousel-wrapper
     {
         width: 100%;
-        min-height: 500px;
+        padding: 2rem 1rem;
         position: relative;
+        overflow: visible;
     }
 
+    .carousel-wrapper :deep .carousel
+    {
+        width: 100% !important;
+        overflow: visible !important;
+    }
+
+    .carousel-wrapper :deep .carousel-inner
+    {
+        width: 100% !important;
+        min-height: 500px !important;
+        overflow: visible !important;
+    }
+
+    .carousel-wrapper :deep .carousel-item
+    {
+        width: 100% !important;
+        min-height: 500px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        overflow: visible !important;
+    }
 
     .chart-title
     {
@@ -172,11 +195,6 @@
         margin-bottom: 1.5rem;
     }
 
-    .stats-carousel
-    {
-        min-height: 500px;
-        width: 100%;
-    }
 
     .stats-table-container
     {

@@ -31,18 +31,215 @@
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
 
-<h1>
-    <p class="text-center" style="color: deeppink;">All Aaru versions...</p>
-</h1>
-<PieChart @ref="_versionsChart" style="padding: 40px" TItem="long"/>
-<Grid Data="@VersionsList" FixedHeader="true" PageSize="int.MaxValue" TItem="NameValueStats" Responsive="true"
-      AllowSorting="true" Class="table table-hover table-bordered table-striped table-dark" style="width: 100%;">
-    <GridColumns>
-        <GridColumn TItem="NameValueStats" HeaderText="Filter" PropertyName="@nameof(NameValueStats.name)">
-            @context.name
-        </GridColumn>
-        <GridColumn TItem="NameValueStats" HeaderText="Times found" PropertyName="@nameof(NameValueStats.Value)">
-            @context.Value
-        </GridColumn>
-    </GridColumns>
-</Grid>
+<!-- Header Section -->
+<div class="stats-header">
+    <h1 class="stats-title">Aaru Versions Statistics</h1>
+    <p class="stats-subtitle">Analysis of all Aaru versions used for scanning</p>
+</div>
+
+<!-- Charts Section -->
+<div class="stats-charts-container">
+    <div class="chart-header">
+        <h2 class="chart-section-title">Version Distribution</h2>
+        <p class="chart-section-subtitle">Interactive visualization of Aaru version usage</p>
+    </div>
+
+    <div class="carousel-wrapper">
+        <PieChart @ref="_versionsChart" style="padding: 40px" TItem="long" />
+    </div>
+</div>
+
+<!-- Table Section -->
+<div class="stats-table-container">
+    <div class="table-header-section">
+        <h2 class="table-title">Complete Versions List</h2>
+        <p class="table-subtitle">Detailed breakdown of all detected Aaru versions</p>
+    </div>
+
+    <Grid Data="@VersionsList"
+          FixedHeader="true"
+          PageSize="int.MaxValue"
+          TItem="NameValueStats"
+          Responsive="true"
+          AllowSorting="true"
+          Class="stats-data-grid table table-hover table-dark"
+          style="width: 100%;">
+        <GridColumns>
+            <GridColumn TItem="NameValueStats"
+                        HeaderText="Version"
+                        PropertyName="@nameof(NameValueStats.name)"
+                        Sortable="true">
+                <div class="version-name-cell">@context.name</div>
+            </GridColumn>
+            <GridColumn TItem="NameValueStats"
+                        HeaderText="Occurrences"
+                        PropertyName="@nameof(NameValueStats.Value)"
+                        Sortable="true">
+                <div class="version-count-cell">
+                    <span class="count-badge">@context.Value</span>
+                </div>
+            </GridColumn>
+        </GridColumns>
+    </Grid>
+</div>
+
+<style>
+    .stats-header
+    {
+        padding: 2rem 1rem;
+        margin-bottom: 2rem;
+        background: linear-gradient(135deg, rgba(224, 64, 251, 0.1), rgba(224, 64, 251, 0.05));
+        border-radius: 0.5rem;
+        border: 1px solid rgba(224, 64, 251, 0.2);
+    }
+
+    .stats-title
+    {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin: 0 0 0.5rem 0;
+    }
+
+    .stats-subtitle
+    {
+        font-size: 1.1rem;
+        color: #b0b0b0;
+        margin: 0;
+        font-weight: 400;
+    }
+
+    .stats-charts-container
+    {
+        padding: 2rem 1rem;
+        margin-bottom: 2rem;
+        background-color: rgba(255, 255, 255, 0.02);
+        border-radius: 0.5rem;
+        border: 1px solid rgba(224, 64, 251, 0.1);
+    }
+
+    .chart-header
+    {
+        margin-bottom: 1.5rem;
+    }
+
+    .chart-section-title
+    {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin: 0 0 0.5rem 0;
+    }
+
+    .chart-section-subtitle
+    {
+        font-size: 0.95rem;
+        color: #a0a0a0;
+        margin: 0;
+    }
+
+    .stats-table-container
+    {
+        padding: 2rem 1rem;
+        background-color: rgba(255, 255, 255, 0.01);
+        border-radius: 0.5rem;
+        border: 1px solid rgba(224, 64, 251, 0.1);
+    }
+
+    .table-header-section
+    {
+        margin-bottom: 2rem;
+    }
+
+    .table-title
+    {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin: 0 0 0.5rem 0;
+    }
+
+    .table-subtitle
+    {
+        font-size: 0.95rem;
+        color: #a0a0a0;
+        margin: 0;
+    }
+
+    .stats-data-grid
+    {
+        background-color: rgba(0, 0, 0, 0.4) !important;
+        border: 1px solid rgba(224, 64, 251, 0.15) !important;
+        border-radius: 0.5rem !important;
+    }
+
+    .stats-data-grid :deep .table-head
+    {
+        background-color: rgba(224, 64, 251, 0.2) !important;
+        border-bottom: 2px solid rgba(224, 64, 251, 0.3) !important;
+    }
+
+    .stats-data-grid :deep th
+    {
+        color: #ffffff !important;
+        font-weight: 600 !important;
+        padding: 1rem !important;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 0.9rem;
+    }
+
+    .stats-data-grid :deep td
+    {
+        padding: 0.75rem 1rem !important;
+        border-color: rgba(224, 64, 251, 0.1) !important;
+        color: #e0e0e0 !important;
+    }
+
+    .stats-data-grid :deep tbody tr:hover
+    {
+        background-color: rgba(224, 64, 251, 0.15) !important;
+    }
+
+    .stats-data-grid :deep tbody tr:nth-child(even)
+    {
+        background-color: rgba(0, 0, 0, 0.2) !important;
+    }
+
+    .stats-data-grid :deep tbody tr:nth-child(even):hover
+    {
+        background-color: rgba(224, 64, 251, 0.15) !important;
+    }
+
+    .version-name-cell
+    {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        min-height: 2rem;
+    }
+
+    .version-count-cell
+    {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 2rem;
+    }
+
+    .count-badge
+    {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, rgba(224, 64, 251, 0.3), rgba(224, 64, 251, 0.1));
+        color: #e040fb;
+        padding: 0.4rem 0.8rem;
+        border-radius: 0.25rem;
+        font-weight: 600;
+        border: 1px solid rgba(224, 64, 251, 0.3);
+        font-size: 0.9rem;
+        min-width: 60px;
+        text-align: center;
+    }
+</style>

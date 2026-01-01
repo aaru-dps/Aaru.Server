@@ -31,18 +31,41 @@
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
 
-<h1>
-    <p class="text-center" style="color: deeppink;">All Aaru commands...</p>
-</h1>
-<PieChart @ref="_commandsChart" style="padding: 40px" TItem="long"/>
-<Grid Data="@CommandsList" FixedHeader="true" PageSize="int.MaxValue" TItem="Command" Responsive="true"
-      AllowSorting="true" Class="table table-hover table-bordered table-striped table-dark" style="width: 100%;">
-    <GridColumns>
-        <GridColumn TItem="Command" HeaderText="Name" PropertyName="@nameof(Command.Name)">
-            @context.Name
-        </GridColumn>
-        <GridColumn TItem="Command" HeaderText="Times" PropertyName="@nameof(Command.Count)">
-            @context.Count
-        </GridColumn>
-    </GridColumns>
-</Grid>
+<!-- Header Section -->
+<div class="stats-header">
+    <h1 class="stats-title">Aaru Commands Statistics</h1>
+    <p class="stats-subtitle">Analysis of all commands executed</p>
+</div>
+
+<!-- Charts Section -->
+<div class="stats-charts-container">
+    <div class="chart-header">
+        <h2 class="chart-section-title">Command Usage Distribution</h2>
+        <p class="chart-section-subtitle">Interactive visualization of command frequency</p>
+    </div>
+
+    <div class="carousel-wrapper">
+        <PieChart @ref="_commandsChart" style="padding: 40px" TItem="long" />
+    </div>
+</div>
+
+<!-- Table Section -->
+<div class="stats-table-container">
+    <div class="table-header-section">
+        <h2 class="table-title">Complete Commands List</h2>
+        <p class="table-subtitle">Detailed breakdown of all detected commands</p>
+    </div>
+
+    <Grid Data="@CommandsList" FixedHeader="true" PageSize="int.MaxValue" TItem="Command" Responsive="true"
+          AllowSorting="true" Class="stats-data-grid table table-hover table-dark" style="width: 100%;">
+        <GridColumns>
+            <GridColumn TItem="Command" HeaderText="Name" PropertyName="@nameof(Command.Name)">
+                <div class="command-name-cell">@context.Name</div>
+            </GridColumn>
+            <GridColumn TItem="Command" HeaderText="Executions" PropertyName="@nameof(Command.Count)">
+                <span class="count-badge">@context.Count</span>
+            </GridColumn>
+        </GridColumns>
+    </Grid>
+</div>
+

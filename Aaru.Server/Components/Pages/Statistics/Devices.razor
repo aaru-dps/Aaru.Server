@@ -31,49 +31,234 @@
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
 
-@*
-    TODO: Group by datagrid
-*@
+<!-- Header Section -->
+<div class="stats-header">
+    <h1 class="stats-title">Devices Statistics</h1>
+    <p class="stats-subtitle">Analysis of all devices found and tested</p>
+</div>
 
-<h1>
-    <p class="text-center" style="color: deeppink;">All devices found...</p>
-</h1>
-<Carousel Crossfade="true" ShowIndicators="true" Autoplay="CarouselAutoPlay.StartOnPageLoad">
-    <CarouselItem Active="true">
-        <PieChart @ref="_devicesByBusChart" style="padding: 40px" TItem="long"/>
-    </CarouselItem>
-    <CarouselItem>
-        <PieChart @ref="_devicesByManufacturerChart" style="padding: 40px" TItem="long"/>
-    </CarouselItem>
-</Carousel>
-<Grid Data="@DevicesList" FixedHeader="true" PageSize="int.MaxValue" TItem="DeviceItem" Responsive="true"
-      AllowSorting="true" Class="table table-hover table-bordered table-striped table-dark" style="width: 100%;">
-    <GridColumns>
-        <GridColumn TItem="DeviceItem" HeaderText="Manufacturer" PropertyName="@nameof(DeviceItem.Manufacturer)">
-            @context.Manufacturer
-        </GridColumn>
-        <GridColumn TItem="DeviceItem" HeaderText="Model" PropertyName="@nameof(DeviceItem.Model)">
-            @context.Model
-        </GridColumn>
-        <GridColumn TItem="DeviceItem" HeaderText="Revision" PropertyName="@nameof(DeviceItem.Revision)">
-            @context.Revision
-        </GridColumn>
-        <GridColumn TItem="DeviceItem" HeaderText="Bus" PropertyName="@nameof(DeviceItem.Bus)">
-            @context.Bus
-        </GridColumn>
-        <GridColumn TItem="DeviceItem" HeaderText="Report" PropertyName="@nameof(DeviceItem.ReportId)">
-            @{
-                int? reportId = context.ReportId;
+<!-- Charts Section -->
+<div class="stats-charts-container">
+    <div class="chart-header">
+        <h2 class="chart-section-title">Device Analysis</h2>
+        <p class="chart-section-subtitle">Interactive visualization of device distribution</p>
+    </div>
 
-                if(reportId > 0)
-                {
-                    <a href="/report/@reportId.Value" target="_blank">Yes</a>
-                }
-                else
-                {
-                    <span>No</span>
-                }
-            }
-        </GridColumn>
-    </GridColumns>
-</Grid>
+    <div class="carousel-wrapper">
+        <Carousel Crossfade="true" ShowIndicators="true" Autoplay="CarouselAutoPlay.StartOnPageLoad">
+            <CarouselItem Active="true">
+                <PieChart @ref="_devicesByBusChart" style="padding: 40px" TItem="long" />
+            </CarouselItem>
+            <CarouselItem>
+                <PieChart @ref="_devicesByManufacturerChart" style="padding: 40px" TItem="long" />
+            </CarouselItem>
+        </Carousel>
+    </div>
+</div>
+
+<!-- Table Section -->
+<div class="stats-table-container">
+    <div class="table-header-section">
+        <h2 class="table-title">Complete Devices List</h2>
+        <p class="table-subtitle">Detailed breakdown of all detected devices and their properties</p>
+    </div>
+
+    <Grid Data="@DevicesList" FixedHeader="true" PageSize="int.MaxValue" TItem="DeviceItem" Responsive="true"
+          AllowSorting="true" Class="stats-data-grid table table-hover table-dark" style="width: 100%;">
+        <GridColumns>
+            <GridColumn TItem="DeviceItem" HeaderText="Manufacturer" PropertyName="@nameof(DeviceItem.Manufacturer)">
+                <div class="device-cell">@context.Manufacturer</div>
+            </GridColumn>
+            <GridColumn TItem="DeviceItem" HeaderText="Model" PropertyName="@nameof(DeviceItem.Model)">
+                <div class="device-cell">@context.Model</div>
+            </GridColumn>
+            <GridColumn TItem="DeviceItem" HeaderText="Revision" PropertyName="@nameof(DeviceItem.Revision)">
+                <div class="device-cell">@context.Revision</div>
+            </GridColumn>
+            <GridColumn TItem="DeviceItem" HeaderText="Bus" PropertyName="@nameof(DeviceItem.Bus)">
+                <div class="device-cell">@context.Bus</div>
+            </GridColumn>
+            <GridColumn TItem="DeviceItem" HeaderText="Report" PropertyName="@nameof(DeviceItem.ReportId)">
+                <div class="device-action-cell">
+                    @{
+                        int? reportId = context.ReportId;
+
+                        if(reportId > 0)
+                        {
+                            <a href="/report/@reportId.Value" target="_blank" class="action-link">View Report</a>
+                        }
+                        else
+                        {
+                            <span class="text-muted">N/A</span>
+                        }
+                    }
+                </div>
+            </GridColumn>
+        </GridColumns>
+    </Grid>
+</div>
+
+<style>
+    .stats-header
+    {
+        padding: 2rem 1rem;
+        margin-bottom: 2rem;
+        background: linear-gradient(135deg, rgba(224, 64, 251, 0.1), rgba(224, 64, 251, 0.05));
+        border-radius: 0.5rem;
+        border: 1px solid rgba(224, 64, 251, 0.2);
+    }
+
+    .stats-title
+    {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin: 0 0 0.5rem 0;
+    }
+
+    .stats-subtitle
+    {
+        font-size: 1.1rem;
+        color: #b0b0b0;
+        margin: 0;
+        font-weight: 400;
+    }
+
+    .stats-charts-container
+    {
+        padding: 2rem 1rem;
+        margin-bottom: 2rem;
+        background-color: rgba(255, 255, 255, 0.02);
+        border-radius: 0.5rem;
+        border: 1px solid rgba(224, 64, 251, 0.1);
+    }
+
+    .chart-header
+    {
+        margin-bottom: 1.5rem;
+    }
+
+    .chart-section-title
+    {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin: 0 0 0.5rem 0;
+    }
+
+    .chart-section-subtitle
+    {
+        font-size: 0.95rem;
+        color: #a0a0a0;
+        margin: 0;
+    }
+
+    .stats-table-container
+    {
+        padding: 2rem 1rem;
+        background-color: rgba(255, 255, 255, 0.01);
+        border-radius: 0.5rem;
+        border: 1px solid rgba(224, 64, 251, 0.1);
+    }
+
+    .table-header-section
+    {
+        margin-bottom: 2rem;
+    }
+
+    .table-title
+    {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin: 0 0 0.5rem 0;
+    }
+
+    .table-subtitle
+    {
+        font-size: 0.95rem;
+        color: #a0a0a0;
+        margin: 0;
+    }
+
+    .stats-data-grid
+    {
+        background-color: rgba(0, 0, 0, 0.4) !important;
+        border: 1px solid rgba(224, 64, 251, 0.15) !important;
+        border-radius: 0.5rem !important;
+    }
+
+    .stats-data-grid :deep .table-head
+    {
+        background-color: rgba(224, 64, 251, 0.2) !important;
+        border-bottom: 2px solid rgba(224, 64, 251, 0.3) !important;
+    }
+
+    .stats-data-grid :deep th
+    {
+        color: #ffffff !important;
+        font-weight: 600 !important;
+        padding: 1rem !important;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 0.9rem;
+    }
+
+    .stats-data-grid :deep td
+    {
+        padding: 0.75rem 1rem !important;
+        border-color: rgba(224, 64, 251, 0.1) !important;
+        color: #e0e0e0 !important;
+    }
+
+    .stats-data-grid :deep tbody tr:hover
+    {
+        background-color: rgba(224, 64, 251, 0.15) !important;
+    }
+
+    .stats-data-grid :deep tbody tr:nth-child(even)
+    {
+        background-color: rgba(0, 0, 0, 0.2) !important;
+    }
+
+    .stats-data-grid :deep tbody tr:nth-child(even):hover
+    {
+        background-color: rgba(224, 64, 251, 0.15) !important;
+    }
+
+    .device-cell
+    {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        min-height: 2rem;
+    }
+
+    .device-action-cell
+    {
+        display: flex;
+        align-items: center;
+        min-height: 2rem;
+    }
+
+    .action-link
+    {
+        color: #e040fb;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 0.25rem 0.75rem;
+        border-radius: 0.25rem;
+        transition: all 0.2s ease;
+    }
+
+    .action-link:hover
+    {
+        background-color: rgba(224, 64, 251, 0.2);
+        color: #ff69b4;
+    }
+
+    .text-muted
+    {
+        color: #666666;
+    }
+</style>

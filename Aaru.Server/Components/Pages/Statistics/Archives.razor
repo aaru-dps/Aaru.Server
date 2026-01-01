@@ -31,24 +31,49 @@
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
 
-<PageTitle>Aaru: Statistics</PageTitle>
+<!-- Header Section -->
+<div class="stats-header">
+    <h1 class="stats-title">Archive Formats Statistics</h1>
+    <p class="stats-subtitle">Analysis of all archive formats found in dumps</p>
+</div>
 
-@*
-    TODO: Group by datagrid
-*@
+<!-- Charts Section -->
+<div class="stats-charts-container">
+    <div class="chart-header">
+        <h2 class="chart-section-title">Format Distribution</h2>
+        <p class="chart-section-subtitle">Interactive visualization of archive format usage</p>
+    </div>
 
-<h1>
-    <p class="text-center" style="color: deeppink;">All archive formats found...</p>
-</h1>
-<PieChart @ref="_formatsChart" style="padding: 40px" TItem="long"/>
-<Grid Data="@ArchiveFormats" FixedHeader="true" PageSize="int.MaxValue" TItem="Archive" Responsive="true"
-      AllowSorting="true" Class="table table-hover table-bordered table-striped table-dark" style="width: 100%;">
-    <GridColumns>
-        <GridColumn TItem="Archive" HeaderText="Filter" PropertyName="@nameof(Archive.Name)">
-            @context.Name
-        </GridColumn>
-        <GridColumn TItem="Archive" HeaderText="Times found" PropertyName="@nameof(Archive.Count)">
-            @context.Count
-        </GridColumn>
-    </GridColumns>
-</Grid>
+    <div class="carousel-wrapper">
+        <PieChart @ref="_formatsChart" style="padding: 40px" TItem="long" />
+    </div>
+</div>
+
+<!-- Table Section -->
+<div class="stats-table-container">
+    <div class="table-header-section">
+        <h2 class="table-title">Complete Archive Formats List</h2>
+        <p class="table-subtitle">Detailed breakdown of all detected archive formats</p>
+    </div>
+
+    <Grid Data="@ArchiveFormats" FixedHeader="true" PageSize="int.MaxValue" TItem="Archive" Responsive="true"
+          AllowSorting="true" Class="stats-data-grid table table-hover table-dark" style="width: 100%;">
+        <GridColumns>
+            <GridColumn TItem="Archive" HeaderText="Filter" PropertyName="@nameof(Archive.Name)">
+                @context.Name
+            </GridColumn>
+            <GridColumn TItem="Archive" HeaderText="Times found" PropertyName="@nameof(Archive.Count)">
+                <span class="count-badge">@context.Count</span>
+            </GridColumn>
+        </GridColumns>
+    </Grid>
+</div>
+
+<style>
+    .stats-header, .stats-charts-container, .stats-table-container, .table-header-section,
+    .chart-header, .stats-title, .stats-subtitle, .chart-section-title, .chart-section-subtitle,
+    .table-title, .table-subtitle, .stats-data-grid, .count-badge
+    {
+        /* Styling inherited from Versions.razor - see app.css for shared styles */
+    }
+</style>
