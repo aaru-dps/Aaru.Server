@@ -35,10 +35,26 @@ namespace Aaru.Server.Components.Admin.Pages.MediaFormats;
 
 public partial class View
 {
-    private int       _deleteId;
-    private Modal?    _deleteModal;
-    bool              _initialized;
-    List<MediaFormat> _items;
+    private int              _deleteId;
+    private Modal?           _deleteModal;
+    private bool             _initialized;
+    private List<MediaFormat> _items = new();
+    private string           _searchTerm = string.Empty;
+
+    private IEnumerable<MediaFormat> FilteredItems
+    {
+        get
+        {
+            if(string.IsNullOrWhiteSpace(_searchTerm))
+                return _items;
+
+            return _items.Where(item =>
+                                    (item.Name?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    item.Count.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                                    item.Id.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+    }
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
