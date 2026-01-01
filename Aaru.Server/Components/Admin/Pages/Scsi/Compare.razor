@@ -34,98 +34,204 @@
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
 
-<PageTitle>SCSI INQUIRY comparison</PageTitle>
+<PageTitle>SCSI INQUIRY Comparison</PageTitle>
 
 @if(!_initialized)
 {
-    <div class="stats-section">
-        <h1 style="color: red; align-content: center; padding: 2rem">Loading...</h1>
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+        <div class="text-center">
+            <div class="spinner-border text-info" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <h3 class="mt-3 text-light">Loading comparison...</h3>
+        </div>
     </div>
 
     return;
 }
 
-@if(Model.AreEqual)
-{
-    <section class="stats-section">
-        <p>No differences found.</p>
-    </section>
+<div class="container-fluid px-4 py-4">
+    <!-- Header Section -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h2 mb-1 text-light">
+                <i class="bi bi-arrow-left-right text-info"></i> SCSI INQUIRY Comparison
+            </h1>
+            <p class="text-secondary mb-0">
+                <span class="badge bg-info text-dark me-2">ID: @Id</span>
+                <i class="bi bi-arrow-left-right text-secondary mx-2"></i>
+                <span class="badge bg-info text-dark">ID: @CompareId</span>
+            </p>
+        </div>
+        <div>
+            <a href="/admin/scsi" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle"></i> Back to List
+            </a>
+        </div>
+    </div>
 
-    return;
-}
+    @if(Model.AreEqual)
+    {
+        <!-- No Differences Card -->
+        <div class="alert alert-success bg-dark border-success text-light shadow-sm" role="alert">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-check-circle-fill text-success fs-3 me-3"></i>
+                <div>
+                    <h5 class="alert-heading mb-1 text-success">Identical Responses</h5>
+                    <p class="mb-0">No differences found between ID @Id and ID @CompareId.</p>
+                </div>
+            </div>
+        </div>
+    }
+    else if(Model.HasError)
+    {
+        <!-- Error Card -->
+        <div class="alert alert-danger bg-dark border-danger text-light shadow-sm" role="alert">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-exclamation-triangle-fill text-danger fs-3 me-3"></i>
+                <div>
+                    <h5 class="alert-heading mb-1 text-danger">Comparison Error</h5>
+                    <p class="mb-0">@Model.ErrorMessage</p>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- Differences Table Card -->
+        <div class="card bg-dark shadow-sm border-secondary mb-4">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="mb-0">
+                    <i class="bi bi-exclamation-triangle"></i> Differences Found
+                    <span class="badge bg-dark text-warning float-end">@Model.ValueNames.Count differences</span>
+                </h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover table-striped mb-0">
+                        <thead class="table-secondary">
+                        <tr>
+                            <th style="width: 40%;">
+                                <i class="bi bi-tag"></i> Value Name
+                            </th>
+                            <th style="width: 30%;">
+                                <span class="badge bg-info text-dark me-1">ID: @Model.LeftId</span>
+                            </th>
+                            <th style="width: 30%;">
+                                <span class="badge bg-info text-dark me-1">ID: @Model.RightId</span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @for(var i = 0; i < Model.ValueNames.Count; i++)
+                        {
+                            <tr>
+                                <td class="align-middle">
+                                    <strong class="text-light">@Model.ValueNames[i]</strong>
+                                </td>
+                                <td class="align-middle">
+                                    <code class="text-warning">@Model.LeftValues[i]</code>
+                                </td>
+                                <td class="align-middle">
+                                    <code class="text-warning">@Model.RightValues[i]</code>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-@if(Model.HasError)
-{
-    <section class="stats-section">
-        <p class="alert-info">@Model.ErrorMessage</p>
-    </section>
+        <!-- Actions Card -->
+        <div class="card bg-dark shadow-sm border-secondary">
+            <div class="card-header bg-secondary text-light">
+                <h5 class="mb-0">
+                    <i class="bi bi-tools"></i> Actions
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <!-- Delete Actions Column -->
+                    <div class="col-md-6">
+                        <h6 class="text-light mb-3">
+                            <i class="bi bi-trash"></i> Delete Actions
+                        </h6>
+                        <div class="d-grid gap-2">
+                            <button type="button" class="btn btn-outline-danger"
+                                    @onclick="async () => await ShowDeleteModal(Id)">
+                                <i class="bi bi-trash"></i> Delete ID @Id
+                            </button>
+                            <button type="button" class="btn btn-outline-danger"
+                                    @onclick="async () => await ShowDeleteModal(CompareId)">
+                                <i class="bi bi-trash"></i> Delete ID @CompareId
+                            </button>
+                        </div>
+                    </div>
 
-    return;
-}
+                    <!-- Consolidate Actions Column -->
+                    <div class="col-md-6">
+                        <h6 class="text-light mb-3">
+                            <i class="bi bi-diagram-3"></i> Consolidate Actions
+                        </h6>
+                        <div class="d-grid gap-2">
+                            <button type="button" class="btn btn-outline-warning"
+                                    @onclick="() => ShowConsolidateModal(Id, CompareId)">
+                                <i class="bi bi-arrow-left"></i> Keep ID @Id, Replace ID @CompareId
+                            </button>
+                            <button type="button" class="btn btn-outline-warning"
+                                    @onclick="() => ShowConsolidateModal(CompareId, Id)">
+                                <i class="bi bi-arrow-right"></i> Keep ID @CompareId, Replace ID @Id
+                            </button>
+                        </div>
+                        <small class="text-secondary d-block mt-2">
+                            <i class="bi bi-info-circle"></i> Consolidating will replace all dependencies and delete the replaced ID.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
-<section class="stats-section">
-    <table class="table table-dark table-striped table-bordered mt-4 mb-4">
-        <thead>
-        <tr>
-            <th>
-                Value name
-            </th>
-            <th>
-                ID: @Model.LeftId
-            </th>
-            <th>
-                ID: @Model.RightId
-            </th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        @for(var i = 0; i < Model.ValueNames.Count; i++)
-        {
-            <tr>
-                <td>
-                    @Model.ValueNames[i]
-                </td>
-                <td>
-                    @Model.LeftValues[i]
-                </td>
-                <td>
-                    @Model.RightValues[i]
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
-    <button class="btn btn-danger btn-sm" @onclick="async () => await ShowDeleteModal(Id)">
-        <i class="bi bi-trash"></i> Delete ID @Id
-    </button>
-    <button class="btn btn-danger btn-sm" @onclick="async () => await ShowDeleteModal(CompareId)">
-        <i class="bi bi-trash"></i> Delete ID @CompareId
-    </button>
-    <button class="btn btn-secondary btn-sm" @onclick="() => ShowConsolidateModal(Id, CompareId)">
-        <i class="bi bi-arrow-left-right"></i> Replace all dependencies from ID @CompareId with ID @Id
-    </button>
-    <button class="btn btn-secondary btn-sm" @onclick="() => ShowConsolidateModal(CompareId, Id)">
-        <i class="bi bi-arrow-left-right"></i> Replace all dependencies from ID @Id with ID @CompareId
-    </button>
-</section>
-
-<BlazorBootstrap.Modal @ref="_deleteModal" Title="Delete INQUIRY" Size="ModalSize.Small">
+<BlazorBootstrap.Modal @ref="_deleteModal"
+                       Title="Delete SCSI INQUIRY"
+                       Size="ModalSize.Small"
+                       IsVerticallyCentered="true">
     <BodyTemplate>
-        <div class="text-danger">Are you sure you want to delete this INQUIRY?</div>
+        <div class="text-danger bg-dark p-3 rounded border border-danger">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            Are you sure you want to delete this SCSI INQUIRY response?
+        </div>
     </BodyTemplate>
     <FooterTemplate>
-        <button class="btn btn-secondary" @onclick="HideDeleteModal">Cancel</button>
-        <button class="btn btn-danger" @onclick="ConfirmDelete">Delete</button>
+        <button type="button" class="btn btn-secondary" @onclick="HideDeleteModal">
+            <i class="bi bi-x-circle"></i> Cancel
+        </button>
+        <button type="button" class="btn btn-danger" @onclick="ConfirmDelete">
+            <i class="bi bi-trash"></i> Delete
+        </button>
     </FooterTemplate>
 </BlazorBootstrap.Modal>
 
-<BlazorBootstrap.Modal @ref="_consolidateModal" Title="Consolidate INQUIRY" Size="ModalSize.Small">
+<BlazorBootstrap.Modal @ref="_consolidateModal"
+                       Title="Consolidate SCSI INQUIRY"
+                       Size="ModalSize.Small"
+                       IsVerticallyCentered="true">
     <BodyTemplate>
-        <div class="text-danger">Are you sure you want to consolidate the selected INQUIRY?</div>
+        <div class="text-warning bg-dark p-3 rounded border border-warning">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <p class="mb-2">Are you sure you want to consolidate the selected SCSI INQUIRY responses?</p>
+            <p class="mb-0 small">This will replace all dependencies from one ID to another and delete the replaced ID.</p>
+        </div>
     </BodyTemplate>
     <FooterTemplate>
-        <button class="btn btn-secondary" @onclick="HideConsolidateModal">Cancel</button>
-        <button class="btn btn-danger" @onclick="ConfirmConsolidate">Consolidate</button>
+        <button type="button" class="btn btn-secondary" @onclick="HideConsolidateModal">
+            <i class="bi bi-x-circle"></i> Cancel
+        </button>
+        <button type="button" class="btn btn-warning text-dark" @onclick="ConfirmConsolidate">
+            <i class="bi bi-diagram-3"></i> Consolidate
+        </button>
     </FooterTemplate>
 </BlazorBootstrap.Modal>
+
