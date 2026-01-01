@@ -35,10 +35,24 @@ namespace Aaru.Server.Components.Admin.Pages.Scsi.Cdrom;
 
 public partial class List
 {
-    private int           _deleteId;
-    private Modal?        _deleteModal;
-    bool                  _initialized;
-    List<MmcModelForView> _items;
+    private int                   _deleteId;
+    private Modal?                _deleteModal;
+    private bool                  _initialized;
+    private List<MmcModelForView> _items      = new();
+    private string                _searchTerm = string.Empty;
+
+    private IEnumerable<MmcModelForView> FilteredItems
+    {
+        get
+        {
+            if(string.IsNullOrWhiteSpace(_searchTerm)) return _items;
+
+            return _items.Where(item => item.Id.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                                        (item.FeaturesId?.ToString()
+                                             .Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                         false));
+        }
+    }
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
