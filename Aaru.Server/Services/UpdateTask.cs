@@ -60,7 +60,7 @@ public class UpdateTask : IHostedService, IDisposable
     /// <inheritdoc />
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        _timer = new Timer(DoWork, null, TimeSpan.FromMinutes(1), TimeSpan.FromHours(1));
+        _timer = new Timer(DoWork, null, TimeSpan.FromHours(1), TimeSpan.FromHours(1));
 
         return Task.CompletedTask;
     }
