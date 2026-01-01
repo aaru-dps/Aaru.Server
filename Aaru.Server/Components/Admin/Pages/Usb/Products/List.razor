@@ -34,48 +34,215 @@
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
 
-<PageTitle>USB products</PageTitle>
+<PageTitle>USB Products</PageTitle>
 
 @if(!_initialized)
 {
-    <div class="stats-section">
-        <h1 style="color: red; align-content: center; padding: 2rem">Loading...</h1>
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+        <div class="text-center">
+            <div class="spinner-border text-info" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <h3 class="mt-3 text-light">Loading USB products...</h3>
+        </div>
     </div>
 
     return;
 }
 
-<section class="stats-section">
-    <h4>USB products</h4>
-    <table class="table table-dark table-striped table-bordered mt-4 mb-4">
-        <thead class="thead-dark">
-        <tr>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(UsbProductModel), nameof(UsbProductModel.VendorName))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(UsbProductModel), nameof(UsbProductModel.ProductName))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(UsbProductModel), nameof(UsbProductModel.ProductId))
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach(UsbProductModel item in _items)
-        {
-            <tr>
-                <td>
-                    <a href="/admin/usb/vendors/@item.VendorId" target="_blank">@item.VendorName</a>
-                </td>
-                <td>
-                    @item.ProductName
-                </td>
-                <td>
-                    @item.ProductId
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
-</section>
+<div class="container-fluid px-4 py-4">
+    <!-- Header Section -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h2 mb-1 text-light">
+                <i class="bi bi-usb-plug text-info"></i> USB Products
+            </h1>
+            <p class="text-secondary mb-0">Browse USB product database with @_totalCount.ToString("N0") entries</p>
+        </div>
+    </div>
+
+    <!-- Search and Filter Bar -->
+    <div class="card bg-dark shadow-sm mb-4 border-secondary">
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-10">
+                    <div class="input-group">
+                        <span class="input-group-text bg-secondary text-light border-secondary">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input type="text"
+                               class="form-control bg-dark text-light border-secondary"
+                               placeholder="Search by vendor name, product name, or product ID..."
+                               @bind="_searchTerm"
+                               @bind:event="oninput"
+                               @onkeyup="HandleSearchKeyUp" />
+                        @if(!string.IsNullOrWhiteSpace(_searchTerm))
+                        {
+                            <button class="btn btn-outline-secondary"
+                                    type="button"
+                                    @onclick="ClearSearch"
+                                    title="Clear search">
+                                <i class="bi bi-x-circle"></i>
+                            </button>
+                        }
+                    </div>
+                    @if(_isSearching)
+                    {
+                        <small class="text-info d-block mt-1">
+                            <i class="bi bi-hourglass-split"></i> Searching...
+                        </small>
+                    }
+                </div>
+                <div class="col-md-2 text-end">
+                    <span class="badge bg-info text-dark fs-6 py-2 px-3 w-100">
+                        <i class="bi bi-database"></i> @(_filteredCount.ToString("N0")) / @(_totalCount.ToString("N0"))
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Table -->
+    <div class="card bg-dark shadow-sm border-secondary">
+        <div class="card-header bg-info text-dark">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">
+                    <i class="bi bi-list-ul"></i> USB Product Database
+                </h5>
+                <div>
+                    <label class="text-dark small me-2 mb-0">Items per page:</label>
+                    <select class="form-select form-select-sm d-inline-block w-auto bg-dark text-light border-secondary"
+                            @onchange="HandlePageSizeChange">
+                        <option value="25" selected="@(_pageSize == 25)">25</option>
+                        <option value="50" selected="@(_pageSize == 50)">50</option>
+                        <option value="100" selected="@(_pageSize == 100)">100</option>
+                        <option value="250" selected="@(_pageSize == 250)">250</option>
+                        <option value="500" selected="@(_pageSize == 500)">500</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            @if(_isLoading)
+            {
+                <div class="text-center py-5">
+                    <div class="spinner-border text-info" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="text-secondary mt-2">Loading page data...</p>
+                </div>
+            }
+            else if(_items.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover table-striped mb-0">
+                        <thead class="table-secondary">
+                        <tr>
+                            <th style="width: 120px;">
+                                <i class="bi bi-hash"></i> Product ID
+                            </th>
+                            <th>
+                                <i class="bi bi-building"></i> Vendor
+                            </th>
+                            <th>
+                                <i class="bi bi-tag"></i> Product
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach(UsbProductModel item in _items)
+                        {
+                            <tr>
+                                <td class="align-middle">
+                                    <span class="badge bg-secondary text-light text-center"
+                                          style="min-width: 100px; display: inline-block;">@item.ProductId</span>
+                                </td>
+                                <td class="align-middle">
+                                    <a href="/admin/usb/vendors/@item.VendorId" target="_blank" class="text-info">
+                                        @item.VendorName
+                                        <i class="bi bi-box-arrow-up-right small"></i>
+                                    </a>
+                                </td>
+                                <td class="align-middle">
+                                    <strong class="text-light">@item.ProductName</strong>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination Controls -->
+                <div class="card-footer bg-dark border-top border-secondary">
+                    <div class="row align-items-center">
+                        <div class="col-md-4">
+                            <small class="text-secondary">
+                                Showing @((_currentPage - 1) * _pageSize + 1) to @Math.Min(_currentPage * _pageSize, _filteredCount) of @_filteredCount.ToString("N0") entries
+                            </small>
+                        </div>
+                        <div class="col-md-8">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination pagination-sm justify-content-end mb-0">
+                                    <li class="page-item @(_currentPage == 1 ? "disabled" : "")">
+                                        <button class="page-link bg-dark text-light border-secondary"
+                                                @onclick="() => GoToPage(1)"
+                                                disabled="@(_currentPage == 1)">
+                                            <i class="bi bi-chevron-bar-left"></i>
+                                        </button>
+                                    </li>
+                                    <li class="page-item @(_currentPage == 1 ? "disabled" : "")">
+                                        <button class="page-link bg-dark text-light border-secondary"
+                                                @onclick="() => GoToPage(_currentPage - 1)"
+                                                disabled="@(_currentPage == 1)">
+                                            <i class="bi bi-chevron-left"></i>
+                                        </button>
+                                    </li>
+
+                                    @foreach(int page in GetPageNumbers())
+                                    {
+                                        <li class="page-item @(page == _currentPage ? "active" : "")">
+                                            <button class="page-link @(page == _currentPage ? "bg-info text-dark border-info" : "bg-dark text-light border-secondary")"
+                                                    @onclick="() => GoToPage(page)">
+                                                @((MarkupString)page.ToString())
+                                            </button>
+                                        </li>
+                                    }
+
+                                    <li class="page-item @(_currentPage == _totalPages ? "disabled" : "")">
+                                        <button class="page-link bg-dark text-light border-secondary"
+                                                @onclick="() => GoToPage(_currentPage + 1)"
+                                                disabled="@(_currentPage == _totalPages)">
+                                            <i class="bi bi-chevron-right"></i>
+                                        </button>
+                                    </li>
+                                    <li class="page-item @(_currentPage == _totalPages ? "disabled" : "")">
+                                        <button class="page-link bg-dark text-light border-secondary"
+                                                @onclick="() => GoToPage(_totalPages)"
+                                                disabled="@(_currentPage == _totalPages)">
+                                            <i class="bi bi-chevron-bar-right"></i>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <i class="bi bi-inbox text-secondary" style="font-size: 4rem;"></i>
+                    <h4 class="text-secondary mt-3">No USB products found</h4>
+                    <p class="text-secondary">@(string.IsNullOrWhiteSpace(_searchTerm) ? "No data available" : "Try adjusting your search criteria")</p>
+                    @if(!string.IsNullOrWhiteSpace(_searchTerm))
+                    {
+                        <button class="btn btn-outline-info btn-sm mt-2" @onclick="ClearSearch">
+                            <i class="bi bi-arrow-counterclockwise"></i> Clear Search
+                        </button>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
