@@ -35,10 +35,28 @@ namespace Aaru.Server.Components.Admin.Pages.Reports;
 
 public partial class List
 {
-    private int          _deleteId;
-    private Modal?       _deleteModal;
-    bool                 _initialized;
-    List<UploadedReport> _items;
+    private int                  _deleteId;
+    private Modal?               _deleteModal;
+    private bool                 _initialized;
+    private List<UploadedReport> _items      = new();
+    private string               _searchTerm = string.Empty;
+
+    private IEnumerable<UploadedReport> FilteredItems
+    {
+        get
+        {
+            if(string.IsNullOrWhiteSpace(_searchTerm)) return _items;
+
+            return _items.Where(item =>
+                                    (item.Manufacturer?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false)                                                                          ||
+                                    (item.Model?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                                    (item.Revision?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false)                                                                        ||
+                                    item.Type.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                                    item.Id.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+    }
 
 
     /// <inheritdoc />
