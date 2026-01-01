@@ -30,6 +30,7 @@
 @page "/admin/device-stats/edit/{Id:int}"
 @attribute [Authorize]
 @layout AdminLayout
+@rendermode InteractiveServer
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
 

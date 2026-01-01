@@ -30,6 +30,8 @@
 @page "/admin/firewire/edit/{Id:int}"
 @attribute [Authorize]
 @layout AdminLayout
+@rendermode InteractiveServer
+
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
 
 <PageTitle>Edit FireWire Device</PageTitle>
