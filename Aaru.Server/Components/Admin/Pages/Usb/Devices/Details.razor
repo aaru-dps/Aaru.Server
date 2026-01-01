@@ -34,55 +34,133 @@
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
 
-<PageTitle>USB device</PageTitle>
+<PageTitle>USB Device Details</PageTitle>
 
 @if(!_initialized)
 {
-    <div class="stats-section">
-        <h1 style="color: red; align-content: center; padding: 2rem">Loading...</h1>
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+        <div class="text-center">
+            <div class="spinner-border text-info" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <h3 class="mt-3 text-light">Loading USB device...</h3>
+        </div>
     </div>
 
     return;
 }
 
-<section class="stats-section">
-    <div>
-        <h4>USB device</h4>
-        <hr />
-        <dl class="row">
-            <dt class="col-sm-2">
-                @DisplayNameHelper.GetDisplayName(typeof(Usb), nameof(Usb.Manufacturer))
-            </dt>
-            <dd class="col-sm-10">
-                @_model?.Manufacturer
-            </dd>
-            <dt class="col-sm-2">
-                @DisplayNameHelper.GetDisplayName(typeof(Usb), nameof(Usb.Product))
-            </dt>
-            <dd class="col-sm-10">
-                @_model?.Product
-            </dd>
-            <dt class="col-sm-2">
-                @DisplayNameHelper.GetDisplayName(typeof(Usb), nameof(Usb.VendorID))
-            </dt>
-            <dd class="col-sm-10">
-                @_model?.VendorID
-            </dd>
-            <dt class="col-sm-2">
-                @DisplayNameHelper.GetDisplayName(typeof(Usb), nameof(Usb.ProductID))
-            </dt>
-            <dd class="col-sm-10">
-                @_model?.ProductID
-            </dd>
-            <dt class="col-sm-2">
-                @DisplayNameHelper.GetDisplayName(typeof(Usb), nameof(Usb.RemovableMedia))
-            </dt>
-            <dd class="col-sm-10">
-                @_model?.RemovableMedia
-            </dd>
-        </dl>
+<div class="container-fluid px-4 py-4">
+    <!-- Header Section -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h2 mb-1 text-light">
+                <i class="bi bi-usb-symbol text-info"></i> USB Device Details
+            </h1>
+            <p class="text-secondary mb-0">
+                <span class="badge bg-info text-dark me-2"
+                      style="min-width: 60px; display: inline-block;">ID: @Id</span>
+                @if(_model?.Manufacturer != null && _model?.Product != null)
+                {
+                    <strong class="text-light">@_model.Manufacturer @_model.Product</strong>
+                }
+            </p>
+        </div>
+        <div>
+            <a href="/admin/usb/devices" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle"></i> Back to List
+            </a>
+        </div>
     </div>
-    <div>
-        <a href="/admin/usb/devices" class="btn btn-secondary">Back to List</a>
+
+    <!-- Device Information Card -->
+    <div class="card bg-dark shadow-sm border-secondary">
+        <div class="card-header bg-info text-dark">
+            <h5 class="mb-0">
+                <i class="bi bi-info-circle"></i> USB Device Information
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <!-- Left Column -->
+                <div class="col-lg-6">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-5 text-secondary">
+                            <i class="bi bi-building"></i> Manufacturer
+                        </dt>
+                        <dd class="col-sm-7 text-light">
+                            <strong>@(_model?.Manufacturer ?? "Unknown")</strong>
+                        </dd>
+
+                        <dt class="col-sm-5 text-secondary">
+                            <i class="bi bi-tag"></i> Product
+                        </dt>
+                        <dd class="col-sm-7 text-light">
+                            <strong>@(_model?.Product ?? "Unknown")</strong>
+                        </dd>
+
+                        <dt class="col-sm-5 text-secondary">
+                            <i class="bi bi-hash"></i> Vendor ID
+                        </dt>
+                        <dd class="col-sm-7">
+                            <code class="text-info">@_model?.VendorID</code>
+                        </dd>
+                    </dl>
+                </div>
+
+                <!-- Right Column -->
+                <div class="col-lg-6">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-5 text-secondary">
+                            <i class="bi bi-hash"></i> Product ID
+                        </dt>
+                        <dd class="col-sm-7">
+                            <code class="text-info">@_model?.ProductID</code>
+                        </dd>
+
+                        <dt class="col-sm-5 text-secondary">
+                            <i class="bi bi-eject"></i> Removable Media
+                        </dt>
+                        <dd class="col-sm-7">
+                            @if(_model?.RemovableMedia == true)
+                            {
+                                <i class="bi bi-check-circle-fill text-success"></i>
+                                <span class="text-success">Yes</span>
+                            }
+                            else
+                            {
+                                <i class="bi bi-x-circle-fill text-danger"></i>
+                                <span class="text-danger">No</span>
+                            }
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
     </div>
-</section>
+
+    <!-- Technical Information Card -->
+    <div class="card bg-dark shadow-sm border-secondary mt-4">
+        <div class="card-header bg-secondary text-light">
+            <h6 class="mb-0">
+                <i class="bi bi-info-circle"></i> About USB Device Identifiers
+            </h6>
+        </div>
+        <div class="card-body">
+            <p class="text-light mb-2"><strong>USB Device Identification</strong></p>
+            <ul class="text-secondary small mb-0">
+                <li><strong>Vendor ID:</strong> A unique 16-bit identifier assigned by the USB Implementers Forum
+                                                (USB-IF) to the device manufacturer
+                </li>
+                <li><strong>Product ID:</strong> A unique 16-bit identifier assigned by the manufacturer to identify the
+                                                 specific device model
+                </li>
+                <li><strong>Removable Media:</strong> Indicates whether the device contains removable storage media
+                                                      (e.g. card readers)
+                </li>
+                <li>These identifiers are used by operating systems to match devices with appropriate drivers</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
