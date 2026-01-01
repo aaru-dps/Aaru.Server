@@ -6,56 +6,135 @@
 @inject IdentityRedirectManager   RedirectManager
 @inject ILogger<Disable2fa>       Logger
 
-<PageTitle>Disable two-factor authentication (2FA)</PageTitle>
+<PageTitle>Disable Two-Factor Auth - Aaru Server</PageTitle>
 
-<StatusMessage/>
-<h3>Disable two-factor authentication (2FA)</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aaru Server - Disable 2FA</title>
+    <link href="_framework/blazor.web.css" rel="stylesheet" />
+    <link href="app.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+</head>
+<body class="bg-dark">
+<div class="min-vh-100 d-flex align-items-center justify-content-center px-4">
+    <div style="width: 100%; max-width: 500px;">
+        <!-- Header -->
+        <div class="text-center mb-5">
+            <h1 class="h2 mb-1 text-light">
+                <i class="bi bi-shield-slash text-danger"></i> Disable 2FA
+            </h1>
+            <p class="text-secondary mb-0">Remove two-factor authentication</p>
+        </div>
 
-<div class="alert alert-warning" role="alert">
-    <p>
-        <strong>This action only disables 2FA.</strong>
-    </p>
-    <p>
-        Disabling 2FA does not change the keys used in authenticator apps. If you wish to change the key
-        used in an authenticator app you should <a href="Account/Manage/ResetAuthenticator">reset your authenticator keys.</a>
-    </p>
+        <!-- Warning Alert -->
+        <div class="alert alert-danger bg-dark border-danger text-light mb-4">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <strong>Important: This Action Cannot Be Undone</strong>
+            <p class="mb-0 mt-2">Disabling 2FA will remove the extra layer of security from your account. You will only
+                                 need your password to sign in.</p>
+        </div>
+
+        <!-- Additional Information -->
+        <div class="card bg-dark shadow-lg border-danger mb-4" style="border-width: 2px;">
+            <div class="card-header bg-danger text-light">
+                <h5 class="mb-0">
+                    <i class="bi bi-info-circle"></i> What This Does
+                </h5>
+            </div>
+            <div class="card-body p-4">
+                <ul class="text-secondary small mb-3">
+                    <li class="mb-2">
+                        <i class="bi bi-check"></i> Disables two-factor authentication requirement
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-x"></i> Does NOT reset your authenticator app keys
+                    </li>
+                    <li>
+                        <i class="bi bi-info-circle"></i> Your account security will decrease
+                    </li>
+                </ul>
+
+                <div class="bg-black p-3 rounded border border-secondary mt-3">
+                    <p class="text-secondary small mb-0">
+                        <strong>To completely reset your authenticator keys,</strong> use the
+                        <a href="Account/Manage/ResetAuthenticator" class="link-warning">Reset Authenticator</a> option
+                                                                                      instead.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmation -->
+        <div class="card bg-dark shadow-sm border-secondary mb-4">
+            <div class="card-header bg-secondary text-light">
+                <h6 class="mb-0">
+                    <i class="bi bi-question-circle"></i> Are You Sure?
+                </h6>
+            </div>
+            <div class="card-body p-4">
+                <p class="text-secondary small mb-4">Disabling 2FA will make your account less secure. Your
+                                                     authenticator app will no longer provide codes for login.</p>
+
+                <form @formname="disable-2fa" method="post" @onsubmit="OnSubmitAsync">
+                    <AntiforgeryToken />
+                    <button class="btn btn-danger btn-lg w-100" type="submit">
+                        <i class="bi bi-shield-slash"></i> Yes, Disable 2FA
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Back Link -->
+        <div class="text-center">
+            <a href="/Account/Manage/TwoFactorAuthentication" class="btn btn-secondary btn-sm">
+                <i class="bi bi-arrow-left-circle"></i> Cancel & Go Back
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-5 text-secondary small">
+            <p class="mb-1">
+                <i class="bi bi-shield-check"></i> Account Security is Important
+            </p>
+            <p class="mb-0">
+                © 2011-2026 Natalia Portillo • Aaru Data Preservation Suite
+            </p>
+        </div>
+    </div>
 </div>
-
-<div>
-    <form @formname="disable-2fa" method="post" @onsubmit="OnSubmitAsync">
-        <AntiforgeryToken/>
-        <button class="btn btn-danger" type="submit">Disable 2FA</button>
-    </form>
-</div>
+</body>
+</html>
 
 @code {
-    private IdentityUser user = default!;
+    private IdentityUser _user = default!;
 
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
 
     protected override async Task OnInitializedAsync()
     {
-        user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+        _user = await UserAccessor.GetRequiredUserAsync(HttpContext);
 
-        if(HttpMethods.IsGet(HttpContext.Request.Method) && !await UserManager.GetTwoFactorEnabledAsync(user))
+        if(HttpMethods.IsGet(HttpContext.Request.Method) && !await UserManager.GetTwoFactorEnabledAsync(_user))
         {
-            throw new InvalidOperationException("Cannot disable 2FA for user as it's not currently enabled.");
+            RedirectManager.RedirectTo("Account/Manage/TwoFactorAuthentication");
         }
     }
 
     private async Task OnSubmitAsync()
     {
-        IdentityResult disable2faResult = await UserManager.SetTwoFactorEnabledAsync(user, false);
+        IdentityResult disable2FaResult = await UserManager.SetTwoFactorEnabledAsync(_user, false);
 
-        if(!disable2faResult.Succeeded)
+        if(!disable2FaResult.Succeeded)
         {
             throw new InvalidOperationException("Unexpected error occurred disabling 2FA.");
         }
 
-        string userId = await UserManager.GetUserIdAsync(user);
-        Logger.LogInformation("User with ID '{UserId}' has disabled 2fa.", userId);
-        RedirectManager.RedirectToWithStatus("Account/Manage/TwoFactorAuthentication", "2fa has been disabled. You can reenable 2fa when you setup an authenticator app", HttpContext);
+        RedirectManager.RedirectToWithStatus("Account/Manage/TwoFactorAuthentication", "2FA has been disabled. You can reenable 2FA when you setup an authenticator app", HttpContext);
     }
 
 }
+

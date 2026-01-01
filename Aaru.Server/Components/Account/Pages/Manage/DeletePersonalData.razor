@@ -8,38 +8,149 @@
 @inject IdentityRedirectManager     RedirectManager
 @inject ILogger<DeletePersonalData> Logger
 
-<PageTitle>Delete Personal Data</PageTitle>
+<PageTitle>Delete Account - Aaru Server</PageTitle>
 
-<StatusMessage Message="@message"/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aaru Server - Delete Account</title>
+    <link href="_framework/blazor.web.css" rel="stylesheet" />
+    <link href="app.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+</head>
+<body class="bg-dark">
+<div class="min-vh-100 d-flex align-items-center justify-content-center px-4">
+    <div style="width: 100%; max-width: 550px;">
+        <!-- Header -->
+        <div class="text-center mb-5">
+            <h1 class="h2 mb-1 text-light">
+                <i class="bi bi-exclamation-triangle-fill text-danger"></i> Delete Account
+            </h1>
+            <p class="text-secondary mb-0">Permanently remove your account</p>
+        </div>
 
-<h3>Delete Personal Data</h3>
+        <!-- Critical Warning -->
+        <div class="alert alert-danger bg-dark border-danger text-light mb-4">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <strong>Permanent Action!</strong>
+            <p class="mb-0 mt-2">This action is permanent and cannot be undone. All your data will be deleted.</p>
+        </div>
 
-<div class="alert alert-warning" role="alert">
-    <p>
-        <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
-    </p>
-</div>
+        <!-- Consequences Card -->
+        <div class="card bg-dark shadow-lg border-danger mb-4" style="border-width: 2px;">
+            <div class="card-header bg-danger text-light">
+                <h5 class="mb-0">
+                    <i class="bi bi-exclamation-circle"></i> What Will Be Deleted
+                </h5>
+            </div>
+            <div class="card-body p-4">
+                <ul class="text-secondary small mb-4">
+                    <li class="mb-2">
+                        <i class="bi bi-trash"></i> Your account and login credentials
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-trash"></i> All personal information and profile data
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-trash"></i> Security settings (2FA, recovery codes)
+                    </li>
+                    <li>
+                        <i class="bi bi-trash"></i> All associated records and history
+                    </li>
+                </ul>
 
-<div>
-    <EditForm FormName="delete-user" method="post" Model="Input" OnValidSubmit="OnValidSubmitAsync">
-        <DataAnnotationsValidator/>
-        <ValidationSummary class="text-danger" role="alert"/>
-        @if(requirePassword)
+                <div class="bg-black p-3 rounded border border-secondary">
+                    <p class="text-secondary small mb-0">
+                        <i class="bi bi-warning"></i> <strong>Warning:</strong> This deletion is irreversible. Please
+                                                                                ensure you have downloaded any data you
+                                                                                wish to keep.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmation Form -->
+        @if(!_showDeleteButton)
         {
-            <div class="form-floating mb-3">
-                <InputText aria-required="true" autocomplete="current-password" @bind-Value="Input.Password" class="form-control" placeholder="Please enter your password." type="password"/>
-                <label class="form-label" for="password">Password</label>
-                <ValidationMessage class="text-danger" For="() => Input.Password"/>
+            <div class="card bg-dark shadow-sm border-secondary mb-4">
+                <div class="card-body p-4">
+                    <p class="text-secondary small mb-3">To proceed with account deletion, enter your password to
+                                                         confirm:</p>
+
+                    <EditForm FormName="delete-user" method="post" Model="Input" OnValidSubmit="OnValidSubmitAsync">
+                        <DataAnnotationsValidator />
+
+                        <!-- Password Field -->
+                        <div class="mb-3">
+                            <label class="form-label text-light">
+                                <i class="bi bi-lock"></i> Confirm Password
+                                <span class="text-danger">*</span>
+                            </label>
+                            <InputText aria-required="true"
+                                       autocomplete="current-password"
+                                       @bind-Value="Input.Password"
+                                       class="form-control bg-dark text-light border-secondary"
+                                       placeholder="Enter your password"
+                                       type="password" />
+                            <ValidationMessage For="() => Input.Password" class="text-danger small mt-1" />
+                        </div>
+
+                        <!-- Validation Summary -->
+                        <div class="mb-3">
+                            <ValidationSummary class="alert alert-danger bg-dark border-danger text-light" />
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button class="btn btn-warning btn-lg w-100" type="submit">
+                            <i class="bi bi-arrow-right-circle"></i> Confirm & Continue
+                        </button>
+                    </EditForm>
+                </div>
             </div>
         }
-        <button class="btn btn-danger btn-lg w-100" type="submit">Delete data and close my account</button>
-    </EditForm>
+        else
+        {
+        <!-- Delete Confirmation -->
+            <div class="card bg-dark shadow-sm border-secondary mb-4">
+                <div class="card-body p-4">
+                    <p class="text-secondary small mb-4">Password confirmed. Your account is ready for deletion.</p>
+
+                    <form @formname="delete-user-confirmed" method="post" @onsubmit="OnSubmitAsync">
+                        <AntiforgeryToken />
+                        <button class="btn btn-danger btn-lg w-100" type="submit">
+                            <i class="bi bi-trash"></i> Yes, Delete My Account Permanently
+                        </button>
+                    </form>
+                </div>
+            </div>
+        }
+
+        <!-- Back Link -->
+        <div class="text-center">
+            <a href="/Account/Manage/PersonalData" class="btn btn-secondary btn-sm">
+                <i class="bi bi-arrow-left-circle"></i> Cancel
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-5 text-secondary small">
+            <p class="mb-1">
+                <i class="bi bi-shield-check"></i> Account Deletion is Secure
+            </p>
+            <p class="mb-0">
+                © 2011-2026 Natalia Portillo • Aaru Data Preservation Suite
+            </p>
+        </div>
+    </div>
 </div>
+</body>
+</html>
 
 @code {
-    private string?      message;
-    private IdentityUser user = default!;
-    private bool         requirePassword;
+    private bool         _showDeleteButton;
+    private IdentityUser _user = default!;
 
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
@@ -49,21 +160,24 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Input           ??= new InputModel();
-        user            =   await UserAccessor.GetRequiredUserAsync(HttpContext);
-        requirePassword =   await UserManager.HasPasswordAsync(user);
+        _user = await UserAccessor.GetRequiredUserAsync(HttpContext);
     }
 
     private async Task OnValidSubmitAsync()
     {
-        if(requirePassword && !await UserManager.CheckPasswordAsync(user, Input.Password))
-        {
-            message = "Error: Incorrect password.";
+        bool isPasswordValid = await UserManager.CheckPasswordAsync(_user, Input.Password);
 
-            return;
+        if(!isPasswordValid)
+        {
+            RedirectManager.RedirectToCurrentPageWithStatus("Error: Incorrect password", HttpContext);
         }
 
-        IdentityResult result = await UserManager.DeleteAsync(user);
+        _showDeleteButton = true;
+    }
+
+    private async Task OnSubmitAsync()
+    {
+        IdentityResult result = await UserManager.DeleteAsync(_user);
 
         if(!result.Succeeded)
         {
@@ -72,16 +186,15 @@
 
         await SignInManager.SignOutAsync();
 
-        string userId = await UserManager.GetUserIdAsync(user);
-        Logger.LogInformation("User with ID '{UserId}' deleted themselves.", userId);
-
-        RedirectManager.RedirectToCurrentPage();
+        RedirectManager.RedirectToWithStatus("/", "Your account has been deleted.", HttpContext);
     }
 
     private sealed class InputModel
     {
+        [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; } = "";
     }
 
 }
+

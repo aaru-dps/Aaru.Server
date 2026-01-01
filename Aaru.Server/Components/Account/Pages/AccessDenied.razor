@@ -1,8 +1,96 @@
 ﻿@page "/Account/AccessDenied"
 
-<PageTitle>Access denied</PageTitle>
+<PageTitle>Access Denied - Aaru Server</PageTitle>
 
-<header>
-    <h1 class="text-danger">Access denied</h1>
-    <p class="text-danger">You do not have access to this resource.</p>
-</header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aaru Server - Access Denied</title>
+    <link href="_framework/blazor.web.css" rel="stylesheet" />
+    <link href="app.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+</head>
+<body class="bg-dark">
+<div class="min-vh-100 d-flex align-items-center justify-content-center px-4">
+    <div style="width: 100%; max-width: 500px;">
+        <!-- Error Icon Section -->
+        <div class="text-center mb-5">
+            <div class="mb-3">
+                <i class="bi bi-shield-exclamation text-danger" style="font-size: 5rem;"></i>
+            </div>
+            <h1 class="h3 text-light mb-2">Access Denied</h1>
+            <p class="text-secondary">Error 403</p>
+        </div>
+
+        <!-- Error Card -->
+        <div class="card bg-dark shadow-lg border-danger" style="border-width: 2px;">
+            <div class="card-header bg-danger text-light">
+                <h5 class="mb-0">
+                    <i class="bi bi-lock-fill"></i> Insufficient Permissions
+                </h5>
+            </div>
+            <div class="card-body p-4">
+                <!-- Error Message -->
+                <div class="alert alert-danger bg-dark border-danger text-light mb-4">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <strong>Permission Denied</strong>
+                    <p class="mb-0 mt-2">You do not have permission to access this resource. Your account lacks the
+                                         required authorization level.</p>
+                </div>
+
+                <!-- Additional Information -->
+                <div class="bg-black p-3 rounded border border-secondary mb-4">
+                    <h6 class="text-light mb-3">
+                        <i class="bi bi-info-circle"></i> What You Can Do
+                    </h6>
+                    <ul class="text-secondary small mb-0">
+                        <li class="mb-2">
+                            <i class="bi bi-arrow-left-circle"></i> Return to the dashboard or home page
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-envelope"></i> Contact your administrator to request access
+                        </li>
+                        <li>
+                            <i class="bi bi-question-circle"></i> Check if you're using the correct account
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="d-flex flex-column gap-2">
+                    <a href="/" class="btn btn-info btn-lg w-100">
+                        <i class="bi bi-house"></i> Go to Home Page
+                    </a>
+                    <a href="/admin" class="btn btn-outline-info btn-lg w-100">
+                        <i class="bi bi-speedometer2"></i> Go to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Support Section -->
+        <div class="text-center mt-5 text-secondary small">
+            <p class="mb-2">
+                <i class="bi bi-question-lg"></i> Need Help?
+            </p>
+            <p class="mb-0">
+                Contact your system administrator for access requests or technical support
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-4 text-secondary small">
+            <p class="mb-1">
+                <i class="bi bi-shield-lock"></i> Secure Access System
+            </p>
+            <p class="mb-0">
+                © 2011-2026 Natalia Portillo • Aaru Data Preservation Suite
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

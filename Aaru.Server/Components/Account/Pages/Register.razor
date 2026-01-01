@@ -2,8 +2,10 @@
 @using System.ComponentModel.DataAnnotations
 @using System.Text
 @using System.Text.Encodings.Web
+@using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
+@attribute [Authorize]
 
 @inject UserManager<IdentityUser>   UserManager
 @inject IUserStore<IdentityUser>    UserStore
@@ -13,44 +15,160 @@
 @inject NavigationManager           NavigationManager
 @inject IdentityRedirectManager     RedirectManager
 
-<PageTitle>Register</PageTitle>
+<PageTitle>Create Account - Aaru Server</PageTitle>
 
-<h1>Register</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aaru Server - Create Account</title>
+    <link href="_framework/blazor.web.css" rel="stylesheet" />
+    <link href="app.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+</head>
+<body class="bg-dark">
+<div class="min-vh-100 d-flex align-items-center justify-content-center px-4">
+    <div style="width: 100%; max-width: 500px;">
+        <!-- Logo/Branding Section -->
+        <div class="text-center mb-5">
+            <h1 class="h3 text-light mb-1">
+                <i class="bi bi-person-plus text-info" style="font-size: 3rem;"></i>
+            </h1>
+            <h2 class="h4 text-light mb-2">Create New Account</h2>
+            <p class="text-secondary">Join Aaru Server</p>
+        </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <StatusMessage Message="@Message"/>
-        <EditForm asp-route-returnUrl="@ReturnUrl" FormName="register" method="post" Model="Input" OnValidSubmit="RegisterUser">
-            <DataAnnotationsValidator/>
-            <h2>Create a new account.</h2>
-            <hr/>
-            <ValidationSummary class="text-danger" role="alert"/>
-            <div class="form-floating mb-3">
-                <InputText aria-required="true" autocomplete="username" @bind-Value="Input.Email" class="form-control" placeholder="name@example.com"/>
-                <label for="email">Email</label>
-                <ValidationMessage class="text-danger" For="() => Input.Email"/>
+        <!-- Registration Card -->
+        <div class="card bg-dark shadow-lg border-info" style="border-width: 2px;">
+            <div class="card-header bg-info text-dark">
+                <h5 class="mb-0">
+                    <i class="bi bi-file-earmark-text"></i> Account Details
+                </h5>
             </div>
-            <div class="form-floating mb-3">
-                <InputText aria-required="true" autocomplete="new-password" @bind-Value="Input.Password" class="form-control" placeholder="password" type="password"/>
-                <label for="password">Password</label>
-                <ValidationMessage class="text-danger" For="() => Input.Password"/>
+            <div class="card-body p-4">
+                <!-- Status Message -->
+                @if(!string.IsNullOrEmpty(Message))
+                {
+                    <div class="alert alert-danger bg-dark border-danger text-light mb-4">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        <strong>Registration Error</strong>
+                        <p class="mb-0 mt-1">@Message</p>
+                    </div>
+                }
+
+                <EditForm asp-route-returnUrl="@ReturnUrl"
+                          FormName="register"
+                          method="post"
+                          Model="Input"
+                          OnValidSubmit="RegisterUser">
+                    <DataAnnotationsValidator />
+
+                    <!-- Email Field -->
+                    <div class="mb-3">
+                        <label class="form-label text-light">
+                            <i class="bi bi-envelope"></i> Email Address
+                            <span class="text-danger">*</span>
+                        </label>
+                        <InputText aria-required="true"
+                                   autocomplete="username"
+                                   @bind-Value="Input.Email"
+                                   class="form-control bg-dark text-light border-secondary"
+                                   placeholder="name@example.com" />
+                        <ValidationMessage For="() => Input.Email" class="text-danger small mt-1" />
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="mb-3">
+                        <label class="form-label text-light">
+                            <i class="bi bi-lock"></i> Password
+                            <span class="text-danger">*</span>
+                        </label>
+                        <InputText aria-required="true"
+                                   autocomplete="new-password"
+                                   @bind-Value="Input.Password"
+                                   class="form-control bg-dark text-light border-secondary"
+                                   placeholder="Enter a secure password"
+                                   type="password" />
+                        <ValidationMessage For="() => Input.Password" class="text-danger small mt-1" />
+                        <small class="text-secondary">Minimum 6 characters</small>
+                    </div>
+
+                    <!-- Confirm Password Field -->
+                    <div class="mb-4">
+                        <label class="form-label text-light">
+                            <i class="bi bi-lock-check"></i> Confirm Password
+                            <span class="text-danger">*</span>
+                        </label>
+                        <InputText aria-required="true"
+                                   autocomplete="new-password"
+                                   @bind-Value="Input.ConfirmPassword"
+                                   class="form-control bg-dark text-light border-secondary"
+                                   placeholder="Re-enter your password"
+                                   type="password" />
+                        <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger small mt-1" />
+                    </div>
+
+                    <!-- Validation Summary -->
+                    <div class="mb-3">
+                        <ValidationSummary class="alert alert-danger bg-dark border-danger text-light" />
+                    </div>
+
+                    <!-- Register Button -->
+                    <button class="btn btn-info btn-lg w-100 mb-3" type="submit">
+                        <i class="bi bi-check-circle"></i> Create Account
+                    </button>
+                </EditForm>
+
+                <!-- Separator -->
+                <hr class="border-secondary my-4" />
+
+                <!-- Help Links -->
+                <div class="text-center">
+                    <p class="text-secondary mb-2">
+                        <a href="/Account/Login" class="link-info">
+                            <i class="bi bi-arrow-left-circle"></i> Already have an account? Sign In
+                        </a>
+                    </p>
+                </div>
             </div>
-            <div class="form-floating mb-3">
-                <InputText aria-required="true" autocomplete="new-password" @bind-Value="Input.ConfirmPassword" class="form-control" placeholder="password" type="password"/>
-                <label for="confirm-password">Confirm Password</label>
-                <ValidationMessage class="text-danger" For="() => Input.ConfirmPassword"/>
+        </div>
+
+        <!-- Requirements Card -->
+        <div class="card bg-dark shadow-sm border-secondary mt-4">
+            <div class="card-header bg-secondary text-light">
+                <h6 class="mb-0">
+                    <i class="bi bi-info-circle"></i> Account Requirements
+                </h6>
             </div>
-            <button class="btn btn-lg btn-primary w-100" type="submit">Register</button>
-        </EditForm>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to register.</h3>
-            <hr/>
-            <ExternalLoginPicker/>
-        </section>
+            <div class="card-body p-3">
+                <ul class="text-secondary small mb-0">
+                    <li class="mb-1">
+                        <i class="bi bi-envelope"></i> Valid email address required
+                    </li>
+                    <li class="mb-1">
+                        <i class="bi bi-key"></i> Password must be at least 6 characters
+                    </li>
+                    <li>
+                        <i class="bi bi-check"></i> Passwords must match
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-5 text-secondary small">
+            <p class="mb-1">
+                <i class="bi bi-shield-check"></i> Secure Account Creation
+            </p>
+            <p class="mb-0">
+                © 2011-2026 Natalia Portillo • Aaru Data Preservation Suite
+            </p>
+        </div>
     </div>
 </div>
+</body>
+</html>
 
 @code {
     private IEnumerable<IdentityError>? identityErrors;
@@ -79,7 +197,7 @@
             return;
         }
 
-        Logger.LogInformation("User created a new account with password.");
+        Logger.LogInformation("User created a new account with password");
 
         string userId = await UserManager.GetUserIdAsync(user);
         string code   = await UserManager.GenerateEmailConfirmationTokenAsync(user);
@@ -150,4 +268,6 @@
         public string ConfirmPassword { get; set; } = "";
     }
 
+
 }
+

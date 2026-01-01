@@ -1,78 +1,193 @@
 ﻿@page "/Account/Manage/EnableAuthenticator"
 @using System.ComponentModel.DataAnnotations
 @using System.Globalization
-@using System.Text
 @using System.Text.Encodings.Web
 @using Microsoft.AspNetCore.Identity
 
-@inject UserManager<IdentityUser>    UserManager
-@inject IdentityUserAccessor         UserAccessor
-@inject UrlEncoder                   UrlEncoder
-@inject IdentityRedirectManager      RedirectManager
-@inject ILogger<EnableAuthenticator> Logger
+@inject UserManager<IdentityUser> UserManager
+@inject IdentityUserAccessor      UserAccessor
+@inject UrlEncoder                UrlEncoder
+@inject IdentityRedirectManager   RedirectManager
 
-<PageTitle>Configure authenticator app</PageTitle>
+<PageTitle>Enable Authenticator - Aaru Server</PageTitle>
 
-@if(recoveryCodes is not null)
-{
-    <ShowRecoveryCodes RecoveryCodes="recoveryCodes.ToArray()" StatusMessage="@message"/>
-}
-else
-{
-    <StatusMessage Message="@message"/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aaru Server - Enable Authenticator</title>
+    <link href="_framework/blazor.web.css" rel="stylesheet" />
+    <link href="app.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+</head>
+<body class="bg-dark">
+<div class="min-vh-100 d-flex align-items-center justify-content-center px-4">
+    <div style="width: 100%; max-width: 600px;">
+        @if(_recoveryCodes is not null)
+        {
+            <!-- Recovery Codes Display -->
 
-    <h3>Configure authenticator app</h3>
-    <div>
-        <p>To use an authenticator app go through the following steps:</p>
-        <ol class="list">
-            <li>
-                <p>
-                    Download a two-factor authenticator app like Microsoft Authenticator for
-                    <a href="https://go.microsoft.com/fwlink/?Linkid=825072">Android</a> and
-                    <a href="https://go.microsoft.com/fwlink/?Linkid=825073">iOS</a> or
-                    Google Authenticator for
-                    <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&amp;hl=en">Android</a> and
-                    <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8">iOS</a>.
-                </p>
-            </li>
-            <li>
-                <p>Scan the QR Code or enter this key <kbd>@sharedKey</kbd> into your two factor authenticator app. Spaces and casing do not matter.</p>
-                <div class="alert alert-info">Learn how to <a href="https://go.microsoft.com/fwlink/?Linkid=852423">enable QR code generation</a>.</div>
-                <div></div>
-                <div data-url="@authenticatorUri"></div>
-            </li>
-            <li>
-                <p>
-                    Once you have scanned the QR code or input the key above, your two factor authentication app will provide you
-                    with a unique code. Enter the code in the confirmation box below.
-                </p>
-                <div class="row">
-                    <div class="col-md-6">
+            <ShowRecoveryCodes RecoveryCodes="_recoveryCodes.ToArray()" StatusMessage="@_message" />
+
+            <!-- Back Link -->
+            <div class="text-center mt-4">
+                <a href="/Account/Manage/TwoFactorAuthentication" class="btn btn-secondary btn-sm">
+                    <i class="bi bi-arrow-left-circle"></i> Back to 2FA Settings
+                </a>
+            </div>
+        }
+        else
+        {
+            <!-- Header -->
+                <div class="text-center mb-5">
+                    <h1 class="h2 mb-1 text-light">
+                        <i class="bi bi-shield-check text-success"></i> Enable Authenticator
+                    </h1>
+                    <p class="text-secondary mb-0">Set up two-factor authentication</p>
+                </div>
+
+            <!-- Setup Instructions Card -->
+                <div class="card bg-dark shadow-lg border-success mb-4" style="border-width: 2px;">
+                    <div class="card-header bg-success text-dark">
+                        <h5 class="mb-0">
+                            <i class="bi bi-list-ol"></i> Setup Instructions
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <ol class="text-light">
+                            <li class="mb-3">
+                                <strong>Download an Authenticator App:</strong>
+                                <div class="mt-2 text-secondary small">
+                                    <p class="mb-2">
+                                        <i class="bi bi-apple me-2"></i>
+                                        <a href="https://itunes.apple.com/us/app/microsoft-authenticator/id434200560"
+                                           class="link-info">Microsoft Authenticator (iOS)</a>
+                                        or
+                                        <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605"
+                                           class="link-info">Google Authenticator (iOS)</a>
+                                    </p>
+                                    <p>
+                                        <i class="bi bi-android2 me-2"></i>
+                                        <a href="https://play.google.com/store/apps/details?id=com.microsoft.identity.secretsmanager"
+                                           class="link-info">Microsoft Authenticator (Android)</a>
+                                        or
+                                        <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2"
+                                           class="link-info">Google Authenticator (Android)</a>
+                                    </p>
+                                </div>
+                            </li>
+
+                            <li class="mb-3">
+                                <strong>Scan QR Code or Enter Key:</strong>
+                                <div class="bg-black p-4 rounded border border-secondary mt-2 text-center mb-3">
+                                    <div class="text-secondary small mb-2">QR Code will appear here</div>
+                                    <div data-url="@_authenticatorUri"
+                                         style="height: 250px; display: flex; align-items: center; justify-content: center;">
+                                        <span class="text-secondary">(QR Code generated by authenticator)</span>
+                                    </div>
+                                </div>
+                                <div class="alert alert-info bg-dark border-info text-light">
+                                    <strong>Manual Entry Key:</strong>
+                                    <div class="mt-2 font-monospace text-center">
+                                        <kbd class="bg-secondary text-dark p-2">@_sharedKey</kbd>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="mb-3">
+                                <strong>Verify Code:</strong>
+                                <p class="text-secondary small mt-2">Enter the 6-digit code from your authenticator
+                                                                     app:</p>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+            <!-- Verification Form Card -->
+                <div class="card bg-dark shadow-lg border-info mb-4" style="border-width: 2px;">
+                    <div class="card-header bg-info text-dark">
+                        <h5 class="mb-0">
+                            <i class="bi bi-key"></i> Verify Code
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
                         <EditForm FormName="send-code" method="post" Model="Input" OnValidSubmit="OnValidSubmitAsync">
-                            <DataAnnotationsValidator/>
-                            <div class="form-floating mb-3">
-                                <InputText autocomplete="off" @bind-Value="Input.Code" class="form-control" placeholder="Please enter the code."/>
-                                <label class="control-label form-label" for="code">Verification Code</label>
-                                <ValidationMessage class="text-danger" For="() => Input.Code"/>
+                            <DataAnnotationsValidator />
+
+                            <!-- Verification Code Field -->
+                            <div class="mb-3">
+                                <label class="form-label text-light">
+                                    <i class="bi bi-phone"></i> Authenticator Code
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <InputText aria-required="true"
+                                           autocomplete="off"
+                                           @bind-Value="Input.Code"
+                                           class="form-control bg-dark text-light border-secondary text-center"
+                                           inputmode="numeric"
+                                           maxlength="7"
+                                           placeholder="000000"
+                                           style="font-size: 1.5rem; letter-spacing: 0.5rem;" />
+                                <ValidationMessage For="() => Input.Code" class="text-danger small mt-1" />
                             </div>
-                            <button class="btn btn-lg btn-primary w-100" type="submit">Verify</button>
-                            <ValidationSummary class="text-danger" role="alert"/>
+
+                            <!-- Validation Summary -->
+                            <div class="mb-3">
+                                <ValidationSummary class="alert alert-danger bg-dark border-danger text-light" />
+                            </div>
+
+                            <!-- Verify Button -->
+                            <button class="btn btn-success btn-lg w-100" type="submit">
+                                <i class="bi bi-check-circle"></i> Verify & Enable
+                            </button>
                         </EditForm>
                     </div>
                 </div>
-            </li>
-        </ol>
+
+            <!-- Warning Card -->
+                <div class="card bg-dark shadow-sm border-secondary">
+                    <div class="card-header bg-secondary text-light">
+                        <h6 class="mb-0">
+                            <i class="bi bi-exclamation-triangle"></i> Important
+                        </h6>
+                    </div>
+                    <div class="card-body p-3">
+                        <ul class="text-secondary small mb-0">
+                            <li class="mb-1">
+                                <i class="bi bi-clock"></i> Code expires every 30 seconds
+                            </li>
+                            <li class="mb-1">
+                                <i class="bi bi-key"></i> Save your recovery codes securely
+                            </li>
+                            <li>
+                                <i class="bi bi-shield-check"></i> 2FA will be enabled after verification
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+        }
+
+            <!-- Footer -->
+        <div class="text-center mt-5 text-secondary small">
+            <p class="mb-1">
+                <i class="bi bi-shield-lock"></i> Authenticator Setup is Secure
+            </p>
+            <p class="mb-0">
+                © 2011-2026 Natalia Portillo • Aaru Data Preservation Suite
+            </p>
+        </div>
     </div>
-}
+</div>
+</body>
+</html>
 
 @code {
-    private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
-
-    private string?              message;
-    private IdentityUser         user = default!;
-    private string?              sharedKey;
-    private string?              authenticatorUri;
-    private IEnumerable<string>? recoveryCodes;
+    private string?              _message;
+    private string?              _sharedKey;
+    private string?              _authenticatorUri;
+    private IdentityUser         _user = default!;
+    private IEnumerable<string>? _recoveryCodes;
 
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
@@ -82,86 +197,79 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+        _user = await UserAccessor.GetRequiredUserAsync(HttpContext);
 
-        await LoadSharedKeyAndQrCodeUriAsync(user);
+        bool is2FaEnabled = await UserManager.GetTwoFactorEnabledAsync(_user);
+
+        if(is2FaEnabled)
+        {
+            RedirectManager.RedirectTo("Account/Manage/TwoFactorAuthentication");
+        }
+
+        string? unformattedKey = await UserManager.GetAuthenticatorKeyAsync(_user);
+
+        if(string.IsNullOrEmpty(unformattedKey))
+        {
+            await UserManager.ResetAuthenticatorKeyAsync(_user);
+            unformattedKey = await UserManager.GetAuthenticatorKeyAsync(_user);
+        }
+
+        _sharedKey        = FormatKey(unformattedKey);
+        _authenticatorUri = GenerateQrCodeUri("Aaru Server", unformattedKey ?? "");
+    }
+
+    private static string FormatKey(string? unformattedKey)
+    {
+        if(string.IsNullOrEmpty(unformattedKey) || unformattedKey.Length < 16) return unformattedKey ?? "";
+
+        return $"{unformattedKey[..2]} {unformattedKey[2..4]} {unformattedKey[4..6]} {unformattedKey[6..8]} {unformattedKey[10..12]} {unformattedKey[12..14]}";
+    }
+
+    private string GenerateQrCodeUri(string issuer, string authenticatorKey)
+    {
+        const string authenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
+
+        string email = _user.Email ?? throw new InvalidOperationException("User email is null.");
+
+        return string.Format(CultureInfo.InvariantCulture, authenticatorUriFormat, UrlEncoder.Encode(issuer), UrlEncoder.Encode(email), authenticatorKey);
     }
 
     private async Task OnValidSubmitAsync()
     {
-        // Strip spaces and hyphens
-        string verificationCode = Input.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
+        string? verificationCode = Input.Code?.Replace(" ", string.Empty).Replace("-", string.Empty);
 
-        bool is2faTokenValid = await UserManager.VerifyTwoFactorTokenAsync(user, UserManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
-
-        if(!is2faTokenValid)
+        if(string.IsNullOrEmpty(verificationCode))
         {
-            message = "Error: Verification code is invalid.";
+            _message = "Verification code cannot be empty.";
 
             return;
         }
 
-        await UserManager.SetTwoFactorEnabledAsync(user, true);
-        string userId = await UserManager.GetUserIdAsync(user);
-        Logger.LogInformation("User with ID '{UserId}' has enabled 2FA with an authenticator app.", userId);
+        bool is2FaTokenValid = await UserManager.VerifyTwoFactorTokenAsync(_user, UserManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
 
-        message = "Your authenticator app has been verified.";
+        if(!is2FaTokenValid)
+        {
+            _message = "Verification code is invalid.";
 
-        if(await UserManager.CountRecoveryCodesAsync(user) == 0)
-        {
-            recoveryCodes = await UserManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
+            return;
         }
-        else
-        {
-            RedirectManager.RedirectToWithStatus("Account/Manage/TwoFactorAuthentication", message, HttpContext);
-        }
+
+        await UserManager.SetTwoFactorEnabledAsync(_user, true);
+
+        IEnumerable<string>? codes = await UserManager.GenerateNewTwoFactorRecoveryCodesAsync(_user, 10);
+        _recoveryCodes = codes?.ToList();
+
+        _message = "Your authenticator app has been verified.";
     }
-
-    private async ValueTask LoadSharedKeyAndQrCodeUriAsync(IdentityUser user)
-    {
-        // Load the authenticator key & QR code URI to display on the form
-        string? unformattedKey = await UserManager.GetAuthenticatorKeyAsync(user);
-
-        if(string.IsNullOrEmpty(unformattedKey))
-        {
-            await UserManager.ResetAuthenticatorKeyAsync(user);
-            unformattedKey = await UserManager.GetAuthenticatorKeyAsync(user);
-        }
-
-        sharedKey = FormatKey(unformattedKey!);
-
-        string? email = await UserManager.GetEmailAsync(user);
-        authenticatorUri = GenerateQrCodeUri(email!, unformattedKey!);
-    }
-
-    private string FormatKey(string unformattedKey)
-    {
-        var result          = new StringBuilder();
-        var currentPosition = 0;
-
-        while(currentPosition + 4 < unformattedKey.Length)
-        {
-            result.Append(unformattedKey.AsSpan(currentPosition, 4)).Append(' ');
-            currentPosition += 4;
-        }
-
-        if(currentPosition < unformattedKey.Length)
-        {
-            result.Append(unformattedKey.AsSpan(currentPosition));
-        }
-
-        return result.ToString().ToLowerInvariant();
-    }
-
-    private string GenerateQrCodeUri(string email, string unformattedKey) => string.Format(CultureInfo.InvariantCulture, AuthenticatorUriFormat, UrlEncoder.Encode("Microsoft.AspNetCore.Identity.UI"), UrlEncoder.Encode(email), unformattedKey);
 
     private sealed class InputModel
     {
         [Required]
         [StringLength(7, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
         [DataType(DataType.Text)]
-        [Display(Name = "Verification Code")]
-        public string Code { get; set; } = "";
+        [Display(Name = "Code")]
+        public string? Code { get; set; }
     }
 
 }
+

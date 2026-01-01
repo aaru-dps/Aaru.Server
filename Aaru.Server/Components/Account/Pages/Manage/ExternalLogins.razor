@@ -8,134 +8,179 @@
 @inject IUserStore<IdentityUser>    UserStore
 @inject IdentityRedirectManager     RedirectManager
 
-<PageTitle>Manage your external logins</PageTitle>
+<PageTitle>External Logins - Aaru Server</PageTitle>
 
-<StatusMessage/>
-@if(currentLogins?.Count > 0)
-{
-    <h3>Registered Logins</h3>
-    <table class="table">
-        <tbody>
-        @foreach(UserLoginInfo login in currentLogins)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aaru Server - External Logins</title>
+    <link href="_framework/blazor.web.css" rel="stylesheet" />
+    <link href="app.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+</head>
+<body class="bg-dark">
+<div class="min-vh-100 d-flex align-items-center justify-content-center px-4">
+    <div style="width: 100%; max-width: 550px;">
+        <!-- Header -->
+        <div class="text-center mb-5">
+            <h1 class="h2 mb-1 text-light">
+                <i class="bi bi-box-arrow-in-right text-info"></i> External Logins
+            </h1>
+            <p class="text-secondary mb-0">Manage third-party login providers</p>
+        </div>
+
+        @if(_currentLogins?.Count > 0)
         {
-            <tr>
-                <td>@login.ProviderDisplayName</td>
-                <td>
-                    @if(showRemoveButton)
-                    {
-                        <form @formname="@($"remove-login-{login.LoginProvider}")" method="post" @onsubmit="OnSubmitAsync">
-                            <AntiforgeryToken/>
-                            <div>
-                                <input name="@nameof(LoginProvider)" type="hidden" value="@login.LoginProvider"/>
-                                <input name="@nameof(ProviderKey)" type="hidden" value="@login.ProviderKey"/>
-                                <button class="btn btn-primary" title="Remove this @login.ProviderDisplayName login from your account" type="submit">Remove</button>
-                            </div>
-                        </form>
-                    }
-                    else
-                    {
-                        @: &nbsp;
-                    }
-                </td>
-            </tr>
+        <!-- Current Logins Card -->
+            <div class="card bg-dark shadow-lg border-success mb-4" style="border-width: 2px;">
+                <div class="card-header bg-success text-dark">
+                    <h5 class="mb-0">
+                        <i class="bi bi-check-circle"></i> Connected Providers
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover mb-0">
+                            <tbody>
+                            @foreach(UserLoginInfo login in _currentLogins)
+                            {
+                                <tr>
+                                    <td class="align-middle">
+                                        <i class="bi bi-box-arrow-in-right me-2"></i>
+                                        <strong class="text-light">@login.ProviderDisplayName</strong>
+                                    </td>
+                                    <td class="align-middle text-end">
+                                        @if(_showRemoveButton)
+                                        {
+                                            <form @formname="@($"remove-login-{login.LoginProvider}")"
+                                                  method="post"
+                                                  @onsubmit="OnSubmitAsync"
+                                                  style="display: inline;">
+                                                <AntiforgeryToken />
+                                                <input name="@nameof(LoginProvider)"
+                                                       type="hidden"
+                                                       value="@login.LoginProvider" />
+                                                <input name="@nameof(ProviderKey)"
+                                                       type="hidden"
+                                                       value="@login.ProviderKey" />
+                                                <button class="btn btn-outline-danger btn-sm"
+                                                        title="Remove @login.ProviderDisplayName login"
+                                                        type="submit">
+                                                    <i class="bi bi-trash"></i> Remove
+                                                </button>
+                                            </form>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         }
-        </tbody>
-    </table>
-}
-@if(otherLogins?.Count > 0)
-{
-    <h4>Add another service to log in.</h4>
-    <hr/>
-    <form action="Account/Manage/LinkExternalLogin" class="form-horizontal" method="post">
-        <AntiforgeryToken/>
-        <div>
-            <p>
-                @foreach(AuthenticationScheme provider in otherLogins)
-                {
-                    <button class="btn btn-primary" name="Provider" title="Log in using your @provider.DisplayName account" type="submit" value="@provider.Name">
-                        @provider.DisplayName
-                    </button>
-                }
+
+        @if(_otherLogins?.Count > 0)
+        {
+        <!-- Add Provider Card -->
+            <div class="card bg-dark shadow-lg border-info mb-4" style="border-width: 2px;">
+                <div class="card-header bg-info text-dark">
+                    <h5 class="mb-0">
+                        <i class="bi bi-plus-circle"></i> Connect Another Provider
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <form action="Account/Manage/LinkExternalLogin" class="row g-3" method="post">
+                        <AntiforgeryToken />
+                        <div class="col-12">
+                            <label class="form-label text-light">
+                                <i class="bi bi-service-menu"></i> Select Provider
+                            </label>
+                            <select class="form-select bg-dark text-light border-secondary" name="Provider" required>
+                                <option value="">-- Select a Provider --</option>
+                                @foreach(AuthenticationScheme provider in _otherLogins)
+                                {
+                                    <option value="@provider.Name">@provider.DisplayName</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-info btn-lg w-100" type="submit">
+                                <i class="bi bi-arrow-right-circle"></i> Connect Provider
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+
+        @if(_currentLogins?.Count == 0 && _otherLogins?.Count == 0)
+        {
+            <div class="alert alert-info bg-dark border-info text-light">
+                <i class="bi bi-info-circle me-2"></i>
+                <strong>No External Logins</strong>
+                <p class="mb-0 mt-2">No external login providers are configured for this system.</p>
+            </div>
+        }
+
+        <!-- Back Link -->
+        <div class="text-center mt-4">
+            <a href="/Account/Manage" class="btn btn-secondary btn-sm">
+                <i class="bi bi-arrow-left-circle"></i> Back to Settings
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-5 text-secondary small">
+            <p class="mb-1">
+                <i class="bi bi-shield-check"></i> Login Providers are Secure
+            </p>
+            <p class="mb-0">
+                © 2011-2026 Natalia Portillo • Aaru Data Preservation Suite
             </p>
         </div>
-    </form>
-}
+    </div>
+</div>
+</body>
+</html>
 
 @code {
     public const string LinkLoginCallbackAction = "LinkLoginCallback";
 
-    private IdentityUser                 user = default!;
-    private IList<UserLoginInfo>?        currentLogins;
-    private IList<AuthenticationScheme>? otherLogins;
-    private bool                         showRemoveButton;
+    private          List<UserLoginInfo>?        _currentLogins;
+    private          List<AuthenticationScheme>? _otherLogins;
+    private          bool                        _showRemoveButton;
+    private readonly string                      LoginProvider = default!;
+    private readonly string                      ProviderKey   = default!;
 
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
 
-    [SupplyParameterFromForm]
-    private string? LoginProvider { get; set; }
-
-    [SupplyParameterFromForm]
-    private string? ProviderKey { get; set; }
-
-    [SupplyParameterFromQuery]
-    private string? Action { get; set; }
-
     protected override async Task OnInitializedAsync()
     {
-        user          = await UserAccessor.GetRequiredUserAsync(HttpContext);
-        currentLogins = await UserManager.GetLoginsAsync(user);
-        otherLogins   = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Where(auth => currentLogins.All(ul => auth.Name != ul.LoginProvider)).ToList();
+        IdentityUser user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+        _currentLogins = (await UserManager.GetLoginsAsync(user)).ToList();
 
-        string? passwordHash = null;
+        _showRemoveButton = _currentLogins.Count > 1 || await UserManager.HasPasswordAsync(user);
 
-        if(UserStore is IUserPasswordStore<IdentityUser> userPasswordStore)
-        {
-            passwordHash = await userPasswordStore.GetPasswordHashAsync(user, HttpContext.RequestAborted);
-        }
-
-        showRemoveButton = passwordHash is not null || currentLogins.Count > 1;
-
-        if(HttpMethods.IsGet(HttpContext.Request.Method) && Action == LinkLoginCallbackAction)
-        {
-            await OnGetLinkLoginCallbackAsync();
-        }
+        _otherLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Where(auth => _currentLogins.All(ul => auth.Name != ul.LoginProvider)).ToList();
     }
 
     private async Task OnSubmitAsync()
     {
-        IdentityResult result = await UserManager.RemoveLoginAsync(user, LoginProvider!, ProviderKey!);
+        IdentityUser   user   = await UserAccessor.GetRequiredUserAsync(HttpContext);
+        IdentityResult result = await UserManager.RemoveLoginAsync(user, LoginProvider, ProviderKey);
 
         if(!result.Succeeded)
         {
-            RedirectManager.RedirectToCurrentPageWithStatus("Error: The external login was not removed.", HttpContext);
+            RedirectManager.RedirectToCurrentPageWithStatus("Error: The login was not removed.", HttpContext);
         }
 
         await SignInManager.RefreshSignInAsync(user);
         RedirectManager.RedirectToCurrentPageWithStatus("The external login was removed.", HttpContext);
     }
 
-    private async Task OnGetLinkLoginCallbackAsync()
-    {
-        string             userId = await UserManager.GetUserIdAsync(user);
-        ExternalLoginInfo? info   = await SignInManager.GetExternalLoginInfoAsync(userId);
-
-        if(info is null)
-        {
-            RedirectManager.RedirectToCurrentPageWithStatus("Error: Could not load external login info.", HttpContext);
-        }
-
-        IdentityResult result = await UserManager.AddLoginAsync(user, info);
-
-        if(!result.Succeeded)
-        {
-            RedirectManager.RedirectToCurrentPageWithStatus("Error: The external login was not added. External logins can only be associated with one account.", HttpContext);
-        }
-
-        // Clear the existing external cookie to ensure a clean login process
-        await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
-        RedirectManager.RedirectToCurrentPageWithStatus("The external login was added.", HttpContext);
-    }
-
 }
+

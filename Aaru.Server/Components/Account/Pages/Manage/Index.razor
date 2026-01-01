@@ -7,34 +7,164 @@
 @inject IdentityUserAccessor        UserAccessor
 @inject IdentityRedirectManager     RedirectManager
 
-<PageTitle>Profile</PageTitle>
+<PageTitle>Account Settings - Aaru Server</PageTitle>
 
-<h3>Profile</h3>
-<StatusMessage/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aaru Server - Account Settings</title>
+    <link href="_framework/blazor.web.css" rel="stylesheet" />
+    <link href="app.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+</head>
+<body class="bg-dark">
+<div class="min-vh-100 d-flex align-items-center justify-content-center px-4">
+    <div style="width: 100%; max-width: 550px;">
+        <!-- Header Section -->
+        <div class="text-center mb-5">
+            <h1 class="h2 mb-1 text-light">
+                <i class="bi bi-gear text-info"></i> Account Settings
+            </h1>
+            <p class="text-secondary mb-0">Manage your profile and security</p>
+        </div>
 
-<div class="row">
-    <div class="col-md-6">
-        <EditForm FormName="profile" method="post" Model="Input" OnValidSubmit="OnValidSubmitAsync">
-            <DataAnnotationsValidator/>
-            <ValidationSummary class="text-danger" role="alert"/>
-            <div class="form-floating mb-3">
-                <input class="form-control" disabled placeholder="Please choose your username." type="text" value="@username"/>
-                <label class="form-label" for="username">Username</label>
+        <!-- Status Message -->
+        @if(!string.IsNullOrEmpty(_statusMessage))
+        {
+            <div class="alert alert-success bg-dark border-success text-light mb-4">
+                <i class="bi bi-check-circle-fill me-2"></i>
+                <strong>Success</strong>
+                <p class="mb-0 mt-1">@_statusMessage</p>
             </div>
-            <div class="form-floating mb-3">
-                <InputText @bind-Value="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number."/>
-                <label class="form-label" for="phone-number">Phone number</label>
-                <ValidationMessage class="text-danger" For="() => Input.PhoneNumber"/>
+        }
+
+        <!-- Profile Card -->
+        <div class="card bg-dark shadow-lg border-info mb-4" style="border-width: 2px;">
+            <div class="card-header bg-info text-dark">
+                <h5 class="mb-0">
+                    <i class="bi bi-person-circle"></i> Profile Information
+                </h5>
             </div>
-            <button class="btn btn-lg btn-primary w-100" type="submit">Save</button>
-        </EditForm>
+            <div class="card-body p-4">
+                <EditForm FormName="profile" method="post" Model="Input" OnValidSubmit="OnValidSubmitAsync">
+                    <DataAnnotationsValidator />
+
+                    <!-- Username Field (Disabled) -->
+                    <div class="mb-3">
+                        <label class="form-label text-light">
+                            <i class="bi bi-person-badge"></i> Username
+                        </label>
+                        <input class="form-control bg-dark text-light border-secondary"
+                               disabled
+                               placeholder="Username"
+                               type="text"
+                               value="@_username" />
+                        <small class="text-secondary">Your username cannot be changed</small>
+                    </div>
+
+                    <!-- Phone Number Field -->
+                    <div class="mb-4">
+                        <label class="form-label text-light">
+                            <i class="bi bi-telephone"></i> Phone Number
+                        </label>
+                        <InputText @bind-Value="Input.PhoneNumber"
+                                   class="form-control bg-dark text-light border-secondary"
+                                   placeholder="(555) 123-4567" />
+                        <ValidationMessage For="() => Input.PhoneNumber" class="text-danger small mt-1" />
+                    </div>
+
+                    <!-- Validation Summary -->
+                    <div class="mb-3">
+                        <ValidationSummary class="alert alert-danger bg-dark border-danger text-light" />
+                    </div>
+
+                    <!-- Save Button -->
+                    <button class="btn btn-info btn-lg w-100" type="submit">
+                        <i class="bi bi-check-circle"></i> Save Changes
+                    </button>
+                </EditForm>
+            </div>
+        </div>
+
+        <!-- Account Security Card -->
+        <div class="card bg-dark shadow-sm border-secondary mb-4">
+            <div class="card-header bg-secondary text-light">
+                <h6 class="mb-0">
+                    <i class="bi bi-shield-lock"></i> Account Security
+                </h6>
+            </div>
+            <div class="card-body p-4">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <a href="/Account/Manage/ChangePassword" class="btn btn-outline-warning btn-sm w-100">
+                            <i class="bi bi-lock"></i> Change Password
+                        </a>
+                    </div>
+                    <div class="col-12">
+                        <a href="/Account/Manage/TwoFactorAuthentication" class="btn btn-outline-success btn-sm w-100">
+                            <i class="bi bi-shield-check"></i> Two-Factor Authentication
+                        </a>
+                    </div>
+                    <div class="col-12">
+                        <a href="/Account/Manage/ExternalLogins" class="btn btn-outline-info btn-sm w-100">
+                            <i class="bi bi-box-arrow-in-right"></i> External Logins
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Management Card -->
+        <div class="card bg-dark shadow-sm border-secondary mb-4">
+            <div class="card-header bg-secondary text-light">
+                <h6 class="mb-0">
+                    <i class="bi bi-database"></i> Data Management
+                </h6>
+            </div>
+            <div class="card-body p-4">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <a href="/Account/Manage/PersonalData" class="btn btn-outline-info btn-sm w-100">
+                            <i class="bi bi-download"></i> Download Personal Data
+                        </a>
+                    </div>
+                    <div class="col-12">
+                        <a href="/Account/Manage/DeletePersonalData" class="btn btn-outline-danger btn-sm w-100">
+                            <i class="bi bi-trash"></i> Delete Account & Data
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back Link -->
+        <div class="text-center">
+            <a href="/" class="btn btn-secondary btn-sm">
+                <i class="bi bi-arrow-left-circle"></i> Back to Home
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-5 text-secondary small">
+            <p class="mb-1">
+                <i class="bi bi-shield-check"></i> Your Account is Secure
+            </p>
+            <p class="mb-0">
+                © 2011-2026 Natalia Portillo • Aaru Data Preservation Suite
+            </p>
+        </div>
     </div>
 </div>
+</body>
+</html>
 
 @code {
-    private IdentityUser user = default!;
-    private string?      username;
-    private string?      phoneNumber;
+    private IdentityUser _user = default!;
+    private string?      _username;
+    private string?      _phoneNumber;
+    private string?      _statusMessage;
 
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
@@ -44,18 +174,18 @@
 
     protected override async Task OnInitializedAsync()
     {
-        user        = await UserAccessor.GetRequiredUserAsync(HttpContext);
-        username    = await UserManager.GetUserNameAsync(user);
-        phoneNumber = await UserManager.GetPhoneNumberAsync(user);
+        _user        = await UserAccessor.GetRequiredUserAsync(HttpContext);
+        _username    = await UserManager.GetUserNameAsync(_user);
+        _phoneNumber = await UserManager.GetPhoneNumberAsync(_user);
 
-        Input.PhoneNumber ??= phoneNumber;
+        Input.PhoneNumber ??= _phoneNumber;
     }
 
     private async Task OnValidSubmitAsync()
     {
-        if(Input.PhoneNumber != phoneNumber)
+        if(Input.PhoneNumber != _phoneNumber)
         {
-            IdentityResult setPhoneResult = await UserManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
+            IdentityResult setPhoneResult = await UserManager.SetPhoneNumberAsync(_user, Input.PhoneNumber);
 
             if(!setPhoneResult.Succeeded)
             {
@@ -63,8 +193,8 @@
             }
         }
 
-        await SignInManager.RefreshSignInAsync(user);
-        RedirectManager.RedirectToCurrentPageWithStatus("Your profile has been updated", HttpContext);
+        await SignInManager.RefreshSignInAsync(_user);
+        _statusMessage = "Your profile has been updated";
     }
 
     private sealed class InputModel
@@ -75,3 +205,4 @@
     }
 
 }
+

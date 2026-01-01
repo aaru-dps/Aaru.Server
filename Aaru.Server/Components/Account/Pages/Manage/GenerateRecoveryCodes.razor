@@ -1,68 +1,162 @@
 ﻿@page "/Account/Manage/GenerateRecoveryCodes"
 @using Microsoft.AspNetCore.Identity
 
-@inject UserManager<IdentityUser>      UserManager
-@inject IdentityUserAccessor           UserAccessor
-@inject IdentityRedirectManager        RedirectManager
-@inject ILogger<GenerateRecoveryCodes> Logger
+@inject UserManager<IdentityUser> UserManager
+@inject IdentityUserAccessor      UserAccessor
+@inject IdentityRedirectManager   RedirectManager
 
-<PageTitle>Generate two-factor authentication (2FA) recovery codes</PageTitle>
+<PageTitle>Generate Recovery Codes - Aaru Server</PageTitle>
 
-@if(recoveryCodes is not null)
-{
-    <ShowRecoveryCodes RecoveryCodes="recoveryCodes.ToArray()" StatusMessage="@message"/>
-}
-else
-{
-    <h3>Generate two-factor authentication (2FA) recovery codes</h3>
-    <div class="alert alert-warning" role="alert">
-        <p>
-            <span class="glyphicon glyphicon-warning-sign"></span>
-            <strong>Put these codes in a safe place.</strong>
-        </p>
-        <p>
-            If you lose your device and don't have the recovery codes you will lose access to your account.
-        </p>
-        <p>
-            Generating new recovery codes does not change the keys used in authenticator apps. If you wish to change the key
-            used in an authenticator app you should <a href="Account/Manage/ResetAuthenticator">reset your authenticator keys.</a>
-        </p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aaru Server - Generate Recovery Codes</title>
+    <link href="_framework/blazor.web.css" rel="stylesheet" />
+    <link href="app.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+</head>
+<body class="bg-dark">
+<div class="min-vh-100 d-flex align-items-center justify-content-center px-4">
+    <div style="width: 100%; max-width: 550px;">
+        @if(_recoveryCodes is not null)
+        {
+            <!-- Recovery Codes Display -->
+            <div class="text-center mb-5">
+                <h1 class="h2 mb-1 text-light">
+                    <i class="bi bi-key-fill text-success"></i> Recovery Codes Generated
+                </h1>
+                <p class="text-secondary mb-0">Save these codes in a secure location</p>
+            </div>
+
+            <div class="alert alert-success bg-dark border-success text-light mb-4">
+                <i class="bi bi-check-circle-fill me-2"></i>
+                <strong>New Recovery Codes Created</strong>
+                <p class="mb-0 mt-2">@_message</p>
+            </div>
+
+            <ShowRecoveryCodes RecoveryCodes="_recoveryCodes.ToArray()" StatusMessage="@_message" />
+
+            <!-- Back Link -->
+            <div class="text-center mt-4">
+                <a href="/Account/Manage/TwoFactorAuthentication" class="btn btn-secondary btn-sm">
+                    <i class="bi bi-arrow-left-circle"></i> Back to 2FA Settings
+                </a>
+            </div>
+        }
+        else
+        {
+            <!-- Generate Codes Request -->
+                <div class="text-center mb-5">
+                    <h1 class="h2 mb-1 text-light">
+                        <i class="bi bi-key text-warning"></i> Generate Recovery Codes
+                    </h1>
+                    <p class="text-secondary mb-0">Create backup codes for your account</p>
+                </div>
+
+            <!-- Critical Warning -->
+                <div class="alert alert-danger bg-dark border-danger text-light mb-4">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <strong>Save These Codes!</strong>
+                    <p class="mb-0 mt-2">Store these recovery codes in a safe place. If you lose your authenticator
+                                         device, these codes are the only way to regain access to your account.</p>
+                </div>
+
+            <!-- Information Card -->
+                <div class="card bg-dark shadow-lg border-warning mb-4" style="border-width: 2px;">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0">
+                            <i class="bi bi-info-circle"></i> Important Information
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <ul class="text-secondary small mb-3">
+                            <li class="mb-2">
+                                <i class="bi bi-key"></i> Generating new codes invalidates all previous codes
+                            </li>
+                            <li class="mb-2">
+                                <i class="bi bi-check"></i> Each code can only be used once
+                            </li>
+                            <li class="mb-2">
+                                <i class="bi bi-shield-lock"></i> Keep codes secure and private
+                            </li>
+                            <li>
+                                <i class="bi bi-info-circle"></i> Does NOT reset your authenticator app keys
+                            </li>
+                        </ul>
+
+                        <div class="bg-black p-3 rounded border border-secondary mt-3">
+                            <p class="text-secondary small mb-0">
+                                <strong>Note:</strong> To change your authenticator app keys, use
+                                <a href="Account/Manage/ResetAuthenticator" class="link-warning">Reset Authenticator</a>
+                                                       instead.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- Generate Button -->
+                <div class="card bg-dark shadow-sm border-secondary mb-4">
+                    <div class="card-body p-4">
+                        <form @formname="generate-recovery-codes" method="post" @onsubmit="OnSubmitAsync">
+                            <AntiforgeryToken />
+                            <button class="btn btn-danger btn-lg w-100" type="submit">
+                                <i class="bi bi-exclamation-circle"></i> Generate New Recovery Codes
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            <!-- Back Link -->
+                <div class="text-center">
+                    <a href="/Account/Manage/TwoFactorAuthentication" class="btn btn-secondary btn-sm">
+                        <i class="bi bi-arrow-left-circle"></i> Cancel
+                    </a>
+                </div>
+        }
+
+            <!-- Footer -->
+        <div class="text-center mt-5 text-secondary small">
+            <p class="mb-1">
+                <i class="bi bi-shield-check"></i> Recovery Codes Protect Your Account
+            </p>
+            <p class="mb-0">
+                © 2011-2026 Natalia Portillo • Aaru Data Preservation Suite
+            </p>
+        </div>
     </div>
-    <div>
-        <form @formname="generate-recovery-codes" method="post" @onsubmit="OnSubmitAsync">
-            <AntiforgeryToken/>
-            <button class="btn btn-danger" type="submit">Generate Recovery Codes</button>
-        </form>
-    </div>
-}
+</div>
+</body>
+</html>
 
 @code {
-    private string?              message;
-    private IdentityUser         user = default!;
-    private IEnumerable<string>? recoveryCodes;
+    private string?              _message;
+    private IdentityUser         _user = default!;
+    private IEnumerable<string>? _recoveryCodes;
 
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
 
     protected override async Task OnInitializedAsync()
     {
-        user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+        _user = await UserAccessor.GetRequiredUserAsync(HttpContext);
 
-        bool isTwoFactorEnabled = await UserManager.GetTwoFactorEnabledAsync(user);
+        bool isTwoFactorEnabled = await UserManager.GetTwoFactorEnabledAsync(_user);
 
         if(!isTwoFactorEnabled)
         {
-            throw new InvalidOperationException("Cannot generate recovery codes for user because they do not have 2FA enabled.");
+            RedirectManager.RedirectTo("Account/Manage/TwoFactorAuthentication");
         }
     }
 
     private async Task OnSubmitAsync()
     {
-        string userId = await UserManager.GetUserIdAsync(user);
-        recoveryCodes = await UserManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
-        message       = "You have generated new recovery codes.";
+        IEnumerable<string> codes = await UserManager.GenerateNewTwoFactorRecoveryCodesAsync(_user, 10);
+        _recoveryCodes = codes.ToList();
 
-        Logger.LogInformation("User with ID '{UserId}' has generated new 2FA recovery codes.", userId);
+        _message = "You have generated new recovery codes.";
     }
 
 }
+

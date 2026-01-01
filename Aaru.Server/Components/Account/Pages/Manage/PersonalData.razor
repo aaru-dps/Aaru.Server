@@ -1,27 +1,121 @@
 ﻿@page "/Account/Manage/PersonalData"
+@using Microsoft.AspNetCore.Identity
 
-@inject IdentityUserAccessor UserAccessor
+@inject UserManager<IdentityUser> UserManager
+@inject IdentityUserAccessor      UserAccessor
+@inject ILogger<PersonalData>     Logger
 
-<PageTitle>Personal Data</PageTitle>
+<PageTitle>Personal Data - Aaru Server</PageTitle>
 
-<StatusMessage/>
-<h3>Personal Data</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aaru Server - Personal Data</title>
+    <link href="_framework/blazor.web.css" rel="stylesheet" />
+    <link href="app.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+</head>
+<body class="bg-dark">
+<div class="min-vh-100 d-flex align-items-center justify-content-center px-4">
+    <div style="width: 100%; max-width: 550px;">
+        <!-- Header -->
+        <div class="text-center mb-5">
+            <h1 class="h2 mb-1 text-light">
+                <i class="bi bi-download text-info"></i> Personal Data
+            </h1>
+            <p class="text-secondary mb-0">Download your personal information</p>
+        </div>
 
-<div class="row">
-    <div class="col-md-6">
-        <p>Your account contains personal data that you have given us. This page allows you to download or delete that data.</p>
-        <p>
-            <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
-        </p>
-        <form action="Account/Manage/DownloadPersonalData" method="post">
-            <AntiforgeryToken/>
-            <button class="btn btn-primary" type="submit">Download</button>
-        </form>
-        <p>
-            <a class="btn btn-danger" href="Account/Manage/DeletePersonalData">Delete</a>
-        </p>
+        <!-- Information Alert -->
+        <div class="alert alert-info bg-dark border-info text-light mb-4">
+            <i class="bi bi-info-circle me-2"></i>
+            <strong>Data Privacy</strong>
+            <p class="mb-0 mt-2">You can download all personal data associated with your account in a machine-readable
+                                 format.</p>
+        </div>
+
+        <!-- Download Card -->
+        <div class="card bg-dark shadow-lg border-info mb-4" style="border-width: 2px;">
+            <div class="card-header bg-info text-dark">
+                <h5 class="mb-0">
+                    <i class="bi bi-file-earmark-arrow-down"></i> Download Data
+                </h5>
+            </div>
+            <div class="card-body p-4">
+                <p class="text-secondary small mb-4">Export all your personal information from this system.</p>
+
+                <form method="post" action="Account/Manage/DownloadPersonalData">
+                    <AntiforgeryToken />
+                    <button class="btn btn-info btn-lg w-100" type="submit">
+                        <i class="bi bi-cloud-download"></i> Download My Data
+                    </button>
+                </form>
+
+                <small class="text-secondary d-block mt-2">
+                    <i class="bi bi-info-circle"></i> The file will be downloaded to your device
+                </small>
+            </div>
+        </div>
+
+        <!-- Information Section -->
+        <div class="card bg-dark shadow-sm border-secondary mb-4">
+            <div class="card-header bg-secondary text-light">
+                <h6 class="mb-0">
+                    <i class="bi bi-question-circle"></i> What's Included
+                </h6>
+            </div>
+            <div class="card-body p-3">
+                <ul class="text-secondary small mb-0">
+                    <li class="mb-1">
+                        <i class="bi bi-check"></i> Account profile information
+                    </li>
+                    <li class="mb-1">
+                        <i class="bi bi-check"></i> Login history and sessions
+                    </li>
+                    <li>
+                        <i class="bi bi-check"></i> Associated records and preferences
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Delete Account Link -->
+        <div class="card bg-dark shadow-sm border-danger">
+            <div class="card-header bg-danger text-light">
+                <h6 class="mb-0">
+                    <i class="bi bi-exclamation-triangle"></i> Delete Account
+                </h6>
+            </div>
+            <div class="card-body p-3">
+                <p class="text-secondary small mb-2">Want to delete your account and all associated data?</p>
+                <a href="/Account/Manage/DeletePersonalData" class="btn btn-outline-danger btn-sm w-100">
+                    <i class="bi bi-trash"></i> Delete Account & Data
+                </a>
+            </div>
+        </div>
+
+        <!-- Back Link -->
+        <div class="text-center mt-4">
+            <a href="/Account/Manage" class="btn btn-secondary btn-sm">
+                <i class="bi bi-arrow-left-circle"></i> Back to Settings
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-5 text-secondary small">
+            <p class="mb-1">
+                <i class="bi bi-shield-check"></i> Your Data is Protected
+            </p>
+            <p class="mb-0">
+                © 2011-2026 Natalia Portillo • Aaru Data Preservation Suite
+            </p>
+        </div>
     </div>
 </div>
+</body>
+</html>
 
 @code {
     [CascadingParameter]
@@ -29,7 +123,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _ = await UserAccessor.GetRequiredUserAsync(HttpContext);
+        IdentityUser user = await UserAccessor.GetRequiredUserAsync(HttpContext);
     }
 
 }
+

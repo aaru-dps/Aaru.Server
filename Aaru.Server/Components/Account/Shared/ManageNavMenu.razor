@@ -1,36 +1,86 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 
-<ul class="flex-column nav nav-pills">
-    <li class="nav-item">
-        <NavLink class="nav-link" href="Account/Manage" Match="NavLinkMatch.All">Profile</NavLink>
-    </li>
-    <li class="nav-item">
-        <NavLink class="nav-link" href="Account/Manage/Email">Email</NavLink>
-    </li>
-    <li class="nav-item">
-        <NavLink class="nav-link" href="Account/Manage/ChangePassword">Password</NavLink>
-    </li>
-    @if(hasExternalLogins)
-    {
-        <li class="nav-item">
-            <NavLink class="nav-link" href="Account/Manage/ExternalLogins">External logins</NavLink>
-        </li>
-    }
-    <li class="nav-item">
-        <NavLink class="nav-link" href="Account/Manage/TwoFactorAuthentication">Two-factor authentication</NavLink>
-    </li>
-    <li class="nav-item">
-        <NavLink class="nav-link" href="Account/Manage/PersonalData">Personal data</NavLink>
-    </li>
-</ul>
+<div class="card bg-dark shadow-lg border-info" style="border-width: 2px;">
+    <div class="card-header bg-info text-dark">
+        <h5 class="mb-0">
+            <i class="bi bi-gear"></i> Account Settings
+        </h5>
+    </div>
+    <div class="card-body p-3">
+        <nav class="nav flex-column gap-2">
+            <!-- Profile -->
+            <NavLink class="nav-link d-flex align-items-center px-3 py-2 rounded text-light"
+                     href="Account/Manage"
+                     Match="NavLinkMatch.All"
+                     ActiveClass="bg-info text-dark">
+                <i class="bi bi-person-circle me-2"></i>
+                <span>Profile</span>
+            </NavLink>
+
+            <!-- Email -->
+            <NavLink class="nav-link d-flex align-items-center px-3 py-2 rounded text-light"
+                     href="Account/Manage/Email"
+                     ActiveClass="bg-info text-dark">
+                <i class="bi bi-envelope me-2"></i>
+                <span>Email</span>
+            </NavLink>
+
+            <!-- Password -->
+            <NavLink class="nav-link d-flex align-items-center px-3 py-2 rounded text-light"
+                     href="Account/Manage/ChangePassword"
+                     ActiveClass="bg-info text-dark">
+                <i class="bi bi-lock me-2"></i>
+                <span>Password</span>
+            </NavLink>
+
+            <!-- External Logins (Conditional) -->
+            @if(_hasExternalLogins)
+            {
+                <NavLink class="nav-link d-flex align-items-center px-3 py-2 rounded text-light"
+                         href="Account/Manage/ExternalLogins"
+                         ActiveClass="bg-info text-dark">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>
+                    <span>External Logins</span>
+                </NavLink>
+            }
+
+            <!-- Two-Factor Authentication -->
+            <NavLink class="nav-link d-flex align-items-center px-3 py-2 rounded text-light"
+                     href="Account/Manage/TwoFactorAuthentication"
+                     ActiveClass="bg-info text-dark">
+                <i class="bi bi-shield-check me-2"></i>
+                <span>Two-Factor Auth</span>
+            </NavLink>
+
+            <!-- Personal Data -->
+            <NavLink class="nav-link d-flex align-items-center px-3 py-2 rounded text-light"
+                     href="Account/Manage/PersonalData"
+                     ActiveClass="bg-info text-dark">
+                <i class="bi bi-download me-2"></i>
+                <span>Personal Data</span>
+            </NavLink>
+
+            <!-- Separator -->
+            <hr class="border-secondary my-2" />
+
+            <!-- Delete Account -->
+            <NavLink class="nav-link d-flex align-items-center px-3 py-2 rounded text-danger"
+                     href="Account/Manage/DeletePersonalData"
+                     ActiveClass="bg-danger text-light">
+                <i class="bi bi-trash me-2"></i>
+                <span>Delete Account</span>
+            </NavLink>
+        </nav>
+    </div>
+</div>
 
 @code {
-    private bool hasExternalLogins;
+    private bool _hasExternalLogins;
 
     protected override async Task OnInitializedAsync()
     {
-        hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+        _hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
     }
 
 }

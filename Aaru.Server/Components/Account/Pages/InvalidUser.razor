@@ -1,7 +1,131 @@
 ﻿@page "/Account/InvalidUser"
 
-<PageTitle>Invalid user</PageTitle>
+<PageTitle>Invalid User - Aaru Server</PageTitle>
 
-<h3>Invalid user</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aaru Server - Invalid User</title>
+    <link href="_framework/blazor.web.css" rel="stylesheet" />
+    <link href="app.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+</head>
+<body class="bg-dark">
+<div class="min-vh-100 d-flex align-items-center justify-content-center px-4">
+    <div style="width: 100%; max-width: 500px;">
+        <!-- Error Icon Section -->
+        <div class="text-center mb-5">
+            <div class="mb-3">
+                <i class="bi bi-person-fill-exclamation text-danger" style="font-size: 5rem;"></i>
+            </div>
+            <h1 class="h3 text-light mb-2">Invalid User Account</h1>
+            <p class="text-secondary">User account could not be found</p>
+        </div>
 
-<StatusMessage/>
+        <!-- Error Card -->
+        <div class="card bg-dark shadow-lg border-danger" style="border-width: 2px;">
+            <div class="card-header bg-danger text-light">
+                <h5 class="mb-0">
+                    <i class="bi bi-exclamation-circle"></i> User Not Found
+                </h5>
+            </div>
+            <div class="card-body p-4">
+                <!-- Error Message -->
+                <div class="alert alert-danger bg-dark border-danger text-light mb-4">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <strong>Invalid User</strong>
+                    <p class="mb-0 mt-2">The user account associated with this request could not be found. This may
+                                         indicate an invalid or corrupted confirmation link.</p>
+                </div>
+
+                <!-- Possible Causes Section -->
+                <div class="bg-black p-3 rounded border border-secondary mb-4">
+                    <h6 class="text-light mb-3">
+                        <i class="bi bi-lightbulb"></i> Possible Causes
+                    </h6>
+                    <ul class="text-secondary small mb-0">
+                        <li class="mb-2">
+                            <i class="bi bi-person-dash"></i> User account was deleted
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-link-45deg"></i> Confirmation link is invalid or corrupted
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-clock"></i> Link has expired
+                        </li>
+                        <li>
+                            <i class="bi bi-exclamation-lg"></i> User ID no longer exists in system
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- What to Do Section -->
+                <div class="bg-dark border border-info p-3 rounded mb-4">
+                    <h6 class="text-info mb-2">
+                        <i class="bi bi-info-circle"></i> What You Can Do
+                    </h6>
+                    <p class="text-secondary small mb-0">Try creating a new account or contact your system administrator
+                                                         for assistance. If you recently deleted your account, you may
+                                                         need to re-register.</p>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="d-flex flex-column gap-2">
+                    <a href="/Account/Register" class="btn btn-info btn-lg w-100">
+                        <i class="bi bi-person-plus"></i> Create New Account
+                    </a>
+                    <a href="/Account/Login" class="btn btn-outline-secondary btn-lg w-100">
+                        <i class="bi bi-arrow-left-circle"></i> Back to Login
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Support Section -->
+        <div class="card bg-dark shadow-sm border-secondary mt-4">
+            <div class="card-header bg-secondary text-light">
+                <h6 class="mb-0">
+                    <i class="bi bi-question-circle"></i> Need Help?
+                </h6>
+            </div>
+            <div class="card-body p-3">
+                <p class="text-secondary small mb-2">If you believe this is an error or need further assistance:</p>
+                <ul class="text-secondary small mb-0">
+                    <li class="mb-1">
+                        <i class="bi bi-envelope"></i> Check your email for account information
+                    </li>
+                    <li class="mb-1">
+                        <i class="bi bi-person-check"></i> Try logging in with your existing credentials
+                    </li>
+                    <li>
+                        <i class="bi bi-headset"></i> Contact your system administrator
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="text-center mt-4">
+            <p class="text-secondary small mb-2">
+                <a href="/" class="link-info">
+                    <i class="bi bi-house"></i> Go to Home Page
+                </a>
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-5 text-secondary small">
+            <p class="mb-1">
+                <i class="bi bi-shield-check"></i> Secure Account System
+            </p>
+            <p class="mb-0">
+                © 2011-2026 Natalia Portillo • Aaru Data Preservation Suite
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
