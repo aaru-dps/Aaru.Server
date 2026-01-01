@@ -34,10 +34,27 @@ namespace Aaru.Server.Components.Admin.Pages.TestedMedia;
 
 public partial class List
 {
-    private int                            _deleteId;
-    private Modal?                         _deleteModal;
-    bool                                   _initialized;
-    List<CommonTypes.Metadata.TestedMedia> _items;
+    private int                                    _deleteId;
+    private Modal?                                 _deleteModal;
+    private bool                                   _initialized;
+    private List<CommonTypes.Metadata.TestedMedia> _items      = new();
+    private string                                 _searchTerm = string.Empty;
+
+    private IEnumerable<CommonTypes.Metadata.TestedMedia> FilteredItems
+    {
+        get
+        {
+            if(string.IsNullOrWhiteSpace(_searchTerm)) return _items;
+
+            return _items.Where(item =>
+                                    (item.Manufacturer?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false)                                                                          ||
+                                    (item.Model?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                                    (item.MediumTypeName?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    item.Id.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+    }
 
 
     /// <inheritdoc />
