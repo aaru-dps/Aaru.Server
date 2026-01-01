@@ -34,8 +34,24 @@ namespace Aaru.Server.Components.Admin.Pages.BlockDescriptors;
 
 public partial class View
 {
-    bool                  _initialized;
-    List<BlockDescriptor> _items;
+    private bool                  _initialized;
+    private List<BlockDescriptor> _items      = new();
+    private string                _searchTerm = string.Empty;
+
+    private IEnumerable<BlockDescriptor> FilteredItems
+    {
+        get
+        {
+            if(string.IsNullOrWhiteSpace(_searchTerm)) return _items;
+
+            return _items.Where(item =>
+                                    item.Density.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                                    item.Blocks.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase)  ||
+                                    item.BlockLength.ToString()
+                                        .Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                                    item.Id.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+    }
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
