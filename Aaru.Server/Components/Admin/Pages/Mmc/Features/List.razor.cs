@@ -34,8 +34,19 @@ namespace Aaru.Server.Components.Admin.Pages.Mmc.Features;
 
 public partial class List
 {
-    bool              _initialized;
-    List<MmcFeatures> _items;
+    private bool              _initialized;
+    private List<MmcFeatures> _items      = new();
+    private string            _searchTerm = string.Empty;
+
+    private IEnumerable<MmcFeatures> FilteredItems
+    {
+        get
+        {
+            if(string.IsNullOrWhiteSpace(_searchTerm)) return _items;
+
+            return _items.Where(item => item.Id.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+    }
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
