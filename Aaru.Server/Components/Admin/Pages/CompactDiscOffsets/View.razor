@@ -38,89 +38,176 @@
 
 @if(!_initialized)
 {
-    <div class="stats-section">
-        <h1 style="color: red; align-content: center; padding: 2rem">Loading...</h1>
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+        <div class="text-center">
+            <div class="spinner-border text-info" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <h3 class="mt-3 text-light">Loading CD offsets...</h3>
+        </div>
     </div>
 
     return;
 }
 
-<section class="stats-section">
-    <h4>Compact Disc Offsets</h4>
-    <table class="table table-dark table-striped table-bordered mt-4 mb-4">
-        <thead class="thead-dark">
-        <tr>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(CompactDiscOffset), nameof(CompactDiscOffset.Manufacturer))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(CompactDiscOffset), nameof(CompactDiscOffset.Model))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(CompactDiscOffset), nameof(CompactDiscOffset.Offset))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(CompactDiscOffset), nameof(CompactDiscOffset.Submissions))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(CompactDiscOffset), nameof(CompactDiscOffset.Agreement))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(CompactDiscOffset), nameof(CompactDiscOffset.AddedWhen))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                @DisplayNameHelper.GetDisplayName(typeof(CompactDiscOffset), nameof(CompactDiscOffset.ModifiedWhen))
-            </th>
-            <th class="fw-bold bg-secondary text-light">
-                Actions
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach(CompactDiscOffset item in _items)
-        {
-            <tr>
-                <td>
-                    @item.Manufacturer
-                </td>
-                <td>
-                    @item.Model
-                </td>
-                <td>
-                    @item.Offset
-                </td>
-                <td>
-                    @item.Submissions
-                </td>
-                <td>
-                    @item.Agreement
-                </td>
-                <td>
-                    @item.AddedWhen
-                </td>
-                <td>
-                    @item.ModifiedWhen
-                </td>
-                <td>
-                    <a href="/admin/cd-offsets/edit/@item.Id" class="btn btn-secondary btn-sm">
-                        <i class="bi bi-pencil"></i> Edit
-                    </a>
-                    <button class="btn btn-danger btn-sm" @onclick="async () => await ShowDeleteModal(item.Id)">
-                        <i class="bi bi-trash"></i> Delete
-                    </button>
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
-</section>
+<div class="container-fluid px-4 py-4">
+    <!-- Header Section -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h2 mb-1 text-light">
+                <i class="bi bi-disc text-info"></i> Compact Disc Offsets
+            </h1>
+            <p class="text-secondary mb-0">Manage CD drive read offset database for accurate audio extraction</p>
+        </div>
+    </div>
 
-<BlazorBootstrap.Modal @ref="_deleteModal" Title="Delete Version" Size="ModalSize.Small">
+    <!-- Search and Filter Bar -->
+    <div class="card bg-dark shadow-sm mb-4 border-secondary">
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text bg-secondary text-light border-secondary">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input type="text"
+                               class="form-control bg-dark text-light border-secondary"
+                               placeholder="Search by manufacturer, model, or offset..."
+                               @bind="_searchTerm"
+                               @bind:event="oninput" />
+                    </div>
+                </div>
+                <div class="col-md-6 text-end">
+                    <span class="badge bg-info text-dark fs-6 py-2 px-3">
+                        <i class="bi bi-database"></i> Total: @FilteredItems.Count() / @_items.Count
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Table -->
+    <div class="card bg-dark shadow-sm border-secondary">
+        <div class="card-header bg-info text-dark">
+            <h5 class="mb-0">
+                <i class="bi bi-list-ul"></i> CD Drive Offset Database
+            </h5>
+        </div>
+        <div class="card-body p-0">
+            @if(FilteredItems.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover table-striped mb-0">
+                        <thead class="table-secondary">
+                        <tr>
+                            <th style="width: 80px;">
+                                <i class="bi bi-hash"></i> ID
+                            </th>
+                            <th>
+                                <i class="bi bi-building"></i> Manufacturer
+                            </th>
+                            <th>
+                                <i class="bi bi-device-hdd"></i> Model
+                            </th>
+                            <th style="width: 100px;">
+                                <i class="bi bi-arrow-left-right"></i> Offset
+                            </th>
+                            <th style="width: 110px;">
+                                <i class="bi bi-people"></i> Submissions
+                            </th>
+                            <th style="width: 110px;">
+                                <i class="bi bi-percent"></i> Agreement
+                            </th>
+                            <th style="width: 150px;">
+                                <i class="bi bi-calendar-plus"></i> Added
+                            </th>
+                            <th style="width: 150px;">
+                                <i class="bi bi-calendar-check"></i> Modified
+                            </th>
+                            <th style="width: 180px;" class="text-center">
+                                <i class="bi bi-gear"></i> Actions
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach(CompactDiscOffset item in FilteredItems)
+                        {
+                            <tr>
+                                <td class="align-middle">
+                                    <span class="badge bg-info text-dark text-center"
+                                          style="min-width: 60px; display: inline-block;">@item.Id</span>
+                                </td>
+                                <td class="align-middle">
+                                    <strong class="text-light">@item.Manufacturer</strong>
+                                </td>
+                                <td class="align-middle">
+                                    <strong class="text-light">@item.Model</strong>
+                                </td>
+                                <td class="align-middle">
+                                    <span class="badge bg-primary text-center"
+                                          style="min-width: 70px; display: inline-block;">@item.Offset</span>
+                                </td>
+                                <td class="align-middle">
+                                    <span class="badge bg-success text-center"
+                                          style="min-width: 80px; display: inline-block;">@item.Submissions</span>
+                                </td>
+                                <td class="align-middle">
+                                    <span class="badge bg-warning text-dark text-center"
+                                          style="min-width: 80px; display: inline-block;">@(item.Agreement*100)%</span>
+                                </td>
+                                <td class="align-middle">
+                                    <small class="text-secondary">@item.AddedWhen.ToString("yyyy-MM-dd")</small>
+                                </td>
+                                <td class="align-middle">
+                                    <small class="text-secondary">@item.ModifiedWhen.ToString("yyyy-MM-dd")</small>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <a href="/admin/cd-offsets/edit/@item.Id"
+                                       class="btn btn-outline-info btn-sm me-1"
+                                       title="Edit">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <button type="button" class="btn btn-outline-danger btn-sm"
+                                            @onclick="async () => await ShowDeleteModal(item.Id)"
+                                            title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <i class="bi bi-inbox text-secondary" style="font-size: 4rem;"></i>
+                    <h4 class="text-secondary mt-3">No CD offsets found</h4>
+                    <p class="text-secondary">@(string.IsNullOrWhiteSpace(_searchTerm) ? "No data available" : "Try adjusting your search criteria")</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<BlazorBootstrap.Modal @ref="_deleteModal"
+                       Title="Delete CD Offset"
+                       Size="ModalSize.Small"
+                       IsVerticallyCentered="true">
     <BodyTemplate>
-        <div class="text-danger">Are you sure you want to delete this offset?</div>
+        <div class="text-danger bg-dark p-3 rounded border border-danger">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            Are you sure you want to delete this CD offset?
+        </div>
     </BodyTemplate>
     <FooterTemplate>
-        <button class="btn btn-secondary" @onclick="HideDeleteModal">Cancel</button>
-        <button class="btn btn-danger" @onclick="ConfirmDelete">Delete</button>
+        <button type="button" class="btn btn-secondary" @onclick="HideDeleteModal">
+            <i class="bi bi-x-circle"></i> Cancel
+        </button>
+        <button type="button" class="btn btn-danger" @onclick="ConfirmDelete">
+            <i class="bi bi-trash"></i> Delete
+        </button>
     </FooterTemplate>
 </BlazorBootstrap.Modal>
+

@@ -35,10 +35,28 @@ namespace Aaru.Server.Components.Admin.Pages.CompactDiscOffsets;
 
 public partial class View
 {
-    private int             _deleteId;
-    private Modal?          _deleteModal;
-    bool                    _initialized;
-    List<CompactDiscOffset> _items;
+    private int                     _deleteId;
+    private Modal?                  _deleteModal;
+    private bool                    _initialized;
+    private List<CompactDiscOffset> _items      = new();
+    private string                  _searchTerm = string.Empty;
+
+    private IEnumerable<CompactDiscOffset> FilteredItems
+    {
+        get
+        {
+            if(string.IsNullOrWhiteSpace(_searchTerm)) return _items;
+
+            return _items.Where(item =>
+                                    (item.Manufacturer?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false)                                                                          ||
+                                    (item.Model?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                                    item.Offset.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                                    item.Submissions.ToString()
+                                        .Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                                    item.Id.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+    }
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
