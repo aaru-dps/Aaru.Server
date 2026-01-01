@@ -215,6 +215,9 @@ public partial class Compare
         }
 
         model.AreEqual = model.LeftValues.Count == 0 && model.RightValues.Count == 0;
+        _initialized = true;
+
+        StateHasChanged();
     }
 
     private async Task ShowDeleteModal(int id)
