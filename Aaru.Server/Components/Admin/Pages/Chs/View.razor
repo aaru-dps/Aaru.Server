@@ -127,9 +127,6 @@
                     <table class="table table-dark table-hover table-striped mb-0">
                         <thead class="table-secondary">
                         <tr>
-                            <th style="width: 80px;">
-                                <i class="bi bi-hash"></i> ID
-                            </th>
                             <th>
                                 <i class="bi bi-arrow-repeat"></i> Cylinders
                             </th>
@@ -145,10 +142,6 @@
                         @foreach(Chs item in FilteredItems)
                         {
                             <tr>
-                                <td class="align-middle">
-                                    <span class="badge bg-info text-dark text-center"
-                                          style="min-width: 60px; display: inline-block;">@item.Id</span>
-                                </td>
                                 <td class="align-middle">
                                     <span class="badge bg-primary text-center"
                                           style="min-width: 100px; display: inline-block;">@item.Cylinders.ToString("N0")</span>
