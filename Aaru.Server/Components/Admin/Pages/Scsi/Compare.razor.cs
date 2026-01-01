@@ -61,7 +61,7 @@ public partial class Compare
 
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
-        var model = new CompareModel
+        Model = new CompareModel
         {
             LeftId  = Id,
             RightId = CompareId
@@ -72,47 +72,47 @@ public partial class Compare
 
         if(left is null)
         {
-            model.ErrorMessage = $"SCSI with id {Id} has not been found";
-            model.HasError     = true;
+            Model.ErrorMessage = $"SCSI with id {Id} has not been found";
+            Model.HasError     = true;
 
             return;
         }
 
         if(right is null)
         {
-            model.ErrorMessage = $"SCSI with id {CompareId} has not been found";
-            model.HasError     = true;
+            Model.ErrorMessage = $"SCSI with id {CompareId} has not been found";
+            Model.HasError     = true;
 
             return;
         }
 
         Inquiry? leftNullable  = left.Inquiry;
         Inquiry? rightNullable = right.Inquiry;
-        model.ValueNames  = [];
-        model.LeftValues  = [];
-        model.RightValues = [];
+        Model.ValueNames  = [];
+        Model.LeftValues  = [];
+        Model.RightValues = [];
 
         if(leftNullable == null && rightNullable == null)
         {
-            model.AreEqual = true;
+            Model.AreEqual = true;
 
             return;
         }
 
         if(leftNullable != null && rightNullable == null)
         {
-            model.ValueNames.Add("Decoded");
-            model.LeftValues.Add("decoded");
-            model.RightValues.Add("null");
+            Model.ValueNames.Add("Decoded");
+            Model.LeftValues.Add("decoded");
+            Model.RightValues.Add("null");
 
             return;
         }
 
         if(leftNullable == null)
         {
-            model.ValueNames.Add("Decoded");
-            model.LeftValues.Add("null");
-            model.RightValues.Add("decoded");
+            Model.ValueNames.Add("Decoded");
+            Model.LeftValues.Add("null");
+            Model.RightValues.Add("decoded");
 
             return;
         }
@@ -135,18 +135,18 @@ public partial class Compare
                     case null when ra is null:
                         continue;
                     case null:
-                        model.ValueNames.Add(fieldInfo.Name);
-                        model.LeftValues.Add("null");
-                        model.RightValues.Add("[]");
+                        Model.ValueNames.Add(fieldInfo.Name);
+                        Model.LeftValues.Add("null");
+                        Model.RightValues.Add("[]");
 
                         continue;
                 }
 
                 if(ra is null)
                 {
-                    model.ValueNames.Add(fieldInfo.Name);
-                    model.LeftValues.Add("[]");
-                    model.RightValues.Add("null");
+                    Model.ValueNames.Add(fieldInfo.Name);
+                    Model.LeftValues.Add("[]");
+                    Model.RightValues.Add("null");
 
                     continue;
                 }
@@ -175,16 +175,16 @@ public partial class Compare
 
                             for(int j = 0; j < ll.Count; j++) rb[j] = (byte)rl[j];
 
-                            model.ValueNames.Add(fieldInfo.Name);
-                            model.LeftValues.Add($"{StringHandlers.CToString(lb)  ?? "<null>"}");
-                            model.RightValues.Add($"{StringHandlers.CToString(rb) ?? "<null>"}");
+                            Model.ValueNames.Add(fieldInfo.Name);
+                            Model.LeftValues.Add($"{StringHandlers.CToString(lb)  ?? "<null>"}");
+                            Model.RightValues.Add($"{StringHandlers.CToString(rb) ?? "<null>"}");
 
                             break;
 
                         default:
-                            model.ValueNames.Add(fieldInfo.Name);
-                            model.LeftValues.Add("[]");
-                            model.RightValues.Add("[]");
+                            Model.ValueNames.Add(fieldInfo.Name);
+                            Model.LeftValues.Add("[]");
+                            Model.RightValues.Add("[]");
 
                             break;
                     }
@@ -195,26 +195,27 @@ public partial class Compare
             else if(lv == null && rv == null) {}
             else if(lv != null && rv == null)
             {
-                model.ValueNames.Add(fieldInfo.Name);
-                model.LeftValues.Add($"{lv}");
-                model.RightValues.Add("null");
+                Model.ValueNames.Add(fieldInfo.Name);
+                Model.LeftValues.Add($"{lv}");
+                Model.RightValues.Add("null");
             }
             else if(lv == null)
             {
-                model.ValueNames.Add(fieldInfo.Name);
-                model.LeftValues.Add("null");
-                model.RightValues.Add($"{rv}");
+                Model.ValueNames.Add(fieldInfo.Name);
+                Model.LeftValues.Add("null");
+                Model.RightValues.Add($"{rv}");
             }
             else if(!lv.Equals(rv))
 
             {
-                model.ValueNames.Add(fieldInfo.Name);
-                model.LeftValues.Add($"{lv}");
-                model.RightValues.Add($"{rv}");
+                Model.ValueNames.Add(fieldInfo.Name);
+                Model.LeftValues.Add($"{lv}");
+                Model.RightValues.Add($"{rv}");
             }
         }
 
-        model.AreEqual = model.LeftValues.Count == 0 && model.RightValues.Count == 0;
+        Model.AreEqual = Model.LeftValues.Count == 0 && Model.RightValues.Count == 0;
+
         _initialized = true;
 
         StateHasChanged();
