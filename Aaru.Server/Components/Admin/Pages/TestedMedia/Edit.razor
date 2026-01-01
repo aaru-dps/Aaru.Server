@@ -36,48 +36,212 @@
 
 @if(!isLoaded)
 {
-    <div>Loading...</div>
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+        <div class="text-center">
+            <div class="spinner-border text-info" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <h3 class="mt-3 text-light">Loading tested media...</h3>
+        </div>
+    </div>
 }
 else
 {
-    <EditForm Model="testedMedia" OnValidSubmit="HandleValidSubmit">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-        <div class="mb-3">
-            <label class="form-label">Manufacturer</label>
-            <InputText class="form-control" @bind-Value="testedMedia.Manufacturer" />
-            <ValidationMessage For="@(() => testedMedia.Manufacturer)" />
+    <div class="container-fluid px-4 py-4">
+        <!-- Header Section -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="h2 mb-1 text-light">
+                    <i class="bi bi-pencil-square text-info"></i> Edit Tested Media
+                </h1>
+                <p class="text-secondary mb-0">
+                    <span class="badge bg-info text-dark me-2"
+                          style="min-width: 60px; display: inline-block;">ID: @Id</span>
+                    Update tested media information
+                </p>
+            </div>
+            <div>
+                <button type="button" class="btn btn-secondary" @onclick="GoBack">
+                    <i class="bi bi-arrow-left-circle"></i> Back to List
+                </button>
+            </div>
         </div>
-        <div class="mb-3">
-            <label class="form-label">Model</label>
-            <InputText class="form-control" @bind-Value="testedMedia.Model" />
-            <ValidationMessage For="@(() => testedMedia.Model)" />
+
+        <!-- Edit Form Card -->
+        <div class="card bg-dark shadow-sm border-secondary">
+            <div class="card-header bg-info text-dark">
+                <h5 class="mb-0">
+                    <i class="bi bi-file-earmark-text"></i> Media Information
+                </h5>
+            </div>
+            <div class="card-body">
+                <EditForm Model="testedMedia" OnValidSubmit="HandleValidSubmit">
+                    <DataAnnotationsValidator />
+
+                    <div class="row g-3">
+                        <!-- Manufacturer -->
+                        <div class="col-md-6">
+                            <label class="form-label text-light">
+                                <i class="bi bi-building"></i> Manufacturer
+                            </label>
+                            <InputText class="form-control bg-dark text-light border-secondary"
+                                       @bind-Value="testedMedia.Manufacturer"
+                                       placeholder="Enter manufacturer name..." />
+                            <ValidationMessage For="@(() => testedMedia.Manufacturer)" class="text-danger small mt-1" />
+                        </div>
+
+                        <!-- Model -->
+                        <div class="col-md-6">
+                            <label class="form-label text-light">
+                                <i class="bi bi-device-hdd"></i> Model
+                            </label>
+                            <InputText class="form-control bg-dark text-light border-secondary"
+                                       @bind-Value="testedMedia.Model"
+                                       placeholder="Enter model name..." />
+                            <ValidationMessage For="@(() => testedMedia.Model)" class="text-danger small mt-1" />
+                        </div>
+
+                        <!-- Medium Type Name -->
+                        <div class="col-md-6">
+                            <label class="form-label text-light">
+                                <i class="bi bi-disc"></i> Medium Type Name
+                            </label>
+                            <InputText class="form-control bg-dark text-light border-secondary"
+                                       @bind-Value="testedMedia.MediumTypeName"
+                                       placeholder="Enter medium type..." />
+                            <ValidationMessage For="@(() => testedMedia.MediumTypeName)"
+                                               class="text-danger small mt-1" />
+                        </div>
+
+                        <!-- Media Is Recognized -->
+                        <div class="col-md-6">
+                            <label class="form-label text-light">
+                                <i class="bi bi-check-circle"></i> Recognition Status
+                            </label>
+                            <div class="form-check form-switch mt-2">
+                                <InputCheckbox class="form-check-input bg-secondary border-secondary"
+                                               @bind-Value="testedMedia.MediaIsRecognized"
+                                               id="mediaRecognized" />
+                                <label class="form-check-label text-light" for="mediaRecognized">
+                                    Media Is Recognized
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Blocks (ulong - use input with manual binding) -->
+                        <div class="col-md-4">
+                            <label class="form-label text-light">
+                                <i class="bi bi-collection"></i> Blocks
+                            </label>
+                            <input type="text"
+                                   class="form-control bg-dark text-light border-secondary"
+                                   placeholder="Enter block count..."
+                                   pattern="[0-9]*"
+                                   value="@blocksString"
+                                   @oninput="@(e => blocksString = e.Value?.ToString())" />
+                            <ValidationMessage For="@(() => testedMedia.Blocks)" class="text-danger small mt-1" />
+                            <small class="text-secondary d-block mt-1">Total number of blocks</small>
+                        </div>
+
+                        <!-- Block Size (uint - use input with manual binding) -->
+                        <div class="col-md-4">
+                            <label class="form-label text-light">
+                                <i class="bi bi-box"></i> Block Size
+                            </label>
+                            <input type="text"
+                                   class="form-control bg-dark text-light border-secondary"
+                                   placeholder="Enter block size..."
+                                   pattern="[0-9]*"
+                                   value="@blockSizeString"
+                                   @oninput="@(e => blockSizeString = e.Value?.ToString())" />
+                            <ValidationMessage For="@(() => testedMedia.BlockSize)" class="text-danger small mt-1" />
+                            <small class="text-secondary d-block mt-1">Size in bytes</small>
+                        </div>
+
+                        <!-- Long Block Size (uint - use input with manual binding) -->
+                        <div class="col-md-4">
+                            <label class="form-label text-light">
+                                <i class="bi bi-box-seam"></i> Long Block Size
+                            </label>
+                            <input type="text"
+                                   class="form-control bg-dark text-light border-secondary"
+                                   placeholder="Enter long block size..."
+                                   pattern="[0-9]*"
+                                   value="@longBlockSizeString"
+                                   @oninput="@(e => longBlockSizeString = e.Value?.ToString())" />
+                            <ValidationMessage For="@(() => testedMedia.LongBlockSize)"
+                                               class="text-danger small mt-1" />
+                            <small class="text-secondary d-block mt-1">Long block size in bytes</small>
+                        </div>
+                    </div>
+
+                    <!-- Validation Summary -->
+                    <div class="mt-3">
+                        <ValidationSummary class="text-danger" />
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="submit" class="btn btn-info">
+                            <i class="bi bi-save"></i> Save Changes
+                        </button>
+                        <button type="button" class="btn btn-secondary" @onclick="GoBack">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </button>
+                    </div>
+                </EditForm>
+            </div>
         </div>
-        <div class="mb-3">
-            <label class="form-label">Medium Type Name</label>
-            <InputText class="form-control" @bind-Value="testedMedia.MediumTypeName" />
-            <ValidationMessage For="@(() => testedMedia.MediumTypeName)" />
-        </div>
-        <div class="mb-3 form-check">
-            <InputCheckbox class="form-check-input" @bind-Value="testedMedia.MediaIsRecognized" />
-            <label class="form-check-label">Media Is Recognized</label>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Blocks</label>
-            <InputNumber class="form-control" @bind-Value="testedMedia.Blocks" />
-            <ValidationMessage For="@(() => testedMedia.Blocks)" />
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Block Size</label>
-            <InputNumber class="form-control" @bind-Value="testedMedia.BlockSize" />
-            <ValidationMessage For="@(() => testedMedia.BlockSize)" />
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Long Block Size</label>
-            <InputNumber class="form-control" @bind-Value="testedMedia.LongBlockSize" />
-            <ValidationMessage For="@(() => testedMedia.LongBlockSize)" />
-        </div>
-        <button type="submit" class="btn btn-primary">Save</button>
-        <button type="button" class="btn btn-secondary ms-2" @onclick="GoBack">Cancel</button>
-    </EditForm>
+    </div>
 }
+
+@code {
+    private string blocksString
+    {
+        get => testedMedia.Blocks?.ToString() ?? string.Empty;
+        set
+        {
+            if(string.IsNullOrWhiteSpace(value))
+            {
+                testedMedia.Blocks = null;
+            }
+            else if(ulong.TryParse(value, out ulong result))
+            {
+                testedMedia.Blocks = result;
+            }
+        }
+    }
+
+    private string blockSizeString
+    {
+        get => testedMedia.BlockSize?.ToString() ?? string.Empty;
+        set
+        {
+            if(string.IsNullOrWhiteSpace(value))
+            {
+                testedMedia.BlockSize = null;
+            }
+            else if(uint.TryParse(value, out uint result))
+            {
+                testedMedia.BlockSize = result;
+            }
+        }
+    }
+
+    private string longBlockSizeString
+    {
+        get => testedMedia.LongBlockSize?.ToString() ?? string.Empty;
+        set
+        {
+            if(string.IsNullOrWhiteSpace(value))
+            {
+                testedMedia.LongBlockSize = null;
+            }
+            else if(uint.TryParse(value, out uint result))
+            {
+                testedMedia.LongBlockSize = result;
+            }
+        }
+    }
+}
+
