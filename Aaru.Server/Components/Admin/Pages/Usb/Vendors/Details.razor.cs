@@ -49,9 +49,9 @@ public partial class Details
 
         await using DbContext ctx = await DbContextFactory.CreateDbContextAsync();
 
-        _model = await ctx.UsbVendors.FirstOrDefaultAsync(m => m.VendorId == Id);
+        _model = await ctx.UsbVendors.FirstOrDefaultAsync(m => m.Id == Id);
 
-        _products = await ctx.UsbProducts.Where(p => p.Vendor.VendorId == Id)
+        _products = await ctx.UsbProducts.Where(p => p.Vendor.Id == Id)
                              .OrderBy(static p => p.Product)
                              .ThenBy(static p => p.ProductId)
                              .Select(static p => new UsbProductModel
