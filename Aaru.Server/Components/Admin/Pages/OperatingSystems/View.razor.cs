@@ -34,8 +34,24 @@ namespace Aaru.Server.Components.Admin.Pages.OperatingSystems;
 
 public partial class View
 {
-    bool                  _initialized;
-    List<OperatingSystem> _items;
+    private bool                  _initialized;
+    private List<OperatingSystem> _items      = new();
+    private string                _searchTerm = string.Empty;
+
+    private IEnumerable<OperatingSystem> FilteredItems
+    {
+        get
+        {
+            if(string.IsNullOrWhiteSpace(_searchTerm)) return _items;
+
+            return _items.Where(item =>
+                                    (item.Name?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                                    (item.Version?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false)                                                                         ||
+                                    item.Count.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                                    item.Id.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+    }
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
