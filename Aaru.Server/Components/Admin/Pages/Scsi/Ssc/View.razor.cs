@@ -36,12 +36,33 @@ namespace Aaru.Server.Components.Admin.Pages.Scsi.Ssc;
 
 public partial class View
 {
-    private Modal?                 _consolidateModal;
-    private int                    _deleteId;
-    private Modal?                 _deleteModal;
-    List<SscModel>                 _duplicates;
-    bool                           _initialized;
-    List<CommonTypes.Metadata.Ssc> _items;
+    private Modal?                         _consolidateModal;
+    private int                            _deleteId;
+    private Modal?                         _deleteModal;
+    private List<SscModel>                 _duplicates = new();
+    private bool                           _initialized;
+    private List<CommonTypes.Metadata.Ssc> _items      = new();
+    private string                         _searchTerm = string.Empty;
+
+    private IEnumerable<CommonTypes.Metadata.Ssc> FilteredItems
+    {
+        get
+        {
+            if(string.IsNullOrWhiteSpace(_searchTerm)) return _items;
+
+            return _items.Where(item =>
+                                    (item.MinBlockLength?.ToString()
+                                         .Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    (item.MaxBlockLength?.ToString()
+                                         .Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    (item.BlockSizeGranularity?.ToString()
+                                         .Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    item.Id.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+    }
 
 
     /// <inheritdoc />
