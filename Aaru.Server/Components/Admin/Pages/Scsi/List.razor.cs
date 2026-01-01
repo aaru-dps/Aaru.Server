@@ -37,12 +37,33 @@ namespace Aaru.Server.Components.Admin.Pages.Scsi;
 
 public partial class List
 {
-    private Modal?                  _consolidateModal;
-    private int                     _deleteId;
-    private Modal?                  _deleteModal;
-    List<IdHashModel?>              _duplicates;
-    bool                            _initialized;
-    List<CommonTypes.Metadata.Scsi> _items;
+    private Modal?                          _consolidateModal;
+    private int                             _deleteId;
+    private Modal?                          _deleteModal;
+    private List<IdHashModel?>              _duplicates = new();
+    private bool                            _initialized;
+    private List<CommonTypes.Metadata.Scsi> _items      = new();
+    private string                          _searchTerm = string.Empty;
+
+    private IEnumerable<CommonTypes.Metadata.Scsi> FilteredItems
+    {
+        get
+        {
+            if(string.IsNullOrWhiteSpace(_searchTerm)) return _items;
+
+            return _items.Where(item =>
+                                    (StringHandlers.CToString(item.Inquiry?.VendorIdentification)
+                                                  ?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    (StringHandlers.CToString(item.Inquiry?.ProductIdentification)
+                                                  ?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    (StringHandlers.CToString(item.Inquiry?.ProductRevisionLevel)
+                                                  ?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    item.Id.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+    }
 
 
     /// <inheritdoc />
