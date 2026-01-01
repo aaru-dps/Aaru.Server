@@ -28,769 +28,495 @@
 // ****************************************************************************/
 }
 @page "/admin/mmc/features/{id:int}"
+@using System.Reflection
 @attribute [Authorize]
 @layout AdminLayout
 @rendermode InteractiveServer
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
 
-<PageTitle>MMC FEATURE</PageTitle>
+<PageTitle>MMC Feature Details</PageTitle>
 
 @if(!_initialized)
 {
-    <div class="stats-section">
-        <h1 style="color: red; align-content: center; padding: 2rem">Loading...</h1>
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+        <div class="text-center">
+            <div class="spinner-border text-info" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <h3 class="mt-3 text-light">Loading MMC feature details...</h3>
+        </div>
     </div>
 
     return;
 }
 
-<section class="stats-section">
-    <div>
-        <h4>MMC FEATURE</h4>
-        <hr />
-        <dl class="row">
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.AACSVersion))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.AACSVersion
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.AGIDs))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.AGIDs
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.BindingNonceBlocks))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.BindingNonceBlocks
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.BlocksPerReadableUnit))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.BlocksPerReadableUnit
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.BufferUnderrunFreeInDVD))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.BufferUnderrunFreeInDVD
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.BufferUnderrunFreeInSAO))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.BufferUnderrunFreeInSAO
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.BufferUnderrunFreeInTAO))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.BufferUnderrunFreeInTAO
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanAudioScan))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanAudioScan
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanEject))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanEject
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanEraseSector))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanEraseSector
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanExpandBDRESpareArea))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanExpandBDRESpareArea
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanFormat))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanFormat
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanFormatBDREWithoutSpare))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanFormatBDREWithoutSpare
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanFormatCert))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanFormatCert
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanFormatFRF))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanFormatFRF
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanFormatQCert))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanFormatQCert
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanFormatRRM))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanFormatRRM
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanGenerateBindingNonce))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanGenerateBindingNonce
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanLoad))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanLoad
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanMuteSeparateChannels))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanMuteSeparateChannels
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanOverwriteSAOTrack))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanOverwriteSAOTrack
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanOverwriteTAOTrack))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanOverwriteTAOTrack
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanPlayCDAudio))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanPlayCDAudio
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanPseudoOverwriteBDR))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanPseudoOverwriteBDR
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadAllDualR))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadAllDualR
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadAllDualRW))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadAllDualRW
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadBD))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadBD
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadBDR))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadBDR
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadBDRE1))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadBDRE1
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadBDRE2))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadBDRE2
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadBDROM))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadBDROM
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadBluBCA))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadBluBCA
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadCD))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadCD
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadCDMRW))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadCDMRW
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadCPRM_MKB))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadCPRM_MKB
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDDCD))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadDDCD
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDVD))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadDVD
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDVDPlusMRW))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadDVDPlusMRW
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDVDPlusR))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadDVDPlusR
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDVDPlusRDL))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadDVDPlusRDL
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDVDPlusRW))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadDVDPlusRW
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDVDPlusRWDL))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadDVDPlusRWDL
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadDriveAACSCertificate))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadDriveAACSCertificate
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadHDDVD))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadHDDVD
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadHDDVDR))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadHDDVDR
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadHDDVDRAM))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadHDDVDRAM
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadLeadInCDText))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadLeadInCDText
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadOldBDR))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadOldBDR
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadOldBDRE))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadOldBDRE
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadOldBDROM))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadOldBDROM
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReadSpareAreaInformation))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReadSpareAreaInformation
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReportDriveSerial))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReportDriveSerial
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanReportMediaSerial))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanReportMediaSerial
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanTestWriteDDCDR))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanTestWriteDDCDR
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanTestWriteDVD))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanTestWriteDVD
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanTestWriteInSAO))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanTestWriteInSAO
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanTestWriteInTAO))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanTestWriteInTAO
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanUpgradeFirmware))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanUpgradeFirmware
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteBD))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteBD
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteBDR))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteBDR
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteBDRE1))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteBDRE1
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteBDRE2))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteBDRE2
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteBusEncryptedBlocks))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteBusEncryptedBlocks
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteCDMRW))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteCDMRW
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteCDRW))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteCDRW
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteCDRWCAV))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteCDRWCAV
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteCDSAO))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteCDSAO
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteCDTAO))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteCDTAO
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteCSSManagedDVD))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteCSSManagedDVD
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDDCDR))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteDDCDR
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDDCDRW))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteDDCDRW
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDPlusMRW))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteDVDPlusMRW
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDPlusR))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteDVDPlusR
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDPlusRDL))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteDVDPlusRDL
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDPlusRW))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteDVDPlusRW
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDPlusRWDL))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteDVDPlusRWDL
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDR))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteDVDR
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDRDL))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteDVDRDL
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteDVDRW))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteDVDRW
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteHDDVDR))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteHDDVDR
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteHDDVDRAM))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteHDDVDRAM
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteOldBDR))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteOldBDR
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteOldBDRE))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteOldBDRE
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWritePackedSubchannelInTAO))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWritePackedSubchannelInTAO
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteRWSubchannelInSAO))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteRWSubchannelInSAO
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteRWSubchannelInTAO))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteRWSubchannelInTAO
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteRaw))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteRaw
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteRawMultiSession))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteRawMultiSession
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CanWriteRawSubchannelInTAO))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CanWriteRawSubchannelInTAO
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.ChangerIsSideChangeCapable))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.ChangerIsSideChangeCapable
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.ChangerSlots))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.ChangerSlots
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.ChangerSupportsDiscPresent))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.ChangerSupportsDiscPresent
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CPRMVersion))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CPRMVersion
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.CSSVersion))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.CSSVersion
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.DBML))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.DBML
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.DVDMultiRead))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.DVDMultiRead
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.EmbeddedChanger))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.EmbeddedChanger
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.ErrorRecoveryPage))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.ErrorRecoveryPage
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.FirmwareDate))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.FirmwareDate
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.LoadingMechanismType))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.LoadingMechanismType
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.Locked))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.Locked
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.LogicalBlockSize))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.LogicalBlockSize
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.MultiRead))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.MultiRead
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.PhysicalInterfaceStandardNumber))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.PhysicalInterfaceStandardNumber
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.PreventJumper))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.PreventJumper
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsAACS))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.SupportsAACS
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsBusEncryption))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.SupportsBusEncryption
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsC2))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.SupportsC2
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsCPRM))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.SupportsCPRM
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsCSS))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.SupportsCSS
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsDAP))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.SupportsDAP
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsDeviceBusyEvent))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.SupportsDeviceBusyEvent
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsHybridDiscs))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.SupportsHybridDiscs
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsModePage1Ch))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.SupportsModePage1Ch
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsOSSC))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.SupportsOSSC
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsPWP))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.SupportsPWP
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsSWPP))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.SupportsSWPP
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsSecurDisc))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.SupportsSecurDisc
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsSeparateVolume))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.SupportsSeparateVolume
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsVCPS))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.SupportsVCPS
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsWriteInhibitDCB))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.SupportsWriteInhibitDCB
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.SupportsWriteProtectPAC))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.SupportsWriteProtectPAC
-            </dd>
-            <dt class="col-sm-8">
-                @DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), nameof(MmcFeatures.VolumeLevels))
-            </dt>
-            <dd class="col-sm-2">
-                @_model?.VolumeLevels
-            </dd>
-        </dl>
+<div class="container-fluid px-4 py-4">
+    <!-- Header Section -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h2 mb-1 text-light">
+                <i class="bi bi-gear-wide-connected text-info"></i> MMC Feature Details
+            </h1>
+            <p class="text-secondary mb-0">
+                <span class="badge bg-info text-dark me-2"
+                      style="min-width: 60px; display: inline-block;">ID: @Id</span>
+                Complete MultiMedia Commands feature profile
+            </p>
+        </div>
+        <div>
+            <a href="/admin/mmc/features" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle"></i> Back to List
+            </a>
+        </div>
     </div>
-    <div>
-        <a href="/admin/mmc/features" class="btn btn-secondary">Back to List</a>
+
+    <!-- Key Features Summary Card -->
+    <div class="card bg-dark shadow-sm border-secondary mb-4">
+        <div class="card-header bg-info text-dark">
+            <h5 class="mb-0">
+                <i class="bi bi-star"></i> Key Capabilities Summary
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <div class="p-3 bg-black rounded border border-secondary text-center">
+                        <div class="mb-2">
+                            @if(_model?.CanReadCD == true)
+                            {
+                                <i class="bi bi-check-circle-fill text-success" style="font-size: 2rem;"></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-x-circle-fill text-danger" style="font-size: 2rem;"></i>
+                            }
+                        </div>
+                        <strong class="text-light">Read CD</strong>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="p-3 bg-black rounded border border-secondary text-center">
+                        <div class="mb-2">
+                            @if(_model?.CanReadDVD == true)
+                            {
+                                <i class="bi bi-check-circle-fill text-success" style="font-size: 2rem;"></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-x-circle-fill text-danger" style="font-size: 2rem;"></i>
+                            }
+                        </div>
+                        <strong class="text-light">Read DVD</strong>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="p-3 bg-black rounded border border-secondary text-center">
+                        <div class="mb-2">
+                            @if(_model?.CanReadBD == true)
+                            {
+                                <i class="bi bi-check-circle-fill text-success" style="font-size: 2rem;"></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-x-circle-fill text-danger" style="font-size: 2rem;"></i>
+                            }
+                        </div>
+                        <strong class="text-light">Read BD</strong>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="p-3 bg-black rounded border border-secondary text-center">
+                        <div class="mb-2">
+                            @if(_model?.CanReadHDDVD == true)
+                            {
+                                <i class="bi bi-check-circle-fill text-success" style="font-size: 2rem;"></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-x-circle-fill text-danger" style="font-size: 2rem;"></i>
+                            }
+                        </div>
+                        <strong class="text-light">Read HD DVD</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3 mt-2">
+                <div class="col-md-3">
+                    <div class="p-3 bg-black rounded border border-secondary text-center">
+                        <div class="mb-2">
+                            @if(_model?.CanWriteCDTAO == true || _model?.CanWriteCDSAO == true)
+                            {
+                                <i class="bi bi-pencil-fill text-warning" style="font-size: 2rem;"></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-x-circle-fill text-danger" style="font-size: 2rem;"></i>
+                            }
+                        </div>
+                        <strong class="text-light">Write CD</strong>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="p-3 bg-black rounded border border-secondary text-center">
+                        <div class="mb-2">
+                            @if(_model?.CanWriteDVDR == true)
+                            {
+                                <i class="bi bi-pencil-fill text-warning" style="font-size: 2rem;"></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-x-circle-fill text-danger" style="font-size: 2rem;"></i>
+                            }
+                        </div>
+                        <strong class="text-light">Write DVD</strong>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="p-3 bg-black rounded border border-secondary text-center">
+                        <div class="mb-2">
+                            @if(_model?.CanWriteBD == true)
+                            {
+                                <i class="bi bi-pencil-fill text-warning" style="font-size: 2rem;"></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-x-circle-fill text-danger" style="font-size: 2rem;"></i>
+                            }
+                        </div>
+                        <strong class="text-light">Write BD</strong>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="p-3 bg-black rounded border border-secondary text-center">
+                        <div class="mb-2">
+                            @if(_model?.CanWriteHDDVDR == true)
+                            {
+                                <i class="bi bi-pencil-fill text-warning" style="font-size: 2rem;"></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-x-circle-fill text-danger" style="font-size: 2rem;"></i>
+                            }
+                        </div>
+                        <strong class="text-light">Write HD DVD</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</section>
+
+    <!-- Info Alert -->
+    <div class="alert alert-info bg-dark border-info text-light shadow-sm mb-4" role="alert">
+        <div class="d-flex align-items-start">
+            <i class="bi bi-info-circle-fill text-info fs-4 me-3"></i>
+            <div>
+                <h6 class="alert-heading mb-2 text-info">Complete Feature Profile</h6>
+                <p class="mb-0 small">
+                    This page displays all 100+ MMC feature capabilities for this drive.
+                    Use the accordion sections below to explore detailed capabilities by category.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Accordion for Detailed Features -->
+    <div class="accordion accordion-flush" id="featuresAccordion">
+
+        <!-- Read Capabilities Section -->
+        <div class="accordion-item bg-dark border-secondary">
+            <h2 class="accordion-header">
+                <button class="accordion-button bg-dark text-light border-secondary"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#readCapabilities">
+                    <i class="bi bi-disc text-success me-2"></i> Read Capabilities
+                </button>
+            </h2>
+            <div id="readCapabilities" class="accordion-collapse collapse show" data-bs-parent="#featuresAccordion">
+                <div class="accordion-body bg-dark">
+                    <dl class="row mb-0">
+                        @RenderFeature(nameof(MmcFeatures.CanReadCD))
+                        @RenderFeature(nameof(MmcFeatures.CanReadCDMRW))
+                        @RenderFeature(nameof(MmcFeatures.CanReadDDCD))
+                        @RenderFeature(nameof(MmcFeatures.CanReadDVD))
+                        @RenderFeature(nameof(MmcFeatures.CanReadDVDPlusMRW))
+                        @RenderFeature(nameof(MmcFeatures.CanReadDVDPlusR))
+                        @RenderFeature(nameof(MmcFeatures.CanReadDVDPlusRDL))
+                        @RenderFeature(nameof(MmcFeatures.CanReadDVDPlusRW))
+                        @RenderFeature(nameof(MmcFeatures.CanReadDVDPlusRWDL))
+                        @RenderFeature(nameof(MmcFeatures.CanReadBD))
+                        @RenderFeature(nameof(MmcFeatures.CanReadBDR))
+                        @RenderFeature(nameof(MmcFeatures.CanReadBDRE1))
+                        @RenderFeature(nameof(MmcFeatures.CanReadBDRE2))
+                        @RenderFeature(nameof(MmcFeatures.CanReadBDROM))
+                        @RenderFeature(nameof(MmcFeatures.CanReadHDDVD))
+                        @RenderFeature(nameof(MmcFeatures.CanReadHDDVDR))
+                        @RenderFeature(nameof(MmcFeatures.CanReadHDDVDRAM))
+                        @RenderFeature(nameof(MmcFeatures.CanReadAllDualR))
+                        @RenderFeature(nameof(MmcFeatures.CanReadAllDualRW))
+                        @RenderFeature(nameof(MmcFeatures.CanReadOldBDR))
+                        @RenderFeature(nameof(MmcFeatures.CanReadOldBDRE))
+                        @RenderFeature(nameof(MmcFeatures.CanReadOldBDROM))
+                        @RenderFeature(nameof(MmcFeatures.MultiRead))
+                        @RenderFeature(nameof(MmcFeatures.DVDMultiRead))
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <!-- Write Capabilities Section -->
+        <div class="accordion-item bg-dark border-secondary">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-dark text-light border-secondary"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#writeCapabilities">
+                    <i class="bi bi-pencil text-warning me-2"></i> Write Capabilities
+                </button>
+            </h2>
+            <div id="writeCapabilities" class="accordion-collapse collapse" data-bs-parent="#featuresAccordion">
+                <div class="accordion-body bg-dark">
+                    <dl class="row mb-0">
+                        @RenderFeature(nameof(MmcFeatures.CanWriteCDMRW))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteCDRW))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteCDRWCAV))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteCDSAO))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteCDTAO))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteDDCDR))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteDDCDRW))
+                        @RenderFeature(nameof(MmcFeatures.CanTestWriteDDCDR))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteDVDPlusMRW))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteDVDPlusR))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteDVDPlusRDL))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteDVDPlusRW))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteDVDPlusRWDL))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteDVDR))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteCSSManagedDVD))
+                        @RenderFeature(nameof(MmcFeatures.CanTestWriteDVD))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteDVDRDL))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteDVDRW))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteBD))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteBDR))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteBDRE1))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteBDRE2))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteHDDVDR))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteHDDVDRAM))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteOldBDRE))
+                        @RenderFeature(nameof(MmcFeatures.CanWritePackedSubchannelInTAO))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteRWSubchannelInSAO))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteRWSubchannelInTAO))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteRaw))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteRawMultiSession))
+                        @RenderFeature(nameof(MmcFeatures.CanWriteRawSubchannelInTAO))
+                        @RenderFeature(nameof(MmcFeatures.CanTestWriteInSAO))
+                        @RenderFeature(nameof(MmcFeatures.CanTestWriteInTAO))
+                        @RenderFeature(nameof(MmcFeatures.CanOverwriteSAOTrack))
+                        @RenderFeature(nameof(MmcFeatures.CanOverwriteTAOTrack))
+                        @RenderFeature(nameof(MmcFeatures.CanPseudoOverwriteBDR))
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security & DRM Section -->
+        <div class="accordion-item bg-dark border-secondary">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-dark text-light border-secondary"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#securityFeatures">
+                    <i class="bi bi-shield-lock text-warning me-2"></i> Security & DRM Features
+                </button>
+            </h2>
+            <div id="securityFeatures" class="accordion-collapse collapse" data-bs-parent="#featuresAccordion">
+                <div class="accordion-body bg-dark">
+                    <dl class="row mb-0">
+                        @RenderFeature(nameof(MmcFeatures.SupportsAACS))
+                        @RenderFeature(nameof(MmcFeatures.AACSVersion))
+                        @RenderFeature(nameof(MmcFeatures.SupportsCSS))
+                        @RenderFeature(nameof(MmcFeatures.CSSVersion))
+                        @RenderFeature(nameof(MmcFeatures.SupportsCPRM))
+                        @RenderFeature(nameof(MmcFeatures.CPRMVersion))
+                        @RenderFeature(nameof(MmcFeatures.SupportsSecurDisc))
+                        @RenderFeature(nameof(MmcFeatures.SupportsOSSC))
+                        @RenderFeature(nameof(MmcFeatures.SupportsVCPS))
+                        @RenderFeature(nameof(MmcFeatures.SupportsBusEncryption))
+                        @RenderFeature(nameof(MmcFeatures.SupportsDAP))
+                        @RenderFeature(nameof(MmcFeatures.SupportsPWP))
+                        @RenderFeature(nameof(MmcFeatures.SupportsSWPP))
+                        @RenderFeature(nameof(MmcFeatures.SupportsWriteInhibitDCB))
+                        @RenderFeature(nameof(MmcFeatures.SupportsWriteProtectPAC))
+                        @RenderFeature(nameof(MmcFeatures.AGIDs))
+                        @RenderFeature(nameof(MmcFeatures.BindingNonceBlocks))
+                        @RenderFeature(nameof(MmcFeatures.CanGenerateBindingNonce))
+                        @RenderFeature(nameof(MmcFeatures.CanReadBluBCA))
+                        @RenderFeature(nameof(MmcFeatures.CanReadCPRM_MKB))
+                        CanWriteBusEncryptedBlocks
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <!-- Format & Media Support Section -->
+        <div class="accordion-item bg-dark border-secondary">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-dark text-light border-secondary"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#formatSupport">
+                    <i class="bi bi-file-earmark text-info me-2"></i> Format & Media Support
+                </button>
+            </h2>
+            <div id="formatSupport" class="accordion-collapse collapse" data-bs-parent="#featuresAccordion">
+                <div class="accordion-body bg-dark">
+                    <dl class="row mb-0">
+                        @RenderFeature(nameof(MmcFeatures.CanFormat))
+                        @RenderFeature(nameof(MmcFeatures.CanFormatBDREWithoutSpare))
+                        @RenderFeature(nameof(MmcFeatures.CanFormatCert))
+                        @RenderFeature(nameof(MmcFeatures.CanFormatFRF))
+                        @RenderFeature(nameof(MmcFeatures.CanFormatQCert))
+                        @RenderFeature(nameof(MmcFeatures.CanFormatRRM))
+                        @RenderFeature(nameof(MmcFeatures.CanExpandBDRESpareArea))
+                        @RenderFeature(nameof(MmcFeatures.CanEraseSector))
+                        @RenderFeature(nameof(MmcFeatures.SupportsHybridDiscs))
+                        @RenderFeature(nameof(MmcFeatures.SupportsModePage1Ch))
+                        @RenderFeature(nameof(MmcFeatures.BlocksPerReadableUnit))
+                        @RenderFeature(nameof(MmcFeatures.LogicalBlockSize))
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <!-- Audio Features Section -->
+        <div class="accordion-item bg-dark border-secondary">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-dark text-light border-secondary"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#audioFeatures">
+                    <i class="bi bi-music-note text-success me-2"></i> Audio Features
+                </button>
+            </h2>
+            <div id="audioFeatures" class="accordion-collapse collapse" data-bs-parent="#featuresAccordion">
+                <div class="accordion-body bg-dark">
+                    <dl class="row mb-0">
+                        @RenderFeature(nameof(MmcFeatures.CanPlayCDAudio))
+                        @RenderFeature(nameof(MmcFeatures.CanAudioScan))
+                        @RenderFeature(nameof(MmcFeatures.CanMuteSeparateChannels))
+                        @RenderFeature(nameof(MmcFeatures.SupportsSeparateVolume))
+                        @RenderFeature(nameof(MmcFeatures.VolumeLevels))
+                        @RenderFeature(nameof(MmcFeatures.SupportsC2))
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <!-- Drive Mechanics Section -->
+        <div class="accordion-item bg-dark border-secondary">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-dark text-light border-secondary"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#driveMechanics">
+                    <i class="bi bi-box text-secondary me-2"></i> Drive Mechanics & Buffer
+                </button>
+            </h2>
+            <div id="driveMechanics" class="accordion-collapse collapse" data-bs-parent="#featuresAccordion">
+                <div class="accordion-body bg-dark">
+                    <dl class="row mb-0">
+                        @RenderFeature(nameof(MmcFeatures.CanLoad))
+                        @RenderFeature(nameof(MmcFeatures.CanEject))
+                        @RenderFeature(nameof(MmcFeatures.LoadingMechanismType))
+                        @RenderFeature(nameof(MmcFeatures.PreventJumper))
+                        @RenderFeature(nameof(MmcFeatures.Locked))
+                        @RenderFeature(nameof(MmcFeatures.BufferUnderrunFreeInDVD))
+                        @RenderFeature(nameof(MmcFeatures.BufferUnderrunFreeInSAO))
+                        @RenderFeature(nameof(MmcFeatures.BufferUnderrunFreeInTAO))
+                        @RenderFeature(nameof(MmcFeatures.SupportsDeviceBusyEvent))
+                        @RenderFeature(nameof(MmcFeatures.ChangerIsSideChangeCapable))
+                        @RenderFeature(nameof(MmcFeatures.ChangerSlots))
+                        @RenderFeature(nameof(MmcFeatures.ChangerSupportsDiscPresent))
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced Features Section -->
+        <div class="accordion-item bg-dark border-secondary">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-dark text-light border-secondary"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#advancedFeatures">
+                    <i class="bi bi-tools text-primary me-2"></i> Advanced Features
+                </button>
+            </h2>
+            <div id="advancedFeatures" class="accordion-collapse collapse" data-bs-parent="#featuresAccordion">
+                <div class="accordion-body bg-dark">
+                    <dl class="row mb-0">
+                        @RenderFeature(nameof(MmcFeatures.EmbeddedChanger))
+                        @RenderFeature(nameof(MmcFeatures.CanReadSpareAreaInformation))
+                        @RenderFeature(nameof(MmcFeatures.CanReadDriveAACSCertificate))
+                        @RenderFeature(nameof(MmcFeatures.PhysicalInterfaceStandardNumber))
+                        @RenderFeature(nameof(MmcFeatures.CanReadLeadInCDText))
+                        @RenderFeature(nameof(MmcFeatures.CanReportDriveSerial))
+                        @RenderFeature(nameof(MmcFeatures.CanReportMediaSerial))
+                        @RenderFeature(nameof(MmcFeatures.CanUpgradeFirmware))
+                        @RenderFeature(nameof(MmcFeatures.DBML))
+                        @RenderFeature(nameof(MmcFeatures.ErrorRecoveryPage))
+                        @RenderFeature(nameof(MmcFeatures.FirmwareDate))
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@code {
+
+
+    private RenderFragment RenderFeature(string propertyName)
+    {
+        return __builder =>
+        {
+            PropertyInfo? property = typeof(MmcFeatures).GetProperty(propertyName);
+
+            if(property == null) return;
+
+            object? value       = property.GetValue(_model);
+            string displayName = DisplayNameHelper.GetDisplayName(typeof(MmcFeatures), propertyName);
+
+            <dt class="col-sm-9 text-light">
+                @displayName
+            </dt>
+            <dd class="col-sm-3 text-end">
+                @if(value is bool boolValue)
+                {
+                    if(boolValue)
+                    {
+                        <i class="bi bi-check-circle-fill text-success" title="Yes"></i>
+                        <span class="text-success ms-1">Yes</span>
+                    }
+                    else
+                    {
+                        <i class="bi bi-x-circle-fill text-danger" title="No"></i>
+                        <span class="text-danger ms-1">No</span>
+                    }
+                }
+                else if(value != null)
+                {
+                    <span class="badge bg-primary">@value</span>
+                }
+                else
+                {
+                    <span class="text-secondary">-</span>
+                }
+            </dd>
+        };
+    }
+
+
+}
+
