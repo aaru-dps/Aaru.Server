@@ -34,12 +34,17 @@
 
 @inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
 
-<PageTitle>Device reports</PageTitle>
+<PageTitle>Device Report Details</PageTitle>
 
 @if(!_initialized)
 {
-    <div class="stats-section">
-        <h1 style="color: red; align-content: center; padding: 2rem">Loading...</h1>
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+        <div class="text-center">
+            <div class="spinner-border text-info" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <h3 class="mt-3 text-light">Loading device report...</h3>
+        </div>
     </div>
 
     return;
@@ -47,467 +52,644 @@
 
 @if(_notFound)
 {
-    <div class="stats-section">
-        <h1 style="color: red; align-content: center; padding: 2rem">Device report not found</h1>
+    <div class="container-fluid px-4 py-4">
+        <div class="alert alert-danger bg-dark border-danger text-light" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <strong>Error:</strong> Device report not found.
+        </div>
+        <a href="/admin/devices" class="btn btn-secondary">
+            <i class="bi bi-arrow-left-circle"></i> Back to List
+        </a>
     </div>
 
     return;
 }
 
-<section class="stats-section">
-    <div>
-        <h4>Device report</h4>
-        <hr />
-        <dl class="row">
-            <dt class="col-sm-2">
-                @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.AddedWhen))
-            </dt>
-            <dd class="col-sm-10">
-                @model.Report?.AddedWhen
-            </dd>
-            <dt class="col-sm-2">
-                @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.ModifiedWhen))
-            </dt>
-            <dd class="col-sm-10">
-                @model.Report?.ModifiedWhen
-            </dd>
-            <dt class="col-sm-2">
-                @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.Manufacturer))
-            </dt>
-            <dd class="col-sm-10">
-                @model.Report?.Manufacturer
-            </dd>
-            <dt class="col-sm-2">
-                @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.Model))
-            </dt>
-            <dd class="col-sm-10">
-                @model.Report?.Model
-            </dd>
-            <dt class="col-sm-2">
-                @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.Revision))
-            </dt>
-            <dd class="col-sm-10">
-                @model.Report?.Revision
-            </dd>
-            <dt class="col-sm-2">
-                @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.CompactFlash))
-            </dt>
-            <dd class="col-sm-10">
-                @model.Report?.CompactFlash
-            </dd>
-            <dt class="col-sm-2">
-                @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.OptimalMultipleSectorsRead))
-            </dt>
-            <dd class="col-sm-10">
-                @model.Report?.OptimalMultipleSectorsRead
-            </dd>
-            <dt class="col-sm-2">
-                @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.CanReadGdRomUsingSwapDisc))
-            </dt>
-            <dd class="col-sm-10">
-                @model.Report?.CanReadGdRomUsingSwapDisc
-            </dd>
-            <dt class="col-sm-2">
-                @DisplayNameHelper.GetDisplayName(typeof(Device), nameof(Device.Type))
-            </dt>
-            <dd class="col-sm-10">
-                @model.Report?.Type
-            </dd>
-        </dl>
+<div class="container-fluid px-4 py-4">
+    <!-- Header Section -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h2 mb-1 text-light">
+                <i class="bi bi-device-hdd text-info"></i> Device Report Details
+            </h1>
+            <p class="text-secondary mb-0">
+                <span class="badge bg-info text-dark me-2"
+                      style="min-width: 60px; display: inline-block;">ID: @model.Report?.Id</span>
+                <strong class="text-light">@model.Report?.Manufacturer @model.Report?.Model</strong>
+                <span class="text-secondary ms-2">Rev: @model.Report?.Revision</span>
+            </p>
+        </div>
+        <div>
+            <a href="/admin/devices/edit/@model.Report?.Id" class="btn btn-warning me-2">
+                <i class="bi bi-pencil"></i> Edit
+            </a>
+            <a href="/admin/devices" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle"></i> Back to List
+            </a>
+        </div>
     </div>
-    <div>
-        <a href="/admin/devices/edit/@model.Report?.Id" class="btn btn-primary">
-            <i class="bi bi-pencil"></i> Edit
-        </a>
-        <a href="/admin/devices" class="btn btn-secondary">
-            <i class="bi bi-arrow-left"></i> Back to List
-        </a>
-    </div>
-    @if(model.ReadCapabilitiesId != 0)
-    {
-        <div>
-            <a href="/admin/tested-media/@model.ReadCapabilitiesId" target="_blank">Read capabilities</a>
-        </div>
-    }
-    @if(model.Report.ATA != null)
-    {
-        <div>
-            <a href="/admin/ata/@model.Report.ATA.Id" target="_blank">ATA report</a>
-        </div>
-    }
-    @if(model.Report.ATAPI != null)
-    {
-        <div>
-            <a href="/admin/ata/@model.Report.ATAPI.Id" target="_blank">ATAPI report</a>
-        </div>
-    }
-    @if(model.Report.SCSI != null)
-    {
-        <div>
-            <a href="/admin/scsi/@model.Report.SCSI.Id" target="_blank">SCSI report</a>
-        </div>
-    }
-    @if(model.Report.MultiMediaCard != null)
-    {
-        <div>
-            <a href="/admin/mmc-sd/@model.Report.MultiMediaCard.Id" target="_blank">MultiMediaCard report</a>
-        </div>
-    }
-    @if(model.Report.SecureDigital != null)
-    {
-        <div>
-            <a href="/admin/mmc-sd/@model.Report.SecureDigital.Id" target="_blank">SecureDigital report</a>
-        </div>
-    }
-    @if(model.Report.USB != null)
-    {
-        <div>
-            <a href="/admin/usb/devices/@model.Report.USB.Id" target="_blank">USB report</a>
-        </div>
-    }
-    @if(model.Report.GdRomSwapDiscCapabilitiesId != null)
-    {
-        <div>
-            <a href="/admin/gdrom/@model.Report.GdRomSwapDiscCapabilitiesId" target="_blank">GD-ROM swap-trick
-                                                                                             capabilities
-                                                                                             report</a>
-        </div>
-    }
-    @if(model.Report.FireWire != null)
-    {
-        <div>
-            Has a FireWire report.
-        </div>
-    }
-    @if(model.Report.PCMCIA != null)
-    {
-        <div>
-            Has a PCMCIA report.
-        </div>
-    }
-    @if(model.SameAll.Count > 0)
-    {
-        <div>
-            <h4>Other device reports with same manufacturer, model and revision:</h4>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>
-                        Id
-                    </th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach(int item in model.SameAll)
-                {
-                    <tr>
-                        <td>
-                            @item
-                        </td>
-                        <td>
-                            <a href="/admin/devices/@item" class="btn btn-primary" target="_blank">Details</a>
-                            <a @onclick="() => Merge(model.Report.Id, item)" class="btn btn-secondary">Merge</a>
-                        </td>
-                    </tr>
-                }
-                </tbody>
-            </table>
-        </div>
-    }
-    @if(model.SameButManufacturer.Count > 0)
-    {
-        <div>
-            <h4>Other device reports with same model and revision:</h4>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>
-                        Id
-                    </th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach(int item in model.SameButManufacturer)
-                {
-                    <tr>
-                        <td>
-                            @item
-                        </td>
-                        <td>
-                            <a href="/admin/devices/@item" class="btn btn-primary" target="_blank">Details</a>
-                            <a @onclick="() => Merge(model.Report.Id, item)" class="btn btn-secondary">Merge</a>
-                        </td>
-                    </tr>
-                }
-                </tbody>
-            </table>
-        </div>
-    }
-    @if(model.ReportAll.Count > 0)
-    {
-        <div>
-            <h4>Uploaded reports with same manufacturer, model and revision:</h4>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>
-                        Id
-                    </th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach(int item in model.ReportAll)
-                {
-                    <tr>
-                        <td>
-                            @item
-                        </td>
-                        <td>
-                            <a href="/admin/reports/@item" class="btn btn-primary" target="_blank">Details</a>
-                            <a @onclick="() => MergeReports(model.Report.Id, item)" class="btn btn-secondary">Merge</a>
-                        </td>
-                    </tr>
-                }
-                </tbody>
-            </table>
-        </div>
-    }
-    @if(model.ReportButManufacturer.Count > 0)
-    {
-        <div>
-            <h4>Device reports with same model and revision:</h4>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>
-                        Id
-                    </th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach(int item in model.ReportButManufacturer)
-                {
-                    <tr>
-                        <td>
-                            @item
-                        </td>
-                        <td>
-                            <a href="/admin/reports/@item" class="btn btn-primary" target="_blank">Details</a>
-                            <a @onclick="() => MergeReports(model.Report.Id, item)" class="btn btn-secondary">Merge</a>
-                        </td>
-                    </tr>
-                }
-                </tbody>
-            </table>
-        </div>
-    }
-    @if(model.StatsAll.Count > 0)
-    {
-        <div>
-            <h4>Device statistics with same manufacturer, model and revision:</h4>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>
-                        @DisplayNameHelper.GetDisplayName(typeof(DeviceStat), nameof(DeviceStat.Manufacturer))
-                    </th>
-                    <th>
-                        @DisplayNameHelper.GetDisplayName(typeof(DeviceStat), nameof(DeviceStat.Model))
-                    </th>
-                    <th>
-                        @DisplayNameHelper.GetDisplayName(typeof(DeviceStat), nameof(DeviceStat.Revision))
-                    </th>
-                    <th>
-                        @DisplayNameHelper.GetDisplayName(typeof(DeviceStat), nameof(DeviceStat.Bus))
-                    </th>
-                    <th>
-                        Has a linked report?
-                    </th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach(DeviceStat item in model.StatsAll)
-                {
-                    <tr>
-                        <td>
-                            @item.Manufacturer
-                        </td>
-                        <td>
-                            @item.Model
-                        </td>
-                        <td>
-                            @item.Revision
-                        </td>
-                        <td>
-                            @item.Bus
-                        </td>
-                        <td>
-                            @if(item.Report is null)
+
+    <div class="row g-4">
+        <!-- Left Column - Device Information -->
+        <div class="col-lg-6">
+            <!-- Device Information Card -->
+            <div class="card bg-dark shadow-sm border-secondary mb-4">
+                <div class="card-header bg-info text-dark">
+                    <h5 class="mb-0">
+                        <i class="bi bi-info-circle"></i> Device Information
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-5 text-secondary">
+                            <i class="bi bi-building"></i> Manufacturer
+                        </dt>
+                        <dd class="col-sm-7 text-light">
+                            <strong>@model.Report?.Manufacturer</strong>
+                        </dd>
+
+                        <dt class="col-sm-5 text-secondary">
+                            <i class="bi bi-device-hdd"></i> Model
+                        </dt>
+                        <dd class="col-sm-7 text-light">
+                            <strong>@model.Report?.Model</strong>
+                        </dd>
+
+                        <dt class="col-sm-5 text-secondary">
+                            <i class="bi bi-code-square"></i> Revision
+                        </dt>
+                        <dd class="col-sm-7 text-light">
+                            <code class="text-info">@model.Report?.Revision</code>
+                        </dd>
+
+                        <dt class="col-sm-5 text-secondary">
+                            <i class="bi bi-tag"></i> Type
+                        </dt>
+                        <dd class="col-sm-7">
+                            <span class="badge bg-primary">@model.Report?.Type</span>
+                        </dd>
+
+                        <dt class="col-sm-5 text-secondary">
+                            <i class="bi bi-sd-card"></i> Compact Flash
+                        </dt>
+                        <dd class="col-sm-7">
+                            @if(model.Report?.CompactFlash == true)
                             {
-                                @("No")
+                                <i class="bi bi-check-circle-fill text-success"></i>
+                                <span class="text-success">Yes</span>
                             }
                             else
                             {
-                                @if(item.Report.Id == model.Report.Id)
-                                {
-                                    @("Us")
-                                }
-                                else
-                                {
-                                    @("Yes")
-                                }
+                                <i class="bi bi-x-circle-fill text-danger"></i>
+                                <span class="text-danger">No</span>
                             }
-                        </td>
-                        <td>
-                            <a @onclick="() => LinkReports(model.Report.Id, item.Id)" class="btn btn-secondary">Link</a>
-                        </td>
-                    </tr>
-                }
-                </tbody>
-            </table>
-        </div>
-    }
-    @if(model.StatsButManufacturer.Count > 0)
-    {
-        <div>
-            <h4>Device statistics with same model and revision:</h4>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>
-                        @DisplayNameHelper.GetDisplayName(typeof(DeviceStat), nameof(DeviceStat.Manufacturer))
-                    </th>
-                    <th>
-                        @DisplayNameHelper.GetDisplayName(typeof(DeviceStat), nameof(DeviceStat.Model))
-                    </th>
-                    <th>
-                        @DisplayNameHelper.GetDisplayName(typeof(DeviceStat), nameof(DeviceStat.Revision))
-                    </th>
-                    <th>
-                        @DisplayNameHelper.GetDisplayName(typeof(DeviceStat), nameof(DeviceStat.Bus))
-                    </th>
-                    <th>
-                        Has a linked report?
-                    </th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach(DeviceStat item in model.StatsButManufacturer)
-                {
-                    <tr>
-                        <td>
-                            @item.Manufacturer
-                        </td>
-                        <td>
-                            @item.Model
-                        </td>
-                        <td>
-                            @item.Revision
-                        </td>
-                        <td>
-                            @item.Bus
-                        </td>
-                        <td>
-                            @if(item.Report is null)
+                        </dd>
+
+                        <dt class="col-sm-5 text-secondary">
+                            <i class="bi bi-speedometer2"></i> Optimal Sectors
+                        </dt>
+                        <dd class="col-sm-7 text-light">
+                            @if(model.Report?.OptimalMultipleSectorsRead > 0)
                             {
-                                @("No")
+                                <span class="badge bg-secondary">@model.Report?.OptimalMultipleSectorsRead</span>
                             }
                             else
                             {
-                                <a href="/admin/reports/@item.Report.Id" target="_blank">Yes</a>
+                                <span class="text-secondary">Not set</span>
                             }
-                        </td>
-                        <td>
-                            <a @onclick="() => LinkReports(model.Report.Id, item.Id)" class="btn btn-secondary">Link</a>
-                        </td>
-                    </tr>
-                }
-                </tbody>
-            </table>
+                        </dd>
+
+                        <dt class="col-sm-5 text-secondary">
+                            <i class="bi bi-disc"></i> GD-ROM Swap Disc
+                        </dt>
+                        <dd class="col-sm-7">
+                            @if(model.Report?.CanReadGdRomUsingSwapDisc == true)
+                            {
+                                <i class="bi bi-check-circle-fill text-success"></i>
+                                <span class="text-success">Yes</span>
+                            }
+                            else if(model.Report?.CanReadGdRomUsingSwapDisc == false)
+                            {
+                                <i class="bi bi-x-circle-fill text-danger"></i>
+                                <span class="text-danger">No</span>
+                            }
+                            else
+                            {
+                                <span class="text-secondary">Unknown</span>
+                            }
+                        </dd>
+
+                        <dt class="col-sm-5 text-secondary">
+                            <i class="bi bi-calendar-plus"></i> Added When
+                        </dt>
+                        <dd class="col-sm-7 text-light">
+                            @model.Report?.AddedWhen.ToString("g")
+                        </dd>
+
+                        <dt class="col-sm-5 text-secondary">
+                            <i class="bi bi-calendar-check"></i> Modified When
+                        </dt>
+                        <dd class="col-sm-7 text-light">
+                            @(model.Report?.ModifiedWhen?.ToString("g") ?? "Never")
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <!-- Related Reports Card -->
+            <div class="card bg-dark shadow-sm border-secondary">
+                <div class="card-header bg-secondary text-light">
+                    <h5 class="mb-0">
+                        <i class="bi bi-link-45deg"></i> Related Reports
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush bg-dark">
+                        @if(model.ReadCapabilitiesId != 0)
+                        {
+                            <a href="/admin/tested-media/@model.ReadCapabilitiesId" target="_blank"
+                               class="list-group-item list-group-item-action bg-dark text-light border-secondary">
+                                <i class="bi bi-book text-info"></i> Read Capabilities Report
+                                <i class="bi bi-box-arrow-up-right text-secondary float-end"></i>
+                            </a>
+                        }
+                        @if(model.Report.ATA != null)
+                        {
+                            <a href="/admin/ata/@model.Report.ATA.Id" target="_blank"
+                               class="list-group-item list-group-item-action bg-dark text-light border-secondary">
+                                <i class="bi bi-hdd-rack text-info"></i> ATA Report
+                                <i class="bi bi-box-arrow-up-right text-secondary float-end"></i>
+                            </a>
+                        }
+                        @if(model.Report.ATAPI != null)
+                        {
+                            <a href="/admin/ata/@model.Report.ATAPI.Id" target="_blank"
+                               class="list-group-item list-group-item-action bg-dark text-light border-secondary">
+                                <i class="bi bi-hdd-rack text-info"></i> ATAPI Report
+                                <i class="bi bi-box-arrow-up-right text-secondary float-end"></i>
+                            </a>
+                        }
+                        @if(model.Report.SCSI != null)
+                        {
+                            <a href="/admin/scsi/@model.Report.SCSI.Id" target="_blank"
+                               class="list-group-item list-group-item-action bg-dark text-light border-secondary">
+                                <i class="bi bi-hdd-network text-info"></i> SCSI Report
+                                <i class="bi bi-box-arrow-up-right text-secondary float-end"></i>
+                            </a>
+                        }
+                        @if(model.Report.MultiMediaCard != null)
+                        {
+                            <a href="/admin/mmc-sd/@model.Report.MultiMediaCard.Id" target="_blank"
+                               class="list-group-item list-group-item-action bg-dark text-light border-secondary">
+                                <i class="bi bi-sd-card text-info"></i> MultiMediaCard Report
+                                <i class="bi bi-box-arrow-up-right text-secondary float-end"></i>
+                            </a>
+                        }
+                        @if(model.Report.SecureDigital != null)
+                        {
+                            <a href="/admin/mmc-sd/@model.Report.SecureDigital.Id" target="_blank"
+                               class="list-group-item list-group-item-action bg-dark text-light border-secondary">
+                                <i class="bi bi-sd-card text-info"></i> SecureDigital Report
+                                <i class="bi bi-box-arrow-up-right text-secondary float-end"></i>
+                            </a>
+                        }
+                        @if(model.Report.USB != null)
+                        {
+                            <a href="/admin/usb/devices/@model.Report.USB.Id" target="_blank"
+                               class="list-group-item list-group-item-action bg-dark text-light border-secondary">
+                                <i class="bi bi-usb-symbol text-info"></i> USB Report
+                                <i class="bi bi-box-arrow-up-right text-secondary float-end"></i>
+                            </a>
+                        }
+                        @if(model.Report.GdRomSwapDiscCapabilitiesId != null)
+                        {
+                            <a href="/admin/gdrom/@model.Report.GdRomSwapDiscCapabilitiesId" target="_blank"
+                               class="list-group-item list-group-item-action bg-dark text-light border-secondary">
+                                <i class="bi bi-disc text-info"></i> GD-ROM Swap-Trick Capabilities Report
+                                <i class="bi bi-box-arrow-up-right text-secondary float-end"></i>
+                            </a>
+                        }
+                        @if(model.Report.FireWire != null)
+                        {
+                            <div class="list-group-item bg-dark text-light border-secondary">
+                                <i class="bi bi-lightning text-warning"></i> Has a FireWire Report
+                            </div>
+                        }
+                        @if(model.Report.PCMCIA != null)
+                        {
+                            <div class="list-group-item bg-dark text-light border-secondary">
+                                <i class="bi bi-credit-card text-warning"></i> Has a PCMCIA Report
+                            </div>
+                        }
+                        @if(model.ReadCapabilitiesId == 0 && model.Report.ATA == null && model.Report.ATAPI == null && model.Report.SCSI == null && model.Report.MultiMediaCard == null && model.Report.SecureDigital == null && model.Report.USB == null && model.Report.GdRomSwapDiscCapabilitiesId == null && model.Report.FireWire == null && model.Report.PCMCIA == null)
+                        {
+                            <div class="list-group-item bg-dark text-secondary border-secondary text-center">
+                                <i class="bi bi-inbox"></i> No related reports found
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
-    }
-    @if(model.TestedMedias.Count > 0)
+
+        <!-- Right Column - Related Devices and Statistics -->
+        <div class="col-lg-6">
+            @if(model.SameAll.Count > 0)
+            {
+                <div class="card bg-dark shadow-sm border-secondary mb-4">
+                    <div class="card-header bg-success text-dark">
+                        <h6 class="mb-0">
+                            <i class="bi bi-diagram-3"></i> Matching Device Reports
+                            <span class="badge bg-dark text-light float-end">@model.SameAll.Count</span>
+                        </h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <small class="text-secondary px-3 pt-2 d-block">Same manufacturer, model and revision</small>
+                        <div class="table-responsive">
+                            <table class="table table-dark table-hover table-sm mb-0">
+                                <tbody>
+                                @foreach(int item in model.SameAll)
+                                {
+                                    <tr>
+                                        <td class="align-middle" style="width: 80px;">
+                                            <span class="badge bg-info text-dark text-center"
+                                                  style="min-width: 60px;">@item</span>
+                                        </td>
+                                        <td class="align-middle text-end">
+                                            <a href="/admin/devices/@item"
+                                               class="btn btn-outline-info btn-sm me-1"
+                                               target="_blank"
+                                               title="View">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <button type="button"
+                                                    class="btn btn-outline-warning btn-sm"
+                                                    @onclick="() => Merge(model.Report.Id, item)"
+                                                    title="Merge">
+                                                <i class="bi bi-diagram-3"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if(model.SameButManufacturer.Count > 0)
+            {
+                <div class="card bg-dark shadow-sm border-secondary mb-4">
+                    <div class="card-header bg-warning text-dark">
+                        <h6 class="mb-0">
+                            <i class="bi bi-diagram-2"></i> Similar Device Reports
+                            <span class="badge bg-dark text-light float-end">@model.SameButManufacturer.Count</span>
+                        </h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <small class="text-secondary px-3 pt-2 d-block">Same model and revision (different
+                                                                        manufacturer)</small>
+                        <div class="table-responsive">
+                            <table class="table table-dark table-hover table-sm mb-0">
+                                <tbody>
+                                @foreach(int item in model.SameButManufacturer)
+                                {
+                                    <tr>
+                                        <td class="align-middle" style="width: 80px;">
+                                            <span class="badge bg-info text-dark text-center"
+                                                  style="min-width: 60px;">@item</span>
+                                        </td>
+                                        <td class="align-middle text-end">
+                                            <a href="/admin/devices/@item"
+                                               class="btn btn-outline-info btn-sm me-1"
+                                               target="_blank"
+                                               title="View">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <button type="button"
+                                                    class="btn btn-outline-warning btn-sm"
+                                                    @onclick="() => Merge(model.Report.Id, item)"
+                                                    title="Merge">
+                                                <i class="bi bi-diagram-3"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if(model.ReportAll.Count > 0)
+            {
+                <div class="card bg-dark shadow-sm border-secondary mb-4">
+                    <div class="card-header bg-primary text-light">
+                        <h6 class="mb-0">
+                            <i class="bi bi-cloud-upload"></i> Matching Uploaded Reports
+                            <span class="badge bg-dark float-end">@model.ReportAll.Count</span>
+                        </h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <small class="text-secondary px-3 pt-2 d-block">Same manufacturer, model and revision</small>
+                        <div class="table-responsive">
+                            <table class="table table-dark table-hover table-sm mb-0">
+                                <tbody>
+                                @foreach(int item in model.ReportAll)
+                                {
+                                    <tr>
+                                        <td class="align-middle" style="width: 80px;">
+                                            <span class="badge bg-info text-dark text-center"
+                                                  style="min-width: 60px;">@item</span>
+                                        </td>
+                                        <td class="align-middle text-end">
+                                            <a href="/admin/reports/@item"
+                                               class="btn btn-outline-info btn-sm me-1"
+                                               target="_blank"
+                                               title="View">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <button type="button"
+                                                    class="btn btn-outline-warning btn-sm"
+                                                    @onclick="() => MergeReports(model.Report.Id, item)"
+                                                    title="Merge">
+                                                <i class="bi bi-diagram-3"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if(model.ReportButManufacturer.Count > 0)
+            {
+                <div class="card bg-dark shadow-sm border-secondary mb-4">
+                    <div class="card-header bg-primary text-light">
+                        <h6 class="mb-0">
+                            <i class="bi bi-cloud-upload"></i> Similar Uploaded Reports
+                            <span class="badge bg-dark float-end">@model.ReportButManufacturer.Count</span>
+                        </h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <small class="text-secondary px-3 pt-2 d-block">Same model and revision (different
+                                                                        manufacturer)</small>
+                        <div class="table-responsive">
+                            <table class="table table-dark table-hover table-sm mb-0">
+                                <tbody>
+                                @foreach(int item in model.ReportButManufacturer)
+                                {
+                                    <tr>
+                                        <td class="align-middle" style="width: 80px;">
+                                            <span class="badge bg-info text-dark text-center"
+                                                  style="min-width: 60px;">@item</span>
+                                        </td>
+                                        <td class="align-middle text-end">
+                                            <a href="/admin/reports/@item"
+                                               class="btn btn-outline-info btn-sm me-1"
+                                               target="_blank"
+                                               title="View">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <button type="button"
+                                                    class="btn btn-outline-warning btn-sm"
+                                                    @onclick="() => MergeReports(model.Report.Id, item)"
+                                                    title="Merge">
+                                                <i class="bi bi-diagram-3"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if(model.TestedMedias.Count > 0)
+            {
+                <div class="card bg-dark shadow-sm border-secondary mb-4">
+                    <div class="card-header bg-info text-dark">
+                        <h6 class="mb-0">
+                            <i class="bi bi-disc"></i> Tested Media
+                            <span class="badge bg-dark text-light float-end">@model.TestedMedias.Count</span>
+                        </h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-dark table-hover table-sm mb-0">
+                                <thead class="table-secondary">
+                                <tr>
+                                    <th><i class="bi bi-building"></i> Manufacturer</th>
+                                    <th><i class="bi bi-tag"></i> Model</th>
+                                    <th><i class="bi bi-diagram-3"></i> Type</th>
+                                    <th style="width: 80px;"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach(TestedMedia item in model.TestedMedias)
+                                {
+                                    <tr>
+                                        <td class="align-middle text-light">@item.Manufacturer</td>
+                                        <td class="align-middle text-light">@item.Model</td>
+                                        <td class="align-middle">
+                                            <span class="badge bg-secondary">@item.MediumTypeName</span></td>
+                                        <td class="align-middle text-end">
+                                            <a href="/admin/tested-media/@item.Id"
+                                               class="btn btn-outline-info btn-sm"
+                                               target="_blank"
+                                               title="View">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if(model.TestedSequentialMedias.Count > 0)
+            {
+                <div class="card bg-dark shadow-sm border-secondary mb-4">
+                    <div class="card-header bg-info text-dark">
+                        <h6 class="mb-0">
+                            <i class="bi bi-cassette"></i> Tested Sequential Media
+                            <span class="badge bg-dark text-light float-end">@model.TestedSequentialMedias.Count</span>
+                        </h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-dark table-hover table-sm mb-0">
+                                <thead class="table-secondary">
+                                <tr>
+                                    <th><i class="bi bi-building"></i> Manufacturer</th>
+                                    <th><i class="bi bi-tag"></i> Model</th>
+                                    <th><i class="bi bi-diagram-3"></i> Type</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach(TestedSequentialMedia item in model.TestedSequentialMedias)
+                                {
+                                    <tr>
+                                        <td class="align-middle text-light">@item.Manufacturer</td>
+                                        <td class="align-middle text-light">@item.Model</td>
+                                        <td class="align-middle">
+                                            <span class="badge bg-secondary">@item.MediumTypeName</span></td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Device Statistics (Full Width at Bottom) -->
+    @if(model.StatsAll.Count > 0 || model.StatsButManufacturer.Count > 0)
     {
-        <div>
-            <h4>Tested media:</h4>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>
-                        @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.Manufacturer))
-                    </th>
-                    <th>
-                        @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.Model))
-                    </th>
-                    <th>
-                        @DisplayNameHelper.GetDisplayName(typeof(TestedMedia), nameof(TestedMedia.MediumTypeName))
-                    </th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach(TestedMedia item in model.TestedMedias)
+        <div class="row mt-4">
+            <div class="col-12">
+                @if(model.StatsAll.Count > 0)
                 {
-                    <tr>
-                        <td>
-                            @item.Manufacturer
-                        </td>
-                        <td>
-                            @item.Model
-                        </td>
-                        <td>
-                            @item.MediumTypeName
-                        </td>
-                        <td>
-                            <a href="/admin/tested-media/@item.Id" class="btn btn-secondary" target="_blank">Details</a>
-                        </td>
-                    </tr>
+                    <div class="card bg-dark shadow-sm border-secondary mb-4">
+                        <div class="card-header bg-secondary text-light">
+                            <h5 class="mb-0">
+                                <i class="bi bi-bar-chart"></i> Device Statistics - Exact Match
+                                <span class="badge bg-info text-dark float-end">@model.StatsAll.Count</span>
+                            </h5>
+                        </div>
+                        <div class="card-body p-0">
+                            <small class="text-secondary px-3 pt-2 d-block">Same manufacturer, model and
+                                                                            revision</small>
+                            <div class="table-responsive">
+                                <table class="table table-dark table-hover table-sm mb-0">
+                                    <thead class="table-secondary">
+                                    <tr>
+                                        <th><i class="bi bi-building"></i> Manufacturer</th>
+                                        <th><i class="bi bi-device-hdd"></i> Model</th>
+                                        <th><i class="bi bi-code-square"></i> Revision</th>
+                                        <th><i class="bi bi-diagram-3"></i> Bus</th>
+                                        <th style="width: 150px;"><i class="bi bi-link"></i> Has Report?</th>
+                                        <th style="width: 100px;"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach(DeviceStat item in model.StatsAll)
+                                    {
+                                        <tr>
+                                            <td class="align-middle text-light">@item.Manufacturer</td>
+                                            <td class="align-middle text-light">@item.Model</td>
+                                            <td class="align-middle"><code class="text-info">@item.Revision</code></td>
+                                            <td class="align-middle"><span class="badge bg-secondary">@item.Bus</span>
+                                            </td>
+                                            <td class="align-middle">
+                                                @if(item.Report is null)
+                                                {
+                                                    <span class="text-danger"><i class="bi bi-x-circle"></i> No</span>
+                                                }
+                                                else if(item.Report.Id == model.Report.Id)
+                                                {
+                                                    <span class="text-success"><i class="bi bi-check-circle-fill"></i> This One</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-warning"><i class="bi bi-check-circle"></i> Yes</span>
+                                                }
+                                            </td>
+                                            <td class="align-middle text-end">
+                                                <button type="button"
+                                                        class="btn btn-outline-info btn-sm"
+                                                        @onclick="() => LinkReports(model.Report.Id, item.Id)"
+                                                        title="Link">
+                                                    <i class="bi bi-link-45deg"></i> Link
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 }
-                </tbody>
-            </table>
+
+                @if(model.StatsButManufacturer.Count > 0)
+                {
+                    <div class="card bg-dark shadow-sm border-secondary mb-4">
+                        <div class="card-header bg-secondary text-light">
+                            <h5 class="mb-0">
+                                <i class="bi bi-bar-chart"></i> Device Statistics - Similar
+                                <span class="badge bg-info text-dark float-end">@model.StatsButManufacturer.Count</span>
+                            </h5>
+                        </div>
+                        <div class="card-body p-0">
+                            <small class="text-secondary px-3 pt-2 d-block">Same model and revision (different
+                                                                            manufacturer)</small>
+                            <div class="table-responsive">
+                                <table class="table table-dark table-hover table-sm mb-0">
+                                    <thead class="table-secondary">
+                                    <tr>
+                                        <th><i class="bi bi-building"></i> Manufacturer</th>
+                                        <th><i class="bi bi-device-hdd"></i> Model</th>
+                                        <th><i class="bi bi-code-square"></i> Revision</th>
+                                        <th><i class="bi bi-diagram-3"></i> Bus</th>
+                                        <th style="width: 150px;"><i class="bi bi-link"></i> Has Report?</th>
+                                        <th style="width: 100px;"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach(DeviceStat item in model.StatsButManufacturer)
+                                    {
+                                        <tr>
+                                            <td class="align-middle text-light">@item.Manufacturer</td>
+                                            <td class="align-middle text-light">@item.Model</td>
+                                            <td class="align-middle"><code class="text-info">@item.Revision</code></td>
+                                            <td class="align-middle"><span class="badge bg-secondary">@item.Bus</span>
+                                            </td>
+                                            <td class="align-middle">
+                                                @if(item.Report is null)
+                                                {
+                                                    <span class="text-danger"><i class="bi bi-x-circle"></i> No</span>
+                                                }
+                                                else
+                                                {
+                                                    <a href="/admin/reports/@item.Report.Id"
+                                                       target="_blank"
+                                                       class="text-info">
+                                                        <i class="bi bi-check-circle"></i> Yes
+                                                        <i class="bi bi-box-arrow-up-right"></i>
+                                                    </a>
+                                                }
+                                            </td>
+                                            <td class="align-middle text-end">
+                                                <button type="button"
+                                                        class="btn btn-outline-info btn-sm"
+                                                        @onclick="() => LinkReports(model.Report.Id, item.Id)"
+                                                        title="Link">
+                                                    <i class="bi bi-link-45deg"></i> Link
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
     }
-    @if(model.TestedSequentialMedias.Count > 0)
-    {
-        <div>
-            <h4>Tested media:</h4>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>
-                        @DisplayNameHelper.GetDisplayName(typeof(TestedSequentialMedia), nameof(TestedSequentialMedia.Manufacturer))
-                    </th>
-                    <th>
-                        @DisplayNameHelper.GetDisplayName(typeof(TestedSequentialMedia), nameof(TestedSequentialMedia.Model))
-                    </th>
-                    <th>
-                        @DisplayNameHelper.GetDisplayName(typeof(TestedSequentialMedia), nameof(TestedSequentialMedia.MediumTypeName))
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach(TestedSequentialMedia item in model.TestedSequentialMedias)
-                {
-                    <tr>
-                        <td>
-                            @item.Manufacturer
-                        </td>
-                        <td>
-                            @item.Model
-                        </td>
-                        <td>
-                            @item.MediumTypeName
-                        </td>
-                    </tr>
-                }
-                </tbody>
-            </table>
-        </div>
-    }
-</section>
+</div>
+
