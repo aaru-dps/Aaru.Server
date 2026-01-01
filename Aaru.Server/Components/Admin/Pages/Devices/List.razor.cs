@@ -35,10 +35,27 @@ namespace Aaru.Server.Components.Admin.Pages.Devices;
 
 public partial class List
 {
-    private int    _deleteId;
-    private Modal? _deleteModal;
-    bool           _initialized;
-    List<Device>   _items;
+    private int          _deleteId;
+    private Modal?       _deleteModal;
+    private bool         _initialized;
+    private List<Device> _items      = new();
+    private string       _searchTerm = string.Empty;
+
+    private IEnumerable<Device> FilteredItems
+    {
+        get
+        {
+            if(string.IsNullOrWhiteSpace(_searchTerm)) return _items;
+
+            return _items.Where(item =>
+                                    (item.Manufacturer?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false)                                                                          ||
+                                    (item.Model?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                                    (item.Revision?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    item.Id.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+    }
 
 
     /// <inheritdoc />
