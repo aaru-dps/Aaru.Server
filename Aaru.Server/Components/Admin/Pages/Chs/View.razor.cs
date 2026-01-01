@@ -35,10 +35,26 @@ namespace Aaru.Server.Components.Admin.Pages.Chs;
 
 public partial class View
 {
-    private Modal?                 _consolidateModal;
-    List<ChsModel>                 _duplicates;
-    bool                           _initialized;
-    List<CommonTypes.Metadata.Chs> _items;
+    private Modal?                         _consolidateModal;
+    private List<ChsModel>                 _duplicates = new();
+    private bool                           _initialized;
+    private List<CommonTypes.Metadata.Chs> _items      = new();
+    private string                         _searchTerm = string.Empty;
+
+    private IEnumerable<CommonTypes.Metadata.Chs> FilteredItems
+    {
+        get
+        {
+            if(string.IsNullOrWhiteSpace(_searchTerm)) return _items;
+
+            return _items.Where(item =>
+                                    item.Cylinders.ToString()
+                                        .Contains(_searchTerm, StringComparison.OrdinalIgnoreCase)                    ||
+                                    item.Heads.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase)   ||
+                                    item.Sectors.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                                    item.Id.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+    }
 
 
     /// <inheritdoc />
