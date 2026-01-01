@@ -36,12 +36,30 @@ namespace Aaru.Server.Components.Admin.Pages.Ata;
 
 public partial class List
 {
-    private Modal?                 _consolidateModal;
-    private int                    _deleteId;
-    private Modal?                 _deleteModal;
-    List<IdHashModel?>             _duplicates;
-    bool                           _initialized;
-    List<CommonTypes.Metadata.Ata> _items;
+    private Modal?                         _consolidateModal;
+    private int                            _deleteId;
+    private Modal?                         _deleteModal;
+    private List<IdHashModel?>             _duplicates = new();
+    private bool                           _initialized;
+    private List<CommonTypes.Metadata.Ata> _items      = new();
+    private string                         _searchTerm = string.Empty;
+
+    private IEnumerable<CommonTypes.Metadata.Ata> FilteredItems
+    {
+        get
+        {
+            if(string.IsNullOrWhiteSpace(_searchTerm)) return _items;
+
+            return _items.Where(item =>
+                                    (item.IdentifyDevice?.Model?.Contains(_searchTerm,
+                                                                          StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    (item.IdentifyDevice?.FirmwareRevision?.Contains(_searchTerm,
+                                         StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    item.Id.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+    }
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
@@ -78,7 +96,7 @@ public partial class List
                             .Select(x => hashes.FirstOrDefault(y => y.Hash == x.Key))
                             .ToList();
 
-        for(int i = 0; i < _duplicates.Count; i++)
+        for(var i = 0; i < _duplicates.Count; i++)
         {
             CommonTypes.Metadata.Ata unique = ctx.Ata.First(a => a.Id == _duplicates[i].Id);
 
