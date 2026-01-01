@@ -336,8 +336,6 @@ public partial class ViewData
             sb.AppendLine();
         }
 
-        _model.Decoded = HttpUtility.HtmlEncode(sb.ToString()).Replace("\n", "<br/>");
-
         _initialized = true;
         StateHasChanged();
     }
