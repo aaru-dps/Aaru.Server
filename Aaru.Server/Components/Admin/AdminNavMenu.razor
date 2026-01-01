@@ -28,106 +28,279 @@
 // ****************************************************************************/
 }
 <div class="navmenu-container">
-    <div class="navbar navbar-dark ps-3 top-row" style="display: flex; align-items: center; justify-content: flex-end;">
-        <a class="navbar-brand" href="/admin">Admin</a>
+    <div class="navbar navbar-dark top-row">
+        <a class="navbar-brand" href="/admin">
+            <span class="bi bi-shield-fill-check-nav-menu"></span>
+            Admin Panel
+        </a>
     </div>
+
+    <div class="nav-search-container">
+        <input type="text"
+               class="nav-search"
+               placeholder="Search menu..."
+               @bind="_searchTerm"
+               @bind:event="oninput" />
+        <span class="search-icon bi bi-search-nav-menu"></span>
+    </div>
+
     <div class="nav-scrollable">
         <nav class="flex-column">
-            <div class="nav-item px-3">
+            <!-- Dashboard -->
+            <div class="nav-item">
                 <NavLink class="nav-link" href="/admin" Match="NavLinkMatch.All">
-                    <span aria-hidden="true" class="bi bi-house-door-fill-nav-menu"></span> Dashboard
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/ata">
-                    ATA IDENTIFY DEVICE responses
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/block-descriptors">
-                    Block descriptors
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/chs">
-                    CHS
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/commands">
-                    Commands
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/cd-offsets">
-                    Compact Disc Offsets
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/devices">
-                    Device reports
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/device-stats">
-                    Device statistics
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/filesystems">
-                    Filesystems
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/filters">
-                    Filters
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/firewire">
-                    FireWire registers
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/media-formats">
-                    Media formats
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/medias">
-                    Medias
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/mmc/features">
-                    MMC FEATUREs
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/mmc-sd">
-                    MultiMediaCard / SecureDigital registers
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/operating-systems">
-                    Operating systems
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/partitions">
-                    Partitions
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/pcmcia">
-                    PCMCIA
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/scsi/cdrom">
-                    SCSI CD-ROM Capabilities
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/scsi">
-                    SCSI INQUIRY responses
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/scsi/pages">
-                    SCSI MODE SENSE pages
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/scsi/modes">
-                    SCSI MODE SENSE responses
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/scsi/ssc">
-                    SCSI SSC
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/supported-densities">
-                    Supported densities
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/tested-media">
-                    Tested media
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/tested-media/sequential">
-                    Tested sequential media
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/reports">
-                    Uploaded reports
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/usb/devices">
-                    USB Devices
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/usb/products">
-                    USB Products
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/usb/vendors">
-                    USB Vendors
-                </NavLink>
-                <NavLink class="nav-link" href="/admin/versions">
-                    Versions
+                    <span aria-hidden="true" class="bi bi-house-door-fill-nav-menu"></span>
+                    <span class="nav-link-text">Dashboard</span>
                 </NavLink>
             </div>
+
+            <!-- Device Hardware -->
+            <div class="nav-section" style="@GetSectionVisibility("device hardware ata firewire pcmcia usb")">
+                <div class="nav-section-header" @onclick="() => ToggleSection(0)">
+                    <span class="bi bi-cpu-nav-menu"></span>
+                    <span class="section-title">Device Hardware</span>
+                    <span class="@GetChevronClass(0)"></span>
+                </div>
+                <div class="nav-section-content @GetSectionClass(0)">
+                    <NavLink class="nav-link" href="/admin/ata" style="@GetLinkVisibility("ata identify device")">
+                        <span class="bi bi-hdd-nav-menu"></span>
+                        <span class="nav-link-text">ATA IDENTIFY DEVICE</span>
+                    </NavLink>
+                    <NavLink class="nav-link" href="/admin/devices" style="@GetLinkVisibility("device reports")">
+                        <span class="bi bi-device-nav-menu"></span>
+                        <span class="nav-link-text">Device Reports</span>
+                    </NavLink>
+                    <NavLink class="nav-link"
+                             href="/admin/device-stats"
+                             style="@GetLinkVisibility("device statistics stats")">
+                        <span class="bi bi-graph-up-nav-menu"></span>
+                        <span class="nav-link-text">Device Statistics</span>
+                    </NavLink>
+                    <NavLink class="nav-link" href="/admin/firewire" style="@GetLinkVisibility("firewire registers")">
+                        <span class="bi bi-plug-nav-menu"></span>
+                        <span class="nav-link-text">FireWire Registers</span>
+                    </NavLink>
+                    <NavLink class="nav-link" href="/admin/pcmcia" style="@GetLinkVisibility("pcmcia")">
+                        <span class="bi bi-card-nav-menu"></span>
+                        <span class="nav-link-text">PCMCIA</span>
+                    </NavLink>
+                </div>
+            </div>
+
+            <!-- USB Hardware -->
+            <div class="nav-section" style="@GetSectionVisibility("usb")">
+                <div class="nav-section-header" @onclick="() => ToggleSection(1)">
+                    <span class="bi bi-usb-nav-menu"></span>
+                    <span class="section-title">USB Hardware</span>
+                    <span class="@GetChevronClass(1)"></span>
+                </div>
+                <div class="nav-section-content @GetSectionClass(1)">
+                    <NavLink class="nav-link" href="/admin/usb/devices" style="@GetLinkVisibility("usb devices")">
+                        <span class="bi bi-device-nav-menu"></span>
+                        <span class="nav-link-text">USB Devices</span>
+                    </NavLink>
+                    <NavLink class="nav-link" href="/admin/usb/products" style="@GetLinkVisibility("usb products")">
+                        <span class="bi bi-box-nav-menu"></span>
+                        <span class="nav-link-text">USB Products</span>
+                    </NavLink>
+                    <NavLink class="nav-link" href="/admin/usb/vendors" style="@GetLinkVisibility("usb vendors")">
+                        <span class="bi bi-building-nav-menu"></span>
+                        <span class="nav-link-text">USB Vendors</span>
+                    </NavLink>
+                </div>
+            </div>
+
+            <!-- SCSI -->
+            <div class="nav-section" style="@GetSectionVisibility("scsi")">
+                <div class="nav-section-header" @onclick="() => ToggleSection(2)">
+                    <span class="bi bi-disc-nav-menu"></span>
+                    <span class="section-title">SCSI</span>
+                    <span class="@GetChevronClass(2)"></span>
+                </div>
+                <div class="nav-section-content @GetSectionClass(2)">
+                    <NavLink class="nav-link" href="/admin/scsi" style="@GetLinkVisibility("scsi inquiry")">
+                        <span class="bi bi-info-circle-nav-menu"></span>
+                        <span class="nav-link-text">SCSI INQUIRY</span>
+                    </NavLink>
+                    <NavLink class="nav-link"
+                             href="/admin/scsi/cdrom"
+                             style="@GetLinkVisibility("scsi cdrom cd-rom capabilities")">
+                        <span class="bi bi-disc-nav-menu"></span>
+                        <span class="nav-link-text">SCSI CD-ROM Capabilities</span>
+                    </NavLink>
+                    <NavLink class="nav-link" href="/admin/scsi/modes" style="@GetLinkVisibility("scsi mode sense")">
+                        <span class="bi bi-gear-nav-menu"></span>
+                        <span class="nav-link-text">SCSI MODE SENSE</span>
+                    </NavLink>
+                    <NavLink class="nav-link"
+                             href="/admin/scsi/pages"
+                             style="@GetLinkVisibility("scsi mode sense pages")">
+                        <span class="bi bi-file-nav-menu"></span>
+                        <span class="nav-link-text">SCSI MODE SENSE Pages</span>
+                    </NavLink>
+                    <NavLink class="nav-link" href="/admin/scsi/ssc" style="@GetLinkVisibility("scsi ssc")">
+                        <span class="bi bi-cassette-nav-menu"></span>
+                        <span class="nav-link-text">SCSI SSC</span>
+                    </NavLink>
+                </div>
+            </div>
+
+            <!-- Media & Storage -->
+            <div class="nav-section" style="@GetSectionVisibility("media storage disc offset mmc multimedia")">
+                <div class="nav-section-header" @onclick="() => ToggleSection(3)">
+                    <span class="bi bi-disc-fill-nav-menu"></span>
+                    <span class="section-title">Media & Storage</span>
+                    <span class="@GetChevronClass(3)"></span>
+                </div>
+                <div class="nav-section-content @GetSectionClass(3)">
+                    <NavLink class="nav-link" href="/admin/medias" style="@GetLinkVisibility("medias media")">
+                        <span class="bi bi-disc-fill-nav-menu"></span>
+                        <span class="nav-link-text">Medias</span>
+                    </NavLink>
+                    <NavLink class="nav-link" href="/admin/media-formats" style="@GetLinkVisibility("media formats")">
+                        <span class="bi bi-files-nav-menu"></span>
+                        <span class="nav-link-text">Media Formats</span>
+                    </NavLink>
+                    <NavLink class="nav-link"
+                             href="/admin/cd-offsets"
+                             style="@GetLinkVisibility("compact disc cd offsets")">
+                        <span class="bi bi-disc-nav-menu"></span>
+                        <span class="nav-link-text">CD Offsets</span>
+                    </NavLink>
+                    <NavLink class="nav-link"
+                             href="/admin/mmc/features"
+                             style="@GetLinkVisibility("mmc features multimedia")">
+                        <span class="bi bi-list-check-nav-menu"></span>
+                        <span class="nav-link-text">MMC FEATUREs</span>
+                    </NavLink>
+                    <NavLink class="nav-link"
+                             href="/admin/mmc-sd"
+                             style="@GetLinkVisibility("multimedia card secure digital mmc sd")">
+                        <span class="bi bi-sd-card-nav-menu"></span>
+                        <span class="nav-link-text">MMC / SD Registers</span>
+                    </NavLink>
+                    <NavLink class="nav-link"
+                             href="/admin/supported-densities"
+                             style="@GetLinkVisibility("supported densities")">
+                        <span class="bi bi-layers-nav-menu"></span>
+                        <span class="nav-link-text">Supported Densities</span>
+                    </NavLink>
+                    <NavLink class="nav-link" href="/admin/tested-media" style="@GetLinkVisibility("tested media")">
+                        <span class="bi bi-check-circle-nav-menu"></span>
+                        <span class="nav-link-text">Tested Media</span>
+                    </NavLink>
+                    <NavLink class="nav-link"
+                             href="/admin/tested-media/sequential"
+                             style="@GetLinkVisibility("tested sequential media")">
+                        <span class="bi bi-arrow-right-nav-menu"></span>
+                        <span class="nav-link-text">Tested Sequential Media</span>
+                    </NavLink>
+                </div>
+            </div>
+
+            <!-- Filesystems & Data -->
+            <div class="nav-section" style="@GetSectionVisibility("filesystem partition block filter")">
+                <div class="nav-section-header" @onclick="() => ToggleSection(4)">
+                    <span class="bi bi-folder-nav-menu"></span>
+                    <span class="section-title">Filesystems & Data</span>
+                    <span class="@GetChevronClass(4)"></span>
+                </div>
+                <div class="nav-section-content @GetSectionClass(4)">
+                    <NavLink class="nav-link" href="/admin/filesystems" style="@GetLinkVisibility("filesystems")">
+                        <span class="bi bi-folder-nav-menu"></span>
+                        <span class="nav-link-text">Filesystems</span>
+                    </NavLink>
+                    <NavLink class="nav-link" href="/admin/partitions" style="@GetLinkVisibility("partitions")">
+                        <span class="bi bi-layout-split-nav-menu"></span>
+                        <span class="nav-link-text">Partitions</span>
+                    </NavLink>
+                    <NavLink class="nav-link"
+                             href="/admin/block-descriptors"
+                             style="@GetLinkVisibility("block descriptors")">
+                        <span class="bi bi-grid-nav-menu"></span>
+                        <span class="nav-link-text">Block Descriptors</span>
+                    </NavLink>
+                    <NavLink class="nav-link" href="/admin/filters" style="@GetLinkVisibility("filters")">
+                        <span class="bi bi-funnel-nav-menu"></span>
+                        <span class="nav-link-text">Filters</span>
+                    </NavLink>
+                    <NavLink class="nav-link" href="/admin/chs" style="@GetLinkVisibility("chs cylinder head sector")">
+                        <span class="bi bi-geo-nav-menu"></span>
+                        <span class="nav-link-text">CHS</span>
+                    </NavLink>
+                </div>
+            </div>
+
+            <!-- System & Reports -->
+            <div class="nav-section" style="@GetSectionVisibility("operating system command version report uploaded")">
+                <div class="nav-section-header" @onclick="() => ToggleSection(5)">
+                    <span class="bi bi-terminal-nav-menu"></span>
+                    <span class="section-title">System & Reports</span>
+                    <span class="@GetChevronClass(5)"></span>
+                </div>
+                <div class="nav-section-content @GetSectionClass(5)">
+                    <NavLink class="nav-link"
+                             href="/admin/operating-systems"
+                             style="@GetLinkVisibility("operating systems os")">
+                        <span class="bi bi-window-nav-menu"></span>
+                        <span class="nav-link-text">Operating Systems</span>
+                    </NavLink>
+                    <NavLink class="nav-link" href="/admin/commands" style="@GetLinkVisibility("commands")">
+                        <span class="bi bi-terminal-nav-menu"></span>
+                        <span class="nav-link-text">Commands</span>
+                    </NavLink>
+                    <NavLink class="nav-link" href="/admin/versions" style="@GetLinkVisibility("versions")">
+                        <span class="bi bi-tag-nav-menu"></span>
+                        <span class="nav-link-text">Versions</span>
+                    </NavLink>
+                    <NavLink class="nav-link" href="/admin/reports" style="@GetLinkVisibility("uploaded reports")">
+                        <span class="bi bi-file-earmark-text-nav-menu"></span>
+                        <span class="nav-link-text">Uploaded Reports</span>
+                    </NavLink>
+                </div>
+            </div>
+
         </nav>
     </div>
 </div>
+
+@code {
+    private string _searchTerm = "";
+    private readonly HashSet<int> _expandedSections = new()
+    {
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+    };
+
+    private void ToggleSection(int sectionIndex)
+    {
+        if(_expandedSections.Contains(sectionIndex))
+            _expandedSections.Remove(sectionIndex);
+        else
+            _expandedSections.Add(sectionIndex);
+    }
+
+    private string GetSectionClass(int sectionIndex) => _expandedSections.Contains(sectionIndex) ? "expanded" : "collapsed";
+
+    private string GetChevronClass(int sectionIndex) => _expandedSections.Contains(sectionIndex) ? "bi bi-chevron-down-nav-menu" : "bi bi-chevron-right-nav-menu";
+
+    private string GetSectionVisibility(string keywords)
+    {
+        if(string.IsNullOrWhiteSpace(_searchTerm)) return "display: block;";
+
+        return keywords.Contains(_searchTerm.ToLower(), StringComparison.OrdinalIgnoreCase) ? "display: block;" : "display: none;";
+    }
+
+    private string GetLinkVisibility(string keywords)
+    {
+        if(string.IsNullOrWhiteSpace(_searchTerm)) return "display: flex;";
+
+        return keywords.Contains(_searchTerm.ToLower(), StringComparison.OrdinalIgnoreCase) ? "display: flex;" : "display: none;";
+    }
+
+}
+
