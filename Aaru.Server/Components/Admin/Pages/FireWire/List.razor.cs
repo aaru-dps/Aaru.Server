@@ -35,12 +35,32 @@ namespace Aaru.Server.Components.Admin.Pages.FireWire;
 
 public partial class List
 {
-    private Modal?                      _consolidateModal;
-    private int                         _deleteId;
-    private Modal?                      _deleteModal;
-    List<FireWireModel>                 _duplicates;
-    bool                                _initialized;
-    List<CommonTypes.Metadata.FireWire> _items;
+    private Modal?                              _consolidateModal;
+    private int                                 _deleteId;
+    private Modal?                              _deleteModal;
+    private List<FireWireModel>                 _duplicates = new();
+    private bool                                _initialized;
+    private List<CommonTypes.Metadata.FireWire> _items      = new();
+    private string                              _searchTerm = string.Empty;
+
+    private IEnumerable<CommonTypes.Metadata.FireWire> FilteredItems
+    {
+        get
+        {
+            if(string.IsNullOrWhiteSpace(_searchTerm)) return _items;
+
+            return _items.Where(item =>
+                                    (item.Manufacturer?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    (item.Product?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ??
+                                     false) ||
+                                    item.VendorID.ToString()
+                                        .Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                                    item.ProductID.ToString()
+                                        .Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                                    item.Id.ToString().Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+    }
 
 
     /// <inheritdoc />
