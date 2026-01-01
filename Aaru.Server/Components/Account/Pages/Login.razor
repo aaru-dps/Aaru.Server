@@ -8,49 +8,133 @@
 @inject NavigationManager           NavigationManager
 @inject IdentityRedirectManager     RedirectManager
 
-<PageTitle>Log in</PageTitle>
+<PageTitle>Login - Aaru Server</PageTitle>
 
-<h1>Log in</h1>
-<div class="row">
-    <div class="col-md-4">
-        <section>
-            <StatusMessage Message="@errorMessage"/>
-            <EditForm FormName="login" method="post" Model="Input" OnValidSubmit="LoginUser">
-                <DataAnnotationsValidator/>
-                <h2>Use a local account to log in.</h2>
-                <hr/>
-                <ValidationSummary class="text-danger" role="alert"/>
-                <div class="form-floating mb-3">
-                    <InputText aria-required="true" autocomplete="username" @bind-Value="Input.Email" class="form-control" placeholder="name@example.com"/>
-                    <label class="form-label" for="email">Email</label>
-                    <ValidationMessage class="text-danger" For="() => Input.Email"/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aaru Server - Login</title>
+    <link href="_framework/blazor.web.css" rel="stylesheet" />
+    <link href="app.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+</head>
+<body class="bg-dark">
+    <div class="min-vh-100 d-flex align-items-center justify-content-center px-4">
+        <div style="width: 100%; max-width: 450px;">
+            <!-- Logo/Branding Section -->
+            <div class="text-center mb-5">
+                <h1 class="h3 text-light mb-1">
+                    <i class="bi bi-hdd-rack text-info" style="font-size: 3rem;"></i>
+                </h1>
+                <h2 class="h4 text-light mb-2">Aaru Server</h2>
+                <p class="text-secondary">Data Preservation Management System</p>
+            </div>
+
+            <!-- Login Card -->
+            <div class="card bg-dark shadow-lg border-info" style="border-width: 2px;">
+                <div class="card-header bg-info text-dark">
+                    <h5 class="mb-0">
+                        <i class="bi bi-lock"></i> Sign In
+                    </h5>
                 </div>
-                <div class="form-floating mb-3">
-                    <InputText aria-required="true" autocomplete="current-password" @bind-Value="Input.Password" class="form-control" placeholder="password" type="password"/>
-                    <label class="form-label" for="password">Password</label>
-                    <ValidationMessage class="text-danger" For="() => Input.Password"/>
+                <div class="card-body p-4">
+                    <!-- Status Message -->
+                    @if(!string.IsNullOrEmpty(errorMessage))
+                    {
+                        <div class="alert alert-danger bg-dark border-danger text-light mb-4" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            <strong>Login Failed</strong>
+                            <p class="mb-0 mt-1">@errorMessage</p>
+                        </div>
+                    }
+
+                    <EditForm FormName="login" method="post" Model="Input" OnValidSubmit="LoginUser">
+                        <DataAnnotationsValidator />
+
+                        <!-- Email Field -->
+                        <div class="mb-3">
+                            <label class="form-label text-light">
+                                <i class="bi bi-envelope"></i> Email Address
+                            </label>
+                            <InputText aria-required="true"
+                                       autocomplete="username"
+                                       @bind-Value="Input.Email"
+                                       class="form-control bg-dark text-light border-secondary"
+                                       placeholder="name@example.com" />
+                            <ValidationMessage For="() => Input.Email" class="text-danger small mt-1" />
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="mb-4">
+                            <label class="form-label text-light">
+                                <i class="bi bi-lock"></i> Password
+                            </label>
+                            <InputText aria-required="true"
+                                       autocomplete="current-password"
+                                       @bind-Value="Input.Password"
+                                       class="form-control bg-dark text-light border-secondary"
+                                       placeholder="Enter your password"
+                                       type="password" />
+                            <ValidationMessage For="() => Input.Password" class="text-danger small mt-1" />
+                        </div>
+
+                        <!-- Remember Me Checkbox -->
+                        <div class="mb-4 p-3 bg-black rounded border border-secondary">
+                            <div class="form-check">
+                                <InputCheckbox @bind-Value="Input.RememberMe"
+                                              class="form-check-input"
+                                              id="rememberMe" />
+                                <label class="form-check-label text-light" for="rememberMe">
+                                    <i class="bi bi-bookmark-check"></i> Remember me for 30 days
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Validation Summary -->
+                        <div class="mb-3">
+                            <ValidationSummary class="alert alert-danger bg-dark border-danger text-light" />
+                        </div>
+
+                        <!-- Sign In Button -->
+                        <button class="btn btn-info btn-lg w-100 mb-3" type="submit">
+                            <i class="bi bi-arrow-right-circle"></i> Sign In
+                        </button>
+                    </EditForm>
+
+                    <!-- Separator -->
+                    <hr class="border-secondary my-4" />
+
+                    <!-- Help Links -->
+                    <div class="text-center">
+                        <p class="text-secondary mb-2">
+                            <a href="Account/ForgotPassword" class="link-info">
+                                <i class="bi bi-question-circle"></i> Forgot Password?
+                            </a>
+                        </p>
+                        <p class="text-secondary mb-0">
+                            <a href="Account/ResendEmailConfirmation" class="link-info">
+                                <i class="bi bi-arrow-repeat"></i> Resend Email Confirmation
+                            </a>
+                        </p>
+                    </div>
                 </div>
-                <div class="checkbox mb-3">
-                    <label class="form-label">
-                        <InputCheckbox @bind-Value="Input.RememberMe" class="darker-border-checkbox form-check-input"/>
-                        Remember me
-                    </label>
-                </div>
-                <div>
-                    <button class="btn btn-lg btn-primary w-100" type="submit">Log in</button>
-                </div>
-                <div>
-                    <p>
-                        <a href="Account/ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a href="Account/ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>
-                </div>
-            </EditForm>
-        </section>
+            </div>
+
+            <!-- Footer Information -->
+            <div class="text-center mt-5 text-secondary small">
+                <p class="mb-1">
+                    <i class="bi bi-shield-check"></i> Secure Login Required
+                </p>
+                <p class="mb-0">
+                    © 2011-2026 Natalia Portillo • Aaru Data Preservation Suite
+                </p>
+            </div>
+        </div>
     </div>
-</div>
+</body>
+</html>
 
 @code {
     private string? errorMessage;
@@ -117,5 +201,5 @@
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
     }
-
 }
+
