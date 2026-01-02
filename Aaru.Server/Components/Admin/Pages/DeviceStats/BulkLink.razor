@@ -1,0 +1,312 @@
+@{
+// /***************************************************************************
+// Aaru Data Preservation Suite
+// ----------------------------------------------------------------------------
+//
+// Filename       : BulkLink.razor
+// Author(s)      : Natalia Portillo <claunia@claunia.com>
+//
+// Component      : Aaru Server.
+//
+// --[ License ] --------------------------------------------------------------
+//
+//     This library is free software; you can redistribute it and/or modify
+//     it under the terms of the GNU Lesser General Public License as
+//     published by the Free Software Foundation; either version 2.1 of the
+//     License, or (at your option) any later version.
+//
+//     This library is distributed in the hope that it will be useful, but
+//     WITHOUT ANY WARRANTY; without even the implied warranty of
+//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+//     Lesser General Public License for more details.
+//
+//     You should have received a copy of the GNU Lesser General Public
+//     License along with this library; if not, see <http://www.gnu.org/licenses/>.
+//
+// ----------------------------------------------------------------------------
+// Copyright © 2011-2026 Natalia Portillo
+// ****************************************************************************/
+}
+@page "/admin/device-stats/bulk-link"
+@attribute [Authorize]
+@layout AdminLayout
+@rendermode InteractiveServer
+
+@inject Microsoft.EntityFrameworkCore.IDbContextFactory<DbContext> DbContextFactory
+
+<PageTitle>Bulk Link Device Statistics</PageTitle>
+
+@if(!_initialized)
+{
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+        <div class="text-center">
+            <div class="spinner-border text-info" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <h3 class="mt-3 text-light">Searching for matching device reports...</h3>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container-fluid px-4 py-4">
+        <!-- Header Section -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="h2 mb-1 text-light">
+                    <i class="bi bi-link-45deg text-info"></i> Bulk Link Device Statistics
+                </h1>
+                <p class="text-secondary mb-0">Automatically match and link device statistics to reports</p>
+            </div>
+            <div>
+                <a href="/admin/device-stats" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left-circle"></i> Back to Statistics
+                </a>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card bg-dark shadow-sm border-secondary h-100">
+                    <div class="card-body text-center">
+                        <div class="display-6 text-info fw-bold">@_unlinkedStats.Count</div>
+                        <p class="text-secondary mb-0">
+                            <i class="bi bi-diagram-3"></i> Unlinked Statistics
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-dark shadow-sm border-secondary h-100">
+                    <div class="card-body text-center">
+                        <div class="display-6 text-success fw-bold">@_matchedPairs.Count(p => p.IsSelected)</div>
+                        <p class="text-secondary mb-0">
+                            <i class="bi bi-check-circle"></i> Selected for Linking
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-dark shadow-sm border-secondary h-100">
+                    <div class="card-body text-center">
+                        <div class="display-6 text-warning fw-bold">@_matchedPairs.Count(p => !p.IsSelected)</div>
+                        <p class="text-secondary mb-0">
+                            <i class="bi bi-exclamation-circle"></i> Available Matches
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if(_matchedPairs.Count == 0)
+        {
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <i class="bi bi-info-circle"></i>
+                <strong>No matches found.</strong> All device statistics are already linked to device reports, or no
+                                                   matching reports are available.
+            </div>
+        }
+        else
+        {
+        <!-- Matched Pairs Table -->
+            <div class="card bg-dark shadow-sm border-secondary mb-4">
+                <div class="card-header bg-info text-dark">
+                    <h5 class="mb-0">
+                        <i class="bi bi-table"></i> Matching Results
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover table-striped mb-0">
+                            <thead class="table-secondary">
+                            <tr>
+                                <th style="width: 50px;" class="text-center">
+                                    <input type="checkbox"
+                                           @onchange="@(e => ToggleSelectAll((bool)e.Value!))"
+                                           title="Select all" />
+                                </th>
+                                <th style="width: 80px;">
+                                    <i class="bi bi-hash"></i> Stat ID
+                                </th>
+                                <th>
+                                    <i class="bi bi-building"></i> Manufacturer
+                                </th>
+                                <th>
+                                    <i class="bi bi-device-hdd"></i> Model
+                                </th>
+                                <th style="width: 150px;">
+                                    <i class="bi bi-code-square"></i> Revision
+                                </th>
+                                <th style="width: 100px;">
+                                    <i class="bi bi-diagram-3"></i> Bus
+                                </th>
+                                <th style="width: 80px;">
+                                    <i class="bi bi-hash"></i> Report ID
+                                </th>
+                                <th style="width: 100px;" class="text-center">
+                                    <i class="bi bi-eye"></i> Details
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach(MatchedStatReportPair pair in _matchedPairs)
+                            {
+                                <tr>
+                                    <td class="align-middle text-center">
+                                        <input type="checkbox"
+                                               @bind="pair.IsSelected"
+                                               title="Select for linking" />
+                                    </td>
+                                    <td class="align-middle">
+                                    <span class="badge bg-info text-dark text-center"
+                                          style="min-width: 60px; display: inline-block;">@pair.Stat.Id</span>
+                                    </td>
+                                    <td class="align-middle text-light">
+                                        <strong>@(pair.Stat.Manufacturer ?? "Unknown")</strong>
+                                    </td>
+                                    <td class="align-middle text-light">
+                                        <strong>@(pair.Stat.Model ?? "Unknown")</strong>
+                                    </td>
+                                    <td class="align-middle">
+                                        <code class="text-info">@(pair.Stat.Revision ?? "Unknown")</code>
+                                    </td>
+                                    <td class="align-middle">
+                                        <span class="badge bg-secondary">@pair.Stat.Bus</span>
+                                    </td>
+                                    <td class="align-middle">
+                                    <span class="badge bg-success text-dark text-center"
+                                          style="min-width: 60px; display: inline-block;">@pair.Report.Id</span>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <a href="/admin/devices/@pair.Report.Id"
+                                           target="_blank"
+                                           class="btn btn-outline-info btn-sm"
+                                           title="View report details">
+                                            <i class="bi bi-box-arrow-up-right"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        <!-- Action Buttons -->
+            <div class="d-flex justify-content-between align-items-center gap-2">
+                <div>
+                    <button type="button"
+                            class="btn btn-outline-secondary"
+                            @onclick="() => ToggleSelectAll(false)"
+                            title="Deselect all">
+                        <i class="bi bi-square"></i> Deselect All
+                    </button>
+                    <button type="button"
+                            class="btn btn-outline-info"
+                            @onclick="() => ToggleSelectAll(true)"
+                            title="Select all">
+                        <i class="bi bi-check-square"></i> Select All
+                    </button>
+                </div>
+                <div>
+                    <button type="button"
+                            class="btn btn-danger"
+                            disabled="@(_matchedPairs.All(p => !p.IsSelected))"
+                            @onclick="ShowConfirmModal"
+                            title="Link selected statistics to reports">
+                        <i class="bi bi-check-lg"></i> Link Selected (@_matchedPairs.Count(p => p.IsSelected))
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<!-- Confirmation Modal -->
+<div class="modal @(_showConfirmModal ? "show d-block" : "")" style="background-color: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark border-secondary">
+            <div class="modal-header border-secondary">
+                <h5 class="modal-title text-light">
+                    <i class="bi bi-exclamation-triangle-fill text-warning"></i> Confirm Bulk Link
+                </h5>
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        @onclick="() => _showConfirmModal = false"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-light">
+                <p>
+                    You are about to link <strong class="text-success">@_matchedPairs.Count(p => p.IsSelected)</strong>
+                    device statistics to their matching reports.
+                </p>
+                <p class="mb-0">
+                    <strong>This action cannot be undone.</strong> Are you sure you want to proceed?
+                </p>
+            </div>
+            <div class="modal-footer border-secondary">
+                <button type="button"
+                        class="btn btn-secondary"
+                        @onclick="() => _showConfirmModal = false">
+                    <i class="bi bi-x-circle"></i> Cancel
+                </button>
+                <button type="button"
+                        class="btn btn-success"
+                        @onclick="ConfirmLinkAsync"
+                        disabled="@_isProcessing">
+                    @if(_isProcessing)
+                    {
+                        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        <span>Processing...</span>
+                    }
+                    else
+                    {
+                        <span>
+                            <i class="bi bi-check-lg"></i> Confirm Link
+                        </span>
+                    }
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Success Toast -->
+@if(_showSuccessMessage)
+{
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11;">
+        <div class="toast show bg-success text-white" role="alert">
+            <div class="toast-body">
+                <i class="bi bi-check-circle-fill"></i>
+                Successfully linked @_successCount device statistics!
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+    .modal.show
+    {
+        display: block !important;
+    }
+
+    .table
+    {
+        margin-bottom: 0;
+    }
+
+    .badge
+    {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .btn-group-custom
+    {
+        display: flex;
+        gap: 0.5rem;
+    }
+</style>
+
