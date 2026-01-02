@@ -37,7 +37,7 @@
     <!-- Header Section -->
     <div class="navbar navbar-dark ps-3 top-row">
         <a class="navbar-brand" href="">
-            <i class="bi bi-database-fill me-2"></i>Aaru Server
+            <i class="bi bi-database-fill-nav"></i>Aaru Server
         </a>
     </div>
 
@@ -49,7 +49,7 @@
                 <!-- Home -->
                 <div class="nav-item px-3">
                     <NavLink class="nav-link d-flex align-items-center" href="" Match="NavLinkMatch.All">
-                        <i class="bi bi-house-door-fill me-2"></i>
+                        <i class="bi bi-house-door-fill-nav"></i>
                         <span>Home</span>
                     </NavLink>
                 </div>
@@ -57,7 +57,7 @@
                 <!-- Statistics -->
                 <div class="nav-item px-3">
                     <NavLink class="nav-link d-flex align-items-center" href="Stats">
-                        <i class="bi bi-graph-up me-2"></i>
+                        <i class="bi bi-graph-up-nav"></i>
                         <span>Statistics</span>
                     </NavLink>
                 </div>
@@ -68,7 +68,7 @@
                 @if(!string.IsNullOrEmpty(_sidebarMarkup))
                 {
                     <div class="sidebar-header px-3 py-2 text-secondary small">
-                        <i class="bi bi-list-nested me-2"></i>Documentation
+                        <i class="bi bi-list-nested-nav"></i>Documentation
                     </div>
                     <div class="sidebar-content">
                         @((MarkupString)_sidebarMarkup)
@@ -81,7 +81,7 @@
                 <!-- Auth Required -->
                 <div class="nav-item px-3">
                     <NavLink class="nav-link d-flex align-items-center" href="auth">
-                        <i class="bi bi-lock me-2"></i>
+                        <i class="bi bi-lock-nav"></i>
                         <span>Auth Required</span>
                     </NavLink>
                 </div>
@@ -96,7 +96,7 @@
                         <!-- Admin Dashboard -->
                         <div class="nav-item px-3">
                             <NavLink class="nav-link d-flex align-items-center" href="admin">
-                                <i class="bi bi-shield-lock me-2"></i>
+                                <i class="bi bi-shield-lock-nav"></i>
                                 <span>Admin</span>
                             </NavLink>
                         </div>
@@ -104,7 +104,7 @@
                         <!-- Account Settings -->
                         <div class="nav-item px-3">
                             <NavLink class="nav-link d-flex align-items-center" href="Account/Manage">
-                                <i class="bi bi-person-circle me-2"></i>
+                                <i class="bi bi-person-circle-nav"></i>
                                 <span>@context.User.Identity?.Name</span>
                             </NavLink>
                         </div>
@@ -115,7 +115,7 @@
                                 <AntiforgeryToken />
                                 <input name="ReturnUrl" type="hidden" value="@_currentUrl" />
                                 <button class="nav-link d-flex align-items-center w-100" type="submit">
-                                    <i class="bi bi-arrow-bar-left me-2"></i>
+                                    <i class="bi bi-arrow-bar-left-nav"></i>
                                     <span>Logout</span>
                                 </button>
                             </form>
@@ -129,7 +129,7 @@
                         <!-- Login -->
                         <div class="nav-item px-3">
                             <NavLink class="nav-link d-flex align-items-center" href="Account/Login">
-                                <i class="bi bi-person-badge me-2"></i>
+                                <i class="bi bi-person-badge-nav"></i>
                                 <span>Login</span>
                             </NavLink>
                         </div>
@@ -139,3 +139,52 @@
         </nav>
     </div>
 </div>
+
+<style>
+    /* NavMenu Component - Icon SVG Definitions with unique names */
+
+    .bi-database-fill-nav
+    {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg transform='matrix(0.91 0 0 0.91 12 12)'%3E%3Cpath style='stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;' transform='translate(-15, -15)' d='M 6 4 C 4.895 4 4 4.895 4 6 L 4 9 C 4 9.552 4.448 10 5 10 L 25 10 C 25.552 10 26 9.552 26 9 L 26 6 C 26 4.895 25.105 4 24 4 L 6 4 z M 5 12 C 4.448 12 4 12.448 4 13 L 4 17 C 4 17.552 4.448 18 5 18 L 25 18 C 25.552 18 26 17.552 26 17 L 26 13 C 26 12.448 25.552 12 25 12 L 5 12 z M 5 20 C 4.448 20 4 20.448 4 21 L 4 24 C 4 25.105 4.895 26 6 26 C 24 26 C 25.105 26 26 25.105 26 24 L 26 21 C 26 20.448 25.552 20 25 20 L 5 20 z' stroke-linecap='round' /%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .bi-house-door-fill-nav
+    {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z'/%3E%3C/svg%3E");
+    }
+
+    .bi-graph-up-nav
+    {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07'/%3E%3C/svg%3E");
+    }
+
+    .bi-lock-nav
+    {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z'/%3E%3C/svg%3E");
+    }
+
+    .bi-shield-lock-nav
+    {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.856C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.134-.88.033-.299-.1-.579-.274-.856-.593l-.26-.256a1.047 1.047 0 0 0-1.466 0l-.26.256c-.277.319-.557.492-.856.593-.299.1-.6.099-.88-.033a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z'/%3E%3Cpath d='M9.5 6.5a1.5 1.5 0 0 1-1 1.415l.385 1.99a.5.5 0 0 1-.491.595h-.788a.5.5 0 0 1-.49-.595l.384-1.99a1.5 1.5 0 1 1 2-1.415z'/%3E%3C/svg%3E");
+    }
+
+    .bi-person-circle-nav
+    {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM.5 1a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1H.5z'/%3E%3C/svg%3E");
+    }
+
+    .bi-arrow-bar-left-nav
+    {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5ZM10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5Z'/%3E%3C/svg%3E");
+    }
+
+    .bi-person-badge-nav
+    {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z'/%3E%3Cpath d='M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0h-7zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492V2.5z'/%3E%3C/svg%3E");
+    }
+
+    .bi-list-nested-nav
+    {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M4.5 11.5A.5.5 0 0 1 5 11h10a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 1 3h10a.5.5 0 0 1 0 1H1a.5.5 0 0 1-.5-.5z'/%3E%3C/svg%3E");
+    }
+</style>
