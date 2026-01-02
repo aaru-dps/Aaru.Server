@@ -33,6 +33,7 @@ using Aaru.Decoders.SCSI;
 using Aaru.Helpers;
 using Aaru.Server.Core;
 using Aaru.Server.Database.Models;
+using Humanizer;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using Ata = Aaru.CommonTypes.Metadata.Ata;
@@ -232,6 +233,10 @@ public partial class View
 
                 foreach(Tuple tuple in tuples)
                 {
+                    int counter;
+
+                    string key;
+
                     switch(tuple.Code)
                     {
                         case TupleCodes.CISTPL_NULL:
@@ -298,11 +303,29 @@ public partial class View
                         case TupleCodes.CISTPL_SPCL:
                         case TupleCodes.CISTPL_SWIL:
                         case TupleCodes.CISTPL_VERS_2:
-                            decodedTuples.Add("Undecoded tuple ID", tuple.Code.ToString());
+                            counter = 0;
+                            key = $"Decoded tuple ID \"{tuple.Code.Humanize()}\"";
+
+                            while(decodedTuples.ContainsKey(key))
+                            {
+                                counter++;
+                                key = $"Decoded tuple ID \"{tuple.Code.Humanize()}\" ({counter})";
+                            }
+
+                            decodedTuples.Add(key, tuple.Code.ToString());
 
                             break;
                         default:
-                            decodedTuples.Add("Unknown tuple ID", $"0x{(byte)tuple.Code:X2}");
+                            counter = 0;
+                            key = $"Unknown tuple ID 0x{(byte)tuple.Code:X2}";
+
+                            while(decodedTuples.ContainsKey(key))
+                            {
+                                counter++;
+                                key = $"Unknown tuple ID 0x{(byte)tuple.Code:X2} ({counter})";
+                            }
+
+                            decodedTuples.Add(key, tuple.Code.ToString());
 
                             break;
                     }
@@ -312,10 +335,10 @@ public partial class View
             }
         }
 
-        bool               removable   = true;
+        var                removable   = true;
         List<TestedMedia>? testedMedia = null;
-        bool               atapi       = false;
-        bool               sscMedia    = false;
+        var                atapi       = false;
+        var                sscMedia    = false;
 
         if(report.ATA != null || report.ATAPI != null)
         {
@@ -428,7 +451,7 @@ public partial class View
 
         if(report.SCSI != null)
         {
-            string? vendorId = "";
+            var vendorId = "";
 
             if(report.SCSI.Inquiry != null)
             {
