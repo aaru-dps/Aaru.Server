@@ -543,3 +543,5 @@ appsettings.Production.json
 # SonarLint plugin
 .idea/sonarlint/
 .idea/**/sonarlint/
+
+/.idea/**/sshConfigs.xml
