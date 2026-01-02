@@ -1,0 +1,82 @@
+@page "/admin/reports/upload"
+@attribute [Authorize]
+@layout AdminLayout
+@rendermode InteractiveServer
+
+<PageTitle>Upload Device Report</PageTitle>
+
+<div class="container-fluid px-4 py-4">
+    <!-- Header Section -->
+    <div class="mb-4">
+        <h1 class="h2 mb-1 text-light">
+            <i class="bi bi-cloud-arrow-up-nav-menu"></i> Upload Device Report
+        </h1>
+        <p class="text-secondary mb-0">Upload a device identification report in JSON format</p>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card bg-dark shadow-sm border-secondary">
+                <div class="card-header bg-info text-dark">
+                    <h5 class="mb-0">Select and Upload Report</h5>
+                </div>
+                <div class="card-body">
+                    @if(!string.IsNullOrEmpty(_errorMessage))
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            @_errorMessage
+                            <button type="button" class="btn-close" @onclick="@(() => _errorMessage = null)"></button>
+                        </div>
+                    }
+
+                    @if(!string.IsNullOrEmpty(_successMessage))
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            @_successMessage
+                            <button type="button" class="btn-close" @onclick="@(() => _successMessage = null)"></button>
+                        </div>
+                    }
+
+                    <div class="mb-4">
+                        <label for="jsonFile" class="form-label text-light">Select JSON Report File</label>
+                        <InputFile class="form-control bg-dark text-light border-secondary" id="jsonFile" accept=".json"
+                                   @ref="_fileInput" OnChange="HandleFileSelected" />
+                        <small class="form-text text-secondary">
+                            Select a valid device report JSON file (.json)
+                        </small>
+                    </div>
+
+                    @if(_fileSelected)
+                    {
+                        <div class="mb-4">
+                            <h5 class="text-light">File Information</h5>
+                            <div class="alert alert-secondary text-dark">
+                                <strong>File:</strong> @_selectedFileName<br />
+                                <strong>Size:</strong> @FormatFileSize(_selectedFileSize)<br />
+                            </div>
+                        </div>
+                    }
+
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-success" @onclick="UploadFile" disabled="@_isUploading">
+                            @if(_isUploading)
+                            {
+                                <span class="spinner-border spinner-border-sm me-2"
+                                      role="status"
+                                      aria-hidden="true"></span>
+                                <span>Uploading...</span>
+                            }
+                            else
+                            {
+                                <i class="bi bi-cloud-arrow-up"></i>
+                                <span>Upload Report</span>
+                            }
+                        </button>
+                        <a class="btn btn-secondary" href="/admin/reports">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
