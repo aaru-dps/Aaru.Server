@@ -249,6 +249,10 @@ public partial class ViewData
                 buffer = testedMedia.LiteOnReadRawDVDData;
 
                 break;
+            case nameof(testedMedia.ReadBuffer3CReadRawDVDData):
+                buffer = testedMedia.ReadBuffer3CReadRawDVDData;
+
+                break;
             case nameof(testedMedia.IdentifyData):
                 buffer         = testedMedia.IdentifyData;
                 _model.Decoded = Identify.Prettify(buffer);
