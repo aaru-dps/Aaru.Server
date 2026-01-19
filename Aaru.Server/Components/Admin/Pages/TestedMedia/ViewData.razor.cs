@@ -245,8 +245,8 @@ public partial class ViewData
                 buffer = testedMedia.HLDTSTReadRawDVDData;
 
                 break;
-            case nameof(testedMedia.LiteOnReadRawDVDData):
-                buffer = testedMedia.LiteOnReadRawDVDData;
+            case nameof(testedMedia.ReadBuffer3CRawDVDData):
+                buffer = testedMedia.ReadBuffer3CRawDVDData;
 
                 break;
             case nameof(testedMedia.IdentifyData):
