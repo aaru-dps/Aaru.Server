@@ -1,8 +1,8 @@
 <Project ToolsVersion="15.0">
   <ItemGroup>
-    <PackageVersion Include="Aaru.CommonTypes" Version="6.0.0-alpha.12" />
-    <PackageVersion Include="Aaru.Decoders" Version="6.0.0-alpha.12" />
-    <PackageVersion Include="Aaru.Dto" Version="6.0.0-alpha.12" />
+    <PackageVersion Include="Aaru.CommonTypes" Version="6.0.0-alpha.18.1" />
+    <PackageVersion Include="Aaru.Decoders" Version="6.0.0-alpha.18.1" />
+    <PackageVersion Include="Aaru.Dto" Version="6.0.0-alpha.18.1" />
     <PackageVersion Include="AsyncFixer" Version="1.6.0" />
     <PackageVersion Include="Blazor.Bootstrap" Version="3.4.0" />
     <PackageVersion Include="ChoPGP" Version="1.0.1.5" />
