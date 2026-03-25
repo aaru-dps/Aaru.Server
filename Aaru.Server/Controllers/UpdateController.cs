@@ -40,6 +40,20 @@ namespace Aaru.Server.Controllers;
 [Controller]
 public sealed class UpdateController(DbContext ctx) : ControllerBase
 {
+    static          List<Device>? _deviceDbCacheSingleton;
+    static readonly DateTime      _lastCache = DateTime.MinValue;
+
+    IEnumerable<Device> DeviceDbCache
+    {
+        get
+        {
+            if(_deviceDbCacheSingleton is null || DateTime.UtcNow - _lastCache > TimeSpan.FromHours(1))
+                _deviceDbCacheSingleton = ctx.Devices.ToList();
+
+            return _deviceDbCacheSingleton;
+        }
+    }
+
     /// <summary>Receives a report from Aaru.Core, verifies it's in the correct format and stores it on the server</summary>
     /// <returns>HTTP response</returns>
     [Route("api/update")]
@@ -80,7 +94,7 @@ public sealed class UpdateController(DbContext ctx) : ControllerBase
 
         sync.Devices = [];
 
-        foreach(Device device in ctx.Devices.Where(d => d.ModifiedWhen > lastSync).ToList())
+        foreach(Device device in DeviceDbCache.Where(d => d.ModifiedWhen > lastSync).ToList())
         {
             sync.Devices.Add(new
                                  DeviceDto(JsonConvert
