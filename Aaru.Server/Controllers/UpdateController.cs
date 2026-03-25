@@ -40,15 +40,18 @@ namespace Aaru.Server.Controllers;
 [Controller]
 public sealed class UpdateController(DbContext ctx) : ControllerBase
 {
-    static          List<Device>? _deviceDbCacheSingleton;
-    static readonly DateTime      _lastCache = DateTime.MinValue;
+    static List<Device>? _deviceDbCacheSingleton;
+    static DateTime      _lastCache = DateTime.MinValue;
 
     IEnumerable<Device> DeviceDbCache
     {
         get
         {
-            if(_deviceDbCacheSingleton is null || DateTime.UtcNow - _lastCache > TimeSpan.FromHours(1))
-                _deviceDbCacheSingleton = ctx.Devices.ToList();
+            if(_deviceDbCacheSingleton is not null && DateTime.UtcNow - _lastCache <= TimeSpan.FromHours(1))
+                return _deviceDbCacheSingleton;
+
+            _deviceDbCacheSingleton = ctx.Devices.ToList();
+            _lastCache              = DateTime.UtcNow;
 
             return _deviceDbCacheSingleton;
         }
